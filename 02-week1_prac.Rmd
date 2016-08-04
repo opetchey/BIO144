@@ -1,6 +1,5 @@
-# Week 1 practical exercises {-}
+# Week 1 practical exercise {-}
 
+There were no exercises for students to complete during week 1 class. Instead, Owen demonstrated the process of specifying a question, getting data, importing data into R, checking the data is ok, graphing the data, and answering the question. The dataset and analyses of it will appear below.
 
-## Exercise one   {-}
-
-## Exercise two  {-}
+## Class exercise  {-}
