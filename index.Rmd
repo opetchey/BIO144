@@ -12,7 +12,7 @@ github-repo: opetchey/bio144
 description: "This is the information for BIO144"
 ---
 
-# About the course
+# About the course  {-}
 
 This is a _sample_ book written in **Markdown**. You can use anything that Pandoc's Markdown supports, e.g., a math equation $a^2 + b^2 = c^2$.
 

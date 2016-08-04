@@ -1,5 +1,5 @@
-# Week 3 practical exercises
+# Week 3 practical exercises  {-}
 
-## Exercise one
+## Exercise one  {-}
 
-## Exercise two
+## Exercise two  {-}
