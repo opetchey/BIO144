@@ -12,54 +12,126 @@ github-repo: opetchey/bio144
 description: "This is the information for BIO144"
 ---
 
-# Introduction  {-}
+# About the course {-}
 
-This set of web pages gives solutions to the weekly exercises. All other information about the course is on the [OpenedX @ UZH course](https://openedx.mnf.uzh.ch/courses/course-v1:UZH+BIO144+FS2017/about).
+## Course aims and learning outcomes  {-}
 
+This course will help you develop a solid foundation in answering biological questions with quantitative data. The approaches you will learn are, however, generally applicable to using data to solve problems, an increasing important skill in a world more and more dominated by data.
 
+By the end of the course you will be able to:
 
-
-
-## About **bookdown** {-}
-
-This is a _sample_ book written in **Markdown**. You can use anything that Pandoc's Markdown supports, e.g., a math equation $a^2 + b^2 = c^2$.
-
-For now, you have to install the development versions of **bookdown** from Github:
-
-```{r eval=FALSE}
-devtools::install_github("rstudio/bookdown")
-```
-
-Remember each Rmd file contains one and only one chapter, and a chapter is defined by the first-level heading `#`.
-
-To compile this example to PDF, you need to install XeLaTeX.
-
-```{r include=FALSE}
-# automatically create a bib database for R packages
-knitr::write_bib(c(
-  .packages(), 'bookdown', 'knitr', 'rmarkdown'
-), 'packages.bib')
-```
+* Plan how to make use quantitative data to solve a biological problems.
+* Translate a biological question into a quantitative problem.
+* Collect and arrange data for efficient processing.
+* Reliably, accurately and efficiently manage and manipulate data.
+* Make clear and informative visualisations of data.
+* Select, perform, validate, and interpret an appropriate statistical test / model.
+* Understand why and when linear models are useful, and what to do when they are not.
+* Clearly communicate the answer to your biological question.
+* Research and learn about other tools for data analysis
 
 
-## Demonstration of some formatting {-}
+## Your instructors {-}
 
-You can label chapter and section titles using `{#label}` after them, e.g., we can reference Chapter \@ref(intro). If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \@ref(methods).
+Your instructors for this course are Prof. Owen Petchey and Dr Stefanie Muff.
 
-Figures and tables with captions will be placed in `figure` and `table` environments, respectively.
+Your teaching assistants will be listed here at a later date.
 
-```{r nice-fig, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'}
-par(mar = c(4, 4, .1, .1))
-plot(pressure, type = 'b', pch = 19)
-```
 
-Reference a figure by its code chunk label with the `fig:` prefix, e.g., see Figure \@ref(fig:nice-fig). Similarly, you can reference tables generated from `knitr::kable()`, e.g., see Table \@ref(tab:nice-tab).
+## You will need to use two websites {-}
 
-```{r nice-tab, tidy=FALSE}
-knitr::kable(
-  head(iris, 20), caption = 'Here is a nice table!',
-  booktabs = TRUE
-)
-```
+This one, and the OpenEdX\@UZH learning platform.
 
-You can write citations, too. For example, we are using the **bookdown** package [@R-bookdown] in this sample book, which was built on top of R Markdown and **knitr** [@xie2015].
+You will use [OpenEdX\@UZH](https://openedx.mnf.uzh.ch/courses/course-v1:UZH+BIO144+FS2017/about) for the assessment that occurs during the course, for viewing some video lectures, for getting important messages about the course, and for Discussion all and anything about the course.
+
+
+## How to get help {-}
+
+We aim that you can ask for help about anything and get a useful answer as soon as possible. The following guidelines will help you get fast, useful help.
+
+1. Sending emails to course staff will result in you receiving no, slow or perhaps not so useful advice (i.e., please come see me during the class).
+2. Please think about if other students might benefit from knowing the answer to your question. Its very likely that other students are wondering the same thing as you. In that case, it is great if you ask the question in a public / class forum. One such place is the OpenEdX discussion forum, another is during class when questions are actively encouraged.
+3. If knowing the answer to your question is not going to help other students (perhaps it might be about your personal circumstances), then approach and talk with a TA, Dr Muff, or Prof. Petchey in class. We will reserve some class time for these types of question.
+
+
+## When and where is the course held? {-}
+
+The course runs during the whole 14 week spring semester, though there will be no "in-person" time during two of these weeks, due to holidays.
+
+You will attend class on either Thursday or Friday afternoon, 1-5pm. You will be assigned to an afternoon, based on your other class commitments.
+
+All classes will be held in Y24-G-45.
+
+
+## Course structure {-}
+
+The course is composed of two sides: the more **conceptual side** and the more **practical side**.
+
+The conceptual side will be composed of lectures mostly delivered by Dr. Muff, 1-3pm.
+
+The practical side of the course will use a “flipped classroom” approach: you do the lectures / reading at home (or anywhere you like) and you do the "homework" during the practical class. The practical classes will be overseen by TAs and Prof. Petchey. 3-5pm.
+
+
+## Assessment {-}
+
+There will be three assessment-related activities:
+
+1. Each week there will be questions about the class on OpenedX. You must answer 80% of these questions correctly in order to be permitted to sit the final assessment.
+2. A mid-semester assessment, which will not contribute to your final grade. The aims of this are to help you understand if you are effectively learning the required material, to give you practice with the types of questions that will be in the final examination. This mid-semester examination will be conducted during one of the usual afternoon classes. During the first two hours (1-3pm) you will sit the exam, and during the second two hours (3-5pm) you will grade your own exam paper against solutions presented by an instructor.
+3. A final assessment during the module examination period in July. Exact date and location to be confirmed.
+
+
+## Being ready for class {-}
+
+The practical side of the course uses a “flipped classroom” approach: you do the lectures / reading at home (or anywhere you like) and you do the homework in class. The homework is practical exercises, working with data on your computer.
+
+### What must I do before each practical class? {-}
+
+You must complete the assigned required reading / viewing. This material is essential and will not be covered during class (lecture or practical). If you do not complete the assigned reading you will have great trouble with the practical exercises, and with answering the weekly practical related questions correctly. Answering 80% or more of these questions correctly is required to be permitted to sit the final exam. Feel free to attempt the practical exercises before class.
+
+### Where can I find the weekly assigned reading / viewing? {-}
+
+This is given below, in the section for the week you are approaching.
+
+
+## Course reading materials and other resources {-}
+
+The course will assign reading from a variety of sources, with that reading being specified each week. Sometimes reading will be replace or be accompanied by viewing video lectures. Some of the reading / viewing will be core (i.e., required) and some will be optional. Only the material in the core reading / viewing will be examined directly; familiarity with material in the optional reading / viewing will not hurt.
+
+Textbooks with required or optional reading are in the main library, and should be accessible electronically through the main library (we hope to link the text below to the e-book).
+
+Core reading will come from various sources, including two textbooks:
+
+* *Getting Started with R, An introduction for biologists* (2017, Second Edition) Beckerman, Childs & Petchey (**DO NOT USE THE FIRST EDITION!**)
+
+* *The New Statistics with R, An Introduction for Biologists* (2015, First Edition) Hector.
+
+Optional reading will come from various sources, including these textbooks:
+
+* *Regression; Models, Methods and Applications* (2013 Edition) Fahrmeir, Kneib, Lang & Marx.
+
+* *The Analysis of Biological Data* (2015, Second Edition) Whitlock & Schluter.
+
+* *The Essential Guide to Effect Sizes. Statistical Power, Meta-Analysis, and the Interpretation of Research Results (2010, First Edition) Ellis. 
+
+* *Statistics: An Introduction using R* (2011, Second Edition) Crawley.
+
+Other reading:
+
+* http://r4ds.had.co.nz
+* http://dzchilds.github.io/aps-data-analysis-L1/
+* http://dzchilds.github.io/aps-data-analysis-L2/
+
+
+## How to give feedback about the course {-}
+
+Your views on the course are really important to us. What works well, what doesn't work so well, what content is particularly important, what content is not so important, what content is missing?
+
+There are several ways of providing feedback.
+
+1. During the course, you can tell us in person during class, and can make posts on the Discussion forum. Such feedback during the course has the potential to improve the course for you. I.e. we might be able to change something quickly, so your and your fellow students'  experience of the class is improved.
+
+2. Submit a comment, which can be anonymous, via a google form. Details to be confirmed. 
+
+3. Fill in the "official" course evaluation form. Details to be confirmed.
+

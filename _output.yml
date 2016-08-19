@@ -5,7 +5,8 @@ bookdown::gitbook:
       before: |
         <li><a href="./">BIO144 -- Data Analysis for Biologists</a></li>
       after: |
-        <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+        <li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
+      collapse: section
     download: [pdf, epub]
     edit:
       link: https://github.com/opetchey/bio144/edit/master/%s
