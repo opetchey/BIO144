@@ -1,0 +1,50 @@
+# Week 0 {-}
+
+If you're wondering what "Week 0" means, its just means "before Week 1". Many of you will already have lots of skills and knowledge important for data analysis in biology. Below we cover what you're expected to already know, from previous learning, and a few other things to take care of before the first class (week 1).
+
+MAT 183
+
+## Conceptual side {-}
+
+TBD
+
+### Expected competencies from previous courses {-}
+
+TBD
+
+## Practical side {-}
+
+#### Setting up your laptop {-}
+
+You will be using your own computer during the course. You will need to bring this to the practical classes. 
+
+We will be using three computer programmes during class:
+
+1. A spreadsheet programme, such as Microsoft Excel, Mac Numbers, or OpenOffice. Please make sure you have one of these.
+
+2. [The R software environment for statistical computing and graphics](https://www.r-project.org). Its worth knowing why we are using R. You can find out by **looking at this** / **reading this**.
+
+3. [Rstudio](https://www.rstudio.com). We use RStudio to interact with R. Rstudio has lots of features that make working with R much much easier and enjoyable. 
+
+#### Expected competencies from previous courses {-}
+
+* Basic use of R and RStudio (MAT183).
+
+* Basic arithmetic in R, on scalars and vectors. Use of logical operators (i.e. <, >, ==, !, &, |) (from MAT183).
+
+* Importing data into R (MAT183).
+
+* Get a basic summary of how your data in R.
+
+#### Activities in preparation for practical class {-}
+
+
+
+
+##### Practical class exercises {-}
+
+ Instead, Owen demonstrated the process of specifying a question, getting data, importing data into R, checking the data is ok, graphing the data, and answering the question. The dataset and analyses of it will appear below.
+
+##### Practical class exercise solutions {-}
+
+To be posted.

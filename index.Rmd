@@ -33,7 +33,11 @@ By the end of the course you will be able to:
 
 ## Your instructors {-}
 
-Your instructors for this course are Prof. Owen Petchey and Dr Stefanie Muff.
+Your instructors for this course are [Prof. Owen Petchey](http://www.ieu.uzh.ch/en/staff/professors/petchey.html) and [Dr. Stefanie Muff](http://www.ebpi.uzh.ch/en/aboutus/departments/biostatistics/teambiostats/muff.html).
+
+Prof. Petchey has been investigating how environmental change affects ecological communities, using a combination of empirical and mathematical methods (including lots of analysis of data) for going on 20 years. He specialises in the practical side of data analysis, in particular, how to implement them in the R software that will be used extensively in this course.
+
+Dr. Muff is a mathematician and statistician, working in the across fields of biology, developing better methods for analysing data.
 
 Your teaching assistants will be listed here at a later date.
 
@@ -42,7 +46,14 @@ Your teaching assistants will be listed here at a later date.
 
 This one, and the OpenEdX\@UZH learning platform.
 
-You will use [OpenEdX\@UZH](https://openedx.mnf.uzh.ch/courses/course-v1:UZH+BIO144+FS2017/about) for the assessment that occurs during the course, for viewing some video lectures, for getting important messages about the course, and for Discussion all and anything about the course.
+Use this site as a guide through the course, with week-by-week schedule of content and activities.
+
+You will use [OpenEdX\@UZH](https://openedx.mnf.uzh.ch/courses/course-v1:UZH+BIO144+FS2017/about) for four things:
+
+1. To take the **assessments** that occur during the course
+2. To **view video lectures**.
+3. To recieve **important messages** about the course.
+3. For **discussing and communicating** all and anything about the course.
 
 
 ## How to get help {-}
@@ -58,9 +69,14 @@ We aim that you can ask for help about anything and get a useful answer as soon 
 
 The course runs during the whole 14 week spring semester, though there will be no "in-person" time during two of these weeks, due to holidays.
 
-You will attend class on either Thursday or Friday afternoon, 1-5pm. You will be assigned to an afternoon, based on your other class commitments.
+You will attend class on either Thursday or Friday afternoon, 1-5pm. *You will be assigned to an afternoon, based on your other class commitments. CHECK THIS*
 
-All classes will be held in Y24-G-45.
+All classes will be held in **Y24-G-45**.
+
+
+## You will need to use your own laptop during the course {-}
+
+Please bring your laptop to class. Please make sure that it has sufficient battery charge to last the duration of the class, as there are few power sockets in **Y24-G-45**. Please make sure you know how to use it (some people are sometimes not so sure, perhaps because its new, or they borrow someone else's.) Your laptop must be able to connect to the wireless internet at UZH, and you will need two software programmes (see section [Setting up your laptop]).
 
 
 ## Course structure {-}
@@ -85,6 +101,10 @@ There will be three assessment-related activities:
 
 The practical side of the course uses a “flipped classroom” approach: you do the lectures / reading at home (or anywhere you like) and you do the homework in class. The homework is practical exercises, working with data on your computer.
 
+### What am I expected to already know? {-}
+
+Please see the relevant sections in the [Week 0] page (i.e., the two sections labelled "Expected competencies from previous courses", one of which is conceptual competencies, and the other practical).
+
 ### What must I do before each practical class? {-}
 
 You must complete the assigned required reading / viewing. This material is essential and will not be covered during class (lecture or practical). If you do not complete the assigned reading you will have great trouble with the practical exercises, and with answering the weekly practical related questions correctly. Answering 80% or more of these questions correctly is required to be permitted to sit the final exam. Feel free to attempt the practical exercises before class.
@@ -98,13 +118,15 @@ This is given below, in the section for the week you are approaching.
 
 The course will assign reading from a variety of sources, with that reading being specified each week. Sometimes reading will be replace or be accompanied by viewing video lectures. Some of the reading / viewing will be core (i.e., required) and some will be optional. Only the material in the core reading / viewing will be examined directly; familiarity with material in the optional reading / viewing will not hurt.
 
-Textbooks with required or optional reading are in the main library, and should be accessible electronically through the main library (we hope to link the text below to the e-book).
+Textbooks with required or optional reading are in the main library, and should be accessible electronically through the main library.
+
+Some books are available online via the UZH library. Access to these is only possible within the IP range of the UZH. You have only access with LAN or WLAN UZH and with VPN UZH.
 
 Core reading will come from various sources, including two textbooks:
 
 * *Getting Started with R, An introduction for biologists* (2017, Second Edition) Beckerman, Childs & Petchey (**DO NOT USE THE FIRST EDITION!**)
 
-* *The New Statistics with R, An Introduction for Biologists* (2015, First Edition) Hector.
+* *The New Statistics with R, An Introduction for Biologists* (2015, First Edition) Hector. [Ebook via UZH library.](http://ezproxy.uzh.ch/login?url=http://dx.doi.org/10.1093/acprof:oso/9780198729051.001.0001)
 
 Optional reading will come from various sources, including these textbooks:
 
@@ -112,7 +134,7 @@ Optional reading will come from various sources, including these textbooks:
 
 * *The Analysis of Biological Data* (2015, Second Edition) Whitlock & Schluter.
 
-* *The Essential Guide to Effect Sizes. Statistical Power, Meta-Analysis, and the Interpretation of Research Results (2010, First Edition) Ellis. 
+* *The Essential Guide to Effect Sizes. Statistical Power, Meta-Analysis, and the Interpretation of Research Results (2010, First Edition) Ellis. [Ebook via UZH library.](http://ezproxy.uzh.ch/login?url=http://dx.doi.org/10.1017/CBO9780511761676)
 
 * *Statistics: An Introduction using R* (2011, Second Edition) Crawley.
 
@@ -121,6 +143,7 @@ Other reading:
 * http://r4ds.had.co.nz
 * http://dzchilds.github.io/aps-data-analysis-L1/
 * http://dzchilds.github.io/aps-data-analysis-L2/
+* https://geanders.github.io/RProgrammingForResearch/index.html
 
 
 ## How to give feedback about the course {-}
