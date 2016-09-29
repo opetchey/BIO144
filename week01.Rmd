@@ -1,19 +1,19 @@
-# = Week 1
+# Week 1  - Introduction {-}
 
-## Conceptual side
+## Conceptual side {-}
 
 TBD
 
-## Practical side
+## Practical side {-}
 
-### Study in preparation for practical class
+### Study in preparation for practical class {-}
 
 None.
 
-### Practical class exercises
+### Practical class exercises {-}
 
 There were no exercises for students to complete during week 1 class. Instead, Owen demonstrated the process of specifying a question, getting data, importing data into R, checking the data is ok, graphing the data, and answering the question. The dataset and analyses of it will appear below.
 
-### Practical class exercise solutions
+### Practical class exercise solutions {-}
 
 To be posted.

@@ -41,6 +41,14 @@ Dr. Muff is a mathematician and statistician, working in the across fields of bi
 
 Your teaching assistants will be listed here at a later date.
 
+## Course schedule {-}
+
+```{r, echo=FALSE}
+schedule <- read.csv("assets/schedule.csv")
+knitr::kable(schedule, col.names = c("Week", "Dates", "Practical (1-3pm)", "Lecture (3-5pm)"))
+```
+
+
 
 ## You will need to use two websites {-}
 
@@ -103,7 +111,7 @@ The practical side of the course uses a “flipped classroom” approach: you do
 
 ### What am I expected to already know? {-}
 
-Please see the relevant sections in the [Week 0] page (i.e., the two sections labelled "Expected competencies from previous courses", one of which is conceptual competencies, and the other practical).
+Please see the relevant sections in the [Expected competencies] page (i.e., the two sections labelled "Expected competencies from previous courses", one of which is conceptual competencies, and the other practical).
 
 ### What must I do before each practical class? {-}
 

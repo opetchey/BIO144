@@ -1,6 +1,6 @@
-# Week 0 {-}
+# Expected competencies {-}
 
-If you're wondering what "Week 0" means, its just means "before Week 1". Many of you will already have lots of skills and knowledge important for data analysis in biology. Below we cover what you're expected to already know, from previous learning, and a few other things to take care of before the first class (week 1).
+Many of you will already have lots of skills and knowledge important for data analysis in biology. Below we cover what you're expected to already know, from previous learning, and a few other things to take care of before the first class.
 
 MAT 183
 
