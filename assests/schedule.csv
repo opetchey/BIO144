@@ -1,0 +1,16 @@
+Week,Dates,Practical (1-3pm),Lecture (3-5pm)
+1,"Feb. 23, 24",Demonstration during class.,Introduction. Motivation. Recap. Basic visualisation. Models.
+2,"Mar. 2, 3",Basic visualisation.,Linear Regression
+3,"Mar. 9, 10",Linear Regression,Checking your assumptions
+4,"Mar. 16, 17",Checking your assumptions. Data wrangling.,Multiple linear regression
+5,"Mar. 23, 24",Multiple linear regression,ANOVA and ANCOVA
+6,"Mar. 30, 31",ANOVA and ANCOVA,Matrix algebra
+7,"Apr. 6, 7",Matrix algebra,Model selection
+8,"Apr. 13, 14",Self study week,Self study week
+-,"Apr. 20, 21",Spring break,Spring break
+9,"Apr. 27, 28",Model selection,"Interpreting your model, causality, and cautionary notes"
+10,"May 4, 5",Interpretation of your model. Data wrangling 3.,Modelling count data
+11,"May 11, 12",Modelling count data,Modelling binary data
+12,"May 18, 19",Modelling binary data,Repeated measures / random effects
+13,"May 25, 26",Self study week,Self study week
+14,"Jun. 1, 2",Repeated measures / random effects,Recap and outlook.
