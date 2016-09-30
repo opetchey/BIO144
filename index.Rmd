@@ -41,13 +41,33 @@ Dr. Muff is a mathematician and statistician, working in the across fields of bi
 
 Your teaching assistants will be listed here at a later date.
 
+
+
 ## Course schedule {-}
+
+The course runs during the whole 14 week spring semester, though there will be no "in-person" time during two of these weeks, due to holidays.
+
+You will attend class on either Thursday or Friday afternoon, 1-5pm. *You will be assigned to an afternoon, based on your other class commitments. CHECK THIS*
+
+All classes will be held in **Y24-G-45**.
+
+Each afternoon has a practical session and a lecture session. The practical session is first, from 1-3pm, overseen by TAs and Prof. Petchey. The practical use a “flipped classroom” approach: you do the lectures / reading at home (or anywhere you like) and you do the "homework" during the practical class.  The lecture session is delivered by Dr. Muff, 3-5pm.
+
+Why do the practical sessions occur before the lecture sessions? Well, actually, they don't. Look at the schedule below, and you see that the practical session in week 3 (linear regression) concerns the lecture from week 2. So you get the lecture in week 2, have a week to do the practical lectures / reading in your own time, and then in week 3 have the practical class concerning that work. And so on throughout the course.
+
+The only exceptions to this are in week 1 and 14, during which we mix things up a bit.
 
 ```{r, echo=FALSE}
 schedule <- read.csv("assets/schedule.csv")
 knitr::kable(schedule, col.names = c("Week", "Dates", "Practical (1-3pm)", "Lecture (3-5pm)"))
 ```
 
+The course is worth 5 credit points, so with 1 CP being approximately 30 hours work, requires around 150 hours study. Approximately on third of this is "in class" and two thirds is self-study, including in-course assessments and preparation for the examination.
+
+
+## Course language {-}
+
+The course will be part German and part English. Please let us know how we can assist with any challenges this presents (see sections [How to get help] and [How to give feedback]).
 
 
 ## You will need to use two websites {-}
@@ -63,37 +83,35 @@ You will use [OpenEdX\@UZH](https://openedx.mnf.uzh.ch/courses/course-v1:UZH+BIO
 3. To recieve **important messages** about the course.
 3. For **discussing and communicating** all and anything about the course.
 
+## What am I expected to already know? {-}
 
-## How to get help {-}
-
-We aim that you can ask for help about anything and get a useful answer as soon as possible. The following guidelines will help you get fast, useful help.
-
-1. Sending emails to course staff will result in you receiving no, slow or perhaps not so useful advice (i.e., please come see me during the class).
-2. Please think about if other students might benefit from knowing the answer to your question. Its very likely that other students are wondering the same thing as you. In that case, it is great if you ask the question in a public / class forum. One such place is the OpenEdX discussion forum, another is during class when questions are actively encouraged.
-3. If knowing the answer to your question is not going to help other students (perhaps it might be about your personal circumstances), then approach and talk with a TA, Dr Muff, or Prof. Petchey in class. We will reserve some class time for these types of question.
-
-
-## When and where is the course held? {-}
-
-The course runs during the whole 14 week spring semester, though there will be no "in-person" time during two of these weeks, due to holidays.
-
-You will attend class on either Thursday or Friday afternoon, 1-5pm. *You will be assigned to an afternoon, based on your other class commitments. CHECK THIS*
-
-All classes will be held in **Y24-G-45**.
+Please see the relevant sections in the [Expected competencies] page.
 
 
 ## You will need to use your own laptop during the course {-}
 
-Please bring your laptop to class. Please make sure that it has sufficient battery charge to last the duration of the class, as there are few power sockets in **Y24-G-45**. Please make sure you know how to use it (some people are sometimes not so sure, perhaps because its new, or they borrow someone else's.) Your laptop must be able to connect to the wireless internet at UZH, and you will need two software programmes (see section [Setting up your laptop]).
+Please bring your laptop to class. Please make sure that it has sufficient battery charge to last the duration of the class, as there are few power sockets in **Y24-G-45**. Please make sure you know how to use it (some people are sometimes not so sure, perhaps because its new, or they borrow someone else's.) Your laptop must be able to connect to the wireless internet at UZH, and you will need two software programmes.
+
+We will be using three computer programmes during class, please make sure you have them:
+
+1. A spreadsheet programme, such as Microsoft Excel, Mac Numbers, or OpenOffice. Please make sure you have one of these.
+
+2. [The R software environment for statistical computing and graphics](https://www.r-project.org). Its worth knowing why we are using R. You can find out by **looking at this** / **reading this**.
+
+3. [Rstudio](https://www.rstudio.com). We use RStudio to interact with R. Rstudio has lots of features that make working with R much much easier and enjoyable. 
+
+If you need any help setting up your laptop with R and RStudio, please look at [this video class](https://openedx.mnf.uzh.ch/courses/course-v1:UZH+multi_module+multi_date/courseware/97c07360593d47a1bf632cce6a43dd4a/bf1e7a134b554e7f8dcb1da4151596cf/).
 
 
-## Course structure {-}
+## What must I do before each practical session? {-}
 
-The course is composed of two sides: the more **conceptual side** and the more **practical side**.
+You must complete the assigned required reading / viewing. This material is essential and will not be covered during class (lecture or practical). If you do not complete the assigned reading you will have great trouble with the practical exercises, and with answering the weekly practical related questions correctly. Answering 80% or more of these questions correctly is required to be permitted to sit the final exam. Feel free to attempt the practical exercises before class.
 
-The conceptual side will be composed of lectures mostly delivered by Dr. Muff, 1-3pm.
+## Where can I find the weekly assigned reading / viewing? {-}
 
-The practical side of the course will use a “flipped classroom” approach: you do the lectures / reading at home (or anywhere you like) and you do the "homework" during the practical class. The practical classes will be overseen by TAs and Prof. Petchey. 3-5pm.
+This is given below, in the section for the week you are approaching.
+
+
 
 
 ## Assessment {-}
@@ -105,56 +123,18 @@ There will be three assessment-related activities:
 3. A final assessment during the module examination period in July. Exact date and location to be confirmed.
 
 
-## Being ready for class {-}
+## How to get help {-}
 
-The practical side of the course uses a “flipped classroom” approach: you do the lectures / reading at home (or anywhere you like) and you do the homework in class. The homework is practical exercises, working with data on your computer.
+We aim that you can ask for help about anything and get a useful answer as soon as possible. The following guidelines will help you get fast, useful help.
 
-### What am I expected to already know? {-}
-
-Please see the relevant sections in the [Expected competencies] page (i.e., the two sections labelled "Expected competencies from previous courses", one of which is conceptual competencies, and the other practical).
-
-### What must I do before each practical class? {-}
-
-You must complete the assigned required reading / viewing. This material is essential and will not be covered during class (lecture or practical). If you do not complete the assigned reading you will have great trouble with the practical exercises, and with answering the weekly practical related questions correctly. Answering 80% or more of these questions correctly is required to be permitted to sit the final exam. Feel free to attempt the practical exercises before class.
-
-### Where can I find the weekly assigned reading / viewing? {-}
-
-This is given below, in the section for the week you are approaching.
+1. Sending emails to course staff will result in you receiving no, slow or perhaps not so useful advice (i.e., please come see me during the class).
+2. Please think about if other students might benefit from knowing the answer to your question. Its very likely that other students are wondering the same thing as you. In that case, it is great if you ask the question in a public / class forum. One such place is the OpenEdX discussion forum, another is during class when questions are actively encouraged.
+3. If knowing the answer to your question is not going to help other students (perhaps it might be about your personal circumstances), then approach and talk with a TA, Dr Muff, or Prof. Petchey in class. We will reserve some class time for these types of question.
 
 
-## Course reading materials and other resources {-}
-
-The course will assign reading from a variety of sources, with that reading being specified each week. Sometimes reading will be replace or be accompanied by viewing video lectures. Some of the reading / viewing will be core (i.e., required) and some will be optional. Only the material in the core reading / viewing will be examined directly; familiarity with material in the optional reading / viewing will not hurt.
-
-Textbooks with required or optional reading are in the main library, and should be accessible electronically through the main library.
-
-Some books are available online via the UZH library. Access to these is only possible within the IP range of the UZH. You have only access with LAN or WLAN UZH and with VPN UZH.
-
-Core reading will come from various sources, including two textbooks:
-
-* *Getting Started with R, An introduction for biologists* (2017, Second Edition) Beckerman, Childs & Petchey (**DO NOT USE THE FIRST EDITION!**)
-
-* *The New Statistics with R, An Introduction for Biologists* (2015, First Edition) Hector. [Ebook via UZH library.](http://ezproxy.uzh.ch/login?url=http://dx.doi.org/10.1093/acprof:oso/9780198729051.001.0001)
-
-Optional reading will come from various sources, including these textbooks:
-
-* *Regression; Models, Methods and Applications* (2013 Edition) Fahrmeir, Kneib, Lang & Marx.
-
-* *The Analysis of Biological Data* (2015, Second Edition) Whitlock & Schluter.
-
-* *The Essential Guide to Effect Sizes. Statistical Power, Meta-Analysis, and the Interpretation of Research Results (2010, First Edition) Ellis. [Ebook via UZH library.](http://ezproxy.uzh.ch/login?url=http://dx.doi.org/10.1017/CBO9780511761676)
-
-* *Statistics: An Introduction using R* (2011, Second Edition) Crawley.
-
-Other reading:
-
-* http://r4ds.had.co.nz
-* http://dzchilds.github.io/aps-data-analysis-L1/
-* http://dzchilds.github.io/aps-data-analysis-L2/
-* https://geanders.github.io/RProgrammingForResearch/index.html
 
 
-## How to give feedback about the course {-}
+## How to give feedback {-}
 
 Your views on the course are really important to us. What works well, what doesn't work so well, what content is particularly important, what content is not so important, what content is missing?
 

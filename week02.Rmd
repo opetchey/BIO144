@@ -1,19 +1,30 @@
 # Week 2 {-}
 
-## Conceptual side {-}
 
-TBD
+## Practical session exercises {-}
 
-## Practical side {-}
+Data import, data wrangling, data visualisation.
 
-### Study in preparation for practical class {-}
+As you go through the practical exercises, complete the questions on OpenEdx. It is mandatory that you complete these questions.
 
-TBD
 
-### Practical class exercises {-}
 
-TBD
+## Lecture session {-}
 
-### Practical class exercise solutions {-}
+Linear regression.
 
-TBD
+
+
+## Study to do by week 3 {-}
+
+Linear regression video lectures and reading.
+
+
+## Handouts {-}
+
+[PDF of the lecture by Dr. Muff.](\lectures\week2\BIO144_2017_week2.pdf)
+
+
+## Further reading {-}
+
+
