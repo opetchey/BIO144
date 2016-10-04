@@ -28,3 +28,4 @@ Other reading:
 * http://dzchilds.github.io/aps-data-analysis-L1/
 * http://dzchilds.github.io/aps-data-analysis-L2/
 * https://geanders.github.io/RProgrammingForResearch/index.html
+* https://www.youtube.com/playlist?list=PLDcUM9US4XdMdZOhJWJJD4mDBMnbTWw_z
