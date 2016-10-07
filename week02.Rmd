@@ -17,7 +17,17 @@ Linear regression.
 
 ## Study to do by week 3 {-}
 
+### Required...
+
 Linear regression video lectures and reading.
+
+### Some things to try, if you feel the need
+
+Here's [an interactive tool that challenges you to find the best intercept and slope to fit a straight line through some data](https://gallery.shinyapps.io/simple_regression/). This is you doing the regression modelling! Have a play with this.
+
+Here is another interactive tool. [This one lets you make some data, and then shows what linear regression makes of this data, in terms of sums of squares, residuals, and estimates of coefficients.](https://paternogbc.shinyapps.io/SS_regression/)
+* If you make some data with no relationship (i.e. slope = 0), which sum of squares is small and which large, and why? Approximately what percentage of variance in the data is explained by the regression?
+* If you make some data with a strong relationship (i.e. slope = 2) and little variation (i.e. standard deviation close to zero), which sum of squares is small and which large, and why? Approximately what percentage of variance in the data is explained by the regression?
 
 
 ## Handouts {-}
@@ -25,6 +35,6 @@ Linear regression video lectures and reading.
 [PDF of the lecture by Dr. Muff.](\lectures\week2\BIO144_2017_week2.pdf)
 
 
-## Further reading {-}
+## Further reading (not required, but interesting) {-}
 
 
