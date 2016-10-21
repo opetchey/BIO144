@@ -81,7 +81,7 @@
 \SweaveOpts{width=6,height=4}
 \fboxsep5pt
 
-{
+\frame{
 \title[]{ \centering \Huge Kurs Bio144: \\
 Datenanalyse in der Biologie}%\\[.3cm]
 \author[Stefanie Muff, Owen L.\ Petchey]{\centering Stefanie Muff (Lecture) \& Owen L.\ Petchey (Exercises)}
