@@ -57,14 +57,14 @@
 \headcommand {\beamer@framepages {28}{28}}
 \headcommand {\slideentry {0}{0}{29}{29/29}{}{0}}
 \headcommand {\beamer@framepages {29}{29}}
-\headcommand {\slideentry {0}{0}{30}{30/31}{}{0}}
-\headcommand {\beamer@framepages {30}{31}}
-\headcommand {\slideentry {0}{0}{31}{32/32}{}{0}}
+\headcommand {\slideentry {0}{0}{30}{30/30}{}{0}}
+\headcommand {\beamer@framepages {30}{30}}
+\headcommand {\slideentry {0}{0}{31}{31/31}{}{0}}
+\headcommand {\beamer@framepages {31}{31}}
+\headcommand {\slideentry {0}{0}{32}{32/32}{}{0}}
 \headcommand {\beamer@framepages {32}{32}}
-\headcommand {\slideentry {0}{0}{32}{33/33}{}{0}}
-\headcommand {\beamer@framepages {33}{33}}
-\headcommand {\slideentry {0}{0}{33}{34/34}{}{0}}
-\headcommand {\beamer@framepages {34}{34}}
+\headcommand {\slideentry {0}{0}{33}{33/34}{}{0}}
+\headcommand {\beamer@framepages {33}{34}}
 \headcommand {\slideentry {0}{0}{34}{35/35}{}{0}}
 \headcommand {\beamer@framepages {35}{35}}
 \headcommand {\slideentry {0}{0}{35}{36/36}{}{0}}
@@ -87,8 +87,14 @@
 \headcommand {\beamer@framepages {44}{44}}
 \headcommand {\slideentry {0}{0}{44}{45/45}{}{0}}
 \headcommand {\beamer@framepages {45}{45}}
-\headcommand {\beamer@partpages {1}{45}}
-\headcommand {\beamer@subsectionpages {1}{45}}
-\headcommand {\beamer@sectionpages {1}{45}}
-\headcommand {\beamer@documentpages {45}}
-\headcommand {\def \inserttotalframenumber {44}}
+\headcommand {\slideentry {0}{0}{45}{46/46}{}{0}}
+\headcommand {\beamer@framepages {46}{46}}
+\headcommand {\slideentry {0}{0}{46}{47/47}{}{0}}
+\headcommand {\beamer@framepages {47}{47}}
+\headcommand {\slideentry {0}{0}{47}{48/48}{}{0}}
+\headcommand {\beamer@framepages {48}{48}}
+\headcommand {\beamer@partpages {1}{48}}
+\headcommand {\beamer@subsectionpages {1}{48}}
+\headcommand {\beamer@sectionpages {1}{48}}
+\headcommand {\beamer@documentpages {48}}
+\headcommand {\def \inserttotalframenumber {47}}

@@ -32,6 +32,7 @@
 \definecolor{Gray}{RGB}{139,137,137}
 \definecolor{darkred}{rgb}{0.8,0,0}
 \definecolor{Green}{rgb}{0,0.8,0.3}
+\definecolor{lightgreen}{rgb}{0,0.7,0.3}
 \definecolor{Blue}{rgb}{0,0,1}
 \def\myalert{\textcolor{darkred}}
 \def\myref{\textcolor{Gray}}
@@ -97,6 +98,7 @@ Datenanalyse in der Biologie}%\\[.3cm]
 \begin{itemize}
 \item Introduction of the linear regression model
 \item Parameter estimation
+\item Simple model checking
 \item Goodness of the model: Correlation and $R^2$
 \item Tests and confidence intervals
 \item Confidence and prediction ranges
@@ -143,6 +145,8 @@ $\beta$ is also denoted as the regression coefficient of $X$.\\[4mm]
 
 
 \item If $\alpha=0$ the line goes through the origin.
+
+\item Interpretation of linear dependency: proportional increase in $y$ with increase (decrease) in $x$.
 \end{itemize}
 }
 
@@ -168,13 +172,13 @@ It is obvious that another realization of the data (other 241 males) would lead 
 
 $\Rightarrow$ The model should take this into account! \\[4mm]
 
-{\bf Solution:} Add an \myalert{error term} $E_i$ to the predictor
-$$(body fat)_i = \alpha + \beta \cdot bmi_i + E_i  \ ,$$
-where $E_i$ treated as a random variable with a \myalert{normally distributied}
-$$E_i ~\sim \N(0,\sigma_E^2) \quad \text{for } i = 1,\ldots, n \ .$$
+{\bf Solution:} Add an \myalert{error term} $e_i$ to the predictor
+$$(body fat)_i = \alpha + \beta \cdot bmi_i + e_i  \ ,$$
+where $e_i$ treated as a random variable with a \myalert{normally distributied}
+$$e_i ~\sim \N(0,\sigma_e^2) \quad \text{for } i = 1,\ldots, n \ .$$
 
 This is a \myalert{model} for $bodyfat$ given $bmi$.
-The assumption is that the target value $bodyfat_i$ is the sum of a predicted value ($\alpha + \beta \cdot bmi_i$) plus an error term $E_i$.
+The assumption is that the target value $bodyfat_i$ is the sum of a predicted value ($\alpha + \beta \cdot bmi_i$) plus an error term $e_i$.
 
 }
 
@@ -184,17 +188,17 @@ Generally:
 The linear regression model for the data $\bm{y}=(y_1,\ldots,y_n)$ given $\bm{x}=(x_1,\ldots,x_n)$ is
 
 %
-$$y_i = \alpha + \beta x_i + E_i \ , \qquad E_i \sim \N(0,\sigma_E^2) \  \text{independent}.$$
+$$y_i = \alpha + \beta x_i + e_i \ , \qquad e_i \sim \N(0,\sigma_e^2) \  \text{independent}.$$
 \end{minipage}}
 ~\\[2mm]
 The assumption is that
-$$y_i \quad= \quad \underbrace{\text{\ prediction\ }}_{\alpha + \beta x_i} \quad + \quad \underbrace{\text{\ error\ }}_{E_i}$$
+$$y_i \quad= \quad \underbrace{\text{\ prediction\ }}_{\alpha + \beta x_i} \quad + \quad \underbrace{\text{\ error\ }}_{e_i}$$
 
 \vspace{2mm}
 Note:
 
 \begin{itemize}
-\item The model for $\bm{y}$ given $\bm{x}$ has \myalert{three parameters}: $\alpha$, $\beta$ and $\sigma_E^2$ .
+\item The model for $\bm{y}$ given $\bm{x}$ has \myalert{three parameters}: $\alpha$, $\beta$ and $\sigma_e^2$ .
 \item $\bm{x}$ is the \myalert{independent} or \myalert{explanatory} variable.
 \item $\bm{y}$ is the \myalert{dependent} or \myalert{outcome} variable. \\
 \end{itemize}
@@ -220,7 +224,7 @@ This is a general approach in statistics:\\[6mm]
 {\scriptsize (Simulation are \emph{always} a great way to understand statistics!!)}\\[2mm]
 
 Generate an independent (explanatory) variable $\bm{x}$ and {\bf two} samples of a dependent variable $\bm{y}$ assuming that
-$$y_i = 4 - 2x_i + E_i \ , \quad E_i\sim \N(0,0.5^2) \ .$$
+$$y_i = 4 - 2x_i + e_i \ , \quad e_i\sim \N(0,0.5^2) \ .$$
 
 
 \begin{center}
@@ -260,7 +264,7 @@ Random variation is always present. This leads us to the next question.
 
 
 \frame{\frametitle{Parameter estimation}
-Remember: There are \myalert{three parameters} $\alpha$, $\beta$ and $\sigma_E^2$ that want to be estimated.\\[4mm]
+Remember: There are \myalert{three parameters} $\alpha$, $\beta$ and $\sigma_e^2$ that want to be estimated.\\[4mm]
 
 \begin{itemize}
 \item {\bf Problem:} For more than two points there is generally no perfectly fitting line.\\[4mm]
@@ -310,12 +314,12 @@ Note: The vertical deviations $r_i$ are called the \myalert{residuals}. \\[2mm]
 \begin{eqnarray*}
 \hat\beta &=& \frac{\sum_{i=1}^n  (y_i - \overline{y}) (x_i - \overline{x})}{ \sum_{i=1}^n (x_i - \overline{x})^2 } = \frac{cov(\bm{x},\bm{y})}{var(\bm{x})} \\[4mm]
 \hat\alpha &=& \overline{y} - \hat\beta \overline{x} \\[4mm]
-\hat\sigma_E^2 &=& \frac{1}{n-2}\sum_{i=1}^n R_i^2 \quad \text{with residuals  } R_i = y_i - (\hat\alpha - \hat\beta x_i)
+\hat\sigma_e^2 &=& \frac{1}{n-2}\sum_{i=1}^n R_i^2 \quad \text{with residuals  } R_i = y_i - (\hat\alpha - \hat\beta x_i)
 \end{eqnarray*}
 \end{minipage}}
 ~\\[6mm]
 
-The hat on the parameters ($\hat\alpha$,$\hat\beta$,$\hat\sigma$) indicates that these are \myalert{estimates}. \\[6mm]
+The hat on the parameters ($\hat\alpha$,$\hat\beta$,$\hat\sigma_e$) indicates that these are \myalert{estimates}. \\[6mm]
 
 {\small (The derivation of the parameters can be looked up in the Stahel script 2.A b. Idea: Minimization through derivating equations and setting them =0.)}
 
@@ -341,11 +345,12 @@ Let's estimate the regression parameters from the bodyfat example\\[3mm]
 %\setkeys{Gin}{width=0.5\textwidth}
 <<lmbodyfat,echo=T,eval=T>>=
 r.bodyfat <- lm(bodyfat ~ bmi,d.bodyfat)
+
 summary(r.bodyfat)
 @
 
 ~\\
-$\Rightarrow$ $\hat\alpha=\Sexpr{round(r.bodyfat$coef[1],2)}$ ,  $\hat\beta=\Sexpr{round(r.bodyfat$coef[2],2)}$, $\hat\sigma_E = \Sexpr{round(summary(r.bodyfat)$sigma,2)}$.\\
+$\Rightarrow$ $\hat\alpha=\Sexpr{round(r.bodyfat$coef[1],2)}$ ,  $\hat\beta=\Sexpr{round(r.bodyfat$coef[2],2)}$, $\hat\sigma_e = \Sexpr{round(summary(r.bodyfat)$sigma,2)}$.\\
 
 Interpretation: for an increase in the bmi by one index point, roughly 1.82\% percentage points more bodyfat are expected.
 }
@@ -362,6 +367,69 @@ abline(r.bodyfat,lwd=2)
 \end{center}
 
 }
+
+\frame{\frametitle{Are the modellign assumptions met?}
+Before we continue to look into the results, we need to \myalert{check if the modelling assumptions are met}!\\[2mm]
+
+Why? Because otherwise we draw invalid conclusions from the results.\\[4mm]
+
+The assumption we took here is that the errors $e_i \sim \N(0,\sigma_e^2)$. This implies four things:\\[2mm]
+\colorbox{lightgray}{\begin{minipage}{10cm}
+\begin{enumerate}[a)]
+\item The expected value of $e_i$ is 0: $\E(e_i)=0$.\\[2mm]
+\item All $e_i$ have the same variance: $\Var(e_i)=\sigma_e^2$. \\[2mm]
+\item The $e_i$ are normally distributed.\\[2mm]
+\item The $e_i$ are independent of each other.
+\end{enumerate}
+\end{minipage}}
+
+~\\[6mm]
+For the moment, we introduce two simple graphical model checking tools.
+}
+
+\frame[containsverbatim]{\frametitle{Model checking tools I: Tukey-Anscombe diagram}
+
+The \myalert{Tukey-Anscombe} diagram plots the residuals against the fitted values:
+\begin{center}
+\setkeys{Gin}{width=0.5\textwidth}
+<<TA,fig=T,width=4,height=4,echo=F>>=
+plot(r.bodyfat$fitted,r.bodyfat$residuals,xlab="Fitted", ylab="Residuals")
+abline(h=0,lty=2)
+@
+\end{center}
+This plot is ideal to check if assumptions a) and b) (and partially d)) are met. Here, this seems fine.
+}
+
+
+\frame[containsverbatim]{\frametitle{Model checking tools II: Histogram}
+ 
+Look at the histogram of the residuals:
+\begin{center}
+\setkeys{Gin}{width=0.5\textwidth}
+<<hist,fig=T,width=4,height=4,echo=F>>=
+hist(r.bodyfat$residuals,nclass=20,xlab="Residuals",main="")
+@
+\end{center}
+The normal distribution assumptions seems ok as well.
+ 
+}
+
+
+%' \frame[containsverbatim]{\frametitle{Model checking tools II: QQ-plot}
+%' (Todo: check if Luchsinger has introduced QQ plots)
+%' 
+%' The quantile-quantile (QQ) plot helps to check if the $e_i$ are normally distributed.
+%' \begin{center}
+%' \setkeys{Gin}{width=0.5\textwidth}
+%' <<QQ,fig=T,width=4,height=4,echo=F>>=
+%' qqnorm(r.bodyfat$residuals)
+%' qqline(r.bodyfat$residuals)
+%' @
+%' \end{center}
+%'  
+%' }
+
+
 
 
 \frame[containsverbatim]{\frametitle{Uncertainty in the estimates $\hat\alpha$ and $\hat\beta$}
@@ -383,7 +451,7 @@ The logical next question is: what is the distribution of the estimates?
 \vspace{-6mm}
 Again, a simulation can help to get an idea. We generate data points according to the model
 %
-$$y_i = 4 - 2x_i + E_i \ , \quad E_i\sim \N(0,0.5^2). $$
+$$y_i = 4 - 2x_i + e_i \ , \quad e_i\sim \N(0,0.5^2). $$
 In each round, we estimate the parameters and store them:\\[3mm]
 
 <<echo=T, eval=T>>=
@@ -417,20 +485,22 @@ In fact, from theory:
 \frame{
 The standard deviations ${\sigma^{(\beta)2}}$ and ${\sigma^{(\alpha)2}}$ are defined as
 
-$$\sigma^{(\beta)2} = \sigma_E^2 / \text{SSQ}^{(X)} \qquad \sigma^{(\alpha)2} = \sigma_E^2 \left(\frac{1}{n} + \overline{x}^2/\text{SSQ}^{(X)}\right)$$
+$$\sigma^{(\beta)2} = \sigma_e^2 / \text{SSQ}^{(X)} \qquad \sigma^{(\alpha)2} = \sigma_e^2 \left(\frac{1}{n} + \overline{x}^2/\text{SSQ}^{(X)}\right)$$
 
 with the sum-of-squares for $X$ given as
 $$\text{SSQ}^{(X)} = \sum_{i=1}^n (x_i-\overline{x})^2 \ .$$
 
 {\small(See also Stahel 2.2.h)}\\[2mm]
-
-Don't worry, you do not need to know these formulas by heart! \\[3mm]
+\colorbox{lightgreen}{\begin{minipage}{10cm}
+Don't worry, you do not need to know these formulas by heart! 
+\end{minipage}}
+~\\
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
 {\bf You should know that}
 \begin{itemize}
 \item the parameters estimates $\hat\alpha$ and $\hat\beta$ are \myalert{normally distributed.}
-\item the formulas to calculate the variances depend on the residual variance $\sigma_E^2$, the sample size $n$ and SSQ$^{(X)}$.
+\item the formulas to calculate the variances depend on the residual variance $\sigma_e^2$, the sample size $n$ and SSQ$^{(X)}$.
 \end{itemize}
 \end{minipage}}
 }
@@ -523,7 +593,7 @@ It is some type of summary statistic that follows a known distribution under $H_
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
 \begin{equation}\label{eq:beta}
-T=\frac{\hat\beta - \beta_0}{se^{(\beta)}} \quad \text{with} \quad se^{(\beta)}=\sqrt{\hat\sigma_E^2/SSQ^{(X)}}  \ .
+T=\frac{\hat\beta - \beta_0}{se^{(\beta)}} \quad \text{with} \quad se^{(\beta)}=\sqrt{\hat\sigma_e^2/SSQ^{(X)}}  \ .
 \end{equation}
 \end{minipage}}
 
@@ -592,7 +662,7 @@ Let us collect the facts we know about $\hat\beta$:
 \begin{itemize}
 \item $\hat\beta$ is estimated with a standard error of $\sigma^{(\beta)}$.
 \item The distribution of $\hat\beta$ is normal, namely $\hat\beta\sim\N(\beta,\sigma^{(\beta)2})$.
-\item However, since we need to estimate $\sigma_E^2$ from the data, we have a $t$-distribution.
+\item However, since we need to estimate $\sigma_e^2$ from the data, we have a $t$-distribution.
 \end{itemize}
 }
 
@@ -731,7 +801,7 @@ Given a fixed value of $x$, say $x_0$. The question is: \\[6mm]
 Where does a {\bf future observation} lie with a certain confidence (i.e., 95\%)? 
 \end{minipage}}\\[6mm]
 
-To answer this question, we have to consider not only the uncertainty in the predicted value $\hat y_0 =  \hat\alpha + \hat\beta x_0$, but also the error in the equation $E_i \sim \N(0,\sigma_E^2)$. \\[6mm]
+To answer this question, we have to consider not only the uncertainty in the predicted value $\hat y_0 =  \hat\alpha + \hat\beta x_0$, but also the error in the equation $e_i \sim \N(0,\sigma_e^2)$. \\[6mm]
 
 
 This is the reason why the prediction range is always wider than the confidence range.

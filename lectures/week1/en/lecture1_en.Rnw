@@ -79,7 +79,7 @@
 
 \frame{
 \title[]{ \centering \Huge Course Bio144: \\
-Datenanalyse in der Biologie}%\\[.3cm]
+Data analysis in biology}%\\[.3cm]
 \author[Stefanie Muff, Owen L.\ Petchey]{\centering Stefanie Muff (Lectures) \& Owen L.\ Petchey (Exercises)}
 \date[]{Week 1: Introduction and Outlook\\ 23./24. February 2017}
 
@@ -285,9 +285,9 @@ Observed variables were, e.g., media consumption, behavior of the parents, age, 
 {\scriptsize (From Theo Gasser \& Burkhardt Seifert \emph{Grundbegriffe der Biostatistik})}\\[6mm]
 
 Body fat is an important indicator for overweight, but difficult to measure. \\
-{\bf Question:}  Which factors allow an precise estimation (prediction) of body fat? \\[4mm]
+{\bf Question:}  Which factors allow for precise estimation (prediction) of body fat? \\[4mm]
 
-Study with 241 male participants. Measured variable were, among others, body fat (in \%), age, weight, body size, BMI, neck thickness and abdominal girth.\\[4mm]
+Study with 241 male participants. Measured variable were, among others, body fat (\%), age, weight, body size, BMI, neck thickness and abdominal girth.\\[4mm]
 
 <<echo=F>>=
 path <- "~/Teaching/Bio144/data_examples/bodyFat/"
@@ -472,7 +472,7 @@ The next question then is: which diets are \emph{pairwise} different.
 
 \frame[containsverbatim]{\frametitle{Data example 4: Blood-screening}
 \vspace{-5mm}
-{\scriptsize\citep[Aus ][Chapter 7.1]{hothorn.everitt2014}}\\[4mm]
+{\scriptsize\citep[From ][Chapter 7.1]{hothorn.everitt2014}}\\[4mm]
 
 Is a high ESR (erythrocyte sedimentation rate) an indicator for certain diseases (rheumatic disease, chronic inflammations)?\\[3mm]
 
@@ -573,7 +573,7 @@ Representation & Useful for \\
  Conditional density plots &  Dependency of a binary variable from\\
     &  a continuous variable.\\[1mm]
 Barplots & As boxplots. \\[1mm]
-Coplots & Dependencies among multiple variables \\
+Coplots & Dependencies among multiple variables. \\
 \hline
 \end{tabular}
 
