@@ -78,10 +78,7 @@
 
 
 \begin{document}
-<<setup>>=
-library(reporttools)
-library(biostatUZH)
-@
+
 \SweaveOpts{width=6,height=4}
 \fboxsep5pt
 
@@ -99,12 +96,14 @@ Datenanalyse in der Biologie}%\\[.3cm]
 
 \frame{\frametitle{Overview (todo: check)}
 \begin{itemize}
+
+\item Checking the assumptions of linear regression
+\item Tukey-Anscombe diagram, QQ-plot, leverage plot
 \item Multiple predictors $x_1$, $x_2$, \ldots, $x_p$
 \item $R^2$ in multiple linear regression
 \item $t$-tests, $F$-tests and $p$-values
-\item Binary and factor covariates
-\item Interactions between covariates
-\item Multiple vs.\ many single regressions
+\item Transformation of variables
+
 \end{itemize}
 }
 
@@ -112,26 +111,29 @@ Datenanalyse in der Biologie}%\\[.3cm]
 
 \frame{\frametitle{Course material covered today}
 \begin{itemize}
-\item Chapters 3.1 - 3.3 of \emph{Lineare Regression}, p.25-39 (Stahel script)
-\item Other?
+\item Chapters 3.1, 3.2a-q of \emph{Lineare Regression}
+\item Chapters 4.1 4.2f, 4.3a-e of \emph{Lineare Regression}
+\item Chapter 11.2 in \emph{Statistische Datenanalyse}
 \end{itemize}
 }
 
 \frame[containsverbatim]{\frametitle{Recap of last week I}
 <<read.bodyfat,echo=F,eval=T>>=
+library(reporttools)
+library(biostatUZH)
 path <- "~/Teaching/Bio144/data_examples/bodyFat/"
 d.bodyfat <- read.table(paste(path,"bodyfat.clean.txt",sep=""),header=T)
-d.bodyfat <- d.bodyfat[,c("bodyfat","age","gewicht","hoehe","bmi","neck","abdomen","hip")]
+d.bodyfat <- d.bodyfat[,c("bodyfat","age","gewicht","bmi","neck","abdomen","hip")]
 r.bodyfat <- lm(bodyfat ~ bmi,d.bodyfat)
 @
 
 \begin{itemize}
 \item The linear regression model for the data $\bm{y}=(y_1,\ldots,y_n)$ given $\bm{x}=(x_1,\ldots,x_n)$ is
-$$y_i = \alpha + \beta x_i + E_i \ , \qquad E_i \sim \N(0,\sigma_E^2) \  \text{independent}.$$\\[2mm]
-\item Estimate the parameters $\alpha$, $\beta$ and $\sigma_E^2$ by least squares.\\[2mm]
-\item The estimated parameters $\hat\alpha$, $\hat\beta$ contain \myalert{uncertainty} and are normally distributed around the true values. %(actually, also $\hat\sigma_E^2$...). \\[2mm]
-\item Knowing this helps to deduce \myalert{statistical tests}, such as: Is $\beta=0$?\\[2mm]
-\item Testing is simple using R:\\[2mm]
+$$y_i = \alpha + \beta x_i + e_i \ , \qquad e_i \sim \N(0,\sigma_e^2) \  \text{independent}.$$\\[2mm]
+\item Estimate the parameters $\alpha$, $\beta$ and $\sigma_e^2$ by least squares.\\[2mm]
+\item The estimated parameters $\hat\alpha$, $\hat\beta$ contain \myalert{uncertainty} and are normally distributed around the true values. %(actually, also $\hat\sigma_e^2$...). \\[2mm]
+\item Use the knowledge about the distribution to formulate \myalert{statistical tests}, such as: Is $\beta=0$?\\[2mm]
+\item All this is done automatically by R:\\[2mm]
 <<lmbodyfat,echo=T,eval=T>>=
 summary(r.bodyfat)$coef
 @
@@ -167,8 +169,82 @@ lty=8, cex=1,col=c(2,4),lwd=2)
 }
 
 
+\frame[containsverbatim]{\frametitle{Recap of last week III}
+Remember: 
+The assumption in linear regression is that the residuals follow a $\N(0,\sigma_e^2)$ distribution, implying that :\\[2mm]
+\colorbox{lightgray}{\begin{minipage}{10cm}
+\begin{enumerate}[a)]
+\item The expected value of $e_i$ is 0: $\E(e_i)=0$.\\[2mm]
+\item All $e_i$ have the same variance: $\Var(e_i)=\sigma_e^2$. \\[2mm]
+\item The $e_i$ are normally distributed.\\[2mm]
+\item The $e_i$ are independent of each other.
+\end{enumerate}
+\end{minipage}}
+~\\
+We started to do some residual analysis using the \myalert{Tukey-Anscombe plot} and the \myalert{Histogram} of the residuals $R_i$.\\[-4mm]
+
+\begin{center}
+\setkeys{Gin}{width=0.6\textwidth}
+<<MCs,fig=T,width=8,height=4,echo=F>>=
+par(mfrow=c(1,2))
+plot(r.bodyfat$fitted,r.bodyfat$residuals,xlab="Fitted", ylab="Residuals")
+abline(h=0,lty=2)
+hist(r.bodyfat$residuals,nclass=20,xlab="Residuals",main="")
+@
+\end{center}
+
+}
+
+\frame[containsverbatim]{\frametitle{Another useful diagnostic plot: The QQ-plot}
+Usually, not the histogram of the residuals is plotted, but the so-called \myalert{quantile-quantile} (QQ) plot. The quantiles of the observed distribution are plotted against the quantiles of the respective theoretical (normal) distribution:
+
+\begin{multicols}{2}
+\setkeys{Gin}{width=0.4\textwidth}
+<<QQ1,fig=T,echo=T,width=5,height=5>>=
+qqnorm(r.bodyfat$residuals)
+qqline(r.bodyfat$residuals)
+@
+\\
+If the points lie approximately on a straight line, the data is fairly normally distributed.\\[2mm]
+
+This is often ``tested'' by eye, and needs some experience.
+\end{multicols}
+}
+
+\frame[containsverbatim]{
+
+Please read ``Quantil-Quantil-Diagramme'', Chapter 11.2., p.258-261, in ``Statistische Datenenalyse'' by W. Stahel (Mat183 literature).\\[2mm]
+
+It gives a very nice and intuitive description of QQ diagrams! \\
+
+\setkeys{Gin}{width=0.8\textwidth}
+<<fig=T,width=6,height=4,echo=F>>=
+par(mfrow=c(1,2))
+x<-seq(-3,3,0.1)
+stdr <- sort(scale(r.bodyfat$residuals))
+
+s <- seq(2)  # one shorter than data
+x <- c(-2.5,qnorm(0.6),qnorm(0.6))
+y <- c(0.6,0.6,0)
+
+plot(stdr,pnorm(stdr),xlab="Theoretical quantiles",ylab="F")
+arrows(x[s], y[s], x[s+1], y[s+1])
+n<-nrow(d.bodyfat)
+plot(stdr,(1:n)/n,xlab="Sample quantiles",ylab="Empirical cumulative distribution")
+arrows(x[s], y[s], x[s+1], y[s+1])
+@
+~\\
+The idea is that, for each observed point, theoretical quantiles are plotted against the sample quantiles.
+}
+
+\frame{
+\begin{center}
+{\Large\textcolor{blue}{Multiple linear regression}}
+\end{center}
+}
+
 \frame[containsverbatim]{\frametitle{Bodyfat example}
-We have so far modelled bodyfat in dependence of bmi, that is: $(body fat)_i = \alpha + \beta \cdot bmi_i + E_i$.\\[2mm]
+We have so far modelled bodyfat in dependence of bmi, that is: $(body fat)_i = \alpha + \beta \cdot bmi_i + e_i$.\\[2mm]
 
 However, other predictors might also be relevant for an accurate prediction of bodyfat.\\[4mm]
 
@@ -185,6 +261,13 @@ plot(bodyfat ~ hip,d.bodyfat,xlab="hip", ylab="bodyfat (y)")
 
 }
 
+\frame[containsverbatim]{
+Or again the pairs plot:
+\setkeys{Gin}{width=0.8\textwidth}
+<<fig=T,width=6,height=6>>=
+pairs(d.bodyfat)
+@
+}
 
 \frame[containsverbatim]{\frametitle{Multiple linear regression model}
 The idea is simple: just {\bf extend the linear model by additional predictors}.\\[4mm]
@@ -195,12 +278,12 @@ the straightforward extension of the simple linear model is\\[4mm]
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
 \begin{eqnarray*}
-y_i &=& \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_2 x_i^{(m)} + E_i  \\[2mm]
-\text{with  } \ E_i &\sim& \N (0,\sigma_E^2).
+y_i &=& \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_2 x_i^{(m)} + e_i  \\[2mm]
+\text{with  } \ e_i &\sim& \N (0,\sigma_e^2).
 \end{eqnarray*}
 \end{minipage}}
 ~\\[6mm]
-\item The parameters of this model are $\bm\beta=(\beta_0,\beta_1,\ldots,\beta_m)$ and $\sigma_E^2$.
+\item The parameters of this model are $\bm\beta=(\beta_0,\beta_1,\ldots,\beta_m)$ and $\sigma_e^2$.
 \end{itemize}
 }
 
@@ -217,26 +300,51 @@ Some {\bf linear algebra} is needed to understand these sections, but we do not 
 
 }
 
+\frame{\frametitle{Multiple linear regression for bodyfat}
+Let us regress the proportion (\%) of bodyfat (from last week) to the predictors {\bf bmi} and {\bf age} simultaneously. The model thus is given as\\[4mm]
+\begin{eqnarray*}
+(bodyfat)_i &=& \beta_0 + \beta_1 \cdot bmi_i + \beta_2 \cdot age_i + e_i \ , \\
+\text{with} \quad e_i &\sim& \N(0,\sigma_e^2) \ .
+\end{eqnarray*}
+}
+
+\frame[containsverbatim]{\frametitle{}
+\emph{Before} we estimate the parameters, let us ask the questions that we intend to answer:\\[6mm]
+\begin{enumerate}
+\item Does the {\bf ensemble} of all covariates explain a relevant part of the variability of the response?\\[4mm]
+\item If yes, which influence variables are good predictors of bodyfat? \\[4mm]
+\item How good is the overall model fit?
+\end{enumerate}
+
+}
+
+
 \frame[containsverbatim]{\frametitle{Multiple linear regression with R}
-\vspace{-5mm}
-Let us fit bodyfat (from last week) to the predictors {\bf bmi} and {\bf age} simultaneously. The R code to fit the model is\\[2mm]
+\vspace{-8mm}
+Let's now fit the model with R, and quickly glance at the output:\\[4mm]
 
 <<r.bodyfatM,eval=T,echo=T>>=
-r.bodyfatM <- lm(bodyfat ~ bmi + age ,d.bodyfat)#+ neck + hip + abdomen
+r.bodyfatM <- lm(bodyfat ~ bmi + age ,d.bodyfat) 
 @
 <<summary.bf,eval=T,echo=T>>=
 summary(r.bodyfatM)
 @
 }
 
-\frame[containsverbatim]{\frametitle{}
-Which questions should be asked? (In principle, we should have asked the questions \emph{before}!)\\[6mm]
-\begin{enumerate}
-\item Does the {\bf ensemble} of all covariates influence the response?\\[4mm]
-\item If yes, which influence variables are good predictors of bodyfat? \\[4mm]
-\item How good is the model fit?
-\end{enumerate}
+\frame[containsverbatim]{\frametitle{Model checking}
+Before we look at the results, we have to check if the modelling assumptions are fulfilled:
+\begin{center}
+\setkeys{Gin}{width=0.9\textwidth}
+<<modelChecks,fig=T,width=7,height=4,echo=F>>=
+par(mfrow=c(1,2))
+plot(r.bodyfatM$fitted,r.bodyfat$residuals,xlab="Fitted", ylab="Residuals")
+abline(h=0,lty=2)
+qqnorm(r.bodyfatM$residuals)
+qqline(r.bodyfatM$residuals)
+@
+\end{center}
 
+This seems ok, so continue with answering questions 1-3.
 }
 
 
@@ -312,7 +420,7 @@ The $p$-value and $T$-statistics should only be used as a {\bf rough guide} for 
 
 \frame[containsverbatim]{\frametitle{ }
 
-For illustration, let us extend the model a bit more:\\[4mm]
+For illustration, let us extend the model a bit more, including also neck, hip and abdomen:\\[4mm]
 
 <<r.bodyfat2M,eval=T,echo=T>>=
 r.bodyfatM2 <- lm(bodyfat ~ bmi + age + neck + hip + abdomen,d.bodyfat)
@@ -321,9 +429,11 @@ summary(r.bodyfatM2)$coef
 ~\\[3mm]
 It is now much \myalert{less clear what the influences of age ($p=0.60$) and bmi ($p=0.06$) are}. \\[2mm]
 
-Basically, the problem is that the variables in the model are already correlated and therefore explain similar aspects that influence the proportion of bodyfat. \\[2mm]
+Basically, the problem is that the variables in the model are correlated and therefore explain similar aspects of \% bodyfat. \\[2mm]
 
-This problem is at the heart of many confusions of regression analysis, and we will talk about such issues later in the course.\\[2mm]
+\colorbox{lightgray}{\begin{minipage}{10cm}
+This problem is at the heart of many confusions of regression analysis, and we will talk about such issues later in the course.
+\end{minipage}}
 
 
 
@@ -386,28 +496,201 @@ text(35,40,expression(hat(y)),cex=1.5)
 
 
 \frame[containsverbatim]{
-Let us look at the $R^2$s from the two bodyfat models (model 1 with bmi + age, model 2 with bmi + age + neck + hip + abdomen):\\[4mm]
+Let us look at the $R^2$s from the three bodyfat models (model 1: $y\sim bmi$\\
+model 2: $y\sim bmi + age$\\
+model 3: $y\sim bmi + age + neck + hip + abdomen$):\\[4mm]
 
 <<r.squared,eval=T,echo=F>>=
+summary(r.bodyfat)$r.squared
 summary(r.bodyfatM)$r.squared
 summary(r.bodyfatM2)$r.squared
 @
  ~\\[2mm]
-The models thus explain $\Sexpr{round(summary(r.bodyfatM)$r.squared*100,0)}$ \% and $\Sexpr{round(summary(r.bodyfatM2)$r.squared*100,0)}$ \% of the total variability of $y$.\\[5mm]
+The models thus explain  $\Sexpr{round(summary(r.bodyfat)$r.squared*100,0)}$ \%, $\Sexpr{round(summary(r.bodyfatM)$r.squared*100,0)}$ \% and $\Sexpr{round(summary(r.bodyfatM2)$r.squared*100,0)}$ \% of the total variability of $y$.\\[5mm]
 
-It thus \emph{seems} that the larger model is ``better''. However, $R^2$ does always increase when new variables are included, but this does not mean that the model is more reasonable. \\[2mm]
+It thus \emph{seems} that larger models are ``better''. However, $R^2$ does always increase when new variables are included, but this does not mean that the model is more reasonable. \\[2mm]
 
 \myalert{Model selection} is a topic that will be treated in more detail later in this course.
 }
 
+\frame{\frametitle{Adjusted $R^2$}
+When the sample size $n$ is small with respect to the number of variables $m$ included in the model, an \myalert{adjusted} $R^2$ gives a better (or ``fairer'', i.e.\ unbiased) estimation of the actual variability that is explained by the covariates:
 
-
-
-\frame{\frametitle{Interpretation of the coefficients}
-What does the regression output actually \emph{mean}?
+\begin{equation*}
+R^2_a = 1-(1-R^2 )\frac{n-1}{n-m-1}
+\end{equation*}
 }
 
 
+\frame[containsverbatim]{\frametitle{Interpretation of the coefficients}
+Apart from model checking and thinking about questions 1-3, it is probably even {\bf more important to understand what you \emph{see}.} Look at the output and ask yourself:\\[2mm]
+
+\begin{quote}
+What does the regression output actually \emph{mean}?
+\end{quote}
+
+<<results=tex,echo=F>>=
+tableRegression(r.bodyfatM,caption="Parameter estimates of model 3.", label="tab:m3")
+@
+
+Task in teams: Interpret the coefficients, 95\% CIs and $p$-values.
+}
+
+\frame[containsverbatim]{\frametitle{Example: Catheter Data}
+<<echo=F,eval=T>>=
+path <- "~/Teaching/Bio144/data_examples/WBL/"
+d.cath <- read.table(paste(path,"catheter.dat",sep=""),header=T)
+r.cath <- lm(y~x1+x2,data=d.cath)
+@
+
+Catheter length ($y$) for heart surgeries depending on two characteristic variables $x^{(1)}$ and $x^{(2)}$ of the patients. Aim: estimate $y$ from $x^{(1)}$ and  $x^{(2)}$ ($n=12$).
+Regression results:
+<<results=tex,echo=F>>=
+tableRegression(r.cath)
+@
+with $R^2=\Sexpr{round(summary(r.cath)$r.squared,2)}$, $R^2_a = \Sexpr{round(summary(r.cath)$adj.r.squared,2)}$, $p$-value of the $F$-test $p=0.0006$, and diagnostic residual plots
+
+\setkeys{Gin}{width=0.8\textwidth}
+<<fig=T,width=7,height=3.3,echo=F>>=
+par(mfrow=c(1,2))
+plot(r.cath$fitted,r.cath$resid,xlab="Fitted values",ylab="Residuals",main="Tukey-Anscombe")
+abline(h=0,lty=2)
+qqnorm(r.cath$fitted)
+qqline(r.cath$fitted)
+@
+
+}
+
+\frame[containsverbatim]{\frametitle{}
+\begin{enumerate}
+\item Are the modelling assumptions fulfilled?
+\item Does the model have some predictive power?
+\item Which variable(s) influence(s) the response?
+\item How good is the overall fit of the model?
+\item Interpretation of the results?
+\end{enumerate}
+Also look at the regression table when using $x^{(1)}$ and $x^{(2)}$ alone:
+<<results=tex,echo=F>>=
+tableRegression(lm(y~x1,d.cath))
+@
+<<results=tex,echo=F>>=
+tableRegression(lm(y~x2,d.cath))
+@
+}
+
+\frame[containsverbatim]{\frametitle{}
+\setkeys{Gin}{width=0.8\textwidth}
+<<pairs,width=6,length=6,fig=T>>=
+pairs(d.cath)
+@
+
+Note that $x^{(1)}$ and $x^{(2)}$ are highly correlated!
+}
+
+
+\frame{\frametitle{Binary covariates}
+So far, the covariates $x$ were always continuous. \\[2mm]
+
+However, in our regression models there are {\bf no restrictions assumed with respect to the $x$ variables}. \\[2mm]
+
+One very frequent data type of covariates are {\bf binary} variables, that is, variables that can only attain values 0 or 1. \\[6mm]
+
+See section 3.2c of the Stahel script: 
+\colorbox{lightgray}{\begin{minipage}{10cm}
+If the binary variable $x$ is the only variable in the model $y_i = \beta_0 + \beta_1 x_i + e_i$, the model has only two predicted outcomes\\
+\begin{equation*}
+y_i = \left\{ 
+\begin{array}{ll}
+ \beta_0  + e_i \quad &\text{if } x_i=0 \\
+ \beta_0 + \beta_1 + e_i \quad &\text{if } x_i =1\\
+\end{array}
+\right .
+\end{equation*}
+\end{minipage}}
+
+}
+
+\frame[containsverbatim]{\frametitle{Example: Smoking variable in Hg Study}
+~\\
+For the 59 mothers in the Hg study, check if their smoking status (0=no,1=yes) influences the Hg-concentration in the urin.\\[6mm]
+
+We fit the following linear regression model: \\
+
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+\begin{equation*}
+\log(Hg_{urin})_i  = \beta_0 +  \beta_1 \cdot x^{(1)}_i +  \beta_2\cdot x^{(2)}_i + \beta_3 \cdot x^{(3)}_i + e_i \ ,
+\end{equation*}
+\end{minipage}}
+~\\[2mm]
+Where 
+\begin{itemize}
+\item $\log(Hg_{urin})_i$ is the urine mercury concentration.
+\item $x^{(1)}$ is the binary smoking indicator (0/1).
+\item $x^{(2)}$ the number of amalgam fillings.
+\item $x^{(3)}$ the monthly number of marine fish meals.
+\end{itemize}
+{\scriptsize(Remember from week 1 that the log of Hg concentrations is needed to obtain useful distributions.)}\\[6mm]
+
+}
+
+%' \frame[containsverbatim]{
+%' 
+%' \setkeys{Gin}{width=0.9\textwidth}
+%' <<pairsHg,echo=T,fig=T,width=5,height=5>>=
+%' pairs(d.hg)
+%' @
+%' }
+
+
+\frame[containsverbatim]{
+<<echo=F>>=
+path <- "~/Teaching/Bio144/data_examples/Hg/"
+d.hg <- read.table(paste(path,"Hg_urin.csv",sep=""),header=T, sep=",")
+d.hg <- d.hg[d.hg$mother==1,-c(3,4,9,10,11)]
+names(d.hg) <- c("Hg_urin", "Hg_soil", "smoking","amalgam", "age", "fish")
+@
+<<r1urin,echo=F>>=
+r1.urin.mother <- lm(log10(Hg_urin) ~  smoking +
+                     + amalgam + fish,data=d.hg)
+#summary(r1.urin.mother)
+@
+The results table is given as follows:
+<<results=tex,echo=F>>=
+tableRegression(r1.urin.mother)
+@
+~\\[2mm]
+There is some weak ($p=0.12$) indication that smokers have a slightly increased Hg concentration in their body.\\
+
+In principle, we have now -- at the same time -- fitted {\bf two models:}one for smokers and one for non-smokers, assuming that the slopes of the other covariates are the same for both groups.\\[2mm]
+\colorbox{lightgray}{\begin{minipage}{10cm}
+Smokers: $y_i = -1.01 + 0.22  + 0.092\cdot amalgam _i+ 0.032\cdot fish_i + e_i$ \\
+Non-smokers:  $y_i = -1.01  + 0.092\cdot amalgam_i + 0.032\cdot fish_i  + e_i$ 
+\end{minipage}}
+}
+
+
+
+\frame[containsverbatim]{
+...and for completeness, again a short check of the modelling assumptions:\\[2mm]
+\setkeys{Gin}{width=0.8\textwidth}
+<<Hgcheck,fig=T,width=6,height=4,echo=F>>=
+par(mfrow=c(1,2))
+plot(r1.urin.mother$fitted,r1.urin.mother$residuals,xlab="fitted",ylab="residual")
+abline(h=0,lty=2)
+qqnorm(r1.urin.mother$residuals)
+qqline(r1.urin.mother$residuals)
+@
+
+It seems ok, apart from one point that could be categorized as an outlier. We ignore it for the moment.
+}
+
+
+\frame{\frametitle{Categorical covariates}
+Some covariates indicate a {\bf category}, for instance...
+
+(Stahel 3.2e)
+}
 %\frame{References:
 %\bibliographystyle{Chicago}
 %\bibliography{refs}

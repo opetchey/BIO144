@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.10.20)  24 OCT 2016 11:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.10.20)  24 OCT 2016 15:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2013,14 +2013,14 @@ Overfull \hbox (1.46407pt too wide) in paragraph at lines 578--578
 ] [32
 
 ]
-Overfull \hbox (1.46407pt too wide) in paragraph at lines 644--644
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 647--647
 [][][][][][][]  
  []
 
 [33
 
 ]
-Overfull \hbox (1.46407pt too wide) in paragraph at lines 644--644
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 647--647
 [][][][][][][]  
  []
 
@@ -2031,7 +2031,7 @@ Overfull \hbox (1.46407pt too wide) in paragraph at lines 644--644
 ] [36
 
 ]
-Overfull \hbox (1.46407pt too wide) in paragraph at lines 695--696
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 698--699
 [][][][][][][]  
  []
 
@@ -2041,52 +2041,55 @@ Overfull \hbox (1.46407pt too wide) in paragraph at lines 695--696
 
 ] [39
 
-] [40
+]
+LaTeX Font Info:    Font shape `T1/aess/m/it' in size <7> not available
+(Font)              Font shape `T1/aess/m/sl' tried instead on input line 771.
+ [40
 
 ] [41
 
 ]
-<Bio144_2017_week2-confpred.pdf, id=350, 361.35pt x 361.35pt>
+<Bio144_2017_week2-confpred.pdf, id=351, 361.35pt x 361.35pt>
 File: Bio144_2017_week2-confpred.pdf Graphic file (type pdf)
 
 <use Bio144_2017_week2-confpred.pdf>
-Package pdftex.def Info: Bio144_2017_week2-confpred.pdf used on input line 797.
+Package pdftex.def Info: Bio144_2017_week2-confpred.pdf used on input line 808.
 
 (pdftex.def)             Requested size: 190.48947pt x 190.48903pt.
  [42
 
  <./Bio144_2017_week2-confpred.pdf>]
-Overfull \hbox (1.46407pt too wide) in paragraph at lines 817--817
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 828--828
 [][][][][][][]  
  []
 
 
-Overfull \hbox (1.46407pt too wide) in paragraph at lines 817--817
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 828--828
 [][][][][][][]  
  []
 
 [43
 
-] <Bio144_2017_week2-conf.pdf, id=370, 361.35pt x 361.35pt>
+] <Bio144_2017_week2-conf.pdf, id=371, 361.35pt x 361.35pt>
 File: Bio144_2017_week2-conf.pdf Graphic file (type pdf)
 
 <use Bio144_2017_week2-conf.pdf>
-Package pdftex.def Info: Bio144_2017_week2-conf.pdf used on input line 827.
+Package pdftex.def Info: Bio144_2017_week2-conf.pdf used on input line 838.
 (pdftex.def)             Requested size: 190.48947pt x 190.48903pt.
  [44
 
  <./Bio144_2017_week2-conf.pdf>]
-Overfull \hbox (1.46407pt too wide) in paragraph at lines 843--843
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 854--854
 [][][][][][][]  
  []
 
 [45
 
-] <Bio144_2017_week2-pred.pdf, id=390, 361.35pt x 361.35pt>
+] <Bio144_2017_week2-pred.pdf, id=391, 361.35pt x 361.35pt>
 File: Bio144_2017_week2-pred.pdf Graphic file (type pdf)
 
 <use Bio144_2017_week2-pred.pdf>
-Package pdftex.def Info: Bio144_2017_week2-pred.pdf used on input line 853.
+Package pdftex.def Info: Bio144_2017_week2-pred.pdf used on input line 864.
 (pdftex.def)             Requested size: 190.48947pt x 190.48903pt.
  [46
 
@@ -2107,44 +2110,44 @@ Package atenddvi Info: Last page = 48.
 \tf@snm=\write10
 \openout10 = `Bio144_2017_week2.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 875.
-Package atveryend Info: Executing hook `AfterLastShipout' on input line 875.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 886.
+Package atveryend Info: Executing hook `AfterLastShipout' on input line 886.
  (./Bio144_2017_week2.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 875.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 875.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 886.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 886.
 Package rerunfilecheck Info: File `Bio144_2017_week2.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 875.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 886.
  ) 
 Here is how much of TeX's memory you used:
- 30965 strings out of 494901
- 597417 string characters out of 6178616
+ 30985 strings out of 494901
+ 597622 string characters out of 6178616
  670717 words of memory out of 5000000
- 33470 multiletter control sequences out of 15000+600000
- 55879 words of font info for 118 fonts, out of 8000000 for 9000
+ 33482 multiletter control sequences out of 15000+600000
+ 63376 words of font info for 133 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  56i,13n,66p,10416b,542s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb>
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/
 share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/t
-exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texlive/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmss9.pfb></usr/share/texlive/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmssi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmssi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmssi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.
-pfb>
-Output written on Bio144_2017_week2.pdf (48 pages, 338416 bytes).
+exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmss9.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmssi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmssi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmssi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
+Output written on Bio144_2017_week2.pdf (48 pages, 347488 bytes).
 PDF statistics:
- 483 PDF objects out of 1000 (max. 8388607)
- 383 compressed objects within 4 object streams
+ 487 PDF objects out of 1000 (max. 8388607)
+ 386 compressed objects within 4 object streams
  100 named destinations out of 1000 (max. 500000)
  119 words of extra memory for PDF output out of 10000 (max. 10000000)
 

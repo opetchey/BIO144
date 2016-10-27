@@ -339,7 +339,7 @@ We are looking for a \emph{model} that \myalert{predicts} body fat as precisely 
 path <- "~/Teaching/Bio144/data_examples/Hg/"
 d.hg <- read.table(paste(path,"Hg_urin.csv",sep=""),header=T, sep=",")
 d.hg <- d.hg[,-c(11)]
-names(d.hg) <- c("Hg_urin", "Hg_soil", "veg_garden", "migration", "smoking","amalgam_quant", "age", "Meerfisch_quant", "last_time_fish", "mother")
+names(d.hg) <- c("Hg_urin", "Hg_soil", "veg_garden", "migration", "smoking","amalgam", "age", "fish", "last_time_fish", "mother")
 d.hg$mother <- as.factor(d.hg$mother)
 set.seed(234)
 d.hg$Hg_soil <- d.hg$Hg_soil[sample(1:nrow(d.hg))]
@@ -371,9 +371,9 @@ Which other factors might be responsible for high Hg concentrations in urin?\\[4
 \setkeys{Gin}{width=1.0\textwidth}
 <<hg2,fig=T,height=2.2,width=5.5,echo=F>>=
 par(mfrow=c(1,3),mar=c(4,4,0.5,0.5))
-plot((Hg_urin) ~ amalgam_quant, data=d.hg, xlab="amalgam", ylab = "Hg Urin")
+plot((Hg_urin) ~ amalgam, data=d.hg, xlab="amalgam", ylab = "Hg Urin")
 plot((Hg_urin) ~ age, data=d.hg, xlab="age", ylab = "")
-plot((Hg_urin) ~ Meerfisch_quant, data=d.hg, xlab="fish consumption", ylab = "")
+plot((Hg_urin) ~ fish, data=d.hg, xlab="fish consumption", ylab = "")
 @ 
 \end{center}
 \vspace{5mm}

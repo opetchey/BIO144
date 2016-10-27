@@ -349,10 +349,8 @@ r.bodyfat <- lm(bodyfat ~ bmi,d.bodyfat)
 summary(r.bodyfat)
 @
 
-~\\
-$\Rightarrow$ $\hat\alpha=\Sexpr{round(r.bodyfat$coef[1],2)}$ ,  $\hat\beta=\Sexpr{round(r.bodyfat$coef[2],2)}$, $\hat\sigma_e = \Sexpr{round(summary(r.bodyfat)$sigma,2)}$.\\
-
-Interpretation: for an increase in the bmi by one index point, roughly 1.82\% percentage points more bodyfat are expected.
+~\\[2mm]
+$\Rightarrow$ $\hat\alpha=\Sexpr{round(r.bodyfat$coef[1],2)}$ ,  $\hat\beta=\Sexpr{round(r.bodyfat$coef[2],2)}$, $\hat\sigma_e = \Sexpr{round(summary(r.bodyfat)$sigma,2)}$.
 }
 
 
@@ -361,6 +359,8 @@ Plotting the resulting line into the scatterplot is simple:\\[4mm]
 \begin{center}
 \setkeys{Gin}{width=0.5\textwidth}
 <<plotbodyfat,fig=T,width=5,height=5.0>>=
+library(reporttools)
+library(biostatUZH)
 plot(bodyfat ~ bmi,d.bodyfat)
 abline(r.bodyfat,lwd=2)
 @
@@ -368,7 +368,7 @@ abline(r.bodyfat,lwd=2)
 
 }
 
-\frame{\frametitle{Are the modellign assumptions met?}
+\frame{\frametitle{Are the modelling assumptions met?}
 Before we continue to look into the results, we need to \myalert{check if the modelling assumptions are met}!\\[2mm]
 
 Why? Because otherwise we draw invalid conclusions from the results.\\[4mm]
@@ -384,10 +384,10 @@ The assumption we took here is that the errors $e_i \sim \N(0,\sigma_e^2)$. This
 \end{minipage}}
 
 ~\\[6mm]
-For the moment, we introduce two simple graphical model checking tools.
+For the moment, we introduce two simple graphical model checking tools:
 }
 
-\frame[containsverbatim]{\frametitle{Model checking tools I: Tukey-Anscombe diagram}
+\frame[containsverbatim]{\frametitle{Model checking tool I: Tukey-Anscombe diagram}
 
 The \myalert{Tukey-Anscombe} diagram plots the residuals against the fitted values:
 \begin{center}
@@ -401,7 +401,7 @@ This plot is ideal to check if assumptions a) and b) (and partially d)) are met.
 }
 
 
-\frame[containsverbatim]{\frametitle{Model checking tools II: Histogram}
+\frame[containsverbatim]{\frametitle{Model checking tool II: Histogram of residuals}
  
 Look at the histogram of the residuals:
 \begin{center}
@@ -410,7 +410,7 @@ Look at the histogram of the residuals:
 hist(r.bodyfat$residuals,nclass=20,xlab="Residuals",main="")
 @
 \end{center}
-The normal distribution assumptions seems ok as well.
+The normal distribution assumption (c) seems ok as well.
  
 }
 
@@ -545,6 +545,9 @@ Generally, $R^2$ indicates the proportion of variability of the response variabl
 $R^2$ becomes more interesting in \emph{multiple} linear regression.\\
 
 }
+
+
+
 
 \frame{\frametitle{Testing and Confidence Intervals}\label{sl:testsCI}
 After the regression parameters and their uncertainties have been estimated, there are typically two fundamental questions to be answered:\\[4mm]
@@ -696,17 +699,14 @@ Even easier: directly ask R to give you the CIs.\\[2mm]
 confint(r.bodyfat,level=c(0.95))
 @
 ~\\[8mm]
-\underline{Interpretation:} all true values for $\beta$ between 1.61 and 2.03 are compatible with the observed data.
 
-
-%' ~\\[5mm]
-%' Note that you can also choose another level than 95\%, for instance 90\%:\\[2mm]
-%' 
-%' <<echo=T,eval=T>>=
-%' confint(r.bodyfat,level=c(0.90))
-%' @
+In summary,
+<<results=tex,echo=F>>=
+tableRegression(r.bodyfat)
+@
+~\\[6mm]
+\underline{Interpretation:} for an increase in the bmi by one index point, roughly 1.82\% percentage points more bodyfat are expected, and all true values for $\beta$ between 1.61 and 2.03 are compatible with the observed data. \\[2mm]
 }
-
 
 
 \frame{\frametitle{Confidence and Prediction Ranges}

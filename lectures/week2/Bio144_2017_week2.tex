@@ -355,10 +355,8 @@ F-statistic: 281.8 on 1 and 241 DF,  p-value: < 2.2e-16
 \end{Soutput}
 \end{Schunk}
 
-~\\
-$\Rightarrow$ $\hat\alpha=-26.98$ ,  $\hat\beta=1.82$, $\hat\sigma_e = 5.57$.\\
-
-Interpretation: for an increase in the bmi by one index point, roughly 1.82\% percentage points more bodyfat are expected.
+~\\[2mm]
+$\Rightarrow$ $\hat\alpha=-26.98$ ,  $\hat\beta=1.82$, $\hat\sigma_e = 5.57$.
 }
 
 
@@ -368,6 +366,8 @@ Plotting the resulting line into the scatterplot is simple:\\[4mm]
 \setkeys{Gin}{width=0.5\textwidth}
 \begin{Schunk}
 \begin{Sinput}
+> library(reporttools)
+> library(biostatUZH)
 > plot(bodyfat ~ bmi,d.bodyfat)
 > abline(r.bodyfat,lwd=2)
 \end{Sinput}
@@ -377,7 +377,7 @@ Plotting the resulting line into the scatterplot is simple:\\[4mm]
 
 }
 
-\frame{\frametitle{Are the modellign assumptions met?}
+\frame{\frametitle{Are the modelling assumptions met?}
 Before we continue to look into the results, we need to \myalert{check if the modelling assumptions are met}!\\[2mm]
 
 Why? Because otherwise we draw invalid conclusions from the results.\\[4mm]
@@ -393,10 +393,10 @@ The assumption we took here is that the errors $e_i \sim \N(0,\sigma_e^2)$. This
 \end{minipage}}
 
 ~\\[6mm]
-For the moment, we introduce two simple graphical model checking tools.
+For the moment, we introduce two simple graphical model checking tools:
 }
 
-\frame[containsverbatim]{\frametitle{Model checking tools I: Tukey-Anscombe diagram}
+\frame[containsverbatim]{\frametitle{Model checking tool I: Tukey-Anscombe diagram}
 
 The \myalert{Tukey-Anscombe} diagram plots the residuals against the fitted values:
 \begin{center}
@@ -407,14 +407,14 @@ This plot is ideal to check if assumptions a) and b) (and partially d)) are met.
 }
 
 
-\frame[containsverbatim]{\frametitle{Model checking tools II: Histogram}
+\frame[containsverbatim]{\frametitle{Model checking tool II: Histogram of residuals}
  
 Look at the histogram of the residuals:
 \begin{center}
 \setkeys{Gin}{width=0.5\textwidth}
 \includegraphics{Bio144_2017_week2-hist}
 \end{center}
-The normal distribution assumptions seems ok as well.
+The normal distribution assumption (c) seems ok as well.
  
 }
 
@@ -576,6 +576,9 @@ Generally, $R^2$ indicates the proportion of variability of the response variabl
 $R^2$ becomes more interesting in \emph{multiple} linear regression.\\
 
 }
+
+
+
 
 \frame{\frametitle{Testing and Confidence Intervals}\label{sl:testsCI}
 After the regression parameters and their uncertainties have been estimated, there are typically two fundamental questions to be answered:\\[4mm]
@@ -758,17 +761,25 @@ bmi           1.605362   2.032195
 \end{Soutput}
 \end{Schunk}
 ~\\[8mm]
-\underline{Interpretation:} all true values for $\beta$ between 1.61 and 2.03 are compatible with the observed data.
 
-
-%' ~\\[5mm]
-%' Note that you can also choose another level than 95\%, for instance 90\%:\\[2mm]
-%' 
-%' <<echo=T,eval=T>>=
-%' confint(r.bodyfat,level=c(0.90))
-%' @
+In summary,
+% latex table generated in R 3.3.1 by xtable 1.8-2 package
+% Mon Oct 24 15:08:22 2016
+\begin{table}[!h]
+\centering
+\begingroup\footnotesize
+\begin{tabular}{rrrr}
+  \hline
+ & Coefficent & 95\%-confidence interval & $p$-value \\ 
+  \hline
+Intercept & -26.98 & from -32.44 to -21.53 & $<$ 0.0001 \\ 
+  bmi & 1.82 & from 1.61 to 2.03 & $<$ 0.0001 \\ 
+   \hline
+\end{tabular}
+\endgroup
+\end{table}~\\[6mm]
+\underline{Interpretation:} for an increase in the bmi by one index point, roughly 1.82\% percentage points more bodyfat are expected, and all true values for $\beta$ between 1.61 and 2.03 are compatible with the observed data. \\[2mm]
 }
-
 
 
 \frame{\frametitle{Confidence and Prediction Ranges}

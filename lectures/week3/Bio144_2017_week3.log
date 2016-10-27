@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.10.20)  24 OCT 2016 11:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.10.20)  25 OCT 2016 20:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1800,73 +1800,117 @@ LaTeX Font Warning: Font shape `T1/aess/bx/it' undefined
 
 LaTeX Font Info:    Try loading font information for U+bbold on input line 80.
 (/usr/share/texlive/texmf-dist/tex/latex/bbold/Ubbold.fd)
-LaTeX Font Info:    Try loading font information for T1+aett on input line 82.
+
+Package hyperref Warning: Option `pdfauthor' has already been used,
+(hyperref)                setting the option has no effect on input line 94.
+
+[1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+LaTeX Font Info:    Font shape `T1/aess/m/it' in size <9> not available
+(Font)              Font shape `T1/aess/m/sl' tried instead on input line 108.
+LaTeX Font Info:    Font shape `T1/aess/m/it' in size <6> not available
+(Font)              Font shape `T1/aess/m/sl' tried instead on input line 108.
+LaTeX Font Info:    Font shape `T1/aess/m/it' in size <12> not available
+(Font)              Font shape `T1/aess/m/sl' tried instead on input line 108.
+LaTeX Font Info:    Font shape `T1/aess/m/it' in size <8> not available
+(Font)              Font shape `T1/aess/m/sl' tried instead on input line 108.
+ [2
+
+] [3
+
+]
+LaTeX Font Info:    Try loading font information for T1+aett on input line 130.
+
 
 (/usr/share/texlive/texmf-dist/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
 )
-LaTeX Font Info:    Font shape `T1/aess/m/it' in size <9> not available
-(Font)              Font shape `T1/aess/m/sl' tried instead on input line 86.
-LaTeX Font Info:    Font shape `T1/aess/m/it' in size <6> not available
-(Font)              Font shape `T1/aess/m/sl' tried instead on input line 86.
-
-
-Package hyperref Warning: Option `pdfauthor' has already been used,
-(hyperref)                setting the option has no effect on input line 99.
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [1
-
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
-LaTeX Font Info:    Font shape `T1/aess/m/it' in size <12> not available
-(Font)              Font shape `T1/aess/m/sl' tried instead on input line 111.
-LaTeX Font Info:    Font shape `T1/aess/m/it' in size <8> not available
-(Font)              Font shape `T1/aess/m/sl' tried instead on input line 111.
- [3
-
-] [4
-
-]
-Overfull \hbox (18.49988pt too wide) in paragraph at lines 131--141
+Overfull \hbox (18.49988pt too wide) in paragraph at lines 129--139
 []$[]$  
  []
 
-[5
+[4
 
-] <Bio144_2017_week3-confpred.pdf, id=56, 361.35pt x 361.35pt>
+] <Bio144_2017_week3-confpred.pdf, id=50, 361.35pt x 361.35pt>
 File: Bio144_2017_week3-confpred.pdf Graphic file (type pdf)
 
 <use Bio144_2017_week3-confpred.pdf>
-Package pdftex.def Info: Bio144_2017_week3-confpred.pdf used on input line 153.
+Package pdftex.def Info: Bio144_2017_week3-confpred.pdf used on input line 151.
 
 (pdftex.def)             Requested size: 190.48947pt x 190.48903pt.
- [6
+ [5
 
  <./Bio144_2017_week3-confpred.pdf>]
-<Bio144_2017_week3-005.pdf, id=69, 433.62pt x 180.675pt>
-File: Bio144_2017_week3-005.pdf Graphic file (type pdf)
-
-<use Bio144_2017_week3-005.pdf>
-Package pdftex.def Info: Bio144_2017_week3-005.pdf used on input line 166.
-(pdftex.def)             Requested size: 293.06349pt x 122.11575pt.
- [7
-
- <./Bio144_2017_week3-005.pdf>]
-Overfull \hbox (19.96394pt too wide) in paragraph at lines 184--185
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 166--167
 [][][][][][][] 
  []
 
-[8
+<Bio144_2017_week3-MCs.pdf, id=63, 578.16pt x 289.08pt>
+File: Bio144_2017_week3-MCs.pdf Graphic file (type pdf)
 
-] [9
+<use Bio144_2017_week3-MCs.pdf>
+Package pdftex.def Info: Bio144_2017_week3-MCs.pdf used on input line 172.
+(pdftex.def)             Requested size: 175.83987pt x 87.92004pt.
 
-] [10
+Overfull \vbox (10.28168pt too high) detected at line 175
+ []
 
-] [11
+[6
 
-] [12
+ <./Bio144_2017_week3-MCs.pdf>]
+<Bio144_2017_week3-QQ1.pdf, id=76, 361.35pt x 361.35pt>
+File: Bio144_2017_week3-QQ1.pdf Graphic file (type pdf)
+
+<use Bio144_2017_week3-QQ1.pdf>
+Package pdftex.def Info: Bio144_2017_week3-QQ1.pdf used on input line 188.
+(pdftex.def)             Requested size: 117.2236pt x 117.22232pt.
+
+Overfull \hbox (151.53175pt too wide) in paragraph at lines 182--189
+[]$[]$ 
+ []
+
+[7
+
+ <./Bio144_2017_week3-QQ1.pdf>]
+<Bio144_2017_week3-006.pdf, id=91, 433.62pt x 289.08pt>
+File: Bio144_2017_week3-006.pdf Graphic file (type pdf)
+
+<use Bio144_2017_week3-006.pdf>
+Package pdftex.def Info: Bio144_2017_week3-006.pdf used on input line 203.
+(pdftex.def)             Requested size: 234.45168pt x 156.30377pt.
+ [8
+
+ <./Bio144_2017_week3-006.pdf>] [9
+
+]
+<Bio144_2017_week3-007.pdf, id=111, 433.62pt x 180.675pt>
+File: Bio144_2017_week3-007.pdf Graphic file (type pdf)
+
+<use Bio144_2017_week3-007.pdf>
+Package pdftex.def Info: Bio144_2017_week3-007.pdf used on input line 222.
+(pdftex.def)             Requested size: 293.06349pt x 122.11575pt.
+ [10
+
+ <./Bio144_2017_week3-007.pdf>]
+<Bio144_2017_week3-008.pdf, id=124, 433.62pt x 433.62pt>
+File: Bio144_2017_week3-008.pdf Graphic file (type pdf)
+
+<use Bio144_2017_week3-008.pdf>
+Package pdftex.def Info: Bio144_2017_week3-008.pdf used on input line 235.
+(pdftex.def)             Requested size: 234.45168pt x 234.45567pt.
+
+Overfull \vbox (2.10677pt too high) detected at line 236
+ []
+
+[11
+
+ <./Bio144_2017_week3-008.pdf>]
+Overfull \hbox (19.96394pt too wide) in paragraph at lines 250--251
+[][][][][][][] 
+ []
+
+[12
 
 ] [13
 
@@ -1874,44 +1918,129 @@ Overfull \hbox (19.96394pt too wide) in paragraph at lines 184--185
 
 ] [15
 
+] [16
+
 ]
-Overfull \hbox (1.46407pt too wide) in paragraph at lines 357--359
+<Bio144_2017_week3-modelChecks.pdf, id=171, 505.89pt x 289.08pt>
+File: Bio144_2017_week3-modelChecks.pdf Graphic file (type pdf)
+
+<use Bio144_2017_week3-modelChecks.pdf>
+Package pdftex.def Info: Bio144_2017_week3-modelChecks.pdf used on input line 3
+28.
+(pdftex.def)             Requested size: 263.75534pt x 150.71945pt.
+ [17
+
+ <./Bio144_2017_week3-modelChecks.pdf>] [18
+
+] [19
+
+] [20
+
+]
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 429--430
+[][][][][][][]  
+ []
+
+[21
+
+]
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 444--446
 [][][][][][][] 
  []
 
-<Bio144_2017_week3-011.pdf, id=141, 289.08pt x 289.08pt>
-File: Bio144_2017_week3-011.pdf Graphic file (type pdf)
+<Bio144_2017_week3-015.pdf, id=217, 289.08pt x 289.08pt>
+File: Bio144_2017_week3-015.pdf Graphic file (type pdf)
 
-<use Bio144_2017_week3-011.pdf>
-Package pdftex.def Info: Bio144_2017_week3-011.pdf used on input line 361.
+<use Bio144_2017_week3-015.pdf>
+Package pdftex.def Info: Bio144_2017_week3-015.pdf used on input line 448.
 (pdftex.def)             Requested size: 146.53174pt x 146.52899pt.
 
-Overfull \vbox (2.432pt too high) detected at line 363
+Overfull \vbox (2.432pt too high) detected at line 450
  []
 
-[16
+[22
 
- <./Bio144_2017_week3-011.pdf>]
-Overfull \hbox (1.46407pt too wide) in paragraph at lines 382--382
+ <./Bio144_2017_week3-015.pdf>]
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 469--469
 [][][][][][][] 
  []
 
-[17
+[23
 
-] <Bio144_2017_week3-012.pdf, id=161, 361.35pt x 361.35pt>
-File: Bio144_2017_week3-012.pdf Graphic file (type pdf)
+] <Bio144_2017_week3-016.pdf, id=236, 361.35pt x 361.35pt>
+File: Bio144_2017_week3-016.pdf Graphic file (type pdf)
 
-<use Bio144_2017_week3-012.pdf>
-Package pdftex.def Info: Bio144_2017_week3-012.pdf used on input line 388.
+<use Bio144_2017_week3-016.pdf>
+Package pdftex.def Info: Bio144_2017_week3-016.pdf used on input line 475.
 (pdftex.def)             Requested size: 175.83987pt x 175.83899pt.
- [18
+ [24
 
- <./Bio144_2017_week3-012.pdf>] [19
+ <./Bio144_2017_week3-016.pdf>] [25
 
 ]
-Package atenddvi Info: Last page = 20.
+[26
 
-[20
+]
+LaTeX Font Info:    Font shape `T1/aess/m/it' in size <7> not available
+(Font)              Font shape `T1/aess/m/sl' tried instead on input line 525.
+ [27
+
+] <Bio144_2017_week3-021.pdf, id=271, 505.89pt x 237.88875pt>
+File: Bio144_2017_week3-021.pdf Graphic file (type pdf)
+
+<use Bio144_2017_week3-021.pdf>
+Package pdftex.def Info: Bio144_2017_week3-021.pdf used on input line 563.
+(pdftex.def)             Requested size: 234.45168pt x 110.25049pt.
+ [28
+
+ <./Bio144_2017_week3-021.pdf>] [29
+
+]
+<Bio144_2017_week3-pairs.pdf, id=292, 433.62pt x 289.08pt>
+File: Bio144_2017_week3-pairs.pdf Graphic file (type pdf)
+
+<use Bio144_2017_week3-pairs.pdf>
+Package pdftex.def Info: Bio144_2017_week3-pairs.pdf used on input line 613.
+(pdftex.def)             Requested size: 234.45168pt x 156.30377pt.
+ [30
+
+ <./Bio144_2017_week3-pairs.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 639--639
+
+ []
+
+
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 639--639
+[][][][][][]  
+ []
+
+[31
+
+]
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 652--653
+[][][][][][][] 
+ []
+
+[32
+
+]
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 699--700
+[][][][][][][]  
+ []
+
+[33
+
+] <Bio144_2017_week3-Hgcheck.pdf, id=324, 433.62pt x 289.08pt>
+File: Bio144_2017_week3-Hgcheck.pdf Graphic file (type pdf)
+
+<use Bio144_2017_week3-Hgcheck.pdf>
+Package pdftex.def Info: Bio144_2017_week3-Hgcheck.pdf used on input line 707.
+(pdftex.def)             Requested size: 234.45168pt x 156.30377pt.
+Package atenddvi Info: Last page = 34.
+ [34
+
+ <./Bio144_2017_week3-Hgcheck.pdf>]
+[35
 
 ]
 \tf@nav=\write8
@@ -1923,46 +2052,61 @@ Package atenddvi Info: Last page = 20.
 \tf@snm=\write10
 \openout10 = `Bio144_2017_week3.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 425.
-Package atveryend Info: Executing hook `AfterLastShipout' on input line 425.
- (./Bio144_2017_week3.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 425.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 425.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 723.
+Package atveryend Info: Executing hook `AfterLastShipout' on input line 723.
+ (./Bio144_2017_week3.aux
+
+Package atenddvi Warning: Rerun LaTeX, last page has changed.
+
+
+Package animate Warning: @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+(animate)                @@ Rerun to get internal references right! @@
+(animate)                @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@.
+
+)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 723.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 723.
 Package rerunfilecheck Info: File `Bio144_2017_week3.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 425.
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 723.
  ) 
 Here is how much of TeX's memory you used:
- 30796 strings out of 494901
- 595042 string characters out of 6178616
- 670619 words of memory out of 5000000
- 33370 multiletter control sequences out of 15000+600000
- 55300 words of font info for 117 fonts, out of 8000000 for 9000
+ 30963 strings out of 494901
+ 597909 string characters out of 6178616
+ 672643 words of memory out of 5000000
+ 33482 multiletter control sequences out of 15000+600000
+ 66510 words of font info for 140 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 56i,13n,66p,10416b,540s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 56i,14n,66p,10416b,540s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb>
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb></
 usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/sha
 re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/amsfonts/cmextra/cmmib9.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmssi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmssi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.
-pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></u
-sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
-Output written on Bio144_2017_week3.pdf (20 pages, 203075 bytes).
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cmextra/cmmib9.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmss9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmssi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmssi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss
+i9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/s
+hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/te
+xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/share/texlive/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
+Output written on Bio144_2017_week3.pdf (35 pages, 349293 bytes).
 PDF statistics:
- 248 PDF objects out of 1000 (max. 8388607)
- 192 compressed objects within 2 object streams
- 42 named destinations out of 1000 (max. 500000)
- 69 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 422 PDF objects out of 1000 (max. 8388607)
+ 330 compressed objects within 4 object streams
+ 73 named destinations out of 1000 (max. 500000)
+ 109 words of extra memory for PDF output out of 10000 (max. 10000000)
 
