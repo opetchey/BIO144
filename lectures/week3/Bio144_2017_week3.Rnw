@@ -98,11 +98,11 @@ Datenanalyse in der Biologie}%\\[.3cm]
 \begin{itemize}
 
 \item Checking the assumptions of linear regression
-\item Tukey-Anscombe diagram, QQ-plot, leverage plot
-\item Multiple predictors $x_1$, $x_2$, \ldots, $x_p$
+\item Tukey-Anscombe diagram, QQ-plot 
+\item Multiple predictors $x_1$, $x_2$, \ldots, $x_m$
 \item $R^2$ in multiple linear regression
 \item $t$-tests, $F$-tests and $p$-values
-\item Transformation of variables
+\item Binary and factor covariates
 
 \end{itemize}
 }
@@ -301,7 +301,7 @@ Some {\bf linear algebra} is needed to understand these sections, but we do not 
 }
 
 \frame{\frametitle{Multiple linear regression for bodyfat}
-Let us regress the proportion (\%) of bodyfat (from last week) to the predictors {\bf bmi} and {\bf age} simultaneously. The model thus is given as\\[4mm]
+Let us regress the proportion (\%) of bodyfat (from last week) on the predictors {\bf bmi} and {\bf age} simultaneously. The model thus is given as\\[4mm]
 \begin{eqnarray*}
 (bodyfat)_i &=& \beta_0 + \beta_1 \cdot bmi_i + \beta_2 \cdot age_i + e_i \ , \\
 \text{with} \quad e_i &\sim& \N(0,\sigma_e^2) \ .
@@ -395,11 +395,12 @@ As in simple linear regression, the $T$-statistic for the $j$-th covariate is ca
 T_j =\frac{\hat\beta_j - {\beta_j}_0}{se^{(\beta_j)}}  \quad\underbrace{=}_{if  {\beta_j}_0=0} \quad  \frac{\hat\beta_j}{se^{(\beta_j)}}\ ,
 \end{equation}
 with  $se^{(\beta_j)}$ given in the second column of the regression output.\\[2mm]
+The distribution of this statistic is $T_j \sim t_{n-p}$. 
 
 
 }
 
-\frame{
+\frame[containsverbatim]{
 
 Therefore:  A ``small'' $p$-value indicates that the variable is relevant in the model.\\[2mm]
 
@@ -409,16 +410,20 @@ Here, we have
 \item $p<0.001$ for age
 \end{itemize}
 
-Thus both, bmi and age seem to have some predictive power for bodyfat. \\[6mm]
+Thus both, bmi and age seem to have some predictive power for bodyfat. \\[2mm]
 
-{\bf !However!: } \\[2mm]
-The $p$-value and $T$-statistics should only be used as a {\bf rough guide} for the ``significance'' of the coefficients. 
+Again, a 95\% CI for $\beta_j$ can be calculated with $[\hat\beta - c \cdot \sigma^{(\beta)} ; \hat\beta + c \cdot \sigma^{(\beta)}]$, where $c$ is the 97.5\% quantile of the $t$-distribution with $n-p$ degrees of freedom  (compare to slide 38 of last week). With R:\\[2mm]
 
+<<>>=
+confint(r.bodyfatM)
+@
 
 }
 
+\frame[containsverbatim]{\frametitle{}
+{\bf !However!: }\\[2mm]
 
-\frame[containsverbatim]{\frametitle{ }
+The $p$-value and $T$-statistics should only be used as a {\bf rough guide} for the ``significance'' of the coefficients.\\[2mm]
 
 For illustration, let us extend the model a bit more, including also neck, hip and abdomen:\\[4mm]
 
@@ -429,7 +434,14 @@ summary(r.bodyfatM2)$coef
 ~\\[3mm]
 It is now much \myalert{less clear what the influences of age ($p=0.60$) and bmi ($p=0.06$) are}. \\[2mm]
 
-Basically, the problem is that the variables in the model are correlated and therefore explain similar aspects of \% bodyfat. \\[2mm]
+
+}
+
+
+\frame[containsverbatim]{\frametitle{ }
+
+Basically, the problem is that the variables in the model are correlated and therefore explain similar aspects of \% bodyfat. \\[6mm]
+
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
 This problem is at the heart of many confusions of regression analysis, and we will talk about such issues later in the course.
@@ -496,7 +508,8 @@ text(35,40,expression(hat(y)),cex=1.5)
 
 
 \frame[containsverbatim]{
-Let us look at the $R^2$s from the three bodyfat models (model 1: $y\sim bmi$\\
+Let us look at the $R^2$s from the three bodyfat models \\
+(model 1: $y\sim bmi$\\
 model 2: $y\sim bmi + age$\\
 model 3: $y\sim bmi + age + neck + hip + abdomen$):\\[4mm]
 
@@ -519,6 +532,8 @@ When the sample size $n$ is small with respect to the number of variables $m$ in
 \begin{equation*}
 R^2_a = 1-(1-R^2 )\frac{n-1}{n-m-1}
 \end{equation*}
+~\\
+Why $R^2_a$? Todo: explain briefly 
 }
 
 
@@ -543,7 +558,17 @@ d.cath <- read.table(paste(path,"catheter.dat",sep=""),header=T)
 r.cath <- lm(y~x1+x2,data=d.cath)
 @
 
-Catheter length ($y$) for heart surgeries depending on two characteristic variables $x^{(1)}$ and $x^{(2)}$ of the patients. Aim: estimate $y$ from $x^{(1)}$ and  $x^{(2)}$ ($n=12$).
+Catheter length ($y$) for heart surgeries depending on two characteristic variables $x^{(1)}$ and $x^{(2)}$ of the patients. Aim: estimate $y$ from $x^{(1)}$ and  $x^{(2)}$ ($n=12$). Again look at the data first:
+
+\setkeys{Gin}{width=0.7\textwidth}
+<<pairs,width=6,length=6,fig=T>>=
+pairs(d.cath)
+@
+
+Note that $x^{(1)}$ and $x^{(2)}$ are highly correlated!
+}
+
+\frame[containsverbatim]{\frametitle{}
 Regression results:
 <<results=tex,echo=F>>=
 tableRegression(r.cath)
@@ -567,24 +592,15 @@ qqline(r.cath$fitted)
 \item Does the model have some predictive power?
 \item Which variable(s) influence(s) the response?
 \item How good is the overall fit of the model?
-\item Interpretation of the results?
+\item Interpretation of the results?\\[4mm]
 \end{enumerate}
-Also look at the regression table when using $x^{(1)}$ and $x^{(2)}$ alone:
+To understand what is going on, the regression results of $y$ on $x^{(1)}$ and $x^{(2)}$ alone may be useful:
 <<results=tex,echo=F>>=
 tableRegression(lm(y~x1,d.cath))
 @
 <<results=tex,echo=F>>=
 tableRegression(lm(y~x2,d.cath))
 @
-}
-
-\frame[containsverbatim]{\frametitle{}
-\setkeys{Gin}{width=0.8\textwidth}
-<<pairs,width=6,length=6,fig=T>>=
-pairs(d.cath)
-@
-
-Note that $x^{(1)}$ and $x^{(2)}$ are highly correlated!
 }
 
 
@@ -597,7 +613,7 @@ One very frequent data type of covariates are {\bf binary} variables, that is, v
 
 See section 3.2c of the Stahel script: 
 \colorbox{lightgray}{\begin{minipage}{10cm}
-If the binary variable $x$ is the only variable in the model $y_i = \beta_0 + \beta_1 x_i + e_i$, the model has only two predicted outcomes\\
+If the binary variable $x$ is the only variable in the model $y_i = \beta_0 + \beta_1 x_i + e_i$, the model has only two predicted outcomes (plus error):\\
 \begin{equation*}
 y_i = \left\{ 
 \begin{array}{ll}
@@ -626,7 +642,7 @@ We fit the following linear regression model: \\
 Where 
 \begin{itemize}
 \item $\log(Hg_{urin})_i$ is the urine mercury concentration.
-\item $x^{(1)}$ is the binary smoking indicator (0/1).
+\item $x^{(1)}$ is the binary smoking indicator (0/1), denoted as {\bf dummy variable}.
 \item $x^{(2)}$ the number of amalgam fillings.
 \item $x^{(3)}$ the monthly number of marine fish meals.
 \end{itemize}
@@ -662,7 +678,7 @@ tableRegression(r1.urin.mother)
 ~\\[2mm]
 There is some weak ($p=0.12$) indication that smokers have a slightly increased Hg concentration in their body.\\
 
-In principle, we have now -- at the same time -- fitted {\bf two models:}one for smokers and one for non-smokers, assuming that the slopes of the other covariates are the same for both groups.\\[2mm]
+In principle, we have now -- at the same time -- fitted {\bf two models:} one for smokers and one for non-smokers, assuming that the slopes of the other covariates are the same for both groups.\\[2mm]
 \colorbox{lightgray}{\begin{minipage}{10cm}
 Smokers: $y_i = -1.01 + 0.22  + 0.092\cdot amalgam _i+ 0.032\cdot fish_i + e_i$ \\
 Non-smokers:  $y_i = -1.01  + 0.092\cdot amalgam_i + 0.032\cdot fish_i  + e_i$ 
@@ -686,11 +702,171 @@ It seems ok, apart from one point that could be categorized as an outlier. We ig
 }
 
 
-\frame{\frametitle{Categorical covariates}
-Some covariates indicate a {\bf category}, for instance...
+\frame{\frametitle{Factor covariates}
+Some covariates indicate a {\bf category}, for instance the species of an animal or a plant. This type of covariat is called a {\bf factor}. The trick is to convert a factor with $k$ levels (for instance 3 species) into $k$ dummy variables $x_i^{(j)}$ with 
+\colorbox{lightgray}{\begin{minipage}{10cm}
+\begin{equation*}
+x_i^{(j)} = \left\{ 
+\begin{array} {ll}
+1, & \text{if the $i$th observation belongs to group $j$}.\\
+0, & \text{otherwise.}
+\end{array}\right.
+\end{equation*}
+\end{minipage}}
+~\\[2mm]
 
-(Stahel 3.2e)
+Each of the covariates $x^{(1)},\ldots, x^{(k)}$ can then be included as a binary variable in the model
+\begin{equation*}
+y_i = \beta_0 + \beta_1 x^{(1)} + \ldots + \beta_k x^{(k)} + e_i \ .
+\end{equation*}
+
+However: one of the $k$ categories must be selected as a \emph{reference category} and is \emph{not included in the model}, because the model is otherwise not identifiable!! Typically: $\beta_1=0$\\[2mm]
+
 }
+
+\frame{\frametitle{}
+The model thus discriminates between the factor levels, such that (assuming $\beta_1=0$)
+
+\begin{equation*}
+\hat y_i = \left\{
+\begin{array}{ll}
+\beta_0 , & \text{if $x_i^{(1)}=1$ }\\
+\beta_0 + \beta_2 , & \text{if $x_i^{(2)}=1$ }\\
+...\\
+\beta_0 + \beta_k , & \text{if $x_i^{(k)}=1$ } \ .
+\end{array}\right.
+\end{equation*} 
+
+~\\[4mm]
+\textcolor{gray}{Please also consult Stahel 3.2e.}
+}
+
+\frame[containsverbatim]{\frametitle{Example: Earthworm study}
+{\tiny (Angelika von Förster und Burgi Liebst)}
+
+{\scriptsize Die Dachse im Sihlwald ernähren sich zu einem grossen Prozentsatz von Regenwürmern. Ein Teil des Muskelmagens der Regenwürmer wird während der Passage durch den Dachsdarm nicht verdaut und mit dem Kot ausgeschieden. Wenn man aus der Grösse des Muskelmagenteilchens auf das Gewicht des Regenwurms schliessen kann, ist die Energiemenge berechnenbar, die der Dachs aufgenommen hat.}\\[4mm]
+
+{\bf Frage:} Besteht eine Beziehung zwischen dem Umfang des Muskelmagenteilchens und dem Gewicht des Regenwurms?\\[4mm]
+
+Data set with three species (Lumbricus, Octolasion und Nicodrilus), weight, stomachic circumference (Magenumfang).
+
+
+}
+
+
+\frame[containsverbatim]{\frametitle{}
+~\\[2mm]
+Data inspection suggests that the three species have different weight and stomach sizes:\\
+\vspace{-8mm}
+
+\begin{center}
+\setkeys{Gin}{width=0.7\textwidth}
+<<wurmP,fig=T,width=6.5,height=3.5,echo=F>>=
+library(lattice)
+par(mfrow=c(1,2))
+d.wurm <- read.table ("/home/steffi/Teaching/Bio144/data_examples/ancova/Projekt6Regenwuermer/RegenwuermerDaten_Haupt.txt",header=T)
+d.wurm[d.wurm$Gattung=="N","GEWICHT"] <- d.wurm[d.wurm$Gattung=="N","GEWICHT"]*0.5
+boxplot(GEWICHT ~ Gattung, d.wurm,xlab="Gattung",ylab="Gewicht (g)")
+boxplot(MAGENUMF ~ Gattung, d.wurm,xlab="Gattung",ylab="Magenumfang")
+@
+\setkeys{Gin}{width=0.5\textwidth}
+<<wurmP2,fig=T,width=5,height=3.5,echo=F>>=
+xyplot(GEWICHT ~ MAGENUMF, d.wurm,
+       grid = TRUE,
+       scales = list(x = list(log = 10, equispaced.log = FALSE)),
+       group = Gattung, auto.key = list(columns = nlevels(d.wurm$Gattung)),
+       lwd = 2)
+@
+\end{center}
+}
+
+\frame[containsverbatim]{\frametitle{}
+However, data inspection also suggests that there is not really a linear relationship between weight and stomach size. Therefore, log-transform  weight, and it looks much better:\\[2mm]
+
+\begin{center}
+\setkeys{Gin}{width=0.6\textwidth}
+<<wurmP3,fig=T,width=5,height=3.5,echo=F>>=
+xyplot(log(GEWICHT) ~ MAGENUMF, d.wurm,
+       grid = TRUE,
+       scales = list(x = list(log = 10, equispaced.log = FALSE)),
+       group = Gattung, auto.key = list(columns = nlevels(d.wurm$Gattung)),
+       lwd = 2)
+@
+\end{center}
+}
+
+\frame[containsverbatim]{\frametitle{}
+Formulate a model (in short notation) \\[2mm]
+\texttt{log(Gewicht)} $\sim$ \texttt{Magenumfang + Gattung}. \\[2mm]
+Fitting it is simple in R: 
+
+<<fitWurm,echo=T,eval=T>>=
+r.lm <- lm(log(GEWICHT) ~  MAGENUMF + Gattung,d.wurm)
+@
+{\bf\scriptsize But make sure that Gattung is stored as a factor in R (check by \texttt{str(d.wurm)})!}
+~\\[2mm]
+This leads to
+<<results=tex,echo=F>>=
+tableRegression(r.lm)
+@
+
+~\\[2mm]
+Why is Gattung Lumbricus (L) not in the results table? \\
+Answer: L was chosen as the ``reference category'', thus $\beta_L=0$.\\[4mm]
+
+{\bf Important:} The $p$-values of the worm species are not very meaningful. They belong to tests that compare the actual level with the reference level. However, the question is whether the species variable has an effect in total.
+}
+
+\frame[containsverbatim]{\frametitle{F-test to compare models}
+\vspace{-5mm}
+When a factor covariate with $k$ levels is in the model, it occupies $k-1$ parameters. Therefore, the $t$-test needs to be replaced by the $F$-test:\\[2mm]
+
+\includegraphics[width=11cm]{pictures/Ftest.pdf}
+{\small Remember: $F_{1,n-p} = t^2_{n-p}$}
+}
+
+
+
+\frame[containsverbatim]{\frametitle{F-test for the earthworms}
+
+There exists a function (ANOVA) in R that does the $F$-test for categorical variables:\\[6mm]
+
+<<>>=
+anova(r.lm)
+@
+
+~\\[4mm]
+Thus: there seems to be some difference in the regression models for the three species.
+}
+
+\frame[containsverbatim]{\frametitle{Plotting the earthworms results}
+All species have the same slope (this is a modelling assumption), but different intercepts:
+\begin{center}
+\setkeys{Gin}{width=0.7\textwidth}
+<<fig=T,echo=F,width=5,height=4>>=
+cc <- r.lm$coefficients
+plot(log(GEWICHT)~MAGENUMF,d.wurm,col=as.numeric(Gattung),cex=0.8,ylim=c(-3,3),xlim=c(0,8))
+abline(c(cc[1],cc[2]),col=1)
+abline(c(cc[1]+cc[3],cc[2]),col=2)
+abline(c(cc[1]+cc[4],cc[2]),col=3)
+@
+\end{center}
+}
+
+\frame[containsverbatim]{\frametitle{Again: checking modelling assumptions}
+
+\setkeys{Gin}{width=0.8\textwidth}
+<<fig=T,echo=F,widht=6,height=4>>=
+par(mfrow=c(1,2))
+plot(r.lm$fitted,r.lm$residuals)
+abline(h=0,lty=2)
+qqnorm(r.lm$residuals)
+qqline(r.lm$residuals)
+@
+}
+
+
+\frame{\frametitle{Summary} Todo}
 %\frame{References:
 %\bibliographystyle{Chicago}
 %\bibliography{refs}
