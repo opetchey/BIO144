@@ -748,7 +748,7 @@ The model thus discriminates between the factor levels, such that (assuming $\be
 
 {\bf Frage:} Besteht eine Beziehung zwischen dem Umfang des Muskelmagenteilchens und dem Gewicht des Regenwurms?\\[4mm]
 
-Data set with three species (Lumbricus, Octolasion und Nicodrilus), weight, stomachic circumference (Magenumfang).
+Data set with three species (Lumbricus, Nicodrilus, Octolasion), weight, stomachic circumference (Magenumfang).
 
 
 }
@@ -802,6 +802,7 @@ Fitting it is simple in R:
 
 <<fitWurm,echo=T,eval=T>>=
 r.lm <- lm(log(GEWICHT) ~  MAGENUMF + Gattung,d.wurm)
+worm.coef <- summary(r.lm)$coef
 @
 {\bf\scriptsize But make sure that Gattung is stored as a factor in R (check by \texttt{str(d.wurm)})!}
 ~\\[2mm]
@@ -814,29 +815,20 @@ tableRegression(r.lm)
 Why is Gattung Lumbricus (L) not in the results table? \\
 Answer: L was chosen as the ``reference category'', thus $\beta_L=0$.\\[4mm]
 
+}
+
+
+\frame[containsverbatim]{\frametitle{}
+We have now actually fitted {\bf three} models, one model for each species:\\[2mm]
+
+Lumbricus: $\hat{y}_i = \Sexpr{round(worm.coef[1,1],2)} + \Sexpr{round(worm.coef[2,1],2)}\cdot \text{MAGENUMF}$ \\[2mm]
+Nicodrilus: $\hat{y}_i = \Sexpr{round(worm.coef[1,1],2)} + \Sexpr{round(worm.coef[3,1],2)}  + \Sexpr{round(worm.coef[2,1],2)}\cdot \text{MAGENUMF}$ \\[2mm]
+Octolasion: $\hat{y}_i = \Sexpr{round(worm.coef[1,1],2)} + \Sexpr{round(worm.coef[4,1],2)}  + \Sexpr{round(worm.coef[2,1],2)}\cdot \text{MAGENUMF}$
+
+~\\[6mm]
+
 {\bf Important:} The $p$-values of the worm species are not very meaningful. They belong to tests that compare the actual level with the reference level. However, the question is whether the species variable has an effect in total.
-}
 
-\frame[containsverbatim]{\frametitle{F-test to compare models}
-\vspace{-5mm}
-When a factor covariate with $k$ levels is in the model, it occupies $k-1$ parameters. Therefore, the $t$-test needs to be replaced by the $F$-test:\\[2mm]
-
-\includegraphics[width=11cm]{pictures/Ftest.pdf}
-{\small Remember: $F_{1,n-p} = t^2_{n-p}$}
-}
-
-
-
-\frame[containsverbatim]{\frametitle{F-test for the earthworms}
-
-There exists a function (ANOVA) in R that does the $F$-test for categorical variables:\\[6mm]
-
-<<>>=
-anova(r.lm)
-@
-
-~\\[4mm]
-Thus: there seems to be some difference in the regression models for the three species.
 }
 
 \frame[containsverbatim]{\frametitle{Plotting the earthworms results}
@@ -852,6 +844,32 @@ abline(c(cc[1]+cc[4],cc[2]),col=3)
 @
 \end{center}
 }
+
+\frame[containsverbatim]{\frametitle{F-test to compare models}
+\vspace{-5mm}
+When a factor covariate with $k$ levels is in the model, it occupies $k-1$ parameters. Therefore, the $t$-test needs to be replaced by the $F$-test:\\[2mm]
+
+\includegraphics[width=11cm]{pictures/Ftest.pdf}\\
+{\small Remember: $F_{1,n-p} = t^2_{n-p}$}
+}
+
+
+
+\frame[containsverbatim]{\frametitle{F-test for the earthworms}
+
+Question: Is the ``Gattung'' covariate relevant in the model, that is, do the models differ for the three species? \\[4mm]
+
+There exists a function (ANOVA) in R that does the $F$-test for categorical variables:\\[6mm]
+
+<<>>=
+anova(r.lm)
+@
+
+~\\[4mm]
+Thus: there seems to be some difference in the regression models for the three species.
+}
+
+
 
 \frame[containsverbatim]{\frametitle{Again: checking modelling assumptions}
 

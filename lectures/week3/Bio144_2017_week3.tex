@@ -99,7 +99,7 @@ Datenanalyse in der Biologie}%\\[.3cm]
 
 \item Checking the assumptions of linear regression
 \item Tukey-Anscombe diagram, QQ-plot 
-\item Multiple predictors $x_1$, $x_2$, \ldots, $x_p$
+\item Multiple predictors $x_1$, $x_2$, \ldots, $x_m$
 \item $R^2$ in multiple linear regression
 \item $t$-tests, $F$-tests and $p$-values
 \item Binary and factor covariates
@@ -541,7 +541,7 @@ What does the regression output actually \emph{mean}?
 \end{quote}
 
 % latex table generated in R 3.3.1 by xtable 1.8-2 package
-% Thu Oct 27 11:12:00 2016
+% Mon Oct 31 08:43:13 2016
 \begin{table}[!h]
 \centering
 \begingroup\footnotesize
@@ -579,7 +579,7 @@ Note that $x^{(1)}$ and $x^{(2)}$ are highly correlated!
 \frame[containsverbatim]{\frametitle{}
 Regression results:
 % latex table generated in R 3.3.1 by xtable 1.8-2 package
-% Thu Oct 27 11:12:00 2016
+% Mon Oct 31 08:43:13 2016
 \begin{table}[!h]
 \centering
 \begingroup\footnotesize
@@ -610,7 +610,7 @@ Intercept & 21.09 & from 1.25 to 40.93 & 0.04 \\
 \end{enumerate}
 To understand what is going on, the regression results of $y$ on $x^{(1)}$ and $x^{(2)}$ alone may be useful:
 % latex table generated in R 3.3.1 by xtable 1.8-2 package
-% Thu Oct 27 11:12:00 2016
+% Mon Oct 31 08:43:13 2016
 \begin{table}[!h]
 \centering
 \begingroup\footnotesize
@@ -624,7 +624,7 @@ Intercept & 12.13 & from 2.66 to 21.59 & 0.017 \\
 \end{tabular}
 \endgroup
 \end{table}% latex table generated in R 3.3.1 by xtable 1.8-2 package
-% Thu Oct 27 11:12:00 2016
+% Mon Oct 31 08:43:13 2016
 \begin{table}[!h]
 \centering
 \begingroup\footnotesize
@@ -698,7 +698,7 @@ Where
 \frame[containsverbatim]{
 The results table is given as follows:
 % latex table generated in R 3.3.1 by xtable 1.8-2 package
-% Thu Oct 27 11:12:00 2016
+% Mon Oct 31 08:43:13 2016
 \begin{table}[!h]
 \centering
 \begingroup\footnotesize
@@ -780,7 +780,7 @@ The model thus discriminates between the factor levels, such that (assuming $\be
 
 {\bf Frage:} Besteht eine Beziehung zwischen dem Umfang des Muskelmagenteilchens und dem Gewicht des Regenwurms?\\[4mm]
 
-Data set with three species (Lumbricus, Octolasion und Nicodrilus), weight, stomachic circumference (Magenumfang).
+Data set with three species (Lumbricus, Nicodrilus, Octolasion), weight, stomachic circumference (Magenumfang).
 
 
 }
@@ -816,13 +816,14 @@ Fitting it is simple in R:
 \begin{Schunk}
 \begin{Sinput}
 > r.lm <- lm(log(GEWICHT) ~  MAGENUMF + Gattung,d.wurm)
+> worm.coef <- summary(r.lm)$coef
 \end{Sinput}
 \end{Schunk}
 {\bf\scriptsize But make sure that Gattung is stored as a factor in R (check by \texttt{str(d.wurm)})!}
 ~\\[2mm]
 This leads to
 % latex table generated in R 3.3.1 by xtable 1.8-2 package
-% Thu Oct 27 11:12:00 2016
+% Mon Oct 31 08:43:13 2016
 \begin{table}[!h]
 \centering
 \begingroup\footnotesize
@@ -842,20 +843,43 @@ Intercept & -2.54 & from -2.97 to -2.10 & $<$ 0.0001 \\
 Why is Gattung Lumbricus (L) not in the results table? \\
 Answer: L was chosen as the ``reference category'', thus $\beta_L=0$.\\[4mm]
 
+}
+
+
+\frame[containsverbatim]{\frametitle{}
+We have now actually fitted {\bf three} models, one model for each species:\\[2mm]
+
+Lumbricus: $\hat{y}_i = -2.54 + 0.71\cdot \text{MAGENUMF}$ \\[2mm]
+Nicodrilus: $\hat{y}_i = -2.54 + -0.52  + 0.71\cdot \text{MAGENUMF}$ \\[2mm]
+Octolasion: $\hat{y}_i = -2.54 + -0.09  + 0.71\cdot \text{MAGENUMF}$
+
+~\\[6mm]
+
 {\bf Important:} The $p$-values of the worm species are not very meaningful. They belong to tests that compare the actual level with the reference level. However, the question is whether the species variable has an effect in total.
+
+}
+
+\frame[containsverbatim]{\frametitle{Plotting the earthworms results}
+All species have the same slope (this is a modelling assumption), but different intercepts:
+\begin{center}
+\setkeys{Gin}{width=0.7\textwidth}
+\includegraphics{Bio144_2017_week3-035}
+\end{center}
 }
 
 \frame[containsverbatim]{\frametitle{F-test to compare models}
 \vspace{-5mm}
 When a factor covariate with $k$ levels is in the model, it occupies $k-1$ parameters. Therefore, the $t$-test needs to be replaced by the $F$-test:\\[2mm]
 
-\includegraphics[width=11cm]{pictures/Ftest.pdf}
+\includegraphics[width=11cm]{pictures/Ftest.pdf}\\
 {\small Remember: $F_{1,n-p} = t^2_{n-p}$}
 }
 
 
 
 \frame[containsverbatim]{\frametitle{F-test for the earthworms}
+
+Question: Is the ``Gattung'' covariate relevant in the model, that is, do the models differ for the three species? \\[4mm]
 
 There exists a function (ANOVA) in R that does the $F$-test for categorical variables:\\[6mm]
 
@@ -880,13 +904,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Thus: there seems to be some difference in the regression models for the three species.
 }
 
-\frame[containsverbatim]{\frametitle{Plotting the earthworms results}
-All species have the same slope (this is a modelling assumption), but different intercepts:
-\begin{center}
-\setkeys{Gin}{width=0.7\textwidth}
-\includegraphics{Bio144_2017_week3-036}
-\end{center}
-}
+
 
 \frame[containsverbatim]{\frametitle{Again: checking modelling assumptions}
 
