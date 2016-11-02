@@ -107,7 +107,7 @@ Datenanalyse in der Biologie}%\\[.3cm]
 
 \frame{\frametitle{Course material covered today}
 \begin{itemize}
-\item To do
+\item Chapter 3.3 in \emph{Lineare Regression}
 \item To do
 \end{itemize}
 }
@@ -226,11 +226,25 @@ qqline(r.hg$residuals)
 @
 }
 
-\frame[containsverbatim]{\frametitle{Multiple vs.\ many single regressions}
-Question: I find group-specific intercepts and interactions too complicated. Could I simply fit separate models for each group?
+\frame{\frametitle{Multiple vs.\ many single regressions}
+Question: I find group-specific intercepts and interactions too complicated. Could I simply fit separate models for each group?\\[6mm]
 
+\pause
+Answer (Stahel 3.3o):\\[4mm]
+\includegraphics[width=11cm]{pictures/citation.pdf}
+~\\[4mm]
+
+Why?
 }
 
+\frame{\frametitle{}
+Chapter 3.3c in the Stahel script illustrates the point on four artificial examples. The model is given as 
+\begin{equation*}
+y_i = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + e_i \  ,
+\end{equation*}
+
+where $\bm{x}^{(1)}$ is a continuous variable, and  $\bm{x}^{(2)}$ is a binary grouping variable (thus taking values 0 for group 0 and 1 for group 1).
+}
 %\frame{References:
 %\bibliographystyle{Chicago}
 %\bibliography{refs}

@@ -107,7 +107,7 @@ Datenanalyse in der Biologie}%\\[.3cm]
 
 \frame{\frametitle{Course material covered today}
 \begin{itemize}
-\item To do
+\item Chapter 3.3 in \emph{Lineare Regression}
 \item To do
 \end{itemize}
 }
@@ -200,8 +200,8 @@ Remember (from last week), however, that the Hg model also included smoking stat
 \end{Sinput}
 \end{Schunk}
 
-% latex table generated in R 3.3.1 by xtable 1.8-2 package
-% Mon Oct 31 11:21:59 2016
+% latex table generated in R 3.3.2 by xtable 1.8-2 package
+% Wed Nov  2 20:44:56 2016
 \begin{table}[!h]
 \centering
 \begingroup\footnotesize
@@ -231,11 +231,25 @@ Again, for completeness, some model checking:
 \includegraphics{Bio144_2017_week4-modelChecksHg}
 }
 
-\frame[containsverbatim]{\frametitle{Multiple vs.\ many single regressions}
-Question: I find group-specific intercepts and interactions too complicated. Could I simply fit separate models for each group?
+\frame{\frametitle{Multiple vs.\ many single regressions}
+Question: I find group-specific intercepts and interactions too complicated. Could I simply fit separate models for each group?\\[6mm]
 
+\pause
+Answer (Stahel 3.3o):\\[4mm]
+\includegraphics[width=11cm]{pictures/citation.pdf}
+~\\[4mm]
+
+Why?
 }
 
+\frame{\frametitle{}
+Chapter 3.3c in the Stahel script illustrates the point on four artificial examples. The model is given as 
+\begin{equation*}
+y_i = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + e_i \  ,
+\end{equation*}
+
+where $\bm{x}^{(1)}$ is a continuous variable, and  $\bm{x}^{(2)}$ is a binary grouping variable (0/1)
+}
 %\frame{References:
 %\bibliographystyle{Chicago}
 %\bibliography{refs}
