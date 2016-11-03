@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.7.13)  2 NOV 2016 20:44
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.7.13)  3 NOV 2016 17:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1482,11 +1482,124 @@ Overfull \hbox (19.91681pt too wide) in paragraph at lines 243--243
 ]
 
 LaTeX Font Warning: Font shape `T1/aess/bx/it' undefined
-(Font)              using `T1/aess/bx/n' instead on input line 252.
+(Font)              using `T1/aess/bx/n' instead on input line 260.
 
 [14
 
+] <pictures/FigsAB.jpg, id=143, 1235.61626pt x 456.70625pt>
+File: pictures/FigsAB.jpg Graphic file (type jpg)
+
+<use pictures/FigsAB.jpg>
+Package pdftex.def Info: pictures/FigsAB.jpg used on input line 268.
+(pdftex.def)             Requested size: 312.9803pt x 115.68153pt.
+
+Overfull \hbox (19.91681pt too wide) in paragraph at lines 268--268
+[][]  
+ []
+
+[15
+
+ <./pictures/FigsAB.jpg>]
+<pictures/FigsCD.pdf, id=150, 1049.9225pt x 404.51125pt>
+File: pictures/FigsCD.pdf Graphic file (type pdf)
+
+<use pictures/FigsCD.pdf>
+Package pdftex.def Info: pictures/FigsCD.pdf used on input line 276.
+(pdftex.def)             Requested size: 312.9803pt x 120.58276pt.
+
+Overfull \hbox (19.91681pt too wide) in paragraph at lines 276--276
+[][]  
+ []
+
+[16
+
+ <./pictures/FigsCD.pdf>]
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 294--294
+[][][][][][][]  
+ []
+
+
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 294--294
+[][][][][][][]  
+ []
+
+[17
+
 ]
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 308--308
+[][][][][][][] 
+ []
+
+[18
+
+] <pictures/41b.pdf, id=177, 979.66pt x 238.8925pt>
+File: pictures/41b.pdf Graphic file (type pdf)
+ <use pictures/41b.pdf>
+Package pdftex.def Info: pictures/41b.pdf used on input line 321.
+(pdftex.def)             Requested size: 312.9803pt x 76.31956pt.
+
+Overfull \hbox (19.91681pt too wide) in paragraph at lines 321--321
+[]  
+ []
+
+
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 321--321
+[][][][][][][]  
+ []
+
+[19
+
+ <./pictures/41b.pdf>] [20
+
+]
+<Bio144_2017_week4-hgFig.pdf, id=198, 289.08pt x 289.08pt>
+File: Bio144_2017_week4-hgFig.pdf Graphic file (type pdf)
+
+<use Bio144_2017_week4-hgFig.pdf>
+Package pdftex.def Info: Bio144_2017_week4-hgFig.pdf used on input line 352.
+(pdftex.def)             Requested size: 146.53174pt x 146.52899pt.
+
+Overfull \hbox (5.0pt too wide) in paragraph at lines 349--354
+[] 
+ []
+
+[21
+
+ <./Bio144_2017_week4-hgFig.pdf>] [22
+
+]
+<Bio144_2017_week4-hgFigCov.pdf, id=217, 505.89pt x 289.08pt>
+File: Bio144_2017_week4-hgFigCov.pdf Graphic file (type pdf)
+
+<use Bio144_2017_week4-hgFigCov.pdf>
+Package pdftex.def Info: Bio144_2017_week4-hgFigCov.pdf used on input line 382.
+
+(pdftex.def)             Requested size: 263.75534pt x 150.71945pt.
+ [23
+
+ <./Bio144_2017_week4-hgFigCov.pdf>]
+<Bio144_2017_week4-hgFigQQ.pdf, id=230, 289.08pt x 289.08pt>
+File: Bio144_2017_week4-hgFigQQ.pdf Graphic file (type pdf)
+
+<use Bio144_2017_week4-hgFigQQ.pdf>
+Package pdftex.def Info: Bio144_2017_week4-hgFigQQ.pdf used on input line 391.
+(pdftex.def)             Requested size: 175.83987pt x 175.84009pt.
+ [24
+
+ <./Bio144_2017_week4-hgFigQQ.pdf>]
+[25
+
+] [26
+
+] <Bio144_2017_week4-013.pdf, id=257, 289.08pt x 289.08pt>
+File: Bio144_2017_week4-013.pdf Graphic file (type pdf)
+
+<use Bio144_2017_week4-013.pdf>
+Package pdftex.def Info: Bio144_2017_week4-013.pdf used on input line 413.
+(pdftex.def)             Requested size: 175.83987pt x 175.84009pt.
+ [27
+
+ <./Bio144_2017_week4-013.pdf>]
 \tf@nav=\write8
 \openout8 = `Bio144_2017_week4.nav'.
 
@@ -1496,27 +1609,28 @@ LaTeX Font Warning: Font shape `T1/aess/bx/it' undefined
 \tf@snm=\write10
 \openout10 = `Bio144_2017_week4.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 258.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 258.
- (./Bio144_2017_week4.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 258.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 258.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 423.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 423.
+
+(./Bio144_2017_week4.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 423.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 423.
 Package rerunfilecheck Info: File `Bio144_2017_week4.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 258.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 423.
  ) 
 Here is how much of TeX's memory you used:
- 21036 strings out of 494976
- 381895 string characters out of 6179137
+ 21173 strings out of 494976
+ 384468 string characters out of 6179137
  495867 words of memory out of 5000000
- 23620 multiletter control sequences out of 15000+600000
- 60257 words of font info for 131 fonts, out of 8000000 for 9000
+ 23721 multiletter control sequences out of 15000+600000
+ 61227 words of font info for 134 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 49i,13n,60p,419b,408s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 49i,13n,60p,419b,507s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/
 texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive
@@ -1527,10 +1641,10 @@ dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist
 /public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
 /amsfonts/cm/cmtt8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
 ts/cm/cmtt9.pfb>
-Output written on Bio144_2017_week4.pdf (14 pages, 143266 bytes).
+Output written on Bio144_2017_week4.pdf (27 pages, 367823 bytes).
 PDF statistics:
- 183 PDF objects out of 1000 (max. 8388607)
- 137 compressed objects within 2 object streams
- 30 named destinations out of 1000 (max. 500000)
- 79 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 318 PDF objects out of 1000 (max. 8388607)
+ 243 compressed objects within 3 object streams
+ 56 named destinations out of 1000 (max. 500000)
+ 114 words of extra memory for PDF output out of 10000 (max. 10000000)
 

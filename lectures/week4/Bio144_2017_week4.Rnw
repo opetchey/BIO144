@@ -227,7 +227,7 @@ qqline(r.hg$residuals)
 }
 
 \frame{\frametitle{Multiple vs.\ many single regressions}
-Question: I find group-specific intercepts and interactions too complicated. Could I simply fit separate models for each group?\\[6mm]
+Question: I find group-specific intercepts and interactions too complicated. Could I simply fit separate models for each variable?\\[6mm]
 
 \pause
 Answer (Stahel 3.3o):\\[4mm]
@@ -237,17 +237,212 @@ Answer (Stahel 3.3o):\\[4mm]
 Why?
 }
 
-\frame{\frametitle{}
-Chapter 3.3c in the Stahel script illustrates the point on four artificial examples. The model is given as 
+\frame{\frametitle{Illustration}
+Chapter 3.3c in the Stahel script illustrates the point on four artificial examples. The model is always given as 
 \begin{equation*}
 y_i = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + e_i \  ,
 \end{equation*}
 
-where $\bm{x}^{(1)}$ is a continuous variable, and  $\bm{x}^{(2)}$ is a binary grouping variable (thus taking values 0 for group 0 and 1 for group 1).
+where $\bm{x}^{(1)}$ is a continuous variable, and $\bm{x}^{(2)}$ is a binary grouping variable (thus taking values 0 for group 0 and 1 for group 1).\\[4mm]
+
+Thus the model is 
+\begin{equation*}
+\begin{array}{lll}
+\hat{y_i} &= \beta_0 +  \beta_1 x_i^{(1)} & \text{if $x_i^{(2)}=0$.} \\
+\hat{y_i} &= \beta_0 + \beta_2 + \beta_1 x_i^{(1)}   & \text{if $x_i^{(2)}=1$.} 
+\end{array}
+\end{equation*}
 }
-%\frame{References:
-%\bibliographystyle{Chicago}
-%\bibliography{refs}
-%}
+
+\frame{
+\includegraphics[width=11cm]{pictures/FigsAB.jpg}\\[2mm]
+
+Example A: Within-group slope is $>0$. Fitting $y\sim x$ leads to an overestimated slope when group-variable is not included in the model.\\[4mm]
+
+Example B: Within-group slope is $0$, but fitting $y\sim x$ leads to a slope estimate $>0$, wich is only an artefact of not accounting for the group variable $x^{(2)}$. \\[4mm]
+}
+
+\frame{
+\includegraphics[width=11cm]{pictures/FigsCD.pdf}\\[2mm]
+
+Example C: Within-group slope is $<0$, but fitting $y\sim x$ leads to an estimated slope of $>0$! \\[4mm]
+
+Example D: Within-group slope is $<0$, but fitting $y\sim x$ leads to a slope estimate of $0$. \\[4mm]
+}
+
+
+\frame{\frametitle{Another interpretation of multiple regression}
+In multiple regression, the coefficient $\beta_x$ of a covariate $x$ can be interpreted as follows:\\[4mm]
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+$\beta_x$ explains how the response changes with $x$, while holding all the other variables constant.
+\end{minipage}}
+
+~\\[2mm]
+This idea is similar in spirit to an experimental design, where the influence of a covariate of interest on the response is investigated in various environments\footnote{Clayton, D. and M. Hills (1993). Statistical Models in Epidemiology. Oxford: Oxford University Press.}. Clayton and Hills (1993) continue (p.273):\\[3mm]
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+\begin{quote}
+To extend our analogy, the data analyst is in a position like that of an experimental scientist who has the capability to plan and carry out many experiments within a single day. Not surprisingly, a cool head is required!
+\end{quote}
+\end{minipage}}
+}
+
+\frame{\frametitle{Checking modelling assumptions}
+Remember from week 2, that in linear regression the modelling assumption is that the residuals $e_i$ are independently normally distributed around zero, that is, $e_i \sim \N(0,\sigma_e^2)$. This implies four things:\\[2mm]
+\colorbox{lightgray}{\begin{minipage}{10cm}
+\begin{enumerate}[a)]
+\item The expected value of $e_i$ is 0: $\E(e_i)=0$.\\[2mm]
+\item All $e_i$ have the same variance: $\Var(e_i)=\sigma_e^2$. \\[2mm]
+\item The $e_i$ are normally distributed.\\[2mm]
+\item The $e_i$ are independent of each other.
+\end{enumerate}
+\end{minipage}}
+~\\[2mm]
+So far, we have discussed the Tukey-Anscombe plot and the QQ-plot.
+}
+
+\frame{
+Stahel 4.1b:
+\includegraphics[width=11cm]{pictures/41b.pdf}
+~\\[6mm]
+
+The aim is to find a model that describes the data well. But always keep in mind the following statement from a wise man:\\[6mm]
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+All models are wrong, but some are useful.\\
+\scriptsize{(Box 1978)}
+\end{minipage}}
+}
+
+\frame{\frametitle{Overview of model-checking tools}
+
+Those used in this course are:\\[4mm]
+
+\begin{itemize}
+\item Tukey-Anscombe plot (see weeks 2 and 3)\\
+$\Rightarrow$ \myalert{To check assumptions a), b) and d)}\\[2mm]
+
+\item Quantile-quantile (QQ) plot (see weeks 2 and 3)\\
+$\Rightarrow$ \myalert{To check assumption c)}\\[2mm]
+
+
+\item Scale-location plot (Streuungs-Diagramm)\\
+$\Rightarrow$ \myalert{To check assumption b)}\\[2mm]
+
+\item Leverage plot (Hebelarm-Diagramm)\\
+$\Rightarrow$ \myalert{To find influencial observations}
+\end{itemize}
+}
+
+\frame[containsverbatim]{\frametitle{Tukey-Anscombe plot}
+<<echo=F>>=
+path <- "~/Teaching/Bio144/data_examples/Hg/"
+d.hg <- read.table(paste(path,"Hg_urin.csv",sep=""),header=T, sep=",")
+d.hg <- d.hg[d.hg$mother==1,-c(3,4,9,10,11)]
+names(d.hg) <- c("Hg_urin", "Hg_soil", "smoking","amalgam", "age", "fish")
+@
+
+
+It is useful to enrich the TA-plot by adding a ``running mean'' or a ``smoothed mean'', which can give hints on the trend of the residuals. For the mercury example where $\log(Hg_{\text{urin}})$ is regressed on smoking, amalgam and fish consumption (slides 33-35 or week 3): 
+\vspace{-10mm}
+
+\begin{multicols}{2}{ll}
+% \begin{center}
+\setkeys{Gin}{width=0.5\textwidth}
+<<hgFig,fig=T,echo=F,width=4,height=4>>=
+r1.urin.mother <- lm(log10(Hg_urin) ~  smoking + amalgam + fish,data=d.hg)
+plot(fitted(r1.urin.mother),residuals(r1.urin.mother),xlab="fitted",ylab="residual")
+abline(h=0,lty=2)
+aa <- data.frame(cbind(x=fitted(r1.urin.mother), y=residuals(r1.urin.mother)))
+aa <- aa[order(aa$x),]
+lo <- loess(y ~ x, aa)
+lines(aa$x,predict(lo), col='red', lwd=2,lty=5)
+@
+\vspace{5mm}
+~\\[1cm]
+% \end{center}
+The TA plot (again) indicates that there is a small problem in the range of -0.7 to -0.6, namely due to an outlier...\\
+\end{multicols}
+
+}
+
+
+\frame{
+We claimed that the TA plot is also able to check the \emph{independence assumption} d). But how?\\[4mm]
+
+A dependency would be reflected by some kind of \myalert{trend}. \\[4mm]
+
+Other ideas to plot residuals to check for a dependency? Please discuss!
+
+}
+
+% Todo: hide the following slide in the published version of the slides!!
+\frame{
+The dependency is not necessarily on the fitted values ($x$-axis of TA plot). Ideas: 
+\begin{itemize}
+\item Plot in dependency of time (if available) or sequence of obervations.
+\item Plot against the covariates.
+\end{itemize}
+\begin{center}
+\setkeys{Gin}{width=0.9\textwidth}
+<<hgFigCov,fig=T,echo=F,width=7,height=4>>=
+par(mfrow=c(1,2))
+plot(d.hg$amalgam,residuals(r1.urin.mother),xlab="No of amalgam",ylab="residual")
+abline(h=0,lty=2)
+plot(d.hg$fish,residuals(r1.urin.mother),xlab="No of fish",ylab="residual")
+abline(h=0,lty=2)
+@
+\end{center}
+}
+
+\frame{\frametitle{QQ-plot}
+
+The \myalert{outlier} recorded above is also visible in the (well-known) QQ-plot, which is useful to check normal distribution of residuals (assumption c):
+\begin{center}
+\setkeys{Gin}{width=0.6\textwidth}
+<<hgFigQQ,fig=T,echo=F,width=4,height=4>>=
+qqnorm(residuals(r1.urin.mother))
+qqline(residuals(r1.urin.mother))
+@
+\end{center}
+}
+
+
+\frame{\frametitle{Scale-location plot (Streuungs-Diagramm)}}
+
+
+\frame{\frametitle{Leverage plot}
+
+}
+
+
+
+\frame[containsverbatim]{\frametitle{Outliers}
+<<echo=F>>=
+path <- "~/Teaching/Bio144/data_examples/Hg/"
+d.hg <- read.table(paste(path,"Hg_urin.csv",sep=""),header=T, sep=",")
+d.hg <- d.hg[d.hg$mother==1,-c(3,4,9,10,11)]
+names(d.hg) <- c("Hg_urin", "Hg_soil", "smoking","amalgam", "age", "fish")
+@
+<<r1urin,echo=F>>=
+r1.urin.mother <- lm(log10(Hg_urin) ~  smoking  + amalgam + fish,data=d.hg)
+#summary(r1.urin.mother)
+@
+\setkeys{Gin}{width=0.6\textwidth}
+<<fig=T,width=4,height=4>>=
+plot(fitted(r1.urin.mother),residuals(r1.urin.mother))
+abline(h=0,lty=2)
+qqnorm(fitted(r1.urin.mother))
+qqline(fitted(r1.urin.mother))
+@
+
+}
+% \frame{References:
+% \bibliographystyle{Chicago}
+% \bibliography{refs}
+% }
+
+
 
 \end{document}
