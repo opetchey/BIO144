@@ -59,6 +59,8 @@
 \newcommand{\Po}{\text{Po}}
 \newcommand{\N}{\mathsf{N}}
 
+\newcommand{\hl}{\textcolor{red}}
+
 \newcommand{\ball}[1]{\begin{pgfpicture}{-1ex}{-0.65ex}{1ex}{1ex}
 \usebeamercolor[fg]{item projected}
 
@@ -201,7 +203,7 @@ Remember (from last week), however, that the Hg model also included smoking stat
 \end{Schunk}
 
 % latex table generated in R 3.3.2 by xtable 1.8-2 package
-% Thu Nov  3 17:42:36 2016
+% Mon Nov  7 17:03:19 2016
 \begin{table}[!h]
 \centering
 \begingroup\footnotesize
@@ -294,7 +296,8 @@ To extend our analogy, the data analyst is in a position like that of an experim
 }
 
 \frame{\frametitle{Checking modelling assumptions}
-Remember from week 2, that in linear regression the modelling assumption is that the residuals $e_i$ are independently normally distributed around zero, that is, $e_i \sim \N(0,\sigma_e^2)$. This implies four things:\\[2mm]
+Remember from week 2, that in linear regression the modelling assumption is that the residuals $e_i$ are independently normally distributed around zero, that is, $e_i \sim \N(0,\sigma_e^2)$. This implies four things:\\[6mm]
+
 \colorbox{lightgray}{\begin{minipage}{10cm}
 \begin{enumerate}[a)]
 \item The expected value of $e_i$ is 0: $\E(e_i)=0$.\\[2mm]
@@ -336,7 +339,7 @@ $\Rightarrow$ \myalert{To check assumption c)}\\[2mm]
 $\Rightarrow$ \myalert{To check assumption b)}\\[2mm]
 
 \item Leverage plot (Hebelarm-Diagramm)\\
-$\Rightarrow$ \myalert{To find influencial observations}
+$\Rightarrow$ \myalert{To find influential observations}
 \end{itemize}
 }
 
@@ -391,16 +394,93 @@ The \myalert{outlier} recorded above is also visible in the (well-known) QQ-plot
 }
 
 
-\frame{\frametitle{Scale-location plot (Streuungs-Diagramm)}}
+\frame[containsverbatim]{\frametitle{Scale-location plot (Streuungs-Diagramm)}
+The scale-location plot is particularly suited to check the assumption of equal variances ({\bf homoscedasticiy / Homoskedasdizit\"at}).\\[2mm]
 
-
-\frame{\frametitle{Leverage plot}
-
+The idea is to plot the squared residuals $\sqrt{|R_i|}$ against the fitted values $\hat{y_i}$:\\[2mm]
+\begin{center}
+\setkeys{Gin}{width=0.6\textwidth}
+\includegraphics{Bio144_2017_week4-slPlot}
+\end{center}
 }
 
 
+\frame{\frametitle{Leverages}
+To understand the leverage plot, we need to introduce the idea of the \emph{leverage} (``Hebel''), see Stahel 4.3 h).\\[2mm]
+
+The leverage of individual $i$ is defined as $H_{ii} = (1/n) + (x_i-\overline{x})^2 SSQ^{(X)}$, which becomes larger the further away from the mean...\\[6mm]
+
+\includegraphics[width=11cm]{pictures/leverage.jpg}
+
+}
+
+\frame{\frametitle{Graphical illustration of the leverage effect}
+Data points with $x_i$ values far from the mean have a stronger leverage effect than when $x_i\approx \overline{x}$:
+
+\begin{center}
+\setkeys{Gin}{width=1.1\textwidth}
+\includegraphics{Bio144_2017_week4-012}
+\end{center}
+
+The outlier in the middle plot ``pulls'' the regression line in its direction and biases the slope.
+
+}
+
+\frame[containsverbatim]{\frametitle{Leverage plot (Hebelarm-Diagramm)}
+In the leverage plot, (standardized) residuals $\tilde{R_i}$ are plotted against the leverage $H_{ii}$:
+~\vspace{-8mm}
+\begin{center}
+\setkeys{Gin}{width=0.6\textwidth}
+\includegraphics{Bio144_2017_week4-013}
+\end{center}
+~\\
+Note: Cook's distance measures how much the regression changes when the $i$th observation is omitted.
+}
+
+
+\frame{\frametitle{What can go ``wrong'' during the modelling process?}
+
+\begin{itemize}
+\item ...
+% \item Violation of assumptions:
+% \begin{itemize}
+% \item $\E(e_i)\neq 0$
+% \item $\Var(e_i)$ not constant
+% \item $e_i$ not normally distributed.
+% \item Heteroscedasticity
+% \end{itemize}
+% \item Outliers
+%
+\end{itemize}
+}
+
+\frame{\frametitle{What to do when things go wrong?}
+\begin{enumerate}[(i)]
+\item \hl{Transform the outcome or the covariables.}\\[2mm]
+\item \hl{Take care of outliers.}\\[2mm]
+\item Use weighted regression (not discussed here; todo: check).\\[2mm]
+\item Improve the model, e.g., by adding additional terms or interactions (see ``model selection'' in week 7).\\[2mm]
+\item Use another model family (generalized or nonlinear regression model).\\[2mm]
+\end{enumerate}
+}
+
+
+\frame[containsverbatim]{\frametitle{Transformation of the response?}
+\begin{Schunk}
+\begin{Sinput}
+> r2.urin.mother <- lm(Hg_urin ~  smoking  + amalgam + fish,data=d.hg)
+\end{Sinput}
+\end{Schunk}
+~\\
+\setkeys{Gin}{width=0.65\textwidth}
+\includegraphics{Bio144_2017_week4-015}
+}
+
 
 \frame[containsverbatim]{\frametitle{Outliers}
+Mention that leverage plot is good to find influential observations. 
+
+Outliers also graphically visible in TA and QQ plots
 \setkeys{Gin}{width=0.6\textwidth}
 \begin{Schunk}
 \begin{Sinput}
@@ -410,7 +490,7 @@ The \myalert{outlier} recorded above is also visible in the (well-known) QQ-plot
 > qqline(fitted(r1.urin.mother))
 \end{Sinput}
 \end{Schunk}
-\includegraphics{Bio144_2017_week4-013}
+\includegraphics{Bio144_2017_week4-018}
 
 }
 % \frame{References:
