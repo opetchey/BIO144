@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.7.13)  7 NOV 2016 17:03
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.7.13)  9 NOV 2016 16:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1552,14 +1552,14 @@ Overfull \hbox (1.46407pt too wide) in paragraph at lines 324--324
  <./pictures/41b.pdf>] [20
 
 ]
-<Bio144_2017_week4-hgFig.pdf, id=198, 289.08pt x 289.08pt>
+<Bio144_2017_week4-hgFig.pdf, id=198, 361.35pt x 361.35pt>
 File: Bio144_2017_week4-hgFig.pdf Graphic file (type pdf)
 
 <use Bio144_2017_week4-hgFig.pdf>
-Package pdftex.def Info: Bio144_2017_week4-hgFig.pdf used on input line 355.
-(pdftex.def)             Requested size: 146.53174pt x 146.52899pt.
+Package pdftex.def Info: Bio144_2017_week4-hgFig.pdf used on input line 357.
+(pdftex.def)             Requested size: 146.53174pt x 146.53342pt.
 
-Overfull \hbox (5.0pt too wide) in paragraph at lines 352--357
+Overfull \hbox (5.0pt too wide) in paragraph at lines 354--359
 [] 
  []
 
@@ -1572,7 +1572,7 @@ Overfull \hbox (5.0pt too wide) in paragraph at lines 352--357
 File: Bio144_2017_week4-hgFigCov.pdf Graphic file (type pdf)
 
 <use Bio144_2017_week4-hgFigCov.pdf>
-Package pdftex.def Info: Bio144_2017_week4-hgFigCov.pdf used on input line 385.
+Package pdftex.def Info: Bio144_2017_week4-hgFigCov.pdf used on input line 387.
 
 (pdftex.def)             Requested size: 263.75534pt x 150.71945pt.
  [23
@@ -1582,7 +1582,7 @@ Package pdftex.def Info: Bio144_2017_week4-hgFigCov.pdf used on input line 385.
 File: Bio144_2017_week4-hgFigQQ.pdf Graphic file (type pdf)
 
 <use Bio144_2017_week4-hgFigQQ.pdf>
-Package pdftex.def Info: Bio144_2017_week4-hgFigQQ.pdf used on input line 394.
+Package pdftex.def Info: Bio144_2017_week4-hgFigQQ.pdf used on input line 396.
 (pdftex.def)             Requested size: 175.83987pt x 175.84009pt.
  [24
 
@@ -1591,7 +1591,7 @@ Package pdftex.def Info: Bio144_2017_week4-hgFigQQ.pdf used on input line 394.
 File: Bio144_2017_week4-slPlot.pdf Graphic file (type pdf)
 
 <use Bio144_2017_week4-slPlot.pdf>
-Package pdftex.def Info: Bio144_2017_week4-slPlot.pdf used on input line 403.
+Package pdftex.def Info: Bio144_2017_week4-slPlot.pdf used on input line 405.
 (pdftex.def)             Requested size: 175.83987pt x 153.86008pt.
  [25
 
@@ -1600,10 +1600,10 @@ Package pdftex.def Info: Bio144_2017_week4-slPlot.pdf used on input line 403.
 File: pictures/leverage.jpg Graphic file (type jpg)
 
 <use pictures/leverage.jpg>
-Package pdftex.def Info: pictures/leverage.jpg used on input line 415.
+Package pdftex.def Info: pictures/leverage.jpg used on input line 417.
 (pdftex.def)             Requested size: 312.9803pt x 108.9134pt.
 
-Overfull \hbox (19.91681pt too wide) in paragraph at lines 415--415
+Overfull \hbox (19.91681pt too wide) in paragraph at lines 417--417
 [][]  
  []
 
@@ -1614,10 +1614,10 @@ Overfull \hbox (19.91681pt too wide) in paragraph at lines 415--415
 File: Bio144_2017_week4-012.pdf Graphic file (type pdf)
 
 <use Bio144_2017_week4-012.pdf>
-Package pdftex.def Info: Bio144_2017_week4-012.pdf used on input line 427.
+Package pdftex.def Info: Bio144_2017_week4-012.pdf used on input line 429.
 (pdftex.def)             Requested size: 322.37163pt x 123.13466pt.
 
-Overfull \hbox (29.30814pt too wide) in paragraph at lines 427--427
+Overfull \hbox (29.30814pt too wide) in paragraph at lines 429--429
  [] 
  []
 
@@ -1628,8 +1628,8 @@ Overfull \hbox (29.30814pt too wide) in paragraph at lines 427--427
 File: Bio144_2017_week4-013.pdf Graphic file (type pdf)
 
 <use Bio144_2017_week4-013.pdf>
-Package pdftex.def Info: Bio144_2017_week4-013.pdf used on input line 434.
-(pdftex.def)             Requested size: 175.83987pt x 156.30377pt.
+Package pdftex.def Info: Bio144_2017_week4-013.pdf used on input line 436.
+(pdftex.def)             Requested size: 161.1858pt x 143.27809pt.
  [28
 
  <./Bio144_2017_week4-013.pdf>] [29
@@ -1641,24 +1641,62 @@ Package pdftex.def Info: Bio144_2017_week4-013.pdf used on input line 434.
 File: Bio144_2017_week4-015.pdf Graphic file (type pdf)
 
 <use Bio144_2017_week4-015.pdf>
-Package pdftex.def Info: Bio144_2017_week4-015.pdf used on input line 476.
-(pdftex.def)             Requested size: 190.48947pt x 190.48903pt.
- [31
+Package pdftex.def Info: Bio144_2017_week4-015.pdf used on input line 481.
+(pdftex.def)             Requested size: 175.83987pt x 175.8401pt.
+
+Overfull \vbox (24.70416pt too high) detected at line 483
+ []
+
+[31
 
  <./Bio144_2017_week4-015.pdf>]
-<Bio144_2017_week4-018.pdf, id=319, 289.08pt x 289.08pt>
+<Bio144_2017_week4-016.pdf, id=319, 433.62pt x 433.62pt>
+File: Bio144_2017_week4-016.pdf Graphic file (type pdf)
+
+<use Bio144_2017_week4-016.pdf>
+Package pdftex.def Info: Bio144_2017_week4-016.pdf used on input line 489.
+(pdftex.def)             Requested size: 175.83987pt x 175.8401pt.
+ [32
+
+ <./Bio144_2017_week4-016.pdf>]
+<Bio144_2017_week4-018.pdf, id=332, 433.62pt x 433.62pt>
 File: Bio144_2017_week4-018.pdf Graphic file (type pdf)
 
 <use Bio144_2017_week4-018.pdf>
-Package pdftex.def Info: Bio144_2017_week4-018.pdf used on input line 493.
-(pdftex.def)             Requested size: 175.83987pt x 175.84009pt.
-
-Overfull \vbox (10.72809pt too high) detected at line 495
- []
-
-[32
+Package pdftex.def Info: Bio144_2017_week4-018.pdf used on input line 498.
+(pdftex.def)             Requested size: 175.83987pt x 175.8401pt.
+ [33
 
  <./Bio144_2017_week4-018.pdf>]
+<pictures/logT.pdf, id=347, 847.165pt x 730.73pt>
+File: pictures/logT.pdf Graphic file (type pdf)
+ <use pictures/logT.pdf>
+Package pdftex.def Info: pictures/logT.pdf used on input line 509.
+(pdftex.def)             Requested size: 227.62204pt x 196.32968pt.
+
+[34
+
+ <./pictures/logT.pdf>]
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 526--526
+[][][][][][][] 
+ []
+
+[35
+
+]
+File: Bio144_2017_week4-hgFig.pdf Graphic file (type pdf)
+ <use Bio144_2017_week4-hgFig.pdf>
+Package pdftex.def Info: Bio144_2017_week4-hgFig.pdf used on input line 531.
+(pdftex.def)             Requested size: 205.14354pt x 205.14458pt.
+ [36
+
+] [37
+
+] [38
+
+] [39
+
+]
 \tf@nav=\write8
 \openout8 = `Bio144_2017_week4.nav'.
 
@@ -1668,24 +1706,25 @@ Overfull \vbox (10.72809pt too high) detected at line 495
 \tf@snm=\write10
 \openout10 = `Bio144_2017_week4.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 503.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 503.
- (./Bio144_2017_week4.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 503.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 503.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 563.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 563.
+
+(./Bio144_2017_week4.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 563.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 563.
 Package rerunfilecheck Info: File `Bio144_2017_week4.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 503.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 563.
  ) 
 Here is how much of TeX's memory you used:
- 21219 strings out of 494976
- 385351 string characters out of 6179137
+ 21259 strings out of 494976
+ 385863 string characters out of 6179137
  495875 words of memory out of 5000000
- 23752 multiletter control sequences out of 15000+600000
+ 23775 multiletter control sequences out of 15000+600000
  61227 words of font info for 134 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  49i,13n,60p,419b,507s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1700,10 +1739,10 @@ ype1/public/amsfonts/cm/cmssi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
 ublic/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
 msfonts/cm/cmtt8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
 /cm/cmtt9.pfb>
-Output written on Bio144_2017_week4.pdf (32 pages, 803667 bytes).
+Output written on Bio144_2017_week4.pdf (39 pages, 914630 bytes).
 PDF statistics:
- 383 PDF objects out of 1000 (max. 8388607)
- 293 compressed objects within 3 object streams
- 66 named destinations out of 1000 (max. 500000)
- 139 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 449 PDF objects out of 1000 (max. 8388607)
+ 346 compressed objects within 4 object streams
+ 81 named destinations out of 1000 (max. 500000)
+ 149 words of extra memory for PDF output out of 10000 (max. 10000000)
 

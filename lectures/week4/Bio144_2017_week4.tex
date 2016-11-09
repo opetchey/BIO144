@@ -203,7 +203,7 @@ Remember (from last week), however, that the Hg model also included smoking stat
 \end{Schunk}
 
 % latex table generated in R 3.3.2 by xtable 1.8-2 package
-% Mon Nov  7 17:03:19 2016
+% Wed Nov  9 16:59:46 2016
 \begin{table}[!h]
 \centering
 \begingroup\footnotesize
@@ -339,14 +339,16 @@ $\Rightarrow$ \myalert{To check assumption c)}\\[2mm]
 $\Rightarrow$ \myalert{To check assumption b)}\\[2mm]
 
 \item Leverage plot (Hebelarm-Diagramm)\\
-$\Rightarrow$ \myalert{To find influential observations}
+$\Rightarrow$ \myalert{To find influential observations and/or outliers}\\[4mm]
 \end{itemize}
+
+\myalert{Note:} these four diagrams are plotted automatically by R when you use the \texttt{plot()} function on an \texttt{lm} object, for example \texttt{plot(r.hg)}.
 }
 
 \frame[containsverbatim]{\frametitle{Tukey-Anscombe plot}
 
 
-It is useful to enrich the TA-plot by adding a ``running mean'' or a ``smoothed mean'', which can give hints on the trend of the residuals. For the mercury example where $\log(Hg_{\text{urin}})$ is regressed on smoking, amalgam and fish consumption (slides 33-35 or week 3): 
+It is useful to enrich the TA-plot by adding a ``running mean'' or a ``smoothed mean'', which can give hints on the trend of the residuals. For the mercury example where $\log(Hg_{\text{urin}})$ is regressed on smoking, amalgam and fish consumption for mothers only (slides 33-35 or week 3): 
 \vspace{-10mm}
 
 \begin{multicols}{2}{ll}
@@ -397,7 +399,7 @@ The \myalert{outlier} recorded above is also visible in the (well-known) QQ-plot
 \frame[containsverbatim]{\frametitle{Scale-location plot (Streuungs-Diagramm)}
 The scale-location plot is particularly suited to check the assumption of equal variances ({\bf homoscedasticiy / Homoskedasdizit\"at}).\\[2mm]
 
-The idea is to plot the squared residuals $\sqrt{|R_i|}$ against the fitted values $\hat{y_i}$:\\[2mm]
+The idea is to plot the squared residuals $\sqrt{|R_i|}$ against the fitted values $\hat{y_i}$ {\scriptsize (again using the Hg example with the mothers)}:\\[2mm]
 \begin{center}
 \setkeys{Gin}{width=0.6\textwidth}
 \includegraphics{Bio144_2017_week4-slPlot}
@@ -427,14 +429,15 @@ The outlier in the middle plot ``pulls'' the regression line in its direction an
 }
 
 \frame[containsverbatim]{\frametitle{Leverage plot (Hebelarm-Diagramm)}
-In the leverage plot, (standardized) residuals $\tilde{R_i}$ are plotted against the leverage $H_{ii}$:
+In the leverage plot, (standardized) residuals $\tilde{R_i}$ are plotted against the leverage $H_{ii}$ (continuing with the Hg example):
 ~\vspace{-8mm}
 \begin{center}
-\setkeys{Gin}{width=0.6\textwidth}
+\setkeys{Gin}{width=0.55\textwidth}
 \includegraphics{Bio144_2017_week4-013}
 \end{center}
-~\\
-Note: Cook's distance measures how much the regression changes when the $i$th observation is omitted.
+{\scriptsize Note: Cook's distance measures how much the regression changes when the $i$th observation is omitted.}\\[2mm]
+\myalert{Critical ranges} are the top and bottom right corners!!\\
+Here, individuals 95, 101 and 106 are potential \myalert{outliers}.
 }
 
 
@@ -466,32 +469,89 @@ Note: Cook's distance measures how much the regression changes when the $i$th ob
 
 
 \frame[containsverbatim]{\frametitle{Transformation of the response?}
+Example: Use again the mercury study, include only mothers. Use the response (Hg-concentration in the urine) \myalert{without log-transformation}. What would it look like?
 \begin{Schunk}
 \begin{Sinput}
-> r2.urin.mother <- lm(Hg_urin ~  smoking  + amalgam + fish,data=d.hg)
+> r2.urin.mother <- lm(Hg_urin ~  smoking  + amalgam + fish,data=d.hg.m)
 \end{Sinput}
 \end{Schunk}
-~\\
-\setkeys{Gin}{width=0.65\textwidth}
+\texttt{plot(r2.urin.mother)}:
+\begin{center}
+\setkeys{Gin}{width=0.6\textwidth}
 \includegraphics{Bio144_2017_week4-015}
+\end{center}
+}
+
+\frame[containsverbatim]{
+Also the ``old-fashioned'' histogram of the residuals is illustrative, it is \myalert{very skewed}:
+\begin{center}
+\setkeys{Gin}{width=0.6\textwidth}
+\includegraphics{Bio144_2017_week4-016}
+\end{center}
+}
+
+\frame[containsverbatim]{
+An in-summary comparison of the model with log-transformed response:
+
+\begin{center}
+\setkeys{Gin}{width=0.6\textwidth}
+\includegraphics{Bio144_2017_week4-018}
+\end{center}
+This looks {\bf much} better! However... there is this individual 106 that needs some closer inspection (see slide \ref{sl:outliersHg} for the solution regarding this outlier).
 }
 
 
+\frame{
+A similar example is given in Stahel 4.4 a+b. The diagnostic plots of a regression where the log-transformation of the outcome was forgotten looked like this:\\
+\begin{center}
+\includegraphics[width=8cm]{pictures/logT.pdf}
+\end{center}
+}
+
+\frame{\frametitle{Common transformations}
+Which tranformations should be considered to cure model deviation symptoms? Answering this depends on plausibility and simplicity, and requires some experience. \\[6mm]
+
+The most common and useful \myalert{first aid transformations} are:\\[4mm]
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+\begin{itemize}
+\item The log transformation for {\bf concentrations} and {\bf absolute values}.
+\item The square-root ($\sqrt{\cdot}$) transformation for {\bf count data}.
+\item The $\arcsin(\sqrt{\cdot})$ transformation for {\bf proportions/percentages}.
+\end{itemize}
+\end{minipage}}
+~\\[4mm]
+
+These transformations can (or should) also be applied on covariates!
+}
+
+\frame[containsverbatim]{
+\begin{center}
+\setkeys{Gin}{width=0.7\textwidth}
+\includegraphics{Bio144_2017_week4-hgFig}
+\end{center}
+}
+
 \frame[containsverbatim]{\frametitle{Outliers}
-Mention that leverage plot is good to find influential observations. 
+{\scriptsize (See Stahel chapter 4.5)}\\
+The above plots illustrate that outliers are visible in all diagnostic plots. \\[4mm]
 
-Outliers also graphically visible in TA and QQ plots
-\setkeys{Gin}{width=0.6\textwidth}
-\begin{Schunk}
-\begin{Sinput}
-> plot(fitted(r1.urin.mother),residuals(r1.urin.mother))
-> abline(h=0,lty=2)
-> qqnorm(fitted(r1.urin.mother))
-> qqline(fitted(r1.urin.mother))
-\end{Sinput}
-\end{Schunk}
-\includegraphics{Bio144_2017_week4-018}
+What to do in this case?
 
+\begin{itemize}
+\item Start by checking the correctness of the data. Is there a typo or a digital point that was shifted by mistake? Check the covariates and the response.\\[2mm]
+\item If not, ask whether the model has been misspecified. Do reasonable transformations of the response or the covariables eliminate the outlier? \\[2mm]
+\item Sometimes, an outlier may be the most interesting observation in a dataset!\\[2mm]
+\item Consider that outliers can also occur by chance!
+\end{itemize}
+
+}
+
+\frame{\frametitle{Deleting outliers?}}
+
+
+\frame{\frametitle{The outlier in the Hg study}\label{sl:outliersHg}
+Mention here that individual 106 forgot to report that she has 5 amalgam fillings!
 }
 % \frame{References:
 % \bibliographystyle{Chicago}
