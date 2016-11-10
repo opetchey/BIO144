@@ -366,8 +366,6 @@ Plotting the resulting line into the scatterplot is simple:\\[4mm]
 \setkeys{Gin}{width=0.5\textwidth}
 \begin{Schunk}
 \begin{Sinput}
-> library(reporttools)
-> library(biostatUZH)
 > plot(bodyfat ~ bmi,d.bodyfat)
 > abline(r.bodyfat,lwd=2)
 \end{Sinput}
@@ -489,7 +487,7 @@ Doing this \numprint{1000} times, we obtain the following distributions for $\ha
 > hist(pars[,2],xlab=expression(beta),main="",freq=F,nclass=20)
 \end{Sinput}
 \end{Schunk}
-\includegraphics{Bio144_2017_week2-012}
+\includegraphics{Bio144_2017_week2-013}
 
 This looks suspiciously normal... \\[2mm]
 In fact, from theory:
@@ -763,8 +761,8 @@ bmi           1.605362   2.032195
 ~\\[8mm]
 
 In summary,
-% latex table generated in R 3.3.1 by xtable 1.8-2 package
-% Mon Oct 24 15:08:22 2016
+% latex table generated in R 3.3.2 by xtable 1.8-2 package
+% Thu Nov 10 20:28:56 2016
 \begin{table}[!h]
 \centering
 \begingroup\footnotesize

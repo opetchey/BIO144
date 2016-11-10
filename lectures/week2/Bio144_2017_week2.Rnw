@@ -358,9 +358,11 @@ $\Rightarrow$ $\hat\alpha=\Sexpr{round(r.bodyfat$coef[1],2)}$ ,  $\hat\beta=\Sex
 Plotting the resulting line into the scatterplot is simple:\\[4mm]
 \begin{center}
 \setkeys{Gin}{width=0.5\textwidth}
-<<plotbodyfat,fig=T,width=5,height=5.0>>=
+<<echo=F>>=
 library(reporttools)
 library(biostatUZH)
+@
+<<plotbodyfat,fig=T,width=5,height=5.0>>=
 plot(bodyfat ~ bmi,d.bodyfat)
 abline(r.bodyfat,lwd=2)
 @
