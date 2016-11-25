@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 # Live data analysis demonstration {-}
 
 ## Introduction {-}
@@ -90,23 +95,24 @@ First note that Owen has gone to the responses googlesheet, and in the "File" me
 
 Now we can read that web page of comma separated values into R:
 
-```{r}
+```{r, message=FALSE}
 ## First we load a required package (we need to install this if we haven't already)
 library(readr)
 ## also we will use some other packages
 library(dplyr)
+library(ggplot2)
 
 ## Now read in the data, using the read_csv() function. We give it the URL of the published version of the google sheet data.
 the_URL <- "https://docs.google.com/spreadsheets/d/e/2PACX-1vQFgYX1QhF9-UXep22XmPow1ZK5nbFHix9nkQIa0DzqUhPtZRxH1HtY-hsno32zDiuIHiLb2Hvphk1L/pub?gid=1188775314&single=true&output=csv"
 class_RTs <- read_csv(the_URL)
 
 ## Have a look at the data in R
-View(class_RTs)
+#View(class_RTs)
 ## or just do
 class_RTs
 ```
 
-## Now we need to do some cleaning and tidying
+## Now we need to do some data wrangling (cleaning and tidying)
 
 ### Clean up the column / variable names:
 
@@ -140,7 +146,7 @@ class_RTs <- filter(class_RTs, !is.na(as.numeric(Reaction_time)))
 ```
 
 Once fixed, we need to make the variable have the correct type
-```{r}
+```{r, message=FALSE}
 ## try using type_convert() from readr package.
 class_RTs <- type_convert(class_RTs)
 ```
@@ -157,73 +163,118 @@ class_RTs
 ```
 
 
+## Visualise the data
+
+When we visualise the data, we're trying to do at least three things, and are not trying to do at least one.
+
+We're not trying to make the most beautiful graph in the world, so we can put it in our report / presentation etc. We just want to clearly see the data.
+
+We are trying to 1) do further checks for possible errors in the data, 2) making some initial assessments of how the data is distributed, 3) see what we think is the answer to our question.
+
+A histogram of all the data:
+```{r, message=FALSE}
+qplot(x=Reaction_time, data=class_RTs)
+```
+
+Separate histograms for each gender:
+```{r, message=FALSE}
+qplot(x=Reaction_time, data=class_RTs, facets = Gender ~ .)
+```
+
+A box and whisker plot:
+```{r, message=FALSE}
+qplot(x=Reaction_time, y=Gender, data=class_RTs, geom = "boxplot")
+```
+
+Or just the data points (with some jitter, to separate overlapping points):
+```{r, message=FALSE}
+qplot(x=Reaction_time, y=Gender, data=class_RTs) + geom_jitter(height=0.2)
+```
+
+What do we think about the three things? Any likely errors? How is the data distributed (within and between groups)? Does it look like there is a difference in reaction times (if so, by how much on average, and which group is faster)?
+
+
+## Assess assumptions
+
+Before we even start to think about running a statistical test, we must check if the specific test we intend to run is justified. That is, we must check if the assumptions of the test are likely to be met.
+
+### Independence
+
+The t-test assumes that observations are independent.
+
+How was the data collected (hopefully not one gender on one day, and the other on another day, or something similarly confounding)?
+
+Do we have more than one observation per subject? Not in this case, because you typed in the average. But we could have. Then the observations from the same individual would not be independent of each other. They would share in common the person they originated from. This would make the statistical test unreliable.
+
+### Normally distributed residuals
+
+We can get a good idea about this, in this case, by looking at the distribution of the two groups of reaction times (see above). Obviously we need to have in mind some idea of what the normal distribution looks like, and how close the data have to look like one. There are quantitative tests for normality, we may look at them later.
+
+### Equal variance
+
+The spread of the reaction times for men, and the spread for women, should be about the same.
+
+We can get a good idea about this, in this case, by looking at the distribution of the two groups of reaction times (see above). Again, we need to have in mind how similar the variance can be, without invalidating this assumption the data. There are quantitative tests for equal variance, we may look at them later.
 
 
 
+## Do the statistical test
+
+We have to do a test, or more generally, some statistics, to give some kind of assessment of certainty / uncertainty in our answer. Traditionally, this is done with a p-value, and if its lower than 0.05 we say the result is significant (i.e. the results are very consistent with no difference). If its higher than 0.05 we accept the null hypothesis that there is no difference.
+
+Another way to quantify uncertainty, is to give the difference in the means of the two groups, and a measure of certainty in this difference. If the difference between the means close to zero, and the uncertainty overlaps zero, then we conclude there is no strong difference.
+
+We'll do this with a T-test, as we already planned.
+Before we go on, there is something very important we should figure out, and we should do this every time before we run a statistical test. Figure out the degrees of freedom.
+
+There will be learning about this later in the course. For now, know that for a t-test the degrees of freedom are the number of observations minus two. Here that is `r nrow(class_RTs)` - 2 (= `r nrow(class_RTs)-2`). This is really important to figure out in advance, as its a great way to check that R is doing the test we think we're telling it to do.
+
+```{r}
+my_ttest <- t.test(Reaction_time ~ Gender, data=class_RTs, var.equal=TRUE)
+my_ttest
+```
+
+Lots of information there. We will teach you how to read this in later lectures.
+
+For now, we can find the p-value: `r round(my_ttest$p.value, 5)`.
+And the difference between the means: `r round(diff(my_ttest$estimate),3)` and the lower (`r round(my_ttest$conf.int[1],3)`) and upper (`r round(my_ttest$conf.int[2],3)`) 95% confidence limits on that difference.
+
+
+## Report and communicate the results
+
+### The results as a sentence
+
+We should write a sentence that gives the direction and extent of difference, and a measure of certainty / uncertainty in that finding. It is totally unnaceptable, though common, to just write "there was a significant difference". If we want to give a p-value (and most people tend to expect to see one), we should remind about the statistical test used (remind because we may have already mentioned it) and give the degrees of freedom, the value of the test statistic, and the p-value.
+
+*Insert sentence here, once we have the results.*
+
+### The results graphically
+
+The aim here is to make a beautiful graph that very clearly communicates the findings! This doesn't mean "fancy" and or "complex". Often simpler is better. Getting the basic right is essential, of course.
+
+```{r}
+qplot(x=Reaction_time, y=Gender, data=class_RTs, geom = "boxplot") +
+  xlab("Reaction time (seconds)") 
+```
+
+Wow! That was easy.
+
+
+### Do not use a table
+
+Here, a table is not necessary. The results are in the sentence and in the graph. Enough already!
 
 
 
+## Critical thinking
 
+* How might the work be flawed?
+* How might the analysis be flawed (assumptions violated)?
+* Is the difference (i.e. effect size) small, medium, large, relative to differences caused by other factors?
+* How general might be the finding?
+* How do the qualitative and quantitative findings compare to those in previous studies?
+* What could have been done better?
+* What are the implications of the findings?
 
-### Why is data analysis so important? {-}
-
-The course will begin with a general introduction, including why data analysis is so important in biology and biomedicine, and indeed in many walks of life and careers. We will introduce a few problems that can be addressed by anaylsis of data, including:
-
-* In order to conserve and manage species, and potentially assist them adapt to environmental change, we need to know their habitat requirements. This problem, and the role of data analysis, is illustrated by a study of otter populations in the European Alps.
-
-* In small populations, or populations that have been small (i.e. experienced a bottleneck), closely related individual may mate and have offspring. Such inbreeding can have fitness costs that may endanger population persistence. The consequence of inbreeding among alpine ibex. This problem is illustrated by a quantitative study of Apline ibex populations.
-
-* Mercury can be quite toxic, with potentially nasty effects on people's health. It can also occur in the environmentl Quantitative analyses can help understanding links between amounts of mercury in the environment and inside people's bodies. This problem is illustrated by a study in the Wallis.
-
-* Physical activity (exercise) can be mentally and physically beneficial. Knowing the factors that influence physical activity could be useful for developing policies to encourage and promote it. This problem is illustrated by a study that recorded children's activity patterns, and also recorded information about their lives, such as media consumption and behaviour of parents.
-
-In addition, you're introduced to some problems (and their associated datasets) that we use several times during the course:
-
-* A study of predictors of body fat in humans.
-
-* A study of diet and blood glucose levels.
-
-* A study of use of blood screening to indicate certain diseases.
-
-Nevertheless, many other problems and datasets will be introduced and used during the course.
-
-
-### Some important terms {-}
-
-We'll explain what we mean by data analysis, statistical analysis, models, and some other important terms.
-
-
-### A general workflow for data analysis {-}
-
-We'll introduce a general workflow that we'll use for all the data analyses in the course.
-
-
-### Data wrangling {-}
-
-There will be a brief introduction to data wrangling, and you will be directed to the study you will do before the week 2 practical session.
-
-### Visualisation of data  {-}
-
-Visualising our data in graphs is one of the most important parts of data analysis. We use it to explore our data, to understand our data, to guide our statistical analyses, and to communicate our results. There will be a brief introduction to types of graphs to use (and not to use). You will be directed to the study you will do before the week 2 practical session.
-
-### Live data analysis demonstration {-}
-
-We will attempt to go through the entire workflow during the class! This will be a good opportunity to recap some of the things you should already know.
-
-
-## Study to do by week 2 {-}
-
-Watch the video lectures "Getting data ready for R", "Getting data into R", and "Basic visualisation in R".
-
-Read chapters X, Y, and Z of ???BOOK???.
-
-Consider attempting the exercises for the week 2 practical session.
-
-
-## Handouts {-}
-
-[PDF of the lecture by Dr. Muff.](\lectures\week1\en\lecture1_en.pdf)
-
-## Further reading {-}
 
 
