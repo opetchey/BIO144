@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.7.13)  14 DEC 2016 19:30
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.7.13)  21 NOV 2016 09:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**Bio144_2017_week4
-(./Bio144_2017_week4.tex
+**Bio144_2017_week5
+(./Bio144_2017_week5.tex
 LaTeX2e <2011/06/27>
 Babel <3.9h> and hyphenation patterns for 7 languages loaded.
 (/usr/share/texmf/tex/latex/beamer/base/beamer.cls
@@ -1061,6 +1061,49 @@ Package: array 2008/09/09 v2.4c Tabular extension package (FMi)
 \c@nprt@cntprint=\count201
 
 No configuration file `numprint.cfg' found.)
+(/usr/share/texlive/texmf-dist/tex/latex/vwcol/vwcol.sty
+Package: vwcol 2008/06/24 v0.1 Variable-width multicolumn text
+
+(/usr/share/texlive/texmf-dist/tex/latex/environ/environ.sty
+Package: environ 2013/04/01 v0.3 A new environment syntax
+
+(/usr/share/texlive/texmf-dist/tex/latex/trimspaces/trimspaces.sty
+Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
+))
+(/usr/share/texlive/texmf-dist/tex/latex/ms/ragged2e.sty
+Package: ragged2e 2009/05/21 v2.1 ragged2e Package (MS)
+
+(/usr/share/texlive/texmf-dist/tex/latex/ms/everysel.sty
+Package: everysel 2011/10/28 v1.2 EverySelectfont Package (MS)
+)
+\CenteringLeftskip=\skip66
+\RaggedLeftLeftskip=\skip67
+\RaggedRightLeftskip=\skip68
+\CenteringRightskip=\skip69
+\RaggedLeftRightskip=\skip70
+\RaggedRightRightskip=\skip71
+\CenteringParfillskip=\skip72
+\RaggedLeftParfillskip=\skip73
+\RaggedRightParfillskip=\skip74
+\JustifyingParfillskip=\skip75
+\CenteringParindent=\skip76
+\RaggedLeftParindent=\skip77
+\RaggedRightParindent=\skip78
+\JustifyingParindent=\skip79
+)
+\vwcol@sep=\skip80
+\vwcol@rule=\skip81
+\vwcol@totalwidth=\skip82
+\vwcol@averagewidth=\skip83
+\vwcol@parindent=\skip84
+\vwcol@last=\count202
+\vwcol@Ncols=\count203
+\vwcol@Nlines=\count204
+\vwcol@maxrecursion=\count205
+\vwcol@box=\box58
+\vwcol@plainbox=\box59
+\vwcol@outputbox=\box60
+)
 (/usr/share/texlive/texmf-dist/tex/latex/doublestroke/dsfont.sty
 Package: dsfont 1995/08/01 v0.1 Double stroke roman fonts
 )
@@ -1070,7 +1113,7 @@ Package: pgf 2008/01/15 v2.10 (rcs-revision 1.12)
 
 (/usr/share/texmf/tex/generic/pgf/modules/pgfmoduleshapes.code.tex
 File: pgfmoduleshapes.code.tex 2010/09/09  (rcs-revision 1.13)
-\pgfnodeparttextbox=\box58
+\pgfnodeparttextbox=\box61
 )
 (/usr/share/texmf/tex/generic/pgf/modules/pgfmoduleplot.code.tex
 File: pgfmoduleplot.code.tex 2010/10/22  (rcs-revision 1.8)
@@ -1098,7 +1141,7 @@ Package: tikz 2010/10/13 v2.10 (rcs-revision 1.76)
 
 (/usr/share/texmf/tex/generic/pgf/libraries/pgflibraryplothandlers.code.tex
 File: pgflibraryplothandlers.code.tex 2010/05/31 v2.10 (rcs-revision 1.15)
-\pgf@plot@mark@count=\count202
+\pgf@plot@mark@count=\count206
 \pgfplotmarksize=\dimen213
 )
 \tikz@lastx=\dimen214
@@ -1107,30 +1150,30 @@ File: pgflibraryplothandlers.code.tex 2010/05/31 v2.10 (rcs-revision 1.15)
 \tikz@lastysaved=\dimen217
 \tikzleveldistance=\dimen218
 \tikzsiblingdistance=\dimen219
-\tikz@figbox=\box59
-\tikz@tempbox=\box60
-\tikztreelevel=\count203
-\tikznumberofchildren=\count204
-\tikznumberofcurrentchild=\count205
-\tikz@fig@count=\count206
+\tikz@figbox=\box62
+\tikz@tempbox=\box63
+\tikztreelevel=\count207
+\tikznumberofchildren=\count208
+\tikznumberofcurrentchild=\count209
+\tikz@fig@count=\count210
 
 (/usr/share/texmf/tex/generic/pgf/modules/pgfmodulematrix.code.tex
 File: pgfmodulematrix.code.tex 2010/08/24  (rcs-revision 1.4)
-\pgfmatrixcurrentrow=\count207
-\pgfmatrixcurrentcolumn=\count208
-\pgf@matrix@numberofcolumns=\count209
+\pgfmatrixcurrentrow=\count211
+\pgfmatrixcurrentcolumn=\count212
+\pgf@matrix@numberofcolumns=\count213
 )
-\tikz@expandcount=\count210
+\tikz@expandcount=\count214
 
 (/usr/share/texmf/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarytopat
 hs.code.tex
 File: tikzlibrarytopaths.code.tex 2008/06/17 v2.10 (rcs-revision 1.2)
 ))) (/usr/share/texlive/texmf-dist/tex/latex/natbib/natbib.sty
 Package: natbib 2010/09/13 8.31b (PWD, AO)
-\bibhang=\skip66
-\bibsep=\skip67
+\bibhang=\skip85
+\bibsep=\skip86
 LaTeX Info: Redefining \cite on input line 694.
-\c@NAT@ctr=\count211
+\c@NAT@ctr=\count215
 )
 (/usr/share/texlive/texmf-dist/tex/latex/jknapltx/mathbbol.sty
 Package: mathbbol 1995/01/01
@@ -1145,7 +1188,7 @@ Language: english 2012/08/20 v3.3p English support from the babel system
 (/usr/share/texlive/texmf-dist/tex/generic/babel/babel.def
 File: babel.def 2013/12/03 3.9h Babel common definitions
 LaTeX Info: Redefining \textlatin on input line 137.
-\babel@savecnt=\count212
+\babel@savecnt=\count216
 \U@D=\dimen220
 )
 \l@british = a dialect from \language\l@english 
@@ -1162,38 +1205,35 @@ Package: fancyvrb 2008/02/07
 
 Style option: `fancyvrb' v2.7a, with DG/SPQR fixes, and firstline=lastline fix 
 <2008/02/07> (tvz)
-\FV@CodeLineNo=\count213
+\FV@CodeLineNo=\count217
 \FV@InFile=\read5
-\FV@TabBox=\box61
-\c@FancyVerbLine=\count214
-\FV@StepNumber=\count215
+\FV@TabBox=\box64
+\c@FancyVerbLine=\count218
+\FV@StepNumber=\count219
 \FV@OutFile=\write6
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/tools/multicol.sty
 Package: multicol 2011/06/27 v1.7a multicolumn formatting (FMi)
-\c@tracingmulticols=\count216
-\mult@box=\box62
+\c@tracingmulticols=\count220
+\mult@box=\box65
 \multicol@leftmargin=\dimen221
-\c@unbalance=\count217
-\c@collectmore=\count218
-\doublecol@number=\count219
-\multicoltolerance=\count220
-\multicolpretolerance=\count221
+\c@unbalance=\count221
+\c@collectmore=\count222
+\doublecol@number=\count223
+\multicoltolerance=\count224
+\multicolpretolerance=\count225
 \full@width=\dimen222
 \page@free=\dimen223
 \premulticols=\dimen224
 \postmulticols=\dimen225
-\multicolsep=\skip68
-\multicolbaselineskip=\skip69
-\partial@page=\box63
-\last@line=\box64
-\mult@rightbox=\box65
-\mult@grightbox=\box66
-\mult@gfirstbox=\box67
-\mult@firstbox=\box68
-\@tempa=\box69
-\@tempa=\box70
-\@tempa=\box71
+\multicolsep=\skip87
+\multicolbaselineskip=\skip88
+\partial@page=\box66
+\last@line=\box67
+\mult@rightbox=\box68
+\mult@grightbox=\box69
+\mult@gfirstbox=\box70
+\mult@firstbox=\box71
 \@tempa=\box72
 \@tempa=\box73
 \@tempa=\box74
@@ -1208,33 +1248,36 @@ Package: multicol 2011/06/27 v1.7a multicolumn formatting (FMi)
 \@tempa=\box83
 \@tempa=\box84
 \@tempa=\box85
-\c@columnbadness=\count222
-\c@finalcolumnbadness=\count223
+\@tempa=\box86
+\@tempa=\box87
+\@tempa=\box88
+\c@columnbadness=\count226
+\c@finalcolumnbadness=\count227
 \last@try=\dimen226
 \multicolovershoot=\dimen227
 \multicolundershoot=\dimen228
-\mult@nat@firstbox=\box86
-\colbreak@box=\box87
-\multicol@sort@counter=\count224
+\mult@nat@firstbox=\box89
+\colbreak@box=\box90
+\multicol@sort@counter=\count228
 )
-(./Bio144_2017_week4.aux)
-\openout1 = `Bio144_2017_week4.aux'.
+(./Bio144_2017_week5.aux)
+\openout1 = `Bio144_2017_week5.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 82.
-LaTeX Font Info:    ... okay on input line 82.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 82.
-LaTeX Font Info:    ... okay on input line 82.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 82.
-LaTeX Font Info:    ... okay on input line 82.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 82.
-LaTeX Font Info:    ... okay on input line 82.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 82.
-LaTeX Font Info:    ... okay on input line 82.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 82.
-LaTeX Font Info:    ... okay on input line 82.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 82.
-LaTeX Font Info:    ... okay on input line 82.
-LaTeX Font Info:    Try loading font information for T1+aess on input line 82.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 83.
+LaTeX Font Info:    ... okay on input line 83.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 83.
+LaTeX Font Info:    ... okay on input line 83.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 83.
+LaTeX Font Info:    ... okay on input line 83.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 83.
+LaTeX Font Info:    ... okay on input line 83.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 83.
+LaTeX Font Info:    ... okay on input line 83.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 83.
+LaTeX Font Info:    ... okay on input line 83.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 83.
+LaTeX Font Info:    ... okay on input line 83.
+LaTeX Font Info:    Try loading font information for T1+aess on input line 83.
  (/usr/share/texlive/texmf-dist/tex/latex/ae/t1aess.fd
 File: t1aess.fd 1997/11/16 Font definitions for T1/aess.
 )
@@ -1288,8 +1331,8 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 ABD: EveryShipout initializing macros
-\AtBeginShipoutBox=\box88
-Package hyperref Info: Link coloring OFF on input line 82.
+\AtBeginShipoutBox=\box91
+Package hyperref Info: Link coloring OFF on input line 83.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -1297,54 +1340,54 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count225
+\c@section@level=\count229
 )
-LaTeX Info: Redefining \ref on input line 82.
-LaTeX Info: Redefining \pageref on input line 82.
-LaTeX Info: Redefining \nameref on input line 82.
+LaTeX Info: Redefining \ref on input line 83.
+LaTeX Info: Redefining \pageref on input line 83.
+LaTeX Info: Redefining \nameref on input line 83.
 
-(./Bio144_2017_week4.out) (./Bio144_2017_week4.out)
+(./Bio144_2017_week5.out) (./Bio144_2017_week5.out)
 \@outlinefile=\write7
-\openout7 = `Bio144_2017_week4.out'.
+\openout7 = `Bio144_2017_week5.out'.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 82.
+(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 83.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 82.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 83.
 \symnumbers=\mathgroup10
 \sympureletters=\mathgroup11
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/cmss/m/n --> T1/aer/m/n on input line 82.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 82.
-LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 82.
+(Font)                  OT1/cmss/m/n --> T1/aer/m/n on input line 83.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 83.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 83.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> T1/aess/m/n on input line 82.
+(Font)                  OT1/cmss/m/n --> T1/aess/m/n on input line 83.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> T1/aess/m/n on input line 82.
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 82.
+(Font)                  OT1/cmss/bx/n --> T1/aess/m/n on input line 83.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 83.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> T1/aess/m/it on input line 82.
+(Font)                  OT1/cmr/m/it --> T1/aess/m/it on input line 83.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> T1/aess/m/it on input line 82.
-LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 82.
+(Font)                  OT1/cmr/bx/it --> T1/aess/m/it on input line 83.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 83.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> T1/aett/m/n on input line 82.
+(Font)                  OT1/cmtt/m/n --> T1/aett/m/n on input line 83.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> T1/aett/m/n on input line 82.
+(Font)                  OT1/cmtt/m/n --> T1/aett/m/n on input line 83.
 LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
-(Font)                  T1/aess/m/n --> T1/aess/bx/n on input line 82.
+(Font)                  T1/aess/m/n --> T1/aess/bx/n on input line 83.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  T1/aess/m/it --> T1/aess/bx/it on input line 82.
+(Font)                  T1/aess/m/it --> T1/aess/bx/it on input line 83.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
-(Font)                  OT1/cmss/bx/n --> T1/aer/bx/n on input line 82.
+(Font)                  OT1/cmss/bx/n --> T1/aer/bx/n on input line 83.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  T1/aess/bx/n --> T1/aess/bx/n on input line 82.
+(Font)                  T1/aess/bx/n --> T1/aess/bx/n on input line 83.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  T1/aess/m/n --> T1/aess/bx/n on input line 82.
+(Font)                  T1/aess/m/n --> T1/aess/bx/n on input line 83.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  T1/aess/m/it --> T1/aess/bx/it on input line 82.
+(Font)                  T1/aess/m/it --> T1/aess/bx/it on input line 83.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  T1/aett/m/n --> T1/aett/bx/n on input line 82.
+(Font)                  T1/aett/m/n --> T1/aett/bx/n on input line 83.
 
 (/usr/share/texmf/tex/latex/beamer/base/translator/dicts/translator-basic-dicti
 onary/translator-basic-dictionary-English.dict
@@ -1370,425 +1413,347 @@ Dictionary: translator-numbers-dictionary, Language: English
 tionary/translator-theorem-dictionary-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
 )
-LaTeX Info: Redefining \includegraphics on input line 82.
- (./Bio144_2017_week4.nav)
-LaTeX Font Info:    Try loading font information for U+msa on input line 82.
+LaTeX Info: Redefining \includegraphics on input line 83.
+
+ABD: EverySelectfont initializing macros
+LaTeX Info: Redefining \selectfont on input line 83.
+ (./Bio144_2017_week5.nav)
+LaTeX Font Info:    Try loading font information for U+msa on input line 83.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 82.
+LaTeX Font Info:    Try loading font information for U+msb on input line 83.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+bbold on input line 82.
+LaTeX Font Info:    Try loading font information for U+bbold on input line 83.
 
 (/usr/share/texlive/texmf-dist/tex/latex/bbold/Ubbold.fd)
 LaTeX Font Info:    Font shape `T1/aess/m/it' in size <5> not available
-(Font)              Font shape `T1/aess/m/sl' tried instead on input line 82.
+(Font)              Font shape `T1/aess/m/sl' tried instead on input line 83.
 
 
 Package hyperref Warning: Option `pdfauthor' has already been used,
-(hyperref)                setting the option has no effect on input line 95.
+(hyperref)                setting the option has no effect on input line 96.
 
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
 LaTeX Font Info:    Font shape `T1/aess/m/it' in size <12> not available
-(Font)              Font shape `T1/aess/m/sl' tried instead on input line 107.
+(Font)              Font shape `T1/aess/m/sl' tried instead on input line 109.
 LaTeX Font Info:    Font shape `T1/aess/m/it' in size <8> not available
-(Font)              Font shape `T1/aess/m/sl' tried instead on input line 107.
+(Font)              Font shape `T1/aess/m/sl' tried instead on input line 109.
 LaTeX Font Info:    Font shape `T1/aess/m/it' in size <6> not available
-(Font)              Font shape `T1/aess/m/sl' tried instead on input line 107.
+(Font)              Font shape `T1/aess/m/sl' tried instead on input line 109.
  [2
 
-]
-LaTeX Font Info:    Font shape `T1/aess/m/it' in size <9> not available
-(Font)              Font shape `T1/aess/m/sl' tried instead on input line 115.
- [3
+] [3
 
 ] [4
 
 ] [5
 
-] [6
-
 ]
-LaTeX Font Info:    Try loading font information for T1+aett on input line 138.
+<Bio144_2017_week5-002.pdf, id=53, 289.08pt x 289.08pt>
+File: Bio144_2017_week5-002.pdf Graphic file (type pdf)
 
+<use Bio144_2017_week5-002.pdf>
+Package pdftex.def Info: Bio144_2017_week5-002.pdf used on input line 151.
+(pdftex.def)             Requested size: 146.53174pt x 146.52899pt.
 
-(/usr/share/texlive/texmf-dist/tex/latex/ae/t1aett.fd
-File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
-)
-<Bio144_2017_week4-001.pdf, id=64, 325.215pt x 289.08pt>
-File: Bio144_2017_week4-001.pdf Graphic file (type pdf)
+Overfull \vbox (38.4251pt too high) detected at line 155
+ []
 
-<use Bio144_2017_week4-001.pdf>
-Package pdftex.def Info: Bio144_2017_week4-001.pdf used on input line 142.
-(pdftex.def)             Requested size: 161.1858pt x 143.27809pt.
+[6
+
+ <./Bio144_2017_week5-002.pdf>]
+LaTeX Font Info:    Font shape `T1/aess/m/it' in size <9> not available
+(Font)              Font shape `T1/aess/m/sl' tried instead on input line 168.
  [7
 
- <./Bio144_2017_week4-001.pdf>]
-Overfull \hbox (1.46407pt too wide) in paragraph at lines 164--164
+] [8
+
+]
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 186--188
 [][][][][][][] 
  []
 
-[8
+<Bio144_2017_week5-003.pdf, id=85, 289.08pt x 289.08pt>
+File: Bio144_2017_week5-003.pdf Graphic file (type pdf)
 
-] [9
+<use Bio144_2017_week5-003.pdf>
+Package pdftex.def Info: Bio144_2017_week5-003.pdf used on input line 190.
+(pdftex.def)             Requested size: 146.53174pt x 146.52899pt.
+
+Overfull \vbox (2.50996pt too high) detected at line 192
+ []
+
+[9
+
+ <./Bio144_2017_week5-003.pdf>] [10
 
 ]
-LaTeX Font Info:    Font shape `T1/aess/m/it' in size <7> not available
-(Font)              Font shape `T1/aess/m/sl' tried instead on input line 212.
- [10
-
-]
-<Bio144_2017_week4-modelChecksHg.pdf, id=102, 505.89pt x 289.08pt>
-File: Bio144_2017_week4-modelChecksHg.pdf Graphic file (type pdf)
-
-<use Bio144_2017_week4-modelChecksHg.pdf>
-Package pdftex.def Info: Bio144_2017_week4-modelChecksHg.pdf used on input line
- 235.
-(pdftex.def)             Requested size: 234.45168pt x 133.9753pt.
- [11
-
- <./Bio144_2017_week4-modelChecksHg.pdf>]
-
-LaTeX Font Warning: Font shape `T1/aess/bx/it' undefined
-(Font)              using `T1/aess/bx/n' instead on input line 252.
-
-
-Overfull \hbox (1.46407pt too wide) in paragraph at lines 252--252
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 232--232
 [][][][][][][] 
  []
 
-[12
+[11
 
-] <pictures/multiplReg.pdf, id=124, 972.63374pt x 410.53375pt>
-File: pictures/multiplReg.pdf Graphic file (type pdf)
+] [12
 
-<use pictures/multiplReg.pdf>
-Package pdftex.def Info: pictures/multiplReg.pdf used on input line 261.
-(pdftex.def)             Requested size: 312.9803pt x 132.10013pt.
+] [13
 
-Overfull \hbox (19.91681pt too wide) in paragraph at lines 261--261
-[][]  
- []
-
-[13
-
- <./pictures/multiplReg.pdf>]
-<pictures/citation.pdf, id=139, 1179.40625pt x 77.28876pt>
-File: pictures/citation.pdf Graphic file (type pdf)
-
-<use pictures/citation.pdf>
-Package pdftex.def Info: pictures/citation.pdf used on input line 273.
-(pdftex.def)             Requested size: 312.9803pt x 20.50972pt.
-
-Overfull \hbox (19.91681pt too wide) in paragraph at lines 273--273
-[][]  
+]
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 285--285
+[][][][][][]  
  []
 
 [14
 
- <./pictures/citation.pdf>]
-File: pictures/citation.pdf Graphic file (type pdf)
- <use pictures/citation.pdf>
-Package pdftex.def Info: pictures/citation.pdf used on input line 273.
-(pdftex.def)             Requested size: 312.9803pt x 20.50972pt.
+] [15
 
-Overfull \hbox (19.91681pt too wide) in paragraph at lines 273--273
+]
+Overfull \hbox (27.81726pt too wide) in paragraph at lines 327--327
 [][]  
  []
 
-[15
+[16
 
-] [16
+]
+LaTeX Font Info:    Try loading font information for T1+aett on input line 335.
 
-] <pictures/FigsAB.jpg, id=166, 1235.61626pt x 456.70625pt>
-File: pictures/FigsAB.jpg Graphic file (type jpg)
-
-<use pictures/FigsAB.jpg>
-Package pdftex.def Info: pictures/FigsAB.jpg used on input line 298.
-(pdftex.def)             Requested size: 312.9803pt x 115.68153pt.
-
-Overfull \hbox (19.91681pt too wide) in paragraph at lines 298--298
+ (/usr/share/texlive/texmf-dist/tex/latex/ae/t1aett.fd
+File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
+)
+Overfull \hbox (105.89424pt too wide) in paragraph at lines 333--375
 [][]  
  []
 
 [17
 
- <./pictures/FigsAB.jpg>]
-<pictures/FigsCD.pdf, id=173, 1049.9225pt x 404.51125pt>
-File: pictures/FigsCD.pdf Graphic file (type pdf)
-
-<use pictures/FigsCD.pdf>
-Package pdftex.def Info: pictures/FigsCD.pdf used on input line 306.
-(pdftex.def)             Requested size: 312.9803pt x 120.58276pt.
-
-Overfull \hbox (19.91681pt too wide) in paragraph at lines 306--306
-[][]  
+]
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 401--402
+[][][][][][][]  
  []
 
 [18
 
- <./pictures/FigsCD.pdf>]
-Overfull \hbox (1.46407pt too wide) in paragraph at lines 324--324
-[][][][][][][]  
- []
+] <Bio144_2017_week5-007.pdf, id=166, 289.08pt x 289.08pt>
+File: Bio144_2017_week5-007.pdf Graphic file (type pdf)
 
+<use Bio144_2017_week5-007.pdf>
+Package pdftex.def Info: Bio144_2017_week5-007.pdf used on input line 411.
+(pdftex.def)             Requested size: 175.83987pt x 175.84009pt.
+ [19
 
-Overfull \hbox (1.46407pt too wide) in paragraph at lines 324--324
-[][][][][][][]  
- []
-
-[19
-
-]
-Overfull \hbox (1.46407pt too wide) in paragraph at lines 339--339
+ <./Bio144_2017_week5-007.pdf>]
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 436--436
 [][][][][][][] 
  []
 
 [20
 
-] <pictures/41b.pdf, id=200, 979.66pt x 238.8925pt>
-File: pictures/41b.pdf Graphic file (type pdf)
- <use pictures/41b.pdf>
-Package pdftex.def Info: pictures/41b.pdf used on input line 352.
-(pdftex.def)             Requested size: 312.9803pt x 76.31956pt.
+] [21
 
-Overfull \hbox (19.91681pt too wide) in paragraph at lines 352--352
-[]  
+] [22
+
+] <Bio144_2017_week5-TA1.pdf, id=199, 433.62pt x 244.915pt>
+File: Bio144_2017_week5-TA1.pdf Graphic file (type pdf)
+
+<use Bio144_2017_week5-TA1.pdf>
+Package pdftex.def Info: Bio144_2017_week5-TA1.pdf used on input line 496.
+(pdftex.def)             Requested size: 263.75534pt x 148.97935pt.
+ [23
+
+ <./Bio144_2017_week5-TA1.pdf>]
+<Bio144_2017_week5-blz_plot.pdf, id=213, 578.16pt x 289.08pt>
+File: Bio144_2017_week5-blz_plot.pdf Graphic file (type pdf)
+
+<use Bio144_2017_week5-blz_plot.pdf>
+Package pdftex.def Info: Bio144_2017_week5-blz_plot.pdf used on input line 515.
+
+(pdftex.def)             Requested size: 205.14354pt x 102.56897pt.
+ [24
+
+ <./Bio144_2017_week5-blz_plot.pdf>]
+<Bio144_2017_week5-blz_plot_res.pdf, id=227, 578.16pt x 289.08pt>
+File: Bio144_2017_week5-blz_plot_res.pdf Graphic file (type pdf)
+
+<use Bio144_2017_week5-blz_plot_res.pdf>
+Package pdftex.def Info: Bio144_2017_week5-blz_plot_res.pdf used on input line 
+537.
+(pdftex.def)             Requested size: 225.66013pt x 112.82896pt.
+ [25
+
+ <./Bio144_2017_week5-blz_plot_res.pdf>]
+Overfull \hbox (19.96394pt too wide) in paragraph at lines 554--554
+[][][][][][][] 
  []
 
+[26
 
-Overfull \hbox (1.46407pt too wide) in paragraph at lines 352--352
+]
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 572--572
 [][][][][][][]  
  []
 
-[21
+[27
 
- <./pictures/41b.pdf>] [22
+] [28
 
-]
-<Bio144_2017_week4-hgFig.pdf, id=220, 361.35pt x 361.35pt>
-File: Bio144_2017_week4-hgFig.pdf Graphic file (type pdf)
+] [29
 
-<use Bio144_2017_week4-hgFig.pdf>
-Package pdftex.def Info: Bio144_2017_week4-hgFig.pdf used on input line 385.
-(pdftex.def)             Requested size: 146.53174pt x 146.53342pt.
+] [30
 
-Overfull \hbox (5.0pt too wide) in paragraph at lines 382--387
-[] 
- []
-
-[23
-
- <./Bio144_2017_week4-hgFig.pdf>] [24
+] [31
 
 ]
-<Bio144_2017_week4-hgFigCov.pdf, id=239, 505.89pt x 289.08pt>
-File: Bio144_2017_week4-hgFigCov.pdf Graphic file (type pdf)
+<Bio144_2017_week5-018.pdf, id=280, 361.35pt x 289.08pt>
+File: Bio144_2017_week5-018.pdf Graphic file (type pdf)
 
-<use Bio144_2017_week4-hgFigCov.pdf>
-Package pdftex.def Info: Bio144_2017_week4-hgFigCov.pdf used on input line 415.
+<use Bio144_2017_week5-018.pdf>
+Package pdftex.def Info: Bio144_2017_week5-018.pdf used on input line 696.
+(pdftex.def)             Requested size: 146.53174pt x 117.22673pt.
 
-(pdftex.def)             Requested size: 263.75534pt x 150.71945pt.
- [25
-
- <./Bio144_2017_week4-hgFigCov.pdf>]
-<Bio144_2017_week4-hgFigQQ.pdf, id=253, 289.08pt x 289.08pt>
-File: Bio144_2017_week4-hgFigQQ.pdf Graphic file (type pdf)
-
-<use Bio144_2017_week4-hgFigQQ.pdf>
-Package pdftex.def Info: Bio144_2017_week4-hgFigQQ.pdf used on input line 424.
-(pdftex.def)             Requested size: 175.83987pt x 175.84009pt.
- [26
-
- <./Bio144_2017_week4-hgFigQQ.pdf>]
-Overfull \hbox (1.46407pt too wide) in paragraph at lines 430--432
-[][][][][][][] 
+Overfull \hbox (151.53175pt too wide) in paragraph at lines 691--698
+[]$[]$ 
  []
 
-<Bio144_2017_week4-011.pdf, id=267, 505.89pt x 361.35pt>
-File: Bio144_2017_week4-011.pdf Graphic file (type pdf)
 
-<use Bio144_2017_week4-011.pdf>
-Package pdftex.def Info: Bio144_2017_week4-011.pdf used on input line 437.
-(pdftex.def)             Requested size: 205.14354pt x 146.53342pt.
- [27
-
- <./Bio144_2017_week4-011.pdf>]
-<Bio144_2017_week4-slPlot.pdf, id=281, 289.08pt x 252.945pt>
-File: Bio144_2017_week4-slPlot.pdf Graphic file (type pdf)
-
-<use Bio144_2017_week4-slPlot.pdf>
-Package pdftex.def Info: Bio144_2017_week4-slPlot.pdf used on input line 447.
-(pdftex.def)             Requested size: 175.83987pt x 153.86008pt.
- [28
-
- <./Bio144_2017_week4-slPlot.pdf>]
-<pictures/leverage.jpg, id=296, 1026.83624pt x 357.335pt>
-File: pictures/leverage.jpg Graphic file (type jpg)
-
-<use pictures/leverage.jpg>
-Package pdftex.def Info: pictures/leverage.jpg used on input line 459.
-(pdftex.def)             Requested size: 312.9803pt x 108.9134pt.
-
-Overfull \hbox (19.91681pt too wide) in paragraph at lines 459--459
+Overfull \hbox (5.0pt too wide) in paragraph at lines 691--698
 [][]  
  []
 
-[29
 
- <./pictures/leverage.jpg>]
-<Bio144_2017_week4-013.pdf, id=303, 433.62pt x 165.61874pt>
-File: Bio144_2017_week4-013.pdf Graphic file (type pdf)
-
-<use Bio144_2017_week4-013.pdf>
-Package pdftex.def Info: Bio144_2017_week4-013.pdf used on input line 471.
-(pdftex.def)             Requested size: 322.37163pt x 123.13466pt.
-
-Overfull \hbox (29.30814pt too wide) in paragraph at lines 471--471
- [] 
+Overfull \vbox (9.90053pt too high) detected at line 702
  []
 
-[30
+[32
 
- <./Bio144_2017_week4-013.pdf>]
-<Bio144_2017_week4-014.pdf, id=316, 325.215pt x 289.08pt>
-File: Bio144_2017_week4-014.pdf Graphic file (type pdf)
+ <./Bio144_2017_week5-018.pdf>]
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 723--723
+[][][][][][][] 
+ []
 
-<use Bio144_2017_week4-014.pdf>
-Package pdftex.def Info: Bio144_2017_week4-014.pdf used on input line 478.
-(pdftex.def)             Requested size: 161.1858pt x 143.27809pt.
- [31
-
- <./Bio144_2017_week4-014.pdf>] [32
-
-]
 [33
 
-] <Bio144_2017_week4-016.pdf, id=342, 433.62pt x 433.62pt>
-File: Bio144_2017_week4-016.pdf Graphic file (type pdf)
+] [34
 
-<use Bio144_2017_week4-016.pdf>
-Package pdftex.def Info: Bio144_2017_week4-016.pdf used on input line 523.
-(pdftex.def)             Requested size: 175.83987pt x 175.8401pt.
+] <Bio144_2017_week5-020.pdf, id=307, 433.62pt x 361.35pt>
+File: Bio144_2017_week5-020.pdf Graphic file (type pdf)
 
-Overfull \vbox (24.70416pt too high) detected at line 525
- []
-
-[34
-
- <./Bio144_2017_week4-016.pdf>]
-<Bio144_2017_week4-017.pdf, id=355, 433.62pt x 433.62pt>
-File: Bio144_2017_week4-017.pdf Graphic file (type pdf)
-
-<use Bio144_2017_week4-017.pdf>
-Package pdftex.def Info: Bio144_2017_week4-017.pdf used on input line 531.
-(pdftex.def)             Requested size: 175.83987pt x 175.8401pt.
+<use Bio144_2017_week5-020.pdf>
+Package pdftex.def Info: Bio144_2017_week5-020.pdf used on input line 755.
+(pdftex.def)             Requested size: 175.83987pt x 146.53342pt.
  [35
 
- <./Bio144_2017_week4-017.pdf>]
-<Bio144_2017_week4-019.pdf, id=368, 433.62pt x 433.62pt>
-File: Bio144_2017_week4-019.pdf Graphic file (type pdf)
-
-<use Bio144_2017_week4-019.pdf>
-Package pdftex.def Info: Bio144_2017_week4-019.pdf used on input line 540.
-(pdftex.def)             Requested size: 175.83987pt x 175.8401pt.
- [36
-
- <./Bio144_2017_week4-019.pdf>]
-<pictures/logT.pdf, id=383, 847.165pt x 730.73pt>
-File: pictures/logT.pdf Graphic file (type pdf)
- <use pictures/logT.pdf>
-Package pdftex.def Info: pictures/logT.pdf used on input line 551.
-(pdftex.def)             Requested size: 227.62204pt x 196.32968pt.
-
-[37
-
- <./pictures/logT.pdf>]
-Overfull \hbox (1.46407pt too wide) in paragraph at lines 568--568
+ <./Bio144_2017_week5-020.pdf>]
+Overfull \hbox (19.96394pt too wide) in paragraph at lines 777--777
 [][][][][][][] 
+ []
+
+[36
+
+] [37
+
+]
+Overfull \hbox (17.2916pt too wide) in paragraph at lines 835--835
+[][]  
  []
 
 [38
 
-]
-File: Bio144_2017_week4-hgFig.pdf Graphic file (type pdf)
- <use Bio144_2017_week4-hgFig.pdf>
-Package pdftex.def Info: Bio144_2017_week4-hgFig.pdf used on input line 579.
-(pdftex.def)             Requested size: 190.48947pt x 190.48903pt.
+] <Bio144_2017_week5-TA2.pdf, id=339, 433.62pt x 244.915pt>
+File: Bio144_2017_week5-TA2.pdf Graphic file (type pdf)
+
+<use Bio144_2017_week5-TA2.pdf>
+Package pdftex.def Info: Bio144_2017_week5-TA2.pdf used on input line 843.
+(pdftex.def)             Requested size: 263.75534pt x 148.97935pt.
  [39
 
-] [40
-
-] [41
-
-]
-<Bio144_2017_week4-hgFigOut.pdf, id=425, 361.35pt x 361.35pt>
-File: Bio144_2017_week4-hgFigOut.pdf Graphic file (type pdf)
-
-<use Bio144_2017_week4-hgFigOut.pdf>
-Package pdftex.def Info: Bio144_2017_week4-hgFigOut.pdf used on input line 619.
-
-(pdftex.def)             Requested size: 175.83987pt x 175.83899pt.
-
-Overfull \vbox (8.12463pt too high) detected at line 622
+ <./Bio144_2017_week5-TA2.pdf>]
+Overfull \hbox (151.53175pt too wide) in paragraph at lines 853--871
+[]$[]$ 
  []
 
-[42
+<Bio144_2017_week5-026.pdf, id=353, 361.35pt x 361.35pt>
+File: Bio144_2017_week5-026.pdf Graphic file (type pdf)
 
- <./Bio144_2017_week4-hgFigOut.pdf>] [43
+<use Bio144_2017_week5-026.pdf>
+Package pdftex.def Info: Bio144_2017_week5-026.pdf used on input line 875.
+(pdftex.def)             Requested size: 117.2236pt x 117.22232pt.
+ [40
+
+ <./Bio144_2017_week5-026.pdf>]
+<Bio144_2017_week5-028.pdf, id=365, 578.16pt x 289.08pt>
+File: Bio144_2017_week5-028.pdf Graphic file (type pdf)
+
+<use Bio144_2017_week5-028.pdf>
+Package pdftex.def Info: Bio144_2017_week5-028.pdf used on input line 901.
+(pdftex.def)             Requested size: 205.14354pt x 102.56897pt.
+ [41
+
+ <./Bio144_2017_week5-028.pdf>]
+<Bio144_2017_week5-030.pdf, id=379, 650.43pt x 252.945pt>
+File: Bio144_2017_week5-030.pdf Graphic file (type pdf)
+
+<use Bio144_2017_week5-030.pdf>
+Package pdftex.def Info: Bio144_2017_week5-030.pdf used on input line 927.
+(pdftex.def)             Requested size: 293.06349pt x 113.97086pt.
+ [42
+
+ <./Bio144_2017_week5-030.pdf>] [43
+
+]
+[44
 
 ]
 \tf@nav=\write8
-\openout8 = `Bio144_2017_week4.nav'.
+\openout8 = `Bio144_2017_week5.nav'.
 
 \tf@toc=\write9
-\openout9 = `Bio144_2017_week4.toc'.
+\openout9 = `Bio144_2017_week5.toc'.
 
 \tf@snm=\write10
-\openout10 = `Bio144_2017_week4.snm'.
+\openout10 = `Bio144_2017_week5.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 634.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 634.
- (./Bio144_2017_week4.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 634.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 634.
-Package rerunfilecheck Info: File `Bio144_2017_week4.out' has not changed.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 952.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 952.
+ (./Bio144_2017_week5.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 952.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 952.
+Package rerunfilecheck Info: File `Bio144_2017_week5.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-
-
-LaTeX Font Warning: Some font shapes were not available, defaults substituted.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 634.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 952.
  ) 
 Here is how much of TeX's memory you used:
- 21324 strings out of 494976
- 387335 string characters out of 6179137
- 495875 words of memory out of 5000000
- 23826 multiletter control sequences out of 15000+600000
- 61578 words of font info for 135 fonts, out of 8000000 for 9000
+ 21474 strings out of 494976
+ 390252 string characters out of 6179137
+ 503001 words of memory out of 5000000
+ 23968 multiletter control sequences out of 15000+600000
+ 56280 words of font info for 123 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 49i,13n,60p,419b,528s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/te
-xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/share/texlive/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmssi8.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmssi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmtt8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmtt9.pfb>
-Output written on Bio144_2017_week4.pdf (43 pages, 1115128 bytes).
+ 49i,16n,61p,419b,559s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/sha
+re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmssi12.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmssi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmssi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmt
+t8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
+
+Output written on Bio144_2017_week5.pdf (44 pages, 250451 bytes).
 PDF statistics:
- 503 PDF objects out of 1000 (max. 8388607)
- 389 compressed objects within 4 object streams
- 91 named destinations out of 1000 (max. 500000)
- 164 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 474 PDF objects out of 1000 (max. 8388607)
+ 374 compressed objects within 4 object streams
+ 93 named destinations out of 1000 (max. 500000)
+ 130 words of extra memory for PDF output out of 10000 (max. 10000000)
 
