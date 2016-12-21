@@ -1,5 +1,14 @@
 # Week 2 {-}
 
+## To do before class {-}
+
+Watch the video lectures "Getting data ready for R", "Getting data into R", and "Basic visualisation in R".
+
+Read chapters X, Y, and Z of ???BOOK???.
+
+Consider attempting the exercises for the week 2 practical session.
+
+
 
 ## Practical session exercises {-}
 

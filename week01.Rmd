@@ -1,5 +1,10 @@
 # Week 1  - Introduction and more {-}
 
+## To do before class {-}
+
+Thoroughly prepare for the course by following the information on the ([Expected competencies] page).
+
+
 ## During class {-}
 
 Week 1 is a little different from all subsequent weeks, as we are getting started. While all subsequent weeks are the practical session 1-3pm and lecture session 3-5pm, in week 1 things are a bit mixed up.
@@ -50,13 +55,6 @@ Visualising our data in graphs is one of the most important parts of data analys
 We will attempt to go through the entire workflow during the class! This will be a good opportunity to recap some of the things you should already know.
 
 
-## Study to do by week 2 {-}
-
-Watch the video lectures "Getting data ready for R", "Getting data into R", and "Basic visualisation in R".
-
-Read chapters X, Y, and Z of ???BOOK???.
-
-Consider attempting the exercises for the week 2 practical session.
 
 
 ## Handouts {-}

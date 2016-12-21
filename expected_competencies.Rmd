@@ -1,8 +1,34 @@
 # Expected competencies {-}
 
-Many of you already have skills and knowledge important for data analysis in biology. Below we cover what you're expected to already know, from previous learning, and a few other things to take care of before the first class.
+Many of you already have skills and knowledge important for data analysis in biology. Below we cover what you're expected to already know, from previous learning (in particular [From MAT183 - Stochastik für die Naturwissenschaften] and [From BIO134 - Programming in Biology]).
 
-Don't worry if you're not confident in some of the material below, you will get to practice much of it. Also, there are some links to material that should be useful to recall and become more confident.
+You will greatly benefit from having reasonable recall of this material. So, before the first class:
+
+1. Take the [expected competencies self-test](https://openedx.mnf.uzh.ch/courses/course-v1:UZH+BIO144+FS2017/courseware) in OpenEdX.
+2. Based on your self-test of expected competencies, review material from previous courses. I.e. review the stuff you can't remember! 
+3. If you feel like you need an R / RStudio refresher, or need help install them, have a look at the following material.
+
+## Information on installing R and RStudio {-}
+
+* Video lecture: [Installing R and RStudio on a Mac.](https://youtu.be/wdO3EpEkj-E)
+* Video lectures: Installing R and RStudio on Windows, [part 1](https://youtu.be/ubanYI79jqs) and [part 2](https://youtu.be/DVw5dD_SdEo).
+* Video lecture: [Installing R on Linux.](https://youtu.be/mtpaKpMNHn4) (Not for the faint hearted, and you will still need to install RStudio.)
+
+Reading: Chapter 1, Getting and getting acquainted with R, in Getting Started with R, an Introduction for Biologists, by Beckerman, Childs, & Petchey.
+
+## Information about getting acquainted with R {-}
+
+* Video lecture: [Starting R, Some basic arithmetic in R, writing a script, and submitting commands to the Console.](https://youtu.be/5rxRbpFVXiA)
+* Video lecture: [Saving your script file, and few other things to make your R-life easier.](https://youtu.be/58_lmh-ETP4)
+* Video lecture: [The assigment arrow, and working with vectors](https://youtu.be/yTMLPPiCbzY)
+* Video lecture: A simple graph with R. (Link to be added later.)
+
+## Reading instead of video lectures {-}
+
+Most of what's covered in the video lectures is in **Chapter 1, Getting and getting acquainted with R**, in [Getting Started with R, an Introduction for Biologists, by Beckerman, Childs, & Petchey.](link_to _be_added)
+
+
+
 
 
 ## From MAT183 - Stochastik für die Naturwissenschaften {-}

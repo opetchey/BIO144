@@ -39,7 +39,7 @@ Prof. Petchey has been investigating how environmental change affects ecological
 
 Dr. Muff is a mathematician and statistician, working in the across fields of biology, developing better methods for analysing data.
 
-Your teaching assistants will be listed here at a later date.
+There are several teaching assistants for the course, most of which are current PhD students. You will get to know them during the course.
 
 
 
@@ -78,12 +78,22 @@ This one, and the OpenEdX\@UZH learning platform.
 
 Use this site as a guide through the course, with week-by-week schedule of content and activities.
 
-You will use [OpenEdX\@UZH](https://openedx.mnf.uzh.ch/courses/course-v1:UZH+BIO144+FS2017/about) for four things:
+You will use [OpenEdX\@UZH](https://openedx.mnf.uzh.ch/courses/course-v1:UZH+BIO144+FS2017/about):
 
-1. To take the **assessments** that occur during the course
-2. To **view video lectures**.
-3. To recieve **important messages** about the course.
+1. To take the **assessments** that occur during the course, and the final examination.
+2. To recieve **important messages** about the course.
 3. For **discussing and communicating** all and anything about the course.
+
+
+## Enrolling on the OpenEdX course {-}
+
+You must yourself enrol in the course in OpenEdX\@UZH. To do this you must create an account on OpenEdX\@UZH, if you haven't already.
+
+1. **Important**: Please use your UZH email address when you create your OpenEdX\@UZH account.
+2. Create your OpenEdX\@UZH on [this web page](https://openedx.mnf.uzh.ch/register).
+3. You can then log in with the "Sign in with the University of Zurich" button, and on [your settings page](https://openedx.mnf.uzh.ch/account/settings) link your OpenEdX\@UZH account with your UZH Switch account.
+
+
 
 ## What am I expected to already know? {-}
 
@@ -105,24 +115,19 @@ We will be using three computer programmes during class, please make sure you ha
 If you need any help setting up your laptop with R and RStudio, please look at [this video class](https://openedx.mnf.uzh.ch/courses/course-v1:UZH+multi_module+multi_date/courseware/97c07360593d47a1bf632cce6a43dd4a/bf1e7a134b554e7f8dcb1da4151596cf/).
 
 
-## What must I do before each practical session? {-}
+## What must I do before each class? {-}
 
-You must complete the assigned required reading / viewing. This material is essential and will not be covered during class (lecture or practical). If you do not complete the assigned reading you will have great trouble with the practical exercises, and with answering the weekly practical related questions correctly. Answering 80% or more of these questions correctly is required to be permitted to sit the final exam. Feel free to attempt the practical exercises before class.
+You must complete the assigned required reading / viewing. This material is essential and will not be covered during class (lecture or practical). If you do not complete the assigned reading you will have great trouble with the practical exercises, and with answering the weekly practical related questions correctly. Answering 60% or more of these questions correctly is required to be permitted to sit the final exam.
 
 ## Where can I find the weekly assigned reading / viewing? {-}
 
 This is given below, in the section for the week you are approaching.
 
 
-
-
 ## Assessment {-}
 
-There will be three assessment-related activities:
-
-1. Each week there will be questions about the class on OpenedX. You must answer 80% of these questions correctly in order to be permitted to sit the final assessment.
-2. A mid-semester assessment, which will not contribute to your final grade. The aims of this are to help you understand if you are effectively learning the required material, to give you practice with the types of questions that will be in the final examination. This mid-semester examination will be conducted during one of the usual afternoon classes. During the first two hours (1-3pm) you will sit the exam, and during the second two hours (3-5pm) you will grade your own exam paper against solutions presented by an instructor.
-3. A final assessment during the module examination period in July. Exact date and location to be confirmed.
+1. Each week there will be questions about the class on OpenEdX\@UZH. You must answer 60% of these questions correctly in order to be permitted to sit the final examination.
+2. A final assessment during the module examination period in July. Exact date and location to be confirmed.
 
 
 ## How to get help {-}
