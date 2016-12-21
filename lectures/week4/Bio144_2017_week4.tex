@@ -156,9 +156,11 @@ where $y_i=\log(Hg_{\text{urin}})_i$, and \texttt{mother} is a binary ``dummy'' 
 
 This results in essentially {\bf two} models with group specific intercept and slope:\\[2mm]
 \colorbox{lightgray}{\begin{minipage}{10cm}
-Mothers ($x_i=1$): $\hat{y}_i = \beta_0 +  \beta_1 + (\beta_2 +\beta_3)\text{age}_i + e_i$  \\[2mm]
-Children ($x_i=0$): $\hat{y}_i = \beta_0  + \beta_2 \text{age}_i + e_i$  
+Mothers ($x_i=1$): $\hat{y}_i = \beta_0 +  \beta_1 + (\beta_2 +\beta_3)\text{age}_i $  \\[2mm]
+Children ($x_i=0$): $\hat{y}_i = \beta_0  + \beta_2 \text{age}_i $  
 \end{minipage}}
+~\\
+{\scriptsize Question: why is there a hat on $\hat{y}_i$ now? Difference to $y_i$?}
 }
 
 
@@ -203,7 +205,7 @@ Remember (from last week), however, that the Hg model also included smoking stat
 \end{Schunk}
 
 % latex table generated in R 3.3.2 by xtable 1.8-2 package
-% Wed Nov  9 16:59:46 2016
+% Wed Dec 14 19:30:42 2016
 \begin{table}[!h]
 \centering
 \begingroup\footnotesize
@@ -232,6 +234,32 @@ Again, for completeness, some model checking:
 
 \includegraphics{Bio144_2017_week4-modelChecksHg}
 }
+
+
+\frame{\frametitle{Linear regression is even more powerful}
+We have seen that it is possible to include continuous, binary or factorial covariates in a regression model.\\[6mm]
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+Even \alert{transformations} of covariates be included in (almost) any form. For instance, include the square of a variable $\bm{x}$
+\begin{equation*}
+y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + e_i \ , 
+\end{equation*}
+which leads to a {\bf quadratic} or {\bf polynomial} regression (if higher order terms are used).
+\end{minipage}}
+\vspace{4mm}
+
+Other common transformations are (see also slide \ref{sl:common}): \begin{itemize}\item $\log$ \item $\sqrt{..}$ \item $\sin$, $\cos$,... \end{itemize}
+}
+
+\frame{
+How can a \emph{quadratic} regression be a \emph{linear regression}??\\[4mm]
+
+{\bf Note}:
+The word \emph{linear} refers to the \alert{linearity in the coefficients}, and not on a linear relationship between $\bm{y}$ and $\bm{x}$!\\[4mm]
+
+\includegraphics[width=11cm]{pictures/multiplReg.pdf}
+}
+
 
 \frame{\frametitle{Multiple vs.\ many single regressions}
 Question: I find group-specific intercepts and interactions too complicated. Could I simply fit separate models for each variable?\\[6mm]
@@ -396,6 +424,20 @@ The \myalert{outlier} recorded above is also visible in the (well-known) QQ-plot
 }
 
 
+\frame[containsverbatim]{
+\colorbox{lightgray}{\begin{minipage}{10cm}
+How do I know if a QQ-plot looks ``good''?
+\end{minipage}}
+\vspace{0mm}
+
+There is no quantitative rule to answer this question, experience is needed. However, you can gain this experience from \alert{simulations}. To this end, generate the same number of data points of a normally distributed variable and compare to your plot. Example:
+
+\begin{center}
+\setkeys{Gin}{width=0.7\textwidth}
+\includegraphics{Bio144_2017_week4-011}
+\end{center}
+}
+
 \frame[containsverbatim]{\frametitle{Scale-location plot (Streuungs-Diagramm)}
 The scale-location plot is particularly suited to check the assumption of equal variances ({\bf homoscedasticiy / Homoskedasdizit\"at}).\\[2mm]
 
@@ -421,7 +463,7 @@ Data points with $x_i$ values far from the mean have a stronger leverage effect 
 
 \begin{center}
 \setkeys{Gin}{width=1.1\textwidth}
-\includegraphics{Bio144_2017_week4-012}
+\includegraphics{Bio144_2017_week4-013}
 \end{center}
 
 The outlier in the middle plot ``pulls'' the regression line in its direction and biases the slope.
@@ -433,7 +475,7 @@ In the leverage plot, (standardized) residuals $\tilde{R_i}$ are plotted against
 ~\vspace{-8mm}
 \begin{center}
 \setkeys{Gin}{width=0.55\textwidth}
-\includegraphics{Bio144_2017_week4-013}
+\includegraphics{Bio144_2017_week4-014}
 \end{center}
 {\scriptsize Note: Cook's distance measures how much the regression changes when the $i$th observation is omitted.}\\[2mm]
 \myalert{Critical ranges} are the top and bottom right corners!!\\
@@ -478,7 +520,7 @@ Example: Use again the mercury study, include only mothers. Use the response (Hg
 \texttt{plot(r2.urin.mother)}:
 \begin{center}
 \setkeys{Gin}{width=0.6\textwidth}
-\includegraphics{Bio144_2017_week4-015}
+\includegraphics{Bio144_2017_week4-016}
 \end{center}
 }
 
@@ -486,7 +528,7 @@ Example: Use again the mercury study, include only mothers. Use the response (Hg
 Also the ``old-fashioned'' histogram of the residuals is illustrative, it is \myalert{very skewed}:
 \begin{center}
 \setkeys{Gin}{width=0.6\textwidth}
-\includegraphics{Bio144_2017_week4-016}
+\includegraphics{Bio144_2017_week4-017}
 \end{center}
 }
 
@@ -495,7 +537,7 @@ An in-summary comparison of the model with log-transformed response:
 
 \begin{center}
 \setkeys{Gin}{width=0.6\textwidth}
-\includegraphics{Bio144_2017_week4-018}
+\includegraphics{Bio144_2017_week4-019}
 \end{center}
 This looks {\bf much} better! However... there is this individual 106 that needs some closer inspection (see slide \ref{sl:outliersHg} for the solution regarding this outlier).
 }
@@ -508,7 +550,7 @@ A similar example is given in Stahel 4.4 a+b. The diagnostic plots of a regressi
 \end{center}
 }
 
-\frame{\frametitle{Common transformations}
+\frame{\frametitle{Common transformations}\label{sl:common}
 Which tranformations should be considered to cure model deviation symptoms? Answering this depends on plausibility and simplicity, and requires some experience. \\[6mm]
 
 The most common and useful \myalert{first aid transformations} are:\\[4mm]
@@ -525,9 +567,15 @@ The most common and useful \myalert{first aid transformations} are:\\[4mm]
 These transformations can (or should) also be applied on covariates!
 }
 
-\frame[containsverbatim]{
+\frame[containsverbatim]{\label{sl:hgSqrt}
+For instance, the number of amalgam fillings and the number of monthly fish meals should be sqrt-transformed in the mercury example:
+\begin{Schunk}
+\begin{Sinput}
+> r4.urin.mother <- lm(log10(Hg_urin) ~  smoking + sqrt(amalgam) + sqrt(fish),data=d.hg.m)
+\end{Sinput}
+\end{Schunk}
 \begin{center}
-\setkeys{Gin}{width=0.7\textwidth}
+\setkeys{Gin}{width=0.65\textwidth}
 \includegraphics{Bio144_2017_week4-hgFig}
 \end{center}
 }
@@ -538,20 +586,43 @@ The above plots illustrate that outliers are visible in all diagnostic plots. \\
 
 What to do in this case?
 
-\begin{itemize}
+\begin{enumerate}
 \item Start by checking the correctness of the data. Is there a typo or a digital point that was shifted by mistake? Check the covariates and the response.\\[2mm]
-\item If not, ask whether the model has been misspecified. Do reasonable transformations of the response or the covariables eliminate the outlier? \\[2mm]
+\item If not, ask whether the model has been misspecified. Do reasonable transformations of the response or the covariables eliminate the outlier? Have the residuals a distribution with a long tail (which makes it more likely that extreme observations occur)?\\[2mm]
 \item Sometimes, an outlier may be the most interesting observation in a dataset!\\[2mm]
 \item Consider that outliers can also occur by chance!
-\end{itemize}
+\end{enumerate}
 
 }
 
-\frame{\frametitle{Deleting outliers?}}
+\frame{\frametitle{Deleting outliers?}
+It might seem tempting to delete observations that apparently don't fit into the picture. However:\\[4mm]
+
+\begin{itemize}
+\item Do this {\bf only with absolute care}, e.g., if an observation has extremely implausible values! \\[2mm]
+\item Before deleting outliers, check points 1-4 from the previous slide. \\[2mm]
+\item When deleting outliers or the x\% of most extreme observations, you {\bf must mention this in your report}. \\[2mm]
+\item Confidence intervals, tests and $p$-values might be biased.
+\end{itemize}
 
 
-\frame{\frametitle{The outlier in the Hg study}\label{sl:outliersHg}
-Mention here that individual 106 forgot to report that she has 5 amalgam fillings!
+}
+
+
+\frame[containsverbatim]{\frametitle{The outlier in the Hg study}\label{sl:outliersHg}
+In the Hg study, it turned out later on that the outlier 106 had five unreported amagam fillings! \\[2mm]
+A corrected analysis gives a much more regular picture (please compare to slide \ref{sl:hgSqrt}):
+\vspace{-4mm}
+
+\begin{center}
+\setkeys{Gin}{width=0.6\textwidth}
+\includegraphics{Bio144_2017_week4-hgFigOut}
+\end{center}
+
+}
+
+\frame{\frametitle{Summary}
+Ev use ``Merkpunkte'' from Stahel slides (slide 41). What was today's lecture all about?
 }
 % \frame{References:
 % \bibliographystyle{Chicago}

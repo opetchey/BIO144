@@ -53,7 +53,7 @@ Here is another interactive tool. [This one lets you make some data, and then sh
 
 ## Handouts {-}
 
-[PDF of the lecture by Dr. Muff.](\lectures\week2\BIO144_2017_week2.pdf)
+[PDF of the lecture by Dr. Muff.](https://github.com/opetchey/BIO144/raw/master/lectures/week2/Bio144_2017_week2.pdf)
 
 
 ## Further reading (not required, but interesting) {-}

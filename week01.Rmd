@@ -59,7 +59,7 @@ We will attempt to go through the entire workflow during the class! This will be
 
 ## Handouts {-}
 
-[PDF of the lecture by Dr. Muff.](\lectures\week1\en\lecture1_en.pdf)
+[PDF of the lecture by Dr. Muff.](https://github.com/opetchey/BIO144/raw/master/lectures/week1/Bio144_2017_week1.pdf)
 
 ## Further reading {-}
 

@@ -51,11 +51,11 @@ You will attend class on either Thursday or Friday afternoon, 1-5pm. *You will b
 
 All classes will be held in **Y24-G-45**.
 
-Each afternoon has a practical session and a lecture session. The practical session is first, from 1-3pm, overseen by TAs and Prof. Petchey. The practical use a “flipped classroom” approach: you do the lectures / reading at home (or anywhere you like) and you do the "homework" during the practical class.  The lecture session is delivered by Dr. Muff, 3-5pm.
+Each afternoon has a practical session and a lecture session. The practical session is first, from 1-3pm, overseen by TAs and Prof. Petchey. The practical use a “flipped classroom” approach: you view the video lectures / reading at home (or anywhere you like) and you do the "homework" during the practical class.  The lecture session is delivered by Dr. Muff, 3-5pm.
 
 Why do the practical sessions occur before the lecture sessions? Well, actually, they don't. Look at the schedule below, and you see that the practical session in week 3 (linear regression) concerns the lecture from week 2. So you get the lecture in week 2, have a week to do the practical lectures / reading in your own time, and then in week 3 have the practical class concerning that work. And so on throughout the course.
 
-The only exceptions to this are in week 1 and 14, during which we mix things up a bit.
+The only exceptions to this are in week 1 and 14, during which we mix things up a bit, in order to get started and to finish up.
 
 ```{r, echo=FALSE}
 schedule <- read.csv("assets/schedule.csv")
@@ -102,9 +102,9 @@ Please see the relevant sections in the [Expected competencies] page.
 
 ## You will need to use your own laptop during the course {-}
 
-Please bring your laptop to class. Please make sure that it has sufficient battery charge to last the duration of the class, as there are few power sockets in **Y24-G-45**. Please make sure you know how to use it (some people are sometimes not so sure, perhaps because its new, or they borrow someone else's.) Your laptop must be able to connect to the wireless internet at UZH, and you will need two software programmes.
+Please bring your laptop to class. There are some power outlets in the lecture theatre, but best will be to make sure that your laptop has sufficient battery charge to last the duration of the class **Y24-G-45**. Please make sure you know how to use your laptop (some people are sometimes not so sure, perhaps because its new, or they borrow someone else's.) Your laptop must be able to connect to the wireless internet at UZH.
 
-We will be using three computer programmes during class, please make sure you have them:
+We will be using three computer programmes during class (as well as the usual suspects, such as an internet browswer etc) please make sure you have them:
 
 1. A spreadsheet programme, such as Microsoft Excel, Mac Numbers, or OpenOffice. Please make sure you have one of these.
 
@@ -117,7 +117,9 @@ If you need any help setting up your laptop with R and RStudio, please look at [
 
 ## What must I do before each class? {-}
 
+
 You must complete the assigned required reading / viewing. This material is essential and will not be covered during class (lecture or practical). If you do not complete the assigned reading you will have great trouble with the practical exercises, and with answering the weekly practical related questions correctly. Answering 60% or more of these questions correctly is required to be permitted to sit the final exam.
+
 
 ## Where can I find the weekly assigned reading / viewing? {-}
 
@@ -126,8 +128,19 @@ This is given below, in the section for the week you are approaching.
 
 ## Assessment {-}
 
-1. Each week there will be questions about the class on OpenEdX\@UZH. You must answer 60% of these questions correctly in order to be permitted to sit the final examination.
-2. A final assessment during the module examination period in July. Exact date and location to be confirmed.
+
+There will be two assessment-related activities:
+
+1. Each week there will be questions about the class on OpenedX. You must answer 60% of these questions correctly in order to be permitted to sit the final assessment. The aims of these regular assessments are:
+
+* to make sure you know if you're learning and understanding the material.
+* to motivate you to keep up with the content of the class, and thereby reduce the chance of you falling behind and then having trouble in the final exam.
+* to give you practice with the types of questions that will be in the final examination.
+
+2. A final assessment during the module examination period. Date and time are June 13th, 14-16.00. Location to be confirmed. *Important* -- you are allowed to take any paper documents you like into this exam. You are not permitted to use any electronic devices (questions will require only simple maths possible to do with paper and pen). You can take any documents in because we want to test your understanding more than your recall. You cannot use any electronic devices, in order that there is no chance to collude.
+
+(We may have a short mid-term exam during one of the usual afternoon classes. During the first two hours (1-3pm) you would sit the exam, and during the second two hours (3-5pm) you would grade your own exam paper against solutions presented by an instructor.)
+
 
 
 ## How to get help {-}
