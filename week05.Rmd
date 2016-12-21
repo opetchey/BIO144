@@ -16,4 +16,7 @@ TBD
 
 ### Practical class exercise solutions {-}
 
-TBD
+
+## Handouts {-}
+
+[PDF of the lecture by Dr. Muff.](https://github.com/opetchey/BIO144/raw/master/lectures/week2/Bio144_2017_week5.pdf)
