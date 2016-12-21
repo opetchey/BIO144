@@ -28,9 +28,6 @@ Reading: Chapter 1, Getting and getting acquainted with R, in Getting Started wi
 Most of what's covered in the video lectures is in **Chapter 1, Getting and getting acquainted with R**, in [Getting Started with R, an Introduction for Biologists, by Beckerman, Childs, & Petchey.](link_to _be_added)
 
 
-
-
-
 ## From MAT183 - Stochastik für die Naturwissenschaften {-}
 
 * Methods for describing characteristics of some data. For example, measures of where the centre of the data is, e.g., mean, median, mode. And measures of the spread of the data, e.g. quartiles, variance, standard deviation, standard error. And measures of how symetric is the spread, e.g. the skew of the data.
@@ -53,7 +50,7 @@ Most of what's covered in the video lectures is in **Chapter 1, Getting and gett
 
 ## From BIO134 - Programming in Biology {-}
 
-In BIO134 you spent a lot of time learning concepts and practices about programming, and in that class you used the programming language *Python*. In BIO144 you will use a different language, called *R* via *RStudio*; you used this already in MAT183. There are lots of similarities between Python and R, so please think about applying what you learned in BIO134 in this class (there are also difference, so don't expect your Python code to work in R!). For example, you will benefit from recalling what you learnt about: functions, strings, files, plotting, and data analysis: Spearman correlation.
+In BIO134 you spent a lot of time learning concepts and practices about programming, and in that class you used the programming language *Python*. In BIO144 you will use a different language, called *R* via *RStudio*; you used this already in MAT183. There are lots of similarities between Python and R, so please think about applying what you learned in BIO134 in this class (there are also difference, so don't expect your Python code to work in R!). For example, you will benefit from recalling what you learnt about: functions, strings, files, plotting, and data analysis: Spearman correlation. Also, you will have learned that accuracy is really important when coding. A single wrong character can have very unwelcome consequences.
 
 
 
