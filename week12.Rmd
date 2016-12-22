@@ -1,19 +1,19 @@
 # Week 12 {-}
 
-## Conceptual side {-}
+## To do before class {-}
 
-TBD
 
-## Practical side {-}
 
-### Study in preparation for practical class {-}
+## In class practical session {-}
 
-TBD
 
-### Practical class exercises {-}
 
-TBD
 
-### Practical class exercise solutions {-}
+## Lecture session {-}
 
-TBD
+
+[PDF of the lecture by Dr. Muff.](https://github.com/opetchey/BIO144/raw/master/lectures/week12/Bio144_2017_week12.pdf)
+
+
+
+## Further reading (not required, but interesting) {-}

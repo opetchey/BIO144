@@ -1,28 +1,22 @@
 # Week 3 {-}
 
-## Conceptual side {-}
+## To do before class {-}
 
-TBD
-
-## Practical side {-}
-
-### Study in preparation for practical class {-}
-
-TBD
-
-### Practical class exercises {-}
-
-TBD
-
-### Practical class exercise solutions {-}
-
-TBD
+You have conceptual and some practical learning about linear regression from the lecture. Now you need to learn and practice how to do linear regression, and practice your understanding of some of the important related concepts.
+Linear regression video lectures and reading.
 
 
 
-## Handouts {-}
+## In class practical session {-}
+
+
+
+
+## Lecture session {-}
+
 
 [PDF of the lecture by Dr. Muff.](https://github.com/opetchey/BIO144/raw/master/lectures/week3/Bio144_2017_week3.pdf)
+
 
 
 ## Further reading (not required, but interesting) {-}

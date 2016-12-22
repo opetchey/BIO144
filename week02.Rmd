@@ -2,7 +2,11 @@
 
 ## To do before class {-}
 
-Watch the video lectures "Getting data ready for R", "Getting data into R", and "Basic visualisation in R".
+1. Work through the OpenEdX\@UZH course content [Getting data into R]().
+2. Work through the OpenEdX\@UZH course content [Basic data wrangling]().
+3. Work through the OpenEdX\@UZH course content [Basic visualistion]().
+
+Basic visualisation in R".
 
 Read chapters X, Y, and Z of ???BOOK???.
 
@@ -10,11 +14,11 @@ Consider attempting the exercises for the week 2 practical session.
 
 
 
-## Practical session exercises {-}
+## In class practical session {-}
 
 Data import, data wrangling, data visualisation.
 
-As you go through the practical exercises, complete the questions on OpenEdx. It is mandatory that you complete these questions.
+As you go through the practical exercises, complete the **graded assessment on OpenEdX\@UZH. It is mandatory that you complete these questions; over the whole course you need to answer correctly at least 60% of the questions in these weekly graded assessments to be able to take the final examination.
 
 
 
@@ -22,15 +26,8 @@ As you go through the practical exercises, complete the questions on OpenEdx. It
 
 Linear regression.
 
+[PDF of the lecture by Dr. Muff.](https://github.com/opetchey/BIO144/raw/master/lectures/week2/Bio144_2017_week2.pdf)
 
-
-## Study to do by week 3 {-}
-
-
-### Required...
-
-You have conceptual and some practical learning about linear regression from the lecture. Now you need to learn and practice how to do linear regression, and practice your understanding of some of the important related concepts.
-Linear regression video lectures and reading.
 
 ### Understanding sums of squares
 
@@ -51,9 +48,6 @@ Here is another interactive tool. [This one lets you make some data, and then sh
 
 
 
-## Handouts {-}
-
-[PDF of the lecture by Dr. Muff.](https://github.com/opetchey/BIO144/raw/master/lectures/week2/Bio144_2017_week2.pdf)
 
 
 ## Further reading (not required, but interesting) {-}

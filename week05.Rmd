@@ -1,22 +1,19 @@
 # Week 5 {-}
 
-## Conceptual side {-}
-
-TBD
-
-## Practical side {-}
-
-### Study in preparation for practical class {-}
-
-TBD
-
-### Practical class exercises {-}
-
-TBD
-
-### Practical class exercise solutions {-}
+## To do before class {-}
 
 
-## Handouts {-}
 
-[PDF of the lecture by Dr. Muff.](https://github.com/opetchey/BIO144/raw/master/lectures/week2/Bio144_2017_week5.pdf)
+## In class practical session {-}
+
+
+
+
+## Lecture session {-}
+
+
+[PDF of the lecture by Dr. Muff.](https://github.com/opetchey/BIO144/raw/master/lectures/week5/Bio144_2017_week5.pdf)
+
+
+
+## Further reading (not required, but interesting) {-}

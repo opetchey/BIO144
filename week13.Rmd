@@ -1,19 +1,18 @@
-# Week 13 {-}
+# Week 13 - Self study {-}
 
-## Conceptual side {-}
+## To do before class {-}
 
-TBD
 
-## Practical side {-}
 
-### Study in preparation for practical class {-}
+## In class practical session {-}
 
-TBD
 
-### Practical class exercises {-}
 
-TBD
 
-### Practical class exercise solutions {-}
+## Lecture session {-}
 
-TBD
+
+
+
+
+## Further reading (not required, but interesting) {-}

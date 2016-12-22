@@ -80,9 +80,10 @@ Use this site as a guide through the course, with week-by-week schedule of conte
 
 You will use [OpenEdX\@UZH](https://openedx.mnf.uzh.ch/courses/course-v1:UZH+BIO144+FS2017/about):
 
-1. To take the **assessments** that occur during the course, and the final examination.
-2. To recieve **important messages** about the course.
-3. For **discussing and communicating** all and anything about the course.
+* To view **video lectures** and take quick, **instant feedback quizzes**.
+* To take the **assessments** that occur during the course, and the final examination.
+* To recieve **important messages** about the course.
+* For **discussing and communicating** all and anything about the course.
 
 
 ## Enrolling on the OpenEdX course {-}
@@ -93,6 +94,10 @@ You must yourself enrol in the course in OpenEdX\@UZH. To do this you must creat
 2. Create your OpenEdX\@UZH on [this web page](https://openedx.mnf.uzh.ch/register).
 3. You can then log in with the "Sign in with the University of Zurich" button, and on [your settings page](https://openedx.mnf.uzh.ch/account/settings) link your OpenEdX\@UZH account with your UZH Switch account.
 
+
+## Verify your UZH identity on OpenEdX\@UZH {-}
+
+As we will be using OpenEdX\@UZH for assessments, including the final examination, we need to verify your identity on OpenEdX\@UZH. To do this, please go to the Courseware and the "IMPORTANT! DO THIS NOW!" module, and follow the instructions there.
 
 
 ## What am I expected to already know? {-}
