@@ -6,7 +6,9 @@ Textbooks with required or optional reading are in the main library, and should 
 
 Some books are available online via the UZH library. Access to these is only possible within the IP range of the UZH. You have only access with LAN or WLAN UZH and with VPN UZH.
 
-Core reading will come from various sources, including two textbooks:
+Core reading will come from various sources, including the three texts:
+
+* *Lineare Regression*, Werner Stahel, 2013. [Link to pdf document.](assets/Stahel_LinReg.pdf) 
 
 * *Getting Started with R, An introduction for biologists* (2017, Second Edition) Beckerman, Childs & Petchey (**DO NOT USE THE FIRST EDITION!**)
 
