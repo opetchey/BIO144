@@ -9,162 +9,28 @@ bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
 github-repo: opetchey/bio144
-description: "This is the information for BIO144"
+description: "This is the information for BIO144 Instructors and TAs"
 ---
 
-# About the course {-}
+This website is information for content creators, instructors, and TAs.
 
-## Course aims and learning outcomes  {-}
+This website is associated with a github repo, where things such as datasets, pdfs (and code for) lectures, and other resources are held.
 
-This course will help you develop a solid foundation in answering biological questions with quantitative data. The approaches you will learn are, however, generally applicable to using data to solve problems, an increasing important skill in a world more and more dominated by data.
+The github repo also has an issue tracker. Please use it as you like.
 
-By the end of the course you will be able to:
+The students use the course via [OpenEdX\@UZH](https://openedx.mnf.uzh.ch/courses/course-v1:UZH+BIO144+FS2017/info). They don't need to look at this website, and we don't make them aware of it. It is public however, so please do not add any sensitive information, such as personal information about students, or any information related to examination questions and answers.
 
-* Plan how to make use quantitative data to solve a biological problems.
-* Translate a biological question into a quantitative problem.
-* Collect and arrange data for efficient processing.
-* Reliably, accurately and efficiently manage and manipulate data.
-* Make clear and informative visualisations of data.
-* Select, perform, validate, and interpret an appropriate statistical test / model.
-* Understand why and when linear models are useful, and what to do when they are not.
-* Clearly communicate the answer to your biological question.
-* Research and learn about other tools for data analysis
+## Weekly structure on OpenEdX\@UZH
 
+Each week as at least one of the following sections (BC = before class; IC = in class):
 
-## Your instructors {-}
+* Important info.
+* BC content
+* IC Practical exercises
+* IC Lecture
+* Extras
+* Graded assessment
 
-Your instructors for this course are [Prof. Owen Petchey](http://www.ieu.uzh.ch/en/staff/professors/petchey.html) and [Dr. Stefanie Muff](http://www.ebpi.uzh.ch/en/aboutus/departments/biostatistics/teambiostats/muff.html).
 
-Prof. Petchey has been investigating how environmental change affects ecological communities, using a combination of empirical and mathematical methods (including lots of analysis of data) for going on 20 years. He specialises in the practical side of data analysis, in particular, how to implement them in the R software that will be used extensively in this course.
 
-Dr. Muff is a mathematician and statistician, working in the across fields of biology, developing better methods for analysing data.
-
-There are several teaching assistants for the course, most of which are current PhD students. You will get to know them during the course.
-
-
-
-## Course schedule {-}
-
-The course runs during the whole 14 week spring semester, though there will be no "in-person" time during two of these weeks, due to holidays.
-
-You will attend class on either Thursday or Friday afternoon, 1-5pm. *You will be assigned to an afternoon, based on your other class commitments. CHECK THIS*
-
-All classes will be held in **Y24-G-45**.
-
-Each afternoon has a practical session and a lecture session. The practical session is first, from 1-3pm, overseen by TAs and Prof. Petchey. The practical use a “flipped classroom” approach: you view the video lectures / reading at home (or anywhere you like) and you do the "homework" during the practical class.  The lecture session is delivered by Dr. Muff, 3-5pm.
-
-Why do the practical sessions occur before the lecture sessions? Well, actually, they don't. Look at the schedule below, and you see that the practical session in week 3 (linear regression) concerns the lecture from week 2. So you get the lecture in week 2, have a week to do the practical lectures / reading in your own time, and then in week 3 have the practical class concerning that work. And so on throughout the course.
-
-The only exceptions to this are in week 1 and 14, during which we mix things up a bit, in order to get started and to finish up.
-
-```{r, echo=FALSE}
-schedule <- read.csv("assets/schedule.csv")
-knitr::kable(schedule, col.names = c("Week", "Dates", "Practical (1-3pm)", "Lecture (3-5pm)"))
-```
-
-The course is worth 5 credit points, so with 1 CP being approximately 30 hours work, requires around 150 hours study. Approximately on third of this is "in class" and two thirds is self-study, including in-course assessments and preparation for the examination.
-
-
-## Course language {-}
-
-The course will be part German and part English. Please let us know how we can assist with any challenges this presents (see sections [How to get help] and [How to give feedback]).
-
-[Here is a web page that gives most common (and many not so common) statistical terms in a multitude of languages!](http://isi.cbs.nl/glossary/index.htm)
-
-
-## You will need to use two websites {-}
-
-This one, and the OpenEdX\@UZH learning platform.
-
-Use this site as a guide through the course, with week-by-week schedule of content and activities.
-
-You will use [OpenEdX\@UZH](https://openedx.mnf.uzh.ch/courses/course-v1:UZH+BIO144+FS2017/about):
-
-* To view **video lectures** and take quick, **instant feedback quizzes**.
-* To take the **assessments** that occur during the course, and the final examination.
-* To recieve **important messages** about the course.
-* For **discussing and communicating** all and anything about the course.
-
-
-## Enrolling on the OpenEdX course {-}
-
-You must yourself enrol in the course in OpenEdX\@UZH. To do this you must create an account on OpenEdX\@UZH, if you haven't already.
-
-1. **Important**: Please use your UZH email address when you create your OpenEdX\@UZH account.
-2. Create your OpenEdX\@UZH on [this web page](https://openedx.mnf.uzh.ch/register).
-3. You can then log in with the "Sign in with the University of Zurich" button, and on [your settings page](https://openedx.mnf.uzh.ch/account/settings) link your OpenEdX\@UZH account with your UZH Switch account.
-
-
-## Verify your UZH identity on OpenEdX\@UZH {-}
-
-As we will be using OpenEdX\@UZH for assessments, including the final examination, we need to verify your identity on OpenEdX\@UZH. To do this, please go to the Courseware and the "IMPORTANT! DO THIS NOW!" module, and follow the instructions there.
-
-
-## What am I expected to already know? {-}
-
-Please see the relevant sections in the [Expected competencies] page.
-
-
-## You will need to use your own laptop during the course {-}
-
-Please bring your laptop to class. There are some power outlets in the lecture theatre, but best will be to make sure that your laptop has sufficient battery charge to last the duration of the class **Y24-G-45**. Please make sure you know how to use your laptop (some people are sometimes not so sure, perhaps because its new, or they borrow someone else's.) Your laptop must be able to connect to the wireless internet at UZH.
-
-We will be using three computer programmes during class (as well as the usual suspects, such as an internet browswer etc) please make sure you have them:
-
-1. A spreadsheet programme, such as Microsoft Excel, Mac Numbers, or OpenOffice. Please make sure you have one of these.
-
-2. [The R software environment for statistical computing and graphics](https://www.r-project.org). Its worth knowing why we are using R. You can find out by **looking at this** / **reading this**.
-
-3. [Rstudio](https://www.rstudio.com). We use RStudio to interact with R. Rstudio has lots of features that make working with R much much easier and enjoyable. 
-
-If you need any help setting up your laptop with R and RStudio, please look at [this video class](https://openedx.mnf.uzh.ch/courses/course-v1:UZH+multi_module+multi_date/courseware/97c07360593d47a1bf632cce6a43dd4a/bf1e7a134b554e7f8dcb1da4151596cf/).
-
-
-## What must I do before each class? {-}
-
-
-You must complete the assigned required reading / viewing. This material is essential and will not be covered during class (lecture or practical). If you do not complete the assigned reading you will have great trouble with the practical exercises, and with answering the weekly practical related questions correctly. Answering 60% or more of these questions correctly is required to be permitted to sit the final exam.
-
-
-## Where can I find the weekly assigned reading / viewing? {-}
-
-This is given below, in the section for the week you are approaching.
-
-
-## Assessment {-}
-
-
-There will be two assessment-related activities:
-
-1. Each week there will be questions about the class on OpenedX. You must answer 60% of these questions correctly in order to be permitted to sit the final assessment. The aims of these regular assessments are:
-
-* to make sure you know if you're learning and understanding the material.
-* to motivate you to keep up with the content of the class, and thereby reduce the chance of you falling behind and then having trouble in the final exam.
-* to give you practice with the types of questions that will be in the final examination.
-
-2. A final assessment during the module examination period. Date and time are June 13th, 14-16.00. Location to be confirmed. *Important* -- this is an "open book" exam, and will be delivered on OpenEdX\@UZH. You will, therefore, need to take your laptop into the exam, and make sure you have enough battery power to last the exam. You can take anything else you like into the exam also. You may consult any information source, apart from one type: you are not permitted to communicate in any way with any other person during the exam. The exam will be carefully invigilated / policed to monitor against this.
-
-
-## How to get help {-}
-
-We aim that you can ask for help about anything and get a useful answer as soon as possible. The following guidelines will help you get fast, useful help.
-
-1. Sending emails to course staff will result in you receiving no, slow or perhaps not so useful advice (i.e., please come see me during the class).
-2. Please think about if other students might benefit from knowing the answer to your question. Its very likely that other students are wondering the same thing as you. In that case, it is great if you ask the question in a public / class forum. One such place is the OpenEdX discussion forum, another is during class when questions are actively encouraged.
-3. If knowing the answer to your question is not going to help other students (perhaps it might be about your personal circumstances), then approach and talk with a TA, Dr Muff, or Prof. Petchey in class. We will reserve some class time for these types of question.
-
-
-
-
-## How to give feedback {-}
-
-Your views on the course are really important to us. What works well, what doesn't work so well, what content is particularly important, what content is not so important, what content is missing?
-
-There are several ways of providing feedback.
-
-1. During the course, you can tell us in person during class, and can make posts on the Discussion forum. Such feedback during the course has the potential to improve the course for you. I.e. we might be able to change something quickly, so your and your fellow students'  experience of the class is improved.
-
-2. Submit a comment, which can be anonymous, via a google form. Details to be confirmed. 
-
-3. Fill in the "official" course evaluation form. Details to be confirmed.
 

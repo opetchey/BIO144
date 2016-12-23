@@ -99,7 +99,7 @@ Datenanalyse in der Biologie}%\\[.3cm]
 \begin{itemize}
 \item Interactions between covariates
 \item Multiple vs.\ many single regressions
-\item Checking assumptions / Model validation 
+\item Checking assumptions / Model validation
 \item What to do when things go wrong?
 \item Transformation of variables/the response
 \item Handling of outliers
@@ -115,7 +115,7 @@ Datenanalyse in der Biologie}%\\[.3cm]
 }
 
 \frame[containsverbatim]{\frametitle{Recap of last week I}
-to do 
+to do
 }
 
 \frame[containsverbatim]{\frametitle{Recap of last week I}
@@ -126,7 +126,7 @@ Last week we introduced binary and factor covariates that allowed for group-spec
 \frame[containsverbatim]{\frametitle{Group-specific slopes / Interactions}
 It may happen that groups do not only differ in their intercept ($\beta_0$), but also in their slopes ($\beta_x$).\\[2mm]
 
-For simplicity, let us look at a binary covariate ($x_i \in \{0,1\}$). 
+For simplicity, let us look at a binary covariate ($x_i \in \{0,1\}$).
 }
 
 
@@ -158,7 +158,7 @@ It is therefore crucial to formulate a model that allows for different intercept
 
 The smallest possible model is then given as\\
 \begin{equation}\label{eq:HgInt}
-y_i =  \beta_0 + \beta_1 \text{mother}_i + \beta_2 \text{age}_i + \beta_3\text{age}_i\cdot \text{mother}_i + e_i \ , 
+y_i =  \beta_0 + \beta_1 \text{mother}_i + \beta_2 \text{age}_i + \beta_3\text{age}_i\cdot \text{mother}_i + e_i \ ,
 \end{equation}
 ~\\
 where $y_i=\log(Hg_{\text{urin}})_i$, and \texttt{mother} is a binary ``dummy'' variable that indicates if the person is a mother (1) or a child (0).\\[4mm]
@@ -166,7 +166,7 @@ where $y_i=\log(Hg_{\text{urin}})_i$, and \texttt{mother} is a binary ``dummy'' 
 This results in essentially {\bf two} models with group specific intercept and slope:\\[2mm]
 \colorbox{lightgray}{\begin{minipage}{10cm}
 Mothers ($x_i=1$): $\hat{y}_i = \beta_0 +  \beta_1 + (\beta_2 +\beta_3)\text{age}_i $  \\[2mm]
-Children ($x_i=0$): $\hat{y}_i = \beta_0  + \beta_2 \text{age}_i $  
+Children ($x_i=0$): $\hat{y}_i = \beta_0  + \beta_2 \text{age}_i $
 \end{minipage}}
 ~\\
 {\scriptsize Question: why is there a hat on $\hat{y}_i$ now? Difference to $y_i$?}
@@ -217,7 +217,7 @@ tableRegression(r.hg)
 }
 
 \frame[containsverbatim]{
-Again, for completeness, some model checking: 
+Again, for completeness, some model checking:
 
 \setkeys{Gin}{width=0.8\textwidth}
 
@@ -237,7 +237,7 @@ We have seen that it is possible to include continuous, binary or factorial cova
 \colorbox{lightgray}{\begin{minipage}{10cm}
 Even \alert{transformations} of covariates be included in (almost) any form. For instance, include the square of a variable $\bm{x}$
 \begin{equation*}
-y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + e_i \ , 
+y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + e_i \ ,
 \end{equation*}
 which leads to a {\bf quadratic} or {\bf polynomial} regression (if higher order terms are used).
 \end{minipage}}
@@ -268,18 +268,18 @@ Why?
 }
 
 \frame{\frametitle{Illustration}
-Chapter 3.3c in the Stahel script illustrates the point on four artificial examples. The model is always given as 
+Chapter 3.3c in the Stahel script illustrates the point on four artificial examples. The model is always given as
 \begin{equation*}
 y_i = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + e_i \  ,
 \end{equation*}
 
 where $\bm{x}^{(1)}$ is a continuous variable, and $\bm{x}^{(2)}$ is a binary grouping variable (thus taking values 0 for group 0 and 1 for group 1).\\[4mm]
 
-Thus the model is 
+Thus the model is
 \begin{equation*}
 \begin{array}{lll}
 \hat{y_i} &= \beta_0 +  \beta_1 x_i^{(1)} & \text{if $x_i^{(2)}=0$.} \\
-\hat{y_i} &= \beta_0 + \beta_2 + \beta_1 x_i^{(1)}   & \text{if $x_i^{(2)}=1$.} 
+\hat{y_i} &= \beta_0 + \beta_2 + \beta_1 x_i^{(1)}   & \text{if $x_i^{(2)}=1$.}
 \end{array}
 \end{equation*}
 }
@@ -377,7 +377,7 @@ names(d.hg.m) <- c("Hg_urin", "Hg_soil", "smoking","amalgam", "age", "fish")
 @
 
 
-It is useful to enrich the TA-plot by adding a ``running mean'' or a ``smoothed mean'', which can give hints on the trend of the residuals. For the mercury example where $\log(Hg_{\text{urin}})$ is regressed on smoking, amalgam and fish consumption for mothers only (slides 33-35 or week 3): 
+It is useful to enrich the TA-plot by adding a ``running mean'' or a ``smoothed mean'', which can give hints on the trend of the residuals. For the mercury example where $\log(Hg_{\text{urin}})$ is regressed on smoking, amalgam and fish consumption for mothers only (slides 33-35 or week 3):
 \vspace{-10mm}
 
 \begin{multicols}{2}{ll}
@@ -412,7 +412,7 @@ Other ideas to plot residuals to check for a dependency? Please discuss!
 
 % Todo: hide the following slide in the published version of the slides!!
 \frame{
-The dependency is not necessarily on the fitted values ($x$-axis of TA plot). Ideas: 
+The dependency is not necessarily on the fitted values ($x$-axis of TA plot). Ideas:
 \begin{itemize}
 \item Plot in dependency of time (if available) or sequence of obervations.
 \item Plot against the covariates.
@@ -465,7 +465,7 @@ qqline(ss)
 }
 
 \frame[containsverbatim]{\frametitle{Scale-location plot (Streuungs-Diagramm)}
-The scale-location plot is particularly suited to check the assumption of equal variances ({\bf homoscedasticiy / Homoskedasdizit\"at}).\\[2mm]
+The scale-location plot is particularly suited to check the assumption of equal variances ({\bf homoscedasticity / Homoskedasdizit\"at}).\\[2mm]
 
 The idea is to plot the squared residuals $\sqrt{|R_i|}$ against the fitted values $\hat{y_i}$ {\scriptsize (again using the Hg example with the mothers)}:\\[2mm]
 \begin{center}

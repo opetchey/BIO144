@@ -11,6 +11,6 @@ Week,Dates,Practical (1-3pm),Lecture (3-5pm)
 9,"Apr. 27, 28",Model selection,"Interpreting your model, causality, and cautionary notes"
 10,"May 4, 5",Interpretation of your model. Data wrangling 3.,Modelling count data
 11,"May 11, 12",Modelling count data,Modelling binary data
-12,"May 18, 19",Modelling binary data,Repeated measures / random effects
+12,"May 18, 19",Modelling binary data,Measurement error in regression models; Repeated measures / random effects
 13,"May 25, 26",Self study week,Self study week
 14,"Jun. 1, 2",Repeated measures / random effects,Recap and outlook.
