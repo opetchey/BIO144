@@ -143,7 +143,7 @@ Meine \"Uberzeugung: Fundierte Kenntnisse in Statistik machen Sie unabh\"angig! 
 
 
 
-\frame{\frametitle{Kurs-Fahrplan (12 Wochen)}
+\frame{\frametitle{Kurs-Fahrplan (14 Wochen, 12 Vorlesungen)}
 \vspace{-8mm}
 
 \begin{multicols}{2}
@@ -154,11 +154,13 @@ Meine \"Uberzeugung: Fundierte Kenntnisse in Statistik machen Sie unabh\"angig! 
 5. ANOVA und ANCOVA \\[1mm]
 6. Matrix Algebra \\[1mm]
 7. Modellwahl  \\[1mm]
-8. Interpretation von Resultaten \\[1mm]
-9. Bin\"are Daten (logistische Regression)\\[1mm]
-10. Z\"ahldaten (Poisson Regression) \\[1mm]
-11. Messfehler, zuf\"allige Effekte \\[1mm]
-12. Ausgew\"ahlte Themen, Wiederholungen und Ausblick \\
+8. Selbststudium \\[1mm]
+9. Interpretation von Resultaten \\[1mm]
+10. Bin\"are Daten (logistische Regression)\\[1mm]
+11. Z\"ahldaten (Poisson Regression) \\[1mm]
+12. Messfehler, zuf\"allige Effekte \\[1mm]
+13. Selbststudium \\[1mm]
+14. Ausgew\"ahlte Themen, Wiederholungen und Ausblick \\
 \end{multicols}
 ~\\
 {\bf Kurzfristige Anpassungen vorbehalten!}
@@ -619,6 +621,10 @@ Dazu gibt es etlich R Pakete. Interaktive Darstellungen k\"onnen beispielsweise 
 %' library(shiny)
 %' runApp("/home/steffi/Shiny/Tutorial/census-app")
 %' @
+}
+
+\frame{\frametitle{Experimentelle vs Beobachtungsdaten}
+To do, ev mention only later in weeks 7/8
 }
 
 \frame{\frametitle{N\"achste Woche: Einfache lineare Regression}

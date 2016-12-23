@@ -154,7 +154,7 @@ My belief: A solid foundation in statistics makes you independent!  \\[2mm]
 
 
 
-\frame{\frametitle{Schedule (12 weeks)}
+\frame{\frametitle{Schedule (14 weeks, 12 lectures)}
 \vspace{-8mm}
 
 \begin{multicols}{2}
@@ -165,11 +165,13 @@ My belief: A solid foundation in statistics makes you independent!  \\[2mm]
 5. ANOVA and ANCOVA \\[1mm]
 6. Matrix Algebra \\[1mm]
 7. Model choice  \\[1mm]
-8. Interpretation of the results \\[1mm]
-9. Binary Data (logistic regression)\\[1mm]
-10. Count data (Poisson regression) \\[1mm]
-11. Measurement error, random effects \\[1mm]
-12. Selected topics, repetition and outlook \\
+8. Self-study week \\[1mm]
+9. Interpretation of the results \\[1mm]
+10. Binary Data (logistic regression)\\[1mm]
+11. Count data (Poisson regression) \\[1mm]
+12. Measurement error, random effects \\[1mm]
+13. Self-study week \\[1mm]
+14. Selected topics, repetition and outlook \\
 \end{multicols}
 ~\\
 {\bf Short-dated changes possible!}
@@ -433,7 +435,7 @@ Remember: The idea to log-transform the variables was mainly obvious thanks to \
 
 
 
-\frame[containsverbatim]{\frametitle{Data example 3: Diet and blood glucose}
+\frame[containsverbatim]{\frametitle{Data example 3: Diet and blood glucose level}
 \vspace{-3mm}
 {\scriptsize\citep[p. 190]{elpelt.hartung1987}}\\[2mm]
 %
@@ -638,6 +640,9 @@ Many R packages are available for various purposes. Interactive apps can, for ex
 %' runApp("/home/steffi/Shiny/Tutorial/census-app")
 %' @
 }
+
+\frame{\frametitle{Experimental vs observational data}
+To do, ev mention only later in weeks 7/8}
 
 \frame{\frametitle{Next week: Simple linear regression}
 
