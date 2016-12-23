@@ -142,10 +142,7 @@ There will be two assessment-related activities:
 * to motivate you to keep up with the content of the class, and thereby reduce the chance of you falling behind and then having trouble in the final exam.
 * to give you practice with the types of questions that will be in the final examination.
 
-2. A final assessment during the module examination period. Date and time are June 13th, 14-16.00. Location to be confirmed. *Important* -- you are allowed to take any paper documents you like into this exam. You are not permitted to use any electronic devices (questions will require only simple maths possible to do with paper and pen). You can take any documents in because we want to test your understanding more than your recall. You cannot use any electronic devices, in order that there is no chance to collude.
-
-(We may have a short mid-term exam during one of the usual afternoon classes. During the first two hours (1-3pm) you would sit the exam, and during the second two hours (3-5pm) you would grade your own exam paper against solutions presented by an instructor.)
-
+2. A final assessment during the module examination period. Date and time are June 13th, 14-16.00. Location to be confirmed. *Important* -- this is an "open book" exam, and will be delivered on OpenEdX\@UZH. You will, therefore, need to take your laptop into the exam, and make sure you have enough battery power to last the exam. You can take anything else you like into the exam also. You may consult any information source, apart from one type: you are not permitted to communicate in any way with any other person during the exam. The exam will be carefully invigilated / policed to monitor against this.
 
 
 ## How to get help {-}
