@@ -9,7 +9,8 @@ rm(list=ls())
 
 
 #######################################################
-## First we load some required package (you need to install these if we haven't already)
+## First we load some required add-on package
+## (you need to install these if we haven't already)
 library(readr)
 library(dplyr)
 library(ggplot2)

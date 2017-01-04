@@ -18,7 +18,10 @@ This website is associated with a github repo, where things such as datasets, pd
 
 The github repo also has an issue tracker. Please use it as you like.
 
-The students use the course via [OpenEdX\@UZH](https://openedx.mnf.uzh.ch/courses/course-v1:UZH+BIO144+FS2017/info). They don't need to look at this website, and we don't make them aware of it. It is public however, so please do not add any sensitive information, such as personal information about students, or any information related to examination questions and answers.
+Students don't need to look at this website, and we don't make them aware of it. It is public however, so please do not add any sensitive information, such as personal information about students, or any information related to examination questions and answers
+
+The students use the course via [OpenEdX\@UZH](https://openedx.mnf.uzh.ch/courses/course-v1:UZH+BIO144+FS2017/info).
+
 
 ## Weekly structure on OpenEdX\@UZH
 
@@ -30,6 +33,18 @@ Each week as at least one of the following sections (BC = before class; IC = in 
 * IC Lecture
 * Extras
 * Graded assessment
+
+
+## Students on the course
+
+Available from the Dozierendenportal:
+https://idared.uzh.ch/irj/portal
+There, is an up-to-date list of all registrations for each group, including email addresses, to download or send an email directly.
+
+The registration window closes Feb 12 (2017), so on Feb 13 you should have the maximum number of participants.
+Also, most students are visible in OLAT. For some strange reason, the two lists do not completely coincide. The Dozierendenportal is the “true list”.
+
+Students that miss the deadline for registering should contact the studienkoordination\@biol.uzh.ch
 
 
 
