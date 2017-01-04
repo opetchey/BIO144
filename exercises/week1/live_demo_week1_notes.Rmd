@@ -120,7 +120,8 @@ class_RTs
 ## Must be very careful to get the next line right!!! Really important!!!
 names(class_RTs) <- c("Timestamp", "ID", "Gender", "Reaction_time",
                       "Verbal_memory_score", "Number_memory_score",
-                      "Visual_memory_score")
+                      "Visual_memory_score",
+                      "Weight_kgs")
 class_RTs
 ```
 

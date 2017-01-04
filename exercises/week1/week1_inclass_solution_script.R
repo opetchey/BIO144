@@ -21,15 +21,17 @@ library(ggplot2)
 ## Now read in the data, using the read_csv() function.
 ## First we should assign, using the assignment arrow,
 ## the URL of the published version of the google sheet data into an object.
-the_URL - "https://docs.google.com/spreadsheets/d/e/2PACX-1vQFgYX1QhF9-UXep22XmPow1ZK5nbFHix9nkQIa0DzqUhPtZRxH1HtY-hsno32zDiuIHiLb2Hvphk1L/pub?gid=1188775314&single=true&output=csv"
-## then we use the read_csv function to read in the data from that URL
-class_RTs <- read_cvs(the_URL)
+#### SOLUTION: The following line needed the assignment arrow correctly written
+the_URL <- "https://docs.google.com/spreadsheets/d/e/2PACX-1vQFgYX1QhF9-UXep22XmPow1ZK5nbFHix9nkQIa0DzqUhPtZRxH1HtY-hsno32zDiuIHiLb2Hvphk1L/pub?gid=1188775314&single=true&output=csv"
+#### SOLUTION: the following line needed read_cvs corrected to read_csv
+class_RTs <- read_csv(the_URL)
 #######################################################
 
 
 #######################################################
 ## Have a look at the data in R, does it look OK?
-clas_RTs
+#### SOLUTION: the following line needed clas changed to class
+class_RTs
 #######################################################
 
 
@@ -38,7 +40,8 @@ clas_RTs
 ## Clean up the column / variable names:
 ## Must be very careful to get the next line right!!! Really important!!!
 ## Otherwise columns will have the wrong names, which would be very confusing
-names(class_RTs) <- c("Timestamp", "ID", "Gender", "Reaction_time"
+#### SOLUTION: the following line needed a comma added at the end
+names(class_RTs) <- c("Timestamp", "ID", "Gender", "Reaction_time",
                       "Verbal_memory_score", "Number_memory_score",
                       "Visual_memory_score",
                       "Weight_kgs")
@@ -69,7 +72,8 @@ class_RTs <- filter(class_RTs, !is.na(as.numeric(Reaction_time)))
 
 ## Once fixed, we need to make the variables have the correct type
 ## to do this we can use the type_convert() function from readr package.
-class_RTs <- type_convert(class_RT)
+#### SOLUTION: the following line needed RT changed to RTs
+class_RTs <- type_convert(class_RTs)
 #######################################################
 
 
@@ -83,14 +87,17 @@ table(class_RTs$Gender)
 
 
 #######################################################
-## Now make a figure containing the histogram for the two genders
-qplot(x=???, data=class_RTs, facets = Gender ~ .)
+## Now make a figure containing the histogram of reaction times for the two genders
+#### SOLUTION: replace ??? with Reaction_time
+qplot(x=Reaction_time, data=class_RTs, facets = Gender ~ .)
 
 ## And a box and whisker plot
-qplot(x=???, y=???, data=class_RTs, geom = "boxplot")
+#### SOLUTION: replace x=??? with x=Gender and y=??? with y=Reaction_time
+qplot(x=Gender, y=Reaction_time, data=class_RTs, geom = "boxplot")
 
 ## Or just the data points (with some jitter, to separate overlapping points):
-qplot(x=???, y=???, data=class_RTs) + geom_jitter(height=0.2)
+#### SOLUTION: replace x=??? with x=Gender and y=??? with y=Reaction_time
+qplot(x=Gender, y=Reaction_time, data=class_RTs) + geom_jitter(height=0.2)
 #######################################################
 
 
@@ -108,8 +115,10 @@ qplot(x=???, y=???, data=class_RTs) + geom_jitter(height=0.2)
 
 #######################################################
 ## Do the t test and assign the outcome to an object:
-my_ttest <- t.test(??? ~ ???, data=class_RTs, var.equal=TRUE)
+#### SOLUTION: replace ??? ~ ??? with Reaction_time ~ Gender
+my_ttest <- t.test(Reaction_time ~ Gender, data=class_RTs, var.equal=TRUE)
 ## look at the result of the t-test
+#### SOLUTION: replace t.test with my_ttest
 t.test
 #######################################################
 
@@ -131,5 +140,7 @@ t.test
 ## Write a sentence that gives the direction and extent of difference,
 ## and a measure of certainty / uncertainty in that finding.
 ## Make a beautiful graph that very clearly communicates the findings!
-qplot(x=???, y=???, data=???, geom = "boxplot") +
+#### SOLUTION: replace x=??? with x=Gender and y=??? with y=Reaction_time,
+#### and data=??? with data=class_RTs
+qplot(x=Gender, y=Reaction_time, data=class_RTs, geom = "boxplot") +
   xlab("Reaction time (seconds)") 
