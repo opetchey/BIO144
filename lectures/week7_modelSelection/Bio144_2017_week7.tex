@@ -202,7 +202,7 @@ In the mercury example there are 156 individuals, so a {\bf maximum of 15 variab
 {\bf Remarks:}
 \begin{itemize}
 \item Categorical variables with $k$ levels already require $k-1$ dummy variables. For example, if `education level' has three categories, 2 variables are used up.\\[2mm]
-\item Whenever possible, the model should {\bf not be blown up} unneccessarily. Even if there are many data points, the use of too many variables may lead to an {\bf overfitted} model
+\item Whenever possible, the model should {\bf not be blown up} unneccessarily. Even if there are many data points, the use of too many variables may lead to an {\bf overfitted} model.
 \end{itemize}
  
 
@@ -241,7 +241,7 @@ mother & Mother or child?  & binary\\
 
 
 % latex table generated in R 3.3.2 by xtable 1.8-2 package
-% Fri Dec 23 12:48:12 2016
+% Thu Jan  5 17:54:53 2017
 \begin{table}[!h]
 \centering
 \begingroup\footnotesize
@@ -285,7 +285,7 @@ $\rightarrow$ We need to include an interaction term \emph{mother}$\cdot$\emph{a
 \frame[containsverbatim]{\label{sl:mercury_final}
 Fitting the model again with the additional term:
 % latex table generated in R 3.3.2 by xtable 1.8-2 package
-% Fri Dec 23 12:48:12 2016
+% Thu Jan  5 17:54:53 2017
 \begin{table}[!h]
 \centering
 \begingroup\footnotesize
@@ -318,7 +318,7 @@ $\rightarrow$ The interaction term apparently improved the model.
 }
 
 \frame[containsverbatim]{
-A model checking step (always needed, but we did it already in weeks 4)
+A model checking step (always needed, but we did it already in weeks 4):
 \setkeys{Gin}{width=0.8\textwidth}
 \includegraphics{Bio144_2017_week7-modelChecksHg}
 \vspace{2mm}
@@ -720,7 +720,7 @@ There are 12 potential predictors (plus the response). Let's fit the full model:
 \end{Schunk}
 
 % latex table generated in R 3.3.2 by xtable 1.8-2 package
-% Fri Dec 23 12:48:13 2016
+% Thu Jan  5 17:54:54 2017
 \begin{table}[!h]
 \centering
 \begingroup\footnotesize
@@ -775,7 +775,7 @@ $\rightarrow$ The AIC for the optimal model is $1407.5$, compared to the full mo
 But at least the model was now reduced, and only 8 of the 12 variables remain in the model:\\[2mm]
 
 % latex table generated in R 3.3.2 by xtable 1.8-2 package
-% Fri Dec 23 12:48:14 2016
+% Thu Jan  5 17:54:55 2017
 \begin{table}[!h]
 \centering
 \begingroup\footnotesize

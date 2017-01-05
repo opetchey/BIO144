@@ -122,7 +122,7 @@ Even simpler question: How good is BMI as a predictor for body fat?
 \begin{center}
 
 <<read.bodyfat,echo=F,eval=T>>=
-path <- "~/Teaching/Bio144/data_examples/bodyFat/"
+path <- "../../data_examples/bodyFat/"
 d.bodyfat <- read.table(paste(path,"bodyfat.clean.txt",sep=""),header=T)
 d.bodyfat <- d.bodyfat[,c("bodyfat","age","gewicht","hoehe","bmi","neck","abdomen","hip")]
 @

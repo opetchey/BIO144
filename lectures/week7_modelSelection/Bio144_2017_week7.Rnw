@@ -202,7 +202,7 @@ In the mercury example there are 156 individuals, so a {\bf maximum of 15 variab
 {\bf Remarks:}
 \begin{itemize}
 \item Categorical variables with $k$ levels already require $k-1$ dummy variables. For example, if `education level' has three categories, 2 variables are used up.\\[2mm]
-\item Whenever possible, the model should {\bf not be blown up} unneccessarily. Even if there are many data points, the use of too many variables may lead to an {\bf overfitted} model
+\item Whenever possible, the model should {\bf not be blown up} unneccessarily. Even if there are many data points, the use of too many variables may lead to an {\bf overfitted} model.
 \end{itemize}
  
 
@@ -239,7 +239,7 @@ mother & Mother or child?  & binary\\
 
 \frame[containsverbatim]{Let us now fit the full model (including all covariates) in R:\\[2mm]
 <<echo=F,width=4.5,height=4>>=
-d.hg <- read.table("~/Teaching/Bio144/data_examples/Hg/Hg_urin.csv",header=T, sep=",")
+d.hg <- read.table("../../data_examples/Hg/Hg_urin.csv",header=T, sep=",")
 d.hg["106","amalgam_quant"] <- 5 # correct for the outlier
 d.hg <- d.hg[-11]
 names(d.hg) <- c("Hg_urin", "Hg_soil", "vegetables","migration", "smoking","amalgam", "age", "fish","last_fish","mother")
@@ -271,7 +271,7 @@ Remember from slides 7-10 of week 4 that the dependency of mercury in urine on a
 \begin{center}
 \setkeys{Gin}{width=0.55\textwidth}
 <<fig=T,echo=F,width=4.5,height=4>>=
-# path <- "~/Teaching/Bio144/data_examples/Hg/"
+# path <- "../../data_examples/Hg/"
 # d.hg <- read.table(paste(path,"Hg_urin.csv",sep=""),header=T, sep=",")
 # d.hg <- d.hg[,c(1,2,5,6,7,8,10)]
 # names(d.hg) <- c("Hg_urin", "Hg_soil", "smoking","amalgam", "age", "fish","mother")
@@ -306,7 +306,7 @@ $\rightarrow$ The interaction term apparently improved the model.
 }
 
 \frame[containsverbatim]{
-A model checking step (always needed, but we did it already in weeks 4)
+A model checking step (always needed, but we did it already in weeks 4):
 \setkeys{Gin}{width=0.8\textwidth}
 <<modelChecksHg,fig=T,width=7,height=4,echo=F>>=
 par(mfrow=c(1,2))
@@ -692,7 +692,7 @@ There are 12 potential predictors (plus the response). Let's fit the full model:
 <<read.bodyfat,echo=F,eval=T>>=
 # library(reporttools)
 # library(biostatUZH)
-d.bodyfat <- read.table("~/Teaching/Bio144/data_examples/bodyFat/bodyfat.clean.txt",header=T)
+d.bodyfat <- read.table("../../data_examples/bodyFat/bodyfat.clean.txt",header=T)
 d.bodyfat <- d.bodyfat[,c("bodyfat","age","gewicht","hoehe","bmi","neck","chest","abdomen","hip","thigh","knee","ankle","biceps")]
 @
 

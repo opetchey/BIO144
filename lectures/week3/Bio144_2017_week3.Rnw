@@ -121,7 +121,7 @@ Datenanalyse in der Biologie}%\\[.3cm]
 <<read.bodyfat,echo=F,eval=T>>=
 library(reporttools)
 library(biostatUZH)
-path <- "~/Teaching/Bio144/data_examples/bodyFat/"
+path <- "../../data_examples/bodyFat/"
 d.bodyfat <- read.table(paste(path,"bodyfat.clean.txt",sep=""),header=T)
 d.bodyfat <- d.bodyfat[,c("bodyfat","age","gewicht","bmi","neck","abdomen","hip")]
 r.bodyfat <- lm(bodyfat ~ bmi,d.bodyfat)
@@ -553,7 +553,7 @@ Task in teams: Interpret the coefficients, 95\% CIs and $p$-values.
 
 \frame[containsverbatim]{\frametitle{Example: Catheter Data}
 <<echo=F,eval=T>>=
-path <- "~/Teaching/Bio144/data_examples/WBL/"
+path <- "../../data_examples/WBL/"
 d.cath <- read.table(paste(path,"catheter.dat",sep=""),header=T)
 r.cath <- lm(y~x1+x2,data=d.cath)
 @
@@ -661,7 +661,7 @@ Where
 
 \frame[containsverbatim]{
 <<echo=F>>=
-path <- "~/Teaching/Bio144/data_examples/Hg/"
+path <- "../../data_examples/Hg/"
 d.hg <- read.table(paste(path,"Hg_urin.csv",sep=""),header=T, sep=",")
 d.hg <- d.hg[d.hg$mother==1,-c(3,4,9,10,11)]
 names(d.hg) <- c("Hg_urin", "Hg_soil", "smoking","amalgam", "age", "fish")
@@ -764,7 +764,7 @@ Data inspection suggests that the three species have different weight and stomac
 <<wurmP,fig=T,width=6.5,height=3.5,echo=F>>=
 library(lattice)
 par(mfrow=c(1,2))
-d.wurm <- read.table ("/home/steffi/Teaching/Bio144/data_examples/ancova/Projekt6Regenwuermer/RegenwuermerDaten_Haupt.txt",header=T)
+d.wurm <- read.table ("../../data_examples/ancova/Projekt6Regenwuermer/RegenwuermerDaten_Haupt.txt",header=T)
 d.wurm[d.wurm$Gattung=="N","GEWICHT"] <- d.wurm[d.wurm$Gattung=="N","GEWICHT"]*0.5
 boxplot(GEWICHT ~ Gattung, d.wurm,xlab="Gattung",ylab="Gewicht (g)")
 boxplot(MAGENUMF ~ Gattung, d.wurm,xlab="Gattung",ylab="Magenumfang")

@@ -166,7 +166,7 @@ where $x_i^{(k)}$ is the $k$th dummy variable ($x_i^{(k)}$=1 if $i$th observatio
 }
 \frame[containsverbatim]{
 <<echo=F,eval=T>>=
-d.wurm <- read.table ("/home/steffi/Teaching/Bio144/data_examples/ancova/Projekt6Regenwuermer/RegenwuermerDaten_Haupt.txt",header=T)
+d.wurm <- read.table ("../../data_examples/ancova/Projekt6Regenwuermer/RegenwuermerDaten_Haupt.txt",header=T)
 d.wurm[d.wurm$Gattung=="N","GEWICHT"] <- d.wurm[d.wurm$Gattung=="N","GEWICHT"]*0.5
 @
 
@@ -191,7 +191,7 @@ anova(r.lm)
 Age (years) may be a relevant covariable. \\
 
 <<echo=F>>=
-d.chol <- read.table ("/home/steffi/Teaching/Bio144/data_examples/ancova/cholesterol/cholesterol.txt",header=T)
+d.chol <- read.table ("../../data_examples/ancova/cholesterol/cholesterol.txt",header=T)
 @
 \begin{center}
 \setkeys{Gin}{width=0.60\textwidth}

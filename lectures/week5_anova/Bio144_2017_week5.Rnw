@@ -146,7 +146,7 @@ Es wurden 4 Hybrid-Mais-Sorten angebaut und ihr K\"ornerertrag ermittelt. Jede S
 \vspace{-5mm}
 %
 <<dmais,eval=T,echo=F>>=
-path <- "/home/steffi/Teaching/Bio144/data_examples/anova/ProjektMaishybriden/"
+path <- "../../data_examples/anova/ProjektMaishybriden/"
 d.mais <- read.table(paste(path,"MaishybridenDaten.txt",sep=""),header=T)
 @
 \begin{center}
@@ -451,7 +451,7 @@ Remember example 3 from the first week: \\[2mm]
 {\bf Frage:} Unterscheiden sich die Gruppen in der Ver\"anderung der Blutzuckerwerte?\\[3mm]
 
 <<echo=F>>=
-path <- "~/Teaching/Bio144/data_examples/anova/Blutzucker/"
+path <- "../../data_examples/anova/Blutzucker/"
 d.blz <- read.table(paste(path,"blutzucker.dat",sep=""),header=T)
 @
 \begin{center}
@@ -767,7 +767,7 @@ In an experiment the influence of four levels of fertilizer (DUENGER) on the yie
 DUENGER (4 levels) \hspace{1cm} SORTE (5 levels) \hspace{1cm} ERTRAG \\[6mm]
 
 <<dmais,eval=T,echo=F>>=
-path <- "/home/steffi/Teaching/Bio144/data_examples/WBL/"
+path <- "../../data_examples/WBL/"
 d.duenger <- read.table(paste(path,"duenger.dat",sep=""),header=T,sep=",")
 @
 

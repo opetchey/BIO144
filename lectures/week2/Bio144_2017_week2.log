@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.7.13)  10 NOV 2016 20:28
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.7.13)  5 JAN 2017 17:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1413,7 +1413,7 @@ LaTeX Font Info:    Try loading font information for T1+aett on input line 126.
 (/usr/share/texlive/texmf-dist/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
 )
-<Bio144_2017_week2-002.pdf, id=42, 289.08pt x 325.215pt>
+<Bio144_2017_week2-002.pdf, id=43, 289.08pt x 325.215pt>
 File: Bio144_2017_week2-002.pdf Graphic file (type pdf)
 
 <use Bio144_2017_week2-002.pdf>
@@ -1428,7 +1428,7 @@ Overfull \vbox (0.5267pt too high) detected at line 133
  <./Bio144_2017_week2-002.pdf>] [5
 
 ]
-<Bio144_2017_week2-003.pdf, id=64, 289.08pt x 325.215pt>
+<Bio144_2017_week2-003.pdf, id=65, 289.08pt x 325.215pt>
 File: Bio144_2017_week2-003.pdf Graphic file (type pdf)
 
 <use Bio144_2017_week2-003.pdf>
@@ -1452,7 +1452,7 @@ Overfull \hbox (1.46407pt too wide) in paragraph at lines 200--200
 
 ] [9
 
-] <pictures/regrAssumptions.jpg, id=99, 892.33376pt x 495.8525pt>
+] <pictures/regrAssumptions.jpg, id=100, 892.33376pt x 495.8525pt>
 File: pictures/regrAssumptions.jpg Graphic file (type jpg)
 
 <use pictures/regrAssumptions.jpg>
@@ -1466,7 +1466,7 @@ Overfull \hbox (19.91681pt too wide) in paragraph at lines 214--214
 [10
 
  <./pictures/regrAssumptions.jpg>]
-<Bio144_2017_week2-004.pdf, id=106, 252.945pt x 252.945pt>
+<Bio144_2017_week2-004.pdf, id=107, 252.945pt x 252.945pt>
 File: Bio144_2017_week2-004.pdf Graphic file (type pdf)
 
 <use Bio144_2017_week2-004.pdf>
@@ -1475,7 +1475,7 @@ Package pdftex.def Info: Bio144_2017_week2-004.pdf used on input line 225.
  [11
 
  <./Bio144_2017_week2-004.pdf>]
-<Bio144_2017_week2-005.pdf, id=119, 289.08pt x 274.02374pt>
+<Bio144_2017_week2-005.pdf, id=120, 289.08pt x 274.02374pt>
 File: Bio144_2017_week2-005.pdf Graphic file (type pdf)
 
 <use Bio144_2017_week2-005.pdf>
@@ -1486,7 +1486,7 @@ Package pdftex.def Info: Bio144_2017_week2-005.pdf used on input line 244.
  <./Bio144_2017_week2-005.pdf>] [13
 
 ]
-<pictures/orthRegr.jpg, id=139, 659.46375pt x 262.9825pt>
+<pictures/orthRegr.jpg, id=140, 659.46375pt x 262.9825pt>
 File: pictures/orthRegr.jpg Graphic file (type jpg)
 
 <use pictures/orthRegr.jpg>
@@ -1500,7 +1500,7 @@ Overfull \hbox (19.91681pt too wide) in paragraph at lines 270--270
 [14
 
  <./pictures/orthRegr.jpg>]
-<pictures/regrFitting.jpg, id=146, 803.0pt x 512.91624pt>
+<pictures/regrFitting.jpg, id=147, 803.0pt x 512.91624pt>
 File: pictures/regrFitting.jpg Graphic file (type jpg)
 
 <use pictures/regrFitting.jpg>
@@ -1532,7 +1532,7 @@ Overfull \hbox (1.46407pt too wide) in paragraph at lines 312--312
 ] [19
 
 ]
-<Bio144_2017_week2-plotbodyfat.pdf, id=180, 361.35pt x 361.35pt>
+<Bio144_2017_week2-plotbodyfat.pdf, id=181, 361.35pt x 361.35pt>
 File: Bio144_2017_week2-plotbodyfat.pdf Graphic file (type pdf)
 
 <use Bio144_2017_week2-plotbodyfat.pdf>
@@ -1548,7 +1548,7 @@ Overfull \hbox (1.46407pt too wide) in paragraph at lines 395--395
 
 [21
 
-] <Bio144_2017_week2-TA.pdf, id=199, 289.08pt x 289.08pt>
+] <Bio144_2017_week2-TA.pdf, id=200, 289.08pt x 289.08pt>
 File: Bio144_2017_week2-TA.pdf Graphic file (type pdf)
 
 <use Bio144_2017_week2-TA.pdf>
@@ -1557,7 +1557,7 @@ Package pdftex.def Info: Bio144_2017_week2-TA.pdf used on input line 402.
  [22
 
  <./Bio144_2017_week2-TA.pdf>]
-<Bio144_2017_week2-hist.pdf, id=212, 289.08pt x 289.08pt>
+<Bio144_2017_week2-hist.pdf, id=213, 289.08pt x 289.08pt>
 File: Bio144_2017_week2-hist.pdf Graphic file (type pdf)
 
 <use Bio144_2017_week2-hist.pdf>
@@ -1570,7 +1570,7 @@ Package pdftex.def Info: Bio144_2017_week2-hist.pdf used on input line 413.
 ]
 [25
 
-] <Bio144_2017_week2-013.pdf, id=239, 578.16pt x 289.08pt>
+] <Bio144_2017_week2-013.pdf, id=240, 578.16pt x 289.08pt>
 File: Bio144_2017_week2-013.pdf Graphic file (type pdf)
 
 <use Bio144_2017_week2-013.pdf>
@@ -1642,7 +1642,7 @@ LaTeX Font Info:    Font shape `T1/aess/m/it' in size <7> not available
 ] [41
 
 ]
-<Bio144_2017_week2-confpred.pdf, id=353, 361.35pt x 361.35pt>
+<Bio144_2017_week2-confpred.pdf, id=354, 361.35pt x 361.35pt>
 File: Bio144_2017_week2-confpred.pdf Graphic file (type pdf)
 
 <use Bio144_2017_week2-confpred.pdf>
@@ -1663,7 +1663,7 @@ Overfull \hbox (1.46407pt too wide) in paragraph at lines 826--826
 
 [43
 
-] <Bio144_2017_week2-conf.pdf, id=373, 361.35pt x 361.35pt>
+] <Bio144_2017_week2-conf.pdf, id=374, 361.35pt x 361.35pt>
 File: Bio144_2017_week2-conf.pdf Graphic file (type pdf)
 
 <use Bio144_2017_week2-conf.pdf>
@@ -1678,7 +1678,7 @@ Overfull \hbox (1.46407pt too wide) in paragraph at lines 852--852
 
 [45
 
-] <Bio144_2017_week2-pred.pdf, id=393, 361.35pt x 361.35pt>
+] <Bio144_2017_week2-pred.pdf, id=394, 361.35pt x 361.35pt>
 File: Bio144_2017_week2-pred.pdf Graphic file (type pdf)
 
 <use Bio144_2017_week2-pred.pdf>
@@ -1715,10 +1715,10 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 884.
  ) 
 Here is how much of TeX's memory you used:
- 21171 strings out of 494976
- 384776 string characters out of 6179137
- 495877 words of memory out of 5000000
- 23672 multiletter control sequences out of 15000+600000
+ 21265 strings out of 494976
+ 385514 string characters out of 6179137
+ 495873 words of memory out of 5000000
+ 23766 multiletter control sequences out of 15000+600000
  60952 words of font info for 132 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  49i,16n,60p,419b,536s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1735,7 +1735,7 @@ msfonts/cm/cmssi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
 ts/cm/cmssi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
 cmssi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.
 pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on Bio144_2017_week2.pdf (48 pages, 347102 bytes).
+Output written on Bio144_2017_week2.pdf (48 pages, 347124 bytes).
 PDF statistics:
  490 PDF objects out of 1000 (max. 8388607)
  386 compressed objects within 4 object streams
