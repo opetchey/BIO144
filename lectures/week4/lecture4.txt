@@ -1,1 +1,0 @@
-Multiple regression: show that omission of important covariate can lead to bias in other parameters. Ev. use a simulated dataset for illustration.
