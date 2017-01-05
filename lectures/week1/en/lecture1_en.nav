@@ -1,4 +1,4 @@
-\beamer@endinputifotherversion {3.36pt}
+\beamer@endinputifotherversion {3.24pt}
 \headcommand {\slideentry {0}{0}{1}{1/1}{}{0}}
 \headcommand {\beamer@framepages {1}{1}}
 \headcommand {\slideentry {0}{0}{2}{2/2}{}{0}}
@@ -73,13 +73,15 @@
 \headcommand {\beamer@framepages {37}{37}}
 \headcommand {\slideentry {0}{0}{37}{38/38}{}{0}}
 \headcommand {\beamer@framepages {38}{38}}
-\headcommand {\sectionentry {1}{References}{39}{References}{0}}
-\headcommand {\beamer@sectionpages {1}{38}}
-\headcommand {\beamer@subsectionpages {1}{38}}
-\headcommand {\slideentry {1}{0}{0}{39/39}{}{0}}
+\headcommand {\slideentry {0}{0}{38}{39/39}{}{0}}
 \headcommand {\beamer@framepages {39}{39}}
-\headcommand {\beamer@partpages {1}{39}}
-\headcommand {\beamer@subsectionpages {1}{39}}
+\headcommand {\sectionentry {1}{References}{40}{References}{0}}
 \headcommand {\beamer@sectionpages {1}{39}}
-\headcommand {\beamer@documentpages {39}}
-\headcommand {\def \inserttotalframenumber {38}}
+\headcommand {\beamer@subsectionpages {1}{39}}
+\headcommand {\slideentry {1}{0}{39}{40/40}{}{0}}
+\headcommand {\beamer@framepages {40}{40}}
+\headcommand {\beamer@partpages {1}{40}}
+\headcommand {\beamer@subsectionpages {1}{40}}
+\headcommand {\beamer@sectionpages {1}{40}}
+\headcommand {\beamer@documentpages {40}}
+\headcommand {\def \inserttotalframenumber {39}}
