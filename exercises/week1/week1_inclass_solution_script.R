@@ -119,7 +119,7 @@ qplot(x=Gender, y=Reaction_time, data=class_RTs) + geom_jitter(height=0.2)
 my_ttest <- t.test(Reaction_time ~ Gender, data=class_RTs, var.equal=TRUE)
 ## look at the result of the t-test
 #### SOLUTION: replace t.test with my_ttest
-t.test
+my_ttest
 #######################################################
 
 
