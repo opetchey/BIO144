@@ -3,9 +3,9 @@ FILE=Bio144_2017_week8
 all:
 	R CMD Sweave $(FILE).Rnw
 	pdflatex $(FILE)
-	#bibtex $(FILE)
-	#pdflatex $(FILE)
-	#pdflatex $(FILE)
+	bibtex $(FILE)
+	pdflatex $(FILE)
+	pdflatex $(FILE)
 	evince $(FILE).pdf &
 
 clean: 

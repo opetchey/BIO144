@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.7.13)  15 DEC 2016 12:25
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.7.13)  12 JAN 2017 17:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1441,29 +1441,177 @@ Package hyperref Warning: Option `pdfauthor' has already been used,
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Font shape `T1/aess/m/it' in size <12> not available
-(Font)              Font shape `T1/aess/m/sl' tried instead on input line 106.
-LaTeX Font Info:    Font shape `T1/aess/m/it' in size <8> not available
-(Font)              Font shape `T1/aess/m/sl' tried instead on input line 106.
+LaTeX Font Info:    Font shape `T1/aess/m/it' in size <9> not available
+(Font)              Font shape `T1/aess/m/sl' tried instead on input line 111.
 LaTeX Font Info:    Font shape `T1/aess/m/it' in size <6> not available
-(Font)              Font shape `T1/aess/m/sl' tried instead on input line 106.
+(Font)              Font shape `T1/aess/m/sl' tried instead on input line 111.
+LaTeX Font Info:    Font shape `T1/aess/m/it' in size <12> not available
+(Font)              Font shape `T1/aess/m/sl' tried instead on input line 111.
+LaTeX Font Info:    Font shape `T1/aess/m/it' in size <8> not available
+(Font)              Font shape `T1/aess/m/sl' tried instead on input line 111.
  [2
 
 ] [3
 
 ] [4
 
-]
-LaTeX Font Info:    Font shape `T1/aess/m/it' in size <9> not available
-(Font)              Font shape `T1/aess/m/sl' tried instead on input line 145.
+] [5
 
-Overfull \hbox (1.46407pt too wide) in paragraph at lines 145--145
+]
+LaTeX Font Info:    Font shape `T1/aess/m/it' in size <7> not available
+(Font)              Font shape `T1/aess/m/sl' tried instead on input line 162.
+ [6
+
+]
+[7
+
+] <pictures/NZZ1.jpeg, id=73, 3276.24pt x 2457.18pt>
+File: pictures/NZZ1.jpeg Graphic file (type jpg)
+
+<use pictures/NZZ1.jpeg>
+Package pdftex.def Info: pictures/NZZ1.jpeg used on input line 207.
+(pdftex.def)             Requested size: 284.52756pt x 213.3755pt.
+ [8
+
+ <./pictures/NZZ1.jpeg>]
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 223--223
 [][][][][][][]  
  []
 
-[5
+[9
 
-] [6
+] <pictures/Ioannidis2.png, id=86, 1200.485pt x 1032.85875pt>
+File: pictures/Ioannidis2.png Graphic file (type png)
+
+<use pictures/Ioannidis2.png>
+Package pdftex.def Info: pictures/Ioannidis2.png used on input line 229.
+(pdftex.def)             Requested size: 284.52756pt x 244.7864pt.
+ [10
+
+ <./pictures/Ioannidis2.png (PNG copy)>]
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 246--246
+[][][][][][][]  
+ []
+
+<Bio144_2017_week8-pValFig.pdf, id=93, 578.16pt x 289.08pt>
+File: Bio144_2017_week8-pValFig.pdf Graphic file (type pdf)
+
+<use Bio144_2017_week8-pValFig.pdf>
+Package pdftex.def Info: Bio144_2017_week8-pValFig.pdf used on input line 246.
+(pdftex.def)             Requested size: 293.06349pt x 146.52899pt.
+
+Overfull \vbox (7.62408pt too high) detected at line 246
+ []
+
+[11
+
+ <./Bio144_2017_week8-pValFig.pdf>] [12
+
+]
+<pictures/pValueEffectSize.jpg, id=114, 604.2575pt x 401.5pt>
+File: pictures/pValueEffectSize.jpg Graphic file (type jpg)
+
+<use pictures/pValueEffectSize.jpg>
+Package pdftex.def Info: pictures/pValueEffectSize.jpg used on input line 277.
+(pdftex.def)             Requested size: 199.16928pt x 132.33612pt.
+
+Overfull \vbox (3.17192pt too high) detected at line 277
+ []
+
+[13
+
+ <./pictures/pValueEffectSize.jpg>] [14
+
+]
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 313--313
+[][][][][][][]  
+ []
+
+[15
+
+] [16
+
+]
+
+LaTeX Font Warning: Font shape `T1/aess/bx/it' undefined
+(Font)              using `T1/aess/bx/n' instead on input line 365.
+
+
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 365--365
+[][][][][][][]  
+ []
+
+[17
+
+]
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 381--381
+[][][][][][][]  
+ []
+
+[18
+
+] [19
+
+] [20
+
+]
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 430--430
+[][][][][][][]  
+ []
+
+[21
+
+] [22
+
+]
+Overfull \hbox (1.46407pt too wide) in paragraph at lines 480--480
+[][][][][][][]  
+ []
+
+[23
+
+]
+LaTeX Font Info:    Try loading font information for T1+aett on input line 496.
+
+ (/usr/share/texlive/texmf-dist/tex/latex/ae/t1aett.fd
+File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
+) [24
+
+] [25
+
+] [26
+
+]
+[27
+
+] [28
+
+] [29
+
+] [30
+
+] [31
+
+] [32
+
+] [33
+
+
+]
+<pictures/causality.jpg, id=251, 724.7075pt x 244.915pt>
+File: pictures/causality.jpg Graphic file (type jpg)
+
+<use pictures/causality.jpg>
+Package pdftex.def Info: pictures/causality.jpg used on input line 633.
+(pdftex.def)             Requested size: 227.62204pt x 76.9244pt.
+ [34
+
+ <./pictures/causality.jpg>] [35
+
+] [36
+
+]
+(./Bio144_2017_week8.bbl) [37
 
 ]
 \tf@nav=\write8
@@ -1475,30 +1623,43 @@ Overfull \hbox (1.46407pt too wide) in paragraph at lines 145--145
 \tf@snm=\write10
 \openout10 = `Bio144_2017_week8.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 159.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 159.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 649.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 649.
  (./Bio144_2017_week8.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 159.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 159.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 649.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 649.
 Package rerunfilecheck Info: File `Bio144_2017_week8.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 159.
+
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 649.
  ) 
 Here is how much of TeX's memory you used:
- 21149 strings out of 494976
- 384741 string characters out of 6179137
- 497015 words of memory out of 5000000
- 23759 multiletter control sequences out of 15000+600000
- 48011 words of font info for 100 fonts, out of 8000000 for 9000
+ 21452 strings out of 494976
+ 389517 string characters out of 6179137
+ 502015 words of memory out of 5000000
+ 23964 multiletter control sequences out of 15000+600000
+ 60248 words of font info for 130 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 49i,13n,61p,419b,408s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr
-/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/share/
-texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb>
-Output written on Bio144_2017_week8.pdf (6 pages, 42400 bytes).
+ 49i,13n,61p,548b,524s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/s
+hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/te
+xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/share/texlive/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmssi12.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmssi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmssi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmtt8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mtt9.pfb>
+Output written on Bio144_2017_week8.pdf (37 pages, 3301602 bytes).
 PDF statistics:
- 76 PDF objects out of 1000 (max. 8388607)
- 53 compressed objects within 1 object stream
- 13 named destinations out of 1000 (max. 500000)
- 64 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 337 PDF objects out of 1000 (max. 8388607)
+ 266 compressed objects within 3 object streams
+ 77 named destinations out of 1000 (max. 500000)
+ 89 words of extra memory for PDF output out of 10000 (max. 10000000)
 
