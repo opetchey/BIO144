@@ -23,8 +23,8 @@ plant_gr <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144/master/d
 glimpse(plant_gr)
 
 ## plot the data
-ggplot(plant_gr, aes(x = soil.moisture.content, y = plant.growth.rate)) +
-  geom_point() 
+qplot(x = soil.moisture.content, y = plant.growth.rate, data=plant_gr)
+ 
 
 ## now for the statistical model
 m1 <- lm(plant.growth.rate ~ soil.moisture.content, data=dd)
@@ -40,8 +40,7 @@ summary(m1)
 ## (linear regression, slope=12.7, t=12.5, p < 0.001)
 
 ## make a nice graph for communication
-ggplot(plant_gr, aes(x = soil.moisture.content, y = plant.growth.rate)) +
-  geom_point() +
+qplot(x = soil.moisture.content, y = plant.growth.rate, data=plant_gr) +
   geom_smooth(method = 'lm') +
   ylab("Plant Growth Rate (mm/week)") +
   theme_bw()
