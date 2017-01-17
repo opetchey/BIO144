@@ -15,8 +15,8 @@ library(readr)
 library(ggfortify)
 
 
-## import the data
-plant_gr <- read_csv("https://raw.githubusercontent.com/opetchey/getting_started_with_R/master/datasets/plant.growth.rate.csv")
+## import the data (direct from where it is online)
+plant_gr <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144/master/datasets/plant_growth_rate.csv")
 
       
 ## check the data is imported correctly
