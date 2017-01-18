@@ -34,7 +34,8 @@ qplot(child_mort, data=fhc1)
 qplot(health_exp_total, data=fhc1)
 
 ## Look to see if log transformation help the situation
-qplot(x=log10(health_exp_total), y=log10(child_mort), data=fhc1, xlim=c(0, 4), ylim=c(0, 4))
+qplot(x=log10(health_exp_total), y=log10(child_mort), data=fhc1, xlim=c(0, 5), ylim=c(0, 4)) +
+  geom_smooth(method="lm", fullrange=TRUE)
 qplot(log10(child_mort), data=fhc1, bins=30)
 qplot(log10(health_exp_total), data=fhc1)
 
@@ -44,14 +45,26 @@ fhc1 <- mutate(fhc1,
                log10_child_mort=log10(child_mort))
 
 ## fit the linear model of the log transformed data and assign it to object named m1
-m1 <- lm(log10_health_exp_total ~ log10_child_mort, data=fhc1)
+m1 <- lm(log10_child_mort ~ log10_health_exp_total, data=fhc1)
 ## The diagnostic plots
 autoplot(m1, smooth.colour = NA, which=c(1,2))
 
 ## Do this with the raw, non log transformed data, to see just how bad it is.
 ## fit the linear model and assign it to object named m1
-m2 <- lm(health_exp_total ~ child_mort, data=fhc1)
+m2 <- lm(child_mort ~ health_exp_total, data=fhc1)
 ## The diagnostic plots
 autoplot(m2, smooth.colour = NA, which=c(1,2))
+
+m3 <- lm(log10_child_mort ~ log10_health_exp_total, data=slice(fhc1, c(-52, -5, -142)))
+autoplot(m3, smooth.colour = NA, which=c(1,2))
+
+(coef(m3)[2] - coef(m1)[2])/coef(m1)[2]*100
+
+summary(m1)
+
+## make a graph with regression line on the raw axes
+qplot(x=health_exp_total, y=child_mort, data=fhc1) +
+  geom_line(aes(y=10^predict(m1)), col="red")
+
 
 
