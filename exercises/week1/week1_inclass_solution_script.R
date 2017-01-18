@@ -1,3 +1,5 @@
+## This is the script with solutions included...
+
 ## Warning: the code below contains deliberate errors.
 ## Also it sometimes contains "???" which you need to replace with appropriate text.
 
