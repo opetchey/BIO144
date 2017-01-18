@@ -55,16 +55,43 @@ m2 <- lm(child_mort ~ health_exp_total, data=fhc1)
 ## The diagnostic plots
 autoplot(m2, smooth.colour = NA, which=c(1,2))
 
-m3 <- lm(log10_child_mort ~ log10_health_exp_total, data=slice(fhc1, c(-52, -5, -142)))
+## do this with some data points excluded
+m3 <- lm(log10_child_mort ~ log10_health_exp_total, data=slice(fhc1, c(-52, -4, -142)))
 autoplot(m3, smooth.colour = NA, which=c(1,2))
 
+## calculate the percentage difference in slope caused by removing the three
+## slightly suspect data points
 (coef(m3)[2] - coef(m1)[2])/coef(m1)[2]*100
 
+## look that the model terms
 summary(m1)
+
+## make a nice graph with regression line
+qplot(x=log10_health_exp_total, y=log10_child_mort, data=fhc1) +
+  geom_smooth(method="lm") +
+  theme_bw() +
+  xlab("Log10 Per capita total health care spend (dollar)") +
+  ylab("Log10 Child mortality\n(number of children per 1000 dying before age 5)")
+
+
+## Or by making the axes have log scales...
+qplot(x=health_exp_total, y=child_mort, data=fhc1, log="xy") +
+  geom_smooth(method="lm") +
+  theme_bw() +
+  xlab("Per capita total health care spend (dollar)") +
+  ylab("Child mortality\n(number of children per 1000 dying before age 5)")
+
 
 ## make a graph with regression line on the raw axes
 qplot(x=health_exp_total, y=child_mort, data=fhc1) +
   geom_line(aes(y=10^predict(m1)), col="red")
 
+
+## Make the graph beautiful
+qplot(x=health_exp_total, y=child_mort, data=fhc1) +
+  geom_line(aes(y=10^predict(m1)), col="red") +
+  theme_bw() +
+  xlab("Per capita total health care spend (dollar)") +
+  ylab("Child mortality\n(number of children per 1000 dying before age 5)")
 
 
