@@ -38,10 +38,10 @@ clas_RTs
 ## Clean up the column / variable names:
 ## Must be very careful to get the next line right!!! Really important!!!
 ## Otherwise columns will have the wrong names, which would be very confusing
-names(class_RTs) <- c("Timestamp", "ID", "Gender", "Reaction_time"
+names(class_RTs) <- c("Timestamp", "ID", "Gender", "Pref_Reaction_time",
                       "Verbal_memory_score", "Number_memory_score",
                       "Visual_memory_score",
-                      "Weight_kgs")
+                      "Weight_kgs", "Handed", "Nonpref_Reaction_time")
 ## check the headings are correct
 class_RTs
 #######################################################
@@ -84,13 +84,13 @@ table(class_RTs$Gender)
 
 #######################################################
 ## Now make a figure containing the histogram for the two genders
-qplot(x=???, data=class_RTs, facets = Gender ~ .)
+ggplot(data=class_RTs, aes(x=???)) + geom_histogram() + facet_grid(~Gender)
 
 ## And a box and whisker plot
-qplot(x=???, y=???, data=class_RTs, geom = "boxplot")
+ggplot(data=class_RTs, aes(x=???, y=???)) + geom_boxplot()
 
 ## Or just the data points (with some jitter, to separate overlapping points):
-qplot(x=???, y=???, data=class_RTs) + geom_jitter(height=0.2)
+ggplot(data=class_RTs, aes(x=???, y=???)) + geom_point() + geom_jitter(width=0.05)
 #######################################################
 
 
@@ -131,5 +131,5 @@ t.test
 ## Write a sentence that gives the direction and extent of difference,
 ## and a measure of certainty / uncertainty in that finding.
 ## Make a beautiful graph that very clearly communicates the findings!
-qplot(x=???, y=???, data=???, geom = "boxplot") +
-  xlab("Reaction time (seconds)") 
+ggplot(data=???, aes(x=???, y=???)) + geom_boxplot() +
+  ylab("Reaction time (seconds)")

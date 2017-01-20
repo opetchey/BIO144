@@ -118,10 +118,10 @@ class_RTs
 
 ```{r}
 ## Must be very careful to get the next line right!!! Really important!!!
-names(class_RTs) <- c("Timestamp", "ID", "Gender", "Reaction_time",
+names(class_RTs) <- c("Timestamp", "ID", "Gender", "Pref_Reaction_time",
                       "Verbal_memory_score", "Number_memory_score",
                       "Visual_memory_score",
-                      "Weight_kgs")
+                      "Weight_kgs", "Handed", "Nonpref_Reaction_time")
 class_RTs
 ```
 
@@ -181,22 +181,23 @@ We are trying to 1) do further checks for possible errors in the data, 2) making
 
 A histogram of all the data:
 ```{r, message=FALSE}
-qplot(x=Reaction_time, data=class_RTs)
+#qplot(x=Pref_Reaction_time, data=class_RTs)
+ggplot(data=class_RTs, aes(x=Pref_Reaction_time)) + geom_histogram()
 ```
 
 Separate histograms for each gender:
 ```{r, message=FALSE}
-qplot(x=Reaction_time, data=class_RTs, facets = Gender ~ .)
+ggplot(data=class_RTs, aes(x=Pref_Reaction_time)) + geom_histogram() + facet_grid(~Gender)
 ```
 
 A box and whisker plot:
 ```{r, message=FALSE}
-qplot(x=Reaction_time, y=Gender, data=class_RTs, geom = "boxplot")
+ggplot(data=class_RTs, aes(y=Pref_Reaction_time, x=Gender)) + geom_boxplot()
 ```
 
 Or just the data points (with some jitter, to separate overlapping points):
 ```{r, message=FALSE}
-qplot(x=Reaction_time, y=Gender, data=class_RTs) + geom_jitter(height=0.2)
+ggplot(data=class_RTs, aes(y=Pref_Reaction_time, x=Gender)) + geom_point() + geom_jitter(width=0.05)
 ```
 
 What do we think about the three things? Any likely errors? How is the data distributed (within and between groups)? Does it look like there is a difference in reaction times (if so, by how much on average, and which group is faster)?
@@ -281,8 +282,8 @@ We should write a sentence that gives the direction and extent of difference, an
 The aim here is to make a beautiful graph that very clearly communicates the findings! This doesn't mean "fancy" and or "complex". Often simpler is better. Getting the basic right is essential, of course.
 
 ```{r}
-qplot(x=Reaction_time, y=Gender, data=class_RTs, geom = "boxplot") +
-  xlab("Reaction time (seconds)") 
+ggplot(data=class_RTs, aes(y=Pref_Reaction_time, x=Gender)) + geom_boxplot() +
+  ylab("Reaction time (seconds)")
 ```
 
 Wow! That was easy.

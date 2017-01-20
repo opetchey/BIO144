@@ -12,8 +12,8 @@ Hg_urin <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144/master/da
 
 ## make a graph that allows you to see the frequency distribution of mercury concentrations
 ## in the invididual's urine in the study sample.
-## Hint, use the qplot function.
-qplot(x=Hg_urin_krea_new, data=Hg_urin, bins=20)
+## Hint, use the ggplot function.
+ggplot(data=Hg_urin, aes(x=Hg_urin_krea_new)) +  geom_histogram(bins=20)
 
 ## Does the data look to be normally distributed, or skewed in some way.
 ## Are there any data points (i.e. individuals) that might be considered outliers?
@@ -25,7 +25,7 @@ filter(Hg_urin, Hg_urin_krea_new>2)
 
 ## Make a new dataset that does not contain individuals with concentrations greater than 2.
 Hg_urin_lt2<- filter(Hg_urin, Hg_urin_krea_new<=2)
-qplot(x=Hg_urin_krea_new, data=Hg_urin_lt2, bins=20)
+ggplot(data=Hg_urin_lt2, aes(x=Hg_urin_krea_new)) +  geom_histogram(bins=20)
 
 
 ## Use the mutate function to create a new variable that is the log10 of the mercury concentration variable
@@ -34,7 +34,7 @@ Hg_urin_lt2 <- mutate(Hg_urin_lt2, log10_Hg_urin_krea_new=log10(Hg_urin_krea_new
 
 ## make a similar graph but showing the frequency distribution of the log or the
 ## mercury concentrations.
-qplot(x=log10_Hg_urin_krea_new, data=Hg_urin_lt2, bins=40)
+ggplot(data=Hg_urin_lt2, aes(x=log10_Hg_urin_krea_new)) +  geom_histogram(bins=20)
 
 pairs(Hg_urin_lt2)
 ggpairs(Hg_urin_lt2)

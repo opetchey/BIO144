@@ -31,20 +31,20 @@ group_by(fhc1, continent) %>%
             sd=sd(child_mort))
 
 ## make a box and whisker plot of child mortality by continent
-qplot(x=continent, y=child_mort, data=fhc1, geom="boxplot")
+ggplot(fhc1, aes(x=continent, y=child_mort)) + geom_boxplot()
 
 ## plot the relationship between health care expenditure and child mortality
-qplot(x=health_exp_total, y=child_mort, data=fhc1) 
+ggplot(data=fhc1, aes(x=health_exp_total, y=child_mort)) + geom_point()
 
 ## plot the distribution of child mortality
-qplot(child_mort, data=fhc1)
+ggplot(fhc1, aes(x=child_mort)) + geom_histogram()
 ## plot the distribution of health care expenditure
-qplot(health_exp_total, data=fhc1)
+ggplot(fhc1, aes(x=health_exp_total)) + geom_histogram()
 
 ## Look to see if log transformation help the situation
-qplot(x=log10(health_exp_total), y=log10(child_mort), data=fhc1)
-qplot(log10(child_mort), data=fhc1, bins=30)
-qplot(log10(health_exp_total), data=fhc1)
+ggplot(data=fhc1, aes(x=log10(health_exp_total), y=log10(child_mort))) + geom_point()
+ggplot(fhc1, aes(x=log10(child_mort))) + geom_histogram(bins=20)
+ggplot(fhc1, aes(x=log10(health_exp_total))) + geom_histogram(bins=20)
 
 
 

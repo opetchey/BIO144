@@ -28,16 +28,19 @@ fhc1 <- fhc %>%
 ## plot the relationship between health care expenditure and child mortality
 qplot(x=health_exp_total, y=child_mort, data=fhc1) 
 
+## plot the relationship between health care expenditure and child mortality
+ggplot(data=fhc1, aes(x=health_exp_total, y=child_mort)) + geom_point()
+
 ## plot the distribution of child mortality
-qplot(child_mort, data=fhc1)
+ggplot(fhc1, aes(x=child_mort)) + geom_histogram()
 ## plot the distribution of health care expenditure
-qplot(health_exp_total, data=fhc1)
+ggplot(fhc1, aes(x=health_exp_total)) + geom_histogram()
 
 ## Look to see if log transformation help the situation
-qplot(x=log10(health_exp_total), y=log10(child_mort), data=fhc1, xlim=c(0, 5), ylim=c(0, 4)) +
-  geom_smooth(method="lm", fullrange=TRUE)
-qplot(log10(child_mort), data=fhc1, bins=30)
-qplot(log10(health_exp_total), data=fhc1)
+ggplot(data=fhc1, aes(x=log10(health_exp_total), y=log10(child_mort))) + geom_point()
+ggplot(fhc1, aes(x=log10(child_mort))) + geom_histogram(bins=20)
+ggplot(fhc1, aes(x=log10(health_exp_total))) + geom_histogram(bins=20)
+
 
 ## create new log transformed variables
 fhc1 <- mutate(fhc1,
