@@ -55,7 +55,13 @@ Students that miss the deadline for registering should contact the studienkoordi
 - 13.2 Students emailed to go to OpenEdX\@UZH 
 - 23.2 First day of course
 - 2.5  Stornierungsfrist (drop course deadline)
-- Final exam: 13.6, 14-16h
+- Formal feedback: Studienangebotsentwicklung
+- 13.6 Final exam: 14-16h
+- Grades should go into the system asap.
+- Students allowed to view their paper (one afternoon / day to come see me)
+- Submit any grade alterations
+- 20.7 Validation of exam
+- September: Repetition exam??? 
 
 - Weekly progress check all students.
 - Daily check of Discussion forums.

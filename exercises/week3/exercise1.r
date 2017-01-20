@@ -46,25 +46,24 @@ fhc1 <- mutate(fhc1,
 
 ## fit the linear model of the log transformed data and assign it to object named m1
 m1 <- lm(log10_child_mort ~ log10_health_exp_total, data=fhc1)
-## The diagnostic plots
-autoplot(m1, smooth.colour = NA, which=c(1,2))
+
+## First the residuals versus the predicted values
+qplot(fitted(m1), residuals(m1))
+
+## And not the distribution of the residuals
+qplot(residuals(m1))
+
 
 ## Do this with the raw, non log transformed data, to see just how bad it is.
 ## fit the linear model and assign it to object named m1
 m2 <- lm(child_mort ~ health_exp_total, data=fhc1)
-## The diagnostic plots
-autoplot(m2, smooth.colour = NA, which=c(1,2))
+qplot(fitted(m2), residuals(m2))
+qplot(residuals(m2))
 
-## do this with some data points excluded
-m3 <- lm(log10_child_mort ~ log10_health_exp_total, data=slice(fhc1, c(-52, -4, -142)))
-autoplot(m3, smooth.colour = NA, which=c(1,2))
-
-## calculate the percentage difference in slope caused by removing the three
-## slightly suspect data points
-(coef(m3)[2] - coef(m1)[2])/coef(m1)[2]*100
 
 ## look that the model terms
 summary(m1)
+
 
 ## make a nice graph with regression line
 qplot(x=log10_health_exp_total, y=log10_child_mort, data=fhc1) +
