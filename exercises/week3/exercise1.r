@@ -26,9 +26,6 @@ fhc1 <- fhc %>%
   drop_na() ## drop rows with any NAs
  
 ## plot the relationship between health care expenditure and child mortality
-qplot(x=health_exp_total, y=child_mort, data=fhc1) 
-
-## plot the relationship between health care expenditure and child mortality
 ggplot(data=fhc1, aes(x=health_exp_total, y=child_mort)) + geom_point()
 
 ## plot the distribution of child mortality
@@ -51,17 +48,17 @@ fhc1 <- mutate(fhc1,
 m1 <- lm(log10_child_mort ~ log10_health_exp_total, data=fhc1)
 
 ## First the residuals versus the predicted values
-qplot(fitted(m1), residuals(m1))
+ggplot(mapping=aes(x=fitted(m1), y=residuals(m1))) + geom_point()
 
 ## And not the distribution of the residuals
-qplot(residuals(m1))
+ggplot(mapping=aes(residuals(m1))) + geom_histogram()
 
 
 ## Do this with the raw, non log transformed data, to see just how bad it is.
 ## fit the linear model and assign it to object named m1
 m2 <- lm(child_mort ~ health_exp_total, data=fhc1)
-qplot(fitted(m2), residuals(m2))
-qplot(residuals(m2))
+ggplot(mapping=aes(x=fitted(m1), y=residuals(m1))) + geom_point()
+ggplot(mapping=aes(residuals(m1))) + geom_histogram()
 
 
 ## look that the model terms
@@ -69,31 +66,21 @@ summary(m1)
 
 
 ## make a nice graph with regression line
-qplot(x=log10_health_exp_total, y=log10_child_mort, data=fhc1) +
+ggplot(data=fhc1, aes(x=log10_health_exp_total, y=log10_child_mort)) + geom_point() +
   geom_smooth(method="lm") +
   theme_bw() +
   xlab("Log10 Per capita total health care spend (dollar)") +
   ylab("Log10 Child mortality\n(number of children per 1000 dying before age 5)")
 
 
-## Or by making the axes have log scales...
-qplot(x=health_exp_total, y=child_mort, data=fhc1, log="xy") +
-  geom_smooth(method="lm") +
-  theme_bw() +
-  xlab("Per capita total health care spend (dollar)") +
-  ylab("Child mortality\n(number of children per 1000 dying before age 5)")
-
 
 ## make a graph with regression line on the raw axes
-qplot(x=health_exp_total, y=child_mort, data=fhc1) +
-  geom_line(aes(y=10^predict(m1)), col="red")
-
-
-## Make the graph beautiful
-qplot(x=health_exp_total, y=child_mort, data=fhc1) +
+ggplot(data=fhc1, aes(x=health_exp_total, y=child_mort)) +
+  geom_point() +
   geom_line(aes(y=10^predict(m1)), col="red") +
   theme_bw() +
-  xlab("Per capita total health care spend (dollar)") +
-  ylab("Child mortality\n(number of children per 1000 dying before age 5)")
+  xlab("Log10 Per capita total health care spend (dollar)") +
+  ylab("Log10 Child mortality\n(number of children per 1000 dying before age 5)")
+
 
 

@@ -31,7 +31,7 @@ fhc1 <- mutate(fhc1,
                log10_child_mort=log10(child_mort))
 
 ## plot the relationship between health care expenditure and child mortality
-qplot(x=log10_health_exp_total, y=log10_child_mort, data=fhc1)
+ggplot(data=fhc1, aes(x=health_exp_total, y=child_mort)) + geom_point()
 
 ## fit the linear model of the log transformed data and assign it to object named m1
 m1 <- lm(log10_child_mort ~ log10_health_exp_total, data=fhc1)
@@ -41,7 +41,7 @@ autoplot(m1, smooth.colour = NA, which=c(1,2))
 
 
 ## and how bad things are with the non log transformed data
-m2 <- lm(lchild_mort ~ health_exp_total, data=fhc1)
+m2 <- lm(child_mort ~ health_exp_total, data=fhc1)
 autoplot(m2, smooth.colour = NA, which=c(1,2))
 
 

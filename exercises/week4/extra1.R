@@ -55,29 +55,16 @@ fhc1 <- fhc %>%
   select(year:continent, health_exp_total, child_mort, life_expectancy) %>% ## only these columns please
   drop_na() ## drop rows with any NAs
 
-## plot the relationship between health care expenditure and child mortality
-qplot(x=health_exp_total, y=child_mort, data=fhc1) 
-
-## plot the distribution of child mortality
-qplot(child_mort, data=fhc1)
-## plot the distribution of health care expenditure
-qplot(health_exp_total, data=fhc1)
-
-## Look to see if log transformation help the situation
-qplot(x=log10(health_exp_total), y=log10(child_mort), data=fhc1, xlim=c(0, 5), ylim=c(0, 4)) +
-  geom_smooth(method="lm", fullrange=TRUE)
-qplot(log10(child_mort), data=fhc1, bins=30)
-qplot(log10(health_exp_total), data=fhc1)
-
-## create new log transformed variables
+## From last weeks work we know we need to log transform the data
 fhc1 <- mutate(fhc1,
                log10_health_exp_total=log10(health_exp_total),
                log10_child_mort=log10(child_mort))
 
+## plot the relationship between health care expenditure and child mortality
+ggplot(data=fhc1, aes(x=health_exp_total, y=child_mort)) + geom_point()
+
 ## fit the linear model of the log transformed data and assign it to object named m1
 m1 <- lm(log10_child_mort ~ log10_health_exp_total, data=fhc1)
-## The diagnostic plots
-autoplot(m1, smooth.colour = NA, which=c(1,2))
 
 ## Here we run the function that makes the qqplot with some random samples from a normal distribution
 qqfunc(m1, 100)
