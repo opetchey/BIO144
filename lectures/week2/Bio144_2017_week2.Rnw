@@ -207,11 +207,17 @@ Note:
 }
 
 \frame{\frametitle{}
-This is a general approach in statistics:\\[6mm]
+This is a general approach in statistics:\\[4mm]
 \begin{itemize}
-\item Formulate a model and modelling assumptions that seem plausible for your data. A model emerges in our mind.\\[2mm]
+\item Formulate a model and modelling assumptions that seem plausible for your data. {\bf A model emerges in our mind}.\\[2mm]
 \item Estimate the parameters.\\[2mm]
-\item Only now it is a \emph{specific} model.
+\item Only now it is a \emph{specific} model.\\[6mm]
+\end{itemize}
+
+{\bf Note:} 
+\begin{itemize}
+\item The linear model propagates the most simple relationship between two variables. When using it, please always think if such a relationship is meaningful/reasonable/plausible.\\[2mm]
+\item Always look at the data \alert{before} you start with model fitting.
 \end{itemize}
 }
 
