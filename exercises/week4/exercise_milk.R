@@ -86,6 +86,10 @@ p2 <- ggplot(milk, aes(Neocortex.perc_residuals, kcal.per.g)) + geom_point()
 plot_grid(p1, p2, labels=c("A", "B"), ncol = 2, nrow = 1)
 
 
+## Counterfactual plot should work!
+
+
+
 
 ## scaled explanatory variables
 milk <- mutate(milk,

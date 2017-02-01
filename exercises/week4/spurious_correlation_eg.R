@@ -16,6 +16,7 @@
 library(rethinking)
 library(tidyverse)
 library(ggfortify)
+library(cowplot)
 
 dd <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144/master/datasets/WaffleDivorce_rethinking.csv")
 
@@ -84,5 +85,42 @@ Marriage_rate_residuals <- residuals(lm(Marriage ~ MedianAgeMarriage, dd))
 p1 <- ggplot(dd, aes(Marriage_rate_residuals, Divorce)) + geom_point()
 Marriage_age_residuals <- residuals(lm(MedianAgeMarriage ~ Marriage, dd))
 p2 <- ggplot(dd, aes(Marriage_age_residuals, Divorce)) + geom_point()
+plot_grid(p1, p2, labels=c("A", "B"), ncol = 2, nrow = 1)
+
+
+## counterfactual plots
+new_data <- expand.grid(Marriage=mean(dd$Marriage),
+                        MedianAgeMarriage=dd$MedianAgeMarriage)
+new_data <- mutate(new_data, predicted=predict(both, newdata = new_data))
+p1 <- ggplot(new_data, aes(dd$MedianAgeMarriage, predicted)) + geom_point()
+p1
+
+
+new_data <- expand.grid(Marriage=dd$Marriage,
+                          MedianAgeMarriage=mean(dd$MedianAgeMarriage))
+new_data <- mutate(new_data, predicted=predict(both, newdata = new_data))
+p2 <- ggplot(new_data, aes(dd$Marriage, predicted)) + geom_point()
+p2
+
+plot_grid(p1, p2, labels=c("A", "B"), ncol = 2, nrow = 1)
+
+
+
+## corrected response variable plots
+new_data <- expand.grid(Marriage=mean(dd$Marriage),
+                        MedianAgeMarriage=dd$MedianAgeMarriage)
+new_data <- mutate(new_data, predicted=predict(both, newdata = new_data),
+                   corrected=dd$Divorce-predicted)
+p1 <- ggplot(new_data, aes(dd$Marriage, corrected)) + geom_point()
+p1
+
+
+new_data <- expand.grid(Marriage=dd$Marriage,
+                        MedianAgeMarriage=mean(dd$MedianAgeMarriage))
+new_data <- mutate(new_data, predicted=predict(both, newdata = new_data),
+                   corrected=dd$Divorce-predicted)
+p2 <- ggplot(new_data, aes(dd$MedianAgeMarriage, corrected)) + geom_point()
+p2
+
 plot_grid(p1, p2, labels=c("A", "B"), ncol = 2, nrow = 1)
 
