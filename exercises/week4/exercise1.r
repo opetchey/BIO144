@@ -19,7 +19,7 @@ unique(fhc$year)
 ## give me the rows in which both child mortality and health care expenditure are not NA
 filter(fhc, !is.na(child_mort) & !is.na(health_exp_total))
 
-## Wrange the data
+## Wrangle the data
 fhc1 <- fhc %>%
   filter(year==2013) %>% ## only data fro 2013 please
   select(year:continent, health_exp_total, child_mort, life_expectancy) %>% ## only these columns please
