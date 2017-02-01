@@ -17,9 +17,7 @@ library(rethinking)
 library(tidyverse)
 library(ggfortify)
 
-data("WaffleDivorce")
-dd <- WaffleDivorce
-write.csv(dd, "~/Desktop/WaffleDivorce_rethinking.csv", row.names = FALSE)
+dd <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144/master/datasets/WaffleDivorce_rethinking.csv")
 
 ## Rates are in number of individuals per 1000 individuals
 
@@ -79,23 +77,12 @@ ggplot(dd, aes(Divorce, predict(both))) + geom_point() + geom_abline(intercept=0
 
 
 
-## This next bit not coming out quite as I'd expect it to
 
-## Here is plot of Divorce rate corrected for variation in marriage age, plotted against marriage rate
-new_data <- expand.grid(Marriage=mean(dd$Marriage),
-                        MedianAgeMarriage=dd$MedianAgeMarriage)
-new_data <- mutate(new_data, predicted=predict(both, newdata = new_data))
-p1 <- ggplot(new_data, aes(dd$Marriage, predicted)) + geom_point()
-p1
-
-## Here is plot of divorce rate corrected for variation in marriage rate, plotted against marriage age
-new_data <- expand.grid(Marriage=dd$Marriage,
-                        MedianAgeMarriage=mean(dd$MedianAgeMarriage))
-new_data <- mutate(new_data, predicted=predict(both, newdata = new_data))
-p2 <- ggplot(new_data, aes(dd$MedianAgeMarriage, predicted)) + geom_point()
-p2
-
+## Get marriage rate residuals and plot against divorce, and same for
+## marriage age residuals
+Marriage_rate_residuals <- residuals(lm(Marriage ~ MedianAgeMarriage, dd))
+p1 <- ggplot(dd, aes(Marriage_rate_residuals, Divorce)) + geom_point()
+Marriage_age_residuals <- residuals(lm(MedianAgeMarriage ~ Marriage, dd))
+p2 <- ggplot(dd, aes(Marriage_age_residuals, Divorce)) + geom_point()
 plot_grid(p1, p2, labels=c("A", "B"), ncol = 2, nrow = 1)
-
-
 

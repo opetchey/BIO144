@@ -73,24 +73,18 @@ anova(m3)
 
 library(car)
 vif(m3)
+https://onlinecourses.science.psu.edu/stat501/node/347
 ## this happens due to correlation in the explantory variables.
 
-## Here is the observed versus predicted plot
-ggplot(milk, aes(kcal.per.g, predict(m3))) + geom_point() + geom_abline(intercept=0, slope=1)
 
-## Here is plot of kcal.per.g corrected for variation in neocortex.perc, plotted against log10_mass
-new_data <- expand.grid(log10_mass=mean(milk$log10_mass),
-                        neocortex.perc=milk$neocortex.perc)
-new_data <- mutate(new_data, predicted=predict(m3, newdata = new_data))
-p1 <- ggplot(new_data, aes(milk$log10_mass, predicted)) + geom_point()
-
-## Here is plot of kcal.per.g corrected for variation in log10_mass, plotted against neocortex.perc
-new_data <- expand.grid(log10_mass=milk$log10_mass,
-                        neocortex.perc=mean(milk$neocortex.perc))
-new_data <- mutate(new_data, predicted=predict(m3, newdata = new_data))
-p2 <- ggplot(new_data, aes(milk$neocortex.perc, predicted)) + geom_point()
-
+## Get marriage rate residuals and plot against divorce, and same for
+## marriage age residuals
+Mass_residuals <- residuals(lm(log10_mass ~ neocortex.perc, milk))
+p1 <- ggplot(milk, aes(Mass_residuals, kcal.per.g)) + geom_point()
+Neocortex.perc_residuals <- residuals(lm(neocortex.perc ~ log10_mass, milk))
+p2 <- ggplot(milk, aes(Neocortex.perc_residuals, kcal.per.g)) + geom_point()
 plot_grid(p1, p2, labels=c("A", "B"), ncol = 2, nrow = 1)
+
 
 
 ## scaled explanatory variables
