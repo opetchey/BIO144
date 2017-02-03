@@ -1,6 +1,15 @@
-# Learning Objectives, BIO144, Data Analysis for Biologists
+---
+title: "Weekly Learning Objectives - BIO144, Data Analysis for Biologists"
+author: "Owen Petchey & Stephanie Muff"
+date: "2/3/2017"
+output: 
+  pdf_document: 
+    toc: yes
+---
 
-## Overarching learning objectives
+# Learning Objectives, BIO144, Data Analysis for Biologists {-}
+
+## Overarching learning objectives {-}
 
 By the end of the course you will be able to:
 
@@ -16,7 +25,7 @@ By the end of the course you will be able to:
 * Recognise the limitations of data from experimental and observational studies.
 
 
-## Week 1 - Introduction
+## Week 1 - Introduction {-}
 
 By the end of this week you will be able to:
 
@@ -38,7 +47,7 @@ By the end of this week you will be able to:
 (Please note that these skills are assessed in the Graded Assessment 0 & 1)
 
 
-## Week 2 - Linear Regression
+## Week 2 - Linear Regression {-}
 
 By the end of this week you will be able to:
 
@@ -60,7 +69,7 @@ By the end of this week you will be able to:
 
 (Please note that these skills are assessed in the Graded Assessment 2)
 
-## Week 3 - Multiple linear regression part 1
+## Week 3 - Multiple linear regression part 1 {-}
 
 By the end of this week you will be able to:
 
@@ -79,7 +88,7 @@ By the end of this week you will be able to:
 (Please note that these skills are assessed in the Graded Assessment 3)
 
 
-## Week 4 - Multiple linear regression part 1
+## Week 4 - Multiple linear regression part 1 {-}
 
 By the end of this week you will be able to:
 
@@ -94,7 +103,7 @@ By the end of this week you will be able to:
 (Please note that these skills are assessed in the Graded Assessment 4)
 
 
-## Week 5 - ANOVA
+## Week 5 - ANOVA {-}
 
 By the end of this week you will be able to:
 
@@ -110,7 +119,7 @@ By the end of this week you will be able to:
 (Please note that these skills are assessed in the Graded Assessment 5)
 
 
-## Week 6 - ANCOVA & Matrix alegbra
+## Week 6 - ANCOVA & Matrix alegbra {-}
 
 By the end of this week you will be able to:
 
@@ -124,7 +133,7 @@ By the end of this week you will be able to:
 (Please note that these skills are assessed in the Graded Assessment 6)
 
 
-## Week 7 - Model selection
+## Week 7 - Model selection {-}
 
 By the end of this week you will be able to:
 
@@ -139,12 +148,12 @@ By the end of this week you will be able to:
 (Please note that these skills are assessed in the Graded Assessment 7)
 
 
-## Week 8 - Self Study
+## Week 8 - Self Study {-}
 
 No additional learning objectives this week.
 
 
-## Week 9 - Interpretation, causality, and cautionary notes
+## Week 9 - Interpretation, causality, and cautionary notes {-}
 
 By the end of this week you will be able to:
 
@@ -161,7 +170,7 @@ By the end of this week you will be able to:
 (Please note that these skills are assessed in the Graded Assessment 8)
 
 
-## Week 10 - Analysing count data
+## Week 10 - Analysing count data {-}
 
 By the end of this week you will be able to:
 
@@ -178,7 +187,7 @@ By the end of this week you will be able to:
 
 
 
-## Week 11 - Analysing binary data
+## Week 11 - Analysing binary data {-}
 
 By the end of this week you will be able to:
 
@@ -188,7 +197,7 @@ By the end of this week you will be able to:
 
 
 
-## Week 12 - Measurement error; repeated measures and random effects.
+## Week 12 - Measurement error; repeated measures and random effects {-}
 
 By the end of this week you will be able to:
 
@@ -197,12 +206,12 @@ By the end of this week you will be able to:
 (Please note that these skills are assessed in the Graded Assessment 11)
 
 
-Week 13 - Self Study
+## Week 13 - Self Study  {-}
 
 No additional learning objectives this week.
 
 
-Week 14 - Recap and outlook
+## Week 14 - Recap and outlook  {-}
 
 No additional learning objectives this week.
 
