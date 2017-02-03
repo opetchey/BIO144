@@ -118,10 +118,11 @@ class_RTs
 
 ```{r}
 ## Must be very careful to get the next line right!!! Really important!!!
-names(class_RTs) <- c("Timestamp", "ID", "Gender", "Pref_Reaction_time",
+names(class_RTs) <- c("Timestamp", "ID", "Gender", "Pref_Reaction_time_1",
                       "Verbal_memory_score", "Number_memory_score",
                       "Visual_memory_score",
-                      "Weight_kgs", "Handed", "Nonpref_Reaction_time")
+                      "Weight_kgs", "Handed", "Nonpref_Reaction_time_ave",  "Pref_Reaction_time_2",
+                       "Pref_Reaction_time_3",  "Pref_Reaction_time_4", "Pref_Reaction_time_5", "Pref_Reaction_time")
 class_RTs
 ```
 
@@ -143,7 +144,7 @@ If we have problems here, with variables of the wrong type, it probably means so
 ```{r}
 ## Have to do this live!!!
 ## e.g. to exclude observations with character entries in Reaction_time variable
-class_RTs <- filter(class_RTs, !is.na(as.numeric(Reaction_time)))
+class_RTs <- filter(class_RTs, !is.na(as.numeric(Pref_Reaction_time)))
 ```
 
 Once fixed, we need to make the variable have the correct type
@@ -245,7 +246,7 @@ Before we go on, there is something very important we should figure out, and we 
 There will be learning about this later in the course. For now, know that for a t-test the degrees of freedom are the number of observations minus two. Here that is `r nrow(class_RTs)` - 2 (= `r nrow(class_RTs)-2`). This is really important to figure out in advance, as its a great way to check that R is doing the test we think we're telling it to do.
 
 ```{r}
-my_ttest <- t.test(Reaction_time ~ Gender, data=class_RTs, var.equal=TRUE)
+my_ttest <- t.test(Pref_Reaction_time ~ Gender, data=class_RTs, var.equal=TRUE)
 my_ttest
 ```
 

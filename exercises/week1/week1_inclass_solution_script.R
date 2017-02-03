@@ -43,10 +43,11 @@ class_RTs
 ## Must be very careful to get the next line right!!! Really important!!!
 ## Otherwise columns will have the wrong names, which would be very confusing
 #### SOLUTION: the following line needed a comma added at the end
-names(class_RTs) <- c("Timestamp", "ID", "Gender", "Pref_Reaction_time",
+names(class_RTs) <- c("Timestamp", "ID", "Gender", "Pref_Reaction_time_1",
                       "Verbal_memory_score", "Number_memory_score",
                       "Visual_memory_score",
-                      "Weight_kgs", "Handed", "Nonpref_Reaction_time")
+                      "Weight_kgs", "Handed", "Nonpref_Reaction_time_ave",  "Pref_Reaction_time_2",
+                      "Pref_Reaction_time_3",  "Pref_Reaction_time_4", "Pref_Reaction_time_5", "Pref_Reaction_time")
 ## check the headings are correct
 class_RTs
 #######################################################
@@ -70,7 +71,7 @@ class_RTs
 
 ## e.g. if there are non-numeric entries in the Reaction_time variable, 
 ## one solution is to exclude them
-class_RTs <- filter(class_RTs, !is.na(as.numeric(Reaction_time)))
+class_RTs <- filter(class_RTs, !is.na(as.numeric(Pref_Reaction_time)))
 
 ## Once fixed, we need to make the variables have the correct type
 ## to do this we can use the type_convert() function from readr package.
@@ -118,7 +119,7 @@ ggplot(data=class_RTs, aes(y=Pref_Reaction_time, x=Gender)) + geom_point() + geo
 #######################################################
 ## Do the t test and assign the outcome to an object:
 #### SOLUTION: replace ??? ~ ??? with Reaction_time ~ Gender
-my_ttest <- t.test(Reaction_time ~ Gender, data=class_RTs, var.equal=TRUE)
+my_ttest <- t.test(Pref_Reaction_time ~ Gender, data=class_RTs, var.equal=TRUE)
 ## look at the result of the t-test
 #### SOLUTION: replace t.test with my_ttest
 my_ttest

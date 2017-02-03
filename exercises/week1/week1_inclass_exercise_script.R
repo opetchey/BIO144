@@ -38,10 +38,11 @@ clas_RTs
 ## Clean up the column / variable names:
 ## Must be very careful to get the next line right!!! Really important!!!
 ## Otherwise columns will have the wrong names, which would be very confusing
-names(class_RTs) <- c("Timestamp", "ID", "Gender", "Pref_Reaction_time",
+names(class_RTs) <- c("Timestamp", "ID", "Gender", "Pref_Reaction_time_1"
                       "Verbal_memory_score", "Number_memory_score",
                       "Visual_memory_score",
-                      "Weight_kgs", "Handed", "Nonpref_Reaction_time")
+                      "Weight_kgs", "Handed", "Nonpref_Reaction_time_ave",  "Pref_Reaction_time_2",
+                      "Pref_Reaction_time_3",  "Pref_Reaction_time_4", "Pref_Reaction_time_5", "Pref_Reaction_time")
 ## check the headings are correct
 class_RTs
 #######################################################
