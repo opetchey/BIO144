@@ -299,7 +299,7 @@ $\rightarrow$ A regression model is needed again!
 \frame[containsverbatim]{\frametitle{Illustrative/working example}
 Let us look at an example from chapter 9.2 in Hector (2015): \\[2mm]
 
-Eight groups of beetles were exposed to carbon disulphide (an insecticide) for 5h. For each beetle it was then reported if it was killed or not (1 or 0), but the data were reported aggregated:\\[6mm]
+Eight groups of beetles were exposed to carbon disulphide (an insecticide) for 5h. For each beetle it was then reported if it was killed or not (1 or 0), but the data were reported {\bf aggregated}:\\[6mm]
 
 <<echo=F>>=
 library(AICcmodavg)
@@ -308,7 +308,7 @@ beetle
 @
 
 ~\\[6mm]
-{\bf Question:} (How) does the insecticide affect the survival of the beetles?
+{\bf Question:} (How) does the insecticide ($\bm{x}$) affect the survival probability ($\bm{y}$) of the beetles?
 }
 
 
@@ -361,12 +361,17 @@ lm(Mortality_rate ~ Dose, data=beetle)
 r.lm <- lm(Mortality_rate ~ Dose, data=beetle)
 @
 
-~\\[2mm]
+~\\ 
 This leads to $\hat\beta_0=\Sexpr{format(r.lm$coef[1],2,2,2)}$ and $\hat\beta_1=\Sexpr{format(r.lm$coef[2],2,2,2)}$. This means for instance that, for a zero dose, the probability to die would be $\E(y_i)=\Sexpr{format(r.lm$coef[1],2,2,2)}$.
 
-~\\[4mm]
+~\\
 \colorbox{lightgray}{\begin{minipage}{10cm}
-{\bf Problem:} Linear regression leads to impossible predicted probability values! $\Rightarrow$ \alert{Unrealistic predictions!}
+{\bf Problems:} 
+\begin{itemize}
+\item Linear regression leads to impossible predicted probability values! \\
+$\Rightarrow$ \alert{Unrealistic predictions!}
+\item For $y_i = \beta_0 + \beta_1 Dose_i + e_i$, residuals $e_i$ are {\bf not} normally distributed!
+\end{itemize}
 \end{minipage}}
 }
 
@@ -408,18 +413,18 @@ The probability distribution of a binary random variable $Y$ $\in \{0,1\}$ with 
 \end{equation*}
 \end{minipage}}
 
-~\\[3mm]
-{\bf Characteristics of the Beroulli distribution:}
+~\\[6mm]
+{\bf Characteristics of the Beroulli distribution:}\\ \label{sl:bernoulli}
 \begin{itemize}
-\item $\E(Y) = \pi$
-\item $\Var(Y)=\pi(1-\pi)$.\\[2mm]
+\item $\E(Y) = \pi =\P(y_i=1)$ {\tiny (useful to remember)}\\[2mm]
+\item $\Var(Y)=\pi(1-\pi)$.\\[4mm]
 
 $\rightarrow$ The variance of the distribution is determined by its mean.\\[4mm]
 \end{itemize}
 }
 
 \frame{\frametitle{Doing it right: Logistic regression}
-We can again use the GLM machinery from last week! The \alert{linear predictor} is again (as always):
+We can again use the GLM machinery from last week! The \alert{linear predictor} is as always:
 
 \begin{equation*}
 \eta_i = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_p x_i^{(p)} \ .
@@ -430,42 +435,384 @@ We again need a \alert{link function} that relates the linear predictor $\eta_i$
 
 Remember we used the $\log$ link last week, but that seems a bad idea here (see slide \ref{sl:poisson}).\\[4mm]
 
-The link function must be chosen such that the expected value $\E(y_i)$ is always between 0 and 1!
+The link function must be chosen such that the expected value $\E(y_i) $ is always between 0 and 1!
 
 }
 
 \frame{\frametitle{Link function: The logistic transformation}
+A transformation that assigns a probability ($\pi$) between 0 and 1 a value between $-\infty$ and $\infty$ is the \alert{logit-transformation}:\\[2mm]
 
+\colorbox{lightgray}{\begin{minipage}{10cm}
+$$g(\pi) = \log \left(\frac{\pi}{1-\pi}\right) = \log(\pi) - \log(1-\pi) \ .$$
+\end{minipage}}
+
+~\\[2mm]
+A graph depicts the functional form of $g(\cdot)$: 
+\vspace{-6mm}
+\begin{center}
+\setkeys{Gin}{width=0.5\textwidth}
+<<fig=T,echo=F,width=4,height=4>>=
+x <- seq(0,1,0.001)
+plot(x,log(x/(1-x)),xlab=expression(pi),ylab=expression(log(pi/(1-pi))),cex=0.8)
+@
+\end{center}
+}
+
+\frame{\frametitle{The logistic regression model}
+\colorbox{lightgray}{\begin{minipage}{10cm}
+In order to prevent the expected value $\E(y_i)$ to attain unreasonable values, we thus formulate the \alert{logistic regression model} as
+\begin{equation*}
+\log\left( \frac{\E(y_i)}{1-\E(y_i)} \right) = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_p x_i^{(p)} \ 
+\end{equation*}
+
+with $\E(y_i) = \P(y_i=1) \ .$
+\end{minipage}}
+
+~\\[4mm]
+\begin{itemize}
+\item The \alert{link function} is called the {\bf logistic link}.\\[2mm]
+\item The \alert{family} is {\bf binomial}.\\[2mm]
+\end{itemize}
+}
+
+
+\frame[containsverbatim]{\frametitle{Doing it right: fitting a logistic regression}
+\begin{itemize}
+\item As for the Poisson GLM, we can estimate the parameters $\beta_0, \beta_1, \ldots $ by maximum-likelihood estimation.\\[4mm]
+\item Luckily, the \texttt{glm()} function in R can also handle binary data!\\[4mm]
+
+\item A complication comes from the fact that we need to tell the function \alert{two numbers for the response}:
+  \begin{itemize}
+  \item The number of successes, encoded as 1 (here: number killed )
+  \item The number of failures, encoded as 0 (here: number died)
+  \end{itemize}
+  \vspace{4mm}
+<<>>=
+beetle$Number_survived <- beetle$Number_tested - beetle$Number_killed
+beetle.glm <- glm(cbind(Number_killed,Number_survived) ~ Dose, 
+             data = beetle, family = binomial)
+@
+\end{itemize}
+}
+
+\frame[containsverbatim]{\frametitle{Doing it right: Model diagnostics}
+As always, before looking at the regression output, let's do some model diagnostics:
+
+\begin{center}
+\setkeys{Gin}{width=0.6\textwidth}
+<<fig=T,width=5,height=4.5,echo=F>>=
+par(mfrow=c(2,2),mar=c(3,4,2,1))
+plot(beetle.glm)
+@
+\end{center}
+}
+
+\frame{
+\begin{itemize}
+\item As in Poisson regression, it is not clear how do define residuals, there are many ways...\\[3mm]
+\item Again, different types of residuals are used in the plots. \\[3mm]
+\item \alert{Be careful}: such plots are only reasonable for \alert{aggregated data} (which we have here)! The larger the groups, the more precise are the underlying assumptions (approximate equality of distributions).\\[3mm]
+\item See example on slide \ref{sl:binary} for an example with non-aggregated (binary) data.
+\end{itemize}
+}
+
+
+\frame[containsverbatim]{\frametitle{Doing it right: Interpreting the coefficients}
+Let's look at the results, for the moment on the coefficients:\\[2mm]
+
+<<>>=
+summary(beetle.glm)$coef
+@
+~\\[4mm]
+
+The intercept and slope are estimated as \\
+\begin{equation*}
+\hat\beta_0 = \Sexpr{format(summary(beetle.glm)$coef[1,1],3,3,3)} \quad \text{and}\quad \hat\beta_1 = \Sexpr{format(summary(beetle.glm)$coef[2,1],3,3,3)} \ ,
+\end{equation*}
+
+and standard errors and $p$-values. Very clearly, the dose influences the survival probability ($p<<0.001$), and $\hat\beta_1 >0$, thus, \alert{the larger the dose, the larger the mortality probability} (positive relation). \\[2mm]
+
+This is a {\bf qualitative interpretation} of the coefficients.\\[4mm]
+
+{\tiny Note: The $\beta$ coefficients are approximately normally distributed as $\N(\hat\beta,\hat\sigma^2_\beta)$.}
+}
+
+
+\frame{\frametitle{Quantitative interpretation of the coefficients}
+Remember the regression model
+\begin{equation*}
+\log\left( \frac{\E(y_i)}{1-\E(y_i)} \right) = \beta_0 + \beta_1 Dose_i \ . 
+\end{equation*}
+
+~\\
+To understand what $\beta_1$ tells us, let's transform the equation such that $\E(y_i)=\P(y_i=1)$ is on the left. Some algebra leads to 
+
+\begin{equation}\label{eq:prob}
+\P(y_i=1)= \frac{\exp(\beta_0 + \beta_1 Dose_i)}{1 + \exp(\beta_0 + \beta_1 Dose_i)} \ . 
+\end{equation}
+
+~\\[2mm]
+\colorbox{lightgray}{\begin{minipage}{10cm}
+It is then possible to calculate the \alert{odds} (Chance) 
+\begin{equation*}
+odds(y_i=1 \given Dose_i) = \frac{\P(y_i=1)}{\P(y_i=0)}= \exp(\beta_0 + \beta_1 Dose_i)\ . 
+\end{equation*}
+\end{minipage}}
+}
+
+\frame{
+If the $Dose_i$ is then increased by 1 unit in concentration (from $x$ to $x+1$), the \alert{odds ratio} is given as
+
+\begin{equation*}
+\frac{odds(y_i=1 \given Dose_i = x + 1)}{odds(y_i=1 \given Dose_i = x)} = \exp{(\beta_1)} = \exp(\Sexpr{format(summary(beetle.glm)$coef[2,1],3,3,3)}) = \Sexpr{format(exp(summary(beetle.glm)$coef[2,1]),2,2,2)} \ .
+\end{equation*}
+~\\[2mm]
+
+{\bf Interpretation:} When the dose is increased by 1 unit, the odds to die increases by a factor of $\Sexpr{format(exp(summary(beetle.glm)$coef[2,1]),2,2,2)}$.
+}
+
+\frame[containsverbatim]{\frametitle{Doing it right: The \texttt{anova()} table}
+We can look at the \alert{Analysis of Deviance} table (directly using \texttt{test="Chisq"}):\\[4mm]
+
+<<>>=
+anova(beetle.glm,test="Chisq")
+@
+
+~\\[4mm]
+{\bf Interpretation:} The total deviance is 267.66, and of this 259.23 is explained by \texttt{Dose} (using 1 degree of freedom). This seems really good, because the $\chi^2$ test gives a $p$-value that is reeeeallly small ($<2.2e-16$).
 }
 
 
 
-\frame[containsverbatim]{\frametitle{Your turn!}
+\frame[containsverbatim]{\frametitle{Plotting the fit}
+
+A fitted curve can be added to the raw data by plotting $\P(y_i=1)$ against the Dose, using equation (\ref{eq:prob}):
+
+\begin{center}
+\setkeys{Gin}{width=0.6\textwidth}
+<<fig=T,width=3.5,height=2.5,echo=F>>=
+xx <- seq(45,80,0.01)
+eta <- -14.578 + 0.2455*xx
+ppi <- exp(eta)/(1+exp(eta))
+dd <- data.frame(xx=xx,ppi=ppi)
+ggplot(beetle, aes(x = Dose, y = Mortality_rate)) + theme_bw() +
+geom_point() +
+xlab("Dose") + ylab("Mortality rate (Pr(Y=1))")  +
+geom_line(aes(xx, ppi,colour = "red"), dd, size=1.2) + 
+  scale_color_discrete(guide = FALSE)
+@
+\end{center}
+
+ 
+}
+
+\frame{\frametitle{Overdispersion}
+Remember :
+\begin{itemize}
+\item Slide\ref{sl:bernoulli}: $\E(Y)=\pi$ and $\Var(Y)=\pi(1-\pi)$, thus \alert{the variance is determined by the mean!} \\[2mm]
+
+\item ``Overdispersion'' means \alert{``extra variability''} (larger than the model predicts). \\[2mm]
+\item Reason: Variables are missing in the model!\\[2mm]
+\item Overdispersion leads to \alert{too small $p$-values}.\\[2mm]
+\item Detectable by looking at the \alert{residual deviance}: \\[2mm]
+\texttt{Residual deviance} $>>$ \texttt{df} $\quad\rightarrow$ Overdispersion \\[2mm]
+
+\item Also possible: underdispersion (dependency in the data), if:\\[2mm]
+\texttt{Residual deviance} $<<$ \texttt{df}  
+\end{itemize}
+}
+
+\frame[containsverbatim]{
+Here, the residual deviance is {\bf 8.44} with {\bf 6} degrees of freedom. Is this good or bad?\\[2mm]
 
 <<>>=
-path <- "../../data_examples/WBL/"
-d.heart <- read.table(paste(path,"heart.dat",sep=""),header=T,sep=",")
+1-pchisq(8.438,6)
+@
+~\\
+$\rightarrow$ $p=\Sexpr{format(1-pchisq(8.438,6),2,2,2)}$ seems not problematic.\\[6mm]
+
+One can nevertheless account for overdispersion by switching to a \alert{\texttt{quasibinomial}} model. This allows to estimate the dispersion parameter separately.\\[4mm]
+}
+
+
+\frame[containsverbatim]{
+
+
+<<>>=
+beetle.glm2 <- glm(cbind(Number_killed,Number_survived) ~ Dose, 
+             data = beetle, family = quasibinomial)
+summary(beetle.glm2)
+@
+}
+
+
+
+
+
+\frame{\frametitle{Binary response / non-aggregated data}
+\begin{itemize}
+\item In the beetle example, we were in a comfortable situation: For each level of the does, we had several beetles. For instance, 55 beetles at lowest does (49.06), of which 6 died (1) and 49 survived (0). This was \alert{binomial} data, an aggregated version of 55 trials with 0 or 1 outcome.\\[3mm]
+\item In reality, one often has only one trial (0/1) for a (combination of) covariate(s).\\[3mm]
+\item The analysis is the same as for aggregated data, however there are a few complications with graphical descriptions and model checking. \\[6mm]
+\end{itemize}
+
+{\bf Example}: Blood screeing {\tiny (see week 1; data from Hothorn \& Everitt 2014, chapter 7.3)}
+}
+
+\frame[containsverbatim]{\frametitle{Blood screening example}
+<<>>=
+library(HSAUR3)
+data("plasma",package="HSAUR3")
+plasma$y <- as.integer(plasma$ESR)-1
+@
+ 
+{\small
+\begin{multicols}{2}
+<<echo=FALSE,results=tex>>=
+library(xtable)
+pol1 <- plasma[1:16,]
+pol2 <- plasma[17:32,]
+ttab1 <- xtable(pol1,display=c("s","f","d","s","d"))
+ttab2 <- xtable(pol2,display=c("s","f","d","s","d"))
+print(ttab1, floating = TRUE, include.rownames=FALSE)
+print(ttab2,  floating = TRUE, include.rownames=FALSE)
+@
+\end{multicols}
+}
+}
+
+\frame{\frametitle{}
+{\bf Question:} Is a high ESR (erythrocyte sedimentation rate) an indicator for certain diseases (rheumatic disease, chronic inflammations)?\\[3mm]
+
+{\bf  Specifically: } Is there an association between ESR level ESR$<20mm/hr$ and the concentrations of the plasma proteins Fibrinogen and Globulin?\\[6mm]
+
+{\bf The model to be fitted:}\\
+
+\begin{equation*}
+\log\left( \frac{\E(y_i)}{1-\E(y_i)} \right) = \beta_0 + \beta_1 fibrinogen_i + \beta_2 globulin_i \ ,
+\end{equation*}
+with $\E(y_i)=\P(y_i=1)$.
+}
+
+\frame[containsverbatim]{\frametitle{Complication 1 with binary data: Graphical description}
+Plotting the response $y$ (indictor for ESR$>20$) against the covariats does not lead to very illustrative graphs:
+\vspace{-6mm}
+
+\begin{center}
+\setkeys{Gin}{width=1\textwidth}
+<<fig=T,echo=F,width=6,height=3.5>>=
+par(mfrow=c(1,2))
+plot(y ~ fibrinogen,plasma,ylab="ESR>20")
+plot(y ~ globulin,plasma,ylab="ESR>20")
+@
+\end{center}
+}
+
+\frame[containsverbatim]{
+It is a bit more illustrative to give a \alert{conditional density plot}: 
+\vspace{-2mm}
+
+\begin{center}
+\setkeys{Gin}{width=0.9\textwidth}
+<<cdplot_ESR,fig=T,width=7,height=4,echo=F>>=
+par(mfrow=c(1,2))
+cdplot(ESR ~ fibrinogen,plasma)
+cdplot(ESR ~ globulin,plasma)
+@
+\end{center}
+}
+
+% \frame[containsverbatim]{
+%  
+% 
+% \begin{center}
+% \setkeys{Gin}{width=0.9\textwidth}
+% <<cdplot_ESR,fig=T,width=7,height=4,echo=F>>=
+% par(mfrow=c(1,2))
+% qplot(fibrinogen,y,data=plasma,geom=c("point","smooth")) + theme_bw()
+% @
+% \end{center}
+% }
+
+
+\frame[containsverbatim]{\frametitle{Complication 2: Model diagnostics}\label{sl:binary}
+{\bf a) Residuals plots:}\\[2mm]
+
+\alert{Plotting the residuals} is possible, but \alert{not meaningful}. \\
+{\scriptsize Why? Becasue the model checking assumptions rely on aggregated data!}
+
+\begin{center}
+\setkeys{Gin}{width=0.6\textwidth}
+<<fig=T,width=5,height=4.5,echo=F>>=
+plasma.glm <- glm(y ~ fibrinogen + globulin, data = plasma, family=binomial)
+par(mfrow=c(2,2),mar=c(3,4,2,1))
+plot(plasma.glm)
+@
+\end{center}
+}
+
+\frame{\frametitle{}
+{\bf b) Residual deviance:}\\[4mm]
+
+For non-aggregated data, the \texttt{residual deviance} vs.\ \texttt{df} relation cannot be used to detect overdispersion!!
+}
+ 
+ 
+\frame[containsverbatim]{\frametitle{Your turn!}
+Apart from the above complications, fitting and interpreting the model is analogous to aggregated binary data. Let's continue with the blood screening example:\\
+
+<<echo=T,eval=F>>=
+plasma.glm <- glm(y ~ fibrinogen + globulin, data = plasma, family=binomial)
+@
+
+~\\[2mm]
+Please look at the model outcomes (summary and anova table) on the next slides and answer the following questions:
+
+\begin{enumerate}
+\item Is there an an effect of figrinogen and/or globulin on the outcome (ESR$>20$)?\\[2mm]
+\item What is the \emph{quantitative} interpretation of the $\beta_1$ coefficient (what happens to $\P(ESR>20)$ when fibrinogen incrases by 1 unit)? \\[2mm]
+\item Is a \texttt{quaisbinomial} model more suitable for these data?
+\end{enumerate}
+}
+
+\frame[containsverbatim]{
+<<>>=
+summary(plasma.glm)
 @
 }
 
 \frame[containsverbatim]{
-<<echo=F>>=
-names(data.table)<- c("heartYes","heartNo")
-data.table$cont <- c(1,0)
-@
-
 <<>>=
-data.table
+anova(plasma.glm,test="Chisq")
 @
-
-~\\[2mm]
-<<>>=
-r.heart.glm <- glm(cbind(heartYes,heartNo) ~ cont,data.table,family=binomial)
-summary(r.heart.glm)
-@
-
-
 }
+
+
+% \frame[containsverbatim]{\frametitle{Your turn!}
+% 
+% <<>>=
+% path <- "../../data_examples/WBL/"
+% d.heart <- read.table(paste(path,"heart.dat",sep=""),header=T,sep=",")
+% @
+% }
+% 
+% \frame[containsverbatim]{
+% <<echo=F>>=
+% names(data.table)<- c("heartYes","heartNo")
+% data.table$cont <- c(1,0)
+% @
+% 
+% <<>>=
+% data.table
+% @
+% 
+% ~\\[2mm]
+% <<>>=
+% r.heart.glm <- glm(cbind(heartYes,heartNo) ~ cont,data.table,family=binomial)
+% summary(r.heart.glm)
+% @
+% 
+% }
 
 
 \frame{\frametitle{Summary}
