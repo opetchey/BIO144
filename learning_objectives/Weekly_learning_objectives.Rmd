@@ -127,7 +127,7 @@ By the end of this week you will be able to:
 By the end of this week you will be able to:
 
 * Describe the type of biology / biomedical question that one-way ANCOVA could help answer.
-* **Do all the things listed for previous models, except for ANCOVA.**
+* **Do all the things listed for previous models, except now for ANCOVA.**
 * In particular, interpret the R model `summary` table for ANCOVA type linear models.
 * Recall basic concepts of linear algebra (e.g. vectors, matrices).
 * Relate why linear algebra is useful in data analysis.
@@ -177,12 +177,14 @@ By the end of this week you will be able to:
 
 By the end of this week you will be able to:
 
-* Describe the type of biology / biomedical questions that involve count data.
+* Describe the type of biological / biomedical questions that involve count data.
 * Relate why using a standard linear model to analyse such data could be a bad idea.
 * Describe how a generalised linear model can differ from a standard linear one.
 * Decribe the meaning of the terms *family*, *linear predictor*, and *link function*.
+* Give the family, linear predictor, and link function most often used for count data.
 * Fit a GLM (generalised linear model) to count data in R / Rstudio.
 * **Do all of the same things as one does for a linear model.**
+* Understand and perform an Chi-squared-test (using the anova function).
 * Say what is different about the model summary table produced by R / RStudio.
 * Understand and check for a common problem with count data: overdispersion.
 
@@ -194,7 +196,18 @@ By the end of this week you will be able to:
 
 By the end of this week you will be able to:
 
-* To be completed
+* Describe the type of biological / biomedical questions that involve binary data.
+* Relate why using a standard linear model to analyse such data could be a bad idea.
+* Recall use of Chi-squared test.
+* Understand and calculate an odds, and odds-ratio.
+* Give the family, linear predictor, and link function most often used for count data.
+* Express a binary response appropriately to model it in R / RStudio.
+* Fit a GLM (generalised linear model) to binary data in R / Rstudio (i.e. do logistic regression in R).
+* **Do all of the same things as one does for a linear model.**
+* Say what is different about the model summary table produced by R / RStudio.
+* Understand and perform an Chi-squared-test (using the anova function).
+* Understand and check for a common problem with binary data: overdispersion.
+* Use a conditional density plot to explore binary data.
 
 (Please note that these skills are assessed in the Graded Assessment 10)
 
@@ -204,7 +217,18 @@ By the end of this week you will be able to:
 
 By the end of this week you will be able to:
 
-* To be completed
+* ...
+* ...
+* ...
+* ...
+* Identify explanatory variables as better being included in models as *fixed* or as *random* effects.
+* State what is a mixed model.
+* Describe the type of biological / biomedical questions that required mixed models to analyse.
+* Determine if a statistical test is probably pseudoreplicated.
+* In R / RStudio, perform, check and interpret a simple linear mixed model.
+* **Do all of the same things as one does for a linear model.**
+* Say what is different about the model summary table produced by R / RStudio.
+* Interpret the R model `summary` table for ANCOVA type linear models.
 
 (Please note that these skills are assessed in the Graded Assessment 11)
 
