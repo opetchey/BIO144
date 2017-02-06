@@ -1,24 +1,17 @@
---- 
-title: "BIO144 -- Data Analysis for Biologists"
-author: "Owen L. Petchey & Stefanie Muff"
-date: "`r Sys.Date()`"
-site: bookdown::bookdown_site
-output: bookdown::gitbook
-documentclass: book
-bibliography: [book.bib, packages.bib]
-biblio-style: apalike
-link-citations: yes
-github-repo: opetchey/bio144
-description: "This is the information for BIO144 Instructors and TAs"
+---
+title: "Various info"
+author: "Owen"
+date: "2/6/2017"
+output: html_document
 ---
 
-This website is information for content creators, instructors, and TAs.
+This webpage is information for content creators, instructors, and TAs.
 
-This website is associated with a github repo, where things such as datasets, pdfs (and code for) lectures, and other resources are held.
+This webpage is associated with a [github repo](https://github.com/opetchey/BIO144), where things such as datasets, pdfs (and code for) lectures, and other resources are held.
 
 The github repo also has an issue tracker. Please use it as you like.
 
-Students don't need to look at this website, and we don't make them aware of it. It is public however, so please do not add any sensitive information, such as personal information about students, or any information related to examination questions and answers
+Students don't need to look at this page, and we don't make them aware of it. It is public however, so please do not add any sensitive information, such as personal information about students, or any information related to examination questions and answers
 
 The students use the course via [OpenEdX\@UZH](https://openedx.mnf.uzh.ch/courses/course-v1:UZH+BIO144+FS2017/info).
 
@@ -47,7 +40,7 @@ Also, most students are visible in OLAT. For some strange reason, the two lists 
 Students that miss the deadline for registering should contact the studienkoordination\@biol.uzh.ch
 
 
-## Timeline
+## Timeline 2017
 
 - 20.1 TA meet and greet
 - 13.2 TA briefing
