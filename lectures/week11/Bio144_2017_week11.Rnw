@@ -116,7 +116,7 @@ library(ggfortify)
 \frame{\frametitle{Course material covered today}
 \begin{itemize}
 \item Repetition: Chapter 10 in the Stahel book from last semester.\\[4mm]
-\item (Ev? Stahel GLM Script, (parts of) chapters 7 and 8) \\[4mm]
+%\item (Ev? Stahel GLM Script, (parts of) chapters 7 and 8) \\[4mm]
 \item Chapters 9.1 - 9.3 from ``The new statistics with R''.
 \end{itemize}
 }
@@ -153,7 +153,7 @@ Question: which variables influence the survival probability of premature babies
 \frame{\frametitle{Some repetition: The $\chi^2$ test}
 You have dealt with binary (categorical) data in Mat183! Remember the $\chi^2$ test...\\[2mm]
 
-Example: Heart attack and hormonal contraception (Verh\"utungspille), see Stahel 7.3.j:\\[2mm]
+Example: Heart attack and hormonal contraception (Verh\"utungspille) (from Stahel): \\[2mm] %, see Stahel 7.3.j:\\[2mm]
 
 \includegraphics[width=6cm]{graphics/table1.png}\\[2mm]
 {\small ``Hormonal contraception'' is the predictor ($x$) and ``heart attack'' the outcome ($y$).}\\[2mm]
@@ -223,7 +223,7 @@ chisq.test(data.table,correct=TRUE)
 %\frame{\frametitle{Fisher's exact test}}
 
 \frame{\frametitle{Quantification of a dependency}
-{\tiny(Stahel GLM chapter 7.4)}\\[2mm]
+%{\tiny(Stahel GLM chapter 7.4)}\\[2mm]
 
 If two variables are not independent, it is often desired to \alert{quantify} the dependency.\\[2mm]
 
@@ -250,7 +250,7 @@ There are at least three numbers that can be calculated to quantify how the two 
 OR = \frac{\pi_1 / (1-\pi_1)}{\pi_2 / (1-\pi_2)} = \frac{ 0.404 / (1- 0.404)}{0.210 / (1-0.210)} = 2.55 \ ,
 \end{equation*}
 
-where $\pi/(1-\pi)$ is the chance (die ``Chance'').\\[4mm]
+where $\pi/(1-\pi)$ is the odds (die ``Chance'').\\[4mm]
 Interpretation:
 \begin{enumerate}
 \item   $OR=1$  $\rightarrow$ the two groups are independent.
@@ -534,7 +534,8 @@ and standard errors and $p$-values. Very clearly, the dose influences the surviv
 
 This is a {\bf qualitative interpretation} of the coefficients.\\[4mm]
 
-{\tiny Note: The $\beta$ coefficients are approximately normally distributed as $\N(\hat\beta,\hat\sigma^2_\beta)$.}
+{\small Note: The $\beta$ coefficients are approximately normally distributed as $\N(\hat\beta,\hat\sigma^2_\beta)$. }\\
+{\small $\rightarrow$ confidence intervals etc.\ can be calculated as in the linear case!}
 }
 
 
@@ -568,7 +569,12 @@ If the $Dose_i$ is then increased by 1 unit in concentration (from $x$ to $x+1$)
 \end{equation*}
 ~\\[2mm]
 
-{\bf Interpretation:} When the dose is increased by 1 unit, the odds to die increases by a factor of $\Sexpr{format(exp(summary(beetle.glm)$coef[2,1]),2,2,2)}$.
+{\bf Interpretation:} When the dose is increased by 1 unit, the odds to die increases by a factor of $\Sexpr{format(exp(summary(beetle.glm)$coef[2,1]),2,2,2)}$.\\[8mm]
+
+Moreover, taking the $\log$ on the above equation shows that \alert{$\beta_1$ can be interpreted as a log odds ratio}:
+\begin{equation*}
+\beta_1 = \log\left( \frac{odds(y_i=1 \given Dose_i = x + 1)}{odds(y_i=1 \given Dose_i = x)}\right)
+\end{equation*}
 }
 
 \frame[containsverbatim]{\frametitle{Doing it right: The \texttt{anova()} table}
