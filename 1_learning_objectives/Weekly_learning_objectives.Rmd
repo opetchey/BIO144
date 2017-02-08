@@ -240,8 +240,24 @@ No additional learning objectives this week.
 
 # Week 14 - Recap and outlook  {-}
 
-No additional learning objectives this week.
+By the end of this week you will be able to:
 
+* Describe the type of biological / biomedical questions that require other statistical methods, including:
+    + Time series analysis
+    + Multivariate analysis, including ordination, clustering, and classification
+    + Breakpoint analysis
+    + Nonlinear regression
+    + Structural equation modelling / path analysis
+    + Generalised linear mixed models
+    + Bayesian methods
+    + Generalised addative models
+    + Meta-analysis
+    + Survival analysis
+    + Non-parametric analyses
+    + Spatial analyses / statistics
+    + Power analysis
+    + Randomisation based methods
+* ...
 
 
 
