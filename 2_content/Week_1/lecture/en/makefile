@@ -1,4 +1,4 @@
-FILE=lecture1_en
+FILE=Bio144_2017_lecture1
 
 all:
 	R CMD Sweave $(FILE).Rnw
