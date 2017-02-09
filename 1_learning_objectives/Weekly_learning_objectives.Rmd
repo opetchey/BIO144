@@ -18,7 +18,7 @@ By the end of the course you will be able to:
 * Collect and arrange data for efficient processing.
 * Reliably, accurately and efficiently manage and manipulate data.
 * Make clear and informative visualisations of data.
-* Select, perform, validate, and interpret an appropriate statistical test / model.
+* Select, perform, validate, and interpret an appropriate statistical model or test.
 * Understand why and when linear models are useful, and what to do when they are not.
 * Clearly communicate the answer to your biological question.
 * Research and learn about other tools for data analysis.
@@ -35,7 +35,7 @@ By the end of this week you will be able to:
 * Describe the aims, importance, and applications of data analysis in biology and biomedicine.
 * Recall and use previous relevant learning.
 * Choose graphical tools appropriate to question and data.
-* Describe what is a model, and what one is not.
+* Describe what is a model, and what it is not.
 * Identify important features of data, such as skew and correlation.
 * Describe the equation for a straight line.
 * Recall the general workflow for data analysis.
@@ -55,9 +55,9 @@ By the end of this week you will be able to:
 By the end of this week you will be able to:
 
 * Describe the type of biological / biomedical question that linear regression could help answer.
-* How what we should have done, before we do a linear regression.
-* Fit a linear regression model to data in R / RStudio.
-* Estimate the intercept and slope of a linear regression.
+* What we should have done, before we do a linear regression.
+* Understand how the intercept and slope are estimated in linear regression.
+* Fit and interpret a linear regression model to data in R / RStudio.
 * Recall the assumptions of linear regression.
 * Evaluation the assumptions of normality and of independence of residuals.
 * Interpret the biological meaning of the estimated parameters.
@@ -85,7 +85,8 @@ By the end of this week you will be able to:
 * Relate what are binary and factor type predictor / explanatory variables (sometimes called covariates).
 * Start to do all the above for models with binary and factor covariates.
 * In particular, calculated degrees of freedom for error with binary and factor covariates.
-* In particular, interpret the R model `summary` table for binary and factor covariates.
+* In particular, use the F-test to compare models with/without a factor covariate.
+* In particular, interpret the R model `summary` and `anova` table for binary and factor covariates.
 
 
 (Please note that these skills are assessed in the Graded Assessment 3)
@@ -117,6 +118,7 @@ By the end of this week you will be able to:
 * Describe what hypothesis is tested by an F-test.
 * Understand when to use, and how to perform and interpret post-hoc hypothesis tests.
 * Recognise that ANOVA is just another linear model, as is linear regression, and all the models you've seen so far.
+* In particular, recognise that the model checking strategy is the same as for linear models from the previous weeks. 
 * Relate why ANOVA is often applied to data from manipulative experiments.
 
 (Please note that these skills are assessed in the Graded Assessment 5)
@@ -143,9 +145,10 @@ By the end of this week you will be able to:
 * Describe what is model selection.
 * Describe the type of biology / biomedical question that require model selection.
 * Relate why model selection is difficult, fraught with danger, and perhaps more an art than a science.
-* Understand the meaning, use and importance of p-values, AIC, BIC for model selection
+* Understand the meaning, use and importance of p-values, AIC, AICc, BIC for model selection
 * Describe what is forward, backward, and automatic selection.
 * Relate the difference between explanatory and predictive models.
+* Understand why automatic model selection procedures are not recommended for explanatory models.
 * Recognise the importance of a priori hypotheses for escaping the nightmare that is model selection in explanatory models.
 
 (Please note that these skills are assessed in the Graded Assessment 7)
@@ -163,11 +166,12 @@ By the end of this week you will be able to:
 * Critique the interpretation and use of p-values.
 * Debate statistical versus biological significance (i.e. practical relevance).
 * Describe the importance of the statement: "one cannot prove the null hypothesis".
-* Appropriately assess and describe the relative importance of regression terms.
+* Understand that the p-value is useful if it is interpreted properly.
+* Appropriately assess and describe the importance of regression terms.
 * Describe how causality, correlation, and effect are related.
 * Describe what are effect sizes, and appropriately report them.
 * Understand how to decompose r-squared among mulitple predictor variables, including via LMG.
-* Recall the nine radford-Hill-Criteria for causal inference.
+* Recall the nine Bradford-Hill-Criteria for causal inference.
 * Describe the difference between observational and experimental studies, and its importance for inference.
 
 (Please note that these skills are assessed in the Graded Assessment 8)
