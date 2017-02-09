@@ -444,7 +444,7 @@ Basically, the problem is that the variables in the model are correlated and the
 
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
-This problem is at the heart of many confusions of regression analysis, and we will talk about such issues later in the course (weeks 7/8).
+This problem is at the heart of many confusions of regression analysis, and we will talk about such issues later in the course (lectures 7 and 8).
 \end{minipage}}
 
 
@@ -845,7 +845,7 @@ abline(c(cc[1]+cc[4],cc[2]),col=3)
 \end{center}
 }
 
-\frame[containsverbatim]{\frametitle{F-test to compare models}
+\frame[containsverbatim]{\frametitle{$F$-test to compare models}
 \vspace{-5mm}F
 When a factor covariate with $k$ levels is in the model, it occupies $k-1$ parameters. Therefore, the $t$-test needs to be replaced by the $F$-test:\\[2mm]
 
@@ -855,7 +855,7 @@ When a factor covariate with $k$ levels is in the model, it occupies $k-1$ param
 
 
 
-\frame[containsverbatim]{\frametitle{F-test for the earthworms}
+\frame[containsverbatim]{\frametitle{$F$-test for the earthworms}
 
 Question: Is the ``Gattung'' covariate relevant in the model, that is, do the models differ for the three species? \\[4mm]
 
