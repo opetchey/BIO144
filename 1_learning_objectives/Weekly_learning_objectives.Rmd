@@ -163,7 +163,8 @@ No additional learning objectives this week.
 
 By the end of this week you will be able to:
 
-* Critique the interpretation and use of p-values.
+* Understanding the P-value.
+* Critique, use and misues of p-values.
 * Debate statistical versus biological significance (i.e. practical relevance).
 * Describe the importance of the statement: "one cannot prove the null hypothesis".
 * Understand that the p-value is useful if it is interpreted properly.
@@ -188,7 +189,8 @@ By the end of this week you will be able to:
 * Give the family, linear predictor, and link function most often used for count data.
 * Fit a GLM (generalised linear model) to count data in R / Rstudio.
 * **Do all of the same things as one does for a linear model.**
-* Understand and perform an Chi-squared-test (using the anova function).
+* In particular, understand how to interpret the regression coeffcients and check model diagnostics.
+* Understand and perform Chi-squared-tests using the anova function.
 * Say what is different about the model summary table produced by R / RStudio.
 * Understand and check for a common problem with count data: overdispersion.
 
@@ -201,17 +203,19 @@ By the end of this week you will be able to:
 By the end of this week you will be able to:
 
 * Describe the type of biological / biomedical questions that involve binary data.
-* Relate why using a standard linear model to analyse such data could be a bad idea.
-* Recall use of Chi-squared test.
+* Use a conditional density plot to explore binary data.
+* Relate why using a standard linear or Poisson model to analyse such data could be a bad idea.
+* Recall the use of Chi-squared test for binary data (contingency tables).
 * Understand and calculate an odds, and odds-ratio.
-* Give the family, linear predictor, and link function most often used for count data.
+* Give the family, linear predictor, and link function most often used for binomial/binary data.
 * Express a binary response appropriately to model it in R / RStudio.
 * Fit a GLM (generalised linear model) to binary data in R / Rstudio (i.e. do logistic regression in R).
-* **Do all of the same things as one does for a linear model.**
+* **Do all of the same things as one does for a Poisson model.**
+* In particular, understand how to interpret the regression coeffcients and check model diagnostics.
 * Say what is different about the model summary table produced by R / RStudio.
 * Understand and perform an Chi-squared-test (using the anova function).
-* Understand and check for a common problem with binary data: overdispersion.
-* Use a conditional density plot to explore binary data.
+* Understand and check for overdispersion.
+
 
 (Please note that these skills are assessed in the Graded Assessment 10)
 
