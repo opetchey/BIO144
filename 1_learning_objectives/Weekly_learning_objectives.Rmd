@@ -225,10 +225,12 @@ By the end of this week you will be able to:
 
 By the end of this week you will be able to:
 
-* ...
-* ...
-* ...
-* ...
+* Understand that in regression modelling the covariates are assumed to be error-free
+* Understand that this is often not the case
+* Be aware of the effect that the violation of this assumption has
+* Know the most important error structures (classical and Berkson error)
+* Be able to account for classical measurement error in simple cases (linear regression)
+* Know at least one tool in R that can be used for error modelling
 * Identify explanatory variables as better being included in models as *fixed* or as *random* effects.
 * State what is a mixed model.
 * Describe the type of biological / biomedical questions that required mixed models to analyse.
