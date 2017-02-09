@@ -11,7 +11,7 @@ library(ggfortify)
 library(cowplot)
 
 ## load the dataset
-milk <- read_csv("https://github.com/opetchey/BIO144/raw/master/datasets/milk_rethinking.csv")
+milk <- read_csv("https://github.com/opetchey/BIO144/raw/master/3_datasets/milk_rethinking.csv")
 
 ## look at the data and we see there are NAs in the neocortex.perc variable.
 ## Lets remove the rows with these NAs
