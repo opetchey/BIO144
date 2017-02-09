@@ -59,8 +59,9 @@ class_RTs
 ## Timestamp should be a character
 ## ID should be a character
 ## Gender should be a character
-## The remaining four variables should be numeric (<dbl> if fractional, <int> if whole numbers).
+## The remaining variables should be numeric.
 class_RTs
+glimpse(class_RTs)
 #######################################################
 
 
@@ -99,7 +100,7 @@ ggplot(data=class_RTs, aes(x=Pref_Reaction_time)) + geom_histogram() + facet_gri
 ggplot(data=class_RTs, aes(y=Pref_Reaction_time, x=Gender)) + geom_boxplot()
 
 ## Or just the data points (with some jitter, to separate overlapping points):
-#### SOLUTION: replace x=??? with x=Gender and y=??? with y=Reaction_time
+#### SOLUTION: replace x=??? with x=Gender and y=??? with y=Pref_Reaction_time
 ggplot(data=class_RTs, aes(y=Pref_Reaction_time, x=Gender)) + geom_point() + geom_jitter(width=0.05)
 #######################################################
 
@@ -118,7 +119,7 @@ ggplot(data=class_RTs, aes(y=Pref_Reaction_time, x=Gender)) + geom_point() + geo
 
 #######################################################
 ## Do the t test and assign the outcome to an object:
-#### SOLUTION: replace ??? ~ ??? with Reaction_time ~ Gender
+#### SOLUTION: replace ??? ~ ??? with Pref_Reaction_time ~ Gender
 my_ttest <- t.test(Pref_Reaction_time ~ Gender, data=class_RTs, var.equal=TRUE)
 ## look at the result of the t-test
 #### SOLUTION: replace t.test with my_ttest
