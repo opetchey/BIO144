@@ -647,7 +647,7 @@ We say: The $p$-values were \alert{anti-conservative} or non-conservative.\\[6mm
 
 {\bf Yes}: Especially when there are \alert{dependent observations}!\\[4mm]
 
-You can {\bf detect it} by chekcing if \; \texttt{Residual deviance}$<$ \texttt{df}.\\[4mm]
+You can {\bf detect it} by chekcing if \; \texttt{Residual deviance} $<$ \texttt{df}.\\[4mm]
 
 In that case, your $p$-values are usually too large, that is, the results are \alert{conservative} (just the opposite of the overdispersion problem).\\[4mm]
 
