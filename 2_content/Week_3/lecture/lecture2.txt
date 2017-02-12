@@ -1,2 +1,0 @@
-Idee: Bei nur einer Variablen ist die Frage eigentlich, wie hoch x und y korreliert sind.
-Bringe die anscombe Daten (siehe Uebung 1 von Stahel) um zu zeigen, dass gleiche Korrelationen ganz unterschiedlich aussehen koennen.
