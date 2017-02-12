@@ -1,0 +1,706 @@
+\documentclass[english,9pt,aspectraio=169]{beamer}
+\usepackage{etex}
+\usetheme{uzhneu-en-informal}
+%\usepackage{uarial}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\RequirePackage{graphicx,ae}
+\usepackage{bm}
+\usepackage{fancybox,amssymb,color}
+\usepackage{pgfpages}
+\usepackage{booktabs}
+\usepackage{verbatim}
+\usepackage{animate}
+\usepackage{numprint}
+\usepackage{vwcol} 
+\usepackage{dsfont}
+\usepackage{tikz}
+\usepackage{amsmath,natbib}
+\usepackage{mathbbol}
+\usepackage{babel}
+\usepackage{SweaveSlides}
+\usepackage{multicol}
+\usepackage{xcolor}
+\usepackage{longtable}
+
+
+\usetheme{uzhneu-en-informal}
+\DeclareMathOperator{\po}{Poisson}
+\DeclareMathOperator{\G}{Gamma}
+\DeclareMathOperator{\Be}{Beta}
+\DeclareMathOperator{\logit}{logit}
+\def\n{\mathop{\mathcal N}}
+
+\definecolor{Gray}{RGB}{139,137,137}
+\definecolor{darkred}{rgb}{0.8,0,0}
+\definecolor{Green}{rgb}{0,0.8,0.3}
+\definecolor{lightgreen}{rgb}{0,0.7,0.3}
+\definecolor{Blue}{rgb}{0,0,1}
+\def\myalert{\textcolor{darkred}}
+\def\myref{\textcolor{Gray}}
+\setbeamercovered{invisible}
+
+\renewcommand{\baselinestretch}{1.2}
+\beamertemplateballitem
+\DeclareMathOperator{\cn}{cn} % Copy number
+\DeclareMathOperator{\ccn}{ccn} % common copy number
+\DeclareMathOperator{\p}{p} % common copy number
+\DeclareMathOperator{\E}{E} % common copy number
+\DeclareMathOperator{\given}{|} % common copy number
+\def\given{\,|\,}
+\def\na{\tt{NA}}
+\def\nin{\noindent}
+\pdfpageattr{/Group <</S /Transparency /I true /CS /DeviceRGB>>}
+\def\eps{\varepsilon}
+
+\renewcommand{\P}{\operatorname{\mathsf{Pr}}} % Wahrscheinlichkeitsmaß
+\def\eps{\varepsilon}
+\def\logit{\text{logit}}
+%\newcommand{\E}{\mathsf{E}} % Erwartungswert
+\newcommand{\Var}{\text{Var}} % Varianz
+\newcommand{\NBin}{\text{NBin}}
+\newcommand{\Po}{\text{Po}}
+\newcommand{\N}{\mathsf{N}}
+
+\newcommand{\hl}{\textcolor{red}}
+
+\newcommand{\ball}[1]{\begin{pgfpicture}{-1ex}{-0.65ex}{1ex}{1ex}
+\usebeamercolor[fg]{item projected}
+
+{\pgftransformscale{1.75}\pgftext{\normalsize\pgfuseshading{bigsphere}}}
+{\pgftransformshift{\pgfpoint{0pt}{0.5pt}}
+\pgftext{\usebeamerfont*{item projected}{#1}}}
+\end{pgfpicture}}%
+\usepackage{multicol}
+\newcommand{\ballsmall}[1]{\begin{pgfpicture}{-1ex}{-0.65ex}{.2ex}{.2ex}
+
+{\pgftransformscale{1}\pgftext{\normalsize\pgfuseshading{bigsphere}}}
+{\pgftransformshift{\pgfpoint{0pt}{0.5pt}}
+\pgftext{\usebeamerfont*{item projected}{#1}}}
+\end{pgfpicture}}%
+
+
+
+\begin{document}
+\SweaveOpts{width=6,height=4}
+\fboxsep5pt
+
+\frame{
+\title[]{ \centering \Huge Kurs Bio144: \\
+Datenanalyse in der Biologie}%\\[.3cm]
+\author[Stefanie Muff, Owen L.\ Petchey]{\centering Stefanie Muff  \& Owen L.\ Petchey }
+%\institute[]{Institute of Social and Preventive Medicine \\ Institute of Evolutionary Biology and Environmental Studies}
+\date[]{Lecture 9: Modelling count data \\ 4./5. May 2017}
+
+
+\maketitle
+}
+
+
+\frame{\frametitle{Overview (todo: check)}
+<<echo=F>>=
+library(dplyr)
+library(ggplot2)
+library(ggfortify)
+@
+
+\begin{itemize}
+\item Non-continuous outcomes: counts\\[2mm]
+\item Generalized linear models\\[2mm]
+\item Poisson regression\\[2mm]
+\item Link function\\[2mm]
+\item Residual analysis / model checking / deviances\\[2mm]
+\item Interpretation of the results\\[2mm]
+\item (Overdispersion, zero-inflation)
+\end{itemize}
+
+}
+
+
+\frame{\frametitle{Course material covered today}
+\begin{itemize}
+\item Chapter 7 of GSWR (Beckerman et al.)\\[2mm]
+\end{itemize}
+}
+
+\frame[containsverbatim]{\frametitle{Introduction}
+\begin{itemize}
+\item We have seen: Covariates in regression models can be \alert{continuous}, \alert{categorical} (binary or multi-level) or \alert{counted numbers} (integers).\\[2mm]
+\item However, the \alert{response variable} ($\bm{y}$) was so far \alert{always continuous}, and the assumption was that the residuals $e_i\sim \N(0,\sigma_e^2)$.\\[2mm]
+\item \alert{In reality}, the response variable can also be a count (an integer $\geq 0$) or a categorical variable (e.g., presence/absence data).\\[2mm]
+\item Here, we will look at the case where the response variable is a \alert{count}, that is, $y_i =0,1,2,\dots$.\\[4mm]
+\end{itemize}
+
+}
+
+\frame{\frametitle{Count data}
+In biological or medical data, the outcome of interest is quite often a count:\\[2mm]
+
+\begin{itemize}
+\item Counting items in time or space (animals, plants, species)\\[2mm]
+\item Parasites in animals or humans\\[2mm]
+\item Number of offspring in animals or humans\\[2mm]
+\item Number of adverse health events (e.g., exacerbations) or health-related numbers (e.g., polyps)\\[4mm]
+\end{itemize}
+
+The research question then is: \\[2mm]
+
+{\bf How do certain covariates influence the count outcome?}
+}
+
+\frame[containsverbatim]{\frametitle{Illustrative/working example: Soay sheep}
+Hirta, a small island of Scotland, is inhabited by an unmanaged and feral population of Soay sheep. \\[2mm]
+
+Ecologists were interested in the {\bf question} whether body mass of female animals influences their fitness, measured as their \alert{lifetime reproductive success} (the number of offspring over their lifespan).\\[2mm]
+
+``Are heavier females fitter than lighter females?'' \\[6mm]
+
+<<>>=
+soay <-  read.table("../../data_examples/GSWR_datasets/SoaySheepFitness.csv",header=T, sep=",")
+glimpse(soay)
+@
+}
+
+\frame[containsverbatim]{
+As always, start with a graph (see GSWR book for code to produce the figure):\\
+
+\begin{center}
+\setkeys{Gin}{width=0.6\textwidth}
+<<fig=T,width=4,height=4,echo=F>>=
+ggplot(soay, aes(x = body.size, y = fitness)) +
+geom_point() +
+geom_smooth(method = "lm", se = FALSE) +
+geom_smooth(span = 1, colour = "red", se = FALSE) +
+xlab("Body mass (kg)") + ylab("Lifetime fitness")
+@
+\end{center}
+}
+
+\frame{\frametitle{}
+{\bf What can we see from the plot?}
+\begin{itemize}
+\item Reproductive success seems to increase with female body weight (not surprising, right?).\\[2mm]
+\item The linear line seems unreasonable, the red seems better. Maybe a quadratic term would be useful?\\[2mm]
+\item However, the problem with these data is more subtle.\\[8mm]
+\end{itemize}
+
+{\bf How does one analyze these data correctly?}
+\begin{itemize}
+\item So far, we always used linear regression.\\[2mm]
+\item This is \alert{not} the correct approach here.\\[2mm]
+\item We nevertheless start doing the `wrong' analysis!
+\end{itemize}
+}
+
+
+\frame[containsverbatim]{\frametitle{The `wrong' analysis}
+Use the \texttt{lm()} function to fit the linear model $y=\beta_0 + \beta_1 \cdot \text{bodySize} + e$ and look at the diagnostic plots:
+
+\begin{center}
+\setkeys{Gin}{width=0.55\textwidth}
+<<fig=T,width=6,height=6,echo=F>>=
+r.soay <- lm(fitness ~ body.size ,data=soay)
+autoplot(r.soay,smooth.colour = NA)
+@
+\end{center}
+$\rightarrow$ The diagnostic plots show that the linear regression assumptions are badly violated!
+}
+
+
+\frame[containsverbatim]{
+The same plot with smoothed lines (makes the problems even more obvious):
+\begin{center}
+\setkeys{Gin}{width=0.55\textwidth}
+<<fig=T,width=6,height=6,echo=F>>=
+autoplot(r.soay)
+@
+\end{center}
+}
+
+\frame[containsverbatim]{\label{sl:quadratic}
+What about the model with a quadratic term? 
+\begin{equation*}
+y=\beta_0 + \beta_1 \cdot \text{bodySize} + \beta_2 \cdot \text{bodySize}^2 + e
+\end{equation*}
+
+\begin{center}
+\setkeys{Gin}{width=0.55\textwidth}
+<<fig=T,widht=6,height=6>>=
+r2.soay <- lm(fitness ~ body.size + I(body.size^2),data=soay)
+autoplot(r2.soay,smooth.colour = NA)
+@
+\end{center}
+$\rightarrow$ This looks better. However...
+}
+
+\frame{\frametitle{What is the problem?}
+Obviously, the \alert{normal distribution} for count data is \alert{violated}. Why?\\[2mm]
+
+\begin{itemize}
+\item The normal distribution is for continuous variables.\\[2mm]
+\item The normal distribution allows values $<0$, count data doesn't.\\[2mm]
+\item The normal distribution is symmetrical, counts are often not!
+\end{itemize}
+}
+
+\frame[allowframebreaks]{\frametitle{A model for count data?} \label{sl:poisson}
+Do you remember a distribution for count values from Mat183?\\[4mm]
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+The probability distribution of Poisson-distributed random variable $Y$ with parameter $\lambda$ is defined as
+\begin{equation*}
+\P(Y=k) = \frac{\lambda^k}{k} e^{-\lambda} \ , \quad k=0, 1, 2,\ldots  \ .
+\end{equation*}
+In short: $$Y \sim \Po(\lambda) \ .$$
+\end{minipage}}
+
+~\\[3mm]
+{\bf Characteristics of the Poisson distribution:}
+\begin{itemize}
+\item Suitable to model unbounded counts ($k=0,1,2,...$).
+\item $\E(Y) = \Var(Y) = \lambda$. In words: Mean = variance = $\lambda$.\\[2mm]
+
+$\rightarrow$ The variance of the distribution increases with the mean.\\[4mm]
+\end{itemize}
+
+\eject
+Some examples:
+\begin{center}
+\includegraphics[width=10cm]{graphics/poisson.png}
+\end{center}
+
+So: How can one use the Poisson distribution for regression modelling?
+}
+
+
+\frame{\frametitle{Doing it right: The generalized linear model (GLM) for count data}
+The aim of the GLM approach is that we can still use a \alert{linear predictor} $\eta_i$ in the form of the linear model:
+\begin{equation*}
+\eta_i = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_p x_i^{(p)} \ .
+\end{equation*}
+
+~\\[2mm]
+\begin{itemize}
+\item In {\bf linear regression}, $\eta_i$ is the \alert{predicted value} for the mean $\E(y_i)=\eta_i$  (Why? Because the residual term $+ e_i$ is missing!).\\[2mm]
+
+\item However, for counts we cannot simply set $\eta_i$ equal to $\E(y_i)$, if $y_i$ is a \alert{count}!\\[2mm]
+
+\end{itemize}
+}
+
+\frame{
+Why can't we set $\E(y_i)=\eta_i$ for count data? \\[2mm]
+
+{\bf Because nothing prevents $\eta_i$ from being negative!}\\[4mm]
+
+Let us try to use the same approach as in linear regression, assuming that $\E(y_i)=\eta_i$ for our soay sheep counts, that is,
+
+$$\E(y_i) = \beta_0 + \beta_1\cdot \text{bodySize}_i \ ,$$
+
+using a model with $\beta_0=-2$ and $\beta_1=1.2$.\\[6mm]
+
+What is the predicted number of offspring for a 1kg sheep? Plug-in: $-2 + 1.2\cdot 1 = -0.8$, thus a negative prediction!\\[6mm]
+
+This is very unreasonable, right?\\[6mm]
+
+A trick is thus needed!
+}
+
+\frame{\frametitle{The trick: Use a link function}
+Instead of using $\E(y_i)=\eta_i$ as in linear regression, we simply log-transform the expected value.\\[2mm]
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+In order to prevent the expected value $\E(y_i)$ to be negative for count data $y_i$, we use
+\begin{equation}\label{eq:logLink}
+\log(\E(y_i)) = \eta_i  = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_p x_i^{(p)}\ .
+\end{equation}
+\end{minipage}}
+~\\[2mm]
+
+\begin{itemize}
+\item The $\log$ is called the \alert{link function}.\\[2mm]
+\item The advantage: The predicted fitness $\E(y_i)$ is now \alert{always positive}, because equation \eqref{eq:logLink} is identical to 
+$$\E(y_i) = \exp(\beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_p x_i^{(p)})  \ ,$$
+which is now {\bf always} $>0$! {\scriptsize (I really hope you remember what the $\exp()$ function looks like...)}
+\end{itemize}
+
+}
+
+
+\frame{\frametitle{The probability model }
+\begin{itemize}
+\item Finally, we need a reasonable \alert{probability model for the response variable}. \\[2mm
+]
+\item Remember: we always used the normality assumption $y_i \sim \N(\eta_i, \sigma_e^2)$ in linear regression.\\[2mm]
+
+\item Given that $y_i$ are counts, a Poisson model seems reasonable:  
+$$y_i \sim \Po (\E(y_i)) \ .$$
+~\\
+In words: $y_i$ is a realization of a Poisson random variable distributed as $\Po(\lambda_i)$, where $\lambda_i=\E(y_i)$.\\[2mm]
+\item We say: The model belongs to the Poisson \alert{family}.
+\end{itemize}
+}
+
+\frame{\frametitle{Key terms for GLMs}
+In summary, we have introduced three terms related to GLMs:\\[2mm]
+
+\begin{itemize}
+\item \emph{\bf Family}: The family corresponds to the likelihood model that is used for the (transformed) response. Here, the family is Poisson. Another very common distribution is the \alert{binomial} family for \alert{binary} outcome (see next week). Other families are the gamma or the negative binomial. The family is determined by the data type!\\[2mm]
+
+\item \emph{\bf Linear predictor}: The linear predictor is always given as
+\begin{equation*}
+\eta_i = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_p x_i^{(p)} \ .
+\end{equation*}
+In the soay shee example, it is $\eta_i = \beta_0 + \beta_1\cdot \text{bodySize}_i$ for sheep $i$.\\[2mm]
+
+\item \emph{\bf Link function}: It defines how the linear predictor $\eta_i$ is \alert{related} to $\E(y_i)$. In Poisson regression this is typically the log: $\log(\E(y_i)) = \eta_i$! We will see another important link function next week (for binary data).
+\end{itemize}
+}
+
+
+\frame[containsverbatim]{\frametitle{Doing it right: Fitting a Poisson GLM}
+Uff... that was hard! But we have all the tools for fitting a Poisson GLM now. A statistician would now say: \\[2mm]
+\begin{center}
+``Let's fit a Poisson GLM with a log-link!''\\[4mm]
+\end{center}
+
+\begin{itemize}
+\item Basically, the idea is again to perform \alert{maximum-likelihood estimation}, but the details are a bit more complicated (nothing for us).\\[4mm]
+
+\item Luckily, there is an R-function that works (almost) like \texttt{lm()}, namely \texttt{glm()}:
+
+<<>>=
+soay.glm <- glm(fitness ~ body.size, data = soay, family = poisson(link=log))
+@
+You {\bf must} specify the \alert{family}, but you could leave away the \texttt{link=log} option here, because R automatically picks the log link for the Poisson family...
+\end{itemize}
+}
+
+
+\frame[containsverbatim]{\frametitle{Doing it right: Model diagnostics}
+Before we look at the output, let's do some model diagnostics (as we did it for linear regression):
+
+\begin{center}
+\setkeys{Gin}{width=0.55\textwidth}
+<<fig=T,widht=6,height=6>>=
+autoplot(soay.glm,smooth.colour = NA)
+@
+\end{center}
+}
+
+
+\frame{
+\begin{itemize}
+\item Model diagnostics seem ok (similar to when we used a quadratic term in the linear model, see slide \ref{sl:quadratic}).\\[2mm]
+
+\item Do you find it strange that the same diagnostic plot can be used as in linear regression?\\[2mm]
+
+\item The definition of a ``residuum'' is no longer clear when link-functions are used (on which scale should residuals be calculated? On the link scale or on the observed scale?)\\[2mm]
+
+\item We don't care too much about this aspect, but you should remember:\\[2mm]
+
+\begin{itemize}
+\item There are \alert{different types of residuals}.\\[2mm]
+\item \texttt{autoplot()} \alert{automatically picks} the residuals that ``make sense''.
+\end{itemize}
+\end{itemize}
+}
+
+
+\frame[containsverbatim]{\frametitle{Doing it right: Interpreting the coefficients}
+Let's now look at the \texttt{summary()} output (yes! this works also for glm objects):\\[2mm]
+
+<<>>=
+summary(soay.glm)
+@
+}
+
+\frame{
+You see several (familiar and less familiar) components in the output. For the moment, we are interested in the coefficients, which are estimated as 
+
+\begin{equation*}
+\hat\beta_0 = \Sexpr{format(summary(soay.glm)$coef[1,1],3,3,3)} \quad \text{and}\quad \hat\beta_1 = \Sexpr{format(summary(soay.glm)$coef[2,1],3,3,3)}
+\end{equation*}
+
+with respective standard errors and $p$-values. In particular, $p<0.001$ for $\hat\beta_1$ indicates \alert{very strong evidence for a positive (because $\hat\beta_1 >0$!) effect  of female weight on reproductive success} (number of offspring)!\\[4mm]
+
+{\bf Good to know:} Theory says that the estimated coefficients $\hat\beta_0$ and $\hat\beta_1$ are approximately \alert{normally distributed} around the true values:
+
+\begin{equation}
+\hat\beta \sim \N(\beta,\sigma_\beta^2)
+\end{equation}
+
+Thus a 95\% CI can be approximated by the usual $\hat\beta\pm 2\cdot \sigma_\beta$ idea.
+}
+
+\frame{\frametitle{What do the coefficients tell us?}
+Remember our model
+
+$$
+\log(\E(y_i)) =\beta_0 + \beta_1 \cdot \text{bodySize} 
+$$
+
+~\\
+Thus the $\exp(\cdot)$ transformation leads to 
+$$ \quad \E(y_i) = \exp(\beta_0 + \beta_1 \cdot \text{bodySize})$$.\\[2mm]
+
+Our estimates $\hat\beta_0$ and $\hat\beta_1$ can be plugged into this equation!\\[2mm]
+
+For example, a 5~kg female is \alert{expected} to produce 
+$\exp(\Sexpr{format(summary(soay.glm)$coef[1,1],3,3,3)} + \Sexpr{format(summary(soay.glm)$coef[2,1],3,3,3)}\cdot 5) = \Sexpr{format(exp(summary(soay.glm)$coef[1,1] + summary(soay.glm)$coef[2,1]*5),2,2,2)}$ lambs, while a 7~kg female would already be expected to produce 
+$\exp(\Sexpr{format(summary(soay.glm)$coef[1,1],3,3,3)} + \Sexpr{format(summary(soay.glm)$coef[2,1],3,3,3)}\cdot 7) = \Sexpr{format(exp(summary(soay.glm)$coef[1,1] + summary(soay.glm)$coef[2,1]*7),2,2,2)}$ lambs.\\[2mm]
+
+Makes sense, right?
+
+}
+
+\frame[containsverbatim]{\frametitle{Doing it right: The \texttt{anova()} table}
+Remember: We were sometimes using ANOVA tables, for instance for linear regression output with categorical covariates.\\[2mm]
+
+Here, it is useful again, but it gives us an \alert{Analysis of Deviance} table:\\[4mm]
+
+<<>>=
+anova(soay.glm)
+@
+
+~\\[4mm]
+{\bf Note:} The deviance is essentially a difference of likelihoods.\\
+In brief, the larger the likelihood, the better fits the data to your model...
+}
+
+\frame[containsverbatim]{
+Here, the total deviance is given by the so-called \alert{NULL} deviance: 85.081. It is the analogon to the total variability of the data in linear regression...\\[2mm]
+
+Of this, 37.041 is \alert{explained by bodysize}.\\[2mm]
+
+The question is, whether this is ``much''! This can be tested by a $\chi^2$ test, because the value is $\chi^2$ distributed with 1 degree of freedom:\\[2mm]
+
+<<>>=
+1-pchisq(37.041,1)
+@
+
+~\\[4mm]
+You would get the same if you directly specify the test you want to carry out in the \texttt{anova()} call:\\[2mm]
+
+<<echo=T,eval=F>>=
+anova(soay.glm, test="Chisq")
+@
+}
+
+
+\frame[containsverbatim]{\frametitle{Your turn!}
+Let's look at anoter data example, taken from \citet{hothorn.everitt2014}, chapter 7:\\[2mm]
+
+A new drug was tested in a clinical trial (Giardiello et al. 1993, Piantodsi 1997), aiming at \alert{reducing the number of polyps} in the colon (Dickdarm). The data is publicly available from the Hothorn/Everitt book package:\\[4mm]
+
+<<echo=T>>=
+library(HSAUR3)
+data("polyps")
+@
+
+\vspace{8mm}
+{\bf Scientific question:} Does the drug influence (reduce) the number of polyps?
+}
+
+
+\frame[containsverbatim]{
+Data: Number of polyps (outcome), treatment, age (covariates).
+ \begin{multicols}{2}
+<<echo=FALSE,results=tex>>=
+library(xtable)
+pol1 <- polyps[1:10,]
+pol2 <- polyps[11:20,]
+ttab1 <- xtable(pol1,digits=0)
+ttab2 <- xtable(pol2,digits=0)
+print(ttab1, floating = TRUE, include.rownames=FALSE)
+print(ttab2,  floating = TRUE, include.rownames=FALSE)
+@
+ \end{multicols}
+}
+
+
+\frame{\frametitle{}
+{\bf Your tasks (in teams, if you like):}\\[6mm]
+
+Look at the analysis done in next three slides, and answer the following questions:\\[2mm]
+
+\begin{enumerate}
+\item Are there any problems visible from the diagnostics plots?\\[2mm]
+\item Does the treatment seem to be effective? If yes, can you \alert{quantify the effect}?\\[2mm]
+\item Is age a relevant variable? If yes, what happens when patients grow older?\\[2mm]
+\end{enumerate}
+}
+
+
+\frame[containsverbatim]{
+
+<<polyps>>=
+polyps.glm <- glm(number ~ treat + age,data=polyps, family="poisson")
+@
+
+\begin{center}
+\setkeys{Gin}{width=0.65\textwidth}
+<<fig=TRUE,width=5.5,height=5.5>>=
+autoplot(polyps.glm,smooth.colour = NA)
+@
+\end{center}
+}
+
+
+\frame[containsverbatim]{
+<<>>=
+anova(polyps.glm,test="Chisq")
+@
+}
+
+\frame[containsverbatim]{
+
+<<>>=
+summary(polyps.glm)
+@
+}
+
+
+\frame{\frametitle{Overdispersion}
+
+``Overdispersion'' means ``extra variability''. Why could this be a problem?\\[4mm]
+
+{\bf Remember:} The variance of the Poisson distribution increases with the mean, because \alert{\bf mean=variance} (see slide \ref{sl:poisson}). \\[8mm]
+
+In Poisson regression it is assumed that, for each observation $i$,
+$$y_i \sim \Po (\E(y_i)) \ .$$
+
+However, the \alert{variance is often larger than the mean} in reality, because there are factors that influence the response (``cause variability in it'') that cannot be captured by the covariates!\\[2mm]
+{\small Why? Maybe you simply cannot observe the variable or it is too expensive to monitor, or...}
+
+% or, replacing $\E(y_i) = \exp(\underbrace{\beta_0 + \beta_1 x_i^{(1)}+ \ldots}_{=\eta_i})$:
+% 
+% $$y_i \sim \Po (\exp(\eta_i)) \ .$$
+
+}
+
+\frame{\frametitle{Detecting overdispersion}
+Look at the summary output from your GLM object, check the ``Residual deviance'' and compare it to the ``degrees of freedom''.\\[6mm]
+
+{\bf Soay sheep data:} Res. deviance: 48.040, df=48 \\[4mm]
+
+
+{\bf Polyps data:} Res. deviance: 178.54, df=17 \\[6mm]
+
+The residual deviance should be approximately $\chi^2$ distributed with df degrees of freedom. This means that one should check wheter\\
+\begin{center}
+\texttt{Residual deviance} $\approx$ \texttt{df} .
+\end{center}
+
+The sheep data seem fine, but the polyps data have\\ 
+\texttt{Residual deviance}$>>$ \texttt{df}  $\quad\rightarrow$ overdispersion!\\[2mm]
+
+{\tiny If unclear, use the $\chi^2$ test with \texttt{df} degrees of freedom.}
+
+}
+
+\frame{\frametitle{What is the problem with overdispersion?}
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+When there is unaccounted overdispersion, the $p$-values that are calculated are usually \alert{too small}! 
+\end{minipage}} 
+
+~\\[6mm]
+
+{\bf Possible solutions:}
+
+\begin{itemize}
+\item Use as your regression family \alert{\texttt{quasipoisson}} instead of \texttt{family = poisson}. \\[2mm]
+
+This allows to estimate the variance parameter (denoted as \alert{dispersion parameter}) separately.\\[2mm]
+
+\item Use a \alert{negative binomial regression} (there is the \texttt{glm.nb()} fuction from the \texttt{MASS} package in R to fit it, check it out by \texttt{?glm.nb()}).
+\end{itemize}
+ 
+}
+
+\frame[containsverbatim]{\frametitle{Reanalyzing the polyps data with quasipoisson}
+<<polyps2>>=
+polyps.glm2 <- glm(number ~ treat + age,data=polyps, family="quasipoisson")
+summary(polyps.glm2)
+@
+}
+
+\frame{
+\begin{itemize}
+\item The \alert{dispersion parameter} is now estiamted as 10.73, which is calculated as  
+\begin{center}
+\texttt{Residual deviance / df}.\\[6mm]
+\end{center}
+
+\item The $p$-values for the coefficients are now larger! In particular, there is now only weak evidence ($p=0.063$) for an effect of age!\\[2mm]
+$\rightarrow$ The \texttt{poisson} family gave too optimistic $p$-values!\\[2mm]
+
+We say: The $p$-values were \alert{anti-conservative} or non-conservative.\\[6mm]
+\end{itemize}
+
+{\small (Anti-conservative results are really {\bf the worst} that can happen. Guess why?)}
+}
+
+\frame{\frametitle{Underdispersion?}
+{\bf Can it happen} that the obersvations are \alert{less variable} than expected?\\[4mm]
+
+{\bf Yes}: Especially when there are \alert{dependent observations}!\\[4mm]
+
+You can {\bf detect it} by chekcing if \; \texttt{Residual deviance} $<$ \texttt{df}.\\[4mm]
+
+In that case, your $p$-values are usually too large, that is, the results are \alert{conservative} (just the opposite of the overdispersion problem).\\[4mm]
+
+The \texttt{quasipoisson} regression is a pragmatic solution in that case, too.
+}
+
+\frame{\frametitle{Zero-inflation}
+A special type of overdispersion may be caused by an \alert{overrepresentation of zeros} in the obervations.\\[4mm]
+
+{\bf Example}: Numbers of cigarettes smoked\\[2mm]
+
+Some people are never-smokers, so they will always produce a zero obervation, while smokers may smoke any number of cigarettes. \\[8mm]
+
+Please read chapter 7.5.2 of GSWR for some ideas how to handle this case.
+
+}
+
+\frame{\frametitle{A note on interpretation and model selection}
+Just as a reminder:\\[4mm]
+
+{\bf
+The same remarks and warnings from the last weeks for linear models also apply to GLMs!
+}
+
+% \vspace{4mm}
+% Btw: AIC can be used as in the linear model, it is also printed by the \texttt{summary()} function.
+}
+
+
+
+\frame{\frametitle{Summary}
+\begin{itemize}
+\item Poisson regression is useful to model counted outcomes.\\[2mm]
+\item Pretending that counted outcomes are continuous may lead to wrong results.\\[2mm]
+\item The main ingredients of GLMs are\\[1mm]
+\begin{itemize}
+\item The family\\[1mm]
+\item The linear predictor\\[1mm]
+\item The link function.\\[2mm]
+\end{itemize}
+\item Model diagnostics are similar as in the linear case (\texttt{autoplot()}).\\[2mm]
+\item Interpret the coefficients by back-transforming to the original scale.\\[2mm]
+\item Analysis of deviance is the analogon to ANOVA (\texttt{anova()}).\\[2mm]
+\item Over-(under-)dispersion, how to detect it and what do do.
+\end{itemize}
+}
+
+
+\frame{References:
+\bibliographystyle{Chicago}
+\bibliography{refs}
+}
+
+
+
+\end{document}
