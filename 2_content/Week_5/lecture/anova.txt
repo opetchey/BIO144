@@ -1,6 +1,0 @@
-Schaue hier nach für online apps, um Dinge anschaulich zu präsentieren:
-
-http://onlinestatbook.com/stat_sim/
-
-
-Achtung: erkläre auch, wie man nach ANOVA post-hoc tests macht: welche Gruppen sind unterschiedlich? Achtung, multiples Testen, adjusted p-values gemäss verschiedenen Ansätzen.
