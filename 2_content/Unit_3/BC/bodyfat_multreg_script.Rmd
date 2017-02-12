@@ -1,0 +1,246 @@
+---
+title: "multi_reg_bodyfat_script"
+author: "Owen"
+date: "2/12/2017"
+output: html_document
+---
+
+## Introduction and preliminaries
+
+I'm going to do a walkthrough of doing multiple regression in R, using a dataset you already looked at, the dataset about what easily measured things about people are good predictors of their amount of body fat, which itself is not so easy to measure.
+
+Lets do the usual preliminaries:
+
+```{r, message=FALSE, warning=FALSE}
+rm(list=ls())
+library(tidyverse)
+library(GGally)
+library(ggfortify)
+```
+
+And load the data, here from github:
+```{r}
+dd <- read_delim("https://raw.githubusercontent.com/opetchey/BIO144/master/3_datasets/bodyfat.txt", 
+                      delim="\t", escape_double = FALSE, trim_ws = TRUE)
+```
+
+The variable containing the amount of body fat is `bodyfat`.
+When we previously looked at the dataset we found to variables that looked liked good candidates for indicating body fat, because they appeared strongly correlated with body fat: `abdomen` and `weight`.
+
+Lets reduce the dataset to these variables -- it will make things a bit simpler.
+Which function of the `dplyr` package do we use to select only a few columns?
+
+```{r}
+dd <- select(dd, bodyfat, weight, abdomen)
+```
+
+Have a look at the distribution of the variables:
+
+```{r}
+ggplot(data=gather(dd, key=variable, value=value)) +
+  geom_histogram(mapping=aes(x=value), bins=20) +
+  facet_wrap(~variable, scales="free")
+
+```
+
+There's some rather large values, e.g. a weight over 300. Lets not exclude these at the moment, but keep them in mind for later.
+
+And the correlations among variables...
+
+```{r}
+ggpairs(dd)
+```
+
+All variables are strongly correlated, even the two predictor variables. This gives the possibility that only one of them will be useful for predicting body fat, and in general, correlated explanatory variables should be a bit of an alarm bell.
+
+Its also worth noting that in this example, we can see the correlations of the response with the explanatory variables, i.e. this is a relatively easy problem. Late in the course you'll see a multiple regression example in which things are not so obvious at the outset.
+
+## Degrees of freedom
+
+Before we move on, lets figure out how many degrees of freedom for error we should have. First, we see there are 252 data points in total. So that's our starting point.
+
+Here's how I was taught how to figure out degrees of freedom: take one away for the total, and the one for each continuous explanatory variable. Both our explanatory variables are continuous, so that three we take away. So we should get 249 degrees of freedom for error.
+
+Here's how I now think about degrees of freedom: we have the total number of data points, just as before! Now think about the model we're fitting: how many parameters does it have. Here's the model we're fitting (without the error term, sorry Steffi!)
+
+$$y = a + bx_1 + cx_2$$
+
+$y$ is the response variable, and $x_1$ and $x_2$ are the explanatory variables. $a$, $b$, and $c$ are the parameters (also known as coefficients). $a$ is the intercept, $b$ is the slope for $x_1$ and $c$ is the slope for $x_2$.
+
+So to fit the model to the data, we estimate three parameters. So the degrees of freedom is 252 - 3 which is... 249.
+
+I find this method a bit simpler.
+
+Before we tried to guess the slopes, and the r-squared. Here's it a bit harder to guess slopes, because they depend on each other and so we can't just get them from the bivariate plots. Still, all the variables are positively correlated, so we might expect the slopes to both be positive.
+
+We expect the r-squared to be quite high though, as the bivariate relationships look quite strong.
+
+
+
+## Fitting the model, diagnostics, and the summary table
+
+So, lets fit the model. In R, we put the multiple explanatory variables in the `lm` separated with a plus `+`.
+
+```{r}
+m1 <- lm(bodyfat ~ weight + abdomen, data=dd)
+```
+
+The order of weight and abdomen here does not matter.
+No news is good news.
+
+And the diagnostic plots.
+
+```{r}
+autoplot(m1)
+```
+
+Little trend in the residuals, qq plot looks fine. Row 39 is a bit of a problem, its that large weight. Leave it in for now.
+
+How about the summary table:
+
+```{r}
+summary(m1)
+```
+
+Lets dissect this:
+
+* R first tells us the model we fitted. It is as we expected, good!
+* The we get some information about the residuals. We're already happy with the residuals, so we can ignore this for now.
+* The we get the table of the coefficients. There are three, as we expected. The intercept and two slopes, one for each of the two explanatory variables. The first column gives the estimated slope.
+* The intercept is about the value of body fat when weight and abdomen are zero, so its not relevant at all. So we ignore it here (we don't always though).
+* The weight variable is negatively related to bodyfat. Wow, this is not what we expected. The standard error of the slope is low relative to the slope, so we see its at least statistically important.
+* The abdomen variables is positively related to body fat. As expected, and again the standard error is small relative to the estimate, so it at least statistically important.
+* The residual standard error is 4.391 (I don't often look at this).
+* Residual degrees of freedom, i.e. degrees of freedom for error are 249, great, this is what we expected.
+* R-squared is 72%, so nearly three quarters of the variation in body fat is explained by variation in weight and abdomen. Adjusted R-squared you will look at in the next exercise, so I'll skip it here.
+* And lets ignore the F-statistic for the moment.
+
+So what? Well, first of all, we now know that abdomen and weight are very good explanatory variables, and have the potential to be good predictors of bodyfat, in case we didn't have the ability to directly measure body fat. This is as expected, we guessed this already, so what have we acheived?
+
+1. We confirmed our guess.
+2. We now have a quantitative model we can use to predict bodyfat from the other two. We will do this in a moment.
+3. We have found something unexpected: weight is negative related with bodyfat. I.e. heavier people have lower bodyfat, for a given abdomen measurement. Perhaps abdomen is about about how much fat people have, and after that, weight is about how much muscle? Its difficult to tell from this dataset... we'd have to look into the explanation for this.
+
+## Focusing on estimates
+
+If we want to report effect sizes and confidence intervals, as we suggest is often a good idea, we get them like this:
+
+```{r}
+coef(m1)
+confint(m1)
+```
+
+We have the three estimates we previously saw in the summary table.
+And now we have the 95% confidence intervals (how do we know its 95%? Look in the help file `?confint`).
+
+We see that none of the confidence intervals contain zero, so they are statistically important.
+
+## Visualising the results
+
+How can we show the results? We can't just show the raw bivariate relationships, as these don't for example show the negative relationship between bodyfat and weight, for example. One approach is to use the model to make some data that we then plot. How do we use the model to make some data? Well, R has a really nice funciton called `predict`, you may have already come across this, but I'll go through it step by step.
+
+The simplest way to use predict is to just give it the model. Then it uses the real values of the explanatory variable to make the prediction, i.e. to give values of bodyfat:
+
+```{r}
+predict(m1)
+```
+
+This is the same as `fitted(m1)`, by the way.
+
+We can also give `predict` any value of the explanatory variables we like. First we need to create these, and we have to follow some rules to do so.
+
+1. We must name the new variables exactly as those in the model, here `weight` and `abdomen`.
+2. We must put these in a dataframe.
+
+Following rule 1 is not too difficult. Following rule 2 is done by using a function `expand.grid`. You'll see this more in the future, I won't explain it too much here.
+
+So lets make some new values of weight and abdomen, aiming for a graph that shows the relationship as weight varies, for the mean value of abdomen.
+
+```{r}
+new_data <- expand.grid(weight=seq(min(dd$weight), max(dd$weight), length=100),
+                        abdomen=mean(dd$abdomen))
+```
+
+Talk through this.
+
+Look at it... its just what we expected.
+
+```{r}
+new_data
+```
+
+Now we give this to predict, with interval, because we'd like these in our plot...
+```{r}
+p1 <- predict(m1, newdata = new_data, interval="confidence")
+```
+
+For convenience, we stick together the data we made:
+```{r}
+n1 <- cbind(new_data, p1)
+```
+
+Excellent. Now lets make a nice graph to show this data. We'll build it up gradually, to help you see how ggplot works.
+
+```{r}
+ggplot(n1) +
+  geom_line(mapping=aes(x=weight, y=fit))
+```
+
+And now we can add the confidence interval:
+
+```{r}
+ggplot(n1) +
+  geom_line(mapping=aes(x=weight, y=fit)) +
+  geom_smooth(mapping=aes(x=weight, y=fit, ymin=lwr, ymax=upr), stat="identity")
+```
+
+What does this tell us. Actually, we should be a bit careful of the model, and probably need a different one, because its predicting negative values of `bodyfat` which are impossible! It might work ok for people with low abdomen sizes though.
+
+How does the corresponding graph for `abdomen` predicting `bodyfat` look? We just need to change the data we make and give to `predict`....
+
+```{r}
+new_data <- expand.grid(weight=mean(dd$weight),
+                        abdomen=seq(min(dd$abdomen), max(dd$abdomen), length=100))
+p1 <- predict(m1, newdata = new_data, interval="confidence")
+n1 <- cbind(new_data, p1)
+ggplot(n1) +
+  geom_line(mapping=aes(x=abdomen, y=fit)) +
+  geom_smooth(mapping=aes(x=abdomen, y=fit, ymin=lwr, ymax=upr), stat="identity")
+```
+
+Here we see the predicted value going from 0 to nearly 80. Whereas for `weight` the range of predicted values was lower.
+
+## Reporting results
+
+One option for reporting the findings is to give a table of the coefficients and either confidence intervals or standard errors. Confidence intervals are often considered preferable.
+
+And to plot the two graphs that show the fitted model. There are other graphs one could make, but lets not go there now.
+
+What would we write? Perhaps something like:
+
+In the Methods section: Multiple linear regression with body fat as the response variable and weight and abdomen as two continuous explanatory variables was used. The data met the assumptions of linear regression.
+
+In the Results section: Abdomen measurement was strongly and positively related with the body fat measurement; weight was negatively related with body fat (table 1 contains effect sizes and confidence intervals). Weight and abdoment together explained about 72% of the variation in body fat.
+
+In the Conclusions: Abdomen and weight measurements, which can easily and quickly be made, are promising indicators of body fat. Nevertheless, some development of the predictive model is required, so as to not predict negative values of body fat, and also it should be tested against new data.
+
+
+
+
+
+
+
+
+## Checking for influence of that outlier
+
+```{r}
+m2 <- lm(bodyfat ~ weight + abdomen, data=slice(dd, -39))
+autoplot(m2)
+coef(m2)
+confint(m2)
+coef(m1)
+confint(m1)
+```
+
+Quite robust.
+
