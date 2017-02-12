@@ -1,0 +1,28 @@
+\begin{thebibliography}{}
+
+\bibitem[\protect\citeauthoryear{Box}{Box}{1979}]{box1979}
+Box, G. E.~P. (1979).
+\newblock Robustness in the strategy of scientific model building.
+\newblock In R.~L. Launer and G.~N. Wilkinson (Eds.), {\em In Robustness in
+  Statistics}, pp.\  201--236. New York: Academic Press.
+
+\bibitem[\protect\citeauthoryear{Elpelt and Hartung}{Elpelt and
+  Hartung}{1987}]{elpelt.hartung1987}
+Elpelt, B. and J.~Hartung (1987).
+\newblock {\em Grundkurs Statistik, Lehr- und \"Ubungsbuchder angewandten
+  Statistik}.
+
+\bibitem[\protect\citeauthoryear{Hothorn and Everitt}{Hothorn and
+  Everitt}{2014}]{hothorn.everitt2014}
+Hothorn, T. and B.~S. Everitt (2014).
+\newblock {\em A Handbook of Statistical Analyses Using R\/} (3 ed.).
+\newblock Boca Raton: Chapman \& Hall/CRC Press.
+
+\bibitem[\protect\citeauthoryear{Weinberger, Muff, Kranz, and
+  Bontadina}{Weinberger et~al.}{2016}]{weinberger.etal2016}
+Weinberger, I.~C., S.~Muff, A.~Kranz, and F.~Bontadina (2016).
+\newblock Flexible habitat selection paves the way for a recovery of otter
+  populations in the {E}uropean {A}lps.
+\newblock {\em Biological Conservation\/}~{\em 199}, 88--95.
+
+\end{thebibliography}
