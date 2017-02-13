@@ -147,20 +147,20 @@ Meine \"Uberzeugung: Fundierte Kenntnisse in Statistik machen Sie unabh\"angig! 
 \vspace{-8mm}
 
 \begin{multicols}{2}
-1. Einf\"uhrung und Ausblick \\[1mm]
-2. Einfache lineare Regression\\[1mm]
-3. Residuenanalyse, Modellvalidierung \\[1mm]
-4. Multiple lineare Regression \\[1mm]
-5. ANOVA und ANCOVA \\[1mm]
-6. Matrix Algebra \\[1mm]
-7. Modellwahl  \\[1mm]
-8. Selbststudium \\[1mm]
-9. Interpretation von Resultaten \\[1mm]
-10. Bin\"are Daten (logistische Regression)\\[1mm]
-11. Z\"ahldaten (Poisson Regression) \\[1mm]
-12. Messfehler, zuf\"allige Effekte \\[1mm]
-13. Selbststudium \\[1mm]
-14. Ausgew\"ahlte Themen, Wiederholungen und Ausblick \\
+1. L1 Einf\"uhrung und Ausblick \\[1mm]
+2. L2 Einfache lineare Regression\\[1mm]
+3. L3 Residuenanalyse, Modellvalidierung \\[1mm]
+4. L4 Multiple lineare Regression \\[1mm]
+5. L5 ANOVA  \\[1mm]
+6. L6 ANCOVA, Matrix Algebra \\[1mm]
+7. L7 Modellwahl  \\[1mm]
+8. Selbststudium  \\[1mm]
+9. L8 Interpretation von Resultaten, Kausalit\"at \\[1mm]
+10. L9 Z\"ahldaten (Poisson Regression) \\[1mm]
+11. L10 Bin\"are Daten (logistische Regression)\\[1mm]
+12. L11 Messfehler, zuf\"allige Effekte \\[1mm]
+13. Selbststudium  \\[1mm]
+14. L12 Ausgew\"ahlte Themen, Wiederholungen und Ausblick \\
 \end{multicols}
 ~\\
 {\bf Kurzfristige Anpassungen vorbehalten!}
@@ -427,18 +427,16 @@ Merke: Auf die Idee, die Variablen zu logarithmieren, sind wir nur dank visuelle
 24 Personen werden in 4 Gruppen unterteilt. Jede Gruppe erh\"alt eine andere Di\"at \small{(DIAET)}. Es werden zu Beginn und am Ende (nach 2 Wochen) die Blutzuckerwerte gemessen. Die Differenz wird gespeichert \small{(BLUTZUCK)}.\\[2mm]
 {\bf Frage:} Unterscheiden sich die Gruppen in der Ver\"anderung der Blutzuckerwerte?\\[3mm]
 
+Schauen wir uns die Rohdaten an (Punkte und Boxplots):
 <<echo=F>>=
+library(ggplot2)
 path <- "../../data_examples/anova/Blutzucker/"
 d.blz <- read.table(paste(path,"blutzucker.dat",sep=""),header=T)
 @
 \begin{center}
-\setkeys{Gin}{width=0.7\textwidth}
-<<blz_plot,fig=T,height=4,width=8>>=
-par(mfrow=c(1,2))
-plot(BLUTZUCK ~ DIAET,d.blz,xaxt="n",main="Streudiagramm")
-axis(1,1:4)
-boxplot(BLUTZUCK ~ DIAET,d.blz,xaxt="n",xlab="DIAET",main="Boxplot")
-axis(1,1:4)
+\setkeys{Gin}{width=0.4\textwidth}
+<<blz_plot,fig=T,height=3.5,width=3.5,echo=F>>=
+ggplot(d.blz,aes(x=factor(DIAET),y=BLUTZUCK)) + geom_boxplot() + geom_point(size=4,colour='lightgrey') + theme_bw() + xlab("Diaet") + ylab("Blutzucker")
 @
 \end{center}
 
@@ -451,7 +449,7 @@ Stichwort: 2 Gruppen. \\[4mm]
 
 F\"ur mehrere Gruppen braucht man die \emph{Varianzanalyse} oder \emph{ANOVA} (=ANalysis Of VAriance).\\[4mm]
 
-Es wird sich herausstellen (Woche 5), dass sich die Di\"aten tats\"achlich voneinander unterscheiden. \\[4mm]
+Es wird sich herausstellen (Vorlesung 5), dass sich die Di\"aten tats\"achlich voneinander unterscheiden. \\[4mm]
 
 Die n\"achste Frage ist dann, welche Di\"aten sich \emph{paarweise} voneinander unterscheiden.
 }
@@ -558,7 +556,7 @@ Darstellung & N\"utzlich bei \\
     & Abh\"angigkeit von Kategorien.\\[1mm]
  Conditional density plots &  Abh\"angigkeit einer bin\"aren Variable von\\
     & kontinuierlichen Variablen.\\[1mm]
-Barplots & \"Ahnlicher Anwendungsbereich wie Boxplots.\\[1mm]
+%Barplots & \"Ahnlicher Anwendungsbereich wie Boxplots.\\[1mm]
 Coplots & Darstellung von Abh\"angigkeiten von mehreren\\
     & Variablen.\\
 \hline
@@ -568,33 +566,33 @@ Coplots & Darstellung von Abh\"angigkeiten von mehreren\\
 }
 
 
-\frame[containsverbatim]{\frametitle{Barplots}
-Beispiele aus Beckerman \& Petchey: \\[2mm]
-{\bf Links:} Untersuchung der Fruchtproduktion in abgegrasten und nicht abgegrasten Gebieten. Grasen reduziert die Biomasse \"uber dem Boden. Wie wird Fruchtproduktion dadurch beeinflusst?\\[2mm]
-{\bf Rechts:} Anzahl V\"ogel einer bestimmten Farbe in zwei Umgebungen.
-
-\begin{center}
-\setkeys{Gin}{width=0.8\textwidth}
-<<echo=F,fig=T,width=7,height=4>>=
-par(mfrow=c(1,2))
-comp.dat <- read.csv("../../data_examples/GSWR_datasets/compensation.csv")
-
-mean.fruit <- tapply(comp.dat$Fruit, list(comp.dat$Grazing),mean)
-sd.fruit <- tapply(comp.dat$Fruit, list(comp.dat$Grazing),sd)
-n.fruit <- tapply(comp.dat$Fruit, list(comp.dat$Grazing),length)
-
-mids <- barplot(mean.fruit,xlab="Treatment",ylab="Fruit Production",ylim=c(0,100),plot=F)
-
-barplot(mean.fruit,xlab="Treatment",ylab="Fruit Production",ylim=c(0,100),main="")
-arrows(mids,mean.fruit - sd.fruit,mids,mean.fruit+sd.fruit,code=3,angle=90,length=0.1,add=T)
-text(mids,3,paste("n=",n.fruit),add=T)
-
-chi.data <- matrix(c(115,30,85,70),2,2,byrow=T,dimnames=list(c("Black","Red"),c("Industrial","Rural")))
-
-barplot(chi.data,beside=T,col=c("Black","Red"),ylim=c(0,125),legend=T)
-@
-\end{center}
-}
+% \frame[containsverbatim]{\frametitle{Barplots}
+% Beispiele aus Beckerman \& Petchey: \\[2mm]
+% {\bf Links:} Untersuchung der Fruchtproduktion in abgegrasten und nicht abgegrasten Gebieten. Grasen reduziert die Biomasse \"uber dem Boden. Wie wird Fruchtproduktion dadurch beeinflusst?\\[2mm]
+% {\bf Rechts:} Anzahl V\"ogel einer bestimmten Farbe in zwei Umgebungen.
+% 
+% \begin{center}
+% \setkeys{Gin}{width=0.8\textwidth}
+% <<echo=F,fig=T,width=7,height=4>>=
+% par(mfrow=c(1,2))
+% comp.dat <- read.csv("../../data_examples/GSWR_datasets/compensation.csv")
+% 
+% mean.fruit <- tapply(comp.dat$Fruit, list(comp.dat$Grazing),mean)
+% sd.fruit <- tapply(comp.dat$Fruit, list(comp.dat$Grazing),sd)
+% n.fruit <- tapply(comp.dat$Fruit, list(comp.dat$Grazing),length)
+% 
+% mids <- barplot(mean.fruit,xlab="Treatment",ylab="Fruit Production",ylim=c(0,100),plot=F)
+% 
+% barplot(mean.fruit,xlab="Treatment",ylab="Fruit Production",ylim=c(0,100),main="")
+% arrows(mids,mean.fruit - sd.fruit,mids,mean.fruit+sd.fruit,code=3,angle=90,length=0.1,add=T)
+% text(mids,3,paste("n=",n.fruit),add=T)
+% 
+% chi.data <- matrix(c(115,30,85,70),2,2,byrow=T,dimnames=list(c("Black","Red"),c("Industrial","Rural")))
+% 
+% barplot(chi.data,beside=T,col=c("Black","Red"),ylim=c(0,125),legend=T)
+% @
+% \end{center}
+% }
 
 \frame[containsverbatim]{\frametitle{Coplots}
 Ideal zur Darstellung von Abh\"angigkeiten, wenn mehrere Variablen involviert sind. Eignet sich sehr gut bei kategoriellen Variablen. Beispiel: Quecksilber im Wallis.
@@ -624,9 +622,9 @@ Dazu gibt es etlich R Pakete. Interaktive Darstellungen k\"onnen beispielsweise 
 %' @
 }
 
-\frame{\frametitle{Experimentelle vs Beobachtungsdaten}
-To do, ev mention only later in lectures 7/8
-}
+%\frame{\frametitle{Experimentelle vs Beobachtungsdaten}
+%To do, ev mention only later in lectures 7/8
+%}
 
 \frame{\frametitle{N\"achste Woche: Einfache lineare Regression}
 

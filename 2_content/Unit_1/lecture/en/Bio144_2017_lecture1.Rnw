@@ -96,7 +96,7 @@ To do:
 \item Examination date
 \item Link to course webpage
 \end{itemize}
-
+L1
 }
 
 
@@ -158,20 +158,20 @@ My belief: A solid foundation in statistics makes you independent!  \\[2mm]
 \vspace{-8mm}
 
 \begin{multicols}{2}
-1. Introduction and outlook \\[1mm]
-2. Simple linear regression\\[1mm]
-3. Residual analysis, model validation\\[1mm]
-4. Multiple linear regression \\[1mm]
-5. ANOVA and ANCOVA \\[1mm]
-6. Matrix Algebra \\[1mm]
-7. Model choice  \\[1mm]
-8. Self-study week \\[1mm]
-9. Interpretation of the results \\[1mm]
-10. Binary Data (logistic regression)\\[1mm]
-11. Count data (Poisson regression) \\[1mm]
-12. Measurement error, random effects \\[1mm]
+1. (L1) Introduction and outlook \\[1mm]
+2. (L2) Simple linear regression\\[1mm]
+3. (L3) Residual analysis, model validation\\[1mm]
+4. (L4) Multiple linear regression \\[1mm]
+5. (L5) ANOVA  \\[1mm]
+6. (L6) ANCOVA Matrix Algebra \\[1mm]
+7. (L7) Model selection  \\[1mm]
+8. Self-study week \\[4mm]
+9. (L8) Interpretation of results, causality \\[1mm]
+10. (L9) Count data (Poisson regression) \\[1mm]
+11. (L10) Binary Data (logistic regression)\\[1mm]
+12. (L11) Measurement error, random effects \\[1mm]
 13. Self-study week \\[1mm]
-14. Selected topics, repetition and outlook \\
+14. (L12) Selected topics, repetition and outlook \\
 \end{multicols}
 ~\\
 {\bf Short-dated changes possible!}
@@ -442,18 +442,17 @@ Remember: The idea to log-transform the variables was mainly obvious thanks to \
 24 persons were split into 4 groups. Each group followed another diet \small{(DIAET)}. The blood glucose concentrations were measured at the beginning and at the end (after 2 weeks). The difference of these values was stored \small{(BLUTZUCK)}.\\[2mm]
 {\bf Question:} Are there differences among the groups with respect to changes in blood glucose concentrations?\\[3mm]
 
+Let's look at the raw data (points and boxplots):
+
 <<echo=F>>=
+library(ggplot2)
 path <- "../../../data_examples/anova/Blutzucker/"
 d.blz <- read.table(paste(path,"blutzucker.dat",sep=""),header=T)
 @
 \begin{center}
-\setkeys{Gin}{width=0.7\textwidth}
-<<blz_plot,fig=T,height=4,width=8>>=
-par(mfrow=c(1,2))
-plot(BLUTZUCK ~ DIAET,d.blz,xaxt="n",main="Scatterplot")
-axis(1,1:4)
-boxplot(BLUTZUCK ~ DIAET,d.blz,xaxt="n",xlab="DIAET",main="Boxplot")
-axis(1,1:4)
+\setkeys{Gin}{width=0.4\textwidth}
+<<blz_plot,fig=T,height=3.5,width=3.5,echo=F>>=
+ggplot(d.blz,aes(x=factor(DIAET),y=BLUTZUCK)) + geom_boxplot() + geom_point(size=4,colour='lightgrey') + theme_bw() + xlab("Diet") + ylab("Blood glucose")
 @
 \end{center}
 
@@ -466,7 +465,7 @@ Hint: what would you do for two groups? \\[4mm]
 
 For more than 2 groups we need the \emph{ANOVA} (=ANalysis Of VAriance) approach.\\[4mm]
 
-We will see in week 5 that there are in fact differences between the diets. \\[4mm]
+We will see in lecture 5 that there are in fact differences between the diets. \\[4mm]
 
 The next question then is: which diets are \emph{pairwise} different.
 
@@ -574,7 +573,7 @@ Representation & Useful for \\
     & conditionally on categories.\\[1mm]
  Conditional density plots &  Dependency of a binary variable from\\
     &  a continuous variable.\\[1mm]
-Barplots & As boxplots. \\[1mm]
+%Barplots & As boxplots. \\[1mm]
 Coplots & Dependencies among multiple variables. \\
 \hline
 \end{tabular}
@@ -583,33 +582,33 @@ Coplots & Dependencies among multiple variables. \\
 }
 
 
-\frame[containsverbatim]{\frametitle{Barplots}
-Examples from Beckerman \& Petchey: \\[2mm]
-{\bf Left:} Fruit production in grazed and ungrazed areas. Grazing reduces above-ground biomass. How is fruit production affected by this?\\[2mm]
-{\bf Right:} Number of birds of certain colors in two environments.
-
-\begin{center}
-\setkeys{Gin}{width=0.8\textwidth}
-<<echo=F,fig=T,width=7,height=4>>=
-par(mfrow=c(1,2))
-comp.dat <- read.csv("../../../data_examples/GSWR_datasets/compensation.csv")
-
-mean.fruit <- tapply(comp.dat$Fruit, list(comp.dat$Grazing),mean)
-sd.fruit <- tapply(comp.dat$Fruit, list(comp.dat$Grazing),sd)
-n.fruit <- tapply(comp.dat$Fruit, list(comp.dat$Grazing),length)
-
-mids <- barplot(mean.fruit,xlab="Treatment",ylab="Fruit Production",ylim=c(0,100),plot=F)
-
-barplot(mean.fruit,xlab="Treatment",ylab="Fruit Production",ylim=c(0,100),main="")
-arrows(mids,mean.fruit - sd.fruit,mids,mean.fruit+sd.fruit,code=3,angle=90,length=0.1,add=T)
-text(mids,3,paste("n=",n.fruit),add=T)
-
-chi.data <- matrix(c(115,30,85,70),2,2,byrow=T,dimnames=list(c("Black","Red"),c("Industrial","Rural")))
-
-barplot(chi.data,beside=T,col=c("Black","Red"),ylim=c(0,125),legend=T)
-@
-\end{center}
-}
+% \frame[containsverbatim]{\frametitle{Barplots}
+% Examples from Beckerman \& Petchey: \\[2mm]
+% {\bf Left:} Fruit production in grazed and ungrazed areas. Grazing reduces above-ground biomass. How is fruit production affected by this?\\[2mm]
+% {\bf Right:} Number of birds of certain colors in two environments.
+% 
+% \begin{center}
+% \setkeys{Gin}{width=0.8\textwidth}
+% <<echo=F,fig=T,width=7,height=4>>=
+% par(mfrow=c(1,2))
+% comp.dat <- read.csv("../../../data_examples/GSWR_datasets/compensation.csv")
+% 
+% mean.fruit <- tapply(comp.dat$Fruit, list(comp.dat$Grazing),mean)
+% sd.fruit <- tapply(comp.dat$Fruit, list(comp.dat$Grazing),sd)
+% n.fruit <- tapply(comp.dat$Fruit, list(comp.dat$Grazing),length)
+% 
+% mids <- barplot(mean.fruit,xlab="Treatment",ylab="Fruit Production",ylim=c(0,100),plot=F)
+% 
+% barplot(mean.fruit,xlab="Treatment",ylab="Fruit Production",ylim=c(0,100),main="")
+% arrows(mids,mean.fruit - sd.fruit,mids,mean.fruit+sd.fruit,code=3,angle=90,length=0.1,add=T)
+% text(mids,3,paste("n=",n.fruit),add=T)
+% 
+% chi.data <- matrix(c(115,30,85,70),2,2,byrow=T,dimnames=list(c("Black","Red"),c("Industrial","Rural")))
+% 
+% barplot(chi.data,beside=T,col=c("Black","Red"),ylim=c(0,125),legend=T)
+% @
+% \end{center}
+% }
 
 \frame[containsverbatim]{\frametitle{Coplots}
 Ideal to graphically display dependencies when more than two variables are involved. Very useful for categorical variables. Example: Mercury in Valais.
@@ -641,8 +640,8 @@ Many R packages are available for various purposes. Interactive apps can, for ex
 %' @
 }
 
-\frame{\frametitle{Experimental vs observational data}
-To do, ev mention only later in weeks 7/8}
+%\frame{\frametitle{Experimental vs observational data}
+%To do, ev mention only later in weeks 7/8}
 
 \frame{\frametitle{Next week: Simple linear regression}
 
