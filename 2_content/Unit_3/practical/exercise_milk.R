@@ -63,13 +63,20 @@ summary(m2)
 ## r2 0.12
 
 ## both explanatory variables...
-m3 <- lm(kcal.per.g ~ log10_mass + neocortex.perc, data=milk)
+m3 <- lm(kcal.per.g ~ mass + neocortex.perc, data=milk)
 autoplot(m3) ## pretty bad qqplot, though few data points
 summary(m3)
 anova(m3)
 ## both variables significant
 ## r2 0.53
 ## WOW!
+
+
+r1 <- rnorm(17)
+m4 <- lm(kcal.per.g ~ mass + neocortex.perc + r1, data=milk)
+summary(m4)
+
+
 
 library(car)
 vif(m3)
