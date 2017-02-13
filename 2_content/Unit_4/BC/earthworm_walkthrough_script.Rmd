@@ -2,7 +2,9 @@
 title: "earthworm_walkthrough_script"
 author: "Owen"
 date: "2/13/2017"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ## Introduction and preliminaries
