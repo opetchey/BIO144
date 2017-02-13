@@ -28,8 +28,7 @@ Lets import that data:
 rm(list=ls())
 library(tidyverse)
 library(ggfortify)
-dd <- read_delim("https://raw.githubusercontent.com/opetchey/BIO144/master/3_datasets/earthworm.txt.txt", 
-                 "\t", escape_double = FALSE, trim_ws = TRUE)
+dd <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144/master/3_datasets/earthworm.csv")
 
 ```
 
