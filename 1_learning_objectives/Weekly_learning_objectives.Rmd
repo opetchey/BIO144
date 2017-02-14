@@ -242,13 +242,6 @@ By the end of this week you will be able to:
 
 By the end of this week you will be able to:
 
-<<<<<<< HEAD:1_learning_objectives/Weekly_learning_objectives.Rmd
-=======
-# Week 14 - Recap and outlook  {-}
-
-By the end of this week you will be able to:
-
->>>>>>> origin/master:1_learning_objectives/Weekly_learning_objectives.Rmd
 * Describe the type of biological / biomedical questions that require other statistical methods, including:
     + Time series analysis
     + Multivariate analysis, including ordination, clustering, and classification
@@ -264,7 +257,6 @@ By the end of this week you will be able to:
     + Spatial analyses / statistics
     + Power analysis
     + Randomisation based methods
-* ...
 
 
 
