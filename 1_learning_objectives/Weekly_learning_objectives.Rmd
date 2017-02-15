@@ -119,7 +119,7 @@ By the end of this week you will be able to:
 * Understand when to use, and how to perform and interpret post-hoc hypothesis tests.
 * Recognise that ANOVA is just another linear model, as is linear regression, and all the models you've seen so far.
 * In particular, recognise that the model checking strategy is the same as for linear models from the previous weeks. 
-* Relate why ANOVA is often applied to data from manipulative experiments.
+
 
 (Please note that these skills are assessed in the Graded Assessment 5)
 
