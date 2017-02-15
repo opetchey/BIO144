@@ -2,7 +2,9 @@
 title: "Model selection"
 author: "Owen Petchey & Stefanie Muff"
 date: "2/15/2017"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r}
