@@ -108,10 +108,15 @@ Datenanalyse in der Biologie}%\\[.3cm]
 
 
 \frame{\frametitle{Course material covered today}
+
+The lecture material of today is based on the following literature:\\[4mm]
+
 \begin{itemize}
 \item Chapter 2 of \emph{Lineare Regression}, p.7-20 (Stahel script),
-\item Alternatively, chapters 13.1 - 13.4 in the Stahel book ``Statistische Datenanalyse''.
+\item Alternatively, chapters 13.1 - 13.4 in the Stahel book ``Statistische Datenanalyse''.\\[6mm]
 \end{itemize}
+
+ 
 }
 
 

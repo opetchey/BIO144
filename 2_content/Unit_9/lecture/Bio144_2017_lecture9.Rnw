@@ -118,6 +118,8 @@ library(ggfortify)
 
 
 \frame{\frametitle{Course material covered today}
+
+The lecture material of today is based on the following literature:\\[4mm]
 \begin{itemize}
 \item Chapter 7 of GSWR (Beckerman et al.)\\[2mm]
 \end{itemize}

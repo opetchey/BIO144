@@ -806,7 +806,10 @@ Therefore one may also write $\bm{A}^{-\top}$.
 
 }
 
-\frame{\frametitle{Linear equation system in matrix notation}
+\frame{\frametitle{Linear regression in matrix notation}
+
+Linear regression with $n$ data points can be understood as an \alert{equation system with $n$ equations}.\\[2mm]
+
 Remember example 4 from slide \ref{sl:examples}: We said that a linear regression model can be written compactly using \alert{matrix multiplication}:
 %
 \begin{equation*}
@@ -817,7 +820,7 @@ Remember example 4 from slide \ref{sl:examples}: We said that a linear regressio
 Task: Verify this now, using a model with two variables $\bm{x}^{(1)}$ and $\bm{x}^{(2)}$ and
 \begin{equation*}
 \bm{y}=\left(\begin{array}{c} y_1 \\ y_2 \\ \vdots \\ y_n\end{array}\right), \;
-\, \bm{\tilde\beta}=\left(\begin{array}{c} \beta_0 \\ \beta_1 \\ \beta_2\end{array}\right), \;
+\, 
 \bm{\tilde{X}} = 
 \left(
 \begin{array}{ccc}
@@ -827,6 +830,7 @@ Task: Verify this now, using a model with two variables $\bm{x}^{(1)}$ and $\bm{
 1 & x_n^{(1)} & x_n^{(2)}
 \end{array}
 \right), \;
+\bm{\tilde\beta}=\left(\begin{array}{c} \beta_0 \\ \beta_1 \\ \beta_2\end{array}\right), \;
 \bm{e}=\left(\begin{array}{c} e_1 \\ e_2 \\ \vdots \\ e_n\end{array}\right).
 \end{equation*}
 }
@@ -860,12 +864,15 @@ $i$ & $x_i^{(1)}$ & $x_i^{(2)}$ \\
 
 Thus the model is given as 
 \begin{equation*}
-y_i = 10 + 5 x_i^{(1)} + -2 x_i^{(2)} + e_i \ , \text{for }\quad 1\leq i \leq n \ . 
+y_i = 10 + 5 x_i^{(1)}  -2 x_i^{(2)} + e_i \ , \text{for }\quad 1\leq i \leq n \ . 
 \end{equation*}
 Let us start by generating the ``true'' response, calculated as $\bm{\tilde{X}} \bm{\tilde\beta}$:\\[2mm]
 }
 
 \frame[containsverbatim]{
+<<>>=
+
+@
 <<>>=
 x1 <- c(0,1,2,3,4)
 x2 <- c(4,1,0,1,4)
@@ -884,13 +891,15 @@ Matrix multiplication in R is done by the \alert{\texttt{\%*\%}} symbol.
 Next, we generate the vector containing the $e_i \sim \N(0,\sigma_e^2)$ with $\sigma_e^2=1$:\\[2mm]
 
 <<>>=
-e <- runif(5,0,1)
+e <- rnorm(5,0,1)
+e
 @
 
 ~\\[2mm]
 which we add to the ``true'' $\bm{y}=\bm{\tilde{X}} \bm{\tilde\beta}$ values, to obtain the ``observed'' values:\\[2mm]
 <<>>=
 t.Y <- t.y  + e
+t.Y
 @
 
 ~\\[2mm]
@@ -918,15 +927,13 @@ solve(t(Xtilde) %*% Xtilde)  %*%  t(Xtilde) %*% t.Y
 ~\\[2mm]
 
 \begin{itemize}
-\item \texttt{solve()} calculates the \alert{inverse}.
-\item \texttt{t()} gives the \alert{transposed}.\\[4mm]
+\item \texttt{solve()} calculates the \alert{inverse} (here the inverse of $\tilde{\bm{X}}^\top \tilde{\bm{X}}$).
+\item \texttt{t()} gives the \alert{transposed} (here of $\tilde{\bm{X}}^\top$).\\[4mm]
 \end{itemize}
 
 {\bf Task:} Do this calculation by yourself and verify for each step that the dimensions of the matrices and the vector are indeed fitting, so that this expression is defined.
 }
 
-\frame{\frametitle{Some R commands for matrix algebra}
-Ev?}
 
 \frame{\frametitle{Distribution of the $\bm{\beta}$ coefficients}
 See chapter 3.5 in Stahel: Linear algebra is useful to find the actual distribution of the regression coefficients $\bm\beta$.\\[4mm]
@@ -939,10 +946,78 @@ Finding the joint distribution for $\bm\beta$ is {\bf much harder} without linea
 }
 
 
+% \frame{\frametitle{Summary}
+% 
+% }
 
-\frame{\frametitle{Summary}
+
+\frame{\frametitle{}
+\begin{center}
+{\bf Appendix}
+\end{center}}
+
+\frame[containsverbatim]{\frametitle{Some R commands for matrix algebra}
+\vspace{-5mm}
+Reading vectors and a matrices into R:\\[2mm]
+
+
+<<>>=
+a <- c(1,2,3)
+a
+@
+
+\vspace{10mm}
+<<>>=
+A <- matrix(c(1,2,3,4,5,6),byrow=T,nrow=2)
+B <- matrix(c(6,5,4,3,2,1),byrow=T,nrow=2)
+A
+B
+@
 
 }
+
+\frame[containsverbatim]{
+~\\[2mm]
+Adding and subtracting:\\[2mm]
+<<>>=
+A + B
+A - B
+@
+
+\vspace{10mm}
+However, be careful, R sometims does unreasonable things:\\[2mm]
+<<>>=
+A + a
+@
+~\\[2mm]
+What happened here??
+}
+
+
+\frame[containsverbatim]{
+Matrix multiplication:\\[2mm]
+
+<<>>=
+C <- A %*% t(B)
+C
+A%*%a
+@
+
+\vspace{6mm}
+Matrix inversion (possible for quadratic matrices only):\\[2mm]
+
+<<>>=
+solve(C)
+C %*% solve(C)
+@
+
+\vspace{6mm}
+Why does \texttt{solve(A)} or \texttt{solve(B)} not work?
+}
+
+
+
+
 % \frame{References:
 % \bibliographystyle{Chicago}
 % \bibliography{refs}

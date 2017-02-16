@@ -113,16 +113,18 @@ Datenanalyse in der Biologie}%\\[.3cm]
 
 
 \frame{\frametitle{Course material covered today}
+
+The lecture material of today is based on the following literature:\\[4mm]
+
 \begin{itemize}
-\item Stahel script chapters 5.1-5.4
+\item ``Lineare regression'' chapters 5.1-5.4
 \item Chapter 27.1 and 27.2 by Clayton and Hills ``Choice and Interpretation of Models'' (pdf provided)
 \end{itemize}
 
 \vspace{4mm}
 \textcolor{blue}{\bf Optional reading:}
 \begin{itemize}
-\item Paper by \citet{freedman1983}
-\item Check the Ellis book proposed by Owen
+\item Paper by \citet{freedman1983}: ``A Note on Screening Regression Equations''
 \end{itemize}
 }
 

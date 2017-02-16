@@ -112,15 +112,13 @@ Datenanalyse in der Biologie}%\\[.3cm]
 
 
 \frame{\frametitle{Course material covered today}
+
+The lecture material of today is based on the following literature:\\[4mm]
 \begin{itemize}
-\item todo
+\item Literature/articles from the self-study week (todo: say which ones here)
 \end{itemize}
 
-\vspace{4mm}
-\textcolor{blue}{\bf Optional reading:}
-\begin{itemize}
-\item todo
-\end{itemize}
+
 }
 
 \frame[containsverbatim]{\frametitle{Recap of Last week}

@@ -110,10 +110,12 @@ Datenanalyse in der Biologie}%\\[.3cm]
 
 
 \frame{\frametitle{Course material covered today}
+
+The lecture material of today is based on the following literature:\\[4mm]
 \begin{itemize}
 \item Chapters 3.1, 3.2a-q of \emph{Lineare Regression}
 \item Chapters 4.1 4.2f, 4.3a-e of \emph{Lineare Regression}
-\item Chapter 11.2 in \emph{Statistische Datenanalyse}
+\item Chapter 11.2 in the Stahel book \emph{Statistische Datenanalyse} 
 \end{itemize}
 }
 

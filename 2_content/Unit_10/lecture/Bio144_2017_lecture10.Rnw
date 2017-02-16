@@ -115,10 +115,12 @@ library(ggfortify)
 
 
 \frame{\frametitle{Course material covered today}
+
+The lecture material of today is based on the following literature:\\[4mm]
+
 \begin{itemize}
-\item Repetition: Chapter 10 in the Stahel book from last semester.\\[4mm]
-%\item (Ev? Stahel GLM Script, (parts of) chapters 7 and 8) \\[4mm]
-\item Chapters 9.1 - 9.3 from ``The new statistics with R''.
+\item Repetition: Chapter 10 in Stahels book ``Statistische Datenanalyse'' from last semester.\\[4mm]
+\item Chapters 9.1 - 9.3 from ``The new statistics with R'' (Hector book).
 \end{itemize}
 }
 
