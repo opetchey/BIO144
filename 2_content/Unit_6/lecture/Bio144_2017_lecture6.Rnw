@@ -878,8 +878,8 @@ x1 <- c(0,1,2,3,4)
 x2 <- c(4,1,0,1,4)
 Xtilde <- matrix(c(rep(1,5),x1,x2),ncol=3)
 Xtilde
-beta <- c(10,5,-2)
-t.y <- Xtilde%*%beta
+t.beta <- c(10,5,-2)
+t.y <- Xtilde%*%t.beta
 t.y
 @
 ~\\[2mm]
@@ -891,14 +891,14 @@ Matrix multiplication in R is done by the \alert{\texttt{\%*\%}} symbol.
 Next, we generate the vector containing the $e_i \sim \N(0,\sigma_e^2)$ with $\sigma_e^2=1$:\\[2mm]
 
 <<>>=
-e <- rnorm(5,0,1)
-e
+t.e <- rnorm(5,0,1)
+t.e
 @
 
 ~\\[2mm]
 which we add to the ``true'' $\bm{y}=\bm{\tilde{X}} \bm{\tilde\beta}$ values, to obtain the ``observed'' values:\\[2mm]
 <<>>=
-t.Y <- t.y  + e
+t.Y <- t.y  + t.e
 t.Y
 @
 

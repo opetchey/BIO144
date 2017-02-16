@@ -96,9 +96,36 @@ Calculate all of the following expressions, if they are defined. Solve at least 
 \item A matrix can be created for example like \\
 \texttt{A <- matrix(c(4,2,3,0,3,6),byrow=TRUE,nrow=2)} \ .
 \item \texttt{t(A)} corresponds to $\mathbf{A}^\T$ .
-\item Make sure you understand the difference between $\mathbf{A}$\texttt{*}$\mathbf{B}$ and $\mathbf{A}$\texttt{\%*\%}$\mathbf{B}$ .
+\item Make sure you understand the difference between $\mathbf{A}$\texttt{*}$\mathbf{B}$ and $\mathbf{A}$\texttt{\%*\%}$\mathbf{B}$ .\\[4mm]
 \end{itemize}
- 
+\end{enumerate} 
+
+\begin{enumerate}[\bf{2.}] \item 
+\begin{enumerate}[a)]  \item Repeat the example given in slides 35--38 using R. \\ 
+\item Repeat the above procedure 100 times. In each iteration, store the estimated coefficient vector $(\hat\beta_0,\hat\beta_1,\hat\beta_2)$. Note that the estimates should be different in each iteration, because another random vector \texttt{t.e} is used.\\ 
+\item Plot the histograms of the $\beta$s, the coefficients as a function of the simulation number, and scatterplots of $\hat\beta_1$ vs.\ $\hat\beta_0$, $\hat\beta_2$ vs.\ $\hat\beta_0$ and $\hat\beta_2$ vs.\ $\hat\beta_1$.\\
+\end{enumerate}
+
+{\bf R-hints:} The 100 simulations can be generated elegantly as follows:
+\begin{itemize}
+\item Generate an error matrix of dimension $5\times 100$. Each column  contains the errors of one experiment:\\
+\texttt{t.E <- matrix(rnorm(500),ncol=...)}
+
+\item Use \texttt{t.E} to generate the observations:\\
+\texttt{t.y <- matrix(rep(t.y,100),nrow=5,byrow=F)} \\
+\texttt{t.Y <- t.y + t.E}
+
+\item Define a results matrix of dimension $3\times 100$ that contains in each column the estimates $(\hat\beta_0,\hat\beta_1,\hat\beta_2)$ of an experiment, and fill it with the results of the 100 iterations:\\
+\texttt{r.coef <- matrix(NA,ncol=3, nrow=100)} \\
+\texttt{for (i in 1:100) \{  }\\
+\;\;\qquad \mbox{\texttt{  r.coef[i,] <- lm(t.Y[,i] $\sim$ x1 + x2)\$coefficients }}\\ 
+\texttt{\}}
+
+
+
+or more elegantly with \texttt{apply()}:\\
+\texttt{r.coef <- t(apply(t.Y, 2, FUN = function(y) lm(...)\$...))}
+\end{itemize}
 
 \end{enumerate}
  

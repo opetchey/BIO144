@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.7.13)  14 FEB 2017 18:52
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.7.13)  16 FEB 2017 15:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -902,34 +902,91 @@ Class scrartcl Warning: Usage of deprecated font command `\bf'!
 (scrartcl)              But for now, KOMA-Script will replace deprecated `\bf'
 (scrartcl)              by `\normalfont \bfseries ' on input line 79.
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 79--81
-
- []
-
 LaTeX Font Info:    Try loading font information for T1+aett on input line 83.
 (/usr/share/texlive/texmf-dist/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
-) [1
+)
+LaTeX Font Info:    Try loading font information for U+bbold on input line 115.
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./Bio144_2017_practical6_
-solution.aux) ) 
+
+(/usr/share/texlive/texmf-dist/tex/latex/bbold/Ubbold.fd)
+Overfull \hbox (33.20114pt too wide) detected at line 124
+[] \OMS/cmsy/m/n/12 ^^A [] \OT1/cmr/m/n/12 = [] = []
+ []
+
+[1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+
+Class scrartcl Warning: Usage of deprecated font command `\bf'!
+(scrartcl)              You should note, that in 1994 font command `\bf' has
+(scrartcl)              been defined for compatiblitiy to Script 2.0 only.
+(scrartcl)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrartcl)              shouldn't use such commands any longer and within
+(scrartcl)              KOMA-Script usage of `\bf' is definitely deprecated.
+(scrartcl)              See `fntguide.pdf' for more information about
+(scrartcl)              recommended font commands.
+(scrartcl)              Note also, that KOMA-Script will remove the definition
+(scrartcl)              of `\bf' anytime until release of about version 3.20.
+(scrartcl)              But for now, KOMA-Script will replace deprecated `\bf'
+(scrartcl)              by `\normalfont \bfseries ' on input line 217.
+
+[2] <Bio144_2017_practical6_solution-013.pdf, id=17, 433.62pt x 216.81pt>
+File: Bio144_2017_practical6_solution-013.pdf Graphic file (type pdf)
+
+<use Bio144_2017_practical6_solution-013.pdf>
+Package pdftex.def Info: Bio144_2017_practical6_solution-013.pdf used on input 
+line 278.
+(pdftex.def)             Requested size: 341.43439pt x 170.72554pt.
+
+<Bio144_2017_practical6_solution-014.pdf, id=18, 216.81pt x 216.81pt>
+File: Bio144_2017_practical6_solution-014.pdf Graphic file (type pdf)
+
+<use Bio144_2017_practical6_solution-014.pdf>
+Package pdftex.def Info: Bio144_2017_practical6_solution-014.pdf used on input 
+line 304.
+(pdftex.def)             Requested size: 128.03871pt x 128.0458pt.
+ [3 <./Bio144_2017_practical6_solution-013.pdf>]
+<Bio144_2017_practical6_solution-015.pdf, id=29, 216.81pt x 216.81pt>
+File: Bio144_2017_practical6_solution-015.pdf Graphic file (type pdf)
+
+<use Bio144_2017_practical6_solution-015.pdf>
+Package pdftex.def Info: Bio144_2017_practical6_solution-015.pdf used on input 
+line 310.
+(pdftex.def)             Requested size: 128.03871pt x 128.0458pt.
+
+<Bio144_2017_practical6_solution-016.pdf, id=30, 216.81pt x 216.81pt>
+File: Bio144_2017_practical6_solution-016.pdf Graphic file (type pdf)
+
+<use Bio144_2017_practical6_solution-016.pdf>
+Package pdftex.def Info: Bio144_2017_practical6_solution-016.pdf used on input 
+line 316.
+(pdftex.def)             Requested size: 128.03871pt x 128.0458pt.
+ [4 <./Bio144_2017_practical6_solution-014.pdf> <./Bio144_2017_practical6_solut
+ion-015.pdf> <./Bio144_2017_practical6_solution-016.pdf>] (./Bio144_2017_practi
+cal6_solution.aux) ) 
 Here is how much of TeX's memory you used:
- 7295 strings out of 494976
- 104679 string characters out of 6179137
- 218984 words of memory out of 5000000
- 10367 multiletter control sequences out of 15000+600000
- 15015 words of font info for 38 fonts, out of 8000000 for 9000
+ 7366 strings out of 494976
+ 106275 string characters out of 6179137
+ 222984 words of memory out of 5000000
+ 10412 multiletter control sequences out of 15000+600000
+ 19912 words of font info for 56 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 47i,7n,51p,308b,251s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-bx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pf
-b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsltt10.pfb></
-usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on Bio144_2017_practical6_solution.pdf (1 page, 40534 bytes).
+ 47i,7n,51p,390b,411s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmb
+x8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmsltt10.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/font
+s/type1/public/amsfonts/cm/cmtt12.pfb>
+Output written on Bio144_2017_practical6_solution.pdf (4 pages, 121623 bytes).
 PDF statistics:
- 24 PDF objects out of 1000 (max. 8388607)
- 16 compressed objects within 1 object stream
+ 84 PDF objects out of 1000 (max. 8388607)
+ 59 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
