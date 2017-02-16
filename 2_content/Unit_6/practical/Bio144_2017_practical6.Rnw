@@ -93,16 +93,16 @@ Calculate all of the following expressions, if they are defined. Solve at least 
 \end{tabularx}
 {\bf R-hints:}
 \begin{itemize}
-\item A matrix can be created for example like \\
-\texttt{A <- matrix(c(4,2,3,0,3,6),byrow=TRUE,nrow=2)} \ .
-\item \texttt{t(A)} corresponds to $\mathbf{A}^\T$ .
+\item A matrix can be created for example as \\
+\texttt{A <- matrix(c(4,2,3,0,3,6),byrow=TRUE,nrow=2)}
+\item \texttt{t(A)} corresponds to $\mathbf{A}^\T$ \ .
 \item Make sure you understand the difference between $\mathbf{A}$\texttt{*}$\mathbf{B}$ and $\mathbf{A}$\texttt{\%*\%}$\mathbf{B}$ .\\[4mm]
 \end{itemize}
 \end{enumerate} 
 
 \begin{enumerate}[\bf{2.}] \item 
-\begin{enumerate}[a)]  \item Repeat the example given in slides 35--38 using R. \\ 
-\item Repeat the above procedure 100 times. In each iteration, store the estimated coefficient vector $(\hat\beta_0,\hat\beta_1,\hat\beta_2)$. Note that the estimates should be different in each iteration, because another random vector \texttt{t.e} is used.\\ 
+\begin{enumerate}[a)]  \item Repeat the example given in slides 35--38 of lecture 6 using R. \\ 
+\item Repeat the procedure from a) 100 times. In each iteration, store the estimated coefficient vector $(\hat\beta_0,\hat\beta_1,\hat\beta_2)$. Note that the estimates will be a bit different in each iteration, because another residual vector \texttt{t.e} is used.\\ 
 \item Plot the histograms of the $\beta$s, the coefficients as a function of the simulation number, and scatterplots of $\hat\beta_1$ vs.\ $\hat\beta_0$, $\hat\beta_2$ vs.\ $\hat\beta_0$ and $\hat\beta_2$ vs.\ $\hat\beta_1$.\\
 \end{enumerate}
 
