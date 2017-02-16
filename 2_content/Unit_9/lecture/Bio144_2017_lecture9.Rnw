@@ -229,20 +229,27 @@ y=\beta_0 + \beta_1 \cdot \text{bodySize} + \beta_2 \cdot \text{bodySize}^2 + e
 \setkeys{Gin}{width=0.55\textwidth}
 <<fig=T,widht=6,height=6>>=
 r2.soay <- lm(fitness ~ body.size + I(body.size^2),data=soay)
-autoplot(r2.soay,smooth.colour = NA)
+autoplot(r2.soay)
 @
 \end{center}
-$\rightarrow$ This looks better. However...
+$\rightarrow$ This looks a bit better. However...
 }
 
 \frame{\frametitle{What is the problem?}
-Obviously, the \alert{normal distribution} for count data is \alert{violated}. Why?\\[2mm]
+There is still a clear upwards trend in scale-location plot, indicating that the \alert{variance increases} as the fitted values grow larger (I used the smoother to make this obvious).\\[8mm]
+
+
+Moreover, the \alert{normal distribution} for count data is obviously \alert{violated}. Why?\\[2mm]
 
 \begin{itemize}
 \item The normal distribution is for continuous variables.\\[2mm]
 \item The normal distribution allows values $<0$, count data doesn't.\\[2mm]
-\item The normal distribution is symmetrical, counts are often not!
+\item The normal distribution is symmetrical, counts are often not!\\[10mm]
 \end{itemize}
+
+
+
+
 }
 
 \frame[allowframebreaks]{\frametitle{A model for count data?} \label{sl:poisson}
@@ -393,9 +400,9 @@ autoplot(soay.glm,smooth.colour = NA)
 
 \frame{
 \begin{itemize}
-\item Model diagnostics seem ok (similar to when we used a quadratic term in the linear model, see slide \ref{sl:quadratic}).\\[2mm]
+\item Model diagnostics seem ok. In particular, the scale location plot is much better than when using the quadratic term in linear regression (slide \ref{sl:quadratic}).\\[2mm]
 
-\item Do you find it strange that the same diagnostic plot can be used as in linear regression?\\[2mm]
+\item Do you find it strange that the same diagnostic plot can be used as in simple linear regression?\\[2mm]
 
 \item The definition of a ``residuum'' is no longer clear when link-functions are used (on which scale should residuals be calculated? On the link scale or on the observed scale?)\\[2mm]
 
