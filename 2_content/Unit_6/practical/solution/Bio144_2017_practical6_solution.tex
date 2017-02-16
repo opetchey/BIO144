@@ -1,0 +1,129 @@
+\documentclass[a4paper,12pt]{scrartcl}
+
+\usepackage{amsmath,natbib}
+\usepackage[utf8]{inputenc}
+\usepackage{bm}
+\usepackage{url}
+\usepackage[printonlyused]{acronym}
+\usepackage{Sweave}
+\usepackage{color}
+\usepackage{mathbbol}
+\usepackage{numprint}
+\usepackage{enumerate}
+\usepackage{setspace}
+\usepackage[left=2.5cm,top=2cm,right=3cm,bottom=3cm,bindingoffset=0.5cm]{geometry}
+\usepackage{titlesec}
+\usepackage{lineno}
+%\usepackage{enumitem}
+
+\usepackage{tabularx}
+
+
+\def\logit{\mathsf{logit}}
+\DeclareMathOperator{\E}{\mathsf{E}} 
+\def\SBP{\text{SBP}}
+\def\G{\text{G}}
+\def\T{\text{T}}
+\def\o{_{\text{obs}}}
+\def\given{\,|\,}
+\def\na{\tt{NA}}
+\def\nin{\noindent}
+\def\mm#1{\ensuremath{\boldsymbol{#1}}} % version: amsmath
+\definecolor{grey}{rgb}{.6,.6,.6}
+\newcommand{\p}{\operatorname{{p}}} % Density function
+\newcommand{\Var}{\text{Var}} % Varianz
+\newcommand{\Cor}{\text{Cor}} % correlation
+\newcommand{\latin}[1]{\textit{#1}}
+\newcommand{\abk}[1]{\mbox{#1}\xdot}
+\DeclareRobustCommand\xdot{\futurelet\token\Xdot}
+\def\Xdot{%
+  \ifx\token\bgroup.%
+  \else\ifx\token\egroup.%
+  \else\ifx\token\/.%
+  \else\ifx\token\ .%
+  \else\ifx\token!.%
+  \else\ifx\token,.%
+  \else\ifx\token:.%
+  \else\ifx\token;.%
+  \else\ifx\token?.%
+  \else\ifx\token/.%
+  \else\ifx\token'.%
+  \else\ifx\token).%
+  \else\ifx\token-.%
+  \else\ifx\token+.%
+  \else\ifx\token~.%
+  \else\ifx\token.%
+  \else.\ %
+  \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi%
+}
+\newcommand{\eg}{\abk{\latin{e.\,g}}}
+\newcommand{\ie}{\abk{\latin{i.\,e}}}
+%\newcommand{\hl}{\textcolor{blue}} 
+\newcommand{\hll}{\textcolor{blue}}
+
+\titleformat*{\section}{\large\bfseries\sffamily}
+\titleformat*{\subsection}{\large\bfseries\sffamily}
+\titleformat*{\subsubsection}{\bfseries\sffamily}
+\titleformat*{\paragraph}{\bfseries\sffamily}
+
+
+
+\begin{document}
+\begin{center}
+{\bf Bio144, 6./7. April 2017} \\[8mm] 
+{\large Solution to practical part 7: Exercise on linear algebra}\\[10mm]
+\end{center}
+
+ 
+
+\noindent{\bf 1.}
+The matrices and vectors can be generated in R:\\
+
+\begin{Schunk}
+\begin{Sinput}
+> A <- matrix(c(4,2,3,0,3,6),byrow=TRUE,nrow=2)
+> B <- matrix(c(0,3,6,-1,-1,0),byrow=TRUE,nrow=2)
+> x <- c(-1,2,-3)
+> y <- c(5,3,-2)
+\end{Sinput}
+\end{Schunk}
+
+\begin{enumerate}[a)]
+\item 
+\begin{Schunk}
+\begin{Sinput}
+> 2*A
+\end{Sinput}
+\begin{Soutput}
+     [,1] [,2] [,3]
+[1,]    8    4    6
+[2,]    0    6   12
+\end{Soutput}
+\end{Schunk}
+\item 
+\begin{Schunk}
+\begin{Sinput}
+> A + B
+\end{Sinput}
+\begin{Soutput}
+     [,1] [,2] [,3]
+[1,]    4    5    9
+[2,]   -1    2    6
+\end{Soutput}
+\end{Schunk}
+\item
+\begin{Schunk}
+\begin{Sinput}
+> A%*%t(B)
+\end{Sinput}
+\begin{Soutput}
+     [,1] [,2]
+[1,]   24   -6
+[2,]   45   -3
+\end{Soutput}
+\end{Schunk}
+\end{enumerate}
+
+
+
+\end{document}
