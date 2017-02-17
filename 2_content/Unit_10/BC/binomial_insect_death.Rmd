@@ -38,7 +38,7 @@ to understand and remember the ANCOVA example from the previous chapter.
 
 Import that data:
 ```{r, eval=FALSE}
-insect.death <- read.csv("new_pesticide_study.csv"), row.names=1)
+insect_death <- read.csv("new_pesticide_study.csv"), row.names=1)
 ```
 
 ```{r, echo=FALSE}
