@@ -130,9 +130,9 @@ The lecture material of today is based on the following literature:\\[4mm]
 \end{itemize}
 }
 
-\frame{\frametitle{Recap of ANOVA II}
-To do, if needed.
-}
+% \frame{\frametitle{Recap of ANOVA II}
+% To do, if needed.
+% }
 
 
 

@@ -872,22 +872,22 @@ What is here the problem (look at the TA and the scale-location plots)? Ideas?
 Interpretation? 
 }
 
-% \frame[containsverbatim]{
-% %don't show this slide previously!\\
-% Log-transform the response (ERTRAG) and repeat the analysis:\\[2mm]
-% 
-% <<>>=
-% r.duenger2 <- lm(log(ERTRAG) ~ DUENGER*SORTE,d.duenger)
-% anova(r.duenger2)
-% @
-% 
-% \begin{center}
-% \setkeys{Gin}{width=0.5\textwidth}
-% <<fig=T,width=4,height=4,echo=F>>=
-% autoplot(r.duenger2,smooth.colour=NA)
-% @
-% \end{center}
-% }
+\frame[containsverbatim]{
+%don't show this slide previously!\\
+Log-transform the response (ERTRAG) and repeat the analysis:\\[2mm]
+
+<<>>=
+r.duenger2 <- lm(log(ERTRAG) ~ DUENGER*SORTE,d.duenger)
+anova(r.duenger2)
+@
+
+\begin{center}
+\setkeys{Gin}{width=0.5\textwidth}
+<<fig=T,width=4,height=4,echo=F>>=
+autoplot(r.duenger2,smooth.colour=NA)
+@
+\end{center}
+}
 
 
 \frame{\frametitle{Some summary remarks }

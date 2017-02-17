@@ -132,7 +132,9 @@ By the end of this week you will be able to:
 * **Do all the things listed for previous models, except now for ANCOVA.**
 * In particular, interpret the R model `summary` table for ANCOVA type linear models.
 * Recall basic concepts of linear algebra (e.g. vectors, matrices).
+* Do some basic matrix and vector algebra (e.g. matrix multiplication, inversion, transposing etc)
 * Relate why linear algebra is useful in data analysis.
+* Be able to formulate a linear regression model in matrix notation.
 * Do some linear algebra in R.
 
 (Please note that these skills are assessed in the Graded Assessment 6)
