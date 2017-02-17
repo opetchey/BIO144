@@ -114,14 +114,14 @@ The lecture material of today is based on the following literature:\\[4mm]
 
 \begin{itemize}
 \item Chapter 12 from Stahel book ``Statistische Datenenalyse''
-\item ``The new Statistics with R'' chapter 2 (ANOVA) 
+%\item ``The new Statistics with R'' chapter 2 (ANOVA) 
 \item ``Getting Started with R'' chapters 5.6 and 6.2
 \end{itemize}
 }
 
-\frame[containsverbatim]{\frametitle{Recap of the linear regression model}
-to do 
-}
+% \frame[containsverbatim]{\frametitle{Recap of the linear regression model}
+% to do 
+% }
 
 
 \frame{\frametitle{ANOVA and ANCOVA}

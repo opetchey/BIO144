@@ -229,7 +229,7 @@ y=\beta_0 + \beta_1 \cdot \text{bodySize} + \beta_2 \cdot \text{bodySize}^2 + e
 \setkeys{Gin}{width=0.55\textwidth}
 <<fig=T,widht=6,height=6>>=
 r2.soay <- lm(fitness ~ body.size + I(body.size^2),data=soay)
-autoplot(r2.soay)
+autoplot(r2.soay)#,smooth.colour = NA)
 @
 \end{center}
 $\rightarrow$ This looks a bit better. However...

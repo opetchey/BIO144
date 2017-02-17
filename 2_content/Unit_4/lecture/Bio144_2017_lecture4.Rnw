@@ -366,7 +366,7 @@ $\Rightarrow$ \myalert{To check assumption b)}\\[2mm]
 $\Rightarrow$ \myalert{To find influential observations and/or outliers}\\[4mm]
 \end{itemize}
 
-\myalert{Note:} these four diagrams are plotted automatically by R when you use the \texttt{plot()} function on an \texttt{lm} object, for example \texttt{plot(r.hg)}.
+\myalert{Note:} these four diagrams are plotted automatically by R when you use the \texttt{plot()} or the \texttt{autoplot()} function on an \texttt{lm} object, for example \texttt{autoplot(r.hg)}.
 }
 
 \frame[containsverbatim]{\frametitle{Tukey-Anscombe plot}
@@ -378,7 +378,7 @@ names(d.hg.m) <- c("Hg_urin", "Hg_soil", "smoking","amalgam", "age", "fish")
 @
 
 
-It is useful to enrich the TA-plot by adding a ``running mean'' or a ``smoothed mean'', which can give hints on the trend of the residuals. For the mercury example where $\log(Hg_{\text{urin}})$ is regressed on smoking, amalgam  and fish consumption for mothers only (slides 33-35 or week 3): 
+It is smometimes useful to enrich the TA-plot by adding a ``running mean'' or a ``smoothed mean'', which can give hints on the trend of the residuals. For the mercury example where $\log(Hg_{\text{urin}})$ is regressed on smoking, amalgam  and fish consumption for mothers only (slides 33-35 or week 3): 
 \vspace{-10mm}
 
 \begin{multicols}{2} 
@@ -399,7 +399,7 @@ lines(aa$x,predict(lo), col='red', lwd=2,lty=5)
 The TA plot (again) indicates that there is a small problem in the range of -0.7 to -0.6, namely due to an outlier...\\
 \end{multicols}
 
-\vspace{-3mm}
+\vspace{-5mm}
 However, generally we recommend to \alert{not} add a smoothing line, because it may bias our view on the plot.
 
 }
@@ -422,9 +422,11 @@ The dependency is not necessarily on the fitted values ($x$-axis of TA plot). Id
 \item Plot against the covariates.
 \end{itemize}
 \begin{center}
-\setkeys{Gin}{width=0.9\textwidth}
-<<hgFigCov,fig=T,echo=F,width=7,height=4>>=
-par(mfrow=c(1,2))
+\setkeys{Gin}{width=1\textwidth}
+<<hgFigCov,fig=T,echo=F,width=6,height=2.5>>=
+par(mfrow=c(1,3))
+plot(1:length(residuals(r1.urin.mother)),residuals(r1.urin.mother),xlab="Observation number",ylab="residual")
+abline(h=0,lty=2)
 plot(d.hg.m$amalgam,residuals(r1.urin.mother),xlab="No. of amalgam fillings",ylab="residual")
 abline(h=0,lty=2)
 plot(d.hg.m$fish,residuals(r1.urin.mother),xlab="No. of fish meals/moth",ylab="residual")
@@ -469,7 +471,7 @@ qqline(ss)
 }
 
 \frame[containsverbatim]{\frametitle{Scale-location plot (Streuungs-Diagramm)}
-The scale-location plot is particularly suited to check the assumption of equal variances ({\bf homoscedasticiy / Homoskedasdizit\"at}).\\[2mm]
+The scale-location plot is particularly suited to check the assumption of equal variances ({\bf homoscedasticity / Homoskedasdizit\"at}).\\[2mm]
 
 The idea is to plot the squared residuals $\sqrt{|R_i|}$ against the fitted values $\hat{y_i}$ {\scriptsize (again using the Hg example with the mothers)}:\\[2mm]
 \begin{center}
