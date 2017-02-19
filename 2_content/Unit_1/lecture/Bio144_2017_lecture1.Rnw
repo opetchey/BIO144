@@ -91,8 +91,10 @@ Datenanalyse in der Biologie}%\\[.3cm]
 
 
 \frame{\frametitle{Organisatorisches}
-Gebe hier genaue Testatbedingungen, Pr\"ufungsdaten (falls bekannt);
-OpenEdx Kursseite (Link). Studis m\"ussen sich da anmelden.
+All wichtigen Details, wie Testatbedingung, Prf\"ufungsdaten etc. finden Sie auf der OpenEdX Kursseite:\\[2mm]
+
+\url{https://openedx.mnf.uzh.ch/courses/course-v1:UZH+BIO144+FS2017/about}
+
 }
 
 
@@ -100,15 +102,15 @@ OpenEdx Kursseite (Link). Studis m\"ussen sich da anmelden.
 Obligatorische Lehrmittel:
 \begin{enumerate}[1.]
 \item \emph{Lineare Regression} von W. Stahel (pdf auf Kurshomepage)
-\item \emph{Getting Started With R} von A.P. Beckerman und O.L. Petchey, Oxford University Press;
-ISBN 978-0-19-960162-2
+\item \emph{Getting Started with R, An introduction for biologists} (2017, {\bf Second Edition}) Beckerman, Childs \& Petchey (VERWENDEN SIE NICHT DIE 1. AUSGABE!). \\
+{\scriptsize Ein UZH library Link zur 2. Ausgabe wird so bald wie m\"oglich zur Verf\"ugung gestellt.  }
 \item \emph{The New Statistics With R} von A. Hector, Oxford University Press;
 ISBN 978-0-19-872906-8 \\[5mm]
 \end{enumerate}
 
 \begin{center}
-\includegraphics[width=3cm]{pictures/petchey_buch.jpeg} \qquad \qquad
-\includegraphics[width=3cm]{pictures/hector.jpeg}
+\includegraphics[width=2.7cm]{pictures/petchey_buch.jpeg} \qquad \qquad
+\includegraphics[width=2.7cm]{pictures/hector.jpeg}
 \end{center}
 
 }
@@ -118,7 +120,8 @@ ISBN 978-0-19-872906-8 \\[5mm]
 \begin{itemize}
 \item \emph{Statistics – An Introduction Using R} von M.J. Crawley (\"ahnlich wie 3.) oben)\\[3mm]
 \item \emph{The Analysis of Biological Data} von M.C. Whitlock und D. Schluter\\[3mm]
-\item \emph{Regression - Modelle, Methoden und Anwendungen} von Fahrmeier, Kneib, Lang
+\item \emph{Regression - Modelle, Methoden und Anwendungen} von Fahrmeier, Kneib, Lang\\[3mm]
+\item \emph{The Essential Guide to Effect Sizes. Statistical Power, Meta-Analysis, and the Interpretation of Research Results} (2010, First Edition) Ellis. Ebook via \href{http://ezproxy.uzh.ch/login?url=http://dx.doi.org/10.1017/CBO9780511761676} {\beamergotobutton{UZH library}}.
 \end{itemize}
 }
 
@@ -127,10 +130,10 @@ ISBN 978-0-19-872906-8 \\[5mm]
 \item Solides Fundement an statistischen Methoden erarbeiten, um biologische oder biomedizinische Fragen mit Daten quantitativ und objektiv zu beantworten.\\[2mm]
 \item F\"ahigkeit vermitteln, Resultate in Forschungsartiken zu verstehen, zu interpretiern und evtl. kritisch zu hinterfragen.\\[2mm]
 \item Die \emph{Sprache} des Statistikers verstehen lernen.\\[2mm]
-\item Wir m\"ochten Euch eine herausforderne, spannende und freudvolle Lernerfahrung geben. {\bf Etwas, was man wirklich brauchen kann und darum Spass macht.}\\[6mm]
+\item Wir m\"ochten Ihnen eine herausforderne, spannende und freudvolle Lernerfahrung geben. {\bf Etwas, was man wirklich brauchen kann und darum Spass macht.}\\[6mm]
 \end{itemize}
 
-Meine \"Uberzeugung: Fundierte Kenntnisse in Statistik machen Sie unabh\"angig! \\[2mm]
+Unsere \"Uberzeugung: Fundierte Kenntnisse in Statistik machen Sie unabh\"angig! \\[2mm]
 
 }
 
@@ -143,27 +146,28 @@ Meine \"Uberzeugung: Fundierte Kenntnisse in Statistik machen Sie unabh\"angig! 
 
 
 
-\frame{\frametitle{Kurs-Fahrplan (14 Wochen, 12 Vorlesungen)}
+\frame{\frametitle{Kurs-Fahrplan (12 Wochen Vorlesung + 2 Wochen Selbststudium)}
 \vspace{-8mm}
 
 \begin{multicols}{2}
-1. L1 Einf\"uhrung und Ausblick \\[1mm]
-2. L2 Einfache lineare Regression\\[1mm]
-3. L3 Residuenanalyse, Modellvalidierung \\[1mm]
-4. L4 Multiple lineare Regression \\[1mm]
-5. L5 ANOVA  \\[1mm]
-6. L6 ANCOVA, Matrix Algebra \\[1mm]
-7. L7 Modellwahl  \\[1mm]
-8. Selbststudium  \\[1mm]
-9. L8 Interpretation von Resultaten, Kausalit\"at \\[1mm]
-10. L9 Z\"ahldaten (Poisson Regression) \\[1mm]
-11. L10 Bin\"are Daten (logistische Regression)\\[1mm]
-12. L11 Messfehler, zuf\"allige Effekte \\[1mm]
-13. Selbststudium  \\[1mm]
-14. L12 Ausgew\"ahlte Themen, Wiederholungen und Ausblick \\
+{\bf Woche 1} Einf\"uhrung und Ausblick \\[1mm]
+{\bf Woche 2} Einfache lineare Regression\\[1mm]
+{\bf Woche 3} Residuenanalyse, Modellvalidierung \\[1mm]
+{\bf Woche 4} Multiple lineare Regression \\[1mm]
+{\bf Woche 5} ANOVA  \\[1mm]
+{\bf Woche 6} ANCOVA, Matrix Algebra \\[1mm]
+{\bf Woche 7} Modellwahl  \\[1mm]
+{\bf Selbststudiums-Woche } \\[4mm]
+
+{\bf Woche 8} Interpretation von Resultaten, Kausalit\"at \\[1mm]
+{\bf Woche 9} Z\"ahldaten (Poisson Regression) \\[1mm]
+{\bf Woche 10} Bin\"are Daten (logistische Regression)\\[1mm]
+{\bf Woche 11} Messfehler, zuf\"allige Effekte \\[1mm]
+{\bf Selbststudiums-Woche}  \\[1mm]
+{\bf Woche 12} Ausgew\"ahlte Themen, Wiederholungen und Ausblick \\
 \end{multicols}
 ~\\
-{\bf Kurzfristige Anpassungen vorbehalten!}
+
 }
 
 \frame{\frametitle{Warum ist Statistik f\"ur die Biologie und Medizin so wichtig?}
@@ -251,7 +255,7 @@ Hoch brisante, politisch aufgeladene Fragestellung!\\
 
 %\includegraphics{pictures/g}
 
-\emph{Forschungsfrage:} Welche Einflussfaktoren beeinflussen das Bewegungsverhalten von 3-5 j\"ahrigen Kindern?\\[4mm]
+\emph{Forschungsfrage:} Welche Einflussfaktoren beeinflussen das Bewegungsverhalten von 2-6 j\"ahrigen Kindern?\\[4mm]
 
 \emph{Methode:} Die Kinder werden w\"ahrend mehreren Tagen mit Bewegungsmessern ausgestattet. Die Eltern m\"ussen mehrmals einen detaillierten Fragebogen ausf\"ullen.\\[4mm]
 Erfasste Variablen sind z.B. Medienkonsum, Verhalten der Eltern, Gewicht, Alter,...\\[7mm]
@@ -297,12 +301,12 @@ str(d.bodyfat)
 
 \frame[containsverbatim]{\frametitle{}
  
-\setkeys{Gin}{width=0.75\textwidth}
+\setkeys{Gin}{width=0.8\textwidth}
 <<pairs,fig=T,height=6,width=6>>=
 pairs(d.bodyfat)
 @ 
 
-\texttt{pairs()} liefert die Streudiagramme (scatterplots) von allen Variablen gegen alle.
+%\texttt{pairs()} liefert die Streudiagramme (scatterplots) von allen Variablen gegen alle.
 }
 
 
@@ -325,7 +329,7 @@ Gesucht ist ein \emph{Modell}, welches das K\"orperfett aus einfach zu messenden
 
 
 
-\frame[containsverbatim]{\frametitle{Beispiel 2: Quecksilber im Wallis}
+\frame[containsverbatim]{\frametitle{Beispiel 2: Quecksilber (Hg) im Wallis}
 {\bf Frage:} Zusammenhang zwischen Hg-Werten im Boden und Werten im Urin? Wir verwenden hier ein leicht modifiziertes Datenset.\\[5mm]
 
 <<echo=F>>=
@@ -362,7 +366,7 @@ Haben andere Faktoren einen Einfluss auf Hg im Urin?\\[4mm]
 
 \begin{center}
 \setkeys{Gin}{width=1.0\textwidth}
-<<hg2,fig=T,height=2.2,width=5.5,echo=F>>=
+<<hg2,fig=T,height=2.0,width=5.5,echo=F>>=
 par(mfrow=c(1,3),mar=c(4,4,0.5,0.5))
 plot((Hg_urin) ~ amalgam, data=d.hg, xlab="Amalgamfuellungen", ylab = "Hg Urin")
 plot((Hg_urin) ~ age, data=d.hg, xlab="Alter", ylab = "")
@@ -380,7 +384,7 @@ Aus diesen Grafiken is es sehr schwer zu sagen, welche Faktoren die Quecksilberb
 Es ist immer n\"utzlich, die Verteilungen der Variablen im Modell anzuschauen. Zeichnen wir mal das Histogramm der Quecksilberwerte:\\[4mm]
 
 \begin{center}
-\setkeys{Gin}{width=0.9\textwidth}
+\setkeys{Gin}{width=1\textwidth}
 <<hghist,fig=T,height=4,width=7,echo=F>>=
 par(mfrow=c(1,2))
 hist(d.hg$Hg_soil,xlab="Hg Boden",nclass=20,main="")
@@ -396,9 +400,10 @@ Es zeigt sich: fast alle Hg-Werte ``kleben'' bei 0.
 In solchen F\"allen kann es helfen, die Variable zu \emph{logarithmieren}.
 
  \begin{center}
-\setkeys{Gin}{width=0.9\textwidth}
+\setkeys{Gin}{width=1\textwidth}
 <<hghist2,fig=T,height=4,width=7,echo=F>>=
 par(mfrow=c(1,2))
+#ggplot(d.hg,aes(log(Hg_soil))) + geom_histogram() +  theme_bw() + geom_histogram(log(Hg_urin))
 hist(log(d.hg$Hg_soil),xlab="log(Hg Boden)",nclass=20,main="")
 hist(log(d.hg$Hg_urin),xlab="log(Hg Boden)",nclass=20,main="")
 @
@@ -411,8 +416,8 @@ Mit logarithmierten Werten sieht auch das Streudiagramm etwas sinnvoller aus:
 \begin{center}
 \setkeys{Gin}{width=0.5\textwidth}
 <<hg1_log,fig=T,height=4.5,width=4.5,echo=F>>=
-plot(log(Hg_urin) ~ log(Hg_soil), data=d.hg, xlab="Hg Boden",
-     ylab = "Hg Urin",pch=21,bg=as.numeric(mother)+2,xlim=c(-4.5,4.5),cex=1.2)
+plot(log(Hg_urin) ~ log(Hg_soil), data=d.hg, xlab="log(Hg Boden)",
+     ylab = "log(Hg Urin)",pch=21,bg=as.numeric(mother)+2,xlim=c(-4.5,4.5),cex=1.2)
 
 # ggplot(d.hg, aes(x = log(Hg_soil), y = log(Hg_urin),col=mother)) +
 # xlim(-4.5,4.5) +
@@ -458,7 +463,7 @@ ggplot(d.blz,aes(x=factor(DIAET),y=BLUTZUCK)) + geom_boxplot() + geom_point(size
 Kommt Ihnen diese Fragestellung irgendwie bekannt vor? \\
 Stichwort: 2 Gruppen. \\[4mm]
 
-F\"ur mehrere Gruppen braucht man die \emph{Varianzanalyse} oder \emph{ANOVA} (=ANalysis Of VAriance).\\[4mm]
+F\"ur mehrere Gruppen braucht man die \emph{Varianzanalyse} oder \emph{ANOVA} (=ANalysis Of VAriance; siehe Kapitel 10.1 des Luchsinger-Skripts).\\[4mm]
 
 Es wird sich herausstellen (Vorlesung 5), dass sich die Di\"aten tats\"achlich voneinander unterscheiden. \\[4mm]
 
@@ -485,9 +490,9 @@ plasma[c(1,5,9,10,15,29),]
 }
 
 \frame[containsverbatim]{\frametitle{}
-Die Unterteilung ESR$<20mm/hr$ vs.\ ESR$\geq 20mm/hr$ f\"uhrt zu einer \myalert{bin\"aren} Variable.\\
+Die Unterteilung ESR$<20mm/hr$ vs.\ ESR$\geq 20mm/hr$ f\"uhrt zu einer \myalert{bin\"aren} Response-Variablen.\\
 
-Der Zusammenhang der einzelnen Plasmaprotein-Levels kann mit einer grafischen Darstellung, dem \emph{conditional density plot}, gut erfasst werden:
+Der Zusammenhang der einzelnen Plasmaprotein-Levels kann mit einer grafischen Darstellung, dem \myalert{\emph{conditional density plot}}, gut erfasst werden:
 
 \begin{center}
 \setkeys{Gin}{width=0.9\textwidth}
@@ -540,7 +545,7 @@ models are wrong, but some are useful'' \citep{box1979}.}
 \begin{enumerate}[a)]
 \item \myalert{Vorhersage, Interpolation}. Beispiel K\"orperfett: verwende Ersatzumessungen, um K\"orperfett einer Person vorherzusagen.\\[3mm]
 \item \myalert{Sch\"atzung von Parametern} (Beispiel: ...)\\[3mm]
-\item \myalert{Bestimmung von Einflussgr\"ossen}. Beispiel Aktivit\"atsstudie bei Kindern: Es werden Faktoren gesucht, welche das Bewegungsverhalten der Kinder (positiv oder negativ) beeinflussen.\\[3mm]
+\item \myalert{Verstehen; Bestimmung von Einflussgr\"ossen}. Beispiel Aktivit\"atsstudie bei Kindern: Es werden Faktoren gesucht, welche das Bewegungsverhalten der Kinder (positiv oder negativ) beeinflussen.\\[3mm]
 \item Optimierung \\[3mm]
 \item Eichung\\[8mm]
 \end{enumerate}
@@ -638,7 +643,7 @@ Dazu gibt es etlich R Pakete. Interaktive Darstellungen k\"onnen beispielsweise 
 %}
 
 \frame{\frametitle{N\"achste Woche: Einfache lineare Regression}
-
+Teilweise eine Wiederholung von Mat183, Kapitel 10.2.
 }
 
 

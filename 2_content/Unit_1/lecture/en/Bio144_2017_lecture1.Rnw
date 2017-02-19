@@ -79,7 +79,7 @@
 
 \frame{
 \title[]{ \centering \Huge Course Bio144: \\
-Data analysis in biology}%\\[.3cm]
+Data Analysis in Biology}%\\[.3cm]
 \author[Stefanie Muff, Owen L.\ Petchey]{\centering Stefanie Muff (Lectures) \& Owen L.\ Petchey (Exercises)}
 \date[]{Lecture 1: Introduction and Outlook\\ 23./24. February 2017}
 
@@ -90,13 +90,9 @@ Data analysis in biology}%\\[.3cm]
 
 
 \frame{\frametitle{Organization}
-To do:
-\begin{itemize}
-\item Testate conditions
-\item Examination date
-\item Link to course webpage
-\end{itemize}
-L1
+All important details, such as testate conditions, exam dates etc. are provided on the OpenEdX course page:\\[2mm]
+
+\url{https://openedx.mnf.uzh.ch/courses/course-v1:UZH+BIO144+FS2017/about}
 }
 
 
@@ -104,15 +100,15 @@ L1
 Compulsory literature:
 \begin{enumerate}[1.]
 \item \emph{Lineare Regression} by W. Stahel (pdf on course webpage)
-\item \emph{Getting Started With R} by A.P. Beckerman und O.L. Petchey, Oxford University Press;
-ISBN 978-0-19-960162-2
+\item \emph{Getting Started with R, An introduction for biologists} (2017, {\bf Second Edition}) Beckerman, Childs \& Petchey (DO NOT USE THE FIRST EDITION!).\\
+{\scriptsize A UZH library link to the second edition will be added asap, probably mid March. }
 \item \emph{The New Statistics With R} by A. Hector, Oxford University Press;
 ISBN 978-0-19-872906-8 \\[5mm]
 \end{enumerate}
 
 \begin{center}
-\includegraphics[width=3cm]{pictures/petchey_buch.jpeg} \qquad \qquad
-\includegraphics[width=3cm]{pictures/hector.jpeg}
+\includegraphics[width=2.7cm]{pictures/petchey_buch.jpeg} \qquad \qquad
+\includegraphics[width=2.7cm]{pictures/hector.jpeg}
 \end{center}
 
 }
@@ -122,7 +118,8 @@ ISBN 978-0-19-872906-8 \\[5mm]
 \begin{itemize}
 \item \emph{Statistics – An Introduction Using R} by M.J. Crawley (similar to 3.) above)\\[3mm]
 \item \emph{The Analysis of Biological Data} by M.C. Whitlock and D. Schluter\\[3mm]
-\item \emph{Regression - Modelle, Methoden und Anwendungen} by Fahrmeier, Kneib, Lang
+\item \emph{Regression - Modelle, Methoden und Anwendungen} by Fahrmeier, Kneib, Lang\\[3mm]
+\item  \emph{The Essential Guide to Effect Sizes. Statistical Power, Meta-Analysis, and the Interpretation of Research Results} (2010, First Edition) Ellis. Ebook via \href{http://ezproxy.uzh.ch/login?url=http://dx.doi.org/10.1017/CBO9780511761676} {\beamergotobutton{UZH library}}.
 \end{itemize}
 }
 
@@ -154,27 +151,27 @@ My belief: A solid foundation in statistics makes you independent!  \\[2mm]
 
 
 
-\frame{\frametitle{Schedule (14 weeks, 12 lectures)}
+\frame{\frametitle{Schedule (12 lecture weeks + 2 self-study weeeks)}
 \vspace{-8mm}
 
 \begin{multicols}{2}
-1. (L1) Introduction and outlook \\[1mm]
-2. (L2) Simple linear regression\\[1mm]
-3. (L3) Residual analysis, model validation\\[1mm]
-4. (L4) Multiple linear regression \\[1mm]
-5. (L5) ANOVA  \\[1mm]
-6. (L6) ANCOVA Matrix Algebra \\[1mm]
-7. (L7) Model selection  \\[1mm]
-8. Self-study week \\[4mm]
-9. (L8) Interpretation of results, causality \\[1mm]
-10. (L9) Count data (Poisson regression) \\[1mm]
-11. (L10) Binary Data (logistic regression)\\[1mm]
-12. (L11) Measurement error, random effects \\[1mm]
-13. Self-study week \\[1mm]
-14. (L12) Selected topics, repetition and outlook \\
+{\bf Week 1} Introduction and outlook \\[1mm]
+{\bf Week 2} Simple linear regression\\[1mm]
+{\bf Week 3} Residual analysis, model validation\\[1mm]
+{\bf Week 4} Multiple linear regression \\[1mm]
+{\bf Week 5} ANOVA  \\[1mm]
+{\bf Week 6} ANCOVA Matrix Algebra \\[1mm]
+{\bf Week 7} Model selection  \\[1mm]
+{\bf Self-study week} \\[4mm]
+{\bf Week 8} Interpretation of results, causality \\[1mm]
+{\bf Week 9} Count data (Poisson regression) \\[1mm]
+{\bf Week 10} Binary Data (logistic regression)\\[1mm]
+{\bf Week 11} Measurement error, random effects \\[1mm]
+{\bf Self-study week} \\[1mm]
+{\bf Week 12} Selected topics, repetition and outlook \\
 \end{multicols}
 ~\\
-{\bf Short-dated changes possible!}
+ 
 }
 
 \frame{\frametitle{Why is statistical data analysis so relevant for the biological and medical sciences?}
@@ -311,7 +308,7 @@ str(d.bodyfat)
 pairs(d.bodyfat)
 @ 
 
-\texttt{pairs()} gives us the scatterplots of all against all variables.
+%\texttt{pairs()} returns the scatterplots of all against all variables.
 }
 
 
@@ -334,7 +331,7 @@ We are looking for a \emph{model} that \myalert{predicts} body fat as precisely 
 
 
 
-\frame[containsverbatim]{\frametitle{Data example 2: Mercury in Valais (Switzerland)}
+\frame[containsverbatim]{\frametitle{Data example 2: Mercury (Hg) in Valais (Switzerland)}
 {\bf Question:} Association between Hg concentrations in the soil and in the urin of the people living in the respective properties. We use a slightly modified data set here.\\[5mm]
 
 <<echo=F>>=
@@ -359,7 +356,7 @@ A first visual inspection is not very informative. There is no association visib
 %
 \begin{center}
 \setkeys{Gin}{width=0.65\textwidth}
-<<hg1,fig=T,height=4,width=4>>=
+<<hg1,fig=T,height=4,width=4,echo=F>>=
 plot(Hg_urin ~ Hg_soil, data=d.hg, xlab="Hg soil", ylab = "Hg Urin")
 @ 
 \end{center}
@@ -371,7 +368,7 @@ Which other factors might be responsible for high Hg concentrations in urin?\\[4
 
 \begin{center}
 \setkeys{Gin}{width=1.0\textwidth}
-<<hg2,fig=T,height=2.2,width=5.5,echo=F>>=
+<<hg2,fig=T,height=2.0,width=5.5,echo=F>>=
 par(mfrow=c(1,3),mar=c(4,4,0.5,0.5))
 plot((Hg_urin) ~ amalgam, data=d.hg, xlab="amalgam", ylab = "Hg Urin")
 plot((Hg_urin) ~ age, data=d.hg, xlab="age", ylab = "")
@@ -389,8 +386,8 @@ From these plots it is hard to tell which factors exactly influence the Hg pollu
 It is always useful to look at the distribution of the variables in the model. Let us plot the histogram of Hg concentrations:\\[4mm]
 
 \begin{center}
-\setkeys{Gin}{width=0.9\textwidth}
-<<hghist,fig=T,height=4,width=7,echo=T>>=
+\setkeys{Gin}{width=1\textwidth}
+<<hghist,fig=T,height=4,width=7,echo=F>>=
 par(mfrow=c(1,2))
 hist(d.hg$Hg_soil,xlab="Hg soil",nclass=20,main="")
 hist(d.hg$Hg_urin,xlab="Hg Urin",nclass=20,main="")
@@ -406,8 +403,8 @@ All Hg values seem to ``stick'' at 0.
 In such cases in can help to \emph{log-transform} the respective variables.
 
  \begin{center}
-\setkeys{Gin}{width=0.9\textwidth}
-<<hghist2,fig=T,height=4,width=7,echo=T>>=
+\setkeys{Gin}{width=1\textwidth}
+<<hghist2,fig=T,height=4,width=7,echo=F>>=
 par(mfrow=c(1,2))
 hist(log(d.hg$Hg_soil),xlab="log(Hg soil)",nclass=20,main="")
 hist(log(d.hg$Hg_urin),xlab="log(Hg soil)",nclass=20,main="")
@@ -421,8 +418,8 @@ The scatterplot does also look much more reasonable with log-transformed values:
 \begin{center}
 \setkeys{Gin}{width=0.5\textwidth}
 <<hg1_log,fig=T,height=4.5,width=4.5>>=
-plot(log(Hg_urin) ~ log(Hg_soil), data=d.hg, xlab="Hg soil", 
-     ylab = "Hg Urin",pch=21,bg=as.numeric(mother)+2,xlim=c(-4.5,4.5))
+plot(log(Hg_urin) ~ log(Hg_soil), data=d.hg, xlab="log(Hg soil)", 
+     ylab = "log(Hg Urin)",pch=21,bg=as.numeric(mother)+2,xlim=c(-4.5,4.5))
 legend("topright",legend=c("Children","Mothers"),col=c(3,4),pch=21,pt.bg=c(3,4))
 @ 
 \end{center}
@@ -463,7 +460,7 @@ ggplot(d.blz,aes(x=factor(DIAET),y=BLUTZUCK)) + geom_boxplot() + geom_point(size
 Does this question seem familiar to you? \\
 Hint: what would you do for two groups? \\[4mm]
 
-For more than 2 groups we need the \emph{ANOVA} (=ANalysis Of VAriance) approach.\\[4mm]
+For more than 2 groups we need the \emph{ANOVA} (=ANalysis Of VAriance) approach (see chapter 10.1 in the Mat183 script).\\[4mm]
 
 We will see in lecture 5 that there are in fact differences between the diets. \\[4mm]
 
@@ -491,9 +488,9 @@ plasma[c(1,5,9,10,15,29),]
 }
 
 \frame[containsverbatim]{\frametitle{}
-The distinction ESR$<20mm/hr$ vs.\ ESR$\geq 20mm/hr$ leads to a \myalert{binary} variable.\\
+The distinction ESR$<20mm/hr$ vs.\ ESR$\geq 20mm/hr$ leads to a \myalert{binary} response variable.\\
 
-The relation between the plasmaprotein levels and the binary indicator can be captured by a \emph{conditional density plot}.
+The relation between the plasmaprotein levels and the binary indicator can be captured by a \myalert{\emph{conditional density plot}}.
 
 \begin{center}
 \setkeys{Gin}{width=0.9\textwidth}
@@ -546,7 +543,7 @@ models are wrong, but some are useful'' \citep{box1979}.}
 \begin{enumerate}[a)]
 \item \myalert{Prediction, interpolation}. Example body fat: use substitute measurements to predict body fat of a person.\\[3mm]
 \item \myalert{Estimation of parameters.} \\[3mm]
-\item \myalert{Determine important variables}. Example physical activity of children: The study aims to find factors that (positively or negatively) influence the movement behavior of children. \\[3mm]
+\item \myalert{Explanation;  determination of important variables}. Example physical activity of children: The study aims to find factors that (positively or negatively) influence the movement behavior of children. \\[3mm]
 \item Optimization. \\[3mm]
 \item Calibration.\\[8mm]
 \end{enumerate}
@@ -573,7 +570,7 @@ Representation & Useful for \\
     & conditionally on categories.\\[1mm]
  Conditional density plots &  Dependency of a binary variable from\\
     &  a continuous variable.\\[1mm]
-%Barplots & As boxplots. \\[1mm]
+%Barplots & As  (see chapter 10.1 in the Mat183 script)boxplots. \\[1mm]
 Coplots & Dependencies among multiple variables. \\
 \hline
 \end{tabular}
@@ -644,7 +641,7 @@ Many R packages are available for various purposes. Interactive apps can, for ex
 %To do, ev mention only later in weeks 7/8}
 
 \frame{\frametitle{Next week: Simple linear regression}
-
+It will be partially a repetition of what you heard in Mat183, chapter 10.2.
 }
 
 
