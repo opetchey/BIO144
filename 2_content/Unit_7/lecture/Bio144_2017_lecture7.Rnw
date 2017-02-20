@@ -615,7 +615,7 @@ y_i = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + e_i \ ,
 
 the slope coefficients $\beta_1$ and $\beta_2$ \alert{cannot be uniquely determined} (there are many solutions to the equation)! \\[2mm]
 
-When the variables are collinear, this problem is less severe, but the $\beta$ coefficients can be estimated \alert{less precisely} (with higher standard error, thus larger $p$-value).
+When the variables are collinear, this problem is less severe, but the $\beta$ coefficients can be estimated \alert{less precisely} $\rightarrow$ standard errors too high $\rightarrow$ $p$-values too large.
 }
 
 \frame{\frametitle{Detecting collinearity}
