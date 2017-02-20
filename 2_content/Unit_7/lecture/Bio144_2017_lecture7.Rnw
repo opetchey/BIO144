@@ -97,7 +97,7 @@ Datenanalyse in der Biologie}%\\[.3cm]
 }
 
 
-\frame{\frametitle{Overview (todo: check)}
+\frame{\frametitle{Overview}
 \begin{itemize}
 \item Model selection and model checking.\\[2mm]
 \item Automatic model selection and its caveats.\\[2mm]
@@ -128,12 +128,6 @@ The lecture material of today is based on the following literature:\\[4mm]
 \end{itemize}
 }
 
-\frame[containsverbatim]{\frametitle{Recap of Last week}
-\begin{itemize}
-\item {\bf ANCOVA}
-\item {\bf Linear alebra}
-\end{itemize}
-}
 
 \frame{\frametitle{Developing a model}
 So far, our regression models ``fell from heaven'': The model family and the terms in the model were almost always given.\\[4mm]
@@ -346,7 +340,7 @@ A widely used practice to determine the ``importance'' of a term is to look at t
 \begin{itemize}
 \item {\bf A small $p$-value does not necessarily mean that a term is (biologically, medically) important -- and vice versa!}\\[2mm]
 \item When carrying out the $t$-tests with $H_0: \beta_j=0$ for all variables , one runs into a \alert{multiple testing problem}.\\
-{(\scriptsize Remember the ANOVA lecture, week 5, slide 25).}\\[2mm]
+{(\scriptsize Remember the ANOVA lecture, week 5, slide 23).}\\[2mm]
 \item The respective tests depend crucially on the correctness of the \alert{normality assumption}.\\[2mm]
 \item Covariates are sometimes \alert{collinear}, which leads to more uncertainty in the estimation of the respective regression parameters, and thus to larger $p$-values.\\[2mm]
 \end{itemize}
@@ -591,8 +585,63 @@ Given $m$ potential variables to be included in a model.\\[2mm]
 }
 
 \frame{\frametitle{Collinearity of covariates}
-Todo: discuss (see Stahel chapter 5.4)
+{\small (See Stahel chapter 5.4)}\\[4mm]
+
+Given a set of covariates $\bm{x^{(1)}}, \bm{x^{(2)}}, \bm{x^{(3)}}, ...,\bm{x^{(p)}}$. If it is possible for one of the covariates to be written as a \alert{linear combination of the others}
+\begin{equation*}
+x_i^{(j)} = \sum_{k\neq j} c_k x_i^{(k)} \quad \text{for all } \quad  i=1,...,n
+\end{equation*}
+
+the set of covariates is said to be \alert{collinear}. \\[4mm]
+
+{\bf Examples:}\\
+
+\begin{itemize}
+\item Three vectors in a 2D-plane are always collinear.\\[2mm]
+\item A covariate can be written a a linear combination of two others: $\bm{x^{(j)}} = c_1\cdot \bm{x^{(1)}} + c_2 \cdot \bm{x^{(2)}} $, then the three variables are collinear.
+\end{itemize}
 }
+
+
+\frame{\frametitle{}
+In statistics, the expression ``collinearity'' is also used when such a collinearity relationship is approximately true. For example, when two variables $\bm{x^{(1)}}$ and $\bm{x^{(2)}}$ have a high correlation.\\[4mm]
+
+{\bf What is the problem with collinearity?}
+
+I like to do simple (and extreme) examples to understand the point. Given two identical covariates $\bm{x^{(1)}}=\bm{x^{(2)}}$, an extreme form of ``high correlation'', and the regression model
+\begin{equation*}
+y_i = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + e_i \ ,
+\end{equation*}
+
+the slope coefficients $\beta_1$ and $\beta_2$ \alert{cannot be uniquely determined} (there are many solutions to the equation)! \\[2mm]
+
+When the variables are collinear, this problem is less severe, but the $\beta$ coefficients can be estimated \alert{less precisely} (with higher standard error, thus larger $p$-value).
+}
+
+\frame{\frametitle{Detecting collinearity}
+The \alert{variance inflation factor} (VIF) is a measure for collinearity. It is defined for each covariate $\bm{x^{(j)}}$ as 
+\begin{equation*}
+VIF_j = \frac{1}{1-R_j^2} \qquad
+\end{equation*}
+ where $R_j^2$ is the $R^2$ of the regression of ${\bm{x^{(j)}}}$ against all other covariates. (Note: if $R_j^2$ is large, this means large collinearity and thus a large VIF).\\[4mm]
+ 
+{\bf Examples:}
+\begin{itemize}
+\item $R^2_j=0$ $\rightarrow$ no collinearity $\rightarrow$ VIF=1/1 = 1.\\[2mm]
+\item $R^2_j=0.5$ $\rightarrow$ some collinearity $\rightarrow$ VIF=1/(1-0.5) = 2.\\[2mm]
+\item $R^2_j=0.9$ $\rightarrow$  high collinearity $\rightarrow$ VIF=1/(1-0.9) = 10.\\[2mm]
+\end{itemize}
+}
+
+
+\frame{\frametitle{What do do against collinearity?}
+\begin{itemize}
+\item \alert{Avoid} it, e.g. in experiments.\\[2mm]
+\item \alert{Remove the variable} with an inacceptably high $R^2_j$ or $VIF_j$. The tolerance of VIFs are different in the literature and range from 4 to 10 as a maximum tolerable VIF.\\[2mm]
+\item Be \alert{aware} of it and interpret your results with the respectivie care.\\[2mm]
+\item See also Stahel 5.4(i) for  ``recipe''.
+\end{itemize}}
+
 
 \frame{\frametitle{Predictive and explanatory models}
 
@@ -669,7 +718,7 @@ Automatic model selection strategies are thus {\bf not recommended for explanato
 \frame[containsverbatim]{\frametitle{Final comments on the mercury example}
 Given that the mercury model is an {\bf explanatory models}, we should not remove a variable (e.g., migration) simply because it reduces AIC (see slide \ref{sl:migration}).\\[2mm]
 
-Therefore, given the a priori selection of variables and the model validation results, the model from slide \ref{sl:mercury_final} was used in the final publiation (give reference here).
+Therefore, given the a priori selection of variables and the model validation results, the model from slide \ref{sl:mercury_final} was used in the final publication \citep{imo.etal2017}.
 }
 
 
@@ -743,13 +792,27 @@ tableRegression(r.AIC)
 
 
 \frame{\frametitle{Summary}
-
+\begin{itemize}
+\item Model selection is difficult and controversial.\\[2mm]
+\item Different approaches for predictive or explanatory models.\\[2mm]
+\item Automatic model selection procedures are inappropriate for explanatory models.\\[2mm]
+\item $P$-values should not be used for model selection.\\[2mm]
+\item AIC, AIC$_c$, BIC: balance between model fit and model complexity.
+\end{itemize}
 }
 
-\frame{\frametitle{Reading and exercises for the self-study week}
+\frame{\frametitle{Reading for the self-study week}
+You can find all reading tasks in the first ``Self study week'' on OpenEdX. The following pdfs are provided there:\\[2mm]
 \begin{itemize}
-\item Paper by \citet{freedman1983}
-\item 
+\item Statistical significanc vs. biological importance (Interleaf from Whitlock and Schluter)
+\item Correlation vs. causation (Interleaf from Whitlock and Schluter)
+\item P-Werte in der NZZ (3. April 2016) 
+\item S. Goodman (2016): Aligning statistical and scientific reasoning (a really thoughtful article in one of the world's leading scientific journals)\\[4mm]
+\end{itemize}
+
+And {\bf optionally}:\\[2mm]
+\begin{itemize}
+\item Paper by \citet{freedman1983}: ``A Note on Screening Regression Equations''
 \end{itemize}
 }
 
