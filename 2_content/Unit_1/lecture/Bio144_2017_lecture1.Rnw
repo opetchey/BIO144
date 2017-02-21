@@ -94,6 +94,10 @@ Datenanalyse in der Biologie}%\\[.3cm]
 All wichtigen Details, wie Testatbedingung, Prf\"ufungsdaten etc. finden Sie auf der OpenEdX Kursseite:\\[2mm]
 
 \url{https://openedx.mnf.uzh.ch/courses/course-v1:UZH+BIO144+FS2017/about}
+\vspace{10mm}
+
+Vorlesungszeiten jeweils :00 bis :45\\
+\begin{center}$\rightarrow$ Letzte Lektion: {\bf 16:00 bis 16:45}.\end{center}
 
 }
 

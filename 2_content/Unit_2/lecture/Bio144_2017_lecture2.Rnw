@@ -428,20 +428,6 @@ The normal distribution assumption (c) seems ok as well.
 }
 
 
-%' \frame[containsverbatim]{\frametitle{Model checking tools II: QQ-plot}
-%' (Todo: check if Luchsinger has introduced QQ plots)
-%' 
-%' The quantile-quantile (QQ) plot helps to check if the $e_i$ are normally distributed.
-%' \begin{center}
-%' \setkeys{Gin}{width=0.5\textwidth}
-%' <<QQ,fig=T,width=4,height=4,echo=F>>=
-%' qqnorm(r.bodyfat$residuals)
-%' qqline(r.bodyfat$residuals)
-%' @
-%' \end{center}
-%'  
-%' }
-
 
 
 
@@ -855,9 +841,9 @@ lty=8, cex=1,col=c(4),lwd=2)
 \url{http://www.nature.com/nmeth/journal/v12/n11/full/nmeth.3627.html}
 }
 
-\frame{\frametitle{Summary}
-To do 
-}
+% \frame{\frametitle{Summary}
+% To do 
+% }
 
 %\frame{References:
 %\bibliographystyle{Chicago}

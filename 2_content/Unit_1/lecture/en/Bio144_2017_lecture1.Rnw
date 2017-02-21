@@ -93,6 +93,10 @@ Data Analysis in Biology}%\\[.3cm]
 All important details, such as testate conditions, exam dates etc. are provided on the OpenEdX course page:\\[2mm]
 
 \url{https://openedx.mnf.uzh.ch/courses/course-v1:UZH+BIO144+FS2017/about}
+\vspace{10mm}
+
+Lecture times always :00 bis :45\\
+\begin{center}$\rightarrow$ Last lesson: {\bf from 16:00 to 16:45}.\end{center}
 }
 
 
