@@ -123,17 +123,18 @@ The lecture material of today is based on the following literature:\\[4mm]
 \frame[containsverbatim]{\frametitle{The body fat example}
 Remember: Aim is to find prognostic factors for body fat, without actually measuring it. \\
 Even simpler question: How good is BMI as a predictor for body fat?
-
+\vspace{-5mm}
 \begin{center}
-
 <<read.bodyfat,echo=F,eval=T>>=
 path <- "../../data_examples/bodyFat/"
 d.bodyfat <- read.table(paste(path,"bodyfat.clean.txt",sep=""),header=T)
 d.bodyfat <- d.bodyfat[,c("bodyfat","age","gewicht","hoehe","bmi","neck","abdomen","hip")]
 @
-\setkeys{Gin}{width=0.5\textwidth}
-<<fig=T,width=4,height=4.5>>=
-plot(bodyfat ~ bmi,d.bodyfat,xlab="bmi (x)", ylab="body fat (y)")
+\setkeys{Gin}{width=0.6\textwidth}
+<<fig=T,width=3.5,height=4,echo=F>>=
+library(ggplot2)
+plot(bodyfat ~ bmi,d.bodyfat,xlab="BMI (x)", ylab="body fat (y)")
+#ggplot(d.bodyfat,aes(x=bmi,y=bodyfat)) + geom_point() + theme_bw()
 @
 \end{center}
 
@@ -368,13 +369,13 @@ $\Rightarrow$ $\hat\alpha=\Sexpr{round(r.bodyfat$coef[1],2)}$ ,  $\hat\beta=\Sex
 \frame[containsverbatim]{
 Plotting the resulting line into the scatterplot is simple:\\[4mm]
 \begin{center}
-\setkeys{Gin}{width=0.5\textwidth}
+\setkeys{Gin}{width=0.55\textwidth}
 <<echo=F>>=
 library(reporttools)
 library(biostatUZH)
 @
-<<plotbodyfat,fig=T,width=5,height=5.0>>=
-plot(bodyfat ~ bmi,d.bodyfat)
+<<plotbodyfat,fig=T,width=4.5,height=4.5>>=
+plot(bodyfat ~ bmi,d.bodyfat,xlab="BMI")
 abline(r.bodyfat,lwd=2)
 @
 \end{center}
@@ -463,13 +464,16 @@ pars[ii,] <- lm(y~x)$coef
 }
 @
 ~\\[2mm]
-Doing this \numprint{1000} times, we obtain the following distributions for $\hat\alpha$ and $\hat\beta$.
+Doing it \texttt{niter=} \numprint{1000} times, we obtain the following distributions for $\hat\alpha$ and $\hat\beta$.
 }
 
 \frame[containsverbatim]{\label{sl:dists}
 \setkeys{Gin}{width=0.85\textwidth}
-<<fig=T,width=8,height=4,echo=T>>=
+<<fig=T,width=8,height=4,echo=F>>=
 par(mfrow=c(1,2))
+ # library(reshape2)
+ # pars <- melt(pars)
+ # ggplot(pars,aes(x=value)) + geom_histogram() + facet_wrap(~Var2,scales="free_x") + theme_bw()
 hist(pars[,1],xlab =expression(alpha),main="",freq=F,nclass=20)
 hist(pars[,2],xlab=expression(beta),main="",freq=F,nclass=20)
 @
@@ -567,7 +571,7 @@ Let's first go back to the output from the bodyfat example:\\[5mm]
 summary(r.bodyfat)$coef
 @
 ~\\[4mm]
-Besides the estimate and the standard error (which we discussed before), there is a t value and a probability Pr(>|t|) that we need to understand. \\[2mm]
+Besides the estimate and the standard error (which we discussed before), there is a \myalert{\texttt{t value}} and a probability \myalert{\texttt{Pr(>|t|)}} that we need to understand. \\[2mm]
 
 How do these things help us to answer the two questions above?
 }
@@ -587,7 +591,7 @@ $$H_A: \quad \beta \neq  0  \ ,$$
 \frame{
 Remember: to carry out a statistical test, we need a \emph{test statistic}.\\[4mm]
 
-What is a test statistic?? (Clicker exercise here?)\\[6mm]
+What is a test statistic? \\[6mm]%(Clicker exercise!)
 
 \pause
 
@@ -602,8 +606,9 @@ T=\frac{\hat\beta - \beta_0}{se^{(\beta)}} \quad \text{with} \quad se^{(\beta)}=
 ~\\[2mm]
 Again: typically, $\beta_0=0$, so the formula simplifies to.... (please think:-))\\[2mm]
 
-Under $H_0$, $T$ has a $t$-distribution with $n-2$ degrees of freedom ($n=$ number of data points).\\
-(Question: do you remember why this is a t-distribution? Check Mat183, keyword: t-test.)
+Under $H_0$, $T$ has a $t$-distribution with $n-2$ degrees of freedom ($n=$ number of data points).\\[2mm]
+
+{\small (Question: do you remember why this is a t-distribution? Check Mat183, keyword: t-test.)}
 
 }
 
@@ -664,12 +669,12 @@ Let us collect the facts we know about $\hat\beta$:
 \begin{itemize}
 \item $\hat\beta$ is estimated with a standard error of $\sigma^{(\beta)}$.
 \item The distribution of $\hat\beta$ is normal, namely $\hat\beta\sim\N(\beta,\sigma^{(\beta)2})$.
-\item However, since we need to estimate $\sigma_e^2$ from the data, we have a $t$-distribution.
+\item However, since we need to estimate $\sigma^{(\beta)2}$ from the data, we have a $t$-distribution.
 \end{itemize}
 }
 
 \frame[containsverbatim]{
-Doing some calculations (blackboard) leads us to the 95\% confidence interval\\[2mm]
+Doing some calculations (similar to those in chapter 8.2.2 of Mat183 script) leads us to the 95\% confidence interval\\[2mm]
 
 \begin{center}
 \colorbox{lightgray}{\begin{minipage}{6cm}
@@ -832,13 +837,24 @@ lty=8, cex=1,col=c(4),lwd=2)
 
 
 
-\frame{\frametitle{Further reading}
+\frame{\frametitle{Task until next week}
 
-``Points of significance: Simple linear regression'' is a nice, 2-page overview of simple linear regression, summarized in Nature Methods in 2015:\\[4mm]
+The idea of the course is that as a preparation for next week's practical part you will do the following:\\[2mm]
 
+\begin{itemize}
+\item Understand what today's lecture was about. You will certainly need to click through it again.\\[2mm]
+\item {\bf If necessary} (if things are not clear on the slides), consult the "Course material covered today" (see slide 3).\\[2mm]
+\item Go to OpenEdX and do all the "Before class (BC)" tasks.\\[6mm]
+\end{itemize}
 
+{\bf $\rightarrow$ The same procedure applies to all course weeks.}
+ 
 
-\url{http://www.nature.com/nmeth/journal/v12/n11/full/nmeth.3627.html}
+% ``Points of significance: Simple linear regression'' is a nice, 2-page overview of simple linear regression, summarized in Nature Methods in 2015:\\[4mm]
+% 
+% 
+% 
+% \url{http://www.nature.com/nmeth/journal/v12/n11/full/nmeth.3627.html}
 }
 
 % \frame{\frametitle{Summary}
