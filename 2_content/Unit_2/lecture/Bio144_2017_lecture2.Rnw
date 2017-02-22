@@ -837,7 +837,7 @@ lty=8, cex=1,col=c(4),lwd=2)
 
 
 
-\frame{\frametitle{Task until next week}
+\frame{\frametitle{Tasks until next week}
 
 The idea of the course is that as a preparation for next week's practical part you will do the following:\\[2mm]
 

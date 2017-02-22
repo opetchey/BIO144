@@ -509,7 +509,7 @@ cdplot(ESR ~ globulin,plasma)
 
 
 \frame{\frametitle{What is a model?}
-A model is an approximation of the reality. Understanding how the real world works is usually only possible thanks to simplifying assumptions. This is exactly the purpose of statistical data analysis.\\[6mm]
+A model is an approximation of the reality. {\bf Understanding how the real world works} is usually only possible thanks to simplifying assumptions. This is exactly {\bf the purpose of statistical data analysis}.\\[6mm]
 
 In 2014, David Hand wrote:\\[4mm]
 
@@ -546,7 +546,7 @@ models are wrong, but some are useful'' \citep{box1979}.}
 \frame{\frametitle{The scopes of statistical data analysis}
 \begin{enumerate}[a)]
 \item \myalert{Prediction, interpolation}. Example body fat: use substitute measurements to predict body fat of a person.\\[3mm]
-\item \myalert{Estimation of parameters.} \\[3mm]
+\item \myalert{Estimation of parameters.} Example: Effect size of a novel drug.\\[3mm]
 \item \myalert{Explanation;  determination of important variables}. Example physical activity of children: The study aims to find factors that (positively or negatively) influence the movement behavior of children. \\[3mm]
 \item Optimization. \\[3mm]
 \item Calibration.\\[8mm]

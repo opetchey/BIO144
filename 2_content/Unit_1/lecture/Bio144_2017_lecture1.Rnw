@@ -511,7 +511,7 @@ cdplot(ESR ~ globulin,plasma)
 
 
 \frame{\frametitle{Was ist ein Modell?}
-Ein Modell ist eine Ann\"aherung an die Realit\"at. Das Ziel der Statistik und Datenanalyse ist es immer, dank Vereinfachungen der wahren Welt gewisse Zusammenh\"ange zu erkennen.\\[6mm]
+Ein Modell ist eine Ann\"aherung an die Realit\"at. Das {\bf Ziel der Statistik und Datenanalyse} ist es immer, dank Vereinfachungen der wahren Welt gewisse {\bf Zusammenh\"ange zu erkennen}.\\[6mm]
 
 David Hand schrieb 2014:\\[4mm]
 
@@ -548,7 +548,7 @@ models are wrong, but some are useful'' \citep{box1979}.}
 \frame{\frametitle{Fragestellungen der Datenanalyse}
 \begin{enumerate}[a)]
 \item \myalert{Vorhersage, Interpolation}. Beispiel K\"orperfett: verwende Ersatzumessungen, um K\"orperfett einer Person vorherzusagen.\\[3mm]
-\item \myalert{Sch\"atzung von Parametern} (Beispiel: ...)\\[3mm]
+\item \myalert{Sch\"atzung von Parametern}. Beispiel: Effektgr\"osse eines neuen Medikamentes.\\[3mm]
 \item \myalert{Verstehen; Bestimmung von Einflussgr\"ossen}. Beispiel Aktivit\"atsstudie bei Kindern: Es werden Faktoren gesucht, welche das Bewegungsverhalten der Kinder (positiv oder negativ) beeinflussen.\\[3mm]
 \item Optimierung \\[3mm]
 \item Eichung\\[8mm]
@@ -576,7 +576,7 @@ Darstellung & N\"utzlich bei \\
     & Abh\"angigkeit von Kategorien.\\[1mm]
  Conditional density plots &  Abh\"angigkeit einer bin\"aren Variable von\\
     & kontinuierlichen Variablen.\\[1mm]
-%Barplots & \"Ahnlicher Anwendungsbereich wie Boxplots.\\[1mm]
+%Barplots & \"Ahnlicher Anwendungsbereich wie Boxplots, aber nicht empfohlen.\\[1mm]
 Coplots & Darstellung von Abh\"angigkeiten von mehreren\\
     & Variablen.\\
 \hline
