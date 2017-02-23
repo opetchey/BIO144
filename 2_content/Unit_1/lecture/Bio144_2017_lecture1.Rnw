@@ -188,7 +188,7 @@ Erkenntnis, dass ohne Kenntnisse in statistischer Datenanalyse eigene Daten in B
 Beispiele:
 \begin{itemize}
 \item Medizin: Hat ein bestimmtes Medikament eine Wirkung? Welche Faktoren führen zu Krebs?
-\item Oekologie: Was für einen Lebensraum braucht ein Tier zum Leben? Was bevorzugt es?
+\item \"Okologie: Was für einen Lebensraum braucht ein Tier zum Leben? Was bevorzugt es?
 \item Evolutionsbiologie: Haben Tiere mit hohem Inzuchtgrad schlechtere Chancen zu \"uberleben oder sich fortzupflanzen?
 \end{itemize}
 }
@@ -316,9 +316,11 @@ pairs(d.bodyfat)
 
 
 \frame{\frametitle{}
+Einige einzelne {\bf Streudiagramme}:\\[2mm]
+
 \vspace{-0.5cm}
 \begin{center}
-\setkeys{Gin}{width=0.7\textwidth}
+\setkeys{Gin}{width=0.65\textwidth}
 <<echo=FALSE,fig=TRUE,height=5,width=5,include=TRUE>>=
 par(mfrow=c(2,2),mar=c(4,4,1,1))
 plot(bodyfat ~ bmi ,data=d.bodyfat)
@@ -379,13 +381,13 @@ plot((Hg_urin) ~ fish, data=d.hg, xlab="Meerfischkonsum/Monat", ylab = "")
 \end{center}
 \vspace{5mm}
 
-Aus diesen Grafiken is es sehr schwer zu sagen, welche Faktoren die Quecksilberbelastung im Menschen genau beeinflussen.
+Aus diesen Grafiken (Streudiagrammen) is es sehr schwer zu sagen, welche Faktoren die Quecksilberbelastung im Menschen genau beeinflussen.
 
 }
 
 
 \frame[containsverbatim]{\frametitle{}
-Es ist immer n\"utzlich, die Verteilungen der Variablen im Modell anzuschauen. Zeichnen wir mal das Histogramm der Quecksilberwerte:\\[4mm]
+Es ist immer n\"utzlich, die Verteilungen der Variablen im Modell anzuschauen. Zeichnen wir mal das {\bf Histogramm} der Quecksilberwerte:\\[4mm]
 
 \begin{center}
 \setkeys{Gin}{width=1\textwidth}
