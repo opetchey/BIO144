@@ -101,6 +101,12 @@ Vorlesungszeiten jeweils :00 bis :45\\
 
 }
 
+\frame{\frametitle{Voraussetzungen f\"ur Bio144}
+\begin{itemize}
+\item Mat183 Stochastik f\"ur die Naturwissenschaften
+\end{itemize}
+
+}
 
 \frame{\frametitle{Lehrmittel und Literatur}
 Obligatorische Lehrmittel:
@@ -129,24 +135,8 @@ ISBN 978-0-19-872906-8 \\[5mm]
 \end{itemize}
 }
 
-\frame{\frametitle{Ziele dieses Kurses}
-\begin{itemize}
-\item Solides Fundement an statistischen Methoden erarbeiten, um biologische oder biomedizinische Fragen mit Daten quantitativ und objektiv zu beantworten.\\[2mm]
-\item F\"ahigkeit vermitteln, Resultate in Forschungsartiken zu verstehen, zu interpretiern und evtl. kritisch zu hinterfragen.\\[2mm]
-\item Die \emph{Sprache} des Statistikers verstehen lernen.\\[2mm]
-\item Wir m\"ochten Ihnen eine herausforderne, spannende und freudvolle Lernerfahrung geben. {\bf Etwas, was man wirklich brauchen kann und darum Spass macht.}\\[6mm]
-\end{itemize}
 
-Unsere \"Uberzeugung: Fundierte Kenntnisse in Statistik machen Sie unabh\"angig! \\[2mm]
 
-}
-
-\frame{\frametitle{Voraussetzungen f\"ur Bio144}
-\begin{itemize}
-\item Mat183 Stochastik f\"ur die Naturwissenschaften
-\end{itemize}
-
-}
 
 
 
@@ -174,16 +164,24 @@ Unsere \"Uberzeugung: Fundierte Kenntnisse in Statistik machen Sie unabh\"angig!
 
 }
 
+
+\frame{\frametitle{Ziele dieses Kurses}
+\begin{itemize}
+\item Solides Fundement an statistischen Methoden erarbeiten, um biologische oder biomedizinische Fragen mit Daten quantitativ und objektiv zu beantworten.\\[2mm]
+\item F\"ahigkeit vermitteln, Resultate in Forschungsartiken zu verstehen, zu interpretiern und evtl. kritisch zu hinterfragen.\\[2mm]
+\item Die \emph{Sprache} des Statistikers verstehen lernen.\\[2mm]
+\item Wir m\"ochten Ihnen eine herausforderne, spannende und freudvolle Lernerfahrung geben. {\bf Etwas, was man wirklich brauchen kann und darum Spass macht.}\\[6mm]
+\end{itemize}
+
+Unsere \"Uberzeugung: Fundierte Kenntnisse in Statistik machen Sie unabh\"angig! \\[2mm]
+
+}
+
+
 \frame{\frametitle{Warum ist Statistik f\"ur die Biologie und Medizin so wichtig?}
 
-Was denken Sie? \\[4mm]
 
-
-
-\pause
-
-
-Erkenntnis, dass ohne Kenntnisse in statistischer Datenanalyse eigene Daten in Bachelor-, Master- oder Doktorarbeiten nicht ausgewertet werden k\"onnen. \\[2mm]
+Erkenntnis, dass ohne Kenntnisse in statistischer Datenanalyse eigene Daten in Bachelor-, Master- oder Doktorarbeiten nicht ausgewertet werden k\"onnen. \\[6mm]
 
 Beispiele:
 \begin{itemize}
@@ -206,9 +204,9 @@ Datenanalyse ist die Schnittstelle zwischen Mathematik und Biologie (oder andere
 
 \frame{\frametitle{Was leistet die Datenanalyse?}
 \begin{itemize}
-\item Auffinden und Quantifizierung von Zusammenh\"angen durch graphische Darstellung und Modellierung.\\[3mm]
-\item Aus Daten g\"ultige Schlussfolgerungen ziehen.\\[3mm]
-\item Die Unsicherheit der Schlussfolgerung quantifizieren.
+\item \alert{Auffinden} und \alert{Quantifizierung von Zusammenh\"angen} durch graphische Darstellung und Modellierung.\\[3mm]
+\item Aus Daten g\"ultige \alert{Schlussfolgerungen ziehen}.\\[3mm]
+\item Die \alert{Unsicherheit} der Schlussfolgerung \alert{quantifizieren}.
 \end{itemize}
 }
 
@@ -469,7 +467,7 @@ ggplot(d.blz,aes(x=factor(DIAET),y=BLUTZUCK)) + geom_boxplot() + geom_point(size
 Kommt Ihnen diese Fragestellung irgendwie bekannt vor? \\
 Stichwort: 2 Gruppen. \\[4mm]
 
-F\"ur mehrere Gruppen braucht man die \emph{Varianzanalyse} oder \emph{ANOVA} (=ANalysis Of VAriance; siehe Kapitel 10.1 des Luchsinger-Skripts).\\[4mm]
+F\"ur mehrere Gruppen braucht man die \alert{\emph{Varianzanalyse}} oder \alert{\emph{ANOVA}} (=ANalysis Of VAriance; siehe Kapitel 10.1 des Luchsinger-Skripts).\\[4mm]
 
 Es wird sich herausstellen (Vorlesung 5), dass sich die Di\"aten tats\"achlich voneinander unterscheiden. \\[4mm]
 
@@ -535,13 +533,13 @@ models are wrong, but some are useful'' \citep{box1979}.}
 \item Pr\"azise Fragestellung formulieren
 \item Datenerhebung und -analyse planen, Daten sammeln (Experimente, Erhebungen)
 \item Daten aufbereiten und bereinigen
-\item Daten graphisch darstellen
+\item {\bf Daten graphisch darstellen}
 \item Ein geeignetes \emph{Modell} ausw\"ahlen
 \item Modellparameter und deren Unsicherheit sch\"atzen
-\item Modellannahmen \"uberpr\"ufen
-\item Falls notwendig, Modell verbessern; zur\"uck zu Schritt 7
-\item Resultate interpretieren und mit Schritt 1 vergleichen
-\item Resultate pr\"azise und verst\"andlich kommunizieren (Publikation, Zeitungsbericht...)
+\item {\bf Modellannahmen \"uberpr\"ufen}
+\item Falls notwendig, Modell verbessern; zur\"uck zu Schritt 6
+\item {\bf Resultate interpretieren} und mit Schritt 1 vergleichen
+\item {\bf Resultate pr\"azise und verst\"andlich kommunizieren} (Publikation, Zeitungsbericht...)
 \end{enumerate}
 
 }
@@ -549,7 +547,7 @@ models are wrong, but some are useful'' \citep{box1979}.}
 
 \frame{\frametitle{Fragestellungen der Datenanalyse}
 \begin{enumerate}[a)]
-\item \myalert{Vorhersage, Interpolation}. Beispiel K\"orperfett: verwende Ersatzumessungen, um K\"orperfett einer Person vorherzusagen.\\[3mm]
+\item \myalert{Vorhersage (Extrapolation), Interpolation}. Beispiel K\"orperfett: verwende Ersatzumessungen, um K\"orperfett einer Person vorherzusagen.\\[3mm]
 \item \myalert{Sch\"atzung von Parametern}. Beispiel: Effektgr\"osse eines neuen Medikamentes.\\[3mm]
 \item \myalert{Verstehen; Bestimmung von Einflussgr\"ossen}. Beispiel Aktivit\"atsstudie bei Kindern: Es werden Faktoren gesucht, welche das Bewegungsverhalten der Kinder (positiv oder negativ) beeinflussen.\\[3mm]
 \item Optimierung \\[3mm]
@@ -637,7 +635,7 @@ Es gibt viele ``fancy'' Arten, Daten graphisch darzustellen ({\bf nice-to-know})
 \item Interaktive Grafiken und Animationen\\[6mm]
 \end{itemize}
 
-Dazu gibt es etlich R Pakete. Interaktive Darstellungen k\"onnen beispielsweise mit Shiny Apps generiert werden (see census app).
+Dazu gibt es etlich R Pakete. Interaktive Darstellungen k\"onnen beispielsweise mit Shiny Apps generiert werden (siehe ``census app'').
 %' <<>>=
 %' library(shiny)
 %' runApp("/home/steffi/Shiny/Tutorial/census-app")
