@@ -150,7 +150,7 @@ $$y_i = \alpha + \beta x_i\ .$$
 $\beta$ is also denoted as the regression coefficient of $X$.\\[4mm]
 
 
-\item If $\alpha=0$ the line goes through the origin.
+\item If $\alpha=0$ the line goes through the origin $(x,y)=(0,0)$.
 
 \item Interpretation of linear dependency: proportional increase in $y$ with increase (decrease) in $x$.
 \end{itemize}
@@ -171,6 +171,8 @@ abline(c(-25,1.7),col=2,lwd=2)
 abline(c(-35,2.1),col=3,lwd=2)
 @
 \end{center}
+
+{\bf Task:} Estimate the regression parameters $\alpha$ and $\beta$ and write them down.
 }
 
 \frame[containsverbatim]{\frametitle{}
@@ -263,7 +265,6 @@ Or one larger sample:
 \setkeys{Gin}{width=0.6\textwidth}
 \begin{center}
 <<fig=T,width=4,height=3.8>>=
-par(mfrow=c(1,1))
 x <- rnorm(100)
 y <- 4 - 2*x + rnorm(100,0,sd=0.5)
 plot(x,y);abline(c(4,-2))
@@ -608,7 +609,7 @@ Again: typically, $\beta_0=0$, so the formula simplifies to.... (please think:-)
 
 Under $H_0$, $T$ has a $t$-distribution with $n-2$ degrees of freedom ($n=$ number of data points).\\[2mm]
 
-{\small (Question: do you remember why this is a t-distribution? Check Mat183, keyword: t-test.)}
+{\small (You should try to recall the t-distribution. Check Mat183, keyword: t-test.)}
 
 }
 
@@ -640,7 +641,7 @@ Conclusion: there is very strong evidence that the BMI is associated with bodyfa
 
 This basically answers question 1 from slide \ref{sl:testsCI}.\\[6mm]
 
-\textcolor{gray}{\small (Remark: if you forgot the details of the $p$-value, I have a special task for you: go back to the book ``Statistische Datenanalyse'' from W. Stahel and read chapter 8.7.)}
+\textcolor{gray}{\small (Remark: if you forgot the details of the $p$-value, I have a special task for you: Go back to the book ``Statistische Datenanalyse'' from W. Stahel and read chapter 8.7.)}
 }
 
 
