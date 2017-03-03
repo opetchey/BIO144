@@ -176,7 +176,7 @@ abline(c(-35,2.1),col=3,lwd=2)
 }
 
 \frame[containsverbatim]{\frametitle{}
-It is obvious that another realization of the data (other 241 males) would lead to a slightly different picture.\\[4mm]
+It is obvious that another realization of the data (other 243 males) would lead to a slightly different picture.\\[4mm]
 
 $\Rightarrow$ The model should take this into account! \\[4mm]
 
@@ -546,7 +546,9 @@ In simple linear regression, $R^2$ is the squared correlation between the indepe
 \end{minipage}}\\[6mm]
 
 
-Generally, $R^2$ indicates the proportion of variability of the response variable $\bm{y}$ that is explained by the ensemble of all covariates. {\bf The larger $R^2$, the more variability of $\bm{y}$ is captured by the covariates, thus the ``better'' is the model.} (However, we will qualify this statement later in the course...)\\[6mm]
+Generally, $R^2$ indicates the proportion of variability of the response variable $\bm{y}$ that is explained by the ensemble of all covariates.\\[4mm] 
+
+{\bf The larger $R^2$, the more variability of $\bm{y}$ is captured by the covariates, thus the ``better'' is the model.} (However, we will qualify this statement later in the course...)\\[6mm]
 
 $R^2$ becomes more interesting in \emph{multiple} linear regression.\\
 
@@ -632,20 +634,6 @@ Hint: last column contains the {\bf $p$-value} of the test $\beta=0$.\\[2mm]
 \end{enumerate}
 }
 
-\frame[containsverbatim]{
-For task 2 above we can use the built-in ``distribution table'' of the t-distribution in R (two-sided $p$-value):\\[2mm]
-
-<<lmbodyfatTest,echo=T,eval=T>>=
-2*pt(16.787522,241,lower.tail=F)
-@
-~\\[6mm]
-Conclusion: there is very strong evidence that the BMI is associated with bodyfat, because $p$ is extremely small.\\[4mm]
-
-This basically answers question 1 from slide \ref{sl:testsCI}.\\[6mm]
-
-\textcolor{gray}{\small (Remark: if you forgot the details of the $p$-value, I have a special task for you: Go back to the book ``Statistische Datenanalyse'' from W. Stahel and read chapter 8.7.)}
-}
-
 
 \frame{\frametitle{Recap: Formal definition of the $p$-value}
 
@@ -691,6 +679,25 @@ text(-3,0.05,labels="2.5%")
 @
 
 } 
+
+
+
+\frame[containsverbatim]{
+For task 2 above we can use the built-in ``distribution table'' of the t-distribution in R (two-sided $p$-value):\\[2mm]
+
+<<lmbodyfatTest,echo=T,eval=T>>=
+2*pt(16.787522,241,lower.tail=F)
+@
+~\\[6mm]
+Conclusion: there is very strong evidence that the BMI is associated with bodyfat, because $p$ is extremely small.\\[4mm]
+
+This basically answers question 1 from slide \ref{sl:testsCI}.\\[6mm]
+
+\textcolor{gray}{\small (Remark: if you forgot the details of the $p$-value, I have a special task for you: Go back to the book ``Statistische Datenanalyse'' from W. Stahel and read chapter 8.7.)}
+}
+
+
+
 
 \frame[containsverbatim]{\frametitle{A cautionary note on the use of $p$-values}
 Maybe you have seen that in statistical testing, often the criterion $p\leq 0.05$ is used to test whether $H_0$ should be rejected. This is often done in a black-or-white manner.\\[4mm]
