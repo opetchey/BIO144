@@ -176,7 +176,11 @@ abline(c(-35,2.1),col=3,lwd=2)
 }
 
 \frame[containsverbatim]{\frametitle{}
-It is obvious that another realization of the data (other 243 males) would lead to a slightly different picture.\\[4mm]
+It is obvious that 
+\begin{itemize}
+\item the linear relationship does not describe the data perfectly.
+\item another realization of the data (other 243 males) would lead to a slightly different picture.\\[4mm]
+\end{itemize}
 
 $\Rightarrow$ The model should take this into account! \\[4mm]
 
@@ -186,7 +190,7 @@ where $e_i$ treated as a random variable with a \myalert{normally distributied}
 $$e_i ~\sim \N(0,\sigma_e^2) \quad \text{for } i = 1,\ldots, n \ .$$
 
 This is a \myalert{model} for $bodyfat$ given $bmi$.
-The assumption is that the target value $bodyfat_i$ is the sum of a predicted value ($\alpha + \beta \cdot bmi_i$) plus an error term $e_i$.
+%The assumption is that the target value $bodyfat_i$ is the sum of a predicted value ($\alpha + \beta \cdot bmi_i$) plus an error term $e_i$.
 
 }
 

@@ -97,12 +97,12 @@ Datenanalyse in der Biologie}%\\[.3cm]
 \frame{\frametitle{Overview}
 \begin{itemize}
 
-\item Checking the assumptions of linear regression
-\item Tukey-Anscombe diagram, QQ-plot 
-\item Multiple predictors $x_1$, $x_2$, \ldots, $x_m$
-\item $R^2$ in multiple linear regression
-\item $t$-tests, $F$-tests and $p$-values
-\item Binary and factor covariates
+\item Checking the assumptions of linear regression\\[2mm]
+\item Tukey-Anscombe diagram, QQ-plot \\[2mm]
+\item Multiple predictors $x_1$, $x_2$, \ldots, $x_m$\\[2mm]
+\item $R^2$ in multiple linear regression\\[2mm]
+\item $t$-tests, $F$-tests and $p$-values\\[2mm]
+\item Binary and factor covariates\\[2mm]
 
 \end{itemize}
 }
@@ -671,7 +671,6 @@ Where
 %' @
 %' }
 
-
 \frame[containsverbatim]{
 <<echo=F>>=
 path <- "../../data_examples/Hg/"
@@ -684,24 +683,8 @@ r1.urin.mother <- lm(log10(Hg_urin) ~  smoking +
                      + amalgam + fish,data=d.hg)
 #summary(r1.urin.mother)
 @
-The results table is given as follows:
-<<results=tex,echo=F>>=
-tableRegression(r1.urin.mother)
-@
-~\\[2mm]
-There is some weak ($p=0.12$) indication that smokers have a slightly increased Hg concentration in their body.\\
 
-In principle, we have now -- at the same time -- fitted {\bf two models:} one for smokers and one for non-smokers, assuming that the slopes of the other covariates are the same for both groups.\\[2mm]
-\colorbox{lightgray}{\begin{minipage}{10cm}
-Smokers: $y_i = -1.01 + 0.22  + 0.092\cdot amalgam _i+ 0.032\cdot fish_i + e_i$ \\
-Non-smokers:  $y_i = -1.01  + 0.092\cdot amalgam_i + 0.032\cdot fish_i  + e_i$ 
-\end{minipage}}
-}
-
-
-
-\frame[containsverbatim]{
-...and for completeness, again a short check of the modelling assumptions:\\[2mm]
+We first glimpse at a check of the modelling assumptions:\\[2mm]
 \setkeys{Gin}{width=0.8\textwidth}
 <<Hgcheck,fig=T,width=6,height=4,echo=F>>=
 par(mfrow=c(1,2))
@@ -713,6 +696,27 @@ qqline(r1.urin.mother$residuals)
 
 It seems ok, apart from one point that could be categorized as an outlier. We ignore it for the moment.
 }
+
+
+\frame[containsverbatim]{
+
+The results table is given as follows:
+<<results=tex,echo=F>>=
+tableRegression(r1.urin.mother)
+@
+~\\[2mm]
+There is some weak ($p=0.12$) indication that smokers have a slightly increased Hg concentration in their body.\\[4mm]
+
+In principle, we have now -- at the same time -- fitted {\bf two models:} one for smokers and one for non-smokers, assuming that the slopes of the other covariates are the same for both groups.\\[2mm]
+\colorbox{lightgray}{\begin{minipage}{10cm}
+Smokers: $y_i = -1.01 + 0.22  + 0.092\cdot amalgam _i+ 0.032\cdot fish_i + e_i$ \\
+Non-smokers:  $y_i = -1.01  + 0.092\cdot amalgam_i + 0.032\cdot fish_i  + e_i$ 
+\end{minipage}}
+}
+
+
+
+
 
 
 \frame{\frametitle{Factor covariates}
