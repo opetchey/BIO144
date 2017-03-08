@@ -97,8 +97,7 @@ Datenanalyse in der Biologie}%\\[.3cm]
 \frame{\frametitle{Overview}
 \begin{itemize}
 
-\item Checking the assumptions of linear regression\\[2mm]
-\item Tukey-Anscombe diagram, QQ-plot \\[2mm]
+\item Checking the assumptions of linear regression: the QQ-plot\\[2mm]
 \item Multiple predictors $x_1$, $x_2$, \ldots, $x_m$\\[2mm]
 \item $R^2$ in multiple linear regression\\[2mm]
 \item $t$-tests, $F$-tests and $p$-values\\[2mm]
@@ -134,7 +133,8 @@ r.bodyfat <- lm(bodyfat ~ bmi,d.bodyfat)
 $$y_i = \alpha + \beta x_i + e_i \ , \qquad e_i \sim \N(0,\sigma_e^2) \  \text{independent}.$$\\[2mm]
 \item Estimate the parameters $\alpha$, $\beta$ and $\sigma_e^2$ by least squares.\\[2mm]
 \item The estimated parameters $\hat\alpha$, $\hat\beta$ contain \myalert{uncertainty} and are normally distributed around the true values. %(actually, also $\hat\sigma_e^2$...). \\[2mm]
-\item Use the knowledge about the distribution to formulate \myalert{statistical tests}, such as: Is $\beta=0$?\\[2mm]
+\item Use the knowledge about the distribution to formulate \myalert{statistical tests}, such as: Is $\beta=0$?\\
+$\rightarrow$ \alert{$T$-test} with $n-2$ degrees of freedom.\\[2mm]
 \item All this is done automatically by R:\\[2mm]
 <<lmbodyfat,echo=T,eval=T>>=
 summary(r.bodyfat)$coef
@@ -276,7 +276,7 @@ pairs(d.bodyfat)
 }
 
 \frame[containsverbatim]{\frametitle{Multiple linear regression model}
-The idea is simple: just {\bf extend the linear model by additional predictors}.\\[4mm]
+The idea is simple: Just {\bf extend the linear model by additional predictors}.\\[4mm]
 
 \begin{itemize}
 \item Given several influence factors $x_i^{(1)}$, \ldots, $x_i^{(m)}$, 
@@ -284,7 +284,7 @@ the straightforward extension of the simple linear model is\\[4mm]
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
 \begin{eqnarray*}
-y_i &=& \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_2 x_i^{(m)} + e_i  \\[2mm]
+y_i &=& \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_m x_i^{(m)} + e_i  \\[2mm]
 \text{with  } \ e_i &\sim& \N (0,\sigma_e^2).
 \end{eqnarray*}
 \end{minipage}}
@@ -299,7 +299,7 @@ $$\sum_{i=1}^n r_i^2$$
 with 
 $$r_i = y_i - (\beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_2 x_i^{(m)}) $$ 
 
-It is a bit more complicated than for simple linear regression, see Sections 3.3 and 3.4 of the Stahel script. \\[4mm]
+It is a bit more complicated than for simple linear regression, see Section 3.4 of the Stahel script. \\[4mm]
 
 Some {\bf linear algebra} is needed to understand these sections, but we do not look into this for the moment. (It will come later in week 6.) \\[4mm]
 
@@ -394,7 +394,7 @@ summary(r.bodyfatM)$coef
 @
 ~\\[2mm]
 
-To answer this question, again look at the $t$-tests, for which the $p$-values are given in the final column. Each $p$-value refers to the test for the null hypothesis $ \beta^{(j)}_0=0$ for covariate $x^{(j)}$.\\[2mm]
+To answer this question, again look at the \alert{$t$-tests}, for which the $p$-values are given in the final column. Each $p$-value refers to the test for the null hypothesis $ \beta^{(j)}_0=0$ for covariate $x^{(j)}$.\\[2mm]
 
 As in simple linear regression, the $T$-statistic for the $j$-th covariate is calculated as 
 %
@@ -441,7 +441,7 @@ tableRegression(r.bodyfatM2)
 #summary(r.bodyfatM2)$coef
 @
 ~\\[6mm]
-It is now much \myalert{less clear what the influences of age ($p=0.60$) and bmi ($p=0.06$) are}. \\[2mm]
+It is now much \myalert{less clear what the influences of age ($p=0.60$) and bmi ($p=0.06$) are}.  \\[2mm]
 
 
 }
@@ -449,12 +449,23 @@ It is now much \myalert{less clear what the influences of age ($p=0.60$) and bmi
 
 \frame[containsverbatim]{\frametitle{ }
 
-Basically, the problem is that the variables in the model are correlated and therefore explain similar aspects of \% bodyfat. \\[6mm]
-
+Basically, the problem is that the \alert{variables in the model are correlated} and therefore explain similar aspects of \% bodyfat. \\[2mm]
+{\bf Example:} Abdomen (Bauchumfang) seems to be a relevant predictor and it is obvious that abdomen and BMI are correlated:
+\vspace{-5mm}
+\begin{center}
+\setkeys{Gin}{width=0.4\textwidth}
+<<fig=T,width=4,height=4,echo=F>>=
+plot(abdomen ~ bmi,d.bodyfat)
+@
+\end{center}
+\vspace{-1mm}
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
-This problem is at the heart of many confusions of regression analysis, and we will talk about such issues later in the course (lectures 7 and 8).
+This problem of \alert{collinearity} is at the heart of many confusions of regression analysis, and we will talk about such issues later in the course (lectures 7 and 8).
 \end{minipage}}
+
+\vspace{2mm}
+Please see also IC: practical 3 (week 4) for an example and more thoughts.
 
 
 
@@ -546,7 +557,7 @@ Why $R^2_a$? \\[2mm]
 
 Penalization for adding more independent variables that do not fit the model!\\[2mm]
 
-{\bf Note:} $R_a$ may decrease when new variable is added.
+{\bf Note:} $R_a$ may decrease when a new variable is added.
 }
 
 
