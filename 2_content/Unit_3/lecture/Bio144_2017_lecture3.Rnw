@@ -118,7 +118,7 @@ The lecture material of today is based on the following literature:\\[4mm]
 \end{itemize}
 }
 
-\frame[containsverbatim]{\frametitle{Recap of last week }
+\frame[containsverbatim]{\frametitle{Recap of last week I}
 <<read.bodyfat,echo=F,eval=T>>=
 library(reporttools)
 library(biostatUZH)
@@ -171,7 +171,7 @@ summary(r.bodyfat)$coef
 % }
 
 
-\frame[containsverbatim]{\frametitle{Recap of last week III}
+\frame[containsverbatim]{\frametitle{Recap of last week II}
 Remember: 
 The assumption in linear regression is that the residuals follow a $\N(0,\sigma_e^2)$ distribution, implying that :\\[2mm]
 \colorbox{lightgray}{\begin{minipage}{10cm}
@@ -810,11 +810,13 @@ boxplot(MAGENUMF ~ Gattung, d.wurm,xlab="Gattung",ylab="Magenumfang")
 @
 \setkeys{Gin}{width=0.5\textwidth}
 <<wurmP2,fig=T,width=5,height=3.5,echo=F>>=
-xyplot(GEWICHT ~ MAGENUMF, d.wurm,
-       grid = TRUE,
-       scales = list(x = list(log = 10, equispaced.log = FALSE)),
-       group = Gattung, auto.key = list(columns = nlevels(d.wurm$Gattung)),
-       lwd = 2)
+library(ggplot2)
+ggplot(d.wurm,aes(x=MAGENUMF,y= GEWICHT,colour=Gattung)) + geom_point() + theme_bw()
+# xyplot(GEWICHT ~ MAGENUMF, d.wurm,
+#        grid = TRUE,
+#        scales = list(x = list(log = 10, equispaced.log = FALSE)),
+#        group = Gattung, auto.key = list(columns = nlevels(d.wurm$Gattung)),
+#        lwd = 2)
 @
 \end{center}
 }
@@ -822,16 +824,18 @@ xyplot(GEWICHT ~ MAGENUMF, d.wurm,
 \frame[containsverbatim]{\frametitle{}
 However, data inspection also suggests that there is not really a linear relationship between weight and stomach size -- rather it looks \alert{exponential}! \\[2mm]
 
-Therefore, \alert{log-transform} the response (weight), and it looks much better:\\[2mm]
+Therefore, \alert{log-transform} the response (weight), and it looks much better:\\[6mm]
 
 \begin{center}
 \setkeys{Gin}{width=0.6\textwidth}
 <<wurmP3,fig=T,width=5,height=3.5,echo=F>>=
-xyplot(log10(GEWICHT) ~ MAGENUMF, d.wurm,
-       grid = TRUE,
-       scales = list(x = list(log = 10, equispaced.log = FALSE)),
-       group = Gattung, auto.key = list(columns = nlevels(d.wurm$Gattung)),
-       lwd = 2)
+ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point()  + theme_bw()
+
+# xyplot(log10(GEWICHT) ~ MAGENUMF, d.wurm,
+#        grid = TRUE,
+#        scales = list(x = list(log = 10, equispaced.log = FALSE)),
+#        group = Gattung, auto.key = list(columns = nlevels(d.wurm$Gattung)),
+#        lwd = 2)
 @
 \end{center}
 }
@@ -878,30 +882,36 @@ $R^2=0.76$, $R^2_a = 0.75$.
 Why is Gattung Lumbricus (L) not in the results table? \\
 Answer: L was chosen as the ``reference category'', thus $\beta_L=0$.\\[4mm]
 
-\colorbox{lightgray}{\begin{minipage}{10cm}
-We have now actually fitted {\bf three} models, one model for each species:\\[2mm]
+{\bf Degrees of freedom:} We had 143 data points. How many degrees of freedom are left for the residual error?\\
+{Answer:} We need 4 parameters, thus $143-4=139$.\\[2mm]
+
 <<echo=F>>=
 worm.coef <- summary(r.lm)$coef
 @
+
+}
+
+
+\frame[containsverbatim]{\frametitle{Interpreting the results I}
+
+\begin{itemize} 
+\item $\beta_0=\Sexpr{format(worm.coef[1,1],2,2,2)}$ is the intercept.
+\item $\beta_1=\Sexpr{round(worm.coef[2,1],2)}$ is the slope for \texttt{MAGENUMF}.
+\item $\beta_2=\Sexpr{round(worm.coef[3,1],2)}$ is the coefficient for Gattung=Nicodrilus.
+\item $\beta_3=\Sexpr{format(worm.coef[4,1],2,2,2)}$ is the coefficient for Gattung =Octolasion.
+\item No coefficient is needed for Gattung Lumbricus, because $\beta_L=0$.\\[6mm]
+\end{itemize}
+
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+We have now actually fitted {\bf three} models, one model for each species:\\[2mm]
+
 Lumbricus: $\hat{y}_i = \Sexpr{format(worm.coef[1,1],2,2,2)} + \Sexpr{round(worm.coef[2,1],2)}\cdot \text{MAGENUMF}$ \\[2mm]
 Nicodrilus: $\hat{y}_i = \Sexpr{format(worm.coef[1,1],2,2,2)} + (\Sexpr{round(worm.coef[3,1],2)})  + \Sexpr{round(worm.coef[2,1],2)}\cdot \text{MAGENUMF}$ \\[2mm]
 Octolasion: $\hat{y}_i = \Sexpr{format(worm.coef[1,1],2,2,2)} + (\Sexpr{format(worm.coef[4,1],2,2,2)})  + \Sexpr{round(worm.coef[2,1],2)}\cdot \text{MAGENUMF}$
 \end{minipage}}
 }
 
-
-\frame[containsverbatim]{\frametitle{Interpreting the results I}
-{\bf Degrees of freedom:} We had 143 data points. How many degrees of freedom are left for the residual error?\\
-{Answer:} We need 4 parameters: $\beta_0$, $\beta_1$, $\beta_2$, $\beta_3$, thus $143-4=139$.\\[2mm]
-
-Here:\begin{itemize} 
-\item $\beta_0=\Sexpr{format(worm.coef[1,1],2,2,2)}$ is the intercept.
-\item $\beta_1=\Sexpr{round(worm.coef[2,1],2)}$ is the slope for \texttt{MAGENUMF}.
-\item $\beta_2=\Sexpr{round(worm.coef[3,1],2)}$ is the coefficient for Gattung=Nicodrilus.
-\item $\beta_3=\Sexpr{format(worm.coef[4,1],2,2,2)}$ is the coefficient for Gattung =Octolasion.
-\item No coefficient is needed for Gattung=Lumbricus, it is automatically set to 0.
-\end{itemize}
-}
 
 
 \frame[containsverbatim]{\frametitle{Interpreting the results II}
@@ -920,7 +930,7 @@ Moreover, the $R^2=0.76$ is relatively high and almost identical to $R^2_a$.\\[6
 
 {\bf Question:} Is the ``Gattung'' covariate relevant in the model, that is, do the model intercepts differ for the three species? \\[6mm]
 
-{\bf Problem:} The $p$-values of the worm species are not very meaningful. They belong to tests that compare the actual level with the reference level. However, the question is whether the species variable has an effect in total.\\[6mm]
+{\bf Problem:} The $p$-values of the worm species are not very meaningful. They belong to tests that compare the actual level with the reference level. However, the question is whether the variable \texttt{Gattung} has an effect in total.\\[6mm]
 
 {\bf Solution:} When a factor covariate with $k$ levels is in the model, it occupies $k-1$ parameters. Therefore, \alert{the $t$-test needs to be replaced by the $F$-test.}
 
@@ -947,21 +957,25 @@ anova(r.lm)
 @
 
 ~\\[2mm]
-{\bf Note:} Here, the $F$-value for Gattung is distributed as $F_{2,139}$ under the Null-Hypothesis.
+{\bf Note:} Here, the $F$-value for \texttt{Gattung} is distributed as $F_{2,139}$ under the Null-Hypothesis.
 ~\\[4mm]
 Here we have $p=\Sexpr{format(anova(r.lm)[2,5],2,4,2)}$, thus a clear difference in the regression models for the three species (``Gattung is relevant'').
 }
 
+
+
 \frame[containsverbatim]{\frametitle{Plotting the earthworms results}
 All species have the same slope (this is a modelling assumption), but different intercepts:
+
 \begin{center}
 \setkeys{Gin}{width=0.7\textwidth}
-<<fig=T,echo=F,width=4.5,height=4>>=
+<<fig=T,echo=F,width=4.5,height=3>>=
 cc <- r.lm$coefficients
-plot(log10(GEWICHT)~MAGENUMF,d.wurm,col=as.numeric(Gattung),cex=0.8,ylim=c(-1.5,1.5),xlim=c(0,8))
-abline(c(cc[1],cc[2]),col=1)
-abline(c(cc[1]+cc[3],cc[2]),col=2)
-abline(c(cc[1]+cc[4],cc[2]),col=3)
+# plot(log10(GEWICHT)~MAGENUMF,d.wurm,col=as.numeric(Gattung),cex=0.8,ylim=c(-1.5,1.5),xlim=c(0,8))
+# abline(c(cc[1],cc[2]),col=1)
+# abline(c(cc[1]+cc[3],cc[2]),col=2)
+# abline(c(cc[1]+cc[4],cc[2]),col=3)
+ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point() + geom_line(aes(y=cc[1]+cc[2]*MAGENUMF),colour=2)  + geom_line(aes(y=cc[1]+cc[3]+cc[2]*MAGENUMF),colour=3)  + geom_line(aes(y=cc[1]+cc[4] + cc[2]*MAGENUMF),colour=4) + theme_bw()
 @
 \end{center}
 }
