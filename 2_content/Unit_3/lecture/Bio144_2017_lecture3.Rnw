@@ -118,7 +118,7 @@ The lecture material of today is based on the following literature:\\[4mm]
 \end{itemize}
 }
 
-\frame[containsverbatim]{\frametitle{Recap of last week I}
+\frame[containsverbatim]{\frametitle{Recap of last week }
 <<read.bodyfat,echo=F,eval=T>>=
 library(reporttools)
 library(biostatUZH)
@@ -144,31 +144,31 @@ summary(r.bodyfat)$coef
 }
 
 
-\frame[containsverbatim]{\frametitle{Recap of last week II}
-
-\begin{itemize}
-\item Confidence and prediction ranges:
-\end{itemize}
-\begin{center}
-\setkeys{Gin}{width=0.65\textwidth}
-<<confpred,fig=T,eval=T,echo=F,width=5,height=5>>=
-t.range <- range(d.bodyfat$bmi)
-t.xwerte <- seq(t.range[1]-1,t.range[2]+1,by=1)
-t.vert <- predict(r.bodyfat,se.fit=T,newdata=data.frame(bmi=t.xwerte),
-interval ="confidence")$fit
-t.vorh <- predict(r.bodyfat,se.fit=T,newdata=data.frame(bmi=t.xwerte),
-interval ="prediction")$fit
-plot(d.bodyfat$bmi,d.bodyfat$bodyfat,main="",xlab="BMI",ylab="bodyfat",xlim=range(t.xwerte),ylim=c(-5,50),cex=0.8)
-abline(r.bodyfat,lwd=2)
-lines(x=t.xwerte,y=t.vert[,2],lty=8,lwd=2,col=2)
-lines(x=t.xwerte,y=t.vert[,3],lty=8,lwd=2,col=2)
-lines(x=t.xwerte,y=t.vorh[,2],lty=8,lwd=2,col=4)
-lines(x=t.xwerte,y=t.vorh[,3],lty=8,lwd=2,col=4)
-legend("bottomright", c("confidence range (95%)", "prediction range (95%)"),
-lty=8, cex=1,col=c(2,4),lwd=2)
-@
-\end{center}
-}
+% \frame[containsverbatim]{\frametitle{Recap of last week II}
+% 
+% \begin{itemize}
+% \item Confidence and prediction ranges:
+% \end{itemize}
+% \begin{center}
+% \setkeys{Gin}{width=0.65\textwidth}
+% <<confpred,fig=T,eval=T,echo=F,width=5,height=5>>=
+% t.range <- range(d.bodyfat$bmi)
+% t.xwerte <- seq(t.range[1]-1,t.range[2]+1,by=1)
+% t.vert <- predict(r.bodyfat,se.fit=T,newdata=data.frame(bmi=t.xwerte),
+% interval ="confidence")$fit
+% t.vorh <- predict(r.bodyfat,se.fit=T,newdata=data.frame(bmi=t.xwerte),
+% interval ="prediction")$fit
+% plot(d.bodyfat$bmi,d.bodyfat$bodyfat,main="",xlab="BMI",ylab="bodyfat",xlim=range(t.xwerte),ylim=c(-5,50),cex=0.8)
+% abline(r.bodyfat,lwd=2)
+% lines(x=t.xwerte,y=t.vert[,2],lty=8,lwd=2,col=2)
+% lines(x=t.xwerte,y=t.vert[,3],lty=8,lwd=2,col=2)
+% lines(x=t.xwerte,y=t.vorh[,2],lty=8,lwd=2,col=4)
+% lines(x=t.xwerte,y=t.vorh[,3],lty=8,lwd=2,col=4)
+% legend("bottomright", c("confidence range (95%)", "prediction range (95%)"),
+% lty=8, cex=1,col=c(2,4),lwd=2)
+% @
+% \end{center}
+% }
 
 
 \frame[containsverbatim]{\frametitle{Recap of last week III}
@@ -623,9 +623,11 @@ To understand what is going on, the regression results of $y$ on $x^{(1)}$ and $
 <<results=tex,echo=F>>=
 tableRegression(lm(y~x1,d.cath))
 @
+$R^2=0.78, R_a^2=0.75$
 <<results=tex,echo=F>>=
 tableRegression(lm(y~x2,d.cath))
 @
+$R^2=0.80, R_a^2=0.78$
 }
 
 
@@ -717,7 +719,7 @@ The results table is given as follows:
 tableRegression(r1.urin.mother)
 @
 ~\\[2mm]
-There is some weak ($p=0.12$) indication that smokers have a slightly increased Hg concentration in their body.\\[4mm]
+There is some weak ($p=0.12$) indication that smokers have an increased Hg concentration in their body. Their $\log(Hg_{urin})$ is in average by 0.22 higher than for nonsmokers. \\[4mm]
 
 In principle, we have now -- at the same time -- fitted {\bf two models:} one for smokers and one for non-smokers, assuming that the slopes of the other covariates are the same for both groups.\\[2mm]
 \colorbox{lightgray}{\begin{minipage}{10cm}
@@ -749,11 +751,16 @@ Each of the covariates $x^{(1)},\ldots, x^{(k)}$ can then be included as a binar
 y_i = \beta_0 + \beta_1 x^{(1)} + \ldots + \beta_k x^{(k)} + e_i \ .
 \end{equation*}
 
-However: one of the $k$ categories must be selected as a \emph{reference category} and is \emph{not included in the model}, because the model is otherwise not identifiable!! Typically: $\beta_1=0$\\[2mm]
+\vspace{6mm}
+However:  this model is \alert{not identifiable}. I could add a constant to $\beta_1, \beta_2, ...\beta_k$ and subtract it from $\beta_0$, and the model would fit as good to the data.\\[2mm]
 
 }
 
 \frame{\frametitle{}
+
+{\bf Solution: } One of the $k$ categories must be selected as a \emph{reference category} and is \emph{not included in the model}. Typically: the first category is the reference, thus $\beta_1=0$.\\[4mm]
+
+
 The model thus discriminates between the factor levels, such that (assuming $\beta_1=0$)
 
 \begin{equation*}
@@ -767,7 +774,10 @@ The model thus discriminates between the factor levels, such that (assuming $\be
 \end{equation*} 
 
 ~\\[4mm]
-\textcolor{gray}{Please also consult Stahel 3.2e.}
+\textcolor{gray}{Please also consult Stahel 3.2e and g.}\\[4mm]
+
+Please note that \alert{a factor covariate with $k$ factor levels requires $k-1$ parameters!}\\[2mm]
+$\rightarrow$ The \alert{degrees of freedom} are also reduced by $k-1$.
 }
 
 \frame[containsverbatim]{\frametitle{Example: Earthworm study}
@@ -777,7 +787,7 @@ The model thus discriminates between the factor levels, such that (assuming $\be
 
 {\bf Frage:} Besteht eine Beziehung zwischen dem Umfang des Muskelmagenteilchens und dem Gewicht des Regenwurms?\\[4mm]
 
-Data set with three species (Lumbricus, Nicodrilus, Octolasion), weight, stomachic circumference (Magenumfang).
+Data set of $n=143$ worms with three species (Lumbricus, Nicodrilus, Octolasion), weight, stomachic circumference (Magenumfang). 
 
 
 }
@@ -817,7 +827,7 @@ Therefore, \alert{log-transform} the response (weight), and it looks much better
 \begin{center}
 \setkeys{Gin}{width=0.6\textwidth}
 <<wurmP3,fig=T,width=5,height=3.5,echo=F>>=
-xyplot(log(GEWICHT) ~ MAGENUMF, d.wurm,
+xyplot(log10(GEWICHT) ~ MAGENUMF, d.wurm,
        grid = TRUE,
        scales = list(x = list(log = 10, equispaced.log = FALSE)),
        group = Gattung, auto.key = list(columns = nlevels(d.wurm$Gattung)),
@@ -827,16 +837,15 @@ xyplot(log(GEWICHT) ~ MAGENUMF, d.wurm,
 }
 
 \frame[containsverbatim]{\frametitle{}
-Formulate a model 
-\begin{equation*}
-\log(\text{Gewicht}_i) = \beta_0 + \beta_1 \cdot \text{Magenumfang}_i + \beta_2 \cdot \text{Gattung}_i + e_i. 
-\end{equation*}
-
-Fitting it is simple in R:\\ 
+Formulate a model with $\log_{10}(\text{Gewicht})$ as response and \texttt{Magenumfang} and \texttt{Gattung} as covariates.
+% \begin{equation*}
+% \log(\text{Gewicht}_i) = \beta_0 + \beta_1 \cdot \text{Magenumfang}_i + \beta_2 \cdot \text{Gattung}N_i + \beta_3 \cdot \text{Gattung}Oc_i + e_i. 
+% \end{equation*}
+This is imple in R:\\ 
 {\scriptsize (But make sure that Gattung is stored as a factor in R (check by \texttt{str(d.wurm)})!)} \\
 
 <<fitWurm,echo=T,eval=T>>=
-r.lm <- lm(log(GEWICHT) ~  MAGENUMF + Gattung,d.wurm)
+r.lm <- lm(log10(GEWICHT) ~  MAGENUMF + Gattung,d.wurm)
 @
 
 ~\\
@@ -863,29 +872,57 @@ $\rightarrow$ This seems ok.
 <<results=tex,echo=F>>=
 tableRegression(r.lm)
 @
+$R^2=0.76$, $R^2_a = 0.75$.
 
 ~\\[2mm]
 Why is Gattung Lumbricus (L) not in the results table? \\
 Answer: L was chosen as the ``reference category'', thus $\beta_L=0$.\\[4mm]
 
+\colorbox{lightgray}{\begin{minipage}{10cm}
 We have now actually fitted {\bf three} models, one model for each species:\\[2mm]
 <<echo=F>>=
 worm.coef <- summary(r.lm)$coef
 @
-Lumbricus: $\hat{y}_i = \Sexpr{round(worm.coef[1,1],2)} + \Sexpr{round(worm.coef[2,1],2)}\cdot \text{MAGENUMF}$ \\[2mm]
-Nicodrilus: $\hat{y}_i = \Sexpr{round(worm.coef[1,1],2)} + \Sexpr{round(worm.coef[3,1],2)}  + \Sexpr{round(worm.coef[2,1],2)}\cdot \text{MAGENUMF}$ \\[2mm]
-Octolasion: $\hat{y}_i = \Sexpr{round(worm.coef[1,1],2)} + \Sexpr{round(worm.coef[4,1],2)}  + \Sexpr{round(worm.coef[2,1],2)}\cdot \text{MAGENUMF}$
+Lumbricus: $\hat{y}_i = \Sexpr{format(worm.coef[1,1],2,2,2)} + \Sexpr{round(worm.coef[2,1],2)}\cdot \text{MAGENUMF}$ \\[2mm]
+Nicodrilus: $\hat{y}_i = \Sexpr{format(worm.coef[1,1],2,2,2)} + (\Sexpr{round(worm.coef[3,1],2)})  + \Sexpr{round(worm.coef[2,1],2)}\cdot \text{MAGENUMF}$ \\[2mm]
+Octolasion: $\hat{y}_i = \Sexpr{format(worm.coef[1,1],2,2,2)} + (\Sexpr{format(worm.coef[4,1],2,2,2)})  + \Sexpr{round(worm.coef[2,1],2)}\cdot \text{MAGENUMF}$
+\end{minipage}}
 }
 
 
-\frame[containsverbatim]{\frametitle{Interpreting the results}
+\frame[containsverbatim]{\frametitle{Interpreting the results I}
+{\bf Degrees of freedom:} We had 143 data points. How many degrees of freedom are left for the residual error?\\
+{Answer:} We need 4 parameters: $\beta_0$, $\beta_1$, $\beta_2$, $\beta_3$, thus $143-4=139$.\\[2mm]
+
+Here:\begin{itemize} 
+\item $\beta_0=\Sexpr{format(worm.coef[1,1],2,2,2)}$ is the intercept.
+\item $\beta_1=\Sexpr{round(worm.coef[2,1],2)}$ is the slope for \texttt{MAGENUMF}.
+\item $\beta_2=\Sexpr{round(worm.coef[3,1],2)}$ is the coefficient for Gattung=Nicodrilus.
+\item $\beta_3=\Sexpr{format(worm.coef[4,1],2,2,2)}$ is the coefficient for Gattung =Octolasion.
+\item No coefficient is needed for Gattung=Lumbricus, it is automatically set to 0.
+\end{itemize}
+}
 
 
-{\bf Question:} Is the ``Gattung'' covariate relevant in the model, that is, do the models differ for the three species? \\[6mm]
+\frame[containsverbatim]{\frametitle{Interpreting the results II}
+{\bf Main question:} Is there a realation between stomach size and body mass? \\[4mm]
+
+{\bf Results:} \texttt{MAGENUMF} is a positive coefficient with $p<0.0001$, thus very strong evidence that the relation exists. Increasing \texttt{MAGENUMF} by 1 unit increases $\log_{10}$(\texttt{GEWICHT}) by +0.31.\\[4mm]
+
+Moreover, the $R^2=0.76$ is relatively high and almost identical to $R^2_a$.\\[6mm]
+
+}
+
+
+
+\frame[containsverbatim]{\frametitle{Interpreting the results III}
+
+
+{\bf Question:} Is the ``Gattung'' covariate relevant in the model, that is, do the model intercepts differ for the three species? \\[6mm]
 
 {\bf Problem:} The $p$-values of the worm species are not very meaningful. They belong to tests that compare the actual level with the reference level. However, the question is whether the species variable has an effect in total.\\[6mm]
 
-{\bf Solution:} When a factor covariate with $k$ levels is in the model, it occupies $k-1$ parameters. Therefore, the $t$-test needs to be replaced by the $F$-test.
+{\bf Solution:} When a factor covariate with $k$ levels is in the model, it occupies $k-1$ parameters. Therefore, \alert{the $t$-test needs to be replaced by the $F$-test.}
 
 }
 
@@ -903,23 +940,25 @@ Octolasion: $\hat{y}_i = \Sexpr{round(worm.coef[1,1],2)} + \Sexpr{round(worm.coe
 \frame[containsverbatim]{\frametitle{$F$-test for the earthworms}
 
 
-There exists a function (ANOVA) in R that does the $F$-test for categorical variables:\\[6mm]
+There exists a function (ANOVA) in R that does the $F$-test for categorical variables. \\[6mm]
 
 <<>>=
 anova(r.lm)
 @
 
+~\\[2mm]
+{\bf Note:} Here, the $F$-value for Gattung is distributed as $F_{2,139}$ under the Null-Hypothesis.
 ~\\[4mm]
-Thus: there seems to be some difference in the regression models for the three species.
+Here we have $p=\Sexpr{format(anova(r.lm)[2,5],2,4,2)}$, thus a clear difference in the regression models for the three species (``Gattung is relevant'').
 }
 
 \frame[containsverbatim]{\frametitle{Plotting the earthworms results}
 All species have the same slope (this is a modelling assumption), but different intercepts:
 \begin{center}
 \setkeys{Gin}{width=0.7\textwidth}
-<<fig=T,echo=F,width=5,height=4>>=
+<<fig=T,echo=F,width=4.5,height=4>>=
 cc <- r.lm$coefficients
-plot(log(GEWICHT)~MAGENUMF,d.wurm,col=as.numeric(Gattung),cex=0.8,ylim=c(-3,3),xlim=c(0,8))
+plot(log10(GEWICHT)~MAGENUMF,d.wurm,col=as.numeric(Gattung),cex=0.8,ylim=c(-1.5,1.5),xlim=c(0,8))
 abline(c(cc[1],cc[2]),col=1)
 abline(c(cc[1]+cc[3],cc[2]),col=2)
 abline(c(cc[1]+cc[4],cc[2]),col=3)
@@ -930,7 +969,17 @@ abline(c(cc[1]+cc[4],cc[2]),col=3)
 
 
 \frame{\frametitle{Summary} 
-
+To remember:
+\begin{itemize}
+\item Multiple linear regression model $y_i= \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_m x_i^{(m)} + e_i $.\\[2mm]
+\item The degrees of freedom are reduced with each slope parameter $\beta_k$.\\[2mm]
+\item The $F$-statistic is used to test whether the ensemble of all covariates has some predictive/explanatory power.\\[2mm]
+\item Collinearity of covariates is a problem.\\[2mm]
+\item Adjusted $R_a^2$ used to correct for the number of covariates by penalization.\\[2mm]
+\item Binary covariates: Implicitly fit two models.\\[2mm]
+\item Factor covariates with $k$ levels: Implicitly fit $k-1$ models.\\[2mm]
+\item Use the $F$-test to test if factor covariates are relevant.
+\end{itemize}
 }
 %\frame{References:
 %\bibliographystyle{Chicago}
