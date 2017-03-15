@@ -675,7 +675,9 @@ Questions:
 }
 
 
-
+\frame{
+Add thought as given in Stahel 3.3 f, g and especially h (other variable Z that influences both X and Y.)
+}
 
 \frame[allowframebreaks]{\frametitle{Bradford-Hill-Criteria for causal inference}
 In 1965 the Epidemiologist Bradford Hill presented a list of criteria to assess whether there is some causality or not. However, he wrote ``None of my nine viewpoints can bring indisputable evidence for or against the cause-and-effect hypothesis and none can be required sina qua non.''\\[4mm]

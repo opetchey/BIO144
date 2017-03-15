@@ -88,7 +88,7 @@
 Datenanalyse in der Biologie}%\\[.3cm]
 \author[Stefanie Muff, Owen L.\ Petchey]{\centering Stefanie Muff  \& Owen L.\ Petchey }
 %\institute[]{Institute of Social and Preventive Medicine \\ Institute of Evolutionary Biology and Environmental Studies}
-\date[]{Lecture 4: Multiple linear regression (finalize) / Residual analysis / Checking modelling assumptions\\ 16./17. March 2017}
+\date[]{Lecture 4: Multiple linear regression (finalize) / Residual analysis / Checking modeling assumptions\\ 16./17. March 2017}
 
 
 \maketitle
@@ -115,10 +115,10 @@ The lecture material of today is based on the following literature:\\[4mm]
 \end{itemize}
 }
 
-\frame[containsverbatim]{\frametitle{Recap of last week}
+\frame[allowframebreaks]{\frametitle{Recap of last week}
 \begin{itemize}
 \item Multiple linear regression model $y_i= \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_m x_i^{(m)} + e_i $.\\[3mm]
-\item \alert{Binary} and \alert{factor} covariates: Introduce \alert{dummy variables} such that
+\item \alert{Binary} and \alert{factor} covariates: The idea is to introduce \alert{dummy variables} such that
 \colorbox{lightgray}{\begin{minipage}{10cm}
 \begin{equation*}
 x_i^{(j)} = \left\{ 
@@ -132,16 +132,43 @@ x_i^{(j)} = \left\{
 
 \item Include $x^{(2)}$, ... ,$x^{(k)}$ in the regression, given that $x^{(1)}$ is used as \alert{reference category} ($\beta_1=0$).\\[3mm]
 
-\item The $F$-test is used to test if $\beta_2=\beta_3=...=\beta_k=0$ at the same time for a factor covariate with $k$ levels. Use the \texttt{anova()} function in R to carry out this test.
+\item The factor covariates of last week were used to allow for \alert{group-specific intercepts} (see earthworm example).\\[3mm]
+
+\begin{center}
+\setkeys{Gin}{width=0.55\textwidth}
+<<fig=T,echo=F,width=4.5,height=3>>=
+library(ggplot2)
+d.wurm <- read.table ("../../data_examples/ancova/Projekt6Regenwuermer/RegenwuermerDaten_Haupt.txt",header=T)
+d.wurm[d.wurm$Gattung=="N","GEWICHT"] <- d.wurm[d.wurm$Gattung=="N","GEWICHT"]*0.5
+r.lm <- lm(log10(GEWICHT) ~  MAGENUMF + Gattung,d.wurm)
+cc <- r.lm$coefficients
+ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point() + geom_line(aes(y=cc[1]+cc[2]*MAGENUMF),colour=2)  + geom_line(aes(y=cc[1]+cc[3]+cc[2]*MAGENUMF),colour=3)  + geom_line(aes(y=cc[1]+cc[4] + cc[2]*MAGENUMF),colour=4) + theme_bw()
+@
+\end{center}
+
+\item The \alert{$F$-test} is used to test if $\beta_2=\beta_3=...=\beta_k=0$ at the same time for a factor covariate with $k$ levels. Use the \texttt{anova()} function in R to carry out this test.\\[3mm]
+\item The $F$-test is a \alert{generalization of the $t$-test}, which is used to test if $\beta_j = 0$ for one single variable $x^{(j)}$.
 \end{itemize}
 }
 
 
 
 \frame[containsverbatim]{\frametitle{Group-specific slopes: Interactions}
-It may happen that groups do not only differ in their intercept ($\beta_0$), but also in their slopes ($\beta_x$).\\[2mm]
 
-In this case, one has to introduce an \alert{interaction term} into the regression equation.\\[8mm]
+
+
+
+
+It may happen that \alert{groups do not only differ in their intercept ($\beta_0$), but also in their slopes ($\beta_x$)}.\\[2mm]
+In the earthworm example, allowing for different intercepts and slopes:
+\begin{center}
+\setkeys{Gin}{width=0.6\textwidth}
+<<fig=T,echo=F,width=4.5,height=3>>=
+library(ggplot2)
+library(dplyr)
+ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point() + geom_smooth(method="lm") + theme_bw()
+@
+\end{center}
 
 For simplicity, let us look at a binary covariate ($x_i \in \{0,1\}$). \\
 (Generalization to factorial covariates is more or less straightforward.)
@@ -153,31 +180,38 @@ For simplicity, let us look at a binary covariate ($x_i \in \{0,1\}$). \\
 
 Remember the mercury (Hg) example from last week. We now extended the dataset and include mothers \emph{and} children ($\leq 11$ years).\\[2mm]
 
-It is known that Hg concentrations may change over the lifetime of humans. So let us look at \texttt{log(Hg$_\text{urin}$)} depending on the participants age:
-\vspace{-5mm}
+It is known that Hg concentrations may change over the lifetime of humans. So let us look at \texttt{log(Hg$_\text{urin}$)} depending on the participants age:\\
+
 \begin{center}
-\setkeys{Gin}{width=0.55\textwidth}
-<<fig=T,echo=F,width=4.5,height=4>>=
+\setkeys{Gin}{width=0.6\textwidth}
+<<fig=T,echo=F,width=4.5,height=3>>=
 path <- "../../data_examples/Hg/"
 d.hg <- read.table(paste(path,"Hg_urin.csv",sep=""),header=T, sep=",")
 d.hg <- d.hg[,c(1,2,5,6,7,8,10)]
 names(d.hg) <- c("Hg_urin", "Hg_soil", "smoking","amalgam", "age", "fish","mother")
-plot(log(Hg_urin) ~ age, d.hg,col=mother+1,cex.lab=1.5)
-legend("topright",legend=c("children","mothers"),col=1:2,pch=1)
-abline(lm(log(Hg_urin)~age,data=subset(d.hg,mother==0)))
-abline(lm(log(Hg_urin)~age,data=subset(d.hg,mother==1)),col=2)
+d.hg <- mutate(d.hg,mother=factor(mother))
+ggplot(d.hg,aes(x=age,y=log(Hg_urin),colour=mother)) + geom_point() + geom_smooth(method="lm") + theme_bw()
+# plot(log(Hg_urin) ~ age, d.hg,col=mother+1,cex.lab=1.5)
+# legend("topright",legend=c("children","mothers"),col=1:2,pch=1)
+# abline(lm(log(Hg_urin)~age,data=subset(d.hg,mother==0)))
+# abline(lm(log(Hg_urin)~age,data=subset(d.hg,mother==1)),col=2)
 @
 \end{center}
-An important observation is that children and mothers show different dependencies of age!
+An important observation is that children and mothers show different dependencies of age!\\[2mm]
+$\rightarrow$ Formulate a model that allows for \alert{different intercepts \emph{and} slopes}, depending on group membership (mother/child).
 }
 
 \frame{
-It is therefore crucial to formulate a model that allows for \alert{different intercepts \emph{and} slopes}, depending on group membership (mother/child).\\[2mm]
+
+
+This can be achieved by introducing a so-called \alert{interaction term} into the regression equation.\\[2mm]
 
 The smallest possible model is then given as\\
+\colorbox{lightgray}{\begin{minipage}{10cm}
 \begin{equation}\label{eq:HgInt}
 y_i =  \beta_0 + \beta_1 \text{mother}_i + \beta_2 \text{age}_i + \beta_3\text{age}_i\cdot \text{mother}_i + e_i \ , 
 \end{equation}
+\end{minipage}}
 ~\\
 where $y_i=\log(Hg_{\text{urin}})_i$, and \texttt{mother} is a binary ``dummy'' variable that indicates if the person is a mother (1) or a child (0).\\[4mm]
 
@@ -241,17 +275,20 @@ tableRegression(r.hg)
 }
 
 \frame[containsverbatim]{
-Again, for completeness, some model checking (which one usually does before looking at the results): 
+Again, for completeness, some model checking (which one usually does before looking at the results): \\[8mm]
 
 \setkeys{Gin}{width=0.8\textwidth}
-
-<<modelChecksHg,fig=T,width=7,height=4,echo=F>>=
-par(mfrow=c(1,2))
-plot(r.hg$fitted,r.hg$residuals,xlab="Fitted values", ylab="Residuals",main="TA - diagram")
-abline(h=0,lty=2)
-qqnorm(r.hg$residuals)
-qqline(r.hg$residuals)
+\begin{center}
+<<modelChecksHg,fig=T,width=7,height=3.5,echo=F>>=
+library(ggfortify)
+autoplot(r.hg,which=c(1,2),smooth.col=NA)
+# par(mfrow=c(1,2))
+# plot(r.hg$fitted,r.hg$residuals,xlab="Fitted values", ylab="Residuals",main="TA - diagram")
+# abline(h=0,lty=2)
+# qqnorm(r.hg$residuals)
+# qqline(r.hg$residuals)
 @
+\end{center}
 }
 
 
@@ -282,9 +319,10 @@ The word \emph{linear} refers to the \alert{linearity in the coefficients}, and 
 
 \frame{\frametitle{Multiple vs.\ many single regressions}
 
-Question: Given multiple regression covariates $\bm{x}^{(1)}, \bm{x}^{(2)},...$. Could I simply fit separate simple models for each variable, that is\\
+Question: Given multiple regression covariates $\bm{x}^{(1)}, \bm{x}^{(2)},...$. Could I simply fit separate simple models for each variable, that is\\[2mm]
+
 $y_i = \alpha + \beta x_i^{(1)} + e_i$\\
-$y_i = \alpha + \beta x_i^{(2)} + e_i$ \\
+$y_i = \alpha + \beta x_i^{(2)} + e_i$ \\[2mm]
 etc.? \\[4mm]
 
 \pause
@@ -346,8 +384,8 @@ To extend our analogy, the data analyst is in a position like that of an experim
 \end{minipage}}
 }
 
-\frame{\frametitle{Checking modelling assumptions}
-Remember that in linear regression the modelling assumption is that the residuals $e_i$ are independently normally distributed around zero, that is, $e_i \sim \N(0,\sigma_e^2)$. This implies four things:\\[6mm]
+\frame{\frametitle{Checking modeling assumptions}
+Remember that in linear regression the modeling assumption is that the residuals $e_i$ are independently normally distributed around zero, that is, $e_i \sim \N(0,\sigma_e^2)$. This implies four things:\\[6mm]
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
 \begin{enumerate}[a)]
@@ -476,10 +514,10 @@ qqline(residuals(r1.urin.mother))
 
 
 \frame[containsverbatim]{
-\colorbox{lightgray}{\begin{minipage}{10cm}
-How do I know if a QQ-plot looks ``good''?
-\end{minipage}}
-\vspace{0mm}
+%\colorbox{lightgray}{\begin{minipage}{10cm}
+\frametitle{How do I know if a QQ-plot looks ``good''?}
+%\end{minipage}}
+%\vspace{0mm}
 
 There is no quantitative rule to answer this question, experience is needed. However, you can gain this experience from \alert{simulations}. To this end, generate the same number of data points of a normally distributed variable and compare to your plot. \\
 Example: Generate 59 points $e_i \sim \N(0,1)$ each time:\\[2mm]
@@ -569,7 +607,7 @@ Here, individuals 95, 101 and 106 are potential \myalert{outliers}.
 }
 
 
-\frame{\frametitle{What can go ``wrong'' during the modelling process?}
+\frame{\frametitle{What can go ``wrong'' during the modeling process?}
 
 \begin{itemize}
 \item ...
@@ -681,7 +719,7 @@ autoplot(r4.urin.mother,smooth.colour=NA) + theme_bw()
 }
 
 \frame[containsverbatim]{\frametitle{Outliers}
-{\scriptsize (See Stahel chapter 4.5)}\\
+{\scriptsize (See Stahel chapter 4.5)}\\[2mm]
 The above plots illustrate that outliers are visible in all diagnostic plots. \\[4mm]
 
 What to do in this case?
