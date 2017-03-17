@@ -162,7 +162,7 @@ where $x_i^{(k)}$ is the $k$th dummy variable ($x_i^{(k)}$=1 if $i$th observatio
 ``Magenumfang'' was used to predict ``Gewicht'' of the worm, including as covariate also the worm species.\\[2mm]
 
 \begin{center}
-\includegraphics[width=4cm]{graphics/Bio144_2017_week3-wurmP3.pdf}
+\includegraphics[width=5cm]{graphics/Bio144_2017_week3-wurmP3.pdf}
 \end{center}
 
 \alert{Categorical} and \alert{continuous} covariates were used to predict a continuous outcome (the weight of the worm).
@@ -181,11 +181,25 @@ r.lm <- lm(log(GEWICHT) ~  MAGENUMF + Gattung,d.wurm)
 \vspace{3mm}
 {\bf Remember:} What do the $p$-values ($p=0.48$ and $p<0.0001$) of the categorical covariate ``Gattung'' mean? \\[5mm]
 
-To understand if ``Gattung'' has an effect, {\bf we need to carry out an $F$-test} (see slide 45, week 3). To this end, plot the ANOVA table:\\[2mm]
+To understand if ``Gattung'' has an effect, {\bf we need to carry out an $F$-test} (see slides 45/46, week 3). To this end, plot the ANOVA table:\\[2mm]
 <<anovaWurm,echo=T,eval=T>>=
 anova(r.lm)
 @
 }
+
+\frame[containsverbatim]{
+The \alert{$F$-test} is also needed to check whether the \alert{interaction term} between \texttt{MAGENUMF} and \texttt{Gattung} is needed: \\[2mm]
+
+<<fitWurm2,echo=T,eval=T>>=
+r.lm2<- lm(log(GEWICHT) ~  MAGENUMF * Gattung,d.wurm)
+summary(r.lm2)$coef
+anova(r.lm2)
+@
+
+~\\[2mm]
+$\rightarrow$ $p=0.167$ seems not to be significant.
+}
+
 
 
 \frame[containsverbatim]{\frametitle{A new example: cholesterol levels}
@@ -198,8 +212,10 @@ d.chol <- read.table ("../../data_examples/ancova/cholesterol/cholesterol.txt",h
 @
 \begin{center}
 \setkeys{Gin}{width=0.60\textwidth}
-<<chol,fig=T,width=4.5,height=3.6,eval=T>>=
-plot(cholesterol ~ state,data=d.chol)
+<<chol,fig=T,width=4,height=3,eval=T, echo=F>>=
+library(ggplot2)
+ggplot(d.chol,aes(x=state,y=cholesterol)) + geom_boxplot()
+#plot(cholesterol ~ state,data=d.chol)
 @
 \end{center}
 }
@@ -212,8 +228,8 @@ y_i = \beta_0 + \beta_1 (state)_i + \beta_2 (age)_i + \beta_3 (state)_i (age)_i 
 ~\\
 
 <<echo=T>>=
-r.aov <- aov(cholesterol ~ age*state,data=d.chol)
-summary(r.aov)
+r.lm <- lm(cholesterol ~ age*state,data=d.chol)
+anova(r.lm)
 @
 \vspace{5mm}
 
@@ -222,35 +238,34 @@ Interpretation?
 
  
 \frame[containsverbatim]{
-Compare the results from the previous slide to the \texttt{lm()} output:\\[3mm]
+Compare the results from the previous slide to the estimated coefficients:\\[3mm]
 <<echo=T>>=
 r.lm <- lm(cholesterol ~ age*state,data=d.chol)
 summary(r.lm)$coef
 @
 \vspace{5mm}
  
+{\bf Note:} The $p$-values for the \texttt{age} and \texttt{state} coefficients are not the same as in the anova table...\\[2mm]
+
 Compare the results for ``state'' also to the model without interaction:\\[3mm]
 <<echo=T>>=
 r.lm2 <- lm(cholesterol ~ age + state,data=d.chol)
 summary(r.lm2)$coef
 @
 ~\\[2mm]
-{\small {\bf Note:} the $p$-value for `state' is now the same as on the previous slide (ANOVA table).}
+{\small {\bf Note:} the $p$-value for `state' is now the same as on the previous slide (anova table).} Reason: anova tests the models against one another in the {\bf order} specified.
 } 
 
 
 \frame[containsverbatim]{
-As always, some model checking is necessary:\\[2mm]
+As always, some model checking is necessary:\\[4mm]
 
 \setkeys{Gin}{width=0.9\textwidth}
-<<fig=T,width=7,height=4>>=
-par(mfrow=c(1,2))
-plot(r.aov$fitted,r.aov$residuals,xlab="fitted",ylab="residuals")
-abline(h=0,lty=2)
-qqnorm(r.aov$fitted)
-qqline(r.aov$fitted)
+<<fig=T,width=7,height=3,echo=F>>=
+library(ggfortify)
+autoplot(r.lm,which=c(1,2),smooth.colour=NA)
 @
-~\\
+~\\[4mm]
 $\rightarrow$ This seems ok.
 }
  

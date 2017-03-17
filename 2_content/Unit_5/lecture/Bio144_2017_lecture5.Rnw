@@ -132,7 +132,7 @@ Introduction by Sir R.\ A.\ Fisher (1890-1962). He worked at the agricultural re
 
 Questions of AN(C)OVA:
 \begin{itemize}
-\item Generally: Are the means of twor or more groups different?\\[2mm]
+\item Generally: Are the means of two or more groups different?\\[2mm]
 \item Example: Are different plant breeds different in important aspects (e.g., yiels / Ertrag)?\\[2mm]
 \item Example: What is the influence of different treatments on plants (Biology) or patients (Medicine)? \\[2mm]
 \end{itemize}
@@ -270,7 +270,7 @@ Interpretation: The effects $\beta_1$, $\beta_2$ etc give the deviation from the
 
 \frame{\frametitle{ANOVA as a special case of a linear model}
 \colorbox{lightgreen}{\begin{minipage}{10cm}
-The clou is: Model \eqref{eq:aov} is identical to the regression model with a factor covariate, see slides 36/37 from week 3. 
+The clou is: Model \eqref{eq:aov} is identical to the regression model with a factor covariate, see slides 35/36 from week 3. 
 \end{minipage}}
 ~\\[4mm]
 {\bf Interpretation: The levels of the factor are now the different group memberships.} \\
@@ -299,7 +299,7 @@ H_1 &:& \text{At least two groups are different}
 \end{eqnarray*}
 
 ~\\[2mm]
-Remember from slide 44 of week 3 (or Stahel script p.33): We have already used the $F$-test for categorical variables (see $F$-test for the earthworks, slide 45 of week 3). This was equivalent to testing if all $\beta$s that belong to a categorical variable are =0 at the same time.\\[2mm] 
+Remember from slide 45 of week 3 (or Stahel script p.33): We have already used the $F$-test for categorical variables (see $F$-test for the earthworks, slide 46 of week 3). This was equivalent to testing if all $\beta$s that belong to a categorical variable are =0 at the same time.\\[2mm] 
 
 This is \alert{the very same problem here}, thus we need the $F$-test again!\\[2mm]
 
@@ -312,7 +312,7 @@ To derive the ingredients of the $F$-test, we again look at the decomposition of
 
 
 \frame{\frametitle{Variance decomposition}
-(Remember this idea from week 3, slide 24, and replace $\hat{y_{ij}}$ by $\overline{y}_{\cdot i}$)
+(Remember this idea from week 3, slide 23, and replace $\hat{y_{ij}}$ by $\overline{y}_{\cdot i}$)
 
 \begin{eqnarray*}
 SS_{total} &=&  SS_{\text{between groups}} \qquad +\qquad SS_{\text{within groups}} \\
@@ -367,7 +367,7 @@ Thus $F = \frac{MS_G}{MS_E}$ is large when $MS_G$ is ``large'' with respect to $
 
 
 \frame{\frametitle{The ANOVA table}
-An overview of the results is typically given in an ANOVA table (Varianzanalyse-Tabelle):\\[6mm]
+An overview of the results is typically given in an ANOVA table (Varianzanalysen-Tabelle):\\[6mm]
 
 \begin{tabular}{llllll}
 Variation & df & SS & MS = SS/df & F & $p$ \\ 
@@ -628,6 +628,16 @@ Sometimes additional comparisons are of interest. For example, a new diet is to 
 In the ``Blutzucker'' example, this could be, for intance: ``Is diet 1 different from diets 2-4?'' \\[4mm]
 
 (Check also chapter 5.6.5 in GSWR, 2nd edition)
+}
+
+\frame[containsverbatim]{\frametitle{Choosing the reference level}
+Back to the Hybridmais example:
+<<>>=
+levels(d.mais$HYBRID)
+d.mais <- mutate(d.mais,HYBRID = relevel(HYBRID,ref="DBC"))
+anova(lm(YIELD ~ HYBRID, d.mais))
+summary(lm(YIELD ~ HYBRID, d.mais))$coef
+@
 }
 
 \frame[containsverbatim]{\frametitle{Two-way ANOVA (Zweiweg-Varianzanalyse)}
@@ -893,6 +903,7 @@ autoplot(r.duenger2,smooth.colour=NA)
 \frame{\frametitle{Some summary remarks }
 \begin{itemize}
 \item The $t$-test to compare the mean of \myalert{two gropus} is a \myalert{special case of ANOVA}.\\[2mm]
+\item Even more, the $F$-test is a special case of the $t$-test: $F_{1,n} = t^2_n$.\\[2mm]
 \item ANOVA is a \myalert{special cases of the linear regression model}.\\[2mm]
 \item ANOVA is often taught in separate lectures, although it could be integrated in a lecture on linear regression. \\[2mm]
 \item ANOVA is traditionally most used to analyze \myalert{experimental data}.\\[2mm]
@@ -900,6 +911,28 @@ autoplot(r.duenger2,smooth.colour=NA)
 }
 
 
+
+\frame[containsverbatim]{\frametitle{Illustration of $F_{1,n}=t^2_n$}
+
+Look again at the mercury example and include only one covariate (fish):\\[2mm]
+
+<<echo=F>>=
+library(ggfortify)
+path <- "../../data_examples/Hg/"
+d.hg <- read.table(paste(path,"Hg_urin.csv",sep=""),header=T, sep=",")
+d.hg.m <- d.hg[d.hg$mother==1,-c(3,4,9,10,11)]
+names(d.hg.m) <- c("Hg_urin", "Hg_soil", "smoking","amalgam", "age", "fish")
+@
+<<>>=
+r.lm <- lm(log10(Hg_urin) ~  fish,data=d.hg.m)
+summary(r.lm)
+@
+~\\
+The F-value $\Sexpr{format(summary(r.lm)$fstatistic[1],2,2,2)}$ has $\Sexpr{format(summary(r.lm)$fstatistic[2],0,0,0)}$ and $\Sexpr{format(summary(r.lm)$fstatistic[3],0,0,0)}$ degrees of freedom. \\
+
+The $t$-statistic for \texttt{fish} is $t= \Sexpr{format(summary(r.lm)$coef[2,3],2,2,2)}$, also with 57 deg.\ of freedom.\\[2mm]
+$\rightarrow \quad t^2 = F$.
+}
 
 
 % \frame{References:

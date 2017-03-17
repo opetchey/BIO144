@@ -413,7 +413,7 @@ All models are wrong, but some are useful. \scriptsize{(Box 1978)}
 
 \frame{\frametitle{Overview of model-checking tools}
 
-Complete overview of thos used in this course:\\[2mm]
+Complete overview of those used in this course:\\[2mm]
 
 \begin{itemize}
 \item Tukey-Anscombe plot (see lectures 2 and 3)\\
@@ -720,6 +720,7 @@ autoplot(r4.urin.mother,smooth.colour=NA) + theme_bw()
 
 \frame[containsverbatim]{\frametitle{Outliers}
 {\scriptsize (See Stahel chapter 4.5)}\\[2mm]
+
 The above plots illustrate that outliers are visible in all diagnostic plots. \\[4mm]
 
 What to do in this case?
