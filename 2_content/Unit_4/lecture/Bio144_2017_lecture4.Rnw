@@ -443,7 +443,7 @@ names(d.hg.m) <- c("Hg_urin", "Hg_soil", "smoking","amalgam", "age", "fish")
 @
 
 
-It is smometimes useful to enrich the TA-plot by adding a ``running mean'' or a ``smoothed mean'', which can give hints on the trend of the residuals. For the mercury example where $\log(Hg_{\text{urin}})$ is regressed on smoking, amalgam  and fish consumption for mothers only (slides 32-34 of lecture 3): 
+It is sometimes useful to enrich the TA-plot by adding a ``running mean'' or a ``smoothed mean'', which can give hints on the trend of the residuals. For the mercury example where $\log(Hg_{\text{urin}})$ is regressed on smoking, amalgam  and fish consumption for mothers only (slides 32-34 of lecture 3): 
 \vspace{-10mm}
 
 \begin{multicols}{2} 
