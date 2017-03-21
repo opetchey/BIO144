@@ -224,7 +224,7 @@ where
 \item $e_{ij}\sim\N(0,\sigma_e^2)$ is an independent error term. \\[4mm]
 \end{itemize}
 
-Typically, this is rewritten as
+Typically, this is {\bf rewritten as}
 \begin{eqnarray*}
 y_{ij} = \mu + \beta_i + e_{ij} \ ,
 \end{eqnarray*}
@@ -395,8 +395,9 @@ text(3.8,58,expression(bar(y[4])),col=2,cex=1.0)
 \end{itemize}
 
 
-\href{http://onlinestatbook.com/stat_sim/one_way/index.html}
+\href{https://gallery.shinyapps.io/anova_shiny_rstudio/}
 {\beamergotobutton{ANOVA App}}
+\url{ https://gallery.shinyapps.io/anova_shiny_rstudio/}
 }
 
 
@@ -487,7 +488,7 @@ $\rightarrow$ This is equivalent to  ``The group variable is relevant for the mo
 \end{minipage}}
 
 ~\\
-{\bf Exercise:} Look at the table a bit closer. How are \texttt{Df}, \texttt{Sum Sq}, \texttt{Mean Sq}, \texttt{F value} and \texttt{Pr(<F)} related? 
+{\scriptsize {\bf Exercise:} Look at the table a bit closer. How are \texttt{Df}, \texttt{Sum Sq}, \texttt{Mean Sq}, \texttt{F value} and \texttt{Pr(<F)} related?} 
 }
 
 \frame[containsverbatim]{
@@ -512,7 +513,8 @@ summary(r.mais)
 @
 ~\\[2mm]
 
-The table contains the estimates of the intercept \Sexpr{format(summary(r.mais)$coef[1,1],2,2,2)} ($\mu$ in ANOVA notation, $\beta_0$ in regression notation), and estimates for $\beta_2$, $\beta_3$, $\beta_4$ (while $\beta_1=0$).
+The table contains the estimates of the intercept \Sexpr{format(summary(r.mais)$coef[1,1],2,2,2)} ($\mu$ in ANOVA notation, $\beta_0$ in regression notation), and estimates for $\beta_2$, $\beta_3$, $\beta_4$ (while $\beta_1=0$).\\
+{\bf Hint:} Check also the $F$-test on the last line...
 }
 
 
@@ -849,7 +851,7 @@ Compare these values to slide \ref{sl:mean}!
 }
 
 \frame[containsverbatim]{\frametitle{A cautionary note}
-{\bf Be careful:} In the presence of interactions, the $p$-values of the main effects should no longer be interpreted as before!\\[2mm]
+{\bf Be careful:} In the presence of interactions, the $p$-values of the main effects can no longer be interpreted as before!\\[2mm]
 
 It is then required that separate analyses are carried out. For example for "Beef" and "Cereal" protein sources:\\[2mm]
 
@@ -872,7 +874,8 @@ autoplot(r.weight2,smooth.colour=NA)
 
 
 \frame[containsverbatim]{\frametitle{Exercise: }
-In an experiment the influence of four levels of fertilizer (DUENGER) on the yield (ERTRAG) on 5 species (SORTE) of crops was investigated. The data contains the following colums:\\
+In an experiment the influence of four levels of fertilizer (DUENGER) on the yield (ERTRAG) on 5 species (SORTE) of crops was investigated. For each DUENGER $\times$ ERTRAT level, 3 repeats were taken. \\
+The data contains the following colums:\\
 DUENGER (4 levels) \hspace{1cm} SORTE (5 levels) \hspace{1cm} ERTRAG \\[6mm]
 
 <<dmais,eval=T,echo=F>>=
@@ -942,12 +945,13 @@ autoplot(r.duenger2,smooth.colour=NA)
 }
 
 \frame[containsverbatim]{
-Btw, the summary table with coefficients looks horrible and the {\bf$p$-values are not meaningful }! (why?)
+Btw, the summary table with coefficients looks horrible and the {\bf$p$-values are not meaningful}! (why?)
 <<results=tex,echo=F>>=
 #summary(r.duenger2)$coef
 library(biostatUZH)
 tableRegression(r.duenger2)
 @
+Questions: Number of parameters? Degrees of freedom (60 data points)?
 }
 
 
