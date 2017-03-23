@@ -1,0 +1,267 @@
+\documentclass[english,9pt,aspectraio=169]{beamer}
+\usepackage{etex}
+\usetheme{uzhneu-en-informal}
+%\usepackage{uarial}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\RequirePackage{graphicx,ae}
+\usepackage{bm}
+\usepackage{fancybox,amssymb,color}
+\usepackage{pgfpages}
+\usepackage{booktabs}
+\usepackage{verbatim}
+\usepackage{animate}
+\usepackage{numprint}
+\usepackage{vwcol} 
+\usepackage{dsfont}
+\usepackage{tikz}
+\usepackage{amsmath,natbib}
+\usepackage{mathbbol}
+\usepackage{babel}
+\usepackage{SweaveSlides}
+\usepackage{multicol}
+\usepackage{xcolor}
+
+
+\usetheme{uzhneu-en-informal}
+\DeclareMathOperator{\po}{Poisson}
+\DeclareMathOperator{\G}{Gamma}
+\DeclareMathOperator{\Be}{Beta}
+\DeclareMathOperator{\logit}{logit}
+\def\n{\mathop{\mathcal N}}
+
+\definecolor{Gray}{RGB}{139,137,137}
+\definecolor{darkred}{rgb}{0.8,0,0}
+\definecolor{Green}{rgb}{0,0.8,0.3}
+\definecolor{lightgreen}{rgb}{0,0.7,0.3}
+\definecolor{Blue}{rgb}{0,0,1}
+\def\myalert{\textcolor{darkred}}
+\def\myref{\textcolor{Gray}}
+\setbeamercovered{invisible}
+
+\renewcommand{\baselinestretch}{1.2}
+\beamertemplateballitem
+\DeclareMathOperator{\cn}{cn} % Copy number
+\DeclareMathOperator{\ccn}{ccn} % common copy number
+\DeclareMathOperator{\p}{p} % common copy number
+\DeclareMathOperator{\E}{E} % common copy number
+\DeclareMathOperator{\given}{|} % common copy number
+\def\given{\,|\,}
+\def\na{\tt{NA}}
+\def\nin{\noindent}
+\pdfpageattr{/Group <</S /Transparency /I true /CS /DeviceRGB>>}
+\def\eps{\varepsilon}
+
+\renewcommand{\P}{\operatorname{\mathsf{Pr}}} % Wahrscheinlichkeitsmaß
+\def\eps{\varepsilon}
+\def\logit{\text{logit}}
+%\newcommand{\E}{\mathsf{E}} % Erwartungswert
+\newcommand{\Var}{\text{Var}} % Varianz
+\newcommand{\NBin}{\text{NBin}}
+\newcommand{\Po}{\text{Po}}
+\newcommand{\N}{\mathsf{N}}
+\newcommand{\odds}{\text{odds}}
+
+\newcommand{\hl}{\textcolor{red}}
+
+\newcommand{\ball}[1]{\begin{pgfpicture}{-1ex}{-0.65ex}{1ex}{1ex}
+\usebeamercolor[fg]{item projected}
+
+{\pgftransformscale{1.75}\pgftext{\normalsize\pgfuseshading{bigsphere}}}
+{\pgftransformshift{\pgfpoint{0pt}{0.5pt}}
+\pgftext{\usebeamerfont*{item projected}{#1}}}
+\end{pgfpicture}}%
+\usepackage{multicol}
+\newcommand{\ballsmall}[1]{\begin{pgfpicture}{-1ex}{-0.65ex}{.2ex}{.2ex}
+
+{\pgftransformscale{1}\pgftext{\normalsize\pgfuseshading{bigsphere}}}
+{\pgftransformshift{\pgfpoint{0pt}{0.5pt}}
+\pgftext{\usebeamerfont*{item projected}{#1}}}
+\end{pgfpicture}}%
+
+
+
+\begin{document}
+\SweaveOpts{width=6,height=4}
+\fboxsep5pt
+
+\frame{
+\title[]{ \centering \Huge Kurs Bio144: \\
+Datenanalyse in der Biologie}%\\[.3cm]
+\author[Stefanie Muff, Owen L.\ Petchey]{\centering Stefanie Muff  \& Owen L.\ Petchey }
+%\institute[]{Institute of Social and Preventive Medicine \\ Institute of Evolutionary Biology and Environmental Studies}
+\date[]{Lecture 11: Measurement error in regression models \\ 18./19. May 2017}
+
+
+\maketitle
+}
+
+
+\frame{\frametitle{Overview (todo: check)}
+\begin{itemize}
+\item ME in the response ($y$) and in covariates ($x$) of regression models.
+\item Effects of ME on regression parameters.
+\item  When do I have to start to worry?
+\item Simple methods to correct for ME. 
+\end{itemize}
+<<echo=F>>=
+library(dplyr)
+library(ggplot2)
+library(ggfortify)
+@
+}
+
+
+\frame{\frametitle{Course material covered today}
+
+The lecture material of today is partially based on the following literature:\\[4mm]
+
+\begin{itemize}
+\item Chapter 6.1 in ``Lineare regression''
+\end{itemize}
+}
+
+
+\frame{
+	\frametitle{Sources of measurement uncertainty / measurement error (ME)}
+
+	\begin{itemize}
+		\item {\bf Measurement imprecision} in the field or in the lab (length, weight, blood pressure, etc.).\\[0.2cm]
+		\item Errors due to {\bf incomplete} or {\bf biased observations} (e.g., self-reported dietary aspects, health history).\\[0.2cm]
+		\item Biased observations due to {\bf preferential sampling or repeated observations}.\\[0.2cm]
+		\item Rounding error, digit preference.\\[0.2cm]
+		\item {\bf Misclassification error} (e.g., exposure or disease classification).\\[0.2cm]
+		\item \ldots \\[0.6cm]
+	\end{itemize}
+	\begin{center}
+	``Error'' or ``uncertainty''? 
+	\end{center}
+}
+
+\frame{\frametitle{Why should ME not be ignored?}
+
+\begin{itemize}
+\item It is a \alert{fundamental assumption}  that explanatory variables are measured or estimated \alert{without error}, for instance for 
+\begin{itemize}
+\item the calculation of correlations.
+\item linear regression and ANOVA.
+\item Generalized linear and non-linear regressions (e.g.\ logistic an Poisson).
+\end{itemize}
+\item Most other modelling assumptions are routinely checked!\\[2mm]
+\item Violation of this assumption may lead to \alert{biased} parameter estimates, altered standard errors and $p$-values, incorrect covariate importances, and to \alert{misleading conclusions}.\\[2mm]
+\item Even standard statistics textbooks do often not mention these problems.
+\end{itemize}
+
+}
+
+
+\frame{\frametitle{The effects of measurement error (ME)}
+Bias the regression parameters, mainly attenuation (underestimation) of the true effect.
+}
+
+
+\frame{
+	\frametitle{Effect of ME in linear regression}
+	~\\
+	Find regression parameters $\beta_0$ and $\beta_x$ for unobserved $\bm{x}$:
+	\begin{eqnarray*}
+	y_i= 1 \cdot \alert{x_i} + \epsilon_i, \quad \epsilon_i \sim \N(0,\sigma^2_{\epsilon}) \ .
+	\end{eqnarray*}
+	Simulation: $n=100$, $\sigma^2_\epsilon=1/100$, $\sigma^2_x = \sigma^2_u =1$.
+	\vspace*{-1.2cm}
+	\begin{center}
+\setkeys{Gin}{width=.85\textwidth}
+<<echo=FALSE, fig=TRUE, width=8.5, height=7.5>>=
+set.seed(84522)
+col1 <- "red"
+col2 <- "blue"
+n <- 100
+beta_0 <- 0
+beta_1 <- 1
+epsilon <- rnorm(n, 0, 0.1)
+x <- rnorm(n, 0, 1)
+u <- rnorm(n, 0, 1)
+w <- x + u
+##Classical
+y <- beta_0 + beta_1*x + epsilon
+m1 <- lm(y~x)
+m2 <- lm(y~w)
+nf <- layout(matrix(c(1,2),1,2,byrow=TRUE), c(4,4), c(4,2), TRUE)
+par( mar=c(4,6,4,1), cex.lab=1.5, cex.axis=1.4, cex.main=1.8)
+plot(x,y, pch=15, col=col2,  xlim=c(-4,4), ylim=c(-4,4), xlab="Covariate", ylab="Data", main="Classical error model",cex.main=1.5)
+points(w,y, pch=20, col=col1)
+abline(m1, col=col2, lwd=1.8)
+abline(m2, col=col1, lwd=1.8)
+legend("topleft", c("Original data", "Error-prone data"), pch=c(15,19), col=c(col2,col1), bty="n", cex=1.2)
+
+#boxplot(cbind(w,x), horizontal=T, ylim=c(-4,4), las=1, col=c(col1, col2))
+
+## Berkson
+w_b <- x
+x_b <- w
+y <- beta_0 + beta_1*x_b + epsilon
+m3 <- lm(y~x_b)
+m4 <- lm(y~w_b)
+plot(x_b,y, pch=15, col=col2, xlim=c(-4,4), ylim=c(-4,4), xlab="Covariate", ylab="Data", main="Berkson error model",cex.main=1.5)
+points(w_b,y, pch=20, col=col1)
+abline(m3, col=col2, lwd=1.8)
+abline(m4, col=col1, lwd=1.8)
+legend("topleft", c("Original data", "Error-prone data"), pch=c(15,19), col=c(col2, col1), bty="n", cex=1.2)
+
+#boxplot(cbind(w_b,x_b), horizontal=T, ylim=c(-4,4), las=1, col=c(col1, col2), names=c("w", "x"))
+@
+	\end{center}
+}
+
+\frame{\frametitle{Simulations or apps}
+
+Shiny apps for classical  error in linear, logistic and Poisson regression:\\[6mm]
+
+\href{https://stefaniemuff.shinyapps.io/MEC_ChooseL/}
+{\beamergotobutton{Classical error}}
+
+% \href{https://stefaniemuff.shinyapps.io/MEB_ChooseL/}
+% {\beamergotobutton{Berkson error}}
+
+}
+
+
+\frame{\frametitle{Error in the outcome of regression models}
+Example: \alert{Continuous} error in a linear regression outcome.\\[2mm]
+{\small Note: In the case when the observed response 
+\begin{equation*}
+s_i = y_i + v_i \quad v_i \sim \N(0,\sigma_v^2) \ ,
+\end{equation*}
+the error variance is simply absorbed in the residual variance $\sigma^2_\epsilon$. }
+\vspace{-2mm}
+\setkeys{Gin}{width=0.65\textwidth}
+<<echo=FALSE,fig=TRUE,height=3.5,width=6.5,include=TRUE>>=
+par(mfrow=c(1,2))
+x <- runif(100,-2,2)
+y <- x + rnorm(100,0,1)
+ystar <- y + rnorm(100,0,2)
+plot(y~x,xlab="",ylab="",main="",ylim=c(-6,6))
+mtext("without response error",3,cex=1.2,padj=-1)
+abline(c(0,1))
+plot(ystar~x,xlab="",ylab="",main="",ylim=c(-6,6))
+mtext("with response error",3,cex=1.2,padj=-1)
+abline(c(0,1))
+@
+}
+
+\frame{\frametitle{How to correct for error?}
+(attenuation factor in lin. Reg, SIMEX in
+some more general cases, Bayesian approach (only mention it))
+}
+
+\frame{\frametitle{Summary}
+
+}
+% \frame{References:
+% \bibliographystyle{Chicago}
+% \bibliography{refs}
+% }
+
+
+
+\end{document}

@@ -387,7 +387,7 @@ text(3.8,58,expression(bar(y[4])),col=2,cex=1.0)
 \item when the group means become more different, or
 \item when the variability within groups decreases.
 \end{itemize}
-\item On the other hand, $F$decreases
+\item On the other hand, $F$ decreases
 \begin{itemize}
 \item when the group means become more similar, or
 \item when the variability within groups increases.\\[6mm]
@@ -574,7 +574,7 @@ For instance, for four groups there are $4\cdot 3/2= 6$ pairwise combinations th
 
 
 \frame{\frametitle{Post-hoc tests}
-{\bf Still:} If the test $\beta_1=\beta_2=\ldots= \beta_g=0$ is rejected, one is often interested 
+{\bf Still:} If the test $\beta_2=\ldots= \beta_g=0$ is rejected, one is often interested 
 \begin{enumerate}
 \item in finding the actual group(s) that deviate(s) from the others.
 \item in estimates of the pairwise differences.\\[6mm]
@@ -874,7 +874,7 @@ autoplot(r.weight2,smooth.colour=NA)
 
 
 \frame[containsverbatim]{\frametitle{Exercise: }
-In an experiment the influence of four levels of fertilizer (DUENGER) on the yield (ERTRAG) on 5 species (SORTE) of crops was investigated. For each DUENGER $\times$ ERTRAT level, 3 repeats were taken. \\
+In an experiment the influence of four levels of fertilizer (DUENGER) on the yield (ERTRAG) on 5 species (SORTE) of crops was investigated. For each DUENGER $\times$ ERTRAG level, 3 repeats were taken. \\
 The data contains the following colums:\\
 DUENGER (4 levels) \hspace{1cm} SORTE (5 levels) \hspace{1cm} ERTRAG \\[6mm]
 
