@@ -126,7 +126,7 @@ The lecture material of today is based on the following literature:\\[4mm]
 \item Two-way ANOVA for factorial designs, interactions.\\[2mm]
 \item Interpretation of the results.\\[2mm]
 \item Model checking.\\[2mm]
-\item ANOVA as a special case of linear regression with categorical covariates.
+\item ANOVA is a special case of linear regression with categorical covariates.
 \end{itemize}
 }
 
@@ -144,7 +144,7 @@ An ANCOVA is an analysis of variance (ANOVA), \alert{including} also at least on
 \end{minipage}}
 \vspace{6mm}
 
-There, ANCOVA is a \alert{combination of ANOVA and regression}, so in principle, there is nothing new to it...\\[6mm]
+$\rightarrow$ ANCOVA is a \alert{combination of ANOVA and regression}, so in principle, there is nothing new to it...\\[6mm]
 
 Given a categorical covariate $x_i$ and a continuous covariate $z_i$. Then the ANCOVA equation (without interactions) is given as
 \colorbox{lightgray}{\begin{minipage}{10cm}
@@ -153,7 +153,8 @@ y_i = \beta_0 + \beta_1x_i^{(1)} + ... + \beta_kx_i^{(k)} + \beta_z z_i + e_i \ 
 \end{equation*}
 where $x_i^{(k)}$ is the $k$th dummy variable ($x_i^{(k)}$=1 if $i$th observation belongs to category $k$, 0 otherwise).
 \end{minipage}}
-{\bf Note:} It is straightforward to add interactions $x_i^{(j)}z_i$ for all levels of $x_i$.
+~\\
+{\bf Note:} It is straightforward to add an interaction of $x_i$ with $z_i$.
 }
 
 \frame{\frametitle{}
@@ -197,7 +198,7 @@ anova(r.lm2)
 @
 
 ~\\[2mm]
-$\rightarrow$ $p=0.167$ seems not to be significant.
+$\rightarrow$ $p=0.167$, thus interaction is probably not relevant. 
 }
 
 
@@ -253,7 +254,8 @@ r.lm2 <- lm(cholesterol ~ age + state,data=d.chol)
 summary(r.lm2)$coef
 @
 ~\\[2mm]
-{\small {\bf Note:} the $p$-value for `state' is now the same as on the previous slide (anova table).} Reason: anova tests the models against one another in the {\bf order} specified.
+{\small {\bf Note:} the $p$-value for `state' is now (almost) the same as on the previous slide (anova table).}\\
+Reason: anova tests the models against one another in the {\bf order} specified.
 } 
 
 
@@ -657,8 +659,8 @@ Examples:
 \frame{\frametitle{Matrix multiplication}
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
-The multiplication of two matrices $\bm{A}$ and $\bm{B}$ is \alert{defined if}\\[2mm]
-Number of columns in $\bm{A}$ = Number of rows in $\bm{B}$.
+The multiplication of two matrices $\bm{A}$ and $\bm{B}$ is \alert{defined if}%\\[2mm]
+\begin{center}number of columns in $\bm{A}$ = number of rows in $\bm{B}$.\end{center}
 \end{minipage}}
 ~\\[2mm]
 

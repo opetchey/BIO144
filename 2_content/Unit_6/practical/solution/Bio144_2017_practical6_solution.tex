@@ -231,18 +231,18 @@ And check by R:
 \end{Sinput}
 \begin{Soutput}
              Estimate Std. Error   t value    Pr(>|t|)
-(Intercept) 10.562244  0.7687569 13.739382 0.005255709
-x1           4.615732  0.2583106 17.868925 0.003117229
-x2          -1.966152  0.2183123 -9.006146 0.012105420
+(Intercept)  8.590208  1.5538587  5.528307 0.031197109
+x1           5.344841  0.5221132 10.236938 0.009407998
+x2          -2.064356  0.4412662 -4.678254 0.042780503
 \end{Soutput}
 \begin{Sinput}
 > solve(t(Xtilde) %*% Xtilde)  %*%  t(Xtilde) %*% t.Y
 \end{Sinput}
 \begin{Soutput}
           [,1]
-[1,] 10.562244
-[2,]  4.615732
-[3,] -1.966152
+[1,]  8.590208
+[2,]  5.344841
+[3,] -2.064356
 \end{Soutput}
 \end{Schunk}
 
@@ -262,20 +262,39 @@ The \texttt{apply} functions applies the defined function on all columns of \tex
 \end{Sinput}
 \end{Schunk}
 
-\item Following the course philosophy, we procude the required graphs using \texttt{ggplot}. For the histograms, rearrange the data a bit, namely by generating a data frame \texttt{r.data} that contains as one column all estimates of the $\beta$s, and as a second column an indicator if the estimate is for $\beta_0$, $\beta_1$ or $\beta_2$. 
+\item We procude the required graphs using \texttt{ggplot}. Load the libraries:
 \begin{Schunk}
 \begin{Sinput}
 > library(ggplot2)
+> library(tidyr)
 > library(dplyr)
-> r.data <- data.frame(estimate=c(r.coef[,1],r.coef[,2],r.coef[,3]))
-> r.data <- mutate(r.data,beta=rep(c("beta0","beta1","beta2"),each=100))
-> ggplot(r.data,aes(x=estimate)) +  
-+   facet_wrap(~beta,scales="free_x") + 
-+   geom_histogram(bins=20) + 
-+   theme_bw()
 \end{Sinput}
 \end{Schunk}
-\includegraphics{Bio144_2017_practical6_solution-013}
+
+For the histograms, first convert \texttt{r.coef} into a data frame and rename the columns:
+\begin{Schunk}
+\begin{Sinput}
+> r.coef <- data.frame(r.coef)
+> names(r.coef) <- c("beta0","beta1","beta2")
+\end{Sinput}
+\end{Schunk}
+Then either produce three separate plots using
+\begin{Schunk}
+\begin{Sinput}
+> ggplot(r.coef,aes(x=beta0)) + geom_histogram()
+> ggplot(r.coef,aes(x=beta1)) + geom_histogram()
+> ggplot(r.coef,aes(x=beta2)) + geom_histogram()
+\end{Sinput}
+\end{Schunk}
+
+Or use the \texttt{gather()} function from the \texttt{tidyr} package, which has the advantage that you can then use \texttt{facet\_wrap()}:
+\begin{Schunk}
+\begin{Sinput}
+> ggplot(gather(r.coef, key=variable, value=value), aes(value)) +
++   geom_histogram(bins=10) + facet_wrap(~variable, scales = "free") + theme_bw()
+\end{Sinput}
+\end{Schunk}
+\includegraphics{Bio144_2017_practical6_solution-016}
 
 
 
@@ -290,30 +309,27 @@ The \texttt{apply} functions applies the defined function on all columns of \tex
 % @
 % 
 % \eject
-For the scatterplots we can continue to use \texttt{r.coef} with the three columns, but we need to convert it from matrix to a data frame.
+For the scatterplots we can continue to use \texttt{r.coef}:
 
 \setkeys{Gin}{width=0.3\textwidth}
 \begin{Schunk}
 \begin{Sinput}
-> r.coef <- data.frame(r.coef)
-> names(r.coef) <- c("beta0","beta1","beta2")
-> par(mfrow=c(1,3))
 > ggplot(r.coef,aes(x=beta0,y=beta1)) + geom_point()  
 \end{Sinput}
 \end{Schunk}
-\includegraphics{Bio144_2017_practical6_solution-014}
+\includegraphics{Bio144_2017_practical6_solution-017}
 \begin{Schunk}
 \begin{Sinput}
 > ggplot(r.coef,aes(x=beta0,y=beta2)) + geom_point()
 \end{Sinput}
 \end{Schunk}
-\includegraphics{Bio144_2017_practical6_solution-015}
+\includegraphics{Bio144_2017_practical6_solution-018}
 \begin{Schunk}
 \begin{Sinput}
 > ggplot(r.coef,aes(x=beta1,y=beta2)) + geom_point()
 \end{Sinput}
 \end{Schunk}
-\includegraphics{Bio144_2017_practical6_solution-016}
+\includegraphics{Bio144_2017_practical6_solution-019}
 
 Observation:  $\beta_0$ seems to be correlated with $\beta_1$ and $\beta_2$.
 
