@@ -97,7 +97,7 @@ Datenanalyse in der Biologie}%\\[.3cm]
 }
 
 
-\frame{\frametitle{Overview (todo: check)}
+\frame{\frametitle{Overview}
 \begin{itemize}
 \item ANCOVA
 \item ANCOVA as special cases of a linear model
@@ -451,10 +451,10 @@ a_{n1} & a_{n2} & ... & a_{nm}
 \end{array}\right) \quad \Rightarrow \quad
 \bm{A}^\top = \left(
 \begin{array}{cccc}
-a_{11} & a_{21} &  ... & a_{m1}\\
-a_{12} & a_{22} & ... & a_{m2} \\
+a_{11} & a_{21} &  ... & a_{n1}\\
+a_{12} & a_{22} & ... & a_{n2} \\
 \vdots & \vdots &  & \vdots \\
-a_{1n} & a_{2n} & ... & a_{mn}
+a_{1m} & a_{2m} & ... & a_{nm}
 \end{array}\right) \ .
 \end{equation*}
 ~\\[2mm]
@@ -710,7 +710,7 @@ Attention: Matrix multiplication does \alert{not} follow the same rules as scala
 \item The \alert{Distributivgesetz holds:} 
 \begin{eqnarray*}
 \bm{A}\cdot (\bm{B} + \bm{C}) &=& \bm{A}\cdot \bm{B} +   \bm{A}\cdot \bm{C}  \\
-(\bm{A} + \bm{B} ) \cdot \bm{C}) &=& \bm{A}\cdot \bm{C} +   \bm{B}\cdot \bm{C} 
+(\bm{A} + \bm{B} ) \cdot \bm{C} &=& \bm{A}\cdot \bm{C} +   \bm{B}\cdot \bm{C} 
 \end{eqnarray*}
 \item Transposing inverts the order: $(\bm{A}\cdot \bm{B})^\top = \bm{B}^\top \cdot \bm{A}^\top$.\\[4mm]
 \item The product $\bm{A}\cdot\bm{A}^\top$ is \alert{always symmetric}. \\[4mm]
@@ -787,7 +787,7 @@ The identity matrix (of dimension $m$) is probably the simples matrix that exist
 ~\\[2mm]
 
 Multiplication with the identity matrix leaves a $m\times n$ matrix $\bm{A}$ unchanged:\\
-$$\bm{I} \cdot \bm{A} = \bm{A} \cdot \bm{I} = \bm{A} \ .$$
+$$\bm{A} \cdot \bm{I}  = \bm{A} \ .$$
 }
 
 \frame{\frametitle{Inverse matrix}
@@ -887,9 +887,7 @@ Let us start by generating the ``true'' response, calculated as $\bm{\tilde{X}} 
 }
 
 \frame[containsverbatim]{
-<<>>=
 
-@
 <<>>=
 x1 <- c(0,1,2,3,4)
 x2 <- c(4,1,0,1,4)
