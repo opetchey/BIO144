@@ -180,9 +180,16 @@ t.E <- matrix(rnorm(500,0,1),nrow=5)
 t.Y <- t.y  + t.E
 @
 
-The \texttt{apply} functions applies the defined function on all columns of \texttt{t.Y} (note that if the second argument was \texttt{=1} the function would be applied to all rows) 
+% The \texttt{apply} functions applies the defined function on all columns of \texttt{t.Y} (note that if the second argument was \texttt{=1} the function would be applied to all rows) 
+% <<>>=
+% r.coef <- t(apply(t.Y, 2, FUN = function(y) lm(y ~ x1 + x2)$coefficients))
+% @
+100 iterations of the regression:
 <<>>=
-r.coef <- t(apply(t.Y, 2, FUN = function(y) lm(y ~ x1 + x2)$coefficients))
+r.coef <- matrix(NA,ncol=3, nrow=100)
+for (i in 1:100) {
+  r.coef[i,] <- lm(t.Y[,i] ~x1 + x2)$coefficients
+}
 @
 
 \item We procude the required graphs using \texttt{ggplot}. Load the libraries:

@@ -332,14 +332,14 @@ Often, the desire is to find a model that is in some sense ``optimal'' or ``best
 
 
 \frame{\frametitle{Is importance reflected by $p$-values?}
-A widely used practice to determine the ``importance'' of a term is to look at the $p$ value from the $t$-test and check if it falls below a certain threshold (usually $p<0.05$). \\[4mm]
+A widely used practice to determine the ``importance'' of a term is to look at the $p$ value from the $t$ or $F$-test and check if it falls below a certain threshold (usually $p<0.05$). \\[4mm]
 
 {\bf However, there are a few problems with this approach:}\\[2mm]
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
 \begin{itemize}
 \item {\bf A small $p$-value does not necessarily mean that a term is (biologically, medically) important -- and vice versa!}\\[2mm]
-\item When carrying out the $t$-tests with $H_0: \beta_j=0$ for all variables , one runs into a \alert{multiple testing problem}.\\
+\item When carrying out the tests with $H_0: \beta_j=0$ for all variables sequentially, one runs into a \alert{multiple testing problem}.\\
 {(\scriptsize Remember the ANOVA lecture, week 5, slide 23).}\\[2mm]
 \item The respective tests depend crucially on the correctness of the \alert{normality assumption}.\\[2mm]
 \item Covariates are sometimes \alert{collinear}, which leads to more uncertainty in the estimation of the respective regression parameters, and thus to larger $p$-values.\\[2mm]
@@ -410,12 +410,13 @@ r.lm <- lm(Y~.,data)
 @
 
 As expected, the distribution of the $p$-value is (more or less) uniform between 0 and 1:\\
+\begin{center}
 \setkeys{Gin}{width=0.5\textwidth}
 <<fig=T,width=4,height=4,echo=F>>=
 par(mfrow=c(1,1))
 hist(summary(r.lm)$coef[-1,4],freq=T,main="50 variables",xlab="p-values")
 @
-
+\end{center}
 \end{enumerate}
 }
 
@@ -428,13 +429,14 @@ hist(summary(r.lm)$coef[-1,4],freq=T,main="50 variables",xlab="p-values")
 r.lm.red <- lm(Y ~ X1 + X2 + X4 + X5 + X14 + X18 + X20 + X27 + X36 + X38 + X49,data)
 @
 
-
-\setkeys{Gin}{width=0.5\textwidth}
+\begin{center}
+\setkeys{Gin}{width=0.48\textwidth}
 <<fig=T,width=4,height=4,echo=F>>=
 hist(summary(r.lm.red)$coef[-1,4],freq=T,main="11 'best' variables",xlab="p-values")
 @
+\end{center}
 
-The distribution of the $p$-values is now skewed: many of them reach ``significant'' values (7 have $p<0.05$). This happened \alert{although none of the variables has any explanatory power!}
+The distribution of the $p$-values is now skewed: many of them reach rather small values (7 have $p<0.05$). This happened \alert{although none of the variables has any explanatory power!}
 \end{enumerate}
 }
 
@@ -613,7 +615,7 @@ I like to do simple (and extreme) examples to understand the point. Given two id
 y_i = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + e_i \ ,
 \end{equation*}
 
-the slope coefficients $\beta_1$ and $\beta_2$ \alert{cannot be uniquely determined} (there are many solutions to the equation)! \\[2mm]
+the slope coefficients $\beta_1$ and $\beta_2$ \alert{cannot be uniquely determined} (there are many equally ``optimal'' solutions to the equation)! \\[2mm]
 
 When the variables are collinear, this problem is less severe, but the $\beta$ coefficients can be estimated \alert{less precisely} $\rightarrow$ standard errors too high $\rightarrow$ $p$-values too large.
 }
@@ -716,30 +718,15 @@ Automatic model selection strategies are thus {\bf not recommended for explanato
 }
 
 \frame[containsverbatim]{\frametitle{Final comments on the mercury example}
-Given that the mercury model is an {\bf explanatory models}, we should not remove a variable (e.g., migration) simply because it reduces AIC (see slide \ref{sl:migration}).\\[2mm]
+Given that the mercury model is an {\bf explanatory model}, we should not remove a variable (e.g., migration) simply because it reduces AIC (see slide \ref{sl:migration}).\\[2mm]
 
 Therefore, given the a priori selection of variables and the model validation results, the model from slide \ref{sl:mercury_final} was used in the final publication \citep{imo.etal2017}.
 }
 
 
-\frame{\frametitle{Occam's Razor principle}
-
-The principle essentially says that an explanatory model should not be made more complicated than necessary.\\[4mm]
-
-This is also known as the \alert{principle of {\bf parsimony}}:\\[4mm]
-
-\colorbox{lightgray}{\begin{minipage}{10cm}
-Systematic effects should be included in a model {\bf only} if there is convincing evidence for the need of them.
-\end{minipage}}
-
-\vspace{4mm}
-\href{https://de.wikipedia.org/wiki/Ockhams_Rasiermesser}
-{\beamergotobutton{See Wikipedia for ``Ockham's Rasiermesser''}}
-}
 
 
-
-\frame[containsverbatim]{\frametitle{The bodyfat example}
+\frame[containsverbatim]{\frametitle{A predictive model: The bodyfat example}
 The bodyfat study is a typical example for a {\bf predictive model}.\\[2mm] 
 
 There are 12 potential predictors (plus the response). Let's fit the full model:\\[2mm]
@@ -789,7 +776,20 @@ tableRegression(r.AIC)
 }
 
 
+\frame{\frametitle{Occam's Razor principle}
 
+The principle essentially says that an explanatory model should not be made more complicated than necessary.\\[4mm]
+
+This is also known as the \alert{principle of {\bf parsimony}}:\\[4mm]
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+Systematic effects should be included in a model {\bf only} if there is convincing evidence for the need of them.
+\end{minipage}}
+
+\vspace{4mm}
+\href{https://de.wikipedia.org/wiki/Ockhams_Rasiermesser}
+{\beamergotobutton{See Wikipedia for ``Ockham's Rasiermesser''}}
+}
 
 \frame{\frametitle{Summary}
 \begin{itemize}

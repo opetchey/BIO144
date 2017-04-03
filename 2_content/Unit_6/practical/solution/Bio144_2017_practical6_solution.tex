@@ -231,18 +231,18 @@ And check by R:
 \end{Sinput}
 \begin{Soutput}
              Estimate Std. Error   t value    Pr(>|t|)
-(Intercept)  8.590208  1.5538587  5.528307 0.031197109
-x1           5.344841  0.5221132 10.236938 0.009407998
-x2          -2.064356  0.4412662 -4.678254 0.042780503
+(Intercept)  9.376377  1.0661828  8.794343 0.012684355
+x1           5.623006  0.3582489 15.695810 0.004034577
+x2          -2.362865  0.3027756 -7.804014 0.016026000
 \end{Soutput}
 \begin{Sinput}
 > solve(t(Xtilde) %*% Xtilde)  %*%  t(Xtilde) %*% t.Y
 \end{Sinput}
 \begin{Soutput}
           [,1]
-[1,]  8.590208
-[2,]  5.344841
-[3,] -2.064356
+[1,]  9.376377
+[2,]  5.623006
+[3,] -2.362865
 \end{Soutput}
 \end{Schunk}
 
@@ -255,10 +255,17 @@ x2          -2.064356  0.4412662 -4.678254 0.042780503
 \end{Sinput}
 \end{Schunk}
 
-The \texttt{apply} functions applies the defined function on all columns of \texttt{t.Y} (note that if the second argument was \texttt{=1} the function would be applied to all rows) 
+% The \texttt{apply} functions applies the defined function on all columns of \texttt{t.Y} (note that if the second argument was \texttt{=1} the function would be applied to all rows) 
+% <<>>=
+% r.coef <- t(apply(t.Y, 2, FUN = function(y) lm(y ~ x1 + x2)$coefficients))
+% @
+100 iterations of the regression:
 \begin{Schunk}
 \begin{Sinput}
-> r.coef <- t(apply(t.Y, 2, FUN = function(y) lm(y ~ x1 + x2)$coefficients))
+> r.coef <- matrix(NA,ncol=3, nrow=100)
+> for (i in 1:100) {
++   r.coef[i,] <- lm(t.Y[,i] ~x1 + x2)$coefficients
++ }
 \end{Sinput}
 \end{Schunk}
 

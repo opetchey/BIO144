@@ -123,8 +123,8 @@ Calculate all of the following expressions, if they are defined. Solve at least 
 
 
 
-or more elegantly with \texttt{apply()}:\\
-\texttt{r.coef <- t(apply(t.Y, 2, FUN = function(y) lm(...)\$...))}
+% or more elegantly with \texttt{apply()}:\\
+% \texttt{r.coef <- t(apply(t.Y, 2, FUN = function(y) lm(...)\$...))}
 \end{itemize}
 
 \end{enumerate}
