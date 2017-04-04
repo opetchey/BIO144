@@ -576,7 +576,7 @@ Given $m$ potential variables to be included in a model.\\[2mm]
 
 \begin{itemize}
 \item In principle it is possible to minimize the AIC over all $2^m$ possible models. Simply fit all models and take the ``best'' one (lowest AIC).\\[2mm]
-\item Sometimes the best few models have very similar AIC. It is then possible to do {\bf model averaging}, e.g.\ over the best 3 models, by weighting them according to the AIC (not done in this course).\\[6mm]
+\item Sometimes several models have a very similar, low AIC. It is then possible to do {\bf model averaging}, e.g.\ over the 3 models with lowest AIC, by weighting them according to the AIC (not done in this course).\\[6mm]
 \end{itemize}
 
 {\bf However:}
@@ -586,7 +586,7 @@ Given $m$ potential variables to be included in a model.\\[2mm]
 \end{itemize}
 }
 
-\frame{\frametitle{Collinearity of covariates}
+\frame{\frametitle{Another complication: Collinearity of covariates}
 {\small (See Stahel chapter 5.4)}\\[4mm]
 
 Given a set of covariates $\bm{x^{(1)}}, \bm{x^{(2)}}, \bm{x^{(3)}}, ...,\bm{x^{(p)}}$. If it is possible for one of the covariates to be written as a \alert{linear combination of the others}
@@ -606,11 +606,11 @@ the set of covariates is said to be \alert{collinear}. \\[4mm]
 
 
 \frame{\frametitle{}
-In statistics, the expression ``collinearity'' is also used when such a collinearity relationship is approximately true. For example, when two variables $\bm{x^{(1)}}$ and $\bm{x^{(2)}}$ have a high correlation.\\[4mm]
+In statistics, the expression ``collinearity'' is also used when such a collinearity relationship is \emph{approximately} true. For example, when two variables $\bm{x^{(1)}}$ and $\bm{x^{(2)}}$ have a high correlation.\\[4mm]
 
 {\bf What is the problem with collinearity?}
 
-I like to do simple (and extreme) examples to understand the point. Given two identical covariates $\bm{x^{(1)}}=\bm{x^{(2)}}$, an extreme form of ``high correlation'', and the regression model
+I like to do simple (and extreme) examples to understand the point. An extreme form of collinearity is when two covariates are identical $\bm{x^{(1)}}=\bm{x^{(2)}}$. In the regression model
 \begin{equation*}
 y_i = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + e_i \ ,
 \end{equation*}
@@ -641,7 +641,7 @@ VIF_j = \frac{1}{1-R_j^2} \qquad
 \item \alert{Avoid} it, e.g. in experiments.\\[2mm]
 \item \alert{Remove the variable} with an inacceptably high $R^2_j$ or $VIF_j$. The tolerance of VIFs are different in the literature and range from 4 to 10 as a maximum tolerable VIF.\\[2mm]
 \item Be \alert{aware} of it and interpret your results with the respectivie care.\\[2mm]
-\item See also Stahel 5.4(i) for  ``recipe''.
+\item See also Stahel 5.4(i) for a ``recipe''.
 \end{itemize}}
 
 
@@ -650,7 +650,7 @@ VIF_j = \frac{1}{1-R_j^2} \qquad
 Before we continue to discuss model selection, let us introduce an important discrimination between models that aim at explanation and those that aim at prediction:\\[2mm]
 
 \begin{itemize}
-\item \alert{\bf Explanatory models}: These are models that aim to understand the (causal) relationship between covariates and the response. \\
+\item \alert{\bf Explanatory models}: These are models that aim at understanding the (causal) relationship between covariates and the response. \\
 \underline{Example:} The mercury study aims to understand if Hg-concentrations in the soil (covariable) influence the Hg-concentrations in humans (response).\\[2mm]
 
 \item \alert{\bf Predictive models}: These are models that aim to predict the outcome of future subjects.\\
@@ -691,7 +691,7 @@ Automatic model selection procedures using criteria like AIC, AIC$_c$, BIC may t
 
 \frame{\frametitle{Your aim is explanation?}  
 
-{\bf Then please select your covariates according to \emph{a priori} knowledge.}\\[6mm]
+{\bf Then please select your covariates according to \alert{a priori} knowledge.}\\[6mm]
 
 \includegraphics[width=10.5cm]{graphics/claytonHills.jpg}\\
 {\scriptsize\citep{clayton.hills1993}}
@@ -760,11 +760,11 @@ AIC(r.AIC)
 @
 ~\\[6mm]
 
-$\rightarrow$ The AIC for the optimal model is $\Sexpr{format(AIC(r.AIC),1,1,1)}$, compared to the full model with an AIC of $\Sexpr{format(AIC(r.bodyfat),1,1,1)}$. This is not a very dramatic improvement.
+$\rightarrow$ The AIC for the optimal model is $\Sexpr{format(AIC(r.AIC),1,1,1)}$, compared to the full model with an AIC of $\Sexpr{format(AIC(r.bodyfat),1,1,1)}$. This is not a very dramatic improvement, though...
 }
 
 \frame[containsverbatim]{
-But at least the model was now reduced, and only 8 of the 12 variables remain in the model:\\[2mm]
+But at least the model was now reduced, and only 8 of the 12 variables retain:\\[2mm]
 
 <<results=tex,echo=F>>=
 tableRegression(r.AIC)
