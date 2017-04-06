@@ -754,13 +754,13 @@ Given the predictive nature of the model, we do some automatic model selection f
 <<>>=
 library(MASS)
 # model with optimal AIC:
-r.AIC <- stepAIC(r.bodyfat, direction = c("backward"), trace = FALSE)
-AIC(r.bodyfat)
-AIC(r.AIC)
+r.AIC <- stepAIC(r.bodyfat, direction = c("backward"), trace = FALSE,AICc=TRUE)
+AICc(r.bodyfat)
+AICc(r.AIC)
 @
 ~\\[6mm]
 
-$\rightarrow$ The AIC for the optimal model is $\Sexpr{format(AIC(r.AIC),1,1,1)}$, compared to the full model with an AIC of $\Sexpr{format(AIC(r.bodyfat),1,1,1)}$. This is not a very dramatic improvement, though...
+$\rightarrow$ The AICc for the optimal model is $\Sexpr{format(AICc(r.AIC),1,1,1)}$, compared to the full model with an AICc of $\Sexpr{format(AICc(r.bodyfat),1,1,1)}$. This is not a very dramatic improvement, though...
 }
 
 \frame[containsverbatim]{
@@ -771,7 +771,7 @@ tableRegression(r.AIC)
 @
 ~\\[3mm]
 
-{\bf Note:}  AIC minimization may lead to a model that retains variables with relatively large $p$-values (e.g., ankle).\\[2mm]
+{\bf Note:}  AICc minimization may lead to a model that retains variables with relatively large $p$-values (e.g., ankle).\\[2mm]
 {\bf Again:} Such a procedure should not be applied for an explanatory model. Moreover, the coefficients should not be (over-)interpreted.
 }
 
