@@ -231,18 +231,18 @@ And check by R:
 \end{Sinput}
 \begin{Soutput}
              Estimate Std. Error   t value    Pr(>|t|)
-(Intercept)  9.376377  1.0661828  8.794343 0.012684355
-x1           5.623006  0.3582489 15.695810 0.004034577
-x2          -2.362865  0.3027756 -7.804014 0.016026000
+(Intercept) 10.424761  1.1593521  8.991885 0.012143152
+x1           4.996217  0.3895548 12.825454 0.006024432
+x2          -2.494555  0.3292339 -7.576848 0.016976675
 \end{Soutput}
 \begin{Sinput}
 > solve(t(Xtilde) %*% Xtilde)  %*%  t(Xtilde) %*% t.Y
 \end{Sinput}
 \begin{Soutput}
           [,1]
-[1,]  9.376377
-[2,]  5.623006
-[3,] -2.362865
+[1,] 10.424761
+[2,]  4.996217
+[3,] -2.494555
 \end{Soutput}
 \end{Schunk}
 
@@ -298,7 +298,8 @@ Or use the \texttt{gather()} function from the \texttt{tidyr} package, which has
 \begin{Schunk}
 \begin{Sinput}
 > ggplot(gather(r.coef, key=variable, value=value), aes(value)) +
-+   geom_histogram(bins=10) + facet_wrap(~variable, scales = "free") + theme_bw()
++   geom_histogram(bins=10) + facet_wrap(~variable, scales = "free") + 
++   theme_bw()
 \end{Sinput}
 \end{Schunk}
 \includegraphics{Bio144_2017_practical6_solution-016}

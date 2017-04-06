@@ -214,7 +214,8 @@ ggplot(r.coef,aes(x=beta2)) + geom_histogram()
 Or use the \texttt{gather()} function from the \texttt{tidyr} package, which has the advantage that you can then use \texttt{facet\_wrap()}:
 <<fig=T,echo=T,width=6,height=3>>=
 ggplot(gather(r.coef, key=variable, value=value), aes(value)) +
-  geom_histogram(bins=10) + facet_wrap(~variable, scales = "free") + theme_bw()
+  geom_histogram(bins=10) + facet_wrap(~variable, scales = "free") + 
+  theme_bw()
 @
 
 
