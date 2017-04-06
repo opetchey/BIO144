@@ -463,7 +463,7 @@ In 2002, Burnham and Anderson suggested the use of so-called \alert{information-
 The idea is to find a \alert{balance between}\\[4mm]
 
 \begin{center}
-{\bf Good model fit} $\quad\leftrightarrow\quad$ {\bf Low model complexit}
+{\bf Good model fit} $\quad\leftrightarrow\quad$ {\bf Low model complexity}
 \end{center}
 
 ~\\[4mm]
@@ -717,6 +717,21 @@ Automatic model selection strategies are thus {\bf not recommended for explanato
 
 }
 
+\frame{\frametitle{Occam's Razor principle}
+
+The principle essentially says that an {\bf explanatory model} should not be made more complicated than necessary.\\[4mm]
+
+This is also known as the \alert{principle of {\bf parsimony}}:\\[4mm]
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+Systematic effects should be included in a model {\bf only} if there is convincing evidence for the need of them.
+\end{minipage}}
+
+\vspace{4mm}
+\href{https://de.wikipedia.org/wiki/Ockhams_Rasiermesser}
+{\beamergotobutton{See Wikipedia for ``Ockham's Rasiermesser''}}
+}
+
 \frame[containsverbatim]{\frametitle{Final comments on the mercury example}
 Given that the mercury model is an {\bf explanatory model}, we should not remove a variable (e.g., migration) simply because it reduces AIC (see slide \ref{sl:migration}).\\[2mm]
 
@@ -776,20 +791,7 @@ tableRegression(r.AIC)
 }
 
 
-\frame{\frametitle{Occam's Razor principle}
 
-The principle essentially says that an explanatory model should not be made more complicated than necessary.\\[4mm]
-
-This is also known as the \alert{principle of {\bf parsimony}}:\\[4mm]
-
-\colorbox{lightgray}{\begin{minipage}{10cm}
-Systematic effects should be included in a model {\bf only} if there is convincing evidence for the need of them.
-\end{minipage}}
-
-\vspace{4mm}
-\href{https://de.wikipedia.org/wiki/Ockhams_Rasiermesser}
-{\beamergotobutton{See Wikipedia for ``Ockham's Rasiermesser''}}
-}
 
 \frame{\frametitle{Summary}
 \begin{itemize}
