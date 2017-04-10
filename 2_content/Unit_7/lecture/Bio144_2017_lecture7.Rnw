@@ -498,7 +498,7 @@ When the number of data points $n$ is small with respect to the number of parame
 \colorbox{lightgray}{\begin{minipage}{10cm}
 The {\bf corrected AIC} of a model with $n$ data points, likelihood $L$ and $p$ parameters is given as
 \begin{equation*}
-AIC_c = -2\log(L) + \frac{2p(p+1)}{n-p-1} \ .
+AIC_c = -2\log(L) + 2p\cdot\frac{n}{n-p-1} \ .
 \end{equation*}
 \end{minipage}}
 ~\\[4mm]
@@ -721,7 +721,7 @@ Automatic model selection strategies are thus {\bf not recommended for explanato
 
 The principle essentially says that an {\bf explanatory model} should not be made more complicated than necessary.\\[4mm]
 
-This is also known as the \alert{principle of {\bf parsimony}}:\\[4mm]
+This is also known as the \alert{principle of {\bf parsimony}} (Prinzip der Sparsamkeit):\\[4mm]
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
 Systematic effects should be included in a model {\bf only} if there is convincing evidence for the need of them.
