@@ -97,7 +97,7 @@ Datenanalyse in der Biologie}%\\[.3cm]
 }
 
 
-\frame{\frametitle{Overview (todo: check)}
+\frame{\frametitle{Overview}
 \begin{itemize}
 \item $P$-values: Interpretation and (mis-)use\\[2mm]
 \item Statistical significance vs biological relevance\\[2mm]
@@ -115,15 +115,20 @@ Datenanalyse in der Biologie}%\\[.3cm]
 
 The lecture material of today is based on the following literature:\\[4mm]
 \begin{itemize}
-\item Literature/articles from the self-study week (todo: say which ones here)
+\item All literature and articles from the self-study week.
 \end{itemize}
 
 
 }
 
-\frame[containsverbatim]{\frametitle{Recap of Last week}
+\frame[containsverbatim]{\frametitle{Recap of previous lecture (before Easter)}
 \begin{itemize}
-\item todo
+\item Model selection is difficult.\\[2mm]
+\item Information criteria: AIC, AIC$_c$ and BIC \\
+$\qquad \qquad\rightarrow$ {\bf model fit vs model complexity}\\[2mm]
+\item Predictive models vs explanatory models.\\[2mm]
+\item Automatici model selection is inappropriate for explanatory models!\\[2mm]
+\item Caveats of $p$-values: biological relevance vs statistical significance
 \end{itemize}
 }
 
@@ -134,7 +139,7 @@ The lecture material of today is based on the following literature:\\[4mm]
 \frame{\frametitle{$P$-values }
 {\bf Recap:}\\
 
-$P$-values are commonly used for \emph{statistical testing}, e.g.\ by checking if $p<0.05$.\\[4mm]
+$P$-values are often used for \emph{statistical testing}, e.g.\ by checking if $p<0.05$.\\[4mm]
 
 
 {\bf Examples:} \\
@@ -773,9 +778,9 @@ It is {\bf widely unknown} that a model can be broken by the inclusion of a ``wr
 \begin{itemize}
 \item Try to understand the definition and the meaning of $p$-values. \\[2mm]
 \item Correct understanding, use and interpretation of $p$-values: Do not use the \alert{``mindless'' $p<0.05$ criterion}!!\\[2mm]
-\item Statistical significance vs biological relevance: Ask for the \alert{effect size} and \alert{confidence interval}, and reflect what it means, instead of only reporting $p$-values. \\[2mm]
-\item The $p$-value is not ``bad'', but it has to be used properly \\
-$\rightarrow$ 3 suggestions or alternatives (gradual interpretation on $p$-values, effect sizes and CIs, relative importances).\\[2mm]
+\item Statistical significance vs biological relevance: Ask for the \alert{effect size} and \alert{confidence interval}, and reflect what it means, instead of only reporting $p$-values alone. \\[2mm]
+\item The $p$-value is not ``bad'', it contains useful information, but it has to be used properly. \\
+$\rightarrow$ 3 suggestions or alternatives (gradual interpretation of $p$-values, effect sizes and CIs, relative importances).\\[2mm]
 \item \alert{Correlation} should not be mistaken for \alert{causality}.\\[2mm]
 \item \alert{Experimental studies} are better suited to reveal causality than observational studies!
 \end{itemize}

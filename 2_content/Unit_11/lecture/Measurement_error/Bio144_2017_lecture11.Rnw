@@ -150,7 +150,7 @@ $$e_i \sim \N(0,\sigma_e^2) \ . $$
 }
 
 
-\frame{\frametitle{Another fundamental assumption (but often neglected)}
+\frame{\frametitle{Another fundamental assumption that is often neglected}
 
 \begin{itemize}
 \item It is a \alert{fundamental assumption}  that explanatory variables are measured or estimated \alert{without error}, for instance for 
@@ -357,7 +357,7 @@ Illustration with shiny apps for two error types in linear, logistic and Poisson
 }
 
 
-\frame{\frametitle{Error in the outcome of regression models (ev delete?)}
+\frame{\frametitle{Error in the outcome of regression models }
 Example: \alert{Continuous} error in a linear regression outcome.\\[2mm]
 {\small Note: In the case when the observed response 
 \begin{equation*}
@@ -387,14 +387,30 @@ $\rightarrow$ Error in the response seems to be less of a problem. However, this
 \frame{\frametitle{How to correct for error?}
 \begin{itemize}
 \item Generally, to correct for the error we need an {\bf error model} and knowledge of the {\bf error model parameters}.\\[2mm]
-{\bf Example}: If classical error $w_i = x_i + u_i$ with $u_i \sim \N(0,\sigma_u^2)$ is present, knowledge of the {\bf error variance} $\sigma_u^2$ is needed.\\[4mm]
+{\bf Example}: If classical error $w_i = x_i + u_i$ with $u_i \sim \N(0,\sigma_u^2)$ is present, knowledge of the {\bf error variance} $\sigma_u^2$ is needed.\\[2mm]
+
+{\bf Strategy}: Take repeated measurements to estimate the error variance!\\[4mm]
+
 \item In \alert{simple cases}, formulas for the bias exist. \\[2mm]
-{\bf Example}: In linear regression the biased slope parameter $\beta_x^\star$ relates to the true value $\beta_x$ as 
-$$\beta_x^\star = \left(\frac{\sigma_x^2}{\sigma_x^2 + \sigma_u^2}\right) \beta_x \ .$$
-$\rightarrow$ knowing $\sigma_u^2$ and $\sigma_x^2$, the correct slope can be calculated.\\[2mm]
+
 \item In most cases, such simple relations don't exist. Specific error modelling methods are then needed!
 \end{itemize}
 
+}
+
+
+\frame{\frametitle{Attenuation in simple linear regression}
+
+Given the simple linear regression equation $y_i = \beta_0 + \beta_x x_i + e_i$ with $w_i = x_i + u_i$.
+Assume that $w_i$ instead of $x_i$ is used in the regression:
+$$y_i = \beta^\star_0 + \beta^\star_x w_i + e_i \ .$$
+~\\
+
+The {\bf naive slope parameter $\beta_x^\star$} is then underestimated with respect to the true slope $\beta_x$, with {\bf attenuation factor} $\lambda$: 
+$$\beta_x^\star =\underbrace{ \left(\frac{\sigma_x^2}{\sigma_x^2 + \sigma_u^2}\right)}_{=\lambda} \beta_x \ .$$
+$\rightarrow$ knowing $\sigma_u^2$ and $\sigma_x^2$, the correct slope can be retrieved!\\[2mm]
+
+{\bf Example:} $\sigma_x^2 = 5$, $\sigma_u^2 = 1$ $\rightarrow$  $\lambda = \frac{5}{6} = 0.83 $.
 }
 
 % \frame{\frametitle{ME modelling: The SIMEX idea}
@@ -487,7 +503,7 @@ $\rightarrow$ apply the SIMEX procedure!
 
 \frame[containsverbatim]{
 <<echo=F,eval=T>>=
-set.seed(34)
+set.seed(3243445)
 x <- rnorm(100,24,4)
 w <- x + rnorm(100,0,2)
 z <- rbinom(100,1,0.5)
@@ -499,25 +515,44 @@ names(data) <- c("BMI","sex","bodyfat")
 @
 
 
-Use the error-prone BMI variable to fit a regression:
+Use the error-prone BMI variable to fit a ``naive'' regression:\\[2mm]
 <<>>=
 r.lm <- lm(bodyfat ~ BMI + sex,data,x=TRUE)
+summary(r.lm)$coef
 @
+~\\[4mm]
+
 Then run the simex procedure using the \texttt{simex()} function from the respective package:\\[2mm]
 <<>>=
 library(simex)
-r.simex <- simex(r.lm,SIMEXvariable="BMI",measurement.error=sqrt(4),lambda=seq(1,3,0.1),B=10)
+r.simex <- simex(r.lm,SIMEXvariable="BMI",measurement.error=sqrt(4),
+                 lambda=seq(0,2.5,0.1),B=10,fitting.method="quadratic")
+summary(r.simex)$coef$asymptotic
 @
+}
 
+
+\frame[containsverbatim]{
+Graphical results with quadratic extrapolation function:
 \begin{center}
-\setkeys{Gin}{width=.9\textwidth}
+\setkeys{Gin}{width=.95\textwidth}
 <<fig=T,width=5,height=2.5>>=
-par(mfrow=c(1,3))
+par(mfrow=c(1,3),mar=c(4,4,2,1))
 plot(r.simex)
 @
 \end{center}
 }
 
+
+
+\frame{\frametitle{Practical advice}
+\begin{itemize}
+\item Think about error problems {\bf before} you start collecting your data!\\[2mm]
+\item Ideally, take {\bf repeated measurements}, maybe of a subset of data points.\\[2mm]
+\item Figure out if error is a problem and what the bias in your parameters might be. You might need simulations to find out.\\[2mm]
+\item If needed, model the error. {\bf Seek help from a statistician!}
+\end{itemize}
+}
 
 
 \frame{\frametitle{Summary}
