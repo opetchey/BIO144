@@ -101,7 +101,7 @@ Datenanalyse in der Biologie}%\\[.3cm]
 \begin{itemize}
 \item ME in in covariates ($x$) and in the response ($y$) of regression models.
 \item Effects of ME on regression parameters.
-\item  When do I have to start to worry?
+\item  When do I have to worry?
 \item Simple methods to correct for ME. 
 \end{itemize}
 <<echo=F>>=
@@ -381,7 +381,7 @@ abline(c(0,1))
 @
 \end{center}
 \vspace{-8mm}
-$\rightarrow$ Error in the response seems to be less of a problem. However, this might not be true for other regression types (logistic, Poisson) or error structures.
+$\rightarrow$ Error in the response seems to be less of a problem. However, this is \emph{not} true for other regression types (logistic, Poisson) or error structures.
 }
 
 \frame{\frametitle{How to correct for error?}
@@ -506,7 +506,7 @@ $\rightarrow$ apply the SIMEX procedure!
 set.seed(3243445)
 x <- rnorm(100,24,4)
 w <- x + rnorm(100,0,2)
-z <- rbinom(100,1,0.5)
+z <- ifelse(x>25,rbinom(100,1,0.7),rbinom(100,1,0.3))
 y <- -15 + 1.6*x - 2*z + rnorm(100,0,3)
 data <- data.frame(cbind(w,z,y))
 names(data) <- c("BMI","sex","bodyfat")
@@ -541,6 +541,9 @@ par(mfrow=c(1,3),mar=c(4,4,2,1))
 plot(r.simex)
 @
 \end{center}
+
+{\bf Note:} The \texttt{sex} variable has \emph{not} been mismeasured, but it is was alsozs affected by the error in BMI.\\[2mm]
+{\bf Reason:} \texttt{sex} and BMI are correlated.
 }
 
 

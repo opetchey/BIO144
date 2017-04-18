@@ -97,7 +97,7 @@ Datenanalyse in der Biologie}%\\[.3cm]
 }
 
 
-\frame{\frametitle{Overview (todo: check)}
+\frame{\frametitle{Overview }
 \begin{itemize}
 \item Binary response variables
 \item Contingency tables, $\chi^2$ test
@@ -119,7 +119,7 @@ library(ggfortify)
 The lecture material of today is based on the following literature:\\[4mm]
 
 \begin{itemize}
-\item Repetition: Chapter 10 in Stahels book ``Statistische Datenanalyse'' from last semester.\\[4mm]
+\item Repetition: Chapter 9.4 about $\chi^2$-Tests in the Luchsinger script \\[4mm]
 \item Chapters 9.1 - 9.3 from ``The new statistics with R'' (Hector book).
 \end{itemize}
 }
@@ -407,12 +407,12 @@ This leads to $\hat\beta_0=\Sexpr{format(r.pois$coef[1],2,2,2)}$ and $\hat\beta_
 }
 
 \frame{\frametitle{Sidenote: count vs.\ binomial data}
-Clarification of the difference between count data and binomial data:\\[6mm]
+Clarification of the difference between count data and binomial data:\\[4mm]
 
 {\bf Count data:} 
 \begin{itemize}
 \item Theoretically no upper limit on number of times an ``event'' (e.g., number of birds observed in a forest plot)
-\item Counts cannot be expressed as a proportion.\\[4mm]
+\item Counts cannot be expressed as a proportion.\\[6mm]
 \end{itemize} %possible to express as a proportion.\\[4mm]
 
 {\bf Binomial data:}
@@ -460,7 +460,7 @@ Binomial data is an \alert{aggregation of binary data}: \\[2mm]
 \end{itemize}
 
 \vspace{8mm}
-{\small Example: In the beetle data  49 beetles were tested for the lowest dose, of which $k=6$ died.}
+{\small Example: In the beetle data  49 beetles were tested for the lowest dose, of which $k=6$ died, thus $\hat\pi=6/49=0.122$.}
 }
 
 
@@ -703,7 +703,7 @@ summary(beetle.glm2)
 \item The analysis is the same as for aggregated data, however there are a few complications with graphical descriptions and model checking. \\[6mm]
 \end{itemize}
 
-{\bf Example}: Blood screeing {\tiny (see week 1; data from Hothorn \& Everitt 2014, chapter 7.3)}
+{\bf Example}: Blood screening {\tiny (see week 1; data from Hothorn \& Everitt 2014, chapter 7.3)}
 }
 
 \frame[containsverbatim]{\frametitle{Blood screening example}

@@ -97,7 +97,7 @@ Datenanalyse in der Biologie}%\\[.3cm]
 }
 
 
-\frame{\frametitle{Overview (todo: check)}
+\frame{\frametitle{Overview }
 <<echo=F>>=
 library(dplyr)
 library(ggplot2)
@@ -111,7 +111,7 @@ library(ggfortify)
 \item Link function\\[2mm]
 \item Residual analysis / model checking / deviances\\[2mm]
 \item Interpretation of the results\\[2mm]
-\item (Overdispersion, zero-inflation)
+\item Overdispersion, zero-inflation
 \end{itemize}
 
 }
@@ -258,7 +258,7 @@ Do you remember a distribution for count values from Mat183?\\[4mm]
 \colorbox{lightgray}{\begin{minipage}{10cm}
 The probability distribution of Poisson-distributed random variable $Y$ with parameter $\lambda$ is defined as
 \begin{equation*}
-\P(Y=k) = \frac{\lambda^k}{k} e^{-\lambda} \ , \quad k=0, 1, 2,\ldots  \ .
+\P(Y=k) = \frac{\lambda^k}{k!} e^{-\lambda} \ , \quad k=0, 1, 2,\ldots  \ .
 \end{equation*}
 In short: $$Y \sim \Po(\lambda) \ .$$
 \end{minipage}}
@@ -338,14 +338,14 @@ which is now {\bf always} $>0$! {\scriptsize (I really hope you remember what th
 
 \frame{\frametitle{The probability model }
 \begin{itemize}
-\item Finally, we need a reasonable \alert{probability model for the response variable}. \\[2mm
+\item Finally, we need a reasonable \alert{probability model for the response variable}. \\[3mm
 ]
-\item Remember: we always used the normality assumption $y_i \sim \N(\eta_i, \sigma_e^2)$ in linear regression.\\[2mm]
+\item Remember: we always used the normality assumption $y_i \sim \N(\eta_i, \sigma_e^2)$ in linear regression.\\[3mm]
 
 \item Given that $y_i$ are counts, a Poisson model seems reasonable:  
 $$y_i \sim \Po (\E(y_i)) \ .$$
-~\\
-In words: $y_i$ is a realization of a Poisson random variable distributed as $\Po(\lambda_i)$, where $\lambda_i=\E(y_i)$.\\[2mm]
+
+In words: $y_i$ is a realization of a Poisson random variable distributed as $\Po(\lambda_i)$, where $\lambda_i=\E(y_i)$.\\[3mm]
 \item We say: The model belongs to the Poisson \alert{family}.
 \end{itemize}
 }
@@ -368,7 +368,7 @@ In the soay shee example, it is $\eta_i = \beta_0 + \beta_1\cdot \text{bodySize}
 
 
 \frame[containsverbatim]{\frametitle{Doing it right: Fitting a Poisson GLM}
-Uff... that was hard! But we have all the tools for fitting a Poisson GLM now. A statistician would now say: \\[2mm]
+Uff... that was hard! But we finally have all the tools for fitting a Poisson GLM. A statistician would now say: \\[2mm]
 \begin{center}
 ``Let's fit a Poisson GLM with a log-link!''\\[4mm]
 \end{center}
@@ -446,12 +446,12 @@ Thus a 95\% CI can be approximated by the usual $\hat\beta\pm 2\cdot \sigma_\bet
 Remember our model
 
 $$
-\log(\E(y_i)) =\beta_0 + \beta_1 \cdot \text{bodySize} 
+\log(\E(y_i)) =\beta_0 + \beta_1 \cdot \text{bodySize}_i
 $$
 
 ~\\
 Thus the $\exp(\cdot)$ transformation leads to 
-$$ \quad \E(y_i) = \exp(\beta_0 + \beta_1 \cdot \text{bodySize})$$.\\[2mm]
+$$ \quad \E(y_i) = \exp(\beta_0 + \beta_1 \cdot \text{bodySize}_i)$$.\\[2mm]
 
 Our estimates $\hat\beta_0$ and $\hat\beta_1$ can be plugged into this equation!\\[2mm]
 
@@ -466,7 +466,7 @@ Makes sense, right?
 \frame[containsverbatim]{\frametitle{Doing it right: The \texttt{anova()} table}
 Remember: We were sometimes using ANOVA tables, for instance for linear regression output with categorical covariates.\\[2mm]
 
-Here, it is useful again, but it gives us an \alert{Analysis of Deviance} table:\\[4mm]
+Here, it is useful again, but it gives us the \alert{Analysis of Deviance} table:\\[4mm]
 
 <<>>=
 anova(soay.glm)
@@ -531,7 +531,7 @@ print(ttab2,  floating = TRUE, include.rownames=FALSE)
 \frame{\frametitle{}
 {\bf Your tasks (in teams, if you like):}\\[6mm]
 
-Look at the analysis done in next three slides, and answer the following questions:\\[2mm]
+Look at the analysis done on the next three slides, and answer the following questions:\\[2mm]
 
 \begin{enumerate}
 \item Are there any problems visible from the diagnostics plots?\\[2mm]
