@@ -351,7 +351,6 @@ Example: Small effect sizes in regression models.
 }
 
 
-
 \frame{\frametitle{Shall we abolish $p$-values?}
 
 \textcolor{red}{\bf No:} $p$-values are not ``good'' or ``bad''. They contain important information, and they have {\bf strengths} and {\bf weaknesses}. \\[12mm]
@@ -420,6 +419,15 @@ Thus: Although both, meat consumption and smoking, are carcinogenic (``significa
 
 }
 
+\frame{
+Paul D.\ Ellis writes in his book \emph{The Essential Guide to Effect Sizes} (2010):\\[2mm]
+
+\begin{quote}
+Indeed, statistical significance, which partly reflects sample size, may say nothing at all about the practical significance of a result. [....] To extract meaning from their results social scientists need to look beyond $p$ values,
+and {\bf effect sizes and make informed judgments about what they see}.
+\end{quote}
+
+}
 
 \frame{\frametitle{...and 95\% CIs}
 \colorbox{lightgray}{\begin{minipage}{10cm}
@@ -731,6 +739,14 @@ In fact, see a recent article in NZZ am Sonntag (temporary available from OpenEd
 \end{center}
 }
 
+
+\frame{
+On the following website you find many ``spurious correlations'', where the {\bf causality is very obviously missing}:\\[2mm]
+
+\url{http://www.tylervigen.com/spurious-correlations}\\[4mm]
+
+(More about it in the BC material of this unit!)
+}
 
 \frame[allowframebreaks]{\frametitle{Bradford-Hill-Criteria for causal inference}
 In 1965 the Epidemiologist Bradford Hill presented a list of criteria to assess whether there is some causality or not. However, he wrote ``None of my nine viewpoints can bring indisputable evidence for or against the cause-and-effect hypothesis and none can be required sina qua non.''\\[4mm]
