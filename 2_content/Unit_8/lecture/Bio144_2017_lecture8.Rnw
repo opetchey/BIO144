@@ -423,7 +423,7 @@ Thus: Although both, meat consumption and smoking, are carcinogenic (``significa
 Paul D.\ Ellis writes in his book \emph{The Essential Guide to Effect Sizes} (2010):\\[2mm]
 
 \begin{quote}
-Indeed, statistical significance, which partly reflects sample size, may say nothing at all about the practical significance of a result. [....] To extract meaning from their results social scientists need to look beyond $p$ values,
+Indeed, statistical significance, which partly reflects sample size, may say nothing at all about the practical significance of a result. [....] To extract meaning from their results, social scientists need to look beyond $p$ values
 and {\bf effect sizes and make informed judgments about what they see}.
 \end{quote}
 
@@ -543,7 +543,7 @@ y_i = \beta_0 + \beta_{1}   x^{(1)}_i  + \beta_{2}  x^{(2)}_i    + e_i  & \quad 
 \end{eqnarray}
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
-{\bf Note:} The $R^2$ of the model with both covariates is much less than the sum of the $R^2$ from models (1) and (2)!
+{\bf Note:} The $R^2$ of model (3) with both covariates is much less than the sum of the $R^2$ from models (1) and (2)!
 \end{minipage}}
 
 ~\\[2mm]
@@ -788,7 +788,7 @@ An observed effect is more likely to be \emph{causal} if participants were \emph
 \begin{itemize}
 \item Obseration of subjects / objects in a real-world (existing) situation.\\[2mm]
 \item Variables are usually correlated.\\[2mm]
-\item More variables that can be included in the model.\\[2mm]
+\item Often more variables than can be included in the model.\\[2mm]
 \item {\bf Examples}: Influence of pollutans (mercury) on humans, studies of wild animal populations, epidemiological studies,...\\[4mm]
 \end{itemize}
 
@@ -805,13 +805,13 @@ An observed effect is more likely to be \emph{causal} if participants were \emph
 
 \frame{\frametitle{}
 \begin{tabular}{lll}
- & {\bf Experiment} & {\bf Observational study} \\
+  & {\bf Observational study} & {\bf Experiment} \\
  \hline 
- {\bf Situation}  & Artificial, designed & Existing, cannot be influenced \\[3mm]
- {\bf Analysis} & Simple,   & Difficult  \\
-  & \alert{no model selection} & (see model selection issues)  \\[3mm]
- {\bf Interpretation} & Clear,  & Difficult, \\
-  & ``proofs'' causal relationship & especially w.r.t.\ causality
+ {\bf Situation} & Existing, cannot be influenced  & Artificial, designed \\[3mm]
+ {\bf Analysis} & Difficult & Simple    \\
+   & (see model selection issues) & \alert{no model selection}   \\[3mm]
+ {\bf Interpretation} & Difficult, & Clear,   \\
+  & especially w.r.t.\ causality & ``proofs'' causal relationship 
  \end{tabular}
 }
 
