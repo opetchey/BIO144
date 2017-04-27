@@ -733,7 +733,7 @@ Many other ideas are possible...
 }
 
 \frame{
-In fact, see a recent article in NZZ am Sonntag (temporary available from OpenEdX):\\[-4mm]
+In fact, see a recent article in NZZ am Sonntag (temporarily available from OpenEdX):\\[-4mm]
 \begin{center}
 \includegraphics[width=6cm]{pictures/breakfast.png}
 \end{center}
@@ -786,7 +786,7 @@ An observed effect is more likely to be \emph{causal} if participants were \emph
 \begin{multicols}{2}
 {\bf Observational study (``Erhebung'')}:
 \begin{itemize}
-\item Obseration of subjects / objects in a real-world (existing) situation.\\[2mm]
+\item Observation of subjects / objects in a real-world (existing) situation.\\[2mm]
 \item Variables are usually correlated.\\[2mm]
 \item Often more variables than can be included in the model.\\[2mm]
 \item {\bf Examples}: Influence of pollutans (mercury) on humans, studies of wild animal populations, epidemiological studies,...\\[4mm]
@@ -794,10 +794,10 @@ An observed effect is more likely to be \emph{causal} if participants were \emph
 
 {\bf Experimental study}:
 \begin{itemize}
-\item Obseration of subjects / objects in a constructed (experimental) situation.\\[2mm]
+\item Observation of subjects / objects in a constructed (experimental) situation.\\[2mm]
 \item Variables are controlled and uncorrelated (given a good study design!).\\[2mm]
 \item Usually all variables enter the model, {\bf no model selection}.\\[2mm]
-\item {\bf Examples}: Field experiments; clinical studies; psycological or pedagogical experiments,...\\[2mm]
+\item {\bf Examples}: Field experiments; clinical studies; psychological or pedagogical experiments,...\\[2mm]
 \end{itemize}
 \end{multicols}
 }
