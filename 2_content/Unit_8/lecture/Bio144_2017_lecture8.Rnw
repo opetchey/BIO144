@@ -185,7 +185,7 @@ $P$-value {\bf criticism is} as {\bf old} as statistical significance testing (1
 \begin{itemize}
 \item The sharp line $p<0.05$ is \alert{arbitrary} and significance testing according to it may lead to \emph{mindless statistics} \citep{gigerenzer2004}. \\[2mm]
 
-\item  $P$-hacking / dada dredging: Search until you find a result with $p<0.05$.\\[2mm]
+\item  $P$-hacking / data dredging: Search until you find a result with $p<0.05$.\\[2mm]
 
 \item Publication bias: Studies with $p<0.05$ are more likely to be published than ``non-significant'' results.\\[2mm]
 
@@ -423,7 +423,7 @@ Thus: Although both, meat consumption and smoking, are carcinogenic (``significa
 Paul D.\ Ellis writes in his book \emph{The Essential Guide to Effect Sizes} (2010):\\[2mm]
 
 \begin{quote}
-Indeed, statistical significance, which partly reflects sample size, may say nothing at all about the practical significance of a result. [....] To extract meaning from their results, social scientists need to look beyond $p$ values
+Indeed, statistical significance, which partly reflects sample size, may say nothing at all about the practical significance of a result. [....] To extract meaning from their results, social scientists need to look beyond $p$ values,
 and {\bf effect sizes and make informed judgments about what they see}.
 \end{quote}
 
