@@ -157,8 +157,10 @@ Ecologists were interested in the {\bf question} whether body mass of female ani
 
 ``Are heavier females fitter than lighter females?'' \\[6mm]
 
-<<>>=
+<<echo=F>>=
 soay <-  read.table("../../data_examples/GSWR_datasets/SoaySheepFitness.csv",header=T, sep=",")
+@
+<<>>=
 glimpse(soay)
 @
 }
@@ -205,7 +207,7 @@ r.soay <- lm(fitness ~ body.size ,data=soay)
 autoplot(r.soay,smooth.colour = NA)
 @
 \end{center}
-$\rightarrow$ The diagnostic plots show that the linear regression assumptions are badly violated!
+$\rightarrow$ The diagnostic plots show that the {\bf linear regression assumptions are violated}!
 }
 
 
@@ -229,7 +231,7 @@ y=\beta_0 + \beta_1 \cdot \text{bodySize} + \beta_2 \cdot \text{bodySize}^2 + e
 \setkeys{Gin}{width=0.55\textwidth}
 <<fig=T,widht=6,height=6>>=
 r2.soay <- lm(fitness ~ body.size + I(body.size^2),data=soay)
-autoplot(r2.soay)#,smooth.colour = NA)
+autoplot(r2.soay)
 @
 \end{center}
 $\rightarrow$ This looks a bit better. However...
@@ -267,7 +269,8 @@ In short: $$Y \sim \Po(\lambda) \ .$$
 {\bf Characteristics of the Poisson distribution:}
 \begin{itemize}
 \item Suitable to model unbounded counts ($k=0,1,2,...$).
-\item $\E(Y) = \Var(Y) = \lambda$. In words: Mean = variance = $\lambda$.\\[2mm]
+\item $\E(Y) = \Var(Y) = \lambda$. In words: \\[2mm]
+Mean = variance = $\lambda$.\\[2mm]
 
 $\rightarrow$ The variance of the distribution increases with the mean.\\[4mm]
 \end{itemize}
@@ -360,7 +363,7 @@ In summary, we have introduced three terms related to GLMs:\\[2mm]
 \begin{equation*}
 \eta_i = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_p x_i^{(p)} \ .
 \end{equation*}
-In the soay shee example, it is $\eta_i = \beta_0 + \beta_1\cdot \text{bodySize}_i$ for sheep $i$.\\[2mm]
+In the soay sheep example, it is $\eta_i = \beta_0 + \beta_1\cdot \text{bodySize}_i$ for sheep $i$.\\[2mm]
 
 \item \emph{\bf Link function}: It defines how the linear predictor $\eta_i$ is \alert{related} to $\E(y_i)$. In Poisson regression this is typically the log: $\log(\E(y_i)) = \eta_i$! We will see another important link function next week (for binary data).
 \end{itemize}
@@ -439,7 +442,7 @@ with respective standard errors and $p$-values. In particular, $p<0.001$ for $\h
 \hat\beta \sim \N(\beta,\sigma_\beta^2)
 \end{equation}
 
-Thus a 95\% CI can be approximated by the usual $\hat\beta\pm 2\cdot \sigma_\beta$ idea.
+Thus a 95\% CI can be approximated by the usual $\hat\beta\pm 2\cdot \hat\sigma_\beta$ idea.
 }
 
 \frame{\frametitle{What do the coefficients tell us?}
@@ -449,15 +452,15 @@ $$
 \log(\E(y_i)) =\beta_0 + \beta_1 \cdot \text{bodySize}_i
 $$
 
-~\\
 Thus the $\exp(\cdot)$ transformation leads to 
-$$ \quad \E(y_i) = \exp(\beta_0 + \beta_1 \cdot \text{bodySize}_i)$$.\\[2mm]
+$$ \quad \E(y_i) = \exp(\beta_0 + \beta_1 \cdot \text{bodySize}_i) \ .$$\\[2mm]
 
-Our estimates $\hat\beta_0$ and $\hat\beta_1$ can be plugged into this equation!\\[2mm]
+Our estimates $\hat\beta_0$ and $\hat\beta_1$ can be plugged into this equation!\\[4mm]
 
-For example, a 5~kg female is \alert{expected} to produce 
-$\exp(\Sexpr{format(summary(soay.glm)$coef[1,1],3,3,3)} + \Sexpr{format(summary(soay.glm)$coef[2,1],3,3,3)}\cdot 5) = \Sexpr{format(exp(summary(soay.glm)$coef[1,1] + summary(soay.glm)$coef[2,1]*5),2,2,2)}$ lambs, while a 7~kg female would already be expected to produce 
-$\exp(\Sexpr{format(summary(soay.glm)$coef[1,1],3,3,3)} + \Sexpr{format(summary(soay.glm)$coef[2,1],3,3,3)}\cdot 7) = \Sexpr{format(exp(summary(soay.glm)$coef[1,1] + summary(soay.glm)$coef[2,1]*7),2,2,2)}$ lambs.\\[2mm]
+For example, a 5~kg female is {\bf expected} to produce
+$$\exp(\Sexpr{format(summary(soay.glm)$coef[1,1],3,3,3)} + \Sexpr{format(summary(soay.glm)$coef[2,1],3,3,3)}\cdot 5) = \Sexpr{format(exp(summary(soay.glm)$coef[1,1] + summary(soay.glm)$coef[2,1]*5),2,2,2)} \text{ lambs} \ ,$$ %lambs, \\
+while a 7~kg female would already be {\bf expected} to produce 
+$$\exp(\Sexpr{format(summary(soay.glm)$coef[1,1],3,3,3)} + \Sexpr{format(summary(soay.glm)$coef[2,1],3,3,3)}\cdot 7) = \Sexpr{format(exp(summary(soay.glm)$coef[1,1] + summary(soay.glm)$coef[2,1]*7),2,2,2)} \text{ lambs} \ .$$ 
 
 Makes sense, right?
 
@@ -482,7 +485,7 @@ Here, the total deviance is given by the so-called \alert{NULL} deviance: 85.081
 
 Of this, 37.041 is \alert{explained by bodysize}.\\[2mm]
 
-The question is, whether this is ``much''! This can be tested by a $\chi^2$ test, because the value is $\chi^2$ distributed with 1 degree of freedom:\\[2mm]
+The question is, whether this is ``much''? This can be tested by a $\chi^2$ test, because the value is $\chi^2$ distributed with 1 degree of freedom:\\[2mm]
 
 <<>>=
 1-pchisq(37.041,1)
@@ -642,7 +645,7 @@ summary(polyps.glm2)
 \texttt{Residual deviance / df}.\\[6mm]
 \end{center}
 
-\item The $p$-values for the coefficients are now larger! In particular, there is now only weak evidence ($p=0.063$) for an effect of age!\\[2mm]
+\item The $p$-values for the coefficients are now larger! In particular, there is only weak evidence ($p=0.063$) for an effect of age!\\[2mm]
 $\rightarrow$ The \texttt{poisson} family gave too optimistic $p$-values!\\[2mm]
 
 We say: The $p$-values were \alert{anti-conservative} or non-conservative.\\[6mm]
@@ -656,7 +659,7 @@ We say: The $p$-values were \alert{anti-conservative} or non-conservative.\\[6mm
 
 {\bf Yes}: Especially when there are \alert{dependent observations}!\\[4mm]
 
-You can {\bf detect it} by chekcing if \; \texttt{Residual deviance} $<$ \texttt{df}.\\[4mm]
+You can {\bf detect it} by checking if \; \texttt{Residual deviance} $<$ \texttt{df}.\\[4mm]
 
 In that case, your $p$-values are usually too large, that is, the results are \alert{conservative} (just the opposite of the overdispersion problem).\\[4mm]
 
