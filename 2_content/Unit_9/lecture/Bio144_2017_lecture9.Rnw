@@ -147,7 +147,7 @@ In biological or medical data, the outcome of interest is quite often a count:\\
 
 The research question then is: \\[2mm]
 
-{\bf How do certain covariates influence the count outcome?}
+{\bf How do the covariates influence the probability of a certain count outcome?}
 }
 
 \frame[containsverbatim]{\frametitle{Illustrative/working example: Soay sheep}
@@ -246,7 +246,7 @@ Moreover, the \alert{normal distribution} for count data is obviously \alert{vio
 \begin{itemize}
 \item The normal distribution is for continuous variables.\\[2mm]
 \item The normal distribution allows values $<0$, count data doesn't.\\[2mm]
-\item The normal distribution is symmetrical, counts are often not!\\[10mm]
+\item The normal distribution is symmetrical, counts are often not! In particular, they cannot be negative.\\[10mm]
 \end{itemize}
 
 
@@ -258,14 +258,14 @@ Moreover, the \alert{normal distribution} for count data is obviously \alert{vio
 Do you remember a distribution for count values from Mat183?\\[4mm]
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
-The probability distribution of Poisson-distributed random variable $Y$ with parameter $\lambda$ is defined as
+The probability distribution\footnote{A probability distribution is just a mathematical statement of how likely different events are, see GSWR book p.\ 169.} of Poisson-distributed random variable $Y$ with parameter $\lambda$ is defined as
 \begin{equation*}
 \P(Y=k) = \frac{\lambda^k}{k!} e^{-\lambda} \ , \quad k=0, 1, 2,\ldots  \ .
 \end{equation*}
-In short: $$Y \sim \Po(\lambda) \ .$$
+In short: $$Y \sim \Po(\lambda) \ .$$\\
 \end{minipage}}
 
-~\\[3mm]
+~\\[20mm]
 {\bf Characteristics of the Poisson distribution:}
 \begin{itemize}
 \item Suitable to model unbounded counts ($k=0,1,2,...$).
@@ -457,9 +457,9 @@ $$ \quad \E(y_i) = \exp(\beta_0 + \beta_1 \cdot \text{bodySize}_i) \ .$$\\[2mm]
 
 Our estimates $\hat\beta_0$ and $\hat\beta_1$ can be plugged into this equation!\\[4mm]
 
-For example, a 5~kg female is {\bf expected} to produce
+For example, a 5~kg female has {\bf expected fitness} (i.e., produces)
 $$\exp(\Sexpr{format(summary(soay.glm)$coef[1,1],3,3,3)} + \Sexpr{format(summary(soay.glm)$coef[2,1],3,3,3)}\cdot 5) = \Sexpr{format(exp(summary(soay.glm)$coef[1,1] + summary(soay.glm)$coef[2,1]*5),2,2,2)} \text{ lambs} \ ,$$ %lambs, \\
-while a 7~kg female would already be {\bf expected} to produce 
+while a 7~kg female would already have {\bf expected fitness} 
 $$\exp(\Sexpr{format(summary(soay.glm)$coef[1,1],3,3,3)} + \Sexpr{format(summary(soay.glm)$coef[2,1],3,3,3)}\cdot 7) = \Sexpr{format(exp(summary(soay.glm)$coef[1,1] + summary(soay.glm)$coef[2,1]*7),2,2,2)} \text{ lambs} \ .$$ 
 
 Makes sense, right?
@@ -481,7 +481,7 @@ In brief, the larger the likelihood, the better fits the data to your model...
 }
 
 \frame[containsverbatim]{
-Here, the total deviance is given by the so-called \alert{NULL} deviance: 85.081. It is the analogon to the total variability of the data in linear regression...\\[2mm]
+Here, the \alert{total deviance} is given by the so-called \alert{NULL} deviance: 85.081. It is the analogon to the total variability of the data in linear regression...\\[2mm]
 
 Of this, 37.041 is \alert{explained by bodysize}.\\[2mm]
 
@@ -497,6 +497,34 @@ You would get the same if you directly specify the test you want to carry out in
 <<echo=T,eval=F>>=
 anova(soay.glm, test="Chisq")
 @
+}
+
+
+\frame[containsverbatim]{\frametitle{Making a beautiful graph}
+See section 7.4.5 in the GSWR book. Work through the code to obtain this one:
+
+\begin{center}
+\setkeys{Gin}{width=0.55\textwidth}
+<<fig=T,width=3.5,height=3.5,echo=F>>=
+min.size <- min(soay$body.size)
+max.size <- max(soay$body.size)
+
+new.x <- expand.grid(body.size =seq(min.size, max.size, length=1000))
+
+new.y = predict(soay.glm, newdata = new.x, se.fit = TRUE)
+new.y = data.frame(new.y)
+addThese <- data.frame(new.x, new.y)
+addThese <- mutate(addThese, fitness = exp(fit),
+lwr = exp(fit - 1.96 * se.fit),
+upr = exp(fit + 1.96 * se.fit))
+
+ggplot(soay, aes(x = body.size, y = fitness)) +
+# first show the raw data
+geom_point(size = 3, alpha = 0.5) + 
+  geom_smooth(data = addThese, aes(ymin = lwr, ymax = upr), stat = 'identity') +
+  theme_bw()
+@
+\end{center}
 }
 
 
