@@ -45,6 +45,7 @@
 \DeclareMathOperator{\ccn}{ccn} % common copy number
 \DeclareMathOperator{\p}{p} % common copy number
 \DeclareMathOperator{\E}{E} % common copy number
+\DeclareMathOperator{\Binom}{Binom} % common copy number
 \DeclareMathOperator{\given}{|} % common copy number
 \def\given{\,|\,}
 \def\na{\tt{NA}}
@@ -468,6 +469,28 @@ Binomial data is an \alert{aggregation of binary data}: \\[2mm]
 {\small Example: In the beetle data  49 beetles were tested for the lowest dose, of which $k=6$ died, thus $\hat\pi=6/49=0.122$.}
 }
 
+\frame{\frametitle{The binomial distribution}
+
+The {\bf binomial distribution} assigns the probability of seeing $k$ success out of $n$ trials, where the success probability of a single trial is $\pi$.\\[2mm] 
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+\begin{equation*}
+\P(Y = k) = {{n}\choose{k}}\pi^k (1-\pi)^{n-k} \ ,\quad k=0, 1, 2,\ldots, n
+\end{equation*}
+In short: $$Y \sim  \Binom(n,\pi) \ .$$
+\end{minipage}}
+~\\[4mm]
+{\bf Characteristics of the binomial distribution:}\\ \label{sl:bernoulli}
+\begin{itemize}
+\item Mean: $\E(Y)=n \cdot \pi$
+\item Variance: $\Var(Y)=n\cdot \pi(1-\pi)$\\[2mm]
+\end{itemize}
+
+$\rightarrow$ For given $n$, the variance is determined by its mean.\\[4mm]
+
+
+{\small R functions: \texttt{rbinom(), dbinom()}}
+}
 
 \frame{\frametitle{Doing it right: Logistic regression}
 We can again use the GLM machinery from last week! The \alert{linear predictor} is as always:
@@ -508,7 +531,7 @@ plot(x,log(x/(1-x)),xlab=expression(pi),ylab=expression(log(pi/(1-pi))),cex=0.8)
 
 \frame{\frametitle{The logistic regression model}
 \colorbox{lightgray}{\begin{minipage}{10cm}
-In order to prevent the expected value $\E(y_i)$ to attain unreasonable values, we thus formulate the \alert{logistic regression model} as
+In order to prevent the expected value $\E(y_i)$ of a binary experiment (0/1) to attain unreasonable values, we thus formulate the \alert{logistic regression model} as
 \begin{equation*}
 \log\left( \frac{\E(y_i)}{1-\E(y_i)} \right) = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_p x_i^{(p)} \ 
 \end{equation*}
@@ -875,7 +898,7 @@ anova(plasma.glm,test="Chisq")
 \item Logistic regression is useful to model binary/binomial data.\\[3mm]
 \item The link function is the logistic link.\\[3mm]
 \item The coefficients of logistic regression are log odds ratios \\
-\begin{center}$\Leftrightarrow \quad$ $\exp(\beta)$ is an odds ratio \\\end{center}
+\begin{center}$\Leftrightarrow \quad$ $\exp(\beta)$ is an odds ratio \\[2mm]\end{center}
 \item Differences between aggregated (binomial) and binary data.\\[3mm]
 \item Overdispersion not detectable for binary data!
 \end{itemize}
