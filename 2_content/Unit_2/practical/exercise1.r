@@ -8,7 +8,7 @@ library(ggfortify)
 
 ## load the data
 ## Here I'm loading it direct from online where the dataset are stored
-fhc <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144/master/datasets/financing_healthcare.csv")
+fhc <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144/master/3_datasets/financing_healthcare.csv")
 
 ## tell me which countries are in the dataset
 unique(fhc$country)
@@ -22,7 +22,7 @@ filter(fhc, !is.na(child_mort) & !is.na(health_exp_total))
 ## Wrange the data
 fhc1 <- fhc %>%
   filter(year==2013) %>% ## only data fro 2013 please
-  select(year:continent, health_exp_total, child_mort, life_expectancy) %>% ## only these columns please
+  select(year:continent, health_exp_total, child_mort) %>% ## only these columns please
   drop_na() ## drop rows with any NAs
  
 ## plot the relationship between health care expenditure and child mortality
@@ -83,4 +83,5 @@ ggplot(data=fhc1, aes(x=health_exp_total, y=child_mort)) +
   ylab("Log10 Child mortality\n(number of children per 1000 dying before age 5)")
 
 
-
+group_by(fhc, continent) %>%
+  summarise(mean_child_mort = mean(child_mort))

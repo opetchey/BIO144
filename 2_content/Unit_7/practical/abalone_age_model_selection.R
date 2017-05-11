@@ -19,7 +19,7 @@ used to predict the age.  Further information, such as weather patterns
 and location (hence food availability) may be required to solve the problem.
 
 From the original data examples with missing values were removed (the
-                                                                  majority having the predicted value missing), and the ranges of the
+  majority having the predicted value missing), and the ranges of the
 continuous values have been scaled for use with an ANN (by dividing by 200).
 
 Data comes from an original (non-machine-learning) study:

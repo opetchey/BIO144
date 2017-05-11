@@ -82,8 +82,8 @@ bodyfat <- dplyr::mutate(bodyfat, scaled_weight=scale(weight),
                   scaled_wrist=scale(wrist),
                   scaled_height=scale(height),
                   scaled_ankle=scale(ankle))
-m_kg_pounds <- lm(bodyfat ~ scaled_abdomen + scaled_weight, data=bodyfat)
-summary(m_kg_pounds)
+m_kg_pounds_scaled <- lm(bodyfat ~ scaled_abdomen + scaled_weight, data=bodyfat)
+summary(m_kg_pounds_scaled)
 
 
 m_more <- lm(bodyfat ~ scaled_abdomen + scaled_weight +

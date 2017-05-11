@@ -11,7 +11,7 @@ library(ggfortify)
 ## see file abalone.names.txt for description of dataset
 ## found at https://archive.ics.uci.edu/ml/datasets/Abalone
 
-dd <- read_csv("~/Desktop/abalone_age.csv")
+dd <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144/master/3_datasets/abalone_age.csv")
 
 
 
@@ -54,11 +54,12 @@ summary(m5)
 autoplot(m5)
 
 ## for next line to work, need to do linear m3
-m3 <- lm(Rings ~ Sex + Diameter_mm + Whole_weight_g +
+lm3 <- lm(Rings ~ Sex + Diameter_mm + Whole_weight_g +
 Shuck_weight_g + Viscera_weight_g, dd)
-ggplot(mapping=aes(x=fitted(m5), y=fitted(m3))) + geom_point() +
-  xlab="Predictions of glm") +
-  ylab="Predictions"
+ggplot(mapping=aes(x=fitted(m5), y=fitted(lm3))) + geom_point() +
+  xlab("Predictions of glm") +
+  ylab("Predictions of lm") +
+  geom_abline(intercept=0, slope=1)
 cor(cbind(x=fitted(m5), y=fitted(m3)))
 
 

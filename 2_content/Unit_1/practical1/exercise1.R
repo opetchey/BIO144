@@ -27,3 +27,9 @@ ggplot(data=gather(bodyfat, key=variable, value=value),
 ## look at the graphs of variables plotted against each other,
 ## to get an idea of which variables might best predict body fat.
 ggpairs(bodyfat)
+
+select(arrange(bodyfat, bodyfat, decreasing=T))
+
+options(dplyr.width = Inf)
+arrange(bodyfat, desc(bodyfat))
+
