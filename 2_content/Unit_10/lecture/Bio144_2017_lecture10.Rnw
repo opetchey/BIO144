@@ -122,8 +122,10 @@ The lecture material of today is based on the following literature:\\[4mm]
 
 \begin{itemize}
 \item Repetition: Chapter 9.4 about $\chi^2$-Tests in the Luchsinger script \\[4mm]
-\item Chapters 9.1 - 9.3 from \emph{The new statistics with R} (Hector book).
+\item Chapters 9.1 - 9.3 from \emph{The new statistics with R} (Hector book).\\[12mm]
 \end{itemize}
+
+Note that I have also uploaded the continuation of the Stahel script, chapters 7-9 that covers GLM models. This is {\bf not} mandatory literature.
 }
 
 \frame{\frametitle{Recap of last week: GLMs and Poisson regression}
@@ -135,7 +137,6 @@ The lecture material of today is based on the following literature:\\[4mm]
 ($\rightarrow$ residuals are not Gaussian).\\[4mm]
 
 \item Count data usually lead to \alert{Poisson regression}.\\[4mm]
-\item However, for count data it may sometimes be ok to use linear regression with $\log(\bm{y})$ in the response.
 \end{itemize}
 }
 
@@ -308,7 +309,7 @@ $\rightarrow$ A regression model is needed again!
 \frame[containsverbatim]{\frametitle{Illustrative/working example}
 Let us look at an example from chapter 9.2 in Hector (2015): \\[2mm]
 
-Eight groups of beetles were exposed to carbon disulphide (an insecticide) for 5h. For each beetle it was then reported if it was killed or not (1 or 0), but the data were reported {\bf aggregated}:\\[6mm]
+Eight groups of beetles were exposed to carbon disulphide (an insecticide) for 5h. For each beetle it was then reported if it was killed or not (1 or 0), but the data were reported in {\bf aggregated} form:\\[6mm]
 
 <<echo=F>>=
 library(AICcmodavg)
@@ -354,7 +355,7 @@ with linear (blue) and smoothed line (red).
 }
 
 \frame[containsverbatim]{\frametitle{The `wrong' analyses}
-{\bf Linear regression}\\[2mm]
+{\bf Wrong analysis 1: Linear regression}\\[2mm]
 
 We could simply use 
 $$\E(y_i) = \beta_0 + \beta_1 Dose_i $$
@@ -387,7 +388,7 @@ $\Rightarrow$ \alert{Unrealistic predictions!}
 
 
 \frame[containsverbatim]{\frametitle{} \label{sl:poisson}
-{\bf Poisson regression}\\[2mm]
+{\bf Wrong analysis 2: Poisson regression}\\[2mm]
 
 What about Poisson regression with the counts ``\texttt{Number\_killed}'' in the response? We could use
 
@@ -589,7 +590,7 @@ plot(beetle.glm)
 
 
 \frame[containsverbatim]{\frametitle{Doing it right: Interpreting the coefficients}
-Let's look at the results, for the moment on the coefficients:\\[2mm]
+Let's look at the coefficients:\\[2mm]
 
 <<>>=
 summary(beetle.glm)$coef
@@ -620,7 +621,7 @@ Remember the regression model
 To understand what $\beta_1$ tells us, let's transform the equation such that $\E(y_i)=\P(y_i=1)$ is on the left. Some algebra leads to 
 
 \begin{equation}\label{eq:prob}
-\P(y_i=1)= \frac{\exp(\beta_0 + \beta_1 Dose_i)}{1 + \exp(\beta_0 + \beta_1 Dose_i)} \ . 
+\P(y_i=1 \given Dose_i)= \frac{\exp(\beta_0 + \beta_1 Dose_i)}{1 + \exp(\beta_0 + \beta_1 Dose_i)} \ . 
 \end{equation}
 
 ~\\[2mm]
@@ -640,12 +641,17 @@ If the $Dose_i$ is then increased by 1 unit in concentration (from $x$ to $x+1$)
 \end{equation*}
 ~\\[2mm]
 
-{\bf Interpretation:} When the dose is increased by 1 unit, the odds to die increases by a factor of $\Sexpr{format(exp(summary(beetle.glm)$coef[2,1]),2,2,2)}$.\\[8mm]
+\colorbox{lightgray}{\begin{minipage}{10cm}
+{\bf Interpretation:} When the dose is increased by 1 unit, the odds to die increases by a factor of $\Sexpr{format(exp(summary(beetle.glm)$coef[2,1]),2,2,2)}$.
+\end{minipage}}
+\vspace{6mm}
 
-Moreover, taking the $\log$ on the above equation shows that \alert{$\beta_1$ can be interpreted as a log odds ratio}:
+\colorbox{lightgray}{\begin{minipage}{10cm}
+Moreover, taking the $\log$ on the above equation shows that {\bf $\beta_1$ can be interpreted as a log odds ratio}:
 \begin{equation*}
 \beta_1 = \log\left( \frac{\odds(y_i=1 \given Dose_i = x + 1)}{\odds(y_i=1 \given Dose_i = x)}\right)
 \end{equation*}
+\end{minipage}}
 }
 
 \frame[containsverbatim]{\frametitle{Doing it right: The \texttt{anova()} table}
@@ -680,7 +686,7 @@ geom_line(aes(xx, ppi,colour = "red"), dd, size=1.2) +
 @
 \end{center}
 
- 
+(Compare to Figure 9.1 in the Hector book \emph{The new statistics with R}.)
 }
 
 \frame{\frametitle{Overdispersion}
@@ -761,7 +767,7 @@ print(ttab2,  floating = TRUE, include.rownames=FALSE)
 \frame{\frametitle{}
 {\bf Question:} Is a high ESR (erythrocyte sedimentation rate) an indicator for certain diseases (rheumatic disease, chronic inflammations)?\\[3mm]
 
-{\bf  Specifically: } Is there an association between ESR level ESR$<20mm/hr$ and the concentrations of the plasma proteins Fibrinogen and Globulin (which are disease indicators)?\\[6mm]
+{\bf  Specifically: } Are the concentrations of the plasma proteins Fibrinogen and Globulin (which are disease indicators) association between ESR level ESR$<20mm/hr$ and the ?\\[6mm]
 
 {\bf The model to be fitted:}\\
 
@@ -769,7 +775,8 @@ print(ttab2,  floating = TRUE, include.rownames=FALSE)
 \log\left( \frac{\E(y_i)}{1-\E(y_i)} \right) = \beta_0 + \beta_1 fibrinogen_i + \beta_2 globulin_i \ ,
 \end{equation*}
 \\[4mm]
-with $\E(y_i)=\P(y_i=1)=\pi_i$, or, equivalently: $y_i \sim \Bern(\pi_i)$.
+with $\E(y_i)=\P(y_i=1)=\pi_i$. \\
+{\tiny Equivalently: $y_i \sim \Bern(\pi_i)$}
 }
 
 \frame[containsverbatim]{\frametitle{Complication 1 with binary data: Graphical description}
@@ -832,7 +839,7 @@ plot(plasma.glm)
 \frame{\frametitle{}
 {\bf b) Residual deviance:}\\[4mm]
 
-For non-aggregated data, the \texttt{residual deviance} vs.\ \texttt{df} relation cannot be used to detect overdispersion!!
+For non-aggregated data, the \texttt{residual deviance} vs.\ \texttt{df} relation {\bf cannot be used to detect overdispersion}s!!
 }
  
  

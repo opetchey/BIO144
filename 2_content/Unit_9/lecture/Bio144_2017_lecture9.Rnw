@@ -683,7 +683,7 @@ We say: The $p$-values were \alert{anti-conservative} or non-conservative.\\[6mm
 }
 
 \frame{\frametitle{Underdispersion?}
-{\bf Can it happen} that the obersvations are \alert{less variable} than expected?\\[4mm]
+{\bf Can it happen} that the observations are \alert{less variable} than expected?\\[4mm]
 
 {\bf Yes}: Especially when there are \alert{dependent observations}!\\[4mm]
 
