@@ -90,14 +90,14 @@
 Datenanalyse in der Biologie}%\\[.3cm]
 \author[Stefanie Muff, Owen L.\ Petchey]{\centering Stefanie Muff  \& Owen L.\ Petchey }
 %\institute[]{Institute of Social and Preventive Medicine \\ Institute of Evolutionary Biology and Environmental Studies}
-\date[]{Lecture 6: ANCOVA, Introduction to Linear Algebra\\ 30./31. March 2017}
+\date[]{Lecture 6: ANCOVA, Short introduction to Linear Algebra\\ 30./31. March 2017}
 
 
 \maketitle
 }
 
 
-\frame{\frametitle{Overview (todo: check)}
+\frame{\frametitle{Overview}
 \begin{itemize}
 \item ANCOVA
 \item ANCOVA as special cases of a linear model
@@ -126,7 +126,7 @@ The lecture material of today is based on the following literature:\\[4mm]
 \item Two-way ANOVA for factorial designs, interactions.\\[2mm]
 \item Interpretation of the results.\\[2mm]
 \item Model checking.\\[2mm]
-\item ANOVA as a special case of linear regression with categorical covariates.
+\item ANOVA is a special case of linear regression with categorical covariates.
 \end{itemize}
 }
 
@@ -144,7 +144,7 @@ An ANCOVA is an analysis of variance (ANOVA), \alert{including} also at least on
 \end{minipage}}
 \vspace{6mm}
 
-There, ANCOVA is a \alert{combination of ANOVA and regression}, so in principle, there is nothing new to it...\\[6mm]
+$\rightarrow$ ANCOVA is a \alert{combination of ANOVA and regression}, so in principle, there is nothing new to it...\\[6mm]
 
 Given a categorical covariate $x_i$ and a continuous covariate $z_i$. Then the ANCOVA equation (without interactions) is given as
 \colorbox{lightgray}{\begin{minipage}{10cm}
@@ -153,7 +153,8 @@ y_i = \beta_0 + \beta_1x_i^{(1)} + ... + \beta_kx_i^{(k)} + \beta_z z_i + e_i \ 
 \end{equation*}
 where $x_i^{(k)}$ is the $k$th dummy variable ($x_i^{(k)}$=1 if $i$th observation belongs to category $k$, 0 otherwise).
 \end{minipage}}
-{\bf Note:} It is straightforward to add interactions $x_i^{(j)}z_i$ for all levels of $x_i$.
+~\\
+{\bf Note:} It is straightforward to add an interaction of $x_i$ with $z_i$.
 }
 
 \frame{\frametitle{}
@@ -162,7 +163,7 @@ where $x_i^{(k)}$ is the $k$th dummy variable ($x_i^{(k)}$=1 if $i$th observatio
 ``Magenumfang'' was used to predict ``Gewicht'' of the worm, including as covariate also the worm species.\\[2mm]
 
 \begin{center}
-\includegraphics[width=4cm]{graphics/Bio144_2017_week3-wurmP3.pdf}
+\includegraphics[width=5cm]{graphics/Bio144_2017_week3-wurmP3.pdf}
 \end{center}
 
 \alert{Categorical} and \alert{continuous} covariates were used to predict a continuous outcome (the weight of the worm).
@@ -181,11 +182,25 @@ r.lm <- lm(log(GEWICHT) ~  MAGENUMF + Gattung,d.wurm)
 \vspace{3mm}
 {\bf Remember:} What do the $p$-values ($p=0.48$ and $p<0.0001$) of the categorical covariate ``Gattung'' mean? \\[5mm]
 
-To understand if ``Gattung'' has an effect, {\bf we need to carry out an $F$-test} (see slide 45, week 3). To this end, plot the ANOVA table:\\[2mm]
+To understand if ``Gattung'' has an effect, {\bf we need to carry out an $F$-test} (see slides 45/46, week 3). To this end, plot the ANOVA table:\\[2mm]
 <<anovaWurm,echo=T,eval=T>>=
 anova(r.lm)
 @
 }
+
+\frame[containsverbatim]{
+The \alert{$F$-test} is also needed to check whether the \alert{interaction term} between \texttt{MAGENUMF} and \texttt{Gattung} is needed: \\[2mm]
+
+<<fitWurm2,echo=T,eval=T>>=
+r.lm2<- lm(log(GEWICHT) ~  MAGENUMF * Gattung,d.wurm)
+summary(r.lm2)$coef
+anova(r.lm2)
+@
+
+~\\[2mm]
+$\rightarrow$ $p=0.167$, thus interaction is probably not relevant. 
+}
+
 
 
 \frame[containsverbatim]{\frametitle{A new example: cholesterol levels}
@@ -198,8 +213,10 @@ d.chol <- read.table ("../../data_examples/ancova/cholesterol/cholesterol.txt",h
 @
 \begin{center}
 \setkeys{Gin}{width=0.60\textwidth}
-<<chol,fig=T,width=4.5,height=3.6,eval=T>>=
-plot(cholesterol ~ state,data=d.chol)
+<<chol,fig=T,width=4,height=3,eval=T, echo=F>>=
+library(ggplot2)
+ggplot(d.chol,aes(x=state,y=cholesterol)) + geom_boxplot()
+#plot(cholesterol ~ state,data=d.chol)
 @
 \end{center}
 }
@@ -212,8 +229,8 @@ y_i = \beta_0 + \beta_1 (state)_i + \beta_2 (age)_i + \beta_3 (state)_i (age)_i 
 ~\\
 
 <<echo=T>>=
-r.aov <- aov(cholesterol ~ age*state,data=d.chol)
-summary(r.aov)
+r.lm <- lm(cholesterol ~ age*state,data=d.chol)
+anova(r.lm)
 @
 \vspace{5mm}
 
@@ -222,35 +239,35 @@ Interpretation?
 
  
 \frame[containsverbatim]{
-Compare the results from the previous slide to the \texttt{lm()} output:\\[3mm]
+Compare the results from the previous slide to the estimated coefficients:\\[3mm]
 <<echo=T>>=
 r.lm <- lm(cholesterol ~ age*state,data=d.chol)
 summary(r.lm)$coef
 @
 \vspace{5mm}
  
+{\bf Note:} The $p$-values for the \texttt{age} and \texttt{state} coefficients are not the same as in the anova table...\\[2mm]
+
 Compare the results for ``state'' also to the model without interaction:\\[3mm]
 <<echo=T>>=
 r.lm2 <- lm(cholesterol ~ age + state,data=d.chol)
 summary(r.lm2)$coef
 @
 ~\\[2mm]
-{\small {\bf Note:} the $p$-value for `state' is now the same as on the previous slide (ANOVA table).}
+{\small {\bf Note:} the $p$-value for `state' is now (almost) the same as on the previous slide (anova table).}\\
+Reason: anova tests the models against one another in the {\bf order} specified.
 } 
 
 
 \frame[containsverbatim]{
-As always, some model checking is necessary:\\[2mm]
+As always, some model checking is necessary:\\[4mm]
 
 \setkeys{Gin}{width=0.9\textwidth}
-<<fig=T,width=7,height=4>>=
-par(mfrow=c(1,2))
-plot(r.aov$fitted,r.aov$residuals,xlab="fitted",ylab="residuals")
-abline(h=0,lty=2)
-qqnorm(r.aov$fitted)
-qqline(r.aov$fitted)
+<<fig=T,width=7,height=3,echo=F>>=
+library(ggfortify)
+autoplot(r.lm,which=c(1,2),smooth.colour=NA)
 @
-~\\
+~\\[4mm]
 $\rightarrow$ This seems ok.
 }
  
@@ -359,8 +376,8 @@ Why do we discuss this topic in our course?
 \begin{itemize}
 \item Useful for \alert{compact notation}.\\[2mm]
 \item Enabels you to \alert{understand many statistical texts} (books, research articles) that remain inaccessible otherwise. \\[2mm]
+\item Useful for \alert{efficient coding}, e.g. in R, which helps to increase speed and to reduce error rates.\\[2mm]
 \item More advanced concepts often rely on linear algebra, e.g. \alert{principal component analysis} (PCA) or \alert{random effects} models.\\[2mm]
-\item Often useful for \alert{efficient coding}, e.g. in R, which helps to increase speed and to reduce error rates.\\[2mm]
 \item Is part of a \alert{general education} (Allgemeinbildung) ;-) \\
 \end{itemize}
 }
@@ -434,10 +451,10 @@ a_{n1} & a_{n2} & ... & a_{nm}
 \end{array}\right) \quad \Rightarrow \quad
 \bm{A}^\top = \left(
 \begin{array}{cccc}
-a_{11} & a_{21} &  ... & a_{m1}\\
-a_{12} & a_{22} & ... & a_{m2} \\
+a_{11} & a_{21} &  ... & a_{n1}\\
+a_{12} & a_{22} & ... & a_{n2} \\
 \vdots & \vdots &  & \vdots \\
-a_{1n} & a_{2n} & ... & a_{mn}
+a_{1m} & a_{2m} & ... & a_{nm}
 \end{array}\right) \ .
 \end{equation*}
 ~\\[2mm]
@@ -642,8 +659,8 @@ Examples:
 \frame{\frametitle{Matrix multiplication}
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
-The multiplication of two matrices $\bm{A}$ and $\bm{B}$ is \alert{defined if}\\[2mm]
-Number of columns in $\bm{A}$ = Number of rows in $\bm{B}$.
+The multiplication of two matrices $\bm{A}$ and $\bm{B}$ is \alert{defined if}%\\[2mm]
+\begin{center}number of columns in $\bm{A}$ = number of rows in $\bm{B}$.\end{center}
 \end{minipage}}
 ~\\[2mm]
 
@@ -693,7 +710,7 @@ Attention: Matrix multiplication does \alert{not} follow the same rules as scala
 \item The \alert{Distributivgesetz holds:} 
 \begin{eqnarray*}
 \bm{A}\cdot (\bm{B} + \bm{C}) &=& \bm{A}\cdot \bm{B} +   \bm{A}\cdot \bm{C}  \\
-(\bm{A} + \bm{B} ) \cdot \bm{C}) &=& \bm{A}\cdot \bm{C} +   \bm{B}\cdot \bm{C} 
+(\bm{A} + \bm{B} ) \cdot \bm{C} &=& \bm{A}\cdot \bm{C} +   \bm{B}\cdot \bm{C} 
 \end{eqnarray*}
 \item Transposing inverts the order: $(\bm{A}\cdot \bm{B})^\top = \bm{B}^\top \cdot \bm{A}^\top$.\\[4mm]
 \item The product $\bm{A}\cdot\bm{A}^\top$ is \alert{always symmetric}. \\[4mm]
@@ -770,7 +787,7 @@ The identity matrix (of dimension $m$) is probably the simples matrix that exist
 ~\\[2mm]
 
 Multiplication with the identity matrix leaves a $m\times n$ matrix $\bm{A}$ unchanged:\\
-$$\bm{I} \cdot \bm{A} = \bm{A} \cdot \bm{I} = \bm{A} \ .$$
+$$\bm{A} \cdot \bm{I}  = \bm{A} \ .$$
 }
 
 \frame{\frametitle{Inverse matrix}
@@ -870,9 +887,7 @@ Let us start by generating the ``true'' response, calculated as $\bm{\tilde{X}} 
 }
 
 \frame[containsverbatim]{
-<<>>=
 
-@
 <<>>=
 x1 <- c(0,1,2,3,4)
 x2 <- c(4,1,0,1,4)

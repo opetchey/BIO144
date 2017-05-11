@@ -94,7 +94,7 @@ Calculate all of the following expressions, if they are defined. Solve at least 
 {\bf R-hints:}
 \begin{itemize}
 \item A matrix can be created for example as \\
-\texttt{A <- matrix(c(4,2,3,0,3,6),byrow=TRUE,nrow=2)}
+\texttt{A <- matrix(c(4,2,3,1,4,6),byrow=TRUE,nrow=2)}
 \item \texttt{t(A)} corresponds to $\mathbf{A}^\T$ \ .
 \item Make sure you understand the difference between $\mathbf{A}$\texttt{*}$\mathbf{B}$ and $\mathbf{A}$\texttt{\%*\%}$\mathbf{B}$ .\\[4mm]
 \end{itemize}
@@ -115,7 +115,7 @@ Calculate all of the following expressions, if they are defined. Solve at least 
 \texttt{t.y <- matrix(rep(t.y,100),nrow=5,byrow=F)} \\
 \texttt{t.Y <- t.y + t.E}
 
-\item Define a results matrix of dimension $3\times 100$ that contains in each column the estimates $(\hat\beta_0,\hat\beta_1,\hat\beta_2)$ of an experiment, and fill it with the results of the 100 iterations:\\
+\item Define a results matrix of dimension $3\times 100$ that contains in each column the estimates $(\hat\beta_0,\hat\beta_1,\hat\beta_2)$ of an experiment, and fill it with the results of the 100 iterations, \emph{e.g.}:\\
 \texttt{r.coef <- matrix(NA,ncol=3, nrow=100)} \\
 \texttt{for (i in 1:100) \{  }\\
 \;\;\qquad \mbox{\texttt{  r.coef[i,] <- lm(t.Y[,i] $\sim$ x1 + x2)\$coefficients }}\\ 
@@ -123,8 +123,8 @@ Calculate all of the following expressions, if they are defined. Solve at least 
 
 
 
-or more elegantly with \texttt{apply()}:\\
-\texttt{r.coef <- t(apply(t.Y, 2, FUN = function(y) lm(...)\$...))}
+% or more elegantly with \texttt{apply()}:\\
+% \texttt{r.coef <- t(apply(t.Y, 2, FUN = function(y) lm(...)\$...))}
 \end{itemize}
 
 \end{enumerate}

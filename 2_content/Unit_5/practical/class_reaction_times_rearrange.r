@@ -1,4 +1,5 @@
 library(tidyverse)
+library(ggfortify)
 
 ## Now read in the data, using the read_csv() function. We give it the URL of the published version of the google sheet data.
 the_URL <- "https://docs.google.com/spreadsheets/d/e/2PACX-1vQFgYX1QhF9-UXep22XmPow1ZK5nbFHix9nkQIa0DzqUhPtZRxH1HtY-hsno32zDiuIHiLb2Hvphk1L/pub?gid=1188775314&single=true&output=csv"
@@ -17,3 +18,19 @@ class_RTs <- select(class_RTs, ID, Gender, Pref_Reactiontime, Nonpref_Reactionti
 dd <- tidyr::gather(class_RTs, key=key, value=Reaction_time, 3:4)
 dd <- tidyr::separate(dd, col=key, sep="_", into=c("Hand", "Junk"))
 dd <- select(dd, -Junk)
+dd <- mutate(dd, Reaction_time=ifelse(Reaction_time<2.1, Reaction_time*1000, Reaction_time))
+
+dd <- filter(dd, Reaction_time<1900)
+
+
+ggplot(dd, aes(x=Gender, y=Reaction_time, col=Hand)) +
+  geom_point(position = position_dodge(width=0.1))
+
+ggplot(dd, aes(x=Reaction_time, col=Hand)) +
+  geom_density() + facet_wrap(~Gender)
+
+m1 <- lm(Reaction_time ~ Gender * Hand, data=dd)
+autoplot(m1)
+
+anova(m1)
+summary(m1)

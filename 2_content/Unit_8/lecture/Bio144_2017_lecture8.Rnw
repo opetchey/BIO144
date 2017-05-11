@@ -97,7 +97,7 @@ Datenanalyse in der Biologie}%\\[.3cm]
 }
 
 
-\frame{\frametitle{Overview (todo: check)}
+\frame{\frametitle{Overview}
 \begin{itemize}
 \item $P$-values: Interpretation and (mis-)use\\[2mm]
 \item Statistical significance vs biological relevance\\[2mm]
@@ -115,15 +115,20 @@ Datenanalyse in der Biologie}%\\[.3cm]
 
 The lecture material of today is based on the following literature:\\[4mm]
 \begin{itemize}
-\item Literature/articles from the self-study week (todo: say which ones here)
+\item All literature and articles from the self-study week.
 \end{itemize}
 
 
 }
 
-\frame[containsverbatim]{\frametitle{Recap of Last week}
+\frame[containsverbatim]{\frametitle{Recap of previous lecture (before Easter)}
 \begin{itemize}
-\item todo
+\item Model selection is difficult.\\[2mm]
+\item Information criteria: AIC, AIC$_c$ and BIC \\
+$\qquad \qquad\rightarrow$ {\bf model fit vs model complexity}\\[2mm]
+\item {\bf Predictive} vs {\bf explanatory} models.\\[2mm]
+\item Automatic model selection is inappropriate for explanatory models!\\[2mm]
+\item Caveats of $p$-values: biological relevance vs statistical significance
 \end{itemize}
 }
 
@@ -134,7 +139,7 @@ The lecture material of today is based on the following literature:\\[4mm]
 \frame{\frametitle{$P$-values }
 {\bf Recap:}\\
 
-$P$-values are commonly used for \emph{statistical testing}, e.g.\ by checking if $p<0.05$.\\[4mm]
+$P$-values are often used for \emph{statistical testing}, e.g.\ by checking if $p<0.05$.\\[4mm]
 
 
 {\bf Examples:} \\
@@ -180,7 +185,7 @@ $P$-value {\bf criticism is} as {\bf old} as statistical significance testing (1
 \begin{itemize}
 \item The sharp line $p<0.05$ is \alert{arbitrary} and significance testing according to it may lead to \emph{mindless statistics} \citep{gigerenzer2004}. \\[2mm]
 
-\item  $P$-hacking / dada dredging: Search until you find a result with $p<0.05$.\\[2mm]
+\item  $P$-hacking / data dredging: Search until you find a result with $p<0.05$.\\[2mm]
 
 \item Publication bias: Studies with $p<0.05$ are more likely to be published than ``non-significant'' results.\\[2mm]
 
@@ -284,8 +289,13 @@ text(-3,0.05,labels="5%")
   \begin{itemize}
   \item The $p$-value is often used to classify results into ``significant'' and ``non-significant''. Typically: $p<0.05$ vs $p\geq 0.05$.\\[4mm]
   \item However, this is often too crude! \\[4mm]
-  \item It is much better to have a more \alert{gradual interpretation of the $p$-value} (see slide \ref{sl:pInt}).
+  \item It is much better to have a more \alert{gradual interpretation of the $p$-value} (see slide \ref{sl:pInt}).\\[8mm]
   \end{itemize}
+  
+Probably the most important point to remember:\\[2mm]
+  \colorbox{lightgray}{\begin{minipage}{10cm}
+The $p$-value is {\bf not} the probability that the Null Hypothesis is true!!!
+\end{minipage}}
 }
 
 \frame{\frametitle{}
@@ -341,10 +351,9 @@ Example: Small effect sizes in regression models.
 }
 
 
-
 \frame{\frametitle{Shall we abolish $p$-values?}
 
-\textcolor{red}{\bf No:} $p$-values are not ``good'' or ``bad''. They contain important information, and they have have {\bf strengths} and {\bf weaknesses}. \\[12mm]
+\textcolor{red}{\bf No:} $p$-values are not ``good'' or ``bad''. They contain important information, and they have {\bf strengths} and {\bf weaknesses}. \\[12mm]
 
 
  
@@ -386,7 +395,7 @@ tableRegression(r.lm.hg)
 @
 \begin{itemize}
 \item {\bf Little or no evidence:} Hg soil, vegetables from garden, migration background\\
-\item {\bf Weak evidence:} Smoking
+\item {\bf Evidence:} Smoking
 \item {\bf Strong evidence:} Mother, monthly fish consumption
 \item {\bf Very strong evidence:} Amalgam, age, last fish (> or < 3 days), interaction of age and mother
 \end{itemize}
@@ -410,6 +419,15 @@ Thus: Although both, meat consumption and smoking, are carcinogenic (``significa
 
 }
 
+\frame{
+Paul D.\ Ellis writes in his book \emph{The Essential Guide to Effect Sizes} (2010):\\[2mm]
+
+\begin{quote}
+Indeed, statistical significance, which partly reflects sample size, may say nothing at all about the practical significance of a result. [....] To extract meaning from their results, social scientists need to look beyond $p$ values,
+and {\bf effect sizes and make informed judgments about what they see}.
+\end{quote}
+
+}
 
 \frame{\frametitle{...and 95\% CIs}
 \colorbox{lightgray}{\begin{minipage}{10cm}
@@ -469,7 +487,7 @@ y_i = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_2 x_i^{(m
 The aim of {\bf relative importance} is to \alert{decompose} $R^2$ such that 
 \begin{itemize}
 \item each variable $x^{(j)}$ is attributed a fair share $r_j$.\\[2mm]
-\item the sum of all importances sums up to $R$, that is, $\sum_{j=1}^p r_j = R^2$.\\
+\item the sum of all importances sums up to $R$, that is, $\sum_{j=1}^m r_j = R^2$.\\
 \end{itemize}
 \end{minipage}}
 
@@ -525,7 +543,7 @@ y_i = \beta_0 + \beta_{1}   x^{(1)}_i  + \beta_{2}  x^{(2)}_i    + e_i  & \quad 
 \end{eqnarray}
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
-{\bf Note:} The $R^2$ of the model with both covariates is much less than the sum of the $R^2$ from models (1) and (2)!
+{\bf Note:} The $R^2$ of model (3) with both covariates is much less than the sum of the $R^2$ from models (1) and (2)!
 \end{minipage}}
 
 ~\\[2mm]
@@ -633,15 +651,15 @@ lmg.hg.2 <- calc.relimp(r.lm.hg2)$lmg
 }
 
 
-\frame{
-Ev give another example where rel. imp is calculated, e.g. from previous weeks.
-
-}
+% \frame{
+% Ev give another example where rel. imp is calculated, e.g. from previous weeks.
+% 
+% }
 
 
 \frame{\frametitle{Causality vs correlation}
 
-In explanatory models the ultimate goal usually is to reveal \alert{causal relationships} between the covariates and the response.\\[2mm]
+In {\bf explanatory models} the ultimate goal usually is to reveal \alert{causal relationships} between the covariates and the response.\\[2mm]
 
 {\bf Examples:}
 \begin{itemize}
@@ -656,7 +674,7 @@ Regression models actually only reveal associations, that is, \alert{correlation
 }
 
 
-\frame{\frametitle{Example: Breakfast eating and obesity}
+\frame{\frametitle{Example: Breakfast eating and teen obesity}
 
 Please read the following article and answer the questions below:\\
 
@@ -675,21 +693,74 @@ Questions:
 }
 
 
+\frame{
 
+Look at a regression model including covariate $\bm{x}$ and response $\bm{y}$. If the coefficient $\beta_x$ is ``significant'', there are several possible reasons for this:\\[2mm]
+
+\begin{enumerate}
+\item $\bm{x}$ is a {\bf cause} for $\bm{y}$. Write: $\bm{x} \rightarrow \bm{y}$\\[2mm]
+
+{\bf Example:} $\bm{x}$ is fish consumption and $\bm{y}$ is mercury concentration in the urine.\\[2mm]
+This is the desired situation!\\[4mm]
+
+\item $\bm{y}$ (partially) causes $\bm{x}$, that is $\bm{y} \rightarrow \bm{x}$.\\[2mm]
+{\bf Example:} $\bm{x}$ is \emph{knowledge} or \emph{IQ} and $\bm{y}$ is \emph{school education}.\\[2mm]
+In that case, the model is not correctly specified!\\[4mm]
+
+\item There is another covariate $\bm{z}$ that both influences $\bm{x}$ and $\bm{y}$\\
+$$\bm{z} \rightarrow \bm{x} \quad \text{and} \quad \bm{z} \rightarrow \bm{y} \ .$$
+$\rightarrow$ $\bm{x}$ and $\bm{y}$ {\bf covary}, but do not cause each other.
+\end{enumerate}
+
+}
+
+\frame{
+In the teen obesity example, all three reasons are possible -- perhaps even at the same time!\\[2mm]
+
+Ideas:
+
+\begin{itemize}
+\item No breakfast ($\bm{x}$) $\rightarrow$ Obesity ($\bm{y}$)\\[4mm]
+\item Obesity ($\bm{y}$) $\rightarrow$ No breakfast ($\bm{x}$)\\[4mm]
+\item Too much dinner ($\bm{z}$) $\rightarrow$ Obesity ($\bm{y}$)\\[2mm]
+{\centering\emph{and}} \\[2mm]
+Too much dinner ($\bm{z}$) $\rightarrow$ No breakfast ($\bm{x}$)\\[4mm]
+
+
+\end{itemize}
+ 
+Many other ideas are possible...
+}
+
+\frame{
+In fact, see a recent article in NZZ am Sonntag (temporarily available from OpenEdX):\\[-4mm]
+\begin{center}
+\includegraphics[width=6cm]{pictures/breakfast.png}
+\end{center}
+}
+
+
+\frame{
+On the following website you find many ``spurious correlations'', where the {\bf causality is very obviously missing}:\\[2mm]
+
+\url{http://www.tylervigen.com/spurious-correlations}\\[4mm]
+
+(More about it in the BC material of this unit!)
+}
 
 \frame[allowframebreaks]{\frametitle{Bradford-Hill-Criteria for causal inference}
 In 1965 the Epidemiologist Bradford Hill presented a list of criteria to assess whether there is some causality or not. However, he wrote ``None of my nine viewpoints can bring indisputable evidence for or against the cause-and-effect hypothesis and none can be required sina qua non.''\\[4mm]
 
 {\bf Bradford-Hill Criteria:}
 \begin{enumerate}
-\item {\bf Strength:} A causal relationship is likely when the observed association is strong.
-\item {\bf Consistency:} A causal relationship is likely if mutiple independent studies show similar associations.
-\item {\bf Specificity:} A causal relationship is likely when a covariate $x$ is associated only with one potential outcome $y$ and not with other outcomes.
-\item {\bf Temporality:} The effect has to occur after the cause.
-\item {\bf Biological gradient:} Greater exposure should generally lead to greater incidence of the effect.
-\item {\bf Plausibility:} A plausible mechanism is helpful.
-\item {\bf Coherence:} Coherence between findings in the lab and in the field / population increases the likelihood of an effect.
-\item {\bf Analogy:} Similar factors have a similar effect.
+\item {\bf Strength:} A causal relationship is likely when the observed association is strong.\\[2mm]
+\item {\bf Consistency:} A causal relationship is likely if mutiple independent studies show similar associations.\\[2mm]
+\item {\bf Specificity:} A causal relationship is likely when a covariate $x$ is associated only with one potential outcome $y$ and not with other outcomes.\\[2mm]
+\item {\bf Temporality:} The effect has to occur after the cause.\\[2mm]
+\item {\bf Biological gradient:} Greater exposure should generally lead to greater incidence of the effect.\\[2mm]
+\item {\bf Plausibility:} A plausible mechanism is helpful.\\[2mm]
+\item {\bf Coherence:} Coherence between findings in the lab and in the field / population increases the likelihood of an effect.\\[2mm]
+\item {\bf Analogy:} Similar factors have a similar effect.\\[2mm]
 \item {\bf Experiment:} Evidence from an experiment is valuable.
 \end{enumerate}
 }
@@ -715,18 +786,18 @@ An observed effect is more likely to be \emph{causal} if participants were \emph
 \begin{multicols}{2}
 {\bf Observational study (``Erhebung'')}:
 \begin{itemize}
-\item Obseration of subjects / objects in a real-world (existing) situation.\\[2mm]
+\item Observation of subjects / objects in a real-world (existing) situation.\\[2mm]
 \item Variables are usually correlated.\\[2mm]
-\item More variables that can be included in the model.\\[2mm]
+\item Often more variables than can be included in the model.\\[2mm]
 \item {\bf Examples}: Influence of pollutans (mercury) on humans, studies of wild animal populations, epidemiological studies,...\\[4mm]
 \end{itemize}
 
 {\bf Experimental study}:
 \begin{itemize}
-\item Obseration of subjects / objects in a constructed (experimental) situation.\\[2mm]
+\item Observation of subjects / objects in a constructed (experimental) situation.\\[2mm]
 \item Variables are controlled and uncorrelated (given a good study design!).\\[2mm]
 \item Usually all variables enter the model, {\bf no model selection}.\\[2mm]
-\item {\bf Examples}: Field experiments; clinical studies; psycological or pedagogical experiments,...\\[2mm]
+\item {\bf Examples}: Field experiments; clinical studies; psychological or pedagogical experiments,...\\[2mm]
 \end{itemize}
 \end{multicols}
 }
@@ -734,13 +805,13 @@ An observed effect is more likely to be \emph{causal} if participants were \emph
 
 \frame{\frametitle{}
 \begin{tabular}{lll}
- & {\bf Experiment} & {\bf Observational study} \\
+  & {\bf Observational study} & {\bf Experiment} \\
  \hline 
- {\bf Situation}  & Artificial, designed & Existing, cannot be influenced \\[3mm]
- {\bf Analysis} & Simple,   & Difficult  \\
-  & \alert{no model selection} & (see model selection issues)  \\[3mm]
- {\bf Interpretation} & Clear,  & Difficult, \\
-  & ``proofs'' causal relationship & especially w.r.t.\ causality
+ {\bf Situation} & Existing, cannot be influenced  & Artificial, designed \\[3mm]
+ {\bf Analysis} & Difficult & Simple    \\
+   & (see model selection issues) & \alert{no model selection}   \\[3mm]
+ {\bf Interpretation} & Difficult, & Clear,   \\
+  & especially w.r.t.\ causality & ``proofs'' causal relationship 
  \end{tabular}
 }
 
@@ -771,9 +842,9 @@ It is {\bf widely unknown} that a model can be broken by the inclusion of a ``wr
 \begin{itemize}
 \item Try to understand the definition and the meaning of $p$-values. \\[2mm]
 \item Correct understanding, use and interpretation of $p$-values: Do not use the \alert{``mindless'' $p<0.05$ criterion}!!\\[2mm]
-\item Statistical significance vs biological relevance: Ask for the \alert{effect size} and \alert{confidence interval}, and reflect what it means, instead of only reporting $p$-values. \\[2mm]
-\item The $p$-value is not ``bad'', but it has to be used properly \\
-$\rightarrow$ 3 suggestions or alternatives (gradual interpretation on $p$-values, effect sizes and CIs, relative importances).\\[2mm]
+\item Statistical significance vs biological relevance: Ask for the \alert{effect size} and \alert{confidence interval}, and reflect what it means, instead of only reporting $p$-values alone. \\[2mm]
+\item The $p$-value is not ``bad'', it contains useful information, but it has to be used properly. \\
+$\rightarrow$ 3 suggestions or alternatives (gradual interpretation of $p$-values, effect sizes and CIs, relative importances).\\[2mm]
 \item \alert{Correlation} should not be mistaken for \alert{causality}.\\[2mm]
 \item \alert{Experimental studies} are better suited to reveal causality than observational studies!
 \end{itemize}

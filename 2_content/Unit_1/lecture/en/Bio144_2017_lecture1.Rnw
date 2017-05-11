@@ -99,6 +99,12 @@ Lecture times always :00 bis :45\\
 \begin{center}$\rightarrow$ Last lesson: {\bf from 16:00 to 16:45}.\end{center}
 }
 
+\frame{\frametitle{Prerequisite for Bio144}
+\begin{itemize}
+\item Mat183 ``Stochastik f\"ur die Naturwissenschaften'' (2nd semester)
+\end{itemize}
+
+}
 
 \frame{\frametitle{Literature}
 Compulsory literature:
@@ -127,32 +133,6 @@ ISBN 978-0-19-872906-8 \\[5mm]
 \end{itemize}
 }
 
-\frame{\frametitle{Overarching goals of the course}
- 
-
-
-
-
-
-
-\begin{itemize}
-\item Provide a solid foundation for answering biological questions with quantitative data.\\[3mm]
-\item Help students to understand the language of a statistician.\\[3mm]
-\item Ability to understand and interpret results in research articles.\\[3mm]
-\item Give the students a challenging, engaging, and enjoyable learning experience.\\[7mm]
-\end{itemize}
-
-My belief: A solid foundation in statistics makes you independent!  \\[2mm]
-
-}
-
-\frame{\frametitle{Prerequisite for Bio144}
-\begin{itemize}
-\item Mat183 ``Stochastik f\"ur die Naturwissenschaften'' (2nd semester)
-\end{itemize}
-
-}
-
 
 
 \frame{\frametitle{Schedule (12 lecture weeks + 2 self-study weeeks)}
@@ -178,15 +158,30 @@ My belief: A solid foundation in statistics makes you independent!  \\[2mm]
  
 }
 
+
+
+\frame{\frametitle{Overarching goals of the course}
+
+\begin{itemize}
+\item Provide a solid foundation for answering biological questions with quantitative data.\\[3mm]
+\item Help students to understand the language of a statistician.\\[3mm]
+\item Ability to understand and interpret results in research articles.\\[3mm]
+\item Give the students a challenging, engaging, and enjoyable learning experience.\\[7mm]
+\end{itemize}
+
+My belief: A solid foundation in statistics makes you independent!  \\[2mm]
+
+}
+
+
+
+
+
+
 \frame{\frametitle{Why is statistical data analysis so relevant for the biological and medical sciences?}
 
-What do you think? \\[4mm]
 
-
-
-\pause
-
-Awareness that, without a profound knowledge in statistical data analysis, it will be hard to analyze your data from Bachelor, Master or PhD theses.... \\[2mm]
+Awareness that, without a profound knowledge in statistical data analysis, it will be hard to analyze your data from Bachelor, Master or PhD theses.... \\[6mm]
 
 Examples:
 \begin{itemize}
@@ -531,13 +526,13 @@ models are wrong, but some are useful'' \citep{box1979}.}
 \item Formulate a precise question
 \item Plan your inquiry and the analysis of your data, collect the data (experiments or surveys).
 \item Tidy and clean the data
-\item Graphical representation of the data
+\item {\bf Graphical representation of the data}
 \item Choose an appropriate \emph{model}
 \item Estimate model parameters and uncertainties
-\item Check modelling assumptions
-\item If needed, improve the model; back to step 7
-\item Interpret your results and compare to step 1
-\item Communicate results precisely and carefully (publication, articles..)
+\item {\bf Check modelling assumptions}
+\item If needed, improve the model; back to step 6
+\item {\bf Interpret your results} and compare to step 1
+\item {\bf Communicate results} precisely and carefully (publication, articles..)
 \end{enumerate}
 
 }
@@ -545,7 +540,7 @@ models are wrong, but some are useful'' \citep{box1979}.}
 
 \frame{\frametitle{The scopes of statistical data analysis}
 \begin{enumerate}[a)]
-\item \myalert{Prediction, interpolation}. Example body fat: use substitute measurements to predict body fat of a person.\\[3mm]
+\item \myalert{Prediction (extrapolation), interpolation}. Example body fat: use substitute measurements to predict body fat of a person.\\[3mm]
 \item \myalert{Estimation of parameters.} Example: Effect size of a novel drug.\\[3mm]
 \item \myalert{Explanation;  determination of important variables}. Example physical activity of children: The study aims to find factors that (positively or negatively) influence the movement behavior of children. \\[3mm]
 \item Optimization. \\[3mm]
@@ -632,7 +627,7 @@ There are many ``fancy'' ways to graphically display data ({\bf nice-to-know}):
 \item Interactive graphs and animations\\[6mm]
 \end{itemize}
 
-Many R packages are available for various purposes. Interactive apps can, for example, be generated with Shiny (see census app).
+Many R packages are available for various purposes. Interactive apps can, for example, be generated with Shiny (see ``census app'').
 
 
 %' <<>>=

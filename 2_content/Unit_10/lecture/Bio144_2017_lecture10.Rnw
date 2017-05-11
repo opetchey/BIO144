@@ -45,6 +45,7 @@
 \DeclareMathOperator{\ccn}{ccn} % common copy number
 \DeclareMathOperator{\p}{p} % common copy number
 \DeclareMathOperator{\E}{E} % common copy number
+\DeclareMathOperator{\Binom}{Binom} % common copy number
 \DeclareMathOperator{\given}{|} % common copy number
 \def\given{\,|\,}
 \def\na{\tt{NA}}
@@ -60,6 +61,7 @@
 \newcommand{\NBin}{\text{NBin}}
 \newcommand{\Po}{\text{Po}}
 \newcommand{\N}{\mathsf{N}}
+\newcommand{\Bern}{\mathsf{Bern}}
 \newcommand{\odds}{\text{odds}}
 
 \newcommand{\hl}{\textcolor{red}}
@@ -97,7 +99,7 @@ Datenanalyse in der Biologie}%\\[.3cm]
 }
 
 
-\frame{\frametitle{Overview (todo: check)}
+\frame{\frametitle{Overview }
 \begin{itemize}
 \item Binary response variables
 \item Contingency tables, $\chi^2$ test
@@ -119,9 +121,11 @@ library(ggfortify)
 The lecture material of today is based on the following literature:\\[4mm]
 
 \begin{itemize}
-\item Repetition: Chapter 10 in Stahels book ``Statistische Datenanalyse'' from last semester.\\[4mm]
-\item Chapters 9.1 - 9.3 from ``The new statistics with R'' (Hector book).
+\item Repetition: Chapter 9.4 about $\chi^2$-Tests in the Luchsinger script \\[4mm]
+\item Chapters 9.1 - 9.3 from \emph{The new statistics with R} (Hector book).\\[12mm]
 \end{itemize}
+
+Note that I have also uploaded the continuation of the Stahel script, chapters 7-9 that covers GLM models. This is {\bf not} mandatory literature.
 }
 
 \frame{\frametitle{Recap of last week: GLMs and Poisson regression}
@@ -133,7 +137,6 @@ The lecture material of today is based on the following literature:\\[4mm]
 ($\rightarrow$ residuals are not Gaussian).\\[4mm]
 
 \item Count data usually lead to \alert{Poisson regression}.\\[4mm]
-\item However, for count data it may sometimes be ok to use linear regression with $\log(\bm{y})$ in the response.
 \end{itemize}
 }
 
@@ -191,7 +194,7 @@ and is expected to be $\chi^2_{1}$ distributed {\tiny(one degree of freedom: $(2
 The $p$-value of this test is given as $\Pr(X\geq 8.329)=\Sexpr{format(1-pchisq(8.329,1),4,4,4)}$. \\[2mm]
 
 <<>>=
-1-pchisq(8.329,1)
+pchisq(8.329,1,lower.tail=F)
 @
 }
 
@@ -212,7 +215,7 @@ TT <- (23 - 58*57/n)^2 /(58*57/n) + (34 - 166*57/n)^2/(166*57/n) + (35 - 58*167/
 @
 ~\\[8mm]
 
-Please note: You would usually prefer to have \texttt{correct=TRUE} to obtain a better approximation to the $\chi^2$ distribution (continuity correction of Yates):\\[2mm]
+Please note: You may sometimes prefer to have \texttt{correct=TRUE} to obtain a better approximation to the $\chi^2$ distribution when expected values in the cells are small (continuity correction of Yates):\\[2mm]
 
 <<chisq2>>=
 chisq.test(data.table,correct=TRUE)
@@ -285,6 +288,10 @@ Why is this simpler? Look at the interpretation:\\[2mm]
 \end{itemize}
 }
 
+\frame{
+Please go to the following webpage for a short klicker exercise:\\
+\url{http://www.klicker.uzh.ch/bkx}
+}
 
 \frame{\frametitle{Binomial and binary regression}
 Usually the situation is more complicated than 
@@ -302,7 +309,7 @@ $\rightarrow$ A regression model is needed again!
 \frame[containsverbatim]{\frametitle{Illustrative/working example}
 Let us look at an example from chapter 9.2 in Hector (2015): \\[2mm]
 
-Eight groups of beetles were exposed to carbon disulphide (an insecticide) for 5h. For each beetle it was then reported if it was killed or not (1 or 0), but the data were reported {\bf aggregated}:\\[6mm]
+Eight groups of beetles were exposed to carbon disulphide (an insecticide) for 5h. For each beetle it was then reported if it was killed or not (1 or 0), but the data were reported in {\bf aggregated} form:\\[6mm]
 
 <<echo=F>>=
 library(AICcmodavg)
@@ -348,7 +355,7 @@ with linear (blue) and smoothed line (red).
 }
 
 \frame[containsverbatim]{\frametitle{The `wrong' analyses}
-{\bf Linear regression}\\[2mm]
+{\bf Wrong analysis 1: Linear regression}\\[2mm]
 
 We could simply use 
 $$\E(y_i) = \beta_0 + \beta_1 Dose_i $$
@@ -381,7 +388,7 @@ $\Rightarrow$ \alert{Unrealistic predictions!}
 
 
 \frame[containsverbatim]{\frametitle{} \label{sl:poisson}
-{\bf Poisson regression}\\[2mm]
+{\bf Wrong analysis 2: Poisson regression}\\[2mm]
 
 What about Poisson regression with the counts ``\texttt{Number\_killed}'' in the response? We could use
 
@@ -407,12 +414,12 @@ This leads to $\hat\beta_0=\Sexpr{format(r.pois$coef[1],2,2,2)}$ and $\hat\beta_
 }
 
 \frame{\frametitle{Sidenote: count vs.\ binomial data}
-Clarification of the difference between count data and binomial data:\\[6mm]
+Clarification of the difference between count data and binomial data:\\[4mm]
 
 {\bf Count data:} 
 \begin{itemize}
 \item Theoretically no upper limit on number of times an ``event'' (e.g., number of birds observed in a forest plot)
-\item Counts cannot be expressed as a proportion.\\[4mm]
+\item Counts cannot be expressed as a proportion.\\[6mm]
 \end{itemize} %possible to express as a proportion.\\[4mm]
 
 {\bf Binomial data:}
@@ -450,7 +457,7 @@ $\rightarrow$ The variance of the distribution is determined by its mean.\\[4mm]
 Binomial data is an \alert{aggregation of binary data}: \\[2mm]
 
 \begin{itemize}
-\item Repeate the experiment with $\P(Y=1)=\pi$ a total number of $n$ times, calculate how often a success was observed ($k$ times).
+\item Repeat the experiment with $\P(Y=1)=\pi$ a total number of $n$ times, calculate how often a success was observed ($k$ times).
 
 \item The expected proportion of successes (``success rate'', here $k/n$) has then the same expectation as the success probability of a single experiment: 
 \begin{equation*}
@@ -460,9 +467,31 @@ Binomial data is an \alert{aggregation of binary data}: \\[2mm]
 \end{itemize}
 
 \vspace{8mm}
-{\small Example: In the beetle data  49 beetles were tested for the lowest dose, of which $k=6$ died.}
+{\small Example: In the beetle data  49 beetles were tested for the lowest dose, of which $k=6$ died, thus $\hat\pi=6/49=0.122$.}
 }
 
+\frame{\frametitle{The binomial distribution}
+
+The {\bf binomial distribution} assigns the probability of seeing $k$ success out of $n$ trials, where the success probability of a single trial is $\pi$.\\[2mm] 
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+\begin{equation*}
+\P(Y = k) = {{n}\choose{k}}\pi^k (1-\pi)^{n-k} \ ,\quad k=0, 1, 2,\ldots, n
+\end{equation*}
+In short: $$Y \sim  \Binom(n,\pi) \ .$$
+\end{minipage}}
+~\\[4mm]
+{\bf Characteristics of the binomial distribution:}\\ \label{sl:bernoulli}
+\begin{itemize}
+\item Mean: $\E(Y)=n \cdot \pi$
+\item Variance: $\Var(Y)=n\cdot \pi(1-\pi)$\\[2mm]
+\end{itemize}
+
+$\rightarrow$ For given $n$, the variance is determined by its mean.\\[4mm]
+
+
+{\small R functions: \texttt{rbinom(), dbinom()}}
+}
 
 \frame{\frametitle{Doing it right: Logistic regression}
 We can again use the GLM machinery from last week! The \alert{linear predictor} is as always:
@@ -491,17 +520,19 @@ $$g(\pi) = \log \left(\frac{\pi}{1-\pi}\right) = \log(\pi) - \log(1-\pi) \ .$$
 A graph depicts the functional form of $g(\cdot)$: 
 \vspace{-6mm}
 \begin{center}
-\setkeys{Gin}{width=0.5\textwidth}
+\setkeys{Gin}{width=0.45\textwidth}
 <<fig=T,echo=F,width=4,height=4>>=
 x <- seq(0,1,0.001)
 plot(x,log(x/(1-x)),xlab=expression(pi),ylab=expression(log(pi/(1-pi))),cex=0.8)
 @
 \end{center}
+\vspace{-4mm}
+{\small See also Box 9.2 (p.\ 123) in \emph{The new statistics with R}.}
 }
 
 \frame{\frametitle{The logistic regression model}
 \colorbox{lightgray}{\begin{minipage}{10cm}
-In order to prevent the expected value $\E(y_i)$ to attain unreasonable values, we thus formulate the \alert{logistic regression model} as
+In order to prevent the expected value $\E(y_i)$ of a binary experiment (0/1) to attain unreasonable values, we thus formulate the \alert{logistic regression model} as
 \begin{equation*}
 \log\left( \frac{\E(y_i)}{1-\E(y_i)} \right) = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_p x_i^{(p)} \ 
 \end{equation*}
@@ -559,7 +590,7 @@ plot(beetle.glm)
 
 
 \frame[containsverbatim]{\frametitle{Doing it right: Interpreting the coefficients}
-Let's look at the results, for the moment on the coefficients:\\[2mm]
+Let's look at the coefficients:\\[2mm]
 
 <<>>=
 summary(beetle.glm)$coef
@@ -571,7 +602,7 @@ The intercept and slope are estimated as
 \hat\beta_0 = \Sexpr{format(summary(beetle.glm)$coef[1,1],3,3,3)} \quad \text{and}\quad \hat\beta_1 = \Sexpr{format(summary(beetle.glm)$coef[2,1],3,3,3)} \ ,
 \end{equation*}
 
-with standard errors and $p$-values. Very clearly, the dose influences the survival probability ($p<<0.001$), and $\hat\beta_1 >0$, thus, \alert{the larger the dose, the larger the mortality probability} (positive relation). \\[2mm]
+with standard errors and $p$-values. Very clearly, the dose influences the survival probability ($p<<0.001$), and $\hat\beta_1 >0$, thus, \alert{the larger the dose, the larger the mortality probability} (positive relation; {\scriptsize be careful, this is wrong in the Hector book!!}). \\[2mm]
 
 This is a {\bf qualitative interpretation} of the coefficients.\\[4mm]
 
@@ -590,14 +621,14 @@ Remember the regression model
 To understand what $\beta_1$ tells us, let's transform the equation such that $\E(y_i)=\P(y_i=1)$ is on the left. Some algebra leads to 
 
 \begin{equation}\label{eq:prob}
-\P(y_i=1)= \frac{\exp(\beta_0 + \beta_1 Dose_i)}{1 + \exp(\beta_0 + \beta_1 Dose_i)} \ . 
+\P(y_i=1 \given Dose_i)= \frac{\exp(\beta_0 + \beta_1 Dose_i)}{1 + \exp(\beta_0 + \beta_1 Dose_i)} \ . 
 \end{equation}
 
 ~\\[2mm]
 \colorbox{lightgray}{\begin{minipage}{10cm}
 It is then possible to calculate the \alert{odds} (``Chance'') 
 \begin{equation*}
-\odds(y_i=1 \given Dose_i) = \frac{\P(y_i=1)}{\P(y_i=0)}= \exp(\beta_0 + \beta_1 Dose_i)\ . 
+\odds(y_i=1 \given Dose_i) = \frac{\P(y_i=1 \given Dose_i)}{\P(y_i=0\given Dose_i)}= \exp(\beta_0 + \beta_1 Dose_i)\ . 
 \end{equation*}
 \end{minipage}}
 }
@@ -610,12 +641,17 @@ If the $Dose_i$ is then increased by 1 unit in concentration (from $x$ to $x+1$)
 \end{equation*}
 ~\\[2mm]
 
-{\bf Interpretation:} When the dose is increased by 1 unit, the odds to die increases by a factor of $\Sexpr{format(exp(summary(beetle.glm)$coef[2,1]),2,2,2)}$.\\[8mm]
+\colorbox{lightgray}{\begin{minipage}{10cm}
+{\bf Interpretation:} When the dose is increased by 1 unit, the odds to die increases by a factor of $\Sexpr{format(exp(summary(beetle.glm)$coef[2,1]),2,2,2)}$.
+\end{minipage}}
+\vspace{6mm}
 
-Moreover, taking the $\log$ on the above equation shows that \alert{$\beta_1$ can be interpreted as a log odds ratio}:
+\colorbox{lightgray}{\begin{minipage}{10cm}
+Moreover, taking the $\log$ on the above equation shows that {\bf $\beta_1$ can be interpreted as a log odds ratio}:
 \begin{equation*}
 \beta_1 = \log\left( \frac{\odds(y_i=1 \given Dose_i = x + 1)}{\odds(y_i=1 \given Dose_i = x)}\right)
 \end{equation*}
+\end{minipage}}
 }
 
 \frame[containsverbatim]{\frametitle{Doing it right: The \texttt{anova()} table}
@@ -650,13 +686,13 @@ geom_line(aes(xx, ppi,colour = "red"), dd, size=1.2) +
 @
 \end{center}
 
- 
+(Compare to Figure 9.1 in the Hector book \emph{The new statistics with R}.)
 }
 
 \frame{\frametitle{Overdispersion}
 Remember :
 \begin{itemize}
-\item Slide\ref{sl:bernoulli}: $\E(Y)=\pi$ and $\Var(Y)=\pi(1-\pi)$, thus \alert{the variance is determined by the mean!} \\[2mm]
+\item Slide \ref{sl:bernoulli}: $\E(Y)=\pi$ and $\Var(Y)=\pi(1-\pi)$, thus \alert{the variance is determined by the mean!} \\[2mm]
 
 \item ``Overdispersion'' means \alert{``extra variability''} (larger than the model predicts). \\[2mm]
 \item Reason: Variables are missing in the model!\\[2mm]
@@ -698,12 +734,12 @@ summary(beetle.glm2)
 
 \frame{\frametitle{Binary response / non-aggregated data}
 \begin{itemize}
-\item In the beetle example, we were in a comfortable situation: For each level of the does, we had several beetles. For instance, 55 beetles at lowest does (49.06), of which 6 died (1) and 49 survived (0). This was \alert{binomial} data, an aggregated version of 55 trials with 0 or 1 outcome.\\[3mm]
+\item In the beetle example, we were in a comfortable situation: For each level of the does, we had several beetles. For instance, 55 beetles at lowest dose (49.06), of which 6 died (1) and 49 survived (0). This was \alert{binomial} data, an aggregated version of 55 trials with 0 or 1 outcome.\\[3mm]
 \item In reality, one often has only one trial (0/1) for a (combination of) covariate(s).\\[3mm]
 \item The analysis is the same as for aggregated data, however there are a few complications with graphical descriptions and model checking. \\[6mm]
 \end{itemize}
 
-{\bf Example}: Blood screeing {\tiny (see week 1; data from Hothorn \& Everitt 2014, chapter 7.3)}
+{\bf Example}: Blood screening {\tiny (see week 1; data from Hothorn \& Everitt 2014, chapter 7.3)}
 }
 
 \frame[containsverbatim]{\frametitle{Blood screening example}
@@ -731,14 +767,16 @@ print(ttab2,  floating = TRUE, include.rownames=FALSE)
 \frame{\frametitle{}
 {\bf Question:} Is a high ESR (erythrocyte sedimentation rate) an indicator for certain diseases (rheumatic disease, chronic inflammations)?\\[3mm]
 
-{\bf  Specifically: } Is there an association between ESR level ESR$<20mm/hr$ and the concentrations of the plasma proteins Fibrinogen and Globulin?\\[6mm]
+{\bf  Specifically: } Are the concentrations of the plasma proteins Fibrinogen and Globulin (which are disease indicators) association between ESR level ESR$<20mm/hr$ and the ?\\[6mm]
 
 {\bf The model to be fitted:}\\
 
 \begin{equation*}
 \log\left( \frac{\E(y_i)}{1-\E(y_i)} \right) = \beta_0 + \beta_1 fibrinogen_i + \beta_2 globulin_i \ ,
 \end{equation*}
-with $\E(y_i)=\P(y_i=1)$.
+\\[4mm]
+with $\E(y_i)=\P(y_i=1)=\pi_i$. \\
+{\tiny Equivalently: $y_i \sim \Bern(\pi_i)$}
 }
 
 \frame[containsverbatim]{\frametitle{Complication 1 with binary data: Graphical description}
@@ -756,7 +794,7 @@ plot(y ~ globulin,plasma,ylab="ESR>20")
 }
 
 \frame[containsverbatim]{
-It is a bit more illustrative to give a \alert{conditional density plot}: 
+It is a bit more illustrative to give a \alert{conditional density plot} (\texttt{cdplot()}): 
 \vspace{-2mm}
 
 \begin{center}
@@ -801,7 +839,7 @@ plot(plasma.glm)
 \frame{\frametitle{}
 {\bf b) Residual deviance:}\\[4mm]
 
-For non-aggregated data, the \texttt{residual deviance} vs.\ \texttt{df} relation cannot be used to detect overdispersion!!
+For non-aggregated data, the \texttt{residual deviance} vs.\ \texttt{df} relation {\bf cannot be used to detect overdispersion}s!!
 }
  
  
@@ -809,7 +847,7 @@ For non-aggregated data, the \texttt{residual deviance} vs.\ \texttt{df} relatio
 Apart from the above complications, fitting and interpreting the model is analogous to aggregated binary data. Let's continue with the blood screening example:\\
 
 <<echo=T,eval=F>>=
-plasma.glm <- glm(y ~ fibrinogen + globulin, data = plasma, family=binomial)
+plasma.glm <- glm(y ~ fibrinogen + globulin, data = plasma, family = binomial)
 @
 
 ~\\[2mm]
@@ -863,7 +901,14 @@ anova(plasma.glm,test="Chisq")
 
 
 \frame{\frametitle{Summary}
-
+\begin{itemize}
+\item Logistic regression is useful to model binary/binomial data.\\[3mm]
+\item The link function is the logistic link.\\[3mm]
+\item The coefficients of logistic regression are log odds ratios \\
+\begin{center}$\Leftrightarrow \quad$ $\exp(\beta)$ is an odds ratio \\[2mm]\end{center}
+\item Differences between aggregated (binomial) and binary data.\\[3mm]
+\item Overdispersion not detectable for binary data!
+\end{itemize}
 }
 % \frame{References:
 % \bibliographystyle{Chicago}

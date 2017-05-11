@@ -88,20 +88,20 @@
 Datenanalyse in der Biologie}%\\[.3cm]
 \author[Stefanie Muff, Owen L.\ Petchey]{\centering Stefanie Muff  \& Owen L.\ Petchey }
 %\institute[]{Institute of Social and Preventive Medicine \\ Institute of Evolutionary Biology and Environmental Studies}
-\date[]{Lecture 4: Multiple linear regression (finalize) / Residual analysis / Checking modelling assumptions\\ 16./17. March 2017}
+\date[]{Lecture 4: Multiple linear regression (finalize) / Residual analysis / Checking modeling assumptions\\ 16./17. March 2017}
 
 
 \maketitle
 }
 
 
-\frame{\frametitle{Overview (todo: check)}
+\frame{\frametitle{Overview }
 \begin{itemize}
-\item Interactions between covariates
-\item Multiple vs.\ many single regressions
-\item Checking assumptions / Model validation 
-\item What to do when things go wrong?
-\item Transformation of variables/the response
+\item Interactions between covariates \\[2mm]
+\item Multiple vs.\ many single regressions\\[2mm]
+\item Checking assumptions / Model validation \\[2mm]
+\item What to do when things go wrong?\\[2mm]
+\item Transformation of variables/the response\\[2mm]
 \item Handling of outliers
 \end{itemize}
 }
@@ -115,19 +115,63 @@ The lecture material of today is based on the following literature:\\[4mm]
 \end{itemize}
 }
 
-\frame[containsverbatim]{\frametitle{Recap of last week I}
-to do 
+\frame[allowframebreaks]{\frametitle{Recap of last week}
+\begin{itemize}
+\item Multiple linear regression model $y_i= \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_m x_i^{(m)} + e_i $.\\[3mm]
+\item \alert{Binary} and \alert{factor} covariates: The idea is to introduce \alert{dummy variables} such that
+\colorbox{lightgray}{\begin{minipage}{10cm}
+\begin{equation*}
+x_i^{(j)} = \left\{ 
+\begin{array} {ll}
+1, & \text{if the $i$th observation belongs to group $j$}.\\
+0, & \text{otherwise.}
+\end{array}\right.
+\end{equation*}
+\end{minipage}}
+~\\[1mm]
+
+\item Include $x^{(2)}$, ... ,$x^{(k)}$ in the regression, given that $x^{(1)}$ is used as \alert{reference category} ($\beta_1=0$).\\[3mm]
+
+\item The factor covariates of last week were used to allow for \alert{group-specific intercepts} (see earthworm example).\\[3mm]
+
+\begin{center}
+\setkeys{Gin}{width=0.55\textwidth}
+<<fig=T,echo=F,width=4.5,height=3>>=
+library(ggplot2)
+d.wurm <- read.table ("../../data_examples/ancova/Projekt6Regenwuermer/RegenwuermerDaten_Haupt.txt",header=T)
+d.wurm[d.wurm$Gattung=="N","GEWICHT"] <- d.wurm[d.wurm$Gattung=="N","GEWICHT"]*0.5
+r.lm <- lm(log10(GEWICHT) ~  MAGENUMF + Gattung,d.wurm)
+cc <- r.lm$coefficients
+ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point() + geom_line(aes(y=cc[1]+cc[2]*MAGENUMF),colour=2)  + geom_line(aes(y=cc[1]+cc[3]+cc[2]*MAGENUMF),colour=3)  + geom_line(aes(y=cc[1]+cc[4] + cc[2]*MAGENUMF),colour=4) + theme_bw()
+@
+\end{center}
+
+\item The \alert{$F$-test} is used to test if $\beta_2=\beta_3=...=\beta_k=0$ at the same time for a factor covariate with $k$ levels. Use the \texttt{anova()} function in R to carry out this test.\\[3mm]
+\item The $F$-test is a \alert{generalization of the $t$-test}, which is used to test if $\beta_j = 0$ for one single variable $x^{(j)}$.
+\end{itemize}
 }
 
-\frame[containsverbatim]{\frametitle{Recap of last week I}
-Last week we introduced binary and factor covariates that allowed for group-specific intercepts.
-}
 
 
-\frame[containsverbatim]{\frametitle{Group-specific slopes / Interactions}
-It may happen that groups do not only differ in their intercept ($\beta_0$), but also in their slopes ($\beta_x$).\\[2mm]
+\frame[containsverbatim]{\frametitle{Group-specific slopes: Interactions}
 
-For simplicity, let us look at a binary covariate ($x_i \in \{0,1\}$). 
+
+
+
+
+It may happen that \alert{groups do not only differ in their intercept ($\beta_0$), but also in their slopes ($\beta_x$)}.\\[2mm]
+In the earthworm example, allowing for different intercepts and slopes:
+\begin{center}
+\setkeys{Gin}{width=0.6\textwidth}
+<<fig=T,echo=F,width=4.5,height=3>>=
+library(ggplot2)
+library(dplyr)
+ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point() + geom_smooth(method="lm") + theme_bw()
+@
+\end{center}
+
+For simplicity, let us look at a binary covariate ($x_i \in \{0,1\}$). \\
+(Generalization to factorial covariates is more or less straightforward.)
 }
 
 
@@ -136,31 +180,38 @@ For simplicity, let us look at a binary covariate ($x_i \in \{0,1\}$).
 
 Remember the mercury (Hg) example from last week. We now extended the dataset and include mothers \emph{and} children ($\leq 11$ years).\\[2mm]
 
-It is known that Hg concentrations may change over the lifetime of humans. So let us look at \texttt{log(Hg$_\text{urin}$)} depending on the participants age:
-\vspace{-5mm}
+It is known that Hg concentrations may change over the lifetime of humans. So let us look at \texttt{log(Hg$_\text{urin}$)} depending on the participants age:\\
+
 \begin{center}
-\setkeys{Gin}{width=0.55\textwidth}
-<<fig=T,echo=F,width=4.5,height=4>>=
+\setkeys{Gin}{width=0.6\textwidth}
+<<fig=T,echo=F,width=4.5,height=3>>=
 path <- "../../data_examples/Hg/"
 d.hg <- read.table(paste(path,"Hg_urin.csv",sep=""),header=T, sep=",")
 d.hg <- d.hg[,c(1,2,5,6,7,8,10)]
 names(d.hg) <- c("Hg_urin", "Hg_soil", "smoking","amalgam", "age", "fish","mother")
-plot(log(Hg_urin) ~ age, d.hg,col=mother+1,cex.lab=1.5)
-legend("topright",legend=c("children","mothers"),col=1:2,pch=1)
-abline(lm(log(Hg_urin)~age,data=subset(d.hg,mother==0)))
-abline(lm(log(Hg_urin)~age,data=subset(d.hg,mother==1)),col=2)
+d.hg <- mutate(d.hg,mother=factor(mother))
+ggplot(d.hg,aes(x=age,y=log(Hg_urin),colour=mother)) + geom_point() + geom_smooth(method="lm") + theme_bw()
+# plot(log(Hg_urin) ~ age, d.hg,col=mother+1,cex.lab=1.5)
+# legend("topright",legend=c("children","mothers"),col=1:2,pch=1)
+# abline(lm(log(Hg_urin)~age,data=subset(d.hg,mother==0)))
+# abline(lm(log(Hg_urin)~age,data=subset(d.hg,mother==1)),col=2)
 @
 \end{center}
-An important observation is that children and mothers show different dependencies of age!
+An important observation is that children and mothers show different dependencies of age!\\[2mm]
+$\rightarrow$ Formulate a model that allows for \alert{different intercepts \emph{and} slopes}, depending on group membership (mother/child).
 }
 
 \frame{
-It is therefore crucial to formulate a model that allows for different intercepts \emph{and} slopes, depending on group membership (mother/child).\\[2mm]
+
+
+This can be achieved by introducing a so-called \alert{interaction term} into the regression equation.\\[2mm]
 
 The smallest possible model is then given as\\
+\colorbox{lightgray}{\begin{minipage}{10cm}
 \begin{equation}\label{eq:HgInt}
 y_i =  \beta_0 + \beta_1 \text{mother}_i + \beta_2 \text{age}_i + \beta_3\text{age}_i\cdot \text{mother}_i + e_i \ , 
 \end{equation}
+\end{minipage}}
 ~\\
 where $y_i=\log(Hg_{\text{urin}})_i$, and \texttt{mother} is a binary ``dummy'' variable that indicates if the person is a mother (1) or a child (0).\\[4mm]
 
@@ -198,8 +249,14 @@ Children: $\hat{y}_i = \Sexpr{round(r.hg$coefficients[1],2)}  + (\Sexpr{round(r.
 
 \begin{itemize}
 \item The Hg level drops in young children.
-\item The Hg level increases in adults (mothers).
+\item The Hg level increases in adults (mothers).\\
 \end{itemize}
+}
+
+\frame{
+On the previous slide we have actually fitted 2 models at the same time. \\[4mm]
+
+What is the advantage of this? Why is this usually better than fitting two separate models, one for children and one for mothers?
 }
 
 \frame[containsverbatim]{\frametitle{}
@@ -218,17 +275,20 @@ tableRegression(r.hg)
 }
 
 \frame[containsverbatim]{
-Again, for completeness, some model checking: 
+Again, for completeness, some model checking (which one usually does before looking at the results): \\[8mm]
 
 \setkeys{Gin}{width=0.8\textwidth}
-
-<<modelChecksHg,fig=T,width=7,height=4,echo=F>>=
-par(mfrow=c(1,2))
-plot(r.hg$fitted,r.hg$residuals,xlab="Fitted values", ylab="Residuals")
-abline(h=0,lty=2)
-qqnorm(r.hg$residuals)
-qqline(r.hg$residuals)
+\begin{center}
+<<modelChecksHg,fig=T,width=7,height=3.5,echo=F>>=
+library(ggfortify)
+autoplot(r.hg,which=c(1,2),smooth.col=NA)
+# par(mfrow=c(1,2))
+# plot(r.hg$fitted,r.hg$residuals,xlab="Fitted values", ylab="Residuals",main="TA - diagram")
+# abline(h=0,lty=2)
+# qqnorm(r.hg$residuals)
+# qqline(r.hg$residuals)
 @
+\end{center}
 }
 
 
@@ -258,7 +318,12 @@ The word \emph{linear} refers to the \alert{linearity in the coefficients}, and 
 
 
 \frame{\frametitle{Multiple vs.\ many single regressions}
-Question: I find group-specific intercepts and interactions too complicated. Could I simply fit separate models for each variable?\\[6mm]
+
+Question: Given multiple regression covariates $\bm{x}^{(1)}, \bm{x}^{(2)},...$. Could I simply fit separate simple models for each variable, that is\\[2mm]
+
+$y_i = \alpha + \beta x_i^{(1)} + e_i$\\
+$y_i = \alpha + \beta x_i^{(2)} + e_i$ \\[2mm]
+etc.? \\[4mm]
 
 \pause
 Answer (Stahel 3.3o):\\[4mm]
@@ -288,17 +353,17 @@ Thus the model is
 \frame{
 \includegraphics[width=11cm]{pictures/FigsAB.jpg}\\[2mm]
 
-Example A: Within-group slope is $>0$. Fitting $y\sim x$ leads to an overestimated slope when group-variable is not included in the model.\\[4mm]
+Example A: Within-group slope is $>0$. Fitting $y$ against $x$ leads to an overestimated slope when group-variable is not included in the model.\\[4mm]
 
-Example B: Within-group slope is $0$, but fitting $y\sim x$ leads to a slope estimate $>0$, wich is only an artefact of not accounting for the group variable $x^{(2)}$. \\[4mm]
+Example B: Within-group slope is $0$, but fitting $y$ against $x$ leads to a slope estimate $>0$, wich is only an artefact of not accounting for the group variable $x^{(2)}$. \\[4mm]
 }
 
 \frame{
 \includegraphics[width=11cm]{pictures/FigsCD.pdf}\\[2mm]
 
-Example C: Within-group slope is $<0$, but fitting $y\sim x$ leads to an estimated slope of $>0$! \\[4mm]
+Example C: Within-group slope is $<0$, but fitting $y$ against $x$ leads to an estimated slope of $>0$! \\[4mm]
 
-Example D: Within-group slope is $<0$, but fitting $y\sim x$ leads to a slope estimate of $0$. \\[4mm]
+Example D: Within-group slope is $<0$, but fitting $y$ against $x$ leads to a slope estimate of $0$. \\[4mm]
 }
 
 
@@ -319,8 +384,8 @@ To extend our analogy, the data analyst is in a position like that of an experim
 \end{minipage}}
 }
 
-\frame{\frametitle{Checking modelling assumptions}
-Remember from week 2, that in linear regression the modelling assumption is that the residuals $e_i$ are independently normally distributed around zero, that is, $e_i \sim \N(0,\sigma_e^2)$. This implies four things:\\[6mm]
+\frame{\frametitle{Checking modeling assumptions}
+Remember that in linear regression the modeling assumption is that the residuals $e_i$ are independently normally distributed around zero, that is, $e_i \sim \N(0,\sigma_e^2)$. This implies four things:\\[6mm]
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
 \begin{enumerate}[a)]
@@ -342,20 +407,19 @@ Stahel 4.1b:
 The aim is to find a model that describes the data well. But always keep in mind the following statement from a wise man:\\[6mm]
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
-All models are wrong, but some are useful.\\
-\scriptsize{(Box 1978)}
+All models are wrong, but some are useful. \scriptsize{(Box 1978)}
 \end{minipage}}
 }
 
 \frame{\frametitle{Overview of model-checking tools}
 
-Those used in this course are:\\[4mm]
+Complete overview of those used in this course:\\[2mm]
 
 \begin{itemize}
-\item Tukey-Anscombe plot (see weeks 2 and 3)\\
+\item Tukey-Anscombe plot (see lectures 2 and 3)\\
 $\Rightarrow$ \myalert{To check assumptions a), b) and d)}\\[2mm]
 
-\item Quantile-quantile (QQ) plot (see weeks 2 and 3)\\
+\item Quantile-quantile (QQ) plot (see lectures 2 and 3)\\
 $\Rightarrow$ \myalert{To check assumption c)}\\[2mm]
 
 
@@ -363,14 +427,15 @@ $\Rightarrow$ \myalert{To check assumption c)}\\[2mm]
 $\Rightarrow$ \myalert{To check assumption b)}\\[2mm]
 
 \item Leverage plot (Hebelarm-Diagramm)\\
-$\Rightarrow$ \myalert{To find influential observations and/or outliers}\\[4mm]
+$\Rightarrow$ \myalert{To find influential observations and/or outliers}\\[6mm]
 \end{itemize}
 
-\myalert{Note:} these four diagrams are plotted automatically by R when you use the \texttt{plot()} or the \texttt{autoplot()} function on an \texttt{lm} object, for example \texttt{autoplot(r.hg)}.
+{\bf Note:} these four diagrams are plotted automatically by R when you use the \texttt{plot()} or the \texttt{autoplot()}  function (from the \texttt{ggfortify} package) on an \texttt{lm} object, for example \texttt{autoplot(r.hg)}.
 }
 
 \frame[containsverbatim]{\frametitle{Tukey-Anscombe plot}
 <<echo=F>>=
+library(ggfortify)
 path <- "../../data_examples/Hg/"
 d.hg <- read.table(paste(path,"Hg_urin.csv",sep=""),header=T, sep=",")
 d.hg.m <- d.hg[d.hg$mother==1,-c(3,4,9,10,11)]
@@ -378,7 +443,7 @@ names(d.hg.m) <- c("Hg_urin", "Hg_soil", "smoking","amalgam", "age", "fish")
 @
 
 
-It is smometimes useful to enrich the TA-plot by adding a ``running mean'' or a ``smoothed mean'', which can give hints on the trend of the residuals. For the mercury example where $\log(Hg_{\text{urin}})$ is regressed on smoking, amalgam  and fish consumption for mothers only (slides 33-35 or week 3): 
+It is sometimes useful to enrich the TA-plot by adding a ``running mean'' or a ``smoothed mean'', which can give hints on the trend of the residuals. For the mercury example where $\log(Hg_{\text{urin}})$ is regressed on smoking, amalgam  and fish consumption for mothers only (slides 32-34 of lecture 3): 
 \vspace{-10mm}
 
 \begin{multicols}{2} 
@@ -416,20 +481,20 @@ Other ideas to plot residuals to check for a dependency? Please discuss!
 
 % Todo: hide the following slide in the published version of the slides!!
 \frame{
-The dependency is not necessarily on the fitted values ($x$-axis of TA plot). Ideas: 
+The dependency is not necessarily on the fitted values ($x$-axis of TA plot). Ideas:
 \begin{itemize}
-\item Plot in dependency of time (if available) or sequence of obervations.
-\item Plot against the covariates.
+\item Plot residuals in dependency of time (if available) or sequence of obervations.
+\item Plot residuals against the covariates.
 \end{itemize}
 \begin{center}
 \setkeys{Gin}{width=1\textwidth}
 <<hgFigCov,fig=T,echo=F,width=6,height=2.5>>=
 par(mfrow=c(1,3))
-plot(1:length(residuals(r1.urin.mother)),residuals(r1.urin.mother),xlab="Observation number",ylab="residual")
+plot(1:length(residuals(r1.urin.mother)),residuals(r1.urin.mother),xlab="Observation number",ylab="Residuals")
 abline(h=0,lty=2)
-plot(d.hg.m$amalgam,residuals(r1.urin.mother),xlab="No. of amalgam fillings",ylab="residual")
+plot(d.hg.m$amalgam,residuals(r1.urin.mother),xlab="No. of amalgam fillings",ylab="Residuals")
 abline(h=0,lty=2)
-plot(d.hg.m$fish,residuals(r1.urin.mother),xlab="No. of fish meals/moth",ylab="residual")
+plot(d.hg.m$fish,residuals(r1.urin.mother),xlab="No. of fish meals/moth",ylab="Residuals")
 abline(h=0,lty=2)
 @
 \end{center}
@@ -449,18 +514,19 @@ qqline(residuals(r1.urin.mother))
 
 
 \frame[containsverbatim]{
-\colorbox{lightgray}{\begin{minipage}{10cm}
-How do I know if a QQ-plot looks ``good''?
-\end{minipage}}
-\vspace{0mm}
+%\colorbox{lightgray}{\begin{minipage}{10cm}
+\frametitle{How do I know if a QQ-plot looks ``good''?}
+%\end{minipage}}
+%\vspace{0mm}
 
-There is no quantitative rule to answer this question, experience is needed. However, you can gain this experience from \alert{simulations}. To this end, generate the same number of data points of a normally distributed variable and compare to your plot. Example:
+There is no quantitative rule to answer this question, experience is needed. However, you can gain this experience from \alert{simulations}. To this end, generate the same number of data points of a normally distributed variable and compare to your plot. \\
+Example: Generate 59 points $e_i \sim \N(0,1)$ each time:\\[2mm]
 
 \begin{center}
-\setkeys{Gin}{width=0.7\textwidth}
-<<fig=T,echo=F,width=7,height=5>>=
+\setkeys{Gin}{width=0.75\textwidth}
+<<fig=T,echo=F,width=6,height=4>>=
 set.seed(390457)
-par(mfrow=c(2,3))
+par(mfrow=c(2,3),mar=c(4,4,1,1))
 for (ii in 1:6){
   ss <- rnorm(59)
 qqnorm(ss)
@@ -471,9 +537,9 @@ qqline(ss)
 }
 
 \frame[containsverbatim]{\frametitle{Scale-location plot (Streuungs-Diagramm)}
-The scale-location plot is particularly suited to check the assumption of equal variances ({\bf homoscedasticity / Homoskedasdizit\"at}).\\[2mm]
+The scale-location plot is particularly suited to check the assumption of equal variances ({\bf homoscedasticity / Homoskedastizit\"at}).\\[2mm]
 
-The idea is to plot the squared residuals $\sqrt{|R_i|}$ against the fitted values $\hat{y_i}$ {\scriptsize (again using the Hg example with the mothers)}:\\[2mm]
+The idea is to plot the square root of the residuals $\sqrt{|R_i|}$ against the fitted values $\hat{y_i}$ {\scriptsize (again using the Hg example with the mothers)}:\\[2mm]
 \begin{center}
 \setkeys{Gin}{width=0.6\textwidth}
 <<slPlot,fig=T,echo=F,width=4,height=3.5>>=
@@ -491,7 +557,7 @@ lines(aa$x,predict(lo), col='red', lwd=2,lty=5)
 \frame{\frametitle{Leverages}
 To understand the leverage plot, we need to introduce the idea of the \emph{leverage} (``Hebel''), see Stahel 4.3 h).\\[2mm]
 
-The leverage of individual $i$ is defined as $H_{ii} = (1/n) + (x_i-\overline{x})^2 SSQ^{(X)}$, which becomes larger the further away from the mean...\\[6mm]
+In simple regression, the leverage of individual $i$ is defined as $H_{ii} = (1/n) + (x_i-\overline{x})^2 SSQ^{(X)}$, which becomes larger the further away from the mean...\\[6mm]
 
 \includegraphics[width=11cm]{pictures/leverage.jpg}
 
@@ -541,7 +607,7 @@ Here, individuals 95, 101 and 106 are potential \myalert{outliers}.
 }
 
 
-\frame{\frametitle{What can go ``wrong'' during the modelling process?}
+\frame{\frametitle{What can go ``wrong'' during the modeling process?}
 
 \begin{itemize}
 \item ...
@@ -561,7 +627,7 @@ Here, individuals 95, 101 and 106 are potential \myalert{outliers}.
 \begin{enumerate}[(i)]
 \item \hl{Transform the outcome or the covariables.}\\[2mm]
 \item \hl{Take care of outliers.}\\[2mm]
-\item Use weighted regression (not discussed here; todo: check).\\[2mm]
+\item Use weighted regression (not discussed here).\\[2mm]
 \item Improve the model, e.g., by adding additional terms or interactions (see ``model selection'' in week 7).\\[2mm]
 \item Use another model family (generalized or nonlinear regression model).\\[2mm]
 \end{enumerate}
@@ -573,12 +639,12 @@ Example: Use again the mercury study, include only mothers. Use the response (Hg
 <<r1urin,echo=T>>=
 r2.urin.mother <- lm(Hg_urin ~  smoking  + amalgam + fish,data=d.hg.m)
 @
-\texttt{plot(r2.urin.mother)}:
 \begin{center}
-\setkeys{Gin}{width=0.6\textwidth}
-<<fig=T,width=6,height=6,echo=F>>=
-par(mfrow=c(2,2),mar=c(4,4,2,0.5))
-plot(r2.urin.mother)
+\setkeys{Gin}{width=0.55\textwidth}
+<<fig=T,width=5,height=5,echo=F>>=
+autoplot(r2.urin.mother,smooth.colour=NA) + theme_bw()
+# par(mfrow=c(2,2),mar=c(4,4,2,0.5))
+# plot(r2.urin.mother)
 @
 \end{center}
 }
@@ -587,8 +653,9 @@ plot(r2.urin.mother)
 Also the ``old-fashioned'' histogram of the residuals is illustrative, it is \myalert{very skewed}:
 \begin{center}
 \setkeys{Gin}{width=0.6\textwidth}
-<<fig=T,width=6,height=6,echo=F>>=
-hist(residuals(r2.urin.mother),nclass=20)
+<<fig=T,width=4,height=4,echo=F>>=
+ggplot(mapping=aes(x=residuals(r2.urin.mother)))+ geom_histogram(bins=25) + xlab("Residuals")
+# hist(residuals(r2.urin.mother),nclass=20)
 @
 \end{center}
 }
@@ -600,10 +667,11 @@ An in-summary comparison of the model with log-transformed response:
 r3.urin.mother <- lm(log10(Hg_urin) ~  smoking  + amalgam + fish,data=d.hg.m)
 @
 \begin{center}
-\setkeys{Gin}{width=0.6\textwidth}
-<<fig=T,width=6,height=6,echo=F>>=
-par(mfrow=c(2,2),mar=c(4,4,2,0.5))
-plot(r3.urin.mother)
+\setkeys{Gin}{width=0.55\textwidth}
+<<fig=T,width=5,height=5,echo=F>>=
+autoplot(r3.urin.mother,smooth.colour=NA) + theme_bw()
+# par(mfrow=c(2,2),mar=c(4,4,2,0.5))
+# plot(r3.urin.mother)
 @
 \end{center}
 This looks {\bf much} better! However... there is this individual 106 that needs some closer inspection (see slide \ref{sl:outliersHg} for the solution regarding this outlier).
@@ -635,21 +703,24 @@ These transformations can (or should) also be applied on covariates!
 }
 
 \frame[containsverbatim]{\label{sl:hgSqrt}
-For instance, the number of amalgam fillings and the number of monthly fish meals should be sqrt-transformed in the mercury example:
+For instance, the number of amalgam fillings and the number of monthly fish meals should be sqrt-transformed in the mercury example:\\[2mm]
+
 <<sqrt>>=
 r4.urin.mother <- lm(log10(Hg_urin) ~  smoking + sqrt(amalgam) + sqrt(fish),data=d.hg.m)
 @
 \begin{center}
-\setkeys{Gin}{width=0.65\textwidth}
+\setkeys{Gin}{width=0.6\textwidth}
 <<hgFig,fig=T,echo=F,width=5,height=5>>=
-par(mfrow=c(2,2),mar=c(4,4,2,0.5))
-plot(r4.urin.mother)
+autoplot(r4.urin.mother,smooth.colour=NA) + theme_bw()
+# par(mfrow=c(2,2),mar=c(4,4,2,0.5))
+# plot(r4.urin.mother)
 @
 \end{center}
 }
 
 \frame[containsverbatim]{\frametitle{Outliers}
-{\scriptsize (See Stahel chapter 4.5)}\\
+{\scriptsize (See Stahel chapter 4.5)}\\[2mm]
+
 The above plots illustrate that outliers are visible in all diagnostic plots. \\[4mm]
 
 What to do in this case?
@@ -678,7 +749,7 @@ It might seem tempting to delete observations that apparently don't fit into the
 
 
 \frame[containsverbatim]{\frametitle{The outlier in the Hg study}\label{sl:outliersHg}
-In the Hg study, it turned out later on that the outlier 106 had five unreported amagam fillings! \\[2mm]
+In the Hg study, it turned out later on that the outlier 106 had five unreported amalgam fillings! \\[2mm]
 A corrected analysis gives a much more regular picture (please compare to slide \ref{sl:hgSqrt}):
 \vspace{-4mm}
 
@@ -689,16 +760,18 @@ r5.urin.mother <- lm(log10(Hg_urin) ~  smoking + sqrt(amalgam) + sqrt(fish),data
 \begin{center}
 \setkeys{Gin}{width=0.6\textwidth}
 <<hgFigOut,fig=T,echo=F,width=5,height=5>>=
-par(mfrow=c(2,2),mar=c(4,4,2,0.5))
-plot(r5.urin.mother)
+autoplot(r5.urin.mother,smooth.colour=NA) + theme_bw()
+# par(mfrow=c(2,2),mar=c(4,4,2,0.5))
+# plot(r5.urin.mother)
 @
 \end{center}
 
 }
 
 \frame{\frametitle{Summary}
-Ev use ``Merkpunkte'' from Stahel slides (slide 41). What was today's lecture all about?
+%Ev use ``Merkpunkte'' from Stahel slides (slide 41). What was today's lecture all about?
 }
+
 % \frame{References:
 % \bibliographystyle{Chicago}
 % \bibliography{refs}

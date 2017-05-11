@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.7.13)  16 FEB 2017 15:53
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.7.13)  6 APR 2017 09:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -931,39 +931,39 @@ Class scrartcl Warning: Usage of deprecated font command `\bf'!
 (scrartcl)              But for now, KOMA-Script will replace deprecated `\bf'
 (scrartcl)              by `\normalfont \bfseries ' on input line 217.
 
-[2] <Bio144_2017_practical6_solution-013.pdf, id=17, 433.62pt x 216.81pt>
-File: Bio144_2017_practical6_solution-013.pdf Graphic file (type pdf)
-
-<use Bio144_2017_practical6_solution-013.pdf>
-Package pdftex.def Info: Bio144_2017_practical6_solution-013.pdf used on input 
-line 278.
-(pdftex.def)             Requested size: 341.43439pt x 170.72554pt.
-
-<Bio144_2017_practical6_solution-014.pdf, id=18, 216.81pt x 216.81pt>
-File: Bio144_2017_practical6_solution-014.pdf Graphic file (type pdf)
-
-<use Bio144_2017_practical6_solution-014.pdf>
-Package pdftex.def Info: Bio144_2017_practical6_solution-014.pdf used on input 
-line 304.
-(pdftex.def)             Requested size: 128.03871pt x 128.0458pt.
- [3 <./Bio144_2017_practical6_solution-013.pdf>]
-<Bio144_2017_practical6_solution-015.pdf, id=29, 216.81pt x 216.81pt>
-File: Bio144_2017_practical6_solution-015.pdf Graphic file (type pdf)
-
-<use Bio144_2017_practical6_solution-015.pdf>
-Package pdftex.def Info: Bio144_2017_practical6_solution-015.pdf used on input 
-line 310.
-(pdftex.def)             Requested size: 128.03871pt x 128.0458pt.
-
-<Bio144_2017_practical6_solution-016.pdf, id=30, 216.81pt x 216.81pt>
+[2] <Bio144_2017_practical6_solution-016.pdf, id=17, 433.62pt x 216.81pt>
 File: Bio144_2017_practical6_solution-016.pdf Graphic file (type pdf)
 
 <use Bio144_2017_practical6_solution-016.pdf>
 Package pdftex.def Info: Bio144_2017_practical6_solution-016.pdf used on input 
-line 316.
+line 305.
+(pdftex.def)             Requested size: 341.43439pt x 170.72554pt.
+
+<Bio144_2017_practical6_solution-017.pdf, id=18, 216.81pt x 216.81pt>
+File: Bio144_2017_practical6_solution-017.pdf Graphic file (type pdf)
+
+<use Bio144_2017_practical6_solution-017.pdf>
+Package pdftex.def Info: Bio144_2017_practical6_solution-017.pdf used on input 
+line 328.
 (pdftex.def)             Requested size: 128.03871pt x 128.0458pt.
- [4 <./Bio144_2017_practical6_solution-014.pdf> <./Bio144_2017_practical6_solut
-ion-015.pdf> <./Bio144_2017_practical6_solution-016.pdf>] (./Bio144_2017_practi
+ [3 <./Bio144_2017_practical6_solution-016.pdf>]
+<Bio144_2017_practical6_solution-018.pdf, id=27, 216.81pt x 216.81pt>
+File: Bio144_2017_practical6_solution-018.pdf Graphic file (type pdf)
+
+<use Bio144_2017_practical6_solution-018.pdf>
+Package pdftex.def Info: Bio144_2017_practical6_solution-018.pdf used on input 
+line 334.
+(pdftex.def)             Requested size: 128.03871pt x 128.0458pt.
+
+<Bio144_2017_practical6_solution-019.pdf, id=28, 216.81pt x 216.81pt>
+File: Bio144_2017_practical6_solution-019.pdf Graphic file (type pdf)
+
+<use Bio144_2017_practical6_solution-019.pdf>
+Package pdftex.def Info: Bio144_2017_practical6_solution-019.pdf used on input 
+line 340.
+(pdftex.def)             Requested size: 128.03871pt x 128.0458pt.
+ [4 <./Bio144_2017_practical6_solution-017.pdf> <./Bio144_2017_practical6_solut
+ion-018.pdf> <./Bio144_2017_practical6_solution-019.pdf>] (./Bio144_2017_practi
 cal6_solution.aux) ) 
 Here is how much of TeX's memory you used:
  7366 strings out of 494976
@@ -972,7 +972,7 @@ Here is how much of TeX's memory you used:
  10412 multiletter control sequences out of 15000+600000
  19912 words of font info for 56 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 47i,7n,51p,390b,411s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 47i,7n,51p,308b,411s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
 cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmb
 x8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
@@ -983,7 +983,7 @@ ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf
 -dist/fonts/type1/public/amsfonts/cm/cmsltt10.pfb></usr/share/texlive/texmf-dis
 t/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/font
 s/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on Bio144_2017_practical6_solution.pdf (4 pages, 121623 bytes).
+Output written on Bio144_2017_practical6_solution.pdf (4 pages, 122636 bytes).
 PDF statistics:
  84 PDF objects out of 1000 (max. 8388607)
  59 compressed objects within 1 object stream

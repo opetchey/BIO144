@@ -132,7 +132,7 @@ Introduction by Sir R.\ A.\ Fisher (1890-1962). He worked at the agricultural re
 
 Questions of AN(C)OVA:
 \begin{itemize}
-\item Generally: Are the means of twor or more groups different?\\[2mm]
+\item Generally: Are the means of two or more groups different?\\[2mm]
 \item Example: Are different plant breeds different in important aspects (e.g., yiels / Ertrag)?\\[2mm]
 \item Example: What is the influence of different treatments on plants (Biology) or patients (Medicine)? \\[2mm]
 \end{itemize}
@@ -224,7 +224,7 @@ where
 \item $e_{ij}\sim\N(0,\sigma_e^2)$ is an independent error term. \\[4mm]
 \end{itemize}
 
-Typically, this is rewritten as
+Typically, this is {\bf rewritten as}
 \begin{eqnarray*}
 y_{ij} = \mu + \beta_i + e_{ij} \ ,
 \end{eqnarray*}
@@ -270,7 +270,7 @@ Interpretation: The effects $\beta_1$, $\beta_2$ etc give the deviation from the
 
 \frame{\frametitle{ANOVA as a special case of a linear model}
 \colorbox{lightgreen}{\begin{minipage}{10cm}
-The clou is: Model \eqref{eq:aov} is identical to the regression model with a factor covariate, see slides 36/37 from week 3. 
+The clou is: Model \eqref{eq:aov} is identical to the regression model with a factor covariate, see slides 35/36 from week 3. 
 \end{minipage}}
 ~\\[4mm]
 {\bf Interpretation: The levels of the factor are now the different group memberships.} \\
@@ -299,11 +299,11 @@ H_1 &:& \text{At least two groups are different}
 \end{eqnarray*}
 
 ~\\[2mm]
-Remember from slide 44 of week 3 (or Stahel script p.33): We have already used the $F$-test for categorical variables (see $F$-test for the earthworks, slide 45 of week 3). This was equivalent to testing if all $\beta$s that belong to a categorical variable are =0 at the same time.\\[2mm] 
+Remember from slide 45 of week 3 (or Stahel script p.33): We have already used the $F$-test for categorical variables (see $F$-test for the earthworks, slide 46 of week 3). This was equivalent to testing if all $\beta$s that belong to a categorical variable are =0 at the same time \\[2mm]
+$\rightarrow$ equivalent to test if the covariate is needed in the model.\\[2mm] 
 
 This is \alert{the very same problem here}, thus we need the $F$-test again!\\[2mm]
 
-To derive the ingredients of the $F$-test, we again look at the decomposition of variance:
 }
 
 
@@ -312,14 +312,16 @@ To derive the ingredients of the $F$-test, we again look at the decomposition of
 
 
 \frame{\frametitle{Variance decomposition}
-(Remember this idea from week 3, slide 24, and replace $\hat{y_{ij}}$ by $\overline{y}_{\cdot i}$)
+To derive the ingredients of the $F$-test, we again look at the decomposition of variance (Remember this idea from week 3, slide 23, and replace $\hat{y_{ij}}$ by $\overline{y}_{\cdot i}$):
+\vspace{-4mm}
 
 \begin{eqnarray*}
-SS_{total} &=&  SS_{\text{between groups}} \qquad +\qquad SS_{\text{within groups}} \\
-\sum_{i=1}^g \sum_{j=1}^{n_i} (y_{ij}-\overline{y})^2 & = &  \sum_{i=1}^g {n_i(\overline{y}_{\cdot i} - \overline{y})^2} \quad  + \quad
+\text{total variability} &=&  \text{explained variability} +  \text{  residual variability} \\
+SS_{total} &=&  SS_{\text{between groups}} \qquad \, +\qquad SS_{\text{within groups}} \\
+\sum_{i=1}^g \sum_{j=1}^{n_i} (y_{ij}-\overline{y})^2 & = &  \sum_{i=1}^g {n_i(\overline{y}_{\cdot i} - \overline{y})^2} \quad  \, + \quad
 \sum_{i=1}^g \sum_{j=1}^{n_i}  (y_{ij} - \overline{y}_{\cdot i} )^2\\[4mm]
 \text{Degrees of freedom:} \\
-n-1 &= &   (g-1) \qquad  + \qquad (n-g)
+n-1 &= &   (g-1) \qquad \qquad + \qquad \qquad (n-g)
 \end{eqnarray*}
 ~\\
 
@@ -340,7 +342,7 @@ MS_E = \frac{SS_{\text{within}}}{n-g}
 
 
 
-\frame{\frametitle{Interpretation of the $F$ statistic}
+\frame[containsverbatim]{\frametitle{Interpretation of the $F$ statistic}
 \begin{itemize}
 \item $MS_G$: Quantifies the variability {\bf between} groups.
 \item $MS_E$: Quantifies the variability {\bf within} groups.\\[4mm]
@@ -348,26 +350,59 @@ MS_E = \frac{SS_{\text{within}}}{n-g}
 
 Thus $F = \frac{MS_G}{MS_E}$ is large when $MS_G$ is ``large'' with respect to $MS_E$. The larger $F$, the more likely that $H_0$ is false. \\[4mm]
 
+{\bf Example:}
+\vspace{-15mm}
+\begin{multicols}{2}
+
+~\\[0.5cm]
+\begin{itemize}
+\item $MS_G$ captures the variability among the four means (\alert{$\overline{y}_1, \overline{y}_2, \overline{y}_3, \overline{y}_4$})
+\item $MS_E$ captures the variability of the $y_{ij}$ \alert{within the groups}.
+\end{itemize}
+
+\begin{center}
+\setkeys{Gin}{width=0.5\textwidth}
+<<fig=TRUE,width=4.0,height=4,echo=F>>=
+plot(YIELD ~ as.numeric(HYBRID),d.mais,xlab="Hybrid (Sorte)",ylab="Yield (Ertrag)",xaxt="n")
+axis(1,labels=levels(d.mais$HYBRID),at=1:4)
+d.agg <- aggregate(YIELD~HYBRID,d.mais,FUN=mean)
+points(YIELD ~ HYBRID,d.agg,col=2,pch=15)
+abline(c(mean(d.mais$YIELD),0),col=2,lwd=2)
+text(3.8,63.5,expression(bar(y)),col=2,cex=1.5)
+text(1.2,64,expression(bar(y[1 ])),col=2,cex=1.0)
+text(2.2,63.3,expression(bar(y[2])),col=2,cex=1.0)
+text(3.2,64,expression(bar(y[3])),col=2,cex=1.0)
+text(3.8,58,expression(bar(y[4])),col=2,cex=1.0)
+@
+\end{center}
+
+\end{multicols}
+}
+
+\frame{\frametitle{Interpretation of the $F$ statistic II}
+
 \begin{itemize}
 \item $F$ increases 
 \begin{itemize}
 \item when the group means become more different, or
 \item when the variability within groups decreases.
 \end{itemize}
-\item On the other hand, $F$decreases
+\item On the other hand, $F$ decreases
 \begin{itemize}
 \item when the group means become more similar, or
-\item when the variability within groups increases.
+\item when the variability within groups increases.\\[6mm]
 \end{itemize}
 \end{itemize}
 
-\href{http://onlinestatbook.com/stat_sim/one_way/index.html}
+
+\href{https://gallery.shinyapps.io/anova_shiny_rstudio/}
 {\beamergotobutton{ANOVA App}}
+\url{ https://gallery.shinyapps.io/anova_shiny_rstudio/}
 }
 
 
 \frame{\frametitle{The ANOVA table}
-An overview of the results is typically given in an ANOVA table (Varianzanalyse-Tabelle):\\[6mm]
+An overview of the results is typically given in an ANOVA table (Varianzanalysen-Tabelle):\\[6mm]
 
 \begin{tabular}{llllll}
 Variation & df & SS & MS = SS/df & F & $p$ \\ 
@@ -444,11 +479,16 @@ anova(r.mais)
 You can see that the value of $F=\Sexpr{format(summary(r.mais)$fstatistic[1],nsmall=2,digits=2)}$ is $F$-distributed with 3 and 16 degrees of freedom, and the $p$-value of the test ``$\beta_1=\beta_2=\beta_3=\beta_4$ ?'' is $<0.0001$.\\[4mm]
 
 \colorbox{lightgreen}{\begin{minipage}{10cm}
-Conclusion: the four groups are not all the same!
+Conclusion: There are differences among the four groups!
 \end{minipage}}
 
 ~\\[2mm]
-{\bf Exercise:} Look at the table a bit closer. How are \texttt{Df}, \texttt{Sum Sq}, \texttt{Mean Sq}, \texttt{F value} and \texttt{Pr(<F)} related? 
+\colorbox{lightgreen}{\begin{minipage}{10cm}
+$\rightarrow$ This is equivalent to  ``The group variable is relevant for the model''.
+\end{minipage}}
+
+~\\
+{\scriptsize {\bf Exercise:} Look at the table a bit closer. How are \texttt{Df}, \texttt{Sum Sq}, \texttt{Mean Sq}, \texttt{F value} and \texttt{Pr(<F)} related?} 
 }
 
 \frame[containsverbatim]{
@@ -473,7 +513,8 @@ summary(r.mais)
 @
 ~\\[2mm]
 
-The table contains the estimates of the intercept \Sexpr{format(summary(r.mais)$coef[1,1],2,2,2)} ($\mu$ in ANOVA notation, $\beta_0$ in regression notation), and estimates for $\beta_2$, $\beta_3$, $\beta_4$.
+The table contains the estimates of the intercept \Sexpr{format(summary(r.mais)$coef[1,1],2,2,2)} ($\mu$ in ANOVA notation, $\beta_0$ in regression notation), and estimates for $\beta_2$, $\beta_3$, $\beta_4$ (while $\beta_1=0$).\\
+{\bf Hint:} Check also the $F$-test on the last line...
 }
 
 
@@ -533,7 +574,7 @@ For instance, for four groups there are $4\cdot 3/2= 6$ pairwise combinations th
 
 
 \frame{\frametitle{Post-hoc tests}
-{\bf Still:} If the test $\beta_1=\beta_2=\ldots= \beta_g=0$ is rejected, one is often interested 
+{\bf Still:} If the test $\beta_2=\ldots= \beta_g=0$ is rejected, one is often interested 
 \begin{enumerate}
 \item in finding the actual group(s) that deviate(s) from the others.
 \item in estimates of the pairwise differences.\\[6mm]
@@ -628,6 +669,19 @@ Sometimes additional comparisons are of interest. For example, a new diet is to 
 In the ``Blutzucker'' example, this could be, for intance: ``Is diet 1 different from diets 2-4?'' \\[4mm]
 
 (Check also chapter 5.6.5 in GSWR, 2nd edition)
+}
+
+\frame[containsverbatim]{\frametitle{Choosing the reference level}
+Back to the Hybrid mais example. R orders the levels alphabetically and takes the first level as reference level. \\[2mm]
+
+This can be changed manually:\\[2mm]
+
+<<>>=
+levels(d.mais$HYBRID)
+d.mais <- mutate(d.mais,HYBRID = relevel(HYBRID,ref="DBC"))
+anova(lm(YIELD ~ HYBRID, d.mais))
+summary(lm(YIELD ~ HYBRID, d.mais))$coef
+@
 }
 
 \frame[containsverbatim]{\frametitle{Two-way ANOVA (Zweiweg-Varianzanalyse)}
@@ -797,7 +851,7 @@ Compare these values to slide \ref{sl:mean}!
 }
 
 \frame[containsverbatim]{\frametitle{A cautionary note}
-{\bf Be careful:} In the presence of interactions, the $p$-values of the main effects should no longer be interpreted as before!\\[2mm]
+{\bf Be careful:} In the presence of interactions, the $p$-values of the main effects can no longer be interpreted as before!\\[2mm]
 
 It is then required that separate analyses are carried out. For example for "Beef" and "Cereal" protein sources:\\[2mm]
 
@@ -820,7 +874,8 @@ autoplot(r.weight2,smooth.colour=NA)
 
 
 \frame[containsverbatim]{\frametitle{Exercise: }
-In an experiment the influence of four levels of fertilizer (DUENGER) on the yield (ERTRAG) on 5 species (SORTE) of crops was investigated. The data contains the following colums:\\
+In an experiment the influence of four levels of fertilizer (DUENGER) on the yield (ERTRAG) on 5 species (SORTE) of crops was investigated. For each DUENGER $\times$ ERTRAG level, 3 repeats were taken. \\
+The data contains the following colums:\\
 DUENGER (4 levels) \hspace{1cm} SORTE (5 levels) \hspace{1cm} ERTRAG \\[6mm]
 
 <<dmais,eval=T,echo=F>>=
@@ -889,10 +944,21 @@ autoplot(r.duenger2,smooth.colour=NA)
 \end{center}
 }
 
+\frame[containsverbatim]{
+Btw, the summary table with coefficients looks horrible and the {\bf$p$-values are not meaningful}! (why?)
+<<results=tex,echo=F>>=
+#summary(r.duenger2)$coef
+library(biostatUZH)
+tableRegression(r.duenger2)
+@
+Questions: Number of parameters? Degrees of freedom (60 data points)?
+}
+
 
 \frame{\frametitle{Some summary remarks }
 \begin{itemize}
 \item The $t$-test to compare the mean of \myalert{two gropus} is a \myalert{special case of ANOVA}.\\[2mm]
+\item Even more, the $F$-test is a special case of the $t$-test: $F_{1,n} = t^2_n$.\\[2mm]
 \item ANOVA is a \myalert{special cases of the linear regression model}.\\[2mm]
 \item ANOVA is often taught in separate lectures, although it could be integrated in a lecture on linear regression. \\[2mm]
 \item ANOVA is traditionally most used to analyze \myalert{experimental data}.\\[2mm]
@@ -900,6 +966,34 @@ autoplot(r.duenger2,smooth.colour=NA)
 }
 
 
+\frame{\frametitle{}
+\begin{center}
+{\bf \LARGE Appendix}
+\end{center}
+}
+
+
+\frame[containsverbatim]{\frametitle{Illustration of $F_{1,n}=t^2_n$}
+
+Look again at the mercury example and include only one covariate (fish):\\[2mm]
+
+<<echo=F>>=
+library(ggfortify)
+path <- "../../data_examples/Hg/"
+d.hg <- read.table(paste(path,"Hg_urin.csv",sep=""),header=T, sep=",")
+d.hg.m <- d.hg[d.hg$mother==1,-c(3,4,9,10,11)]
+names(d.hg.m) <- c("Hg_urin", "Hg_soil", "smoking","amalgam", "age", "fish")
+@
+<<>>=
+r.lm <- lm(log10(Hg_urin) ~  fish,data=d.hg.m)
+summary(r.lm)
+@
+~\\
+The F-value $\Sexpr{format(summary(r.lm)$fstatistic[1],2,2,2)}$ has $\Sexpr{format(summary(r.lm)$fstatistic[2],0,0,0)}$ and $\Sexpr{format(summary(r.lm)$fstatistic[3],0,0,0)}$ degrees of freedom. \\
+
+The $t$-statistic for \texttt{fish} is $t= \Sexpr{format(summary(r.lm)$coef[2,3],2,2,2)}$, also with 57 deg.\ of freedom.\\[2mm]
+$\rightarrow \quad t^2 = F$.
+}
 
 
 % \frame{References:

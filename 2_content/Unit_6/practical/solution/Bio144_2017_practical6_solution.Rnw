@@ -180,20 +180,41 @@ t.E <- matrix(rnorm(500,0,1),nrow=5)
 t.Y <- t.y  + t.E
 @
 
-The \texttt{apply} functions applies the defined function on all columns of \texttt{t.Y} (note that if the second argument was \texttt{=1} the function would be applied to all rows) 
+% The \texttt{apply} functions applies the defined function on all columns of \texttt{t.Y} (note that if the second argument was \texttt{=1} the function would be applied to all rows) 
+% <<>>=
+% r.coef <- t(apply(t.Y, 2, FUN = function(y) lm(y ~ x1 + x2)$coefficients))
+% @
+100 iterations of the regression:
 <<>>=
-r.coef <- t(apply(t.Y, 2, FUN = function(y) lm(y ~ x1 + x2)$coefficients))
+r.coef <- matrix(NA,ncol=3, nrow=100)
+for (i in 1:100) {
+  r.coef[i,] <- lm(t.Y[,i] ~x1 + x2)$coefficients
+}
 @
 
-\item Following the course philosophy, we procude the required graphs using \texttt{ggplot}. For the histograms, rearrange the data a bit, namely by generating a data frame \texttt{r.data} that contains as one column all estimates of the $\beta$s, and as a second column an indicator if the estimate is for $\beta_0$, $\beta_1$ or $\beta_2$. 
-<<fig=T,echo=T,width=6,height=3>>=
+\item We procude the required graphs using \texttt{ggplot}. Load the libraries:
+<<>>=
 library(ggplot2)
+library(tidyr)
 library(dplyr)
-r.data <- data.frame(estimate=c(r.coef[,1],r.coef[,2],r.coef[,3]))
-r.data <- mutate(r.data,beta=rep(c("beta0","beta1","beta2"),each=100))
-ggplot(r.data,aes(x=estimate)) +  
-  facet_wrap(~beta,scales="free_x") + 
-  geom_histogram(bins=20) + 
+@
+
+For the histograms, first convert \texttt{r.coef} into a data frame and rename the columns:
+<<>>=
+r.coef <- data.frame(r.coef)
+names(r.coef) <- c("beta0","beta1","beta2")
+@
+Then either produce three separate plots using
+<<echo=T, eval=F>>=
+ggplot(r.coef,aes(x=beta0)) + geom_histogram()
+ggplot(r.coef,aes(x=beta1)) + geom_histogram()
+ggplot(r.coef,aes(x=beta2)) + geom_histogram()
+@
+
+Or use the \texttt{gather()} function from the \texttt{tidyr} package, which has the advantage that you can then use \texttt{facet\_wrap()}:
+<<fig=T,echo=T,width=6,height=3>>=
+ggplot(gather(r.coef, key=variable, value=value), aes(value)) +
+  geom_histogram(bins=10) + facet_wrap(~variable, scales = "free") + 
   theme_bw()
 @
 
@@ -210,13 +231,10 @@ ggplot(r.data,aes(x=estimate)) +
 % @
 % 
 % \eject
-For the scatterplots we can continue to use \texttt{r.coef} with the three columns, but we need to convert it from matrix to a data frame.
+For the scatterplots we can continue to use \texttt{r.coef}:
 
 \setkeys{Gin}{width=0.3\textwidth}
 <<fig=T,echo=T,width=3,height=3>>=
-r.coef <- data.frame(r.coef)
-names(r.coef) <- c("beta0","beta1","beta2")
-par(mfrow=c(1,3))
 ggplot(r.coef,aes(x=beta0,y=beta1)) + geom_point()  
 @
 <<fig=T,echo=T,width=3,height=3>>=

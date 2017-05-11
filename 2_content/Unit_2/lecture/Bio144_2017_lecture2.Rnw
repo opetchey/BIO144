@@ -150,9 +150,9 @@ $$y_i = \alpha + \beta x_i\ .$$
 $\beta$ is also denoted as the regression coefficient of $X$.\\[4mm]
 
 
-\item If $\alpha=0$ the line goes through the origin.
+\item If $\alpha=0$ the line goes through the origin $(x,y)=(0,0)$.
 
-\item Interpretation of linear dependency: proportional increase in $y$ with increase (decrease) in $x$.
+\item \alert{Interpretation} of linear dependency: proportional increase in $y$ with increase (decrease) in $x$.
 \end{itemize}
 }
 
@@ -171,10 +171,16 @@ abline(c(-25,1.7),col=2,lwd=2)
 abline(c(-35,2.1),col=3,lwd=2)
 @
 \end{center}
+
+{\bf Task:} Estimate the regression parameters $\alpha$ and $\beta$ (by ``eye'') and write them down.
 }
 
 \frame[containsverbatim]{\frametitle{}
-It is obvious that another realization of the data (other 241 males) would lead to a slightly different picture.\\[4mm]
+It is obvious that 
+\begin{itemize}
+\item the linear relationship does not describe the data perfectly.
+\item another realization of the data (other 243 males) would lead to a slightly different picture.\\[4mm]
+\end{itemize}
 
 $\Rightarrow$ The model should take this into account! \\[4mm]
 
@@ -184,7 +190,7 @@ where $e_i$ treated as a random variable with a \myalert{normally distributied}
 $$e_i ~\sim \N(0,\sigma_e^2) \quad \text{for } i = 1,\ldots, n \ .$$
 
 This is a \myalert{model} for $bodyfat$ given $bmi$.
-The assumption is that the target value $bodyfat_i$ is the sum of a predicted value ($\alpha + \beta \cdot bmi_i$) plus an error term $e_i$.
+%The assumption is that the target value $bodyfat_i$ is the sum of a predicted value ($\alpha + \beta \cdot bmi_i$) plus an error term $e_i$.
 
 }
 
@@ -263,7 +269,6 @@ Or one larger sample:
 \setkeys{Gin}{width=0.6\textwidth}
 \begin{center}
 <<fig=T,width=4,height=3.8>>=
-par(mfrow=c(1,1))
 x <- rnorm(100)
 y <- 4 - 2*x + rnorm(100,0,sd=0.5)
 plot(x,y);abline(c(4,-2))
@@ -468,8 +473,9 @@ Doing it \texttt{niter=} \numprint{1000} times, we obtain the following distribu
 }
 
 \frame[containsverbatim]{\label{sl:dists}
+\begin{center}
 \setkeys{Gin}{width=0.85\textwidth}
-<<fig=T,width=8,height=4,echo=F>>=
+<<fig=T,width=7,height=3.5,echo=F>>=
 par(mfrow=c(1,2))
  # library(reshape2)
  # pars <- melt(pars)
@@ -477,6 +483,7 @@ par(mfrow=c(1,2))
 hist(pars[,1],xlab =expression(alpha),main="",freq=F,nclass=20)
 hist(pars[,2],xlab=expression(beta),main="",freq=F,nclass=20)
 @
+\end{center}
 
 This looks suspiciously normal... \\[2mm]
 In fact, from theory:
@@ -543,7 +550,9 @@ In simple linear regression, $R^2$ is the squared correlation between the indepe
 \end{minipage}}\\[6mm]
 
 
-Generally, $R^2$ indicates the proportion of variability of the response variable $\bm{y}$ that is explained by the ensemble of all covariates. {\bf The larger $R^2$, the more variability of $\bm{y}$ is captured by the covariates, thus the ``better'' is the model.} (However, we will qualify this statement later in the course...)\\[6mm]
+Generally, $R^2$ indicates the proportion of variability of the response variable $\bm{y}$ that is explained by the ensemble of all covariates.\\[4mm] 
+
+{\bf The larger $R^2$, the more variability of $\bm{y}$ is captured by the covariates, thus the ``better'' is the model.} (However, we will qualify this statement later in the course...)\\[6mm]
 
 $R^2$ becomes more interesting in \emph{multiple} linear regression.\\
 
@@ -557,11 +566,11 @@ After the regression parameters and their uncertainties have been estimated, the
 
 \begin{enumerate}
 \item {\bf ''Are the parameters compatible with some specific value?''} \\
-Typically, the question is whether the slope $\beta$ might be 0 or not, that is: ``Is there an effect of the covariate $\bm{x}$ or not?''\\
-$\Rightarrow$ This leads to a {\bf statistical test}.\\[4mm]
+Typically, the question is whether the slope $\beta$ might be 0 or not, that is: ``Is there an effect of the covariate $\bm{x}$ or not?''\\[2mm]
+$\Rightarrow$ This leads to a \alert{\bf statistical test}.\\[4mm]
 
-\item {\bf ``Which values of the parameters are compatible with the data?''}\\
-$\Rightarrow$ This leads us to determine {\bf confidence intervals}.\\[4mm]
+\item {\bf ``Which values of the parameters are compatible with the data?''}\\[2mm]
+$\Rightarrow$ This leads us to determine \alert{\bf confidence intervals}.\\[4mm]
 \end{enumerate}
 }
 
@@ -589,7 +598,7 @@ $$H_A: \quad \beta \neq  0  \ ,$$
  }
  
 \frame{
-Remember: to carry out a statistical test, we need a \emph{test statistic}.\\[4mm]
+Remember: To carry out a statistical test, we need a \emph{test statistic}.\\[4mm]
 
 What is a test statistic? \\[6mm]%(Clicker exercise!)
 
@@ -608,7 +617,7 @@ Again: typically, $\beta_0=0$, so the formula simplifies to.... (please think:-)
 
 Under $H_0$, $T$ has a $t$-distribution with $n-2$ degrees of freedom ($n=$ number of data points).\\[2mm]
 
-{\small (Question: do you remember why this is a t-distribution? Check Mat183, keyword: t-test.)}
+{\small (You should try to recall the t-distribution. Check Mat183, keyword: t-test.)}
 
 }
 
@@ -629,8 +638,56 @@ Hint: last column contains the {\bf $p$-value} of the test $\beta=0$.\\[2mm]
 \end{enumerate}
 }
 
+
+\frame{\frametitle{Recap: Formal definition of the $p$-value}
+
+%Many applied researchers do not \alert{really} understand what the $p$-value actually is.\\[2mm]
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+% The $p$-value is the probability, under the assumption of no effect (the ``Null hypothesis''), of obtaining a result equal to or more extreme than what was actually observed.\\[2mm]
+The {\bf formal definition of $p$-value} is the probability of an observed data summary (e.g., an average) and its more extreme values, given a specified mathematical model and hypothesis (usually the ``Null'', indicating ``no effect'').
+\end{minipage}}\\
+%{\scriptsize \citep{goodman2016}}
+
+~\\[2mm]
+Example (normal distribution): Assume the observed test-statistic leads to a $z$-value = -1.96 \\
+$\Rightarrow$ $\P(|z|\geq 1.96)=0.05$ and $\P(z\leq-1.96)=0.025$ .
+ 
+\setkeys{Gin}{width=1\textwidth}
+<<pValFig,fig=T,width=8,height=4,echo=F>>=
+par(mfrow=c(1,2))
+
+zz1 <- qnorm(0.025)
+zz2 <- qnorm(0.975)
+zz3 <- qnorm(0.025)
+
+cord.x1 <- c(-4,seq(-4,zz1,0.01),zz1)
+cord.y1 <- c(0,dnorm(seq(-4,zz1,0.01)),0)
+
+cord.x2 <- c(zz2,seq(zz2,4,0.01),4)
+cord.y2 <- c(0,dnorm(seq(zz2,4,0.01)),0)
+
+curve(dnorm(x,0,1),-4,4,ylab="density",main="Two-sided p-value (0.05)",xlab="")
+polygon(cord.x1,cord.y1,col='gray')
+polygon(cord.x2,cord.y2,col='gray')
+text(-3,0.05,labels="2.5%")
+text(3,0.05,labels="2.5%")
+
+cord.x3 <- c(-4,seq(-4,zz3,0.01),zz3)
+cord.y3 <- c(0,dnorm(seq(-4,zz3,0.01)),0)
+
+curve(dnorm(x,0,1),-4,4,ylab="density",main="One-sided p-value (0.025)",xlab="")
+polygon(cord.x3,cord.y3,col='gray')
+text(-3,0.05,labels="2.5%")
+
+@
+
+} 
+
+
+
 \frame[containsverbatim]{
-For task 2 above we can use the built-in ``distribution table'' of the t-distribution in R:\\[2mm]
+For task 2 above we can use the built-in ``distribution table'' of the t-distribution in R (two-sided $p$-value):\\[2mm]
 
 <<lmbodyfatTest,echo=T,eval=T>>=
 2*pt(16.787522,241,lower.tail=F)
@@ -640,8 +697,10 @@ Conclusion: there is very strong evidence that the BMI is associated with bodyfa
 
 This basically answers question 1 from slide \ref{sl:testsCI}.\\[6mm]
 
-\textcolor{gray}{\small (Remark: if you forgot the details of the $p$-value, I have a special task for you: go back to the book ``Statistische Datenanalyse'' from W. Stahel and read chapter 8.7.)}
+\textcolor{gray}{\small (Remark: if you forgot the details of the $p$-value, I have a special task for you: Go back to the book ``Statistische Datenanalyse'' from W. Stahel and read chapter 8.7.)}
 }
+
+
 
 
 \frame[containsverbatim]{\frametitle{A cautionary note on the use of $p$-values}
@@ -678,7 +737,7 @@ Doing some calculations (similar to those in chapter 8.2.2 of Mat183 script) lea
 
 \begin{center}
 \colorbox{lightgray}{\begin{minipage}{6cm}
-$$[\hat\beta - c \cdot \sigma^{(\beta)} ; \hat\beta + c \cdot \sigma^{(\beta)}] \ ,$$
+$$[\hat\beta - c \cdot \hat\sigma^{(\beta)} ; \hat\beta + c \cdot \hat\sigma^{(\beta)}] \ ,$$
 \end{minipage}}
 \end{center}
 ~\\[1mm]
@@ -763,7 +822,7 @@ Where does $\hat y_0 = \hat\alpha + \hat\beta x_0$ lie with a certain confidence
 
 This question is not trivial, because both $\hat\alpha$ and $\hat\beta$ are estimates from the data and contain uncertainty. \\[2mm]
 
-The details of the calculation are given in Stahel 2.4b. (Idea: $\hat y_0 \pm q\cdot se^{(y_0)}$.) \\[6mm]
+The details of the calculation are given in Stahel 2.4b. (Idea: $\hat y_0 \pm q\cdot se^{(\hat{y}_0)}$.) \\[6mm]
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
 For \emph{each} $x_0$ one obtains a confidence interval for the expected value $\hat y_0 = \hat\alpha + \hat\beta x_0$. Plotting this interval for all values of $x_0$ one obtains the {\bf confidence range} or {\bf confidence band for the expected values} of $y$.
@@ -805,7 +864,7 @@ Given a fixed value of $x$, say $x_0$. The question is: \\[6mm]
 Where does a {\bf future observation} lie with a certain confidence (i.e., 95\%)? 
 \end{minipage}}\\[6mm]
 
-To answer this question, we have to consider not only the uncertainty in the predicted value $\hat y_0 =  \hat\alpha + \hat\beta x_0$, but also the error in the equation $e_i \sim \N(0,\sigma_e^2)$. \\[6mm]
+To answer this question, we have to \alert{consider not only the uncertainty in the predicted value} $\hat y_0 =  \hat\alpha + \hat\beta x_0$, but also the \alert{error in the equation $e_i \sim \N(0,\sigma_e^2)$}. \\[6mm]
 
 
 This is the reason why the prediction range is always wider than the confidence range.
@@ -843,7 +902,7 @@ The idea of the course is that as a preparation for next week's practical part y
 
 \begin{itemize}
 \item Understand what today's lecture was about. You will certainly need to click through it again.\\[2mm]
-\item {\bf If necessary} (if things are not clear on the slides), consult the "Course material covered today" (see slide 3).\\[2mm]
+\item {\bf If necessary} (if things are not clear on the slides), consult the "Course material covered today" (see slide 3: today it was chapter 2 of the Stahel script \emph{Lineare Regression}).\\[2mm]
 \item Go to OpenEdX and do all the "Before class (BC)" tasks.\\[6mm]
 \end{itemize}
 
