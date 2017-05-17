@@ -99,7 +99,7 @@ Datenanalyse in der Biologie}%\\[.3cm]
 
 \frame{\frametitle{Overview}
 \begin{itemize}
-\item ME in in covariates ($x$) and in the response ($y$) of regression models.
+\item ME in covariates ($x$) and in the response ($y$) of regression models.
 \item Effects of ME on regression parameters.
 \item  When do I have to worry?
 \item Simple methods to correct for ME. 
@@ -142,7 +142,7 @@ The lecture material of today is partially based on the following literature:\\[
 \frame{\frametitle{The fundamental assumptions of regression analyses}
 
 \begin{itemize}
-\item {\bf Linear regrssion including ANOVA:} 
+\item {\bf Linear regression including ANOVA:} 
 $$e_i \sim \N(0,\sigma_e^2) \ . $$
 \item {\bf Generalized linear model:} Implicit assumptions that can be checked by model diagnostic plots.\\[4mm]
 \item Basically, a fundamental assumption is that the distributional assumptions are fulfilled.\\[4mm]
@@ -157,7 +157,7 @@ $$e_i \sim \N(0,\sigma_e^2) \ . $$
 \begin{itemize}
 \item the calculation of correlations.
 \item linear regression and ANOVA.
-\item Generalized linear and non-linear regressions (e.g.\ logistic an Poisson).\\[2mm]
+\item Generalized linear and non-linear regressions (e.g.\ logistic and Poisson).\\[2mm]
 \end{itemize}
 \item Violation of this assumption may lead to \alert{biased} parameter estimates, altered standard errors and $p$-values, incorrect covariate importances, and to \alert{misleading conclusions}.\\[4mm]
 \item Even standard statistics textbooks do often not mention these problems.\\[4mm]
@@ -175,7 +175,7 @@ $\rightarrow$ Measurement error in the covariates ($\bm{x}$) violates an assumpt
 	Let \alert{$x_i$} be the {\bf correct but unobserved} variable and $w_i$ the observed proxy with error $u_i$. Then
 	
 	\vspace{-.3cm}
-	\begin{columns}[B]
+	\begin{columns}%[B]
 	\begin{column}{.4\textwidth}
 	\begin{eqnarray*}
 	w_i &=& x_i + u_i \nonumber\\
@@ -492,7 +492,7 @@ with
 \begin{itemize}
 \item $\bm{y}=(y_1,\ldots, y_{100})^\top$: variable with \% Bodyfat of 100 individuals.\\[2mm]
 \item $\bm{x}=(x_1,\ldots, x_{100})^\top$ the BMI of the individuals. \\
-{\bf Problem:} The BMI was self-reported and thus suffers from measurement error! Not $x_i$ are observed, but only 
+{\bf Problem:} The BMI was self-reported and thus suffers from measurement error! Not $x_i$ are observed, but rather 
 $$w_i = x_i + u_i \ , \quad u_i \sim \N(0,4)  \ .$$ 
  
 \item $\bm{z}=(z_1,\ldots, z_{100})^\top$ a binary covariate that indicates if the $i$-th person was a male ($z_i=1$) or female ($z_i=0$).\\[4mm]
@@ -542,7 +542,7 @@ plot(r.simex)
 @
 \end{center}
 
-{\bf Note:} The \texttt{sex} variable has \emph{not} been mismeasured, but it is was alsozs affected by the error in BMI.\\[2mm]
+{\bf Note:} The \texttt{sex} variable has \emph{not} been mismeasured, but it is was also affected by the error in BMI.\\[2mm]
 {\bf Reason:} \texttt{sex} and BMI are correlated.
 }
 

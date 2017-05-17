@@ -734,7 +734,7 @@ summary(beetle.glm2)
 
 \frame{\frametitle{Binary response / non-aggregated data}
 \begin{itemize}
-\item In the beetle example, we were in a comfortable situation: For each level of the does, we had several beetles. For instance, 55 beetles at lowest dose (49.06), of which 6 died (1) and 49 survived (0). This was \alert{binomial} data, an aggregated version of 55 trials with 0 or 1 outcome.\\[3mm]
+\item In the beetle example, we were in a comfortable situation: For each level of the does, we had several beetles. For instance, 49 beetles at lowest dose (49.06), of which 6 died (1) and 43 survived (0). This was \alert{binomial} data, an aggregated version of 55 trials with 0 or 1 outcome.\\[3mm]
 \item In reality, one often has only one trial (0/1) for a (combination of) covariate(s).\\[3mm]
 \item The analysis is the same as for aggregated data, however there are a few complications with graphical descriptions and model checking. \\[6mm]
 \end{itemize}
@@ -854,9 +854,9 @@ plasma.glm <- glm(y ~ fibrinogen + globulin, data = plasma, family = binomial)
 Please look at the model outcomes (summary and anova table) on the next slides and answer the following questions:
 
 \begin{enumerate}
-\item Is there an an effect of figrinogen and/or globulin on the outcome (ESR$>20$)?\\[2mm]
+\item Is there an an effect of fibrinogen and/or globulin on the outcome (ESR$>20$)?\\[2mm]
 \item What is the \emph{quantitative} interpretation of the $\beta_1$ coefficient (what happens to $\P(ESR>20)$ when fibrinogen incrases by 1 unit)? \\[2mm]
-\item Is a \texttt{quaisbinomial} model more suitable for these data?
+\item Is a \texttt{quasibinomial} model more suitable for these data?
 \end{enumerate}
 }
 
