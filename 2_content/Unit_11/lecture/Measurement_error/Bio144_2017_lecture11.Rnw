@@ -117,7 +117,7 @@ library(ggfortify)
 The lecture material of today is partially based on the following literature:\\[4mm]
 
 \begin{itemize}
-\item Chapter 6.1 in ``Lineare regression''
+\item Chapter 6.1 in ``Lineare regression'' (BC reading)
 \end{itemize}
 }
 
@@ -381,7 +381,7 @@ abline(c(0,1))
 @
 \end{center}
 \vspace{-8mm}
-$\rightarrow$ Error in the response seems to be less of a problem. However, this is \emph{not} true for other regression types (logistic, Poisson) or error structures.
+$\rightarrow$ Error in the response seems to be less of a problem. However, this is \emph{not} true for other regression types (logistic, Poisson) or other error structures.
 }
 
 \frame{\frametitle{How to correct for error?}
@@ -393,7 +393,7 @@ $\rightarrow$ Error in the response seems to be less of a problem. However, this
 
 \item In \alert{simple cases}, formulas for the bias exist. \\[2mm]
 
-\item In most cases, such simple relations don't exist. Specific error modelling methods are then needed!
+\item In most cases, such simple relations don't exist. Specific error modeling methods are then needed!
 \end{itemize}
 
 }
@@ -526,7 +526,7 @@ Then run the simex procedure using the \texttt{simex()} function from the respec
 <<>>=
 library(simex)
 r.simex <- simex(r.lm,SIMEXvariable="BMI",measurement.error=sqrt(4),
-                 lambda=seq(0,2.5,0.1),B=10,fitting.method="quadratic")
+                 lambda=seq(0.1,2.5,0.1),B=100,fitting.method="quadratic")
 summary(r.simex)$coef$asymptotic
 @
 }
@@ -558,9 +558,7 @@ plot(r.simex)
 }
 
 
-\frame{\frametitle{Summary}
 
-}
 \frame{References:
 \bibliographystyle{Chicago}
 \bibliography{refs}
