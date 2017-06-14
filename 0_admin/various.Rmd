@@ -40,6 +40,13 @@ Also, most students are visible in OLAT. For some strange reason, the two lists 
 Students that miss the deadline for registering should contact the studienkoordination\@biol.uzh.ch
 
 
+## BIO 134 comparison
+
+About 210 registered for BIO134, which reduced to about 170 at the
+Stornierungsfirst.  About 155 took the final exam, of whom about 130
+passed.  
+
+
 ## Timeline 2017
 
 - 20.1 TA meet and greet

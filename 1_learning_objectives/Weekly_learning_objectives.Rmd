@@ -235,7 +235,6 @@ By the end of this week you will be able to:
 * In R / RStudio, perform, check and interpret a simple linear mixed model.
 * **Do all of the same things as one does for a linear model.**
 * Say what is different about the model summary table produced by R / RStudio.
-* Interpret the R model `summary` table for ANCOVA type linear models.
 
 (Please note that these skills are assessed in the Graded Assessment 11)
 

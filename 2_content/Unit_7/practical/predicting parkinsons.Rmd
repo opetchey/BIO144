@@ -1,0 +1,139 @@
+---
+title: "Predicting parkinsons"
+author: "Owen Petchey & Stephanie Muff"
+date: "5/9/2017"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+
+```{r}
+rm(list=ls())
+
+library(tidyverse)
+library(GGally)
+library(glmulti)
+library(AICcmodavg)
+library(MASS)
+library(glmulti)
+library(ggfortify)
+
+
+dd <- read_csv("https://archive.ics.uci.edu/ml/machine-learning-databases/parkinsons/telemonitoring/parkinsons_updrs.data")
+
+names(dd)
+
+dd <- dplyr::rename(dd,
+                    Subject=`subject#`,
+                    Jitter_perc=`Jitter(%)`,
+                    Jitter_abs=`Jitter(Abs)`,
+                    Jitter_rap=`Jitter:RAP`,
+                    Jitter_ppq5=`Jitter:PPQ5`,
+                    Jitter_ddp=`Jitter:DDP`,
+                    Shimmer_dB=`Shimmer(dB)`,
+                    Shimmer_apq3=`Shimmer:APQ3`,
+                    Shimmer_apq=`Shimmer:APQ5`,
+                    Shimmer_apq11=`Shimmer:APQ11`,
+                    Shimmer_dda=`Shimmer:DDA`)
+
+#ggplot(dd, aes(x=total_UPDRS)) + geom_density(bw=5)
+ggplot(dd, aes(x=total_UPDRS)) + geom_density(bw=2)
+#ggplot(dd, aes(x=total_UPDRS)) + geom_density(bw=0.5)
+#ggplot(dd, aes(x=total_UPDRS)) + geom_density(bw=0.05)
+
+#ggpairs(dd)
+
+
+ggplot(filter(dd, Subject==1), aes(x=test_time, y=motor_UPDRS, col=as.factor(Subject))) +
+  geom_line() +
+  geom_point()
+
+
+ggplot(dd, aes(x=test_time, y=motor_UPDRS, col=as.factor(Subject))) +
+  geom_line() +
+  geom_point()
+
+ggplot(dd, aes(x=test_time, y=log10(Jitter_perc), col=as.factor(Subject))) +
+  geom_line() +
+  geom_point()
+
+
+
+## will need to try some variable transformations... some are very skewed
+
+subject_mean <- group_by(dd, Subject) %>%
+  summarise_all(mean)
+
+
+subject_UPDRS_mean <- group_by(dd, Subject) %>%
+  summarise(mean_total_UPDRS=mean(total_UPDRS)) %>%
+  arrange(mean_total_UPDRS)
+
+
+subject_UPDRS_mean <- mutate(subject_UPDRS_mean, Subject=reorder(subject_UPDRS_mean$Subject, order(subject_UPDRS_mean$mean_total_UPDRS)))
+ggplot(subject_UPDRS_mean, aes(x=as.factor(Subject), y=mean_total_UPDRS, col=as.factor(Subject))) +
+  geom_point(col="black") +
+  geom_point(data=dd, aes(x=as.factor(Subject), y=total_UPDRS)) +
+  geom_point(col="black")
+
+
+## Modelling subject means
+m1 <- lm(total_UPDRS ~ age + sex +
+     Jitter_perc + Jitter_abs + Jitter_rap + Jitter_ppq5 + Jitter_ddp +
+     Shimmer + Shimmer_dB + Shimmer_apq3 + Shimmer_apq + Shimmer_apq11 + Shimmer_dda +
+       NHR + HNR + RPDE + DFA + PPE,
+   data=subject_mean)
+aictab(list(m1))
+multi1 <- glmulti(total_UPDRS ~ age + sex +
+                    Jitter_perc + Jitter_abs + Jitter_rap + Jitter_ppq5 + Jitter_ddp +
+                    Shimmer + Shimmer_dB + Shimmer_apq3 + Shimmer_apq + Shimmer_apq11 + Shimmer_dda,
+                  data=subject_mean,
+                  level = 1,
+                  method = "h",
+                  crit = "aicc",
+                  confsetsize = 10,
+                  plotty=F, report=F,
+                  fitfunction = "lm")
+summary(multi1)
+print(multi1)
+plot(multi1, type="s")
+plot(multi1, type="p")
+plot(multi1, type="w")
+coef(multi1)
+predict(multi1)
+
+
+## modelling the data without accounting for repeated sampling
+## and or interpolation of response variable
+m2 <- lm(total_UPDRS ~ age + sex +
+     Jitter_perc + Jitter_abs + Jitter_rap + Jitter_ppq5 + Jitter_ddp +
+     Shimmer + Shimmer_dB + Shimmer_apq3 + Shimmer_apq + Shimmer_apq11 + Shimmer_dda +
+       NHR + HNR + RPDE + DFA + PPE,
+   data=dd)
+aictab(list(m2))
+multi2 <- glmulti(total_UPDRS ~ age + sex +
+                    Jitter_perc + Jitter_abs + Jitter_rap + Jitter_ppq5 + Jitter_ddp +
+                    Shimmer + Shimmer_dB + Shimmer_apq3 + Shimmer_apq + Shimmer_apq11 + Shimmer_dda,
+                  data=dd,
+                  level = 1,
+                  method = "h",
+                  crit = "aicc",
+                  confsetsize = 10,
+                  plotty=F, report=F,
+                  fitfunction = "lm")
+summary(multi2)
+print(multi2)
+plot(multi2, type="s")
+plot(multi2, type="p")
+plot(multi2, type="w")
+coef(multi2)
+predict(multi2)
+
+
+
+#corrplot(cor(features1), order = "hclust")
+#trans <- preProcess(dd, method = c("BoxCox", "center", "scale")) features1 <- predict(trans, features0)
+
+```
+
