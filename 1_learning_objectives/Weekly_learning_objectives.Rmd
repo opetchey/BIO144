@@ -98,7 +98,7 @@ By the end of this week you will be able to:
 
 * Describe the type of biological / biomedical question that linear regression with interactions among predictor variables could help answer.
 * **Do all the things listed for week 2, except with interactions among multiple predictor / explanatory variables.**
-* In particulary, find and interpret the interaction terms in the R model `summary` table.
+* In particulary, find and interpret the interaction terms in the R model `anova` table.
 * In particular, calculated degrees of freedom for error with interacting predictor variables.
 * Use the four common graphs for assessing validity of model assumptions (i.e. Tukey-Anscombe plot, QQ-plot, scale-location plot, and leverage plot).
 * Use the ggfortify add-on package to easily produce these four diagnostic graphs.
