@@ -1,0 +1,1006 @@
+\documentclass[english,9pt,aspectraio=169]{beamer}
+\usepackage{etex}
+\usetheme{uzhneu-en-informal}
+%\usepackage{uarial}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\RequirePackage{graphicx,ae}
+\usepackage{bm}
+\usepackage{fancybox,amssymb,color}
+\usepackage{pgfpages}
+\usepackage{booktabs}
+\usepackage{verbatim}
+\usepackage{animate}
+\usepackage{numprint}
+\usepackage{dsfont}
+\usepackage{tikz}
+\usepackage{amsmath,natbib}
+\usepackage{mathbbol}
+\usepackage{babel}
+\usepackage{SweaveSlides}
+\usepackage{multicol}
+\usepackage{xcolor}
+
+
+\usetheme{uzhneu-en-informal}
+\DeclareMathOperator{\po}{Poisson}
+\DeclareMathOperator{\G}{Gamma}
+\DeclareMathOperator{\Be}{Beta}
+\DeclareMathOperator{\logit}{logit}
+\def\n{\mathop{\mathcal N}}
+
+\definecolor{Gray}{RGB}{139,137,137}
+\definecolor{darkred}{rgb}{0.8,0,0}
+\definecolor{Green}{rgb}{0,0.8,0.3}
+\definecolor{lightgreen}{rgb}{0,0.7,0.3}
+\definecolor{Blue}{rgb}{0,0,1}
+\def\myalert{\textcolor{darkred}}
+\def\myref{\textcolor{Gray}}
+\setbeamercovered{invisible}
+
+\renewcommand{\baselinestretch}{1.2}
+\beamertemplateballitem
+\DeclareMathOperator{\cn}{cn} % Copy number
+\DeclareMathOperator{\ccn}{ccn} % common copy number
+\DeclareMathOperator{\p}{p} % common copy number
+\DeclareMathOperator{\E}{E} % common copy number
+\DeclareMathOperator{\given}{|} % common copy number
+\def\given{\,|\,}
+\def\na{\tt{NA}}
+\def\nin{\noindent}
+\pdfpageattr{/Group <</S /Transparency /I true /CS /DeviceRGB>>}
+\def\eps{\varepsilon}
+
+\renewcommand{\P}{\operatorname{\mathsf{Pr}}} % Wahrscheinlichkeitsmaß
+\def\eps{\varepsilon}
+\def\logit{\text{logit}}
+%\newcommand{\E}{\mathsf{E}} % Erwartungswert
+\newcommand{\Var}{\text{Var}} % Varianz
+\newcommand{\NBin}{\text{NBin}}
+\newcommand{\Po}{\text{Po}}
+\newcommand{\N}{\mathsf{N}}
+
+\newcommand{\hl}{\textcolor{red}}
+
+\newcommand{\ball}[1]{\begin{pgfpicture}{-1ex}{-0.65ex}{1ex}{1ex}
+\usebeamercolor[fg]{item projected}
+
+{\pgftransformscale{1.75}\pgftext{\normalsize\pgfuseshading{bigsphere}}}
+{\pgftransformshift{\pgfpoint{0pt}{0.5pt}}
+\pgftext{\usebeamerfont*{item projected}{#1}}}
+\end{pgfpicture}}%
+\usepackage{multicol}
+\newcommand{\ballsmall}[1]{\begin{pgfpicture}{-1ex}{-0.65ex}{.2ex}{.2ex}
+
+{\pgftransformscale{1}\pgftext{\normalsize\pgfuseshading{bigsphere}}}
+{\pgftransformshift{\pgfpoint{0pt}{0.5pt}}
+\pgftext{\usebeamerfont*{item projected}{#1}}}
+\end{pgfpicture}}%
+
+
+
+\begin{document}
+\SweaveOpts{width=6,height=4}
+\fboxsep5pt
+
+\frame{
+\title[]{ \centering \Huge Kurs Bio144: \\
+Datenanalyse in der Biologie}%\\[.3cm]
+\author[Stefanie Muff, Owen L.\ Petchey]{\centering Stefanie Muff  \& Owen L.\ Petchey }
+%\institute[]{Institute of Social and Preventive Medicine \\ Institute of Evolutionary Biology and Environmental Studies}
+\date[]{Lecture 5: ANOVA \\ 22./23. March 2018}
+
+
+\maketitle
+}
+
+
+\frame{\frametitle{Overview}
+\begin{itemize}
+\item One-way ANOVA  
+\item Post-hoc tests and contrasts
+\item Two-way ANOVA 
+\item ANOVA as special cases of a linear model \\[6mm]
+\end{itemize}
+
+Note: \\[2mm]
+ANOVA = ANalysis Of VAriance  (Varianzanalyse)\\
+}
+
+
+\frame{\frametitle{Course material covered today}
+
+The lecture material of today is based on the following literature:\\[4mm]
+
+\begin{itemize}
+\item Chapter 12 from Stahel book ``Statistische Datenenalyse''
+%\item ``The new Statistics with R'' chapter 2 (ANOVA) 
+\item ``Getting Started with R'' chapters 5.6 and 6.2
+\end{itemize}
+}
+
+% \frame[containsverbatim]{\frametitle{Recap of the linear regression model}
+% to do 
+% }
+
+
+\frame{\frametitle{ANOVA and ANCOVA}
+ANOVA = Varianzanalyse\\
+ANCOVA = Kovarianzanalyse \\[2mm]
+
+Introduction by Sir R.\ A.\ Fisher (1890-1962). He worked at the agricultural research station in Rothamstead (England). AN(C)OVA are/were therefore traditionally used to analyze agricultural experiments.\\[6mm]
+
+Questions of AN(C)OVA:
+\begin{itemize}
+\item Generally: Are the means of two or more groups different?\\[2mm]
+\item Example: Are different plant breeds different in important aspects (e.g., yiels / Ertrag)?\\[2mm]
+\item Example: What is the influence of different treatments on plants (Biology) or patients (Medicine)? \\[2mm]
+\end{itemize}
+}
+
+
+\frame[containsverbatim]{\frametitle{Beispiel: Ertragspotential bei Hybrid-Mais mit erh\"ohter Pilzbrand-Resistenz}
+\vspace{-4mm}
+{\scriptsize (Source: W. Blanckenhorn, UZH)}\\[2mm]
+
+Es wurden 4 Hybrid-Mais-Sorten angebaut und ihr K\"ornerertrag ermittelt. Jede Sorte wurde an 5 Orten angepflanzt.\\[2mm]
+
+{\bf Frage:} Unterscheiden sich die Hybrid-Mais-Sorten im Ertrag? \\[2mm]
+{\scriptsize \myalert{Achtung:} Die Frage bezieht sich auf \emph{irgendeinen} Unterschied. Pr\"aziser k\"onnte man fragen, ob sich irgendeine der Sorten von den anderen unterscheidet?}
+\vspace{-5mm}
+%
+<<dmais,eval=T,echo=F>>=
+path <- "../../data_examples/anova/ProjektMaishybriden/"
+d.mais <- read.table(paste(path,"MaishybridenDaten.txt",sep=""),header=T)
+@
+\begin{center}
+\setkeys{Gin}{width=0.5\textwidth}
+<<fig=TRUE,width=4.0,height=4,echo=F>>=
+plot(YIELD ~ as.numeric(HYBRID),d.mais,xlab="Hybrid (Sorte)",ylab="Yield (Ertrag)",xaxt="n")
+axis(1,labels=levels(d.mais$HYBRID),at=1:4)
+@
+\end{center}
+
+ANOVA hilft uns, zu testen, ob es einen Unterschied zwischen den Sorten gibt.
+}
+
+\frame{\label{sl:naive}
+{\bf Naive idea:} 
+To carry out pairwise $t$-tests between any two groups. \\[4mm]
+
+\begin{enumerate}
+\item How many tests would this imply?\\[2mm]
+\item Why is this not a very clever idea? \\[8mm]
+\end{enumerate}
+
+\pause
+(Generally, the number of pairwise tests can be calculated by $g(g-1)/2$, where $g$=number of groups.)
+}
+
+% \frame{
+% {\bf Better idea:} Formulate a model that is able to test whether there is an \myalert{overall difference between the groups.}
+% 
+% }
+
+
+\frame[containsverbatim]{
+{\bf Better idea} 
+
+Formulate a model that is able to \myalert{test simultaneously} whether there is an \myalert{overall difference between the groups.} That is, ask only {\bf one question!}\\[2mm]
+
+This leads us to the\\[4mm]
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+{\bf Idea of the ANOVA analysis:} \\
+Compare the variability within groups ($MS_E$) to the variability between the group means ($MS_G$).
+\end{minipage}}
+\vspace{-10mm}
+\begin{center}
+\setkeys{Gin}{width=0.5\textwidth}
+<<fig=TRUE,width=4.0,height=4,echo=F>>=
+plot(YIELD ~ as.numeric(HYBRID),d.mais,xlab="Hybrid (Sorte)",ylab="Yield (Ertrag)",xaxt="n")
+axis(1,labels=levels(d.mais$HYBRID),at=1:4)
+d.agg <- aggregate(YIELD~HYBRID,d.mais,FUN=mean)
+points(YIELD ~ HYBRID,d.agg,col=2,pch=15)
+abline(c(mean(d.mais$YIELD),0),col=2,lwd=2)
+text(3.8,63.5,expression(bar(y)),col=2,cex=1.5)
+text(1.2,64,expression(bar(y[1 ])),col=2,cex=1.0)
+text(2.2,63.3,expression(bar(y[2])),col=2,cex=1.0)
+text(3.2,64,expression(bar(y[3])),col=2,cex=1.0)
+text(3.8,58,expression(bar(y[4])),col=2,cex=1.0)
+@
+\end{center}
+}
+
+\frame{
+We formulate a model as follows:
+\begin{eqnarray*}
+y_{ij} = \mu_i + e_{ij} \ ,
+\end{eqnarray*}
+where 
+\begin{itemize}
+\item $y_{ij}$= ``Ertrag der $j$-ten Pflanze der Sorte $i$''
+\item $\mu_i$=``Mittlerer Ertrag der Sorte $i$''
+\item $e_{ij}\sim\N(0,\sigma_e^2)$ is an independent error term. \\[4mm]
+\end{itemize}
+
+Typically, this is {\bf rewritten as}
+\begin{eqnarray*}
+y_{ij} = \mu + \beta_i + e_{ij} \ ,
+\end{eqnarray*}
+where $\mu + \beta_i = \mu_i$ from above, thus the {\bf group mean} of group $i$.
+}
+
+\frame{\frametitle{Single factor ANOVA (Einfaktorielle Varianzanalyse)}
+\myalert{More generally}, this leads us to the \myalert{single factor ANOVA:}\\[2mm]
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+Assume we have $g$ groups and in each group $i$ there are $n_i$ measurements of some variable of interest, denoted as $y$. The model is then given as
+\begin{eqnarray}
+y_{ij} = \mu + \beta_i + e_{ij} \quad \text{for }\quad  i &=&1,\ldots ,g \ , \label{eq:aov}  \\
+j &=& 1,\ldots, n_i , \nonumber\\ 
+e_{ij} &\sim& \N(0,\sigma_e^2) \quad i.i.d. \nonumber
+\end{eqnarray}
+\end{minipage}}
+~\\[2mm]
+
+\begin{itemize}
+\item $\mu$ plays the role of the \myalert{intercept} $\beta_0$ in standard regression models.
+\item The estimation of $\mu$, $\beta_2$, \ldots, $\beta_g$ is again done by \myalert{least squares minimization}.
+\item The $e_{ij} \sim \N(0,\sigma_e^2) \quad i.i.d.$ assumption is again crucial, so \myalert{model checking} will be needed again.
+\end{itemize}
+
+}
+
+
+\frame{
+
+Attention: Model \eqref{eq:aov} is overparameterized, thus an additional constraint is needed! Most popular:\\[2mm]
+
+\begin{itemize}
+\item $\beta_1=0$ (\myalert{treatment contrast}; default in R).\\[2mm]
+
+Interpretation: Group 1 is usually chosen such that it is some sort of \myalert{reference group} or \myalert{reference level}, for example a standard diet, while groups 2, 3, etc. corresponde to novel diets whose effect is tested in an experiment.\\[10mm]
+
+\item $\sum_i\beta_i = 0$ (\myalert{sum-to-zero contrast}).\\[2mm]
+
+Interpretation: The effects $\beta_1$, $\beta_2$ etc give the deviation from the population averaged effect.
+\end{itemize}
+}
+
+\frame{\frametitle{ANOVA as a special case of a linear model}
+\colorbox{lightgreen}{\begin{minipage}{10cm}
+The clou is: Model \eqref{eq:aov} is identical to the regression model with a factor covariate, see slides 35/36 from week 3. 
+\end{minipage}}
+~\\[4mm]
+{\bf Interpretation: The levels of the factor are now the different group memberships.} \\
+Thus (assuming $\beta_1=0$):\\
+
+\begin{equation*}
+ y_{ij} = \left\{
+\begin{array}{ll}
+\mu + e_{ij}, & \text{for group } 1\\
+\mu  + \beta_2  + e_{ij}, &  \text{for group } 2\\
+...\\
+\mu  + \beta_g + e_{ij}, &  \text{for group } g \ ,
+\end{array}\right.
+\end{equation*} 
+~\\[4mm]
+and $\hat{y}_{ij} = \overline{y}_{\cdot i} = \mu + \beta_i$ can be interpreted as the predicted value.\\[2mm]
+}
+
+\frame{\frametitle{The ANOVA test: The $F$-test}
+
+{\bf Aim of ANOVA}: to test \emph{globally} if the groups differ. That is:\\
+
+\begin{eqnarray*}
+H_0 &:& \mu_1=\mu_2=\ldots = \mu_g  \quad \text{or, equivalently} \quad  \beta_1=\beta_2 = \ldots = \beta_g   \\[2mm]
+H_1 &:& \text{At least two groups are different}
+\end{eqnarray*}
+
+~\\[2mm]
+Remember from slide 45 of week 3 (or Stahel script p.33): We have already used the $F$-test for categorical variables (see $F$-test for the earthworks, slide 46 of week 3). This was equivalent to testing if all $\beta$s that belong to a categorical variable are =0 at the same time \\[2mm]
+$\rightarrow$ equivalent to test if the covariate is needed in the model.\\[2mm] 
+
+This is \alert{the very same problem here}, thus we need the $F$-test again!\\[2mm]
+
+}
+
+
+
+
+
+
+\frame{\frametitle{Variance decomposition}
+To derive the ingredients of the $F$-test, we again look at the decomposition of variance (Remember this idea from week 3, slide 23, and replace $\hat{y_{ij}}$ by $\overline{y}_{\cdot i}$):
+\vspace{-4mm}
+
+\begin{eqnarray*}
+\text{total variability} &=&  \text{explained variability} +  \text{  residual variability} \\
+SS_{total} &=&  SS_{\text{between groups}} \qquad \, +\qquad SS_{\text{within groups}} \\
+\sum_{i=1}^g \sum_{j=1}^{n_i} (y_{ij}-\overline{y})^2 & = &  \sum_{i=1}^g {n_i(\overline{y}_{\cdot i} - \overline{y})^2} \quad  \, + \quad
+\sum_{i=1}^g \sum_{j=1}^{n_i}  (y_{ij} - \overline{y}_{\cdot i} )^2\\[4mm]
+\text{Degrees of freedom:} \\
+n-1 &= &   (g-1) \qquad \qquad + \qquad \qquad (n-g)
+\end{eqnarray*}
+~\\
+
+
+From this:
+\colorbox{lightgray}{\begin{minipage}{10cm}
+\begin{equation*}
+\left.
+\begin{array}{c}
+MS_G = \frac{SS_{\text{between}}}{g-1} \\[2mm]
+MS_E = \frac{SS_{\text{within}}}{n-g}
+\end{array}
+\right\}
+\Rightarrow F = \frac{MS_G}{MS_E} \quad\text{is } \sim F_{g-1,n-g} \text{  distributed.} 
+\end{equation*}
+\end{minipage}}
+}
+
+
+
+\frame[containsverbatim]{\frametitle{Interpretation of the $F$ statistic}
+\begin{itemize}
+\item $MS_G$: Quantifies the variability {\bf between} groups.
+\item $MS_E$: Quantifies the variability {\bf within} groups.\\[4mm]
+\end{itemize}
+
+Thus $F = \frac{MS_G}{MS_E}$ is large when $MS_G$ is ``large'' with respect to $MS_E$. The larger $F$, the more likely that $H_0$ is false. \\[4mm]
+
+{\bf Example:}
+\vspace{-15mm}
+\begin{multicols}{2}
+
+~\\[0.5cm]
+\begin{itemize}
+\item $MS_G$ captures the variability among the four means (\alert{$\overline{y}_1, \overline{y}_2, \overline{y}_3, \overline{y}_4$})
+\item $MS_E$ captures the variability of the $y_{ij}$ \alert{within the groups}.
+\end{itemize}
+
+\begin{center}
+\setkeys{Gin}{width=0.5\textwidth}
+<<fig=TRUE,width=4.0,height=4,echo=F>>=
+plot(YIELD ~ as.numeric(HYBRID),d.mais,xlab="Hybrid (Sorte)",ylab="Yield (Ertrag)",xaxt="n")
+axis(1,labels=levels(d.mais$HYBRID),at=1:4)
+d.agg <- aggregate(YIELD~HYBRID,d.mais,FUN=mean)
+points(YIELD ~ HYBRID,d.agg,col=2,pch=15)
+abline(c(mean(d.mais$YIELD),0),col=2,lwd=2)
+text(3.8,63.5,expression(bar(y)),col=2,cex=1.5)
+text(1.2,64,expression(bar(y[1 ])),col=2,cex=1.0)
+text(2.2,63.3,expression(bar(y[2])),col=2,cex=1.0)
+text(3.2,64,expression(bar(y[3])),col=2,cex=1.0)
+text(3.8,58,expression(bar(y[4])),col=2,cex=1.0)
+@
+\end{center}
+
+\end{multicols}
+}
+
+\frame{\frametitle{Interpretation of the $F$ statistic II}
+
+\begin{itemize}
+\item $F$ increases 
+\begin{itemize}
+\item when the group means become more different, or
+\item when the variability within groups decreases.
+\end{itemize}
+\item On the other hand, $F$ decreases
+\begin{itemize}
+\item when the group means become more similar, or
+\item when the variability within groups increases.\\[6mm]
+\end{itemize}
+\end{itemize}
+
+
+\href{https://gallery.shinyapps.io/anova_shiny_rstudio/}
+{\beamergotobutton{ANOVA App}}
+\url{ https://gallery.shinyapps.io/anova_shiny_rstudio/}
+}
+
+
+\frame{\frametitle{The ANOVA table}
+An overview of the results is typically given in an ANOVA table (Varianzanalysen-Tabelle):\\[6mm]
+
+\begin{tabular}{llllll}
+Variation & df & SS & MS = SS/df & F & $p$ \\ 
+ \hline
+ Between groups & $g-1$ & $SS_G$  &  $MS_G$ & $\frac{MS_G}{MS_E}$ & $\P(F_{g-1,n-g}>|F|))$\\
+ Within groups &  $n-g$ & $SS_E$ & $MS_E$ & \\ 
+ \hline 
+ Total & $n-1$ & $SS_{\text{total}}$ & \\
+ \hline 
+\end{tabular}
+}
+
+
+
+
+
+\frame[containsverbatim]{\frametitle{Our first ANOVA: Hybrid-Mais example}
+\vspace{-5mm}
+ \begin{multicols}{2}
+<<echo=FALSE,results=tex>>=
+library(xtable)
+mais1 <- d.mais[1:10,]
+mais2 <- d.mais[11:20,]
+ttab1 <- xtable(mais1,digits=0)
+ttab2 <- xtable(mais2,digits=0)
+print(ttab1, floating = TRUE, include.rownames=FALSE)
+print(ttab2,  floating = TRUE, include.rownames=FALSE)
+@
+ \end{multicols}
+
+
+
+% \begin{tabular}{l@{\hspace{-7cm}}l}
+% <<dm,eval=T,echo=T>>=
+% d.mais[,]
+% @
+% &
+<<>>=
+str(d.mais)
+@
+%\end{tabular}
+
+}
+
+
+\frame[containsverbatim]{\frametitle{Hybrid-Mais example -- Estimation}\label{sl:r.aov}
+Using the \texttt{lm()} function in R and then look at the ANOVA table:\\[2mm]
+
+<<r.mais,eval=T,echo=T>>=
+r.mais <- lm(YIELD ~ HYBRID, d.mais)
+@
+~\\[-2mm]
+As always, before looking at the results, let's do some model checking. This is identical to all we did so far, because we are \alert{still working with linear models!}\\[-4mm]
+\begin{center}
+\setkeys{Gin}{width=0.5\textwidth}
+<<modelCheck,fig=T,echo=F,width=6,height=6>>=
+library(ggfortify)
+library(ggplot2)
+library(dplyr)
+autoplot(r.mais,smooth.colour=NA)
+@
+\end{center}
+}
+
+
+\frame[containsverbatim]{
+Always when we needed to do an $F$-test and when categorical covariates were involved, the \texttt{anova()} table was required:\\[3mm]
+
+<<r.mais.anova,eval=T,echo=T>>=
+anova(r.mais)
+@
+~\\[2mm]
+
+You can see that the value of $F=\Sexpr{format(summary(r.mais)$fstatistic[1],nsmall=2,digits=2)}$ is $F$-distributed with 3 and 16 degrees of freedom, and the $p$-value of the test ``$\beta_1=\beta_2=\beta_3=\beta_4$ ?'' is $<0.0001$.\\[4mm]
+
+\colorbox{lightgreen}{\begin{minipage}{10cm}
+Conclusion: There are differences among the four groups!
+\end{minipage}}
+
+~\\[2mm]
+\colorbox{lightgreen}{\begin{minipage}{10cm}
+$\rightarrow$ This is equivalent to  ``The group variable is relevant for the model''.
+\end{minipage}}
+
+~\\
+{\scriptsize {\bf Exercise:} Look at the table a bit closer. How are \texttt{Df}, \texttt{Sum Sq}, \texttt{Mean Sq}, \texttt{F value} and \texttt{Pr(<F)} related?} 
+}
+
+\frame[containsverbatim]{
+The $F$-distribution with 3 and 16 degrees of freedom, as well as the estimated value $F$=17.68:
+
+\setkeys{Gin}{width=0.6\textwidth}
+<<fig=T,width=4,height=4,echo=F>>=
+curve(df(x,3,16),0,20,lwd=2)
+abline(v=17.7,lwd=2,lty=2)
+@
+}
+
+
+
+
+
+\frame[containsverbatim]{
+You may also want to look at the summary table of the \texttt{lm()} output:\\[4mm]
+
+<<r.aov.mais>>=
+summary(r.mais)
+@
+~\\[2mm]
+
+The table contains the estimates of the intercept \Sexpr{format(summary(r.mais)$coef[1,1],2,2,2)} ($\mu$ in ANOVA notation, $\beta_0$ in regression notation), and estimates for $\beta_2$, $\beta_3$, $\beta_4$ (while $\beta_1=0$).\\
+{\bf Hint:} Check also the $F$-test on the last line...
+}
+
+
+
+\frame[containsverbatim]{\frametitle{Exercise: Ern\"ahrung und Blutzucker}
+Remember example 3 from the first week: \\[2mm]
+24 Personen werden in 4 Gruppen unterteilt. Jede Gruppe erh\"alt eine andere Di\"at \small{(DIAET)}. Es werden zu Beginn und am Ende (nach 2 Wochen) die Blutzuckerwerte gemessen. Die Differenz wird gespeichert \small{(BLUTZUCK)}.\\[2mm]
+{\bf Frage:} Unterscheiden sich die Gruppen in der Ver\"anderung der Blutzuckerwerte?\\[3mm]
+
+<<echo=F>>=
+path <- "../../data_examples/anova/Blutzucker/"
+d.blz <- read.table(paste(path,"blutzucker.dat",sep=""),header=T)
+@
+\begin{center}
+\setkeys{Gin}{width=0.4\textwidth}
+<<blz_plot,fig=T,height=3.5,width=3.5,echo=F>>=
+ggplot(d.blz,aes(x=factor(DIAET),y=BLUTZUCK)) + geom_boxplot() + geom_point(size=4,colour='lightgrey') + theme_bw() + xlab("Diaet") + ylab("Blutzucker")
+@
+\end{center}
+}
+
+\frame[containsverbatim]{
+Interpret the results and the residual plots (why is \texttt{mutate()} needed first?):\\[4mm]
+<<>>=
+d.blz <- mutate(d.blz,DIAET=as.factor(DIAET))
+anova(lm(BLUTZUCK ~ DIAET,d.blz))
+@
+
+\begin{center}
+\setkeys{Gin}{width=0.5\textwidth}
+<<blz_plot_res,fig=T,height=5,width=5,echo=F>>=
+autoplot(lm(BLUTZUCK ~ DIAET,d.blz),smooth.colour=NA)
+# par(mfrow=c(1,2))
+# r.aov.blz <- aov(BLUTZUCK ~ DIAET,d.blz)
+# plot(r.aov.blz$fitted,r.aov.blz$residuals,xlab="Fitted values", ylab="Residuals")
+# abline(h=0,lty=2)
+# qqnorm(r.aov.blz$residuals)
+# qqline(r.aov.blz$residuals)
+@
+\end{center}
+}
+
+\frame{\frametitle{Multiple comparisons, multiple tests}
+To remember:
+\begin{itemize}
+\item The $F$-Test is used to check whether \myalert{any two group means} differ. 
+\item Using pairwise tests is not a very good idea (see slide \ref{sl:naive}), because this leads to a \myalert{multiple testing problem}: \\[2mm]
+
+ \colorbox{lightgreen}{\begin{minipage}{10cm}
+When many tests are carried out, the probability to find a ``significant'' result {\bf by chance} increases.
+\end{minipage}}
+~\\[6mm]
+For instance, for four groups there are $4\cdot 3/2= 6$ pairwise combinations that could be tested. The probability to find \emph{at least one result by chance} is much higher than the 5\% error level!!!\\[6mm]
+\end{itemize}
+
+}
+
+
+\frame{\frametitle{Post-hoc tests}
+{\bf Still:} If the test $\beta_2=\ldots= \beta_g=0$ is rejected, one is often interested 
+\begin{enumerate}
+\item in finding the actual group(s) that deviate(s) from the others.
+\item in estimates of the pairwise differences.\\[6mm]
+\end{enumerate}
+
+Several methods to circumvent the problem of  too many ``significant'' test results (type-I error) have been proposed. The most prominent ones are:\\[2mm]
+\colorbox{lightgray}{\begin{minipage}{10cm}
+\begin{itemize}
+\item Bonferroni correction
+\item Tukey {\bf h}onest {\bf s}ignificant {\bf d}ifferences (HSD) approach
+\item Fisher {\bf l}east {\bf s}ignificant {\bf d}ifferences (LSD) approach
+\end{itemize}
+\end{minipage}}
+}
+
+\frame{\frametitle{}
+\myalert{\bf Bonferroni correction}\\[2mm]
+
+{\bf Idea:} If a total of $m$ tests are carried out, simply divide the type-I error level $\alpha_0$ (often 5\%) such that
+
+$$\alpha = \alpha_0 / m \ .$$
+
+
+\myalert{\bf Tukey HSD approach}\\[2mm]
+
+{\bf Idea:} Take into account the distribution of \emph{ranges} (max-min) and design a new test. \\[6mm]
+
+\myalert{\bf Fisher's LSD approach}\\[2mm]
+
+{\bf Idea:} Adjust the idea of a two-sample test, but use a larger variance (namely the pooled variance of all groups).
+}
+
+\frame[containsverbatim]{
+Calculate the pairwise differences and tests with adjustments for the ``Blutzucker'' example:
+
+<<echo=F>>=
+r.aov.blz <- aov(BLUTZUCK ~ DIAET,d.blz)
+table.bonf <- pairwise.t.test(d.blz$BLUTZUCK,d.blz$DIAET,p.adjust.method= "bonf",pool.sd=T)[[3]]
+table.fisher <- pairwise.t.test(d.blz$BLUTZUCK,d.blz$DIAET,p.adjust.method= "none",pool.sd=T)[[3]]
+table.tukey <- TukeyHSD(r.aov.blz,conf.level = 0.95)$DIAET
+@
+\begin{multicols}{2}
+Differences:\\
+\begin{tabular}{l|ccc}
+& 1 & 2 & 3\\
+\hline
+2 & \Sexpr{table.tukey["2-1","diff"]} &  & \\
+3 & \Sexpr{table.tukey["3-1","diff"]} & \Sexpr{table.tukey["3-2","diff"]}\\
+4 & \Sexpr{table.tukey["4-1","diff"]} & \Sexpr{round(table.tukey["4-2","diff"],1)} & \Sexpr{format(table.tukey["4-3","diff"],1,1,1)}\\
+\end{tabular}
+
+~\\[4mm]
+Bonferroni $p$-values: \\
+\begin{tabular}{l|ccc}
+& 1 & 2 & 3\\
+\hline
+2 & \Sexpr{round(table.bonf[1,1],2)} &  & \\
+3 & \Sexpr{round(table.bonf[2,1],2)}  &  \Sexpr{round(table.bonf[2,2],2)}  \\
+4 & \Sexpr{round(table.bonf[3,1],2)}   &\Sexpr{format(table.bonf[3,2],2,2,2)}   & \Sexpr{round(table.bonf[3,3],3)} \\
+\end{tabular}
+
+Tukey HSD $p$-values:\\
+\begin{tabular}{l|ccc}
+& 1 & 2 & 3\\
+\hline
+2 & \Sexpr{round(table.tukey["2-1","p adj"],2)} &  & \\
+3 & \Sexpr{format(table.tukey["3-1","p adj"],2,2,2)} & \Sexpr{round(table.tukey["3-2","p adj"],2)}\\
+4 & \Sexpr{round(table.tukey["4-1","p adj"],2)} & \Sexpr{round(table.tukey["4-2","p adj"],2)} & 
+\Sexpr{round(table.tukey["4-3","p adj"],3)}\\ 
+\end{tabular}
+
+~\\[4mm]
+Fisher $p$-values: \\
+\begin{tabular}{l|ccc}
+& 1 & 2 & 3\\
+\hline
+2 & \Sexpr{round(table.fisher[1,1],2)} &  & \\
+3 & \Sexpr{round(table.fisher[2,1],2)}  &  \Sexpr{round(table.fisher[2,2],3)}  \\
+4 & \Sexpr{round(table.fisher[3,1],2)}   &\Sexpr{format(table.fisher[3,2],2,2,2)}   & \Sexpr{round(table.fisher[3,3],4)} \\
+\end{tabular}
+\end{multicols}
+
+\begin{itemize}
+\item Bonferroni $p$-values are the most conservative (largest $p$).
+\item Fisher $p$-values are the least conservative (smallest $p$).
+\end{itemize}
+}
+
+\frame{\frametitle{Other contrasts}
+Sometimes additional comparisons are of interest. For example, a new diet is to be compared to other, existing diets. \\[4mm]
+
+In the ``Blutzucker'' example, this could be, for intance: ``Is diet 1 different from diets 2-4?'' \\[4mm]
+
+(Check also chapter 5.6.5 in GSWR, 2nd edition)
+}
+
+\frame[containsverbatim]{\frametitle{Choosing the reference level}
+Back to the Hybrid mais example. R orders the levels alphabetically and takes the first level as reference level. \\[2mm]
+
+This can be changed manually:\\[2mm]
+
+<<>>=
+levels(d.mais$HYBRID)
+d.mais <- mutate(d.mais,HYBRID = relevel(HYBRID,ref="DBC"))
+anova(lm(YIELD ~ HYBRID, d.mais))
+summary(lm(YIELD ~ HYBRID, d.mais))$coef
+@
+}
+
+\frame[containsverbatim]{\frametitle{Two-way ANOVA (Zweiweg-Varianzanalyse)}
+Example {\scriptsize(from Hand et al. 1994 / Hothorn/Everitt ``A Handbook of Statistical Analyses Using R'')}: Experiment to study the weight gain of rats, depending on four diets. Protein amounts were either high or low, and the protein source was either beef or cereal. 10 rats for each diet were selected.\\[6mm]
+
+{\bf Question:} How does diet affect weightgain? \\[6mm]
+
+{\bf Complication:} This is a factorial design (gekreuzte Faktoren), because each combination of  protein source (beef/cereal) $\times$ level (high/low) is present (2$\times$2 groups).
+
+Design: 
+\begin{center}
+\begin{tabular}{l|c|c|}
+&beef & cereal \\
+\hline
+high & group 1 & group 2\\
+\hline
+low & group 3 & group 4\\
+\hline
+\end{tabular}
+\end{center}
+}
+
+\frame[containsverbatim]{\label{sl:mean}
+~\\
+Start by looking at means and standard deviations in the groups, as well at a graphical description of the means: \\[2mm]
+<<echo=F>>=
+library(HSAUR3)
+@
+<<echo=T>>=
+summarise(group_by(weightgain,source,type),meanW = mean(weightgain),sdW = sd(weightgain))
+@
+~\\[2mm]
+\begin{multicols}{2}
+\setkeys{Gin}{width=0.5\textwidth}
+<<fig=T,width=5,height=4>>=
+plot.design(weightgain)
+@
+% # ggplot(sumWeight, aes(x = source, y = meanW,
+% #                    colour = type, group = type)) +
+% #   geom_point(position=position_jitterdodge(jitter.width = 0.2)) +
+% #   geom_line() +
+% #   geom_errorbar(aes(ymin = meanW - sdW,
+% #                     ymax = meanW + sdW, width = 0.1),position=position_jitterdodge(jitter.width = 0.2)) +
+% #   theme_bw()
+% # ggplot(weightgain, aes(x = type, y = weightgain, colour = source)) +
+% # geom_point() +
+% # scale_color_manual(values = c(Cereal="green", Beef="red")) +
+% # theme_bw()
+\begin{itemize}
+\item Protein source (beef/cereal) seems less important than the amount (high/low).
+\item Variances seem to be equal in the four groups.
+\end{itemize}
+\end{multicols}
+}
+
+
+\frame{\frametitle{Two-way ANOVA -- The model}
+
+In the presence of a \myalert{factorial design}, the idea is to add separate effects $\beta_i$ (here $i=1,2$) and $\gamma_j$ (here $j=1,2$) for the $i$th level of the first factor and the $j$th level of the second factor:\\[5mm]
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+Assume we have a factorial design with two factors $\beta_i$ and $\gamma_j$, then the $k$th outcome in the group of $i$ and $j$, $y_{ijk}$ is modelled as
+\begin{eqnarray}
+y_{ijk} = \mu + \beta_i + \gamma_j +  e_{ijk} \quad \text{with} \quad e_{ijk} &\sim& \N(0,\sigma_e^2) \quad i.i.d. \nonumber
+\end{eqnarray}
+\end{minipage}}
+~\\[5mm]
+{\scriptsize
+Again, additional constraints are needed!
+\begin{itemize}
+\item $\beta_1=\gamma_1=0$ (\myalert{treatment contrast}; default in R).
+\item $\sum_i\beta_i = \sum_i\gamma_i = 0$ (\myalert{sum-to-zero contrast}).
+\end{itemize}
+}
+}
+
+
+
+\frame[containsverbatim]{\frametitle{Two-way ANOVA in R}
+In R, a two-way ANOVA is as simple as one-way ANOVA, just add another variable:\\[4mm]
+<<>>=
+r.weight <- lm(weightgain ~ source + type,weightgain)
+anova(r.weight)
+@
+~\\[4mm]
+
+Interpretation: There seems to be a difference between low and high amounts of protein, but the source (beef/cereal) seems less relevant. \\[6mm]
+
+However: what if the additive model does not hold?
+}
+
+
+\frame[containsverbatim]{
+A so-called \myalert{interaction plot} helps to understand if the additive model is reasonable:\\[2mm]
+\begin{center}
+\setkeys{Gin}{width=0.6\textwidth}
+<<fig=T,width=4.0,height=2.6,echo=F>>=
+# interaction.plot(x.factor=weightgain$type,
+#                  trace.factor=weightgain$source,
+#                  response=weightgain$weightgain,ylab="mean of weightgain",xlab="type",trace.label="Source")
+sumWeight <- summarise(group_by(weightgain,source,type),meanWeight = mean(weightgain),sdW = sd(weightgain))
+ggplot(sumWeight, aes(x = type, y = meanWeight,
+colour = source, group = source)) +
+geom_point() +
+geom_line() +
+theme_bw()
+@
+\end{center}
+
+The lines are \myalert{not parallel}, indicating that \myalert{there is an interaction} between type and source!\\
+{\scriptsize Note: if the additive model $\beta_i + \gamma_j$ holds, the lines would be parallel.}
+}
+
+
+\frame{\frametitle{Two-way ANOVA with interaction}
+\begin{itemize}
+\item If the purely additive model is not correct, a more general model with an interaction term $(\beta\gamma)_{ij}$ may be used:\\[2mm]
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+\begin{eqnarray}
+y_{ijk} = \mu + \beta_i + \gamma_j + (\beta\gamma)_{ij} + e_{ijk} \quad \text{with} \quad e_{ijk} &\sim& \N(0,\sigma_e^2) \quad i.i.d. \nonumber
+\end{eqnarray}
+\end{minipage}}
+~\\[4mm]
+
+\item As in linear regression, interactions allow for an \myalert{ interplay between the variables}. 
+\item In the rats experiment, increasing the amount from low to high has a different effect in the beef than in the cereal diet.
+\item Moreover: The plot on the previous slide shows that for the low amount of proteins case, the cereal diet leads to a larger average weight gain!
+\end{itemize}
+}
+
+
+\frame[containsverbatim]{\frametitle{Two-way ANOVA in R -- Including an interaction}
+
+Again the rats example, this time including the interaction term:\\[4mm]
+
+<<>>=
+r.weight2 <- lm(weightgain ~ source * type,weightgain)
+anova(r.weight2)
+@
+~\\[4mm]
+
+The coefficient estimates can be obtained as follows:\\[4mm]
+<<>>=
+summary(r.weight2)$coef
+@
+}
+
+\frame{
+{\bf Interpretation of the coefficients} 
+\myalert{This works in the same way as for categorical covariates in regression!} To see this, let us estimate the means from the model. From the above output, we have {\scriptsize [because of using treatment contrasts]}:\\[4mm]
+
+$\hat\beta_{beef}=0$, $\hat\beta_{cereal}=-14.1$, \\
+$\hat\gamma_{high}=0$, $\hat\gamma_{low}=-20.8$,\\
+$\hat{(\beta\gamma)}_{cereal/low}=18.8$, $\hat{(\beta\gamma)}_{beef/high}=\hat{(\beta\gamma)}_{beef/low}=\hat(\beta\gamma)_{cereal/high}=0$.\\[4mm]
+
+Therefore:\\[2mm]
+
+\begin{tabular}{l l}
+Group 1: beef / high &  $\hat{y}_{beef,high} = 100 + 0 + 0 + 0 = 100$\\
+Group 2: cereal / high & $\hat{y}_{cereal,high} = 100 + (-14.1) + 0 + 0 = 85.9$\\
+Group 3: beef / low &  $\hat{y}_{beef,low} = 100 + 0 + (-20.8) + 0 = 79.2$\\
+Group 4: cereal / low & $\hat{y}_{cereal,low} = 100 + (-14.1) + (-20.8) + 18.8 = 83.9$\\[6mm]
+\end{tabular}
+
+Compare these values to slide \ref{sl:mean}!
+}
+
+\frame[containsverbatim]{\frametitle{A cautionary note}
+{\bf Be careful:} In the presence of interactions, the $p$-values of the main effects can no longer be interpreted as before!\\[2mm]
+
+It is then required that separate analyses are carried out. For example for "Beef" and "Cereal" protein sources:\\[2mm]
+
+<<>>=
+anova(lm(weightgain ~ type,subset(weightgain,source=="Beef")))
+anova(lm(weightgain ~ type,subset(weightgain,source=="Cereal")))
+@
+
+}
+
+\frame{
+And finally (what we should have done before checking the results!), the model diagnostics:
+\begin{center}
+\setkeys{Gin}{width=0.6\textwidth}
+<<TA2,fig=T,echo=F,width=5,height=5>>=
+autoplot(r.weight2,smooth.colour=NA)
+@
+\end{center}
+}
+
+
+\frame[containsverbatim]{\frametitle{Exercise: }
+In an experiment the influence of four levels of fertilizer (DUENGER) on the yield (ERTRAG) on 5 species (SORTE) of crops was investigated. For each DUENGER $\times$ ERTRAG level, 3 repeats were taken. \\
+The data contains the following colums:\\
+DUENGER (4 levels) \hspace{1cm} SORTE (5 levels) \hspace{1cm} ERTRAG \\[6mm]
+
+<<dmais,eval=T,echo=F>>=
+path <- "../../data_examples/WBL/"
+d.duenger <- read.table(paste(path,"duenger.dat",sep=""),header=T,sep=",")
+@
+
+\begin{multicols}{2}
+The first 10 rows of the data:\\[2mm]
+<<>>=
+head(d.duenger,10)
+@
+~\\[6mm]
+
+And the interaction plot:
+\setkeys{Gin}{width=0.4\textwidth}
+<<fig=T,width=5,height=5,echo=F>>=
+interaction.plot(d.duenger$DUENGER,d.duenger$SORTE,d.duenger$ERTRAG)
+@
+\end{multicols}
+}
+
+\frame[containsverbatim]{
+The interaction plot indicates that an interaction between SORTE and DUENGER is needed in the analysis. The results and residal plots are given here and on the next slide:\\[2mm]
+
+<<>>=
+d.duenger <- mutate(d.duenger,SORTE=as.factor(SORTE),DUENGER=as.factor(DUENGER))
+r.duenger <- lm(ERTRAG ~ DUENGER*SORTE,d.duenger)
+@
+
+~\\
+\begin{center}
+\setkeys{Gin}{width=0.55\textwidth}
+<<fig=T,width=5,height=5,echo=F>>=
+autoplot(r.duenger,smooth.colour=NA)
+@
+\end{center}
+
+
+}
+
+\frame[containsverbatim]{
+<<>>=
+anova(r.duenger)
+@
+
+~\\[2mm]
+What is here the problem (look at the TA and the scale-location plots)? Ideas?
+Interpretation? 
+}
+
+\frame[containsverbatim]{
+%don't show this slide previously!\\
+Log-transform the response (ERTRAG) and repeat the analysis:\\[2mm]
+
+<<>>=
+r.duenger2 <- lm(log(ERTRAG) ~ DUENGER*SORTE,d.duenger)
+anova(r.duenger2)
+@
+
+\begin{center}
+\setkeys{Gin}{width=0.5\textwidth}
+<<fig=T,width=4,height=4,echo=F>>=
+autoplot(r.duenger2,smooth.colour=NA)
+@
+\end{center}
+}
+
+\frame[containsverbatim]{
+Btw, the summary table with coefficients looks horrible and the {\bf$p$-values are not meaningful}! (why?)
+<<results=tex,echo=F>>=
+#summary(r.duenger2)$coef
+library(biostatUZH)
+tableRegression(r.duenger2)
+@
+Questions: Number of parameters? Degrees of freedom (60 data points)?
+}
+
+
+\frame{\frametitle{Some summary remarks }
+\begin{itemize}
+\item The $t$-test to compare the mean of \myalert{two gropus} is a \myalert{special case of ANOVA}.\\[2mm]
+\item Even more, the $F$-test is a special case of the $t$-test: $F_{1,n} = t^2_n$.\\[2mm]
+\item ANOVA is a \myalert{special cases of the linear regression model}.\\[2mm]
+\item ANOVA is often taught in separate lectures, although it could be integrated in a lecture on linear regression. \\[2mm]
+\item ANOVA is traditionally most used to analyze \myalert{experimental data}.\\[2mm]
+\end{itemize}
+}
+
+
+\frame{\frametitle{}
+\begin{center}
+{\bf \LARGE Appendix}
+\end{center}
+}
+
+
+\frame[containsverbatim]{\frametitle{Illustration of $F_{1,n}=t^2_n$}
+
+Look again at the mercury example and include only one covariate (fish):\\[2mm]
+
+<<echo=F>>=
+library(ggfortify)
+path <- "../../data_examples/Hg/"
+d.hg <- read.table(paste(path,"Hg_urin.csv",sep=""),header=T, sep=",")
+d.hg.m <- d.hg[d.hg$mother==1,-c(3,4,9,10,11)]
+names(d.hg.m) <- c("Hg_urin", "Hg_soil", "smoking","amalgam", "age", "fish")
+@
+<<>>=
+r.lm <- lm(log10(Hg_urin) ~  fish,data=d.hg.m)
+summary(r.lm)
+@
+~\\
+The F-value $\Sexpr{format(summary(r.lm)$fstatistic[1],2,2,2)}$ has $\Sexpr{format(summary(r.lm)$fstatistic[2],0,0,0)}$ and $\Sexpr{format(summary(r.lm)$fstatistic[3],0,0,0)}$ degrees of freedom. \\
+
+The $t$-statistic for \texttt{fish} is $t= \Sexpr{format(summary(r.lm)$coef[2,3],2,2,2)}$, also with 57 deg.\ of freedom.\\[2mm]
+$\rightarrow \quad t^2 = F$.
+}
+
+
+% \frame{References:
+% \bibliographystyle{Chicago}
+% \bibliography{refs}
+% }
+
+
+
+\end{document}

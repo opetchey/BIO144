@@ -1,0 +1,862 @@
+\documentclass[english,9pt,aspectraio=169]{beamer}
+\usepackage{etex}
+\usetheme{uzhneu-en-informal}
+%\usepackage{uarial}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\RequirePackage{graphicx,ae}
+\usepackage{bm}
+\usepackage{fancybox,amssymb,color}
+\usepackage{pgfpages}
+\usepackage{booktabs}
+\usepackage{verbatim}
+\usepackage{animate}
+\usepackage{numprint}
+\usepackage{vwcol} 
+\usepackage{dsfont}
+\usepackage{tikz}
+\usepackage{amsmath,natbib}
+\usepackage{mathbbol}
+\usepackage{babel}
+\usepackage{SweaveSlides}
+\usepackage{multicol}
+\usepackage{xcolor}
+
+
+\usetheme{uzhneu-en-informal}
+\DeclareMathOperator{\po}{Poisson}
+\DeclareMathOperator{\G}{Gamma}
+\DeclareMathOperator{\Be}{Beta}
+\DeclareMathOperator{\logit}{logit}
+\def\n{\mathop{\mathcal N}}
+
+\definecolor{Gray}{RGB}{139,137,137}
+\definecolor{darkred}{rgb}{0.8,0,0}
+\definecolor{Green}{rgb}{0,0.8,0.3}
+\definecolor{lightgreen}{rgb}{0,0.7,0.3}
+\definecolor{Blue}{rgb}{0,0,1}
+\def\myalert{\textcolor{darkred}}
+\def\myref{\textcolor{Gray}}
+\setbeamercovered{invisible}
+
+\renewcommand{\baselinestretch}{1.2}
+\beamertemplateballitem
+\DeclareMathOperator{\cn}{cn} % Copy number
+\DeclareMathOperator{\ccn}{ccn} % common copy number
+\DeclareMathOperator{\p}{p} % common copy number
+\DeclareMathOperator{\E}{E} % common copy number
+\DeclareMathOperator{\given}{|} % common copy number
+\def\given{\,|\,}
+\def\na{\tt{NA}}
+\def\nin{\noindent}
+\pdfpageattr{/Group <</S /Transparency /I true /CS /DeviceRGB>>}
+\def\eps{\varepsilon}
+
+\renewcommand{\P}{\operatorname{\mathsf{Pr}}} % Wahrscheinlichkeitsmaß
+\def\eps{\varepsilon}
+\def\logit{\text{logit}}
+%\newcommand{\E}{\mathsf{E}} % Erwartungswert
+\newcommand{\Var}{\text{Var}} % Varianz
+\newcommand{\Cov}{\text{Cov}} % Varianz
+\newcommand{\NBin}{\text{NBin}}
+\newcommand{\Po}{\text{Po}}
+\newcommand{\N}{\mathsf{N}}
+
+\newcommand{\hl}{\textcolor{red}}
+
+\newcommand{\ball}[1]{\begin{pgfpicture}{-1ex}{-0.65ex}{1ex}{1ex}
+\usebeamercolor[fg]{item projected}
+
+{\pgftransformscale{1.75}\pgftext{\normalsize\pgfuseshading{bigsphere}}}
+{\pgftransformshift{\pgfpoint{0pt}{0.5pt}}
+\pgftext{\usebeamerfont*{item projected}{#1}}}
+\end{pgfpicture}}%
+\usepackage{multicol}
+\newcommand{\ballsmall}[1]{\begin{pgfpicture}{-1ex}{-0.65ex}{.2ex}{.2ex}
+
+{\pgftransformscale{1}\pgftext{\normalsize\pgfuseshading{bigsphere}}}
+{\pgftransformshift{\pgfpoint{0pt}{0.5pt}}
+\pgftext{\usebeamerfont*{item projected}{#1}}}
+\end{pgfpicture}}%
+
+
+
+\begin{document}
+\SweaveOpts{width=6,height=4}
+\fboxsep5pt
+
+\frame{
+\title[]{ \centering \Huge Kurs Bio144: \\
+Datenanalyse in der Biologie}%\\[.3cm]
+\author[Stefanie Muff, Owen L.\ Petchey]{\centering Stefanie Muff  \& Owen L.\ Petchey }
+%\institute[]{Institute of Social and Preventive Medicine \\ Institute of Evolutionary Biology and Environmental Studies}
+\date[]{Lecture 8: Interpretation, causality, cautionary notes \\ 26./27. April 2018}
+
+
+\maketitle
+}
+
+
+\frame{\frametitle{Overview}
+\begin{itemize}
+\item $P$-values: Interpretation and (mis-)use\\[2mm]
+\item Statistical significance vs biological relevance\\[2mm]
+\item Relative importance of regression terms\\[2mm]
+\item Causality vs correlation\\[2mm]
+\item Bradford-Hill criteria for causal inference\\[2mm]
+\item Experimental vs observational studies\\[2mm]
+\item Todo: Ev. introduce the idea of Bayes factors!
+\item Todo: Give p-hacking app in BC material (or for one of the study weeks)
+\end{itemize}
+
+ 
+}
+
+
+\frame{\frametitle{Course material covered today}
+
+The lecture material of today is based on the following literature:\\[4mm]
+\begin{itemize}
+\item All literature and articles from the self-study week.
+\end{itemize}
+
+
+}
+
+\frame[containsverbatim]{\frametitle{Recap of previous lecture (before Easter)}
+\begin{itemize}
+\item Model selection is difficult.\\[2mm]
+\item Information criteria: AIC, AIC$_c$ and BIC \\
+$\qquad \qquad\rightarrow$ {\bf model fit vs model complexity}\\[2mm]
+\item {\bf Predictive} vs {\bf explanatory} models.\\[2mm]
+\item Automatic model selection is inappropriate for explanatory models!\\[2mm]
+\item Caveats of $p$-values: biological relevance vs statistical significance
+\end{itemize}
+}
+
+
+
+
+ 
+\frame{\frametitle{$P$-values }
+{\bf Recap:}\\
+
+$P$-values are often used for \emph{statistical testing}, e.g.\ by checking if $p<0.05$.\\[4mm]
+
+
+{\bf Examples:} \\
+
+\begin{itemize}
+\item $T$-test for a difference between two samples. \\[2mm]
+\item $\chi^2$-test for independence of two discrete distributions. \\[2mm]
+\item Test if a regression coefficient $\beta_x\neq 0$ in a regression model.\\[6mm]
+\end{itemize}
+
+Such tests are useful whenever a {\bf decision} needs to be made (e.g., in clinical trials, intervention actions in ecology etc.).
+}
+
+
+\frame[containsverbatim]{\frametitle{$P$-values in regression models}
+
+In regression modelling, the $p$-value is often used as an indicator of covariate importance. Remember the mercury example:
+
+<<echo=F,width=4.5,height=4>>=
+d.hg <- read.table("../../data_examples/Hg/Hg_urin.csv",header=T, sep=",")
+d.hg["106","amalgam_quant"] <- 5 # correct for the outlier
+d.hg <- d.hg[-11]
+names(d.hg) <- c("Hg_urin", "Hg_soil", "vegetables","migration", "smoking","amalgam", "age", "fish","last_fish","mother")
+
+r.lm.hg <- lm(log10(Hg_urin) ~ log10(Hg_soil) + vegetables + migration + smoking + 
+             sqrt(amalgam) + age * mother + sqrt(fish) + last_fish,d.hg)
+@
+
+<<results=tex,echo=F>>=
+library(biostatUZH)
+tableRegression(r.lm.hg)
+@
+~\\
+A common practice is to look only at the $p$-value and use $p<0.05$ to decide whether a variable has an influence or not (``is significant or not'').
+}
+
+
+
+\frame{\frametitle{$P$-values criticism}
+
+$P$-value {\bf criticism is} as {\bf old} as statistical significance testing (1920s!). Issues:
+
+\begin{itemize}
+\item The sharp line $p<0.05$ is \alert{arbitrary} and significance testing according to it may lead to \emph{mindless statistics} \citep{gigerenzer2004}. \\[2mm]
+
+\item  $P$-hacking / data dredging: Search until you find a result with $p<0.05$.\\[2mm]
+
+\item Publication bias: Studies with $p<0.05$ are more likely to be published than ``non-significant'' results.\\[2mm]
+
+
+\item Recent articles in \emph{Science}, \emph{Nature} or a statement by the \emph{American Statistical Associaton (ASA)} in March 2016 show that the debate still continues \citep{claridge-chang.assam2016,goodman2016,wasserstein.lazar2016}.\\[2mm]
+
+\item Model selection using $p$-values may lead to a \alert{model selection bias} (see last week).\\[2mm]
+\end{itemize}
+}
+
+\frame{\frametitle{$P$-values even made it into NZZ (April 2016)}
+ \includegraphics[width=10cm]{pictures/NZZ1.jpeg}
+}
+
+
+\frame{
+Note: R.A. Fisher, the ``inventor'' of the $p$-value (1920s) didn't mean the $p$-value to be used in the way it is used today (which is: doing a single experiment and use $p<0.05$ for a conclusion)!\\[2mm]
+
+From \citet{goodman2016}:\\[2mm]
+\begin{quote}
+Fisher used ``significance'' merely {\bf to indicate that an observation was worth following up, with refutation of the null hypothesis justified only if further experiments ``rarely failed'' to achieve significance.} 
+This is in stark contrast to the modern practice of making claims based on a single demonstration of statistical significance.
+\end{quote}
+
+~\\[2mm]
+\colorbox{lightgray}{\begin{minipage}{10cm}
+The misuse of $p$-values has led to a \alert{reproducibility crisis} in science!
+\end{minipage}}
+}
+
+\frame{
+
+\includegraphics[width=10cm]{pictures/Ioannidis2.png}\\
+{\tiny \citep{ioannidis2005}}
+}
+
+\frame{\frametitle{What is the problem with the $p$-value?}
+
+Many applied researchers do not \alert{really} understand what the $p$-value actually is.\\[2mm]
+
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+% The $p$-value is the probability, under the assumption of no effect (the ``Null hypothesis''), of obtaining a result equal to or more extreme than what was actually observed.\\[2mm]
+The {\bf formal definition of $p$-value} is the probability of an observed data summary (e.g., an average) and its more extreme values, given a specified mathematical model and hypothesis (usually the ``Null'', indicating ``no effect'').
+\end{minipage}}\\
+%{\scriptsize \citep{goodman2016}}
+
+
+ 
+\setkeys{Gin}{width=1\textwidth}
+<<pValFig,fig=T,width=8,height=4,echo=F>>=
+par(mfrow=c(1,2))
+
+zz1 <- qnorm(0.025)
+zz2 <- qnorm(0.975)
+zz3 <- qnorm(0.05)
+
+cord.x1 <- c(-4,seq(-4,zz1,0.01),zz1) 
+cord.y1 <- c(0,dnorm(seq(-4,zz1,0.01)),0) 
+
+cord.x2 <- c(zz2,seq(zz2,4,0.01),4) 
+cord.y2 <- c(0,dnorm(seq(zz2,4,0.01)),0) 
+
+curve(dnorm(x,0,1),-4,4,ylab="density",main="Two-sided p-value",xlab="")
+polygon(cord.x1,cord.y1,col='gray')
+polygon(cord.x2,cord.y2,col='gray')
+text(-3,0.05,labels="2.5%")
+text(3,0.05,labels="2.5%")
+
+cord.x3 <- c(-4,seq(-4,zz3,0.01),zz3) 
+cord.y3 <- c(0,dnorm(seq(-4,zz3,0.01)),0) 
+
+curve(dnorm(x,0,1),-4,4,ylab="density",main="One-sided p-value",xlab="")
+polygon(cord.x3,cord.y3,col='gray')
+text(-3,0.05,labels="5%")
+ 
+@
+
+} 
+
+ 
+\frame{\frametitle{Test yourself: Klicker-Exercise}
+
+
+\href{http://www.klicker.uzh.ch/bkx}
+{\beamergotobutton{Klicker-Exercise}}
+
+\url{http://www.klicker.uzh.ch/bkx}
+\vspace{5mm}
+
++ Discussion of the results!
+% For each of the following interpretations, decide if it is right or wrong:
+% \begin{itemize}
+% \item The $p$-value is the probability that the null hypothesis is true. (no)
+% \item The $p$-value is the probability that the observed data occurred by chance.(no)
+% \item $(1-p)$ is the probability that the alternative hypothesis is true.(no)
+% \end{itemize}
+}
+ 
+\frame{\frametitle{What is the problem with the $p$-value? II}
+  \begin{itemize}
+  \item The $p$-value is often used to classify results into ``significant'' and ``non-significant''. Typically: $p<0.05$ vs $p\geq 0.05$.\\[4mm]
+  \item However, this is often too crude! \\[4mm]
+  \item It is much better to have a more \alert{gradual interpretation of the $p$-value} (see slide \ref{sl:pInt}).\\[8mm]
+  \end{itemize}
+  
+Probably the most important point to remember:\\[2mm]
+  \colorbox{lightgray}{\begin{minipage}{10cm}
+The $p$-value is {\bf not} the probability that the Null Hypothesis is true!!!
+\end{minipage}}
+}
+
+\frame{\frametitle{}
+{\bf Quote from ASA statement:}\\[6mm]
+
+In February, 2014, George Cobb, Professor Emeritus of Mathematics and Statistics at Mount
+Holyoke College, posed these questions to an ASA discussion forum:\\[4mm]
+
+Q: Why do so many colleges and grad schools teach p = .05?\\
+A: Because that's still what the scientific community and journal editors use.\\[2mm]
+
+Q: Why do so many people still use p = 0.05?\\
+A: Because that's what they were taught in college or grad school.
+} 
+ 
+ 
+
+\frame{\frametitle{Significance vs relevance}
+In regression models:\\[2mm]
+\begin{itemize}
+\item A low $p$-value does not automatically imply that a variable is ``important''.
+\item ``Is there an effect?'' v.s. ''How much of an effect is there?''.\\[6mm]
+\end{itemize}
+\begin{center}
+ \includegraphics[width=7cm]{pictures/pValueEffectSize.jpg}
+ \end{center}
+ {(\scriptsize from Goodman, 2008)}
+}
+
+
+\frame{\frametitle{}
+
+In addition:\\[2mm]
+
+{\bf A large $p$-value (\emph{e.g.}, $p>0.05$) does not automatically imply that a variable is ``unimportant''.}\\[4mm]
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+Absence of evidence is not evidence of absence
+{\small\citep{altman.bland1995}}.
+\end{minipage}}
+\vspace{4mm}
+
+In other words:\\[2mm]
+
+{\bf One cannot prove the Null Hypothesis!!}\\[6mm]
+
+Several reasons may lead to large $p$-values:
+\begin{itemize}
+\item Low sample size ($\rightarrow$ low power).
+\item The truth is not ``far'' from the null hypothesis. \\
+Example: Small effect sizes in regression models. 
+\end{itemize}
+}
+
+
+\frame{\frametitle{Shall we abolish $p$-values?}
+
+\textcolor{red}{\bf No:} $p$-values are not ``good'' or ``bad''. They contain important information, and they have {\bf strengths} and {\bf weaknesses}. \\[12mm]
+
+
+ 
+
+Suggestions:
+\begin{enumerate}
+\item Use $p$-values, but don't over-interpret them, \alert{use them properly}.\\[2mm]
+\item Look at \alert{effect sizes} and \alert{confidence intervals}.\\[2mm]
+\item Look at \alert{relative importances} of covariates.\\[2mm]
+\item {\bf Don't use $p$-values for model selection.} \\[2mm]
+\end{enumerate}
+
+}
+
+
+\frame{\frametitle{Suggestion 1: Proper interpretation of $p$-values}\label{sl:pInt}
+Rather than a black-and-white decision ($p<0.05$), Martin Bland suggests to regard $p$-values as continuous measures for statistical evidence
+(Introduction to Medical Statistics, 4th edition, Oxford University Press): \\[8mm]
+
+\begin{tabular}{ll}
+$p > 0.1$  & little or no evidence against the null hypothesis \\[2mm]
+$0.1 > p > 0.05$&  weak evidence\\[2mm]
+$0.05 > p > 0.01$ & evidence\\[2mm]
+$0.01 > p > 0.001$ & strong evidence\\[2mm]
+$p < 0.001 $ & very strong evidence\\[8mm]
+\end{tabular}
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+But: The level of significance must also depend on the context!
+\end{minipage}}
+}
+
+
+\frame[containsverbatim]{
+In the Hg example:
+<<results=tex,echo=F>>=
+library(biostatUZH)
+tableRegression(r.lm.hg)
+@
+\begin{itemize}
+\item {\bf Little or no evidence:} Hg soil, vegetables from garden, migration background\\
+\item {\bf Evidence:} Smoking
+\item {\bf Strong evidence:} Mother, monthly fish consumption
+\item {\bf Very strong evidence:} Amalgam, age, last fish (> or < 3 days), interaction of age and mother
+\end{itemize}
+}
+
+
+\frame{\frametitle{Suggestion 2: Report effect sizes.... }
+\colorbox{lightgray}{\begin{minipage}{10cm}
+Ask: {\bf Is the effect size \emph{relevant}?}
+\end{minipage}}\\[8mm]
+
+{\bf Example}\\[2mm] 
+WHO recommendation concerning smoking and the consumption of processed meat. Both, smoking and meat consumption, appear to be carcinogenic.
+
+\begin{itemize}
+\item 50g processed meat per day increases the risk for colon cancer by a factor of 1.18 (+18\%).
+\item Smoking increases the risk for cancer by a factor of 3.6 (+260\%).\\[6mm]
+\end{itemize}
+
+Thus: Although both, meat consumption and smoking, are carcinogenic (``significant''), their {\bf effect sizes are vastly different}!
+
+}
+
+\frame{
+Paul D.\ Ellis writes in his book \emph{The Essential Guide to Effect Sizes} (2010):\\[2mm]
+
+\begin{quote}
+Indeed, statistical significance, which partly reflects sample size, may say nothing at all about the practical significance of a result. [....] To extract meaning from their results, social scientists need to look beyond $p$ values,
+and {\bf effect sizes and make informed judgments about what they see}.
+\end{quote}
+
+}
+
+\frame{\frametitle{...and 95\% CIs}
+\colorbox{lightgray}{\begin{minipage}{10cm}
+Ask: {\bf Which range of true effects is statistically consistent with the observed data?} 
+\end{minipage}}\\[5mm]
+
+{\bf Example}\\[2mm] 
+
+Body fat example, slide 39 of week 1. \\[3mm]
+
+The effect estimate for the effect of BMI on body fat is given as  $\hat\beta_{BMI} = 1.82$, 95\% CI from 1.61 to 2.03. \\[3mm]
+
+{\bf Interpretation:} for an increase in the bmi by one index point, roughly 1.82\% percentage points more bodyfat are expected, and all true values for $\beta_{BMI}$ between 1.61 and 2.03 are {\bf compatible with the observed data}. \\[2mm]
+
+}
+
+
+\frame{\frametitle{However...}
+\begin{itemize}
+\item The choice of the \alert{95\% is again somewhat arbitrary}. We could also go for 90\% or 99\% or any other interval, but 95\% has established as a commonly accepted range.\\[9mm]
+\item The 95\% CI should {\bf not be misused for simple hypothesis testing} in the sense of \\[2mm]
+``Is 0 in the confidence interval or not?''\\[2mm]
+Because this boils down to checking whether $p<0.05$ ...
+
+\end{itemize}
+}
+
+% \frame{
+%   Confidence curve / $p$-value function?
+% }
+
+
+
+
+\frame{\frametitle{Suggestion 3:  Look at relative importances of covariates}
+
+\begin{itemize}
+\item Ultimately, the popularity of $p$-values is based on the wish to judge which covariates are {\bf relevant}
+in a model, particularly in observational studies.\\[4mm]
+
+\item The problem with this: Low $p$-values do not automatically imply high relevance \citep{cox1982}.\\[4mm]
+
+\item Alternative: {\bf relative importances} of explanatory variables that measure the proportion (\%) of the responses' variability explained by each variable.
+\end{itemize}
+
+}
+
+
+\frame{\frametitle{Relative importance: Decomposing $R^2$}
+{\bf Remember:} $R^2$ indicates the proportion of variance explained by {\bf all} covariates in a model
+\begin{equation*}
+y_i = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_2 x_i^{(m)} + e_i   \ . 
+\end{equation*}
+~\\
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+The aim of {\bf relative importance} is to \alert{decompose} $R^2$ such that 
+\begin{itemize}
+\item each variable $x^{(j)}$ is attributed a fair share $r_j$.\\[2mm]
+\item the sum of all importances sums up to $R$, that is, $\sum_{j=1}^m r_j = R^2$.\\
+\end{itemize}
+\end{minipage}}
+
+\vspace{6mm}
+
+Further, it is required that
+\begin{itemize}
+\item all shares are $\geq 0$.
+\end{itemize}
+}
+
+
+\frame{
+	\frametitle{Question: How would you define/calculate relative importance?}
+
+	\begin{itemize}
+		\item {\bf Idea 1:} Fit simple models including only one covariate at the time, \emph{i.e.}:
+		\begin{equation*}
+y_i = \beta_0 + \beta_j x_i^{(j)} + e_i   
+\end{equation*}
+for each variable $x^{(j)}$ and use the respective $R^2$ as $r_j$. \\[6mm]
+
+		\item {\bf Idea 2:} Fit  the linear model twice, once with and once without the covariate of interest, and then take the \myalert{increase} of $R^2$ as $r_j$.\\[1cm]
+		
+		
+		% Compare $R^2$ from the full model to the $R_{-j}^2$ from the model without covariate $x^{(j)}$ and use the difference as $r_j$.\\[10mm]
+\end{itemize}
+
+Problem: In practice, regressors $x^{(j)}$ are \emph{always correlated}, thus both ideas lead to $\sum_j r_j \neq R^2$!
+
+%This contribution is called \myalert{relative importance} or \myalert{\% of variance explained}. 
+
+}
+
+\frame{\frametitle{ }
+To understand the problem of ideas 1 and 2, let us fit three models for $\log(Hg_{\text{urine}})$ with \begin{itemize}
+\item$x^{(1)}=\sqrt{\text{Number of monthly fish meals}}$ 
+\item $x^{(2)}=$ binary indicator if last fish meal was less than 3 days ago.
+\end{itemize}
+These two variables are correlated (people who consume a lot of fish are more likely to have it consumed within the last 3 days).\\[-10mm]
+
+<<echo=F,width=4.5,height=4>>=
+r.lm_fish <- lm(log10(Hg_urin) ~ sqrt(fish),d.hg)
+r.lm_amalgam <- lm(log10(Hg_urin) ~ last_fish,d.hg)
+r.lm_fish_amalgam <- lm(log10(Hg_urin) ~ last_fish+ sqrt(fish),d.hg)
+@
+
+\vspace{8mm}
+\begin{eqnarray} 
+y_i = \beta_0 + \beta_{1}  x^{(1)}_i  +   + e_i   & \quad &  R^2 = \Sexpr{format(summary(r.lm_fish)$r.squared,nsmall=2,digits=1)}\\
+y_i = \beta_0 + \beta_{2}  x^{(2)}_i  +   + e_i   & \quad &  R^2 = \Sexpr{format(summary(r.lm_amalgam)$r.squared,nsmall=2,digits=1)}\\
+y_i = \beta_0 + \beta_{1}   x^{(1)}_i  + \beta_{2}  x^{(2)}_i    + e_i  & \quad & R^2 = \Sexpr{format(summary(r.lm_fish_amalgam)$r.squared,2,2,2)} 
+\end{eqnarray}
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+{\bf Note:} The $R^2$ of model (3) with both covariates is much less than the sum of the $R^2$ from models (1) and (2)!
+\end{minipage}}
+
+~\\[2mm]
+$\Rightarrow$ The increase of $R^2$ upon inclusion of a covariate depends on the covariates that are already in the model!
+
+
+% {\bf Example} \\
+% With two collinear covariates, only inclusion of the first increases $R^2$.
+}
+
+
+\frame{\frametitle{A better way to calculate relative importance?}
+
+Various proposals to calculate relative importance ($R^2$ decomposition) have been proposed. The (currently) most useful is given by the following idea, called {\bf LMG} ({\bf L}indemann, {\bf M}erenda and {\bf G}old 1980):\\[4mm]
+
+\begin{itemize}
+\item Fit the model for \alert{all possible orderings of the covariates}.\\[2mm]
+\item Record the incrase in $R^2$ each time a variable is included.\\[2mm]
+\item \alert{Average} over all orderings of the covariates.\\[10mm]
+\end{itemize}
+
+
+{\bf Luckily, the {\tt R}-package \myalert{{\tt relaimpo}}  (Groemping 2006) contains the function {\tt calc.relimp()} that does this for us!}
+
+}
+
+
+\frame[containsverbatim]{\frametitle{Hg results}\label{sl:relimp}
+Which proportion (\%) of variance in $\log(Hg_{\text{urine}})$ is explained by each covariate? Interpret the table below:\\[4mm]
+
+<<>>=
+library(relaimpo)
+lmg.hg <- calc.relimp(r.lm.hg)$lmg
+@
+
+\begin{table}
+\begin{tabular}{l @{\hspace{1cm}} r @{\hspace{1cm}} r}
+Variable & Rel.\ imp.\ (\%)  & $p$-value\\
+\hline
+$\log(Hg_{\text{soil}})$ & \Sexpr{format(lmg.hg[1]*100,2,2,2)}  & \Sexpr{format(summary(r.lm.hg)$coef[2,4],2,2,2)}\\
+Vegetable & \Sexpr{format(lmg.hg[2]*100,2,2,2)} & \Sexpr{format(summary(r.lm.hg)$coef[3,4],2,2,2)}\\
+Migration & \Sexpr{format(lmg.hg[3]*100,2,2,2)} & \Sexpr{format(summary(r.lm.hg)$coef[4,4],2,2,2)}\\
+Smoking & \Sexpr{format(lmg.hg[4]*100,2,2,2)} & \Sexpr{format(summary(r.lm.hg)$coef[5,4],2,2,2)}\\
+Amalgam & \Sexpr{format(lmg.hg[5]*100,2,2,2)} & <0.0001 \\
+Age & \Sexpr{format(lmg.hg[6]*100,2,2,2)} & \Sexpr{format(summary(r.lm.hg)$coef[7,4],nsmall=4,digits=1,scientific=F)}\\
+Mother & \Sexpr{format(lmg.hg[7]*100,2,2,2)} & \Sexpr{format(summary(r.lm.hg)$coef[8,4],2,2,2)}\\
+Fish & \Sexpr{format(lmg.hg[8]*100,2,2,2)} & \Sexpr{format(summary(r.lm.hg)$coef[9,4],2,2,2)}\\
+Last fish & \Sexpr{format(lmg.hg[9]*100,2,2,2)} & <0.0001\\
+Age:mother & \Sexpr{format(lmg.hg[10]*100,2,2,2)} & \Sexpr{format(summary(r.lm.hg)$coef[11,4],nsmall=4,digits=1,scientific=FALSE)}\\
+\end{tabular}
+\end{table}
+}
+
+\frame{
+Several variables have very low $p$-values, but their relative importance differs clearly.\\[4mm]
+
+$\Rightarrow$ Relative importance gives intuitive \alert{complementary information} to $p$-values, effect sizes and confidence intervals!
+}
+
+
+\frame{\frametitle{Does relative importance solve all the problems?}
+Unfortunately not... \\[2mm]
+
+Relative importance should be understood as \alert{a complement to standard statistical output}. \\[6mm]
+
+There are several limitations to it:
+\begin{itemize}
+\item Rel.imp.\ of a variable may heavily depend on the other variables included in the model, especially when there are strongly correlated variables (see slide \ref{sl:example}).\\[2mm]
+
+
+\item Hard to generalize to other, non-linear regression models.
+\end{itemize}
+}
+
+\frame{
+Groemping 2007:\\[3mm]
+``...a request for a decomposition of $R^2$ is often driven by a desire to prioritize intervention actions with the intention to influence the response. It is important to notice that \myalert{any intervention bears the risk [...] of not only influencing the targeted regressor but also the correlation structure among regressors.} Thus, unexpected results may occur regarding changes of the response's variance. In this way, the benefit of the concept of decomposing $R^2$ is more limited than the typical user might realize.''
+}
+
+
+\frame[containsverbatim]{\frametitle{Example}\label{sl:example}
+Compare the estimated relative importance for the variable \texttt{fish} (monthly fish meals) for two cases:\\[2mm]
+
+{\bf Model 1}\\
+Original Hg model. \\[2mm]
+
+{\bf Model 2}\\
+Model \alert{without the indicator variable \texttt{last\_fish}}.
+
+ 
+<<echo=F>>=
+library(relaimpo)
+r.lm.hg2 <- update(r.lm.hg, . ~ . -last_fish)
+lmg.hg.2 <- calc.relimp(r.lm.hg2)$lmg
+@
+
+~\\[4mm]
+
+\begin{itemize}
+\item {\bf Case 1:} Relative importance of \texttt{fish}: \Sexpr{format(lmg.hg[8]*100,2,2,2)}\% (see slide \ref{sl:relimp}).\\[2mm]
+\item {\bf Case 2:} Relative importance of \texttt{fish}: $\Sexpr{format(lmg.hg.2[8]*100,2,2,2)}$\% .\\[8mm] 
+\end{itemize}
+
+{\bf Interpretation:} If one of two correlated variables is removed, the other absorbs some of the importance from it.
+}
+
+
+% \frame{
+% Ev give another example where rel. imp is calculated, e.g. from previous weeks.
+% 
+% }
+
+
+\frame{\frametitle{Causality vs correlation}
+
+In {\bf explanatory models} the ultimate goal usually is to reveal \alert{causal relationships} between the covariates and the response.\\[2mm]
+
+{\bf Examples:}
+\begin{itemize}
+\item Does Hg in the soil influence Hg-levels in humans?\\[2mm]
+\item Does inbreeding negatively affect population growth of Swiss Alpine ibex (Steinbock)?\\[2mm]
+\item Does exposure to Asbest lead to illness or death?\\[2mm]
+\item ...\\[6mm]
+\end{itemize}
+
+{\bf However:}
+Regression models actually only reveal associations, that is, \alert{correlations} between $\bm{x}$ and $\bm{y}$!
+}
+
+
+\frame{\frametitle{Example: Breakfast eating and teen obesity}
+
+Please read the following article and answer the questions below:\\
+
+\url{http://www.webmd.com/diet/news/20080303/eating-breakfast-may-beat-teen-obesity}\\[8mm]
+
+Questions:
+\begin{itemize}
+\item Does the cited study show that teens that eat breakfast are generally less obese?\\[2mm]
+\item Does this automatically imply that eating breakfast {\bf leads to} less obesity among teens? 
+\end{itemize}
+
+%Video (could be part of course preparation / self-study week): \\[2mm]
+
+%\url{https://www.khanacademy.org/math/statistics-probability/designing-studies/experiments-stats-library/v/correlation-and-causality}
+
+}
+
+
+\frame{
+
+Look at a regression model including covariate $\bm{x}$ and response $\bm{y}$. If the coefficient $\beta_x$ is ``significant'', there are several possible reasons for this:\\[2mm]
+
+\begin{enumerate}
+\item $\bm{x}$ is a {\bf cause} for $\bm{y}$. Write: $\bm{x} \rightarrow \bm{y}$\\[2mm]
+
+{\bf Example:} $\bm{x}$ is fish consumption and $\bm{y}$ is mercury concentration in the urine.\\[2mm]
+This is the desired situation!\\[4mm]
+
+\item $\bm{y}$ (partially) causes $\bm{x}$, that is $\bm{y} \rightarrow \bm{x}$.\\[2mm]
+{\bf Example:} $\bm{x}$ is \emph{knowledge} or \emph{IQ} and $\bm{y}$ is \emph{school education}.\\[2mm]
+In that case, the model is not correctly specified!\\[4mm]
+
+\item There is another covariate $\bm{z}$ that both influences $\bm{x}$ and $\bm{y}$\\
+$$\bm{z} \rightarrow \bm{x} \quad \text{and} \quad \bm{z} \rightarrow \bm{y} \ .$$
+$\rightarrow$ $\bm{x}$ and $\bm{y}$ {\bf covary}, but do not cause each other.
+\end{enumerate}
+
+}
+
+\frame{
+In the teen obesity example, all three reasons are possible -- perhaps even at the same time!\\[2mm]
+
+Ideas:
+
+\begin{itemize}
+\item No breakfast ($\bm{x}$) $\rightarrow$ Obesity ($\bm{y}$)\\[4mm]
+\item Obesity ($\bm{y}$) $\rightarrow$ No breakfast ($\bm{x}$)\\[4mm]
+\item Too much dinner ($\bm{z}$) $\rightarrow$ Obesity ($\bm{y}$)\\[2mm]
+{\centering\emph{and}} \\[2mm]
+Too much dinner ($\bm{z}$) $\rightarrow$ No breakfast ($\bm{x}$)\\[4mm]
+
+
+\end{itemize}
+ 
+Many other ideas are possible...
+}
+
+\frame{
+In fact, see a recent article in NZZ am Sonntag (temporarily available from OpenEdX):\\[-4mm]
+\begin{center}
+\includegraphics[width=6cm]{pictures/breakfast.png}
+\end{center}
+}
+
+
+\frame{
+On the following website you find many ``spurious correlations'', where the {\bf causality is very obviously missing}:\\[2mm]
+
+\url{http://www.tylervigen.com/spurious-correlations}\\[4mm]
+
+(More about it in the BC material of this unit!)
+}
+
+\frame[allowframebreaks]{\frametitle{Bradford-Hill-Criteria for causal inference}
+In 1965 the Epidemiologist Bradford Hill presented a list of criteria to assess whether there is some causality or not. However, he wrote ``None of my nine viewpoints can bring indisputable evidence for or against the cause-and-effect hypothesis and none can be required sina qua non.''\\[4mm]
+
+{\bf Bradford-Hill Criteria:}
+\begin{enumerate}
+\item {\bf Strength:} A causal relationship is likely when the observed association is strong.\\[2mm]
+\item {\bf Consistency:} A causal relationship is likely if mutiple independent studies show similar associations.\\[2mm]
+\item {\bf Specificity:} A causal relationship is likely when a covariate $x$ is associated only with one potential outcome $y$ and not with other outcomes.\\[2mm]
+\item {\bf Temporality:} The effect has to occur after the cause.\\[2mm]
+\item {\bf Biological gradient:} Greater exposure should generally lead to greater incidence of the effect.\\[2mm]
+\item {\bf Plausibility:} A plausible mechanism is helpful.\\[2mm]
+\item {\bf Coherence:} Coherence between findings in the lab and in the field / population increases the likelihood of an effect.\\[2mm]
+\item {\bf Analogy:} Similar factors have a similar effect.\\[2mm]
+\item {\bf Experiment:} Evidence from an experiment is valuable.
+\end{enumerate}
+}
+
+
+\frame{\frametitle{Experimental vs observational studies}
+%{\bf Note:} the last Bradford-Hill criterion is about experiments. \\[4mm]
+
+{\bf Experimental studies} are relevant in biology and even more so in medicine, e.g., in the context of clinical trials where novel drugs are tested.\\[4mm]
+
+The teen obesity study was an {\bf observational study}: \\
+\begin{itemize}
+\item All study participants only had to report their behaviour.
+\item None of them was assigned to a treatment group.
+\item There was {\bf no intervention}.\\[4mm]
+\end{itemize} 
+
+An observed effect is more likely to be \emph{causal} if participants were \emph{randomly assigned} to a group, here: breakfast eating yes/no.
+}
+
+
+\frame{
+\begin{multicols}{2}
+{\bf Observational study (``Erhebung'')}:
+\begin{itemize}
+\item Observation of subjects / objects in a real-world (existing) situation.\\[2mm]
+\item Variables are usually correlated.\\[2mm]
+\item Often more variables than can be included in the model.\\[2mm]
+\item {\bf Examples}: Influence of pollutans (mercury) on humans, studies of wild animal populations, epidemiological studies,...\\[4mm]
+\end{itemize}
+
+{\bf Experimental study}:
+\begin{itemize}
+\item Observation of subjects / objects in a constructed (experimental) situation.\\[2mm]
+\item Variables are controlled and uncorrelated (given a good study design!).\\[2mm]
+\item Usually all variables enter the model, {\bf no model selection}.\\[2mm]
+\item {\bf Examples}: Field experiments; clinical studies; psychological or pedagogical experiments,...\\[2mm]
+\end{itemize}
+\end{multicols}
+}
+
+
+\frame{\frametitle{}
+\begin{tabular}{lll}
+  & {\bf Observational study} & {\bf Experiment} \\
+ \hline 
+ {\bf Situation} & Existing, cannot be influenced  & Artificial, designed \\[3mm]
+ {\bf Analysis} & Difficult & Simple    \\
+   & (see model selection issues) & \alert{no model selection}   \\[3mm]
+ {\bf Interpretation} & Difficult, & Clear,   \\
+  & especially w.r.t.\ causality & ``proofs'' causal relationship 
+ \end{tabular}
+}
+
+
+
+
+
+\frame{\frametitle{Causality considerations for model selection}
+ 
+
+It is {\bf widely unknown} that a model can be broken by the inclusion of a ``wrong'' covariate, which is causally associated in the wrong direction:\\[4mm]
+
+\begin{center}
+\includegraphics[width=8cm]{pictures/causality.jpg}
+\end{center}
+~\\[2mm]
+
+{\bf Remember:} Avoid to include covariates in your model that are \alert{caused} by the outcome!\\[4mm]
+
+{\bf Example:} ...
+
+}
+
+
+
+
+\frame{\frametitle{Summary}
+\begin{itemize}
+\item Try to understand the definition and the meaning of $p$-values. \\[2mm]
+\item Correct understanding, use and interpretation of $p$-values: Do not use the \alert{``mindless'' $p<0.05$ criterion}!!\\[2mm]
+\item Statistical significance vs biological relevance: Ask for the \alert{effect size} and \alert{confidence interval}, and reflect what it means, instead of only reporting $p$-values alone. \\[2mm]
+\item The $p$-value is not ``bad'', it contains useful information, but it has to be used properly. \\
+$\rightarrow$ 3 suggestions or alternatives (gradual interpretation of $p$-values, effect sizes and CIs, relative importances).\\[2mm]
+\item \alert{Correlation} should not be mistaken for \alert{causality}.\\[2mm]
+\item \alert{Experimental studies} are better suited to reveal causality than observational studies!
+\end{itemize}
+}
+
+\frame{References:
+\bibliographystyle{Chicago}
+\bibliography{refs}
+}
+
+
+
+\end{document}
