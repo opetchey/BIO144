@@ -85,7 +85,7 @@
 \frame{
 \title[]{ \centering \Huge Kurs Bio144: \\
 Datenanalyse in der Biologie}%\\[.3cm]
-\author[Stefanie Muff, Owen L.\ Petchey]{\centering Stefanie Muff (Lecture) \& Owen L.\ Petchey (Exercises)}
+\author[Stefanie Muff, Owen L.\ Petchey]{\centering Stefanie Muff (Lecture) \& Owen L.\ Petchey (Practical)}
 %\institute[]{Institute of Social and Preventive Medicine \\ Institute of Evolutionary Biology and Environmental Studies}
 \date[]{Lecture 2: Simple linear regression\\ 1./2. March 2018}
 
@@ -281,7 +281,7 @@ Random variation is always present. This leads us to the next question.
 
 
 \frame{\frametitle{Parameter estimation}
-Remember: There are \myalert{three parameters} $\alpha$, $\beta$ and $\sigma_e^2$ that want to be estimated.\\[4mm]
+Remember: There are \myalert{three parameters} $\alpha$, $\beta$ and $\sigma_e^2$ to be estimated.\\[4mm]
 
 \begin{itemize}
 \item {\bf Problem:} For more than two points there is generally no perfectly fitting line.\\[4mm]
@@ -392,7 +392,7 @@ Before we continue to look into the results, we need to \myalert{check if the mo
 
 Why? Because otherwise we draw invalid conclusions from the results.\\[4mm]
 
-The assumption we took here is that the errors $e_i \sim \N(0,\sigma_e^2)$. This implies four things:\\[2mm]
+The assumption we took here is that the errors $e_i \sim \N(0,\sigma_e^2)$. This implies {\bf four things}:\\[2mm]
 \colorbox{lightgray}{\begin{minipage}{10cm}
 \begin{enumerate}[a)]
 \item The expected value of $e_i$ is 0: $\E(e_i)=0$.\\[2mm]
@@ -550,9 +550,13 @@ In simple linear regression, $R^2$ is the squared correlation between the indepe
 \end{minipage}}\\[6mm]
 
 
-Generally, $R^2$ indicates the proportion of variability of the response variable $\bm{y}$ that is explained by the ensemble of all covariates.\\[4mm] 
+Generally, $R^2$ indicates the proportion of variability of the response variable $\bm{y}$ that is {\bf explained by the ensemble of all covariates}.\\[4mm] 
 
-{\bf The larger $R^2$, the more variability of $\bm{y}$ is captured by the covariates, thus the ``better'' is the model.} (However, we will qualify this statement later in the course...)\\[6mm]
+The {\bf larger} $R^2$ \\ 
+$\Rightarrow$  the {\bf more} variability of $\bm{y}$ is captured by the covariates \\
+$\Rightarrow$ the {\bf ``better''} is the model. \\[2mm]
+
+{\scriptsize(However, we will qualify this statement later in the course...)}\\[6mm]
 
 $R^2$ becomes more interesting in \emph{multiple} linear regression.\\
 
@@ -562,7 +566,7 @@ $R^2$ becomes more interesting in \emph{multiple} linear regression.\\
 
 
 \frame{\frametitle{Testing and Confidence Intervals}\label{sl:testsCI}
-After the regression parameters and their uncertainties have been estimated, there are typically two fundamental questions to be answered:\\[4mm]
+After the regression parameters and their uncertainties have been estimated, there are typically two fundamental questions:\\[4mm]
 
 \begin{enumerate}
 \item {\bf ''Are the parameters compatible with some specific value?''} \\
@@ -693,7 +697,7 @@ For task 2 above we can use the built-in ``distribution table'' of the t-distrib
 2*pt(16.787522,241,lower.tail=F)
 @
 ~\\[6mm]
-Conclusion: there is very strong evidence that the BMI is associated with bodyfat, because $p$ is extremely small.\\[4mm]
+Conclusion: there is {\bf very strong evidence} that the BMI is associated with bodyfat, because $p$ is extremely small (thus it is very unlikely that such a slope $\hat\beta$ would be seen if there was no effect of BMI on body fat).\\[4mm]
 
 This basically answers question 1 from slide \ref{sl:testsCI}.\\[6mm]
 
