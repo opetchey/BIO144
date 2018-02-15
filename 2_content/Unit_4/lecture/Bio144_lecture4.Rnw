@@ -21,6 +21,8 @@
 \usepackage{multicol}
 \usepackage{xcolor}
 
+\usepackage{hyperref}
+\hypersetup{colorlinks,urlcolor=blue}
 
 \usetheme{uzhneu-en-informal}
 \DeclareMathOperator{\po}{Poisson}
@@ -98,7 +100,6 @@ Datenanalyse in der Biologie}%\\[.3cm]
 \frame{\frametitle{Overview }
 \begin{itemize}
 \item Interactions between covariates \\[2mm]
-To remember: (from git) Bring an example of an interaction term with at least 3 levels already in the lecture, because I have now only used a binary variable with interaction in lecture 4...
 \item Multiple vs.\ many single regressions\\[2mm]
 \item Checking assumptions / Model validation \\[2mm]
 \item What to do when things go wrong?\\[2mm]
@@ -170,14 +171,17 @@ library(dplyr)
 ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point() + geom_smooth(method="lm") + theme_bw()
 @
 \end{center}
-
-For simplicity, let us look at a binary covariate ($x_i \in \{0,1\}$). \\
-(Generalization to factorial covariates is more or less straightforward.)
+{\bf Important:} This model will be fitted in the BC videos of week 5.
 }
 
 
 
-\frame[containsverbatim]{\frametitle{}
+
+\frame[containsverbatim]{\frametitle{Binary variable with interaction}
+
+For simplicity, let us look at a binary covariate ($x_i \in \{0,1\}$). \\
+
+
 
 Remember the mercury (Hg) example from last week. We now extended the dataset and include mothers \emph{and} children ($\leq 11$ years).\\[2mm]
 
@@ -198,6 +202,10 @@ ggplot(d.hg,aes(x=age,y=log(Hg_urin),colour=mother)) + geom_point() + geom_smoot
 # abline(lm(log(Hg_urin)~age,data=subset(d.hg,mother==1)),col=2)
 @
 \end{center}
+}
+
+\frame{
+
 An important observation is that children and mothers show different dependencies of age!\\[2mm]
 $\rightarrow$ Formulate a model that allows for \alert{different intercepts \emph{and} slopes}, depending on group membership (mother/child).
 }
@@ -257,7 +265,10 @@ Children: $\hat{y}_i = \Sexpr{round(r.hg$coefficients[1],2)}  + (\Sexpr{round(r.
 \frame{
 On the previous slide we have actually fitted 2 models at the same time. \\[4mm]
 
-What is the advantage of this? Why is this usually better than fitting two separate models, one for children and one for mothers?
+What is the advantage of this? Why is this usually better than fitting two separate models, one for children and one for mothers?\\[5mm]
+
+$\rightarrow$ Clicker exercise \href{http://www.klicker.uzh.ch/bkx}{http://www.klicker.uzh.ch/bkx}
+
 }
 
 \frame[containsverbatim]{\frametitle{}
@@ -471,8 +482,11 @@ However, generally we recommend to \alert{not} add a smoothing line, because it 
 }
 
 
+
+
+
 \frame{
-We claimed that the TA plot is also able to check the \emph{independence assumption} d). But how?\\[4mm]
+The TA plot is also able to check the \emph{independence assumption} d). But how?\\[4mm]
 
 A dependency would be reflected by some kind of \myalert{trend}. \\[4mm]
 
@@ -485,18 +499,29 @@ Other ideas to plot residuals to check for a dependency? Please discuss!
 The dependency is not necessarily on the fitted values ($x$-axis of TA plot). Ideas:
 \begin{itemize}
 \item Plot residuals in dependency of time (if available) or sequence of obervations.
-\item Plot residuals against the covariates.
+\item Plot residuals against the covariates. 
 \end{itemize}
+\vspace{5mm}
 \begin{center}
 \setkeys{Gin}{width=1\textwidth}
-<<hgFigCov,fig=T,echo=F,width=6,height=2.5>>=
-par(mfrow=c(1,3))
-plot(1:length(residuals(r1.urin.mother)),residuals(r1.urin.mother),xlab="Observation number",ylab="Residuals")
-abline(h=0,lty=2)
-plot(d.hg.m$amalgam,residuals(r1.urin.mother),xlab="No. of amalgam fillings",ylab="Residuals")
-abline(h=0,lty=2)
-plot(d.hg.m$fish,residuals(r1.urin.mother),xlab="No. of fish meals/moth",ylab="Residuals")
-abline(h=0,lty=2)
+<<hgFigCov,fig=T,echo=F,width=7,height=2.3>>=
+library(ggplot2)
+library(gridExtra)
+d1 <- data.frame(obsNr= 1:length(residuals(r1.urin.mother)), 
+                 resid = residuals(r1.urin.mother),
+                 amalgam = d.hg.m$amalgam,
+                 fish = d.hg.m$fish)
+p1 <- ggplot(d1, aes(x=obsNr,y=resid))+  geom_point() +  geom_hline(yintercept = 0,linetype=2,size=0.3,col=2) +
+  xlab("Observation number") +
+  ylab("Residuals")
+p2 <- ggplot(d1, aes(x=amalgam,y=resid))+  geom_point() +  geom_hline(yintercept = 0,linetype=2,size=0.3,col=2) +
+  xlab("No. of amalgam fillings") +
+  ylab("")
+p3 <- ggplot(d1, aes(x=fish,y=resid))+  geom_point() +  geom_hline(yintercept = 0,linetype=2,size=0.3,col=2) +
+  xlab("No. of fish meals/month") +
+  ylab("")
+grid.arrange(p1, p2, p3, ncol=3)
+
 @
 \end{center}
 }
@@ -506,9 +531,11 @@ abline(h=0,lty=2)
 The \myalert{outlier} recorded above is also visible in the (well-known) QQ-plot, which is useful to check normal distribution of residuals (assumption c):
 \begin{center}
 \setkeys{Gin}{width=0.6\textwidth}
-<<hgFigQQ,fig=T,echo=F,width=4,height=4>>=
-qqnorm(residuals(r1.urin.mother))
-qqline(residuals(r1.urin.mother))
+<<hgFigQQ,fig=T,echo=F,width=4,height=3.5>>=
+library(ggfortify)
+autoplot(r1.urin.mother,2) + theme_bw()
+# qqnorm(residuals(r1.urin.mother))
+# qqline(residuals(r1.urin.mother))
 @
 \end{center}
 }
@@ -530,8 +557,8 @@ set.seed(390457)
 par(mfrow=c(2,3),mar=c(4,4,1,1))
 for (ii in 1:6){
   ss <- rnorm(59)
-qqnorm(ss)
-qqline(ss)
+qqnorm(ss,main="")
+qqline(ss,xlab="")
 }
 @
 \end{center}
@@ -643,7 +670,7 @@ r2.urin.mother <- lm(Hg_urin ~  smoking  + amalgam + fish,data=d.hg.m)
 \begin{center}
 \setkeys{Gin}{width=0.55\textwidth}
 <<fig=T,width=5,height=5,echo=F>>=
-autoplot(r2.urin.mother,smooth.colour=NA) + theme_bw()
+autoplot(r2.urin.mother) + theme_bw()
 # par(mfrow=c(2,2),mar=c(4,4,2,0.5))
 # plot(r2.urin.mother)
 @
@@ -678,13 +705,13 @@ autoplot(r3.urin.mother,smooth.colour=NA) + theme_bw()
 This looks {\bf much} better! However... there is this individual 106 that needs some closer inspection (see slide \ref{sl:outliersHg} for the solution regarding this outlier).
 }
 
-
-\frame{
-A similar example is given in Stahel 4.4 a+b. The diagnostic plots of a regression where the log-transformation of the outcome was forgotten looked like this:\\
-\begin{center}
-\includegraphics[width=8cm]{pictures/logT.pdf}
-\end{center}
-}
+% 
+% \frame{
+% A similar example is given in Stahel 4.4 a+b. The diagnostic plots of a regression where the log-transformation of the outcome was forgotten looked like this:\\
+% \begin{center}
+% \includegraphics[width=8cm]{pictures/logT.pdf}
+% \end{center}
+% }
 
 \frame{\frametitle{Common transformations}\label{sl:common}
 Which tranformations should be considered to cure model deviation symptoms? Answering this depends on plausibility and simplicity, and requires some experience. \\[6mm]
@@ -769,9 +796,7 @@ autoplot(r5.urin.mother,smooth.colour=NA) + theme_bw()
 
 }
 
-\frame{\frametitle{Summary}
-%Ev use ``Merkpunkte'' from Stahel slides (slide 41). What was today's lecture all about?
-}
+
 
 % \frame{References:
 % \bibliographystyle{Chicago}

@@ -21,6 +21,9 @@
 \usepackage{multicol}
 \usepackage{xcolor}
 
+\usepackage{hyperref}
+\hypersetup{colorlinks,urlcolor=blue}
+
 
 \usetheme{uzhneu-en-informal}
 \DeclareMathOperator{\po}{Poisson}
@@ -173,8 +176,12 @@ To carry out pairwise $t$-tests between any two groups. \\[4mm]
 \item Why is this not a very clever idea? \\[8mm]
 \end{enumerate}
 
-\pause
-(Generally, the number of pairwise tests can be calculated by $g(g-1)/2$, where $g$=number of groups.)
+
+Please answer these questions here:
+\href{http://www.klicker.uzh.ch/bkx}{http://www.klicker.uzh.ch/bkx}
+
+% \pause
+% (Generally, the number of pairwise tests can be calculated by $g(g-1)/2$, where $g$=number of groups.)
 }
 
 % \frame{
@@ -235,7 +242,7 @@ where $\mu + \beta_i = \mu_i$ from above, thus the {\bf group mean} of group $i$
 \myalert{More generally}, this leads us to the \myalert{single factor ANOVA:}\\[2mm]
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
-Assume we have $g$ groups and in each group $i$ there are $n_i$ measurements of some variable of interest, denoted as $y$. The model is then given as
+Assume we have $g$ groups and in each group $i$ there are $n_i$ measurements of some variable of interest, denoted as $y_{ij}$. The model is then given as
 \begin{eqnarray}
 y_{ij} = \mu + \beta_i + e_{ij} \quad \text{for }\quad  i &=&1,\ldots ,g \ , \label{eq:aov}  \\
 j &=& 1,\ldots, n_i , \nonumber\\ 
@@ -299,8 +306,9 @@ H_1 &:& \text{At least two groups are different}
 \end{eqnarray*}
 
 ~\\[2mm]
-Remember from slide 45 of week 3 (or Stahel script p.33): We have already used the $F$-test for categorical variables (see $F$-test for the earthworks, slide 46 of week 3). This was equivalent to testing if all $\beta$s that belong to a categorical variable are =0 at the same time \\[2mm]
-$\rightarrow$ equivalent to test if the covariate is needed in the model.\\[2mm] 
+Remember from slide 45 of week 3 (or Stahel script p.33): We have already used the $F$-test for categorical variables (see $F$-test for the earthworms, slide 46 of week 3). This was equivalent to testing if all $\beta$s that belong to a categorical variable are =0 at the same time. \\[2mm]
+
+$\rightarrow$ equivalent to test if the (categorical!) covariate is needed in the model.\\[2mm] 
 
 This is \alert{the very same problem here}, thus we need the $F$-test again!\\[2mm]
 
@@ -348,7 +356,7 @@ MS_E = \frac{SS_{\text{within}}}{n-g}
 \item $MS_E$: Quantifies the variability {\bf within} groups.\\[4mm]
 \end{itemize}
 
-Thus $F = \frac{MS_G}{MS_E}$ is large when $MS_G$ is ``large'' with respect to $MS_E$. The larger $F$, the more likely that $H_0$ is false. \\[4mm]
+Thus $F = \frac{MS_G}{MS_E}$ is large when $MS_G$ is ``large'' with respect to $MS_E$. The larger $F$, the less likely is the data seen under $H_0$. \\[4mm]
 
 {\bf Example:}
 \vspace{-15mm}
@@ -385,7 +393,7 @@ text(3.8,58,expression(bar(y[4])),col=2,cex=1.0)
 \item $F$ increases 
 \begin{itemize}
 \item when the group means become more different, or
-\item when the variability within groups decreases.
+\item when the variability within groups decreases.\\[4mm]
 \end{itemize}
 \item On the other hand, $F$ decreases
 \begin{itemize}
@@ -396,7 +404,8 @@ text(3.8,58,expression(bar(y[4])),col=2,cex=1.0)
 
 
 \href{https://gallery.shinyapps.io/anova_shiny_rstudio/}
-{\beamergotobutton{ANOVA App}}
+{\beamergotobutton{ANOVA App}}\\
+
 \url{ https://gallery.shinyapps.io/anova_shiny_rstudio/}
 }
 
@@ -435,13 +444,12 @@ print(ttab2,  floating = TRUE, include.rownames=FALSE)
 
 
 
-% \begin{tabular}{l@{\hspace{-7cm}}l}
-% <<dm,eval=T,echo=T>>=
-% d.mais[,]
-% @
-% &
+<<echo=F>>=
+library(tidyverse)
+@
+
 <<>>=
-str(d.mais)
+glimpse(d.mais)
 @
 %\end{tabular}
 
@@ -455,7 +463,8 @@ Using the \texttt{lm()} function in R and then look at the ANOVA table:\\[2mm]
 r.mais <- lm(YIELD ~ HYBRID, d.mais)
 @
 ~\\[-2mm]
-As always, before looking at the results, let's do some model checking. This is identical to all we did so far, because we are \alert{still working with linear models!}\\[-4mm]
+As always, before looking at the results, let's do some model checking. This is identical to all we did so far, because we are \alert{still working with linear models!}
+\vspace{-2mm}
 \begin{center}
 \setkeys{Gin}{width=0.5\textwidth}
 <<modelCheck,fig=T,echo=F,width=6,height=6>>=
@@ -567,14 +576,14 @@ To remember:
 When many tests are carried out, the probability to find a ``significant'' result {\bf by chance} increases.
 \end{minipage}}
 ~\\[6mm]
-For instance, for four groups there are $4\cdot 3/2= 6$ pairwise combinations that could be tested. The probability to find \emph{at least one result by chance} is much higher than the 5\% error level!!!\\[6mm]
+For instance, for four groups there are $4\cdot 3/2= 6$ pairwise combinations that could be tested. The probability to find \emph{at least one result by pure chance} is much higher than the 5\% error level!!!\\[6mm]
 \end{itemize}
 
 }
 
 
 \frame{\frametitle{Post-hoc tests}
-{\bf Still:} If the test $\beta_2=\ldots= \beta_g=0$ is rejected, one is often interested 
+{\bf Still:} If the test $\beta_2=\ldots= \beta_g=0$ is rejected, a researcher is then often interested 
 \begin{enumerate}
 \item in finding the actual group(s) that deviate(s) from the others.
 \item in estimates of the pairwise differences.\\[6mm]
@@ -627,14 +636,7 @@ Differences:\\
 \end{tabular}
 
 ~\\[4mm]
-Bonferroni $p$-values: \\
-\begin{tabular}{l|ccc}
-& 1 & 2 & 3\\
-\hline
-2 & \Sexpr{round(table.bonf[1,1],2)} &  & \\
-3 & \Sexpr{round(table.bonf[2,1],2)}  &  \Sexpr{round(table.bonf[2,2],2)}  \\
-4 & \Sexpr{round(table.bonf[3,1],2)}   &\Sexpr{format(table.bonf[3,2],2,2,2)}   & \Sexpr{round(table.bonf[3,3],3)} \\
-\end{tabular}
+
 
 Tukey HSD $p$-values:\\
 \begin{tabular}{l|ccc}
@@ -646,7 +648,16 @@ Tukey HSD $p$-values:\\
 \Sexpr{round(table.tukey["4-3","p adj"],3)}\\ 
 \end{tabular}
 
+Bonferroni $p$-values: \\
+\begin{tabular}{l|ccc}
+& 1 & 2 & 3\\
+\hline
+2 & \Sexpr{round(table.bonf[1,1],2)} &  & \\
+3 & \Sexpr{round(table.bonf[2,1],2)}  &  \Sexpr{round(table.bonf[2,2],2)}  \\
+4 & \Sexpr{round(table.bonf[3,1],2)}   &\Sexpr{format(table.bonf[3,2],2,2,2)}   & \Sexpr{round(table.bonf[3,3],3)} \\
+\end{tabular}
 ~\\[4mm]
+
 Fisher $p$-values: \\
 \begin{tabular}{l|ccc}
 & 1 & 2 & 3\\
@@ -666,12 +677,15 @@ Fisher $p$-values: \\
 \frame{\frametitle{Other contrasts}
 Sometimes additional comparisons are of interest. For example, a new diet is to be compared to other, existing diets. \\[4mm]
 
-In the ``Blutzucker'' example, this could be, for intance: ``Is diet 1 different from diets 2-4?'' \\[4mm]
+In the ``Blutzucker'' example, this could be, for intance:\\[2mm] 
+\begin{center}{\bf ``Is diet 1 different from diets 2-4?''}\\[10mm]
+\end{center}
 
 (Check also chapter 5.6.5 in GSWR, 2nd edition)
 }
 
 \frame[containsverbatim]{\frametitle{Choosing the reference level}
+\vspace{-2mm}
 Back to the Hybrid mais example. R orders the levels alphabetically and takes the first level as reference level. \\[2mm]
 
 This can be changed manually:\\[2mm]
@@ -709,9 +723,10 @@ low & group 3 & group 4\\
 Start by looking at means and standard deviations in the groups, as well at a graphical description of the means: \\[2mm]
 <<echo=F>>=
 library(HSAUR3)
+weightgain <- mutate(weightgain,type = relevel(type,ref="Low"))
 @
 <<echo=T>>=
-summarise(group_by(weightgain,source,type),meanW = mean(weightgain),sdW = sd(weightgain))
+weightgain %>% group_by(source,type) %>% summarise(meanW = mean(weightgain),sdW = sd(weightgain))
 @
 ~\\[2mm]
 \begin{multicols}{2}
@@ -791,8 +806,11 @@ theme_bw()
 @
 \end{center}
 
-The lines are \myalert{not parallel}, indicating that \myalert{there is an interaction} between type and source!\\
-{\scriptsize Note: if the additive model $\beta_i + \gamma_j$ holds, the lines would be parallel.}
+{\bf Note:} if the additive model $\beta_i + \gamma_j$ holds, the lines would be parallel.\\[4mm]
+
+However, these lines are \myalert{not parallel}, indicating that \myalert{there is an interaction} between type and source!\\[4mm
+]
+
 }
 
 
@@ -851,9 +869,10 @@ Compare these values to slide \ref{sl:mean}!
 }
 
 \frame[containsverbatim]{\frametitle{A cautionary note}
+\vspace{-4mm}
 {\bf Be careful:} In the presence of interactions, the $p$-values of the main effects can no longer be interpreted as before!\\[2mm]
 
-It is then required that separate analyses are carried out. For example for "Beef" and "Cereal" protein sources:\\[2mm]
+It is then required that separate analyses are carried out. For example for "Beef" and "Cereal" protein sources:\\[4mm]
 
 <<>>=
 anova(lm(weightgain ~ type,subset(weightgain,source=="Beef")))
@@ -874,9 +893,10 @@ autoplot(r.weight2,smooth.colour=NA)
 
 
 \frame[containsverbatim]{\frametitle{Exercise: }
-In an experiment the influence of four levels of fertilizer (DUENGER) on the yield (ERTRAG) on 5 species (SORTE) of crops was investigated. For each DUENGER $\times$ ERTRAG level, 3 repeats were taken. \\
-The data contains the following colums:\\
-DUENGER (4 levels) \hspace{1cm} SORTE (5 levels) \hspace{1cm} ERTRAG \\[6mm]
+In an experiment the influence of four levels of fertilizer (DUENGER) on the yield (ERTRAG) on 5 species (SORTE) of crops was investigated. For each DUENGER $\times$ ERTRAG level, 3 repeats were taken. \\[2mm]
+
+The data contain the following colums:\\
+\texttt{DUENGER} (4 levels) \hspace{1cm} \texttt{SORTE} (5 levels) \hspace{1cm} \texttt{ERTRAG} (continuous) \\[6mm]
 
 <<dmais,eval=T,echo=F>>=
 path <- "../../data_examples/WBL/"
@@ -923,8 +943,10 @@ anova(r.duenger)
 @
 
 ~\\[2mm]
-What is here the problem (look at the TA and the scale-location plots)? Ideas?
-Interpretation? 
+What is  the problem??\\[4mm] 
+$\rightarrow$ Look at the TA and the scale-location plots)? \\[2mm]
+$\rightarrow$ Ideas? \\[2mm]
+$\rightarrow$ Interpretation? 
 }
 
 \frame[containsverbatim]{

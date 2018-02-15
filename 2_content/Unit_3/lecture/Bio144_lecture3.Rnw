@@ -307,7 +307,7 @@ Some {\bf linear algebra} is needed to understand these sections, but we do not 
 }
 
 \frame{\frametitle{Multiple linear regression for bodyfat}
-Let us regress the proportion (\%) of bodyfat (from last week) on the predictors {\bf bmi} and {\bf age} simultaneously. The model thus is given as\\[4mm]
+Let us regress the proportion (\%) of bodyfat (from last week) on the predictors {\bf bmi} and {\bf age} simultaneously. The model is thus given as\\[4mm]
 \begin{eqnarray*}
 (bodyfat)_i &=& \beta_0 + \beta_1 \cdot bmi_i + \beta_2 \cdot age_i + e_i \ , \\
 \text{with} \quad e_i &\sim& \N(0,\sigma_e^2) \ .
@@ -317,9 +317,9 @@ Let us regress the proportion (\%) of bodyfat (from last week) on the predictors
 \frame[containsverbatim]{\frametitle{}
 \emph{Before} we estimate the parameters, let us ask the questions that we intend to answer:\\[6mm]
 \begin{enumerate}
-\item Does the {\bf ensemble} of all covariates explain a relevant part of the variability of the response?\\[4mm]
-\item If yes, which influence variables are good predictors of bodyfat? \\[4mm]
-\item How good is the overall model fit?
+\item Does the {\bf ensemble} of all covariates have an effect on the response?\\[4mm]
+\item If yes, which influence variables are relevant predictors of bodyfat? \\[4mm]
+\item Which proportion of response variability is explained by the model?
 \end{enumerate}
 
 }
@@ -355,7 +355,8 @@ This seems ok, so continue with answering questions 1-3.
 
 
 
-\frame[containsverbatim]{\frametitle{Question 1: Does the model have some explanatory/predictive power?}
+\frame[containsverbatim]{\frametitle{Question 1: Do the covariates have an effect on the response?}
+\vspace{-2mm}
 To answer question 1, we need to perform a so-called \alert{$F$-test}. The results of the test are displayed in the final line of the regression summary. Here, it says:\\[2mm]
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
@@ -472,7 +473,7 @@ Please see also IC: practical 3 (week 4) for an example and more thoughts.
 
 }
 
-\frame[containsverbatim]{\frametitle{Question 3: How good is the overall model fit?}
+\frame[containsverbatim]{\frametitle{Question 3: Which proportion of variability is explained?}
 To answer this question, we can look at the \myalert{multiple $R^2$} (see Stahel 3.1.h). It is a generalized version of $R^2$ for simple linear regression:\\[2mm]
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
@@ -614,9 +615,9 @@ qqline(r.cath$fitted)
 \frame[containsverbatim]{\frametitle{}
 \begin{enumerate}
 \item Are the modelling assumptions met?
-\item Does the model have some predictive power?
+\item Do the covariates improve the model (compared to a model without covariates)?
 \item Which variable(s) influence(s) the response?
-\item How good is the overall fit of the model?
+\item Which proportion of variability is explained?
 \item Interpretation of the results?\\[4mm]
 \end{enumerate}
 To understand what is going on, the regression results of $y$ on $x^{(1)}$ and $x^{(2)}$ alone may be useful:
@@ -698,7 +699,7 @@ r1.urin.mother <- lm(log10(Hg_urin) ~  smoking +
 #summary(r1.urin.mother)
 @
 
-We first glimpse at a check of the modelling assumptions:\\[2mm]
+First check the modelling assumptions:\\[2mm]
 \setkeys{Gin}{width=0.8\textwidth}
 <<Hgcheck,fig=T,width=6,height=3.5,echo=F>>=
 par(mfrow=c(1,2))
@@ -775,6 +776,11 @@ The model thus discriminates between the factor levels, such that (assuming $\be
 
 ~\\[4mm]
 \textcolor{gray}{Please also consult Stahel 3.2e and g.}\\[4mm]
+
+}
+
+\frame{\frametitle{!!Important to remember!!}
+\textcolor{gray}{(Common aspect that leads to confusion!)}\\[10mm]
 
 Please note that \alert{a factor covariate with $k$ factor levels requires $k-1$ parameters!}\\[2mm]
 $\rightarrow$ The \alert{degrees of freedom} are also reduced by $k-1$.
@@ -879,11 +885,17 @@ tableRegression(r.lm)
 $R^2=0.76$, $R^2_a = 0.75$.
 
 ~\\[2mm]
-Why is Gattung Lumbricus (L) not in the results table? \\
-Answer: L was chosen as the ``reference category'', thus $\beta_L=0$.\\[4mm]
+\colorbox{lightgray}{\begin{minipage}{10cm}
+\begin{itemize}
+\item Question: Why is Gattung Lumbricus (L) not in the results table? \\
+\item Answer: L was chosen as the ``reference category'', thus $\beta_L=0$. 
+\end{itemize}
+\end{minipage}}
 
+\vspace{8mm}
 {\bf Degrees of freedom:} We had 143 data points. How many degrees of freedom are left for the residual error?\\
-{Answer:} We need 4 parameters, thus $143-4=139$.\\[2mm]
+{Answer:} We estimated 4 parameters, thus $143-4=139$.
+
 
 <<echo=F>>=
 worm.coef <- summary(r.lm)$coef
@@ -959,7 +971,7 @@ anova(r.lm)
 ~\\[2mm]
 {\bf Note:} Here, the $F$-value for \texttt{Gattung} is distributed as $F_{2,139}$ under the Null-Hypothesis.
 ~\\[4mm]
-Here we have $p=\Sexpr{format(anova(r.lm)[2,5],2,4,2)}$, thus a clear difference in the regression models for the three species (``Gattung is relevant'').
+This gives $p=\Sexpr{format(anova(r.lm)[2,5],2,4,2)}$, thus a clear difference in the regression models for the three species (``Gattung is relevant'').
 }
 
 
