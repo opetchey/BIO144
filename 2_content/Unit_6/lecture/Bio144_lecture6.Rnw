@@ -162,17 +162,26 @@ where $x_i^{(k)}$ is the $k$th dummy variable ($x_i^{(k)}$=1 if $i$th observatio
 
 ``Magenumfang'' was used to predict ``Gewicht'' of the worm, including as covariate also the worm species.\\[2mm]
 
-\begin{center}
-\includegraphics[width=5cm]{graphics/Bio144_2017_week3-wurmP3.pdf}
-\end{center}
-
-\alert{Categorical} and \alert{continuous} covariates were used to predict a continuous outcome (the weight of the worm).
-}
-\frame[containsverbatim]{
 <<echo=F,eval=T>>=
 d.wurm <- read.table ("../../data_examples/ancova/Projekt6Regenwuermer/RegenwuermerDaten_Haupt.txt",header=T)
 d.wurm[d.wurm$Gattung=="N","GEWICHT"] <- d.wurm[d.wurm$Gattung=="N","GEWICHT"]*0.5
 @
+
+\begin{center}
+\setkeys{Gin}{width=0.6\textwidth}
+<<earthworm1,fig=T,echo=F,width=4.5,height=3>>=
+library(ggplot2)
+library(dplyr)
+ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point() + theme_bw()
+@
+\end{center}
+
+
+
+\alert{Categorical} and \alert{continuous} covariates were used to predict a continuous outcome (the weight of the worm).
+}
+\frame[containsverbatim]{
+
 
 <<fitWurm,echo=T,eval=T>>=
 r.lm <- lm(log(GEWICHT) ~  MAGENUMF + Gattung,d.wurm)
@@ -182,14 +191,28 @@ r.lm <- lm(log(GEWICHT) ~  MAGENUMF + Gattung,d.wurm)
 \vspace{3mm}
 {\bf Remember:} What do the $p$-values ($p=0.48$ and $p<0.0001$) of the categorical covariate ``Gattung'' mean? \\[5mm]
 
-To understand if ``Gattung'' has an effect, {\bf we need to carry out an $F$-test} (see slides 45/46, week 3). To this end, plot the ANOVA table:\\[2mm]
+To understand if ``Gattung'' has an effect, {\bf we need to carry out an $F$-test} (see slides 46/47, week 3). To this end, plot the ANOVA table:\\[2mm]
 <<anovaWurm,echo=T,eval=T>>=
 anova(r.lm)
 @
 }
 
+
 \frame[containsverbatim]{
-The \alert{$F$-test} is also needed to check whether the \alert{interaction term} between \texttt{MAGENUMF} and \texttt{Gattung} is needed: \\[2mm]
+Remember that we can also include an \alert{interaction} term between \texttt{MAGENUMF} and \texttt{Gattung} to allow for different slopes:\\[6mm]
+
+\begin{center}
+\setkeys{Gin}{width=0.6\textwidth}
+<<earthworm2,fig=T,echo=F,width=4.5,height=3>>=
+library(ggplot2)
+library(dplyr)
+ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point() + geom_smooth(method="lm") + theme_bw()
+@
+\end{center}
+}
+
+\frame[containsverbatim]{
+The \alert{$F$-test} is also needed to check whether the respective interaction term is needed: \\[2mm]
 
 <<fitWurm2,echo=T,eval=T>>=
 r.lm2<- lm(log(GEWICHT) ~  MAGENUMF * Gattung,d.wurm)
@@ -210,6 +233,10 @@ Age (years) may be a relevant covariable. \\
 
 <<echo=F>>=
 d.chol <- read.table ("../../data_examples/ancova/cholesterol/cholesterol.txt",header=T)
+ set.seed(23)
+ age <- as.integer(runif(15,19,65))
+ dd2 <- data.frame(cholesterol=round(rnorm(15,10 + 4.5*age,35),0),age=age,state=rep("Arizona",15))
+ d.chol <- rbind(d.chol,dd2)
 @
 \begin{center}
 \setkeys{Gin}{width=0.60\textwidth}
@@ -221,13 +248,31 @@ ggplot(d.chol,aes(x=state,y=cholesterol)) + geom_boxplot()
 \end{center}
 }
 
-\frame[containsverbatim]{
-The model includes state, age and the interaction of the two. The model equation is thus given as
-\begin{equation*}
-y_i = \beta_0 + \beta_1 (state)_i + \beta_2 (age)_i + \beta_3 (state)_i (age)_i + e_i  \ , \quad e_i \sim \N(0,\sigma_e^2) \ .
-\end{equation*}
-~\\
+\frame{
+The scatter plot gives an idea about the model that might be useful here:\\[2mm]
+\begin{center}
+\setkeys{Gin}{width=0.7\textwidth}
+<<statedata,fig=T,echo=F,width=4.5,height=3>>=
+library(ggplot2)
+library(dplyr)
+ggplot(d.chol,aes(x=age,y=cholesterol,colour=state)) + geom_point() + geom_smooth(method="lm") + theme_bw()
+@
+\end{center}
 
+$\rightarrow$ We include state, age and the interaction of the two. 
+}
+
+\frame[containsverbatim]{
+The model equation is thus given as\\[6mm]
+%
+\colorbox{lightgray}{\begin{minipage}{10cm}
+\vspace{-5mm}
+\begin{equation*}
+y_i = \beta_0 + \beta_1 \cdot(state)_i + \beta_2\cdot (age)_i + \beta_3 \cdot(state)_i \cdot(age)_i + e_i  \ , \quad e_i \sim \N(0,\sigma_e^2) \ .
+\end{equation*}
+\end{minipage}}
+ 
+~\\[4mm]
 <<echo=T>>=
 r.lm <- lm(cholesterol ~ age*state,data=d.chol)
 anova(r.lm)
@@ -246,16 +291,18 @@ summary(r.lm)$coef
 @
 \vspace{5mm}
  
-{\bf Note:} The $p$-values for the \texttt{age} and \texttt{state} coefficients are not the same as in the anova table...\\[2mm]
+{\bf Note:} The $p$-values for the \texttt{age} coefficient is not the same as in the anova table...\\[2mm]
 
 Compare the results for ``state'' also to the model without interaction:\\[3mm]
 <<echo=T>>=
-r.lm2 <- lm(cholesterol ~ age + state,data=d.chol)
+r.lm2 <- lm(cholesterol ~ age ,data=d.chol)
 summary(r.lm2)$coef
 @
 ~\\[2mm]
-{\small {\bf Note:} the $p$-value for `state' is now (almost) the same as on the previous slide (anova table).}\\
+{\small {\bf Note:} the $p$-value for `state' is similar to the previous slide (anova table).}\\
+\colorbox{lightgray}{\begin{minipage}{10cm}
 Reason: anova tests the models against one another in the {\bf order} specified.
+\end{minipage}}
 } 
 
 
