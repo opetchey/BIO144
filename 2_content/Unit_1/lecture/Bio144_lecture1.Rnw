@@ -129,8 +129,8 @@ ISBN 978-0-19-872906-8 \\[5mm]
 \begin{itemize}
 \item \emph{Statistics – An Introduction Using R} by M.J. Crawley (similar to 3.) above)\\[3mm]
 \item \emph{The Analysis of Biological Data} by M.C. Whitlock and D. Schluter\\[3mm]
-\item \emph{Regression - Modelle, Methoden und Anwendungen} by Fahrmeier, Kneib, Lang\\[3mm]
-\item  \emph{The Essential Guide to Effect Sizes. Statistical Power, Meta-Analysis, and the Interpretation of Research Results} (2010, First Edition) Ellis. Ebook via \href{http://ezproxy.uzh.ch/login?url=http://dx.doi.org/10.1017/CBO9780511761676} {\beamergotobutton{UZH library}}.
+\item  \emph{The Essential Guide to Effect Sizes. Statistical Power, Meta-Analysis, and the Interpretation of Research Results} (2010, First Edition) Ellis. Ebook via \href{http://ezproxy.uzh.ch/login?url=http://dx.doi.org/10.1017/CBO9780511761676} {\beamergotobutton{UZH library}}.\\[3mm]
+\item \emph{Regression - Modelle, Methoden und Anwendungen} by Fahrmeier, Kneib, Lang (for a deeper understanding) 
 \end{itemize}
 }
 
@@ -146,7 +146,7 @@ ISBN 978-0-19-872906-8 \\[5mm]
 {\bf Week 4} Multiple linear regression \\[1mm]
 {\bf Week 5} ANOVA  \\[1mm]
 {\bf Self-study week} \\[1mm]
-{\bf Week 6} ANCOVA Matrix Algebra \\[1mm]
+{\bf Week 6} ANCOVA; Matrix Algebra \\[1mm]
 {\bf Week 7} Model selection  \\[4mm]
 {\bf Week 8} Interpretation of results, causality \\[1mm]
 {\bf Week 9} Count data (Poisson regression) \\[1mm]
@@ -164,10 +164,10 @@ ISBN 978-0-19-872906-8 \\[5mm]
 \frame{\frametitle{Overarching goals of the course}
 
 \begin{itemize}
-\item Provide a solid foundation for answering biological questions with quantitative data.\\[3mm]
-\item Help students to understand the language of a statistician.\\[3mm]
-\item Ability to understand and interpret results in research articles.\\[3mm]
-\item Give the students a challenging, engaging, and enjoyable learning experience.\\[7mm]
+\item Provide a \hl{solid foundation} for answering biological questions with quantitative data.\\[3mm]
+\item Help students to understand the \hl{language of a statistician}.\\[3mm]
+\item Ability to understand and interpret results \hl{in research articles}.\\[3mm]
+\item Give the students a \hl{challenging, engaging, and enjoyable} learning experience.\\[7mm]
 \end{itemize}
 
 My belief: A solid foundation in statistics makes you independent!  \\[2mm]
@@ -197,7 +197,7 @@ Examples:
 
 A good foundation in statistics \hl{makes you more independent} from consultants or the goodwill of colleagues. Without such a knowledge, you will always need help from others.\\[5mm]
 
-Data analysis is itself an exciting part of research! \\[5mm]
+Data analysis/statistics is itself an exciting part of research! \\[5mm]
  
 Data analysis is at the \hl{interface between mathematics and biology/medicine} (and many other applied research fields).
 
@@ -228,7 +228,7 @@ Data analysis is at the \hl{interface between mathematics and biology/medicine} 
 \myalert{\large Inbreeding in Alpine ibex}\\[2mm]
 \colorbox{lightgray}{\begin{minipage}{10cm}
 \emph{Research question:} Does inbreeding in Alpine ibex populations have a negative effect on long-term population growth? Inbreeding depression!
-\end{minipage}}\\[4mm]
+\end{minipage}}\\[6mm]
 
 \begin{multicols}{2}
 \emph{Methods:} Genetic information from blood samples allow to quantify the level of inbreeding in each ibex population. In addition, long-term monitoring of population sizes and harvest rates.\\[3mm]
@@ -352,7 +352,7 @@ We are looking for a \emph{model} that \myalert{predicts} body fat as precisely 
 
 
 \frame[containsverbatim]{\frametitle{Data example 2: Mercury (Hg) in Valais (Switzerland)}
-{\bf Question:} Association between Hg concentrations in the soil and in the urin of the people living in the respective properties. We use a slightly modified data set here.\\[5mm]
+{\bf Question:} Association between Hg concentrations in the soil and in urine of the people living in the respective properties. We use a slightly modified data set here.\\[5mm]
 
 <<echo=F>>=
 path <- "../../data_examples/Hg/"
@@ -372,7 +372,7 @@ glimpse(d.hg)
 
 \frame[containsverbatim]{\frametitle{}
 \vspace{1cm}
-A first visual inspection is not very informative. There is no association visible by eye:
+A first visual inspection is not very informative. There is not much that is visible by eye:
 %
 \begin{center}
 \setkeys{Gin}{width=0.6\textwidth}
@@ -389,7 +389,7 @@ ggplot(d.hg,aes(x=Hg_soil,y=Hg_urin)) + geom_point() +
 }
 
 \frame[containsverbatim]{\frametitle{}
-Which other factors might be responsible for high Hg concentrations in urin?\\[4mm]
+Which other factors might be responsible for high Hg concentrations in urine?\\[4mm]
 
 \begin{center}
 \setkeys{Gin}{width=1.0\textwidth}
@@ -397,22 +397,22 @@ Which other factors might be responsible for high Hg concentrations in urin?\\[4
 require(cowplot)
 theme_set(theme_cowplot(font_size=10)) # reduce default font size
 
-plot.1 <- ggplot(d.hg,aes(x=amalgam,y=Hg_urin)) + geom_point() + 
+plot.1 <- ggplot(d.hg,aes(x=amalgam,y=Hg_urin)) + geom_point(size=0.5) + 
   theme_bw() +
   xlab("Amalgam") +
   ylab("Hg urine")
 
-plot.2 <- ggplot(d.hg,aes(x=age,y=Hg_urin)) + geom_point() + 
+plot.2 <- ggplot(d.hg,aes(x=age,y=Hg_urin)) + geom_point(size=0.5) + 
   theme_bw() +
   xlab("Age") +
   ylab("Hg urine")
 
-plot.3 <- ggplot(d.hg,aes(x=fish,y=Hg_urin)) + geom_point() + 
+plot.3 <- ggplot(d.hg,aes(x=fish,y=Hg_urin)) + geom_point(size=0.5) + 
   theme_bw() +
   xlab("Fish consumption") +
   ylab("Hg urine")
 
-plot_grid(plot.1, plot.2, plot.3, labels = c('a', 'b','c'),ncol=3)
+plot_grid(plot.1, plot.2, plot.3, ncol=3)
 @ 
 \end{center}
 \vspace{5mm}
@@ -479,7 +479,10 @@ Remember: The idea to log-transform the variables was mainly obvious thanks to \
 {\scriptsize\citep[p. 190]{elpelt.hartung1987}}\\[2mm]
 %
 24 persons were split into 4 groups. Each group followed another diet \small{(DIAET)}. The blood glucose concentrations were measured at the beginning and at the end (after 2 weeks). The difference of these values was stored \small{(BLUTZUCK)}.\\[2mm]
-{\bf Question:} Are there differences among the groups with respect to changes in blood glucose concentrations?\\[3mm]
+\colorbox{lightgray}{\begin{minipage}{10cm}
+{\bf Question:} Are there differences among the groups with respect to changes in blood glucose concentrations?
+\end{minipage}}
+~\\[3mm]
 
 Let's look at the raw data (points and boxplots):
 
@@ -491,7 +494,7 @@ d.blz <- read.table(paste(path,"blutzucker.dat",sep=""),header=T)
 \begin{center}
 \setkeys{Gin}{width=0.4\textwidth}
 <<blz_plot,fig=T,height=3.5,width=3.5,echo=F>>=
-ggplot(d.blz,aes(x=factor(DIAET),y=BLUTZUCK)) + geom_boxplot() + geom_point(size=4,colour='lightgrey') + theme_bw() + xlab("Diet") + ylab("Blood glucose")
+ggplot(d.blz,aes(x=factor(DIAET),y=BLUTZUCK)) + geom_boxplot() + geom_point(size=3,colour='grey') + theme_bw() + xlab("Diet") + ylab("Blood glucose")
 @
 \end{center}
 
@@ -565,18 +568,19 @@ models are wrong, but some are useful'' \citep{box1979}.}
 
 
 \frame{\frametitle{Steps in a modelling process (``work flow'')}
-\begin{enumerate}
-\item Formulate a precise question
-\item Plan your the analysis of your data, collect the data (experiments or surveys).
-\item Tidy and clean the data
-\item {\bf Graphical representation of the data}
-\item Choose an appropriate \emph{model}
-\item Estimate model parameters and uncertainties
-\item {\bf Check modelling assumptions}
-\item If needed, improve the model; back to step 6
-\item {\bf Interpret your results} and compare to step 1
-\item {\bf Communicate results} precisely, carefully and critically (publication, articles..)
-\end{enumerate}
+\includegraphics[width=11cm]{pictures/workflow.png}
+% \begin{enumerate}
+% \item Formulate a precise question
+% \item Plan the analysis of your data, collect the data (experiments or surveys).
+% \item Tidy and clean the data
+% \item {\bf Graphical representation of the data}
+% \item Choose an appropriate \emph{model}
+% \item Estimate model parameters and uncertainties
+% \item {\bf Check modelling assumptions}
+% \item If needed, improve the model; back to step 6
+% \item {\bf Interpret your results} and compare to step 1
+% \item {\bf Communicate results} precisely, carefully and critically (publication, articles..)
+% \end{enumerate}
 
 }
 
@@ -584,8 +588,8 @@ models are wrong, but some are useful'' \citep{box1979}.}
 \frame{\frametitle{The scopes of statistical data analysis}
 \begin{enumerate}[a)]
 \item \myalert{Prediction (extrapolation), interpolation}. Example body fat: use substitute measurements to predict body fat of a person.\\[3mm]
-\item \myalert{Estimation of parameters.} Example: Effect size of a novel drug.\\[3mm]
 \item \myalert{Explanation;  determination of important variables}. Example physical activity of children: The study aims to find factors that (positively or negatively) influence the movement behavior of children. \\[3mm]
+\item \myalert{Estimation of parameters.} Example: Effect size of a novel drug.\\[3mm]
 \item Optimization. \\[3mm]
 \item Calibration.\\[8mm]
 \end{enumerate}
@@ -596,11 +600,11 @@ In this course we are concerned with a)-c).
 \frame{\frametitle{Goals of the course (part 2)}
 By the end of the course you will be able\\[2mm]
 \begin{itemize}
-\item to analyze all data examples introduced here using R (and of course many more),\\[2mm]
-\item to report and interpret the results,\\[2mm]
-\item to draw conclusions from them,\\[2mm]
-\item to give graphical descriptions of the data and the results,\\[2mm]
-\item to be critical about what you see.
+\item to \hl{analyze} all data examples introduced here using R (and of course many more),\\[2mm]
+\item to \hl{report and interpret} the results,\\[2mm]
+\item to \hl{draw conclusions} from them,\\[2mm]
+\item to give \hl{graphical descriptions} of the data and the results,\\[2mm]
+\item to \hl{be critical} about what you see.
 \end{itemize}
 
 }
