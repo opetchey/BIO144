@@ -1,9 +1,12 @@
 ---
 title: "Weekly Learning Objectives - BIO144, Data Analysis for Biologists"
 author: "Owen Petchey & Stephanie Muff"
-date: "2/3/2017"
-output: 
-  pdf_document: 
+date: "`r format(Sys.time(), "%d %B, %Y")`"
+output:
+  html_document:
+    df_print: paged
+    toc: yes
+  pdf_document:
     toc: yes
 ---
 
