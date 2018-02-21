@@ -1,0 +1,49 @@
+
+Warum ist Statistik so wichtig?
+- Erstes Jahr, wo im 4. Semester so ein Kurs angeboten wird. Grund: Erkenntnis, dass ohne Kenntnisse in stat. Datenanalyse eigene Daten in Bachelor-, Master- oder Doktorarbeiten nicht ausgewertet werden können.
+
+Wo braucht man Statistik - Beispiele
+Medizin: Hat ein bestimmtes Medikament eine Wirkung? Welche Faktoren führen zu Krebs?
+Oekologie / Konservationsbiologie: Was für einen Lebensraum braucht ein Tier zum Leben? Was bevorzugt es?
+Evolutionsbiologie: 
+Bioinformatik: 
+
+
+Gedankenbeispiel (mit realem Hintergrund): Sie verbringen 2 Jahr im Feld und sammeln Daten. Kommen ins Büro und müssen nun quant. Aussagen daraus ableiten... 
+Szenario 1: Sie wissen bereits, welche Methoden Sie anwenden wollen, bzw. sind in der Lage, in der Fachliteratur die entsprechenden Methoden nachzulesen und anzuwenden.
+Szenario 2: Sie kennen sich mit statistischen Methoden zu wenig aus. Ihnen fehlt das grundlegende Verständnis für die Datenanalyse. Das Nachlesen komplexerer Methoden ist daher schwierig, denn diese setzen immer schon Kenntnisse der Grundlagen voraus.
+
+Achtung! "Learning by doing" ist in der Statistik praktisch unmöglich. Es braucht viel Erfahrung, es gibt sehr viele Fallstricke.
+
+Wer ein gutes Grundlagenwissen in Statistik hat, kann unabhängiger arbeiten. Wer sich nicht auskennt, ist immer auf die Hilfe eines Experten angewiesen...
+
+
+Starte mit Beispielen: 
+Bodyfat (Korrelation mit BMI etc), Hg-study (Kausaler Zusammenhang mit Hg-Boden?), logit and poisson Example
+Was sind hier die Fragen? Welche Forschungsergebnisse erhofft man sich hier? Wie kommt man dahin?
+Starte mit visueller Inspektion. Hypothesen? 
+
+Zur Beantwortung brauche ich ein Modell. Aber:
+Was ist ein (statistisches) Modell?
+
+- Ein Modell ist immer nur eine Annäherung an die Realität.
+- Citation from Aitkin et. al 2009 "Statistical Modelling in R": The object of statistical modelling is to present a simplified or smoothed representation of the underlying population
+
+
+
+Ziel des Kurses: 
+
+- Solides Fundement an statistischen Methoden erarbeiten, um biologische oder medizinische Fragen mit Daten quantitativ und objektiv zu beantworten. 
+- Helfen, die Sprache der Statistiker zu verstehen.
+- Fähigkeit vermitteln, Resultate in Forschungsartiken zu verstehen, zu interpretiern und evtl. kritisch zu hinterfragen.
+- Wir möchten Euch eine herausforderne, spannende und freudvolle Lernerfahrung geben. "Etwas, was man wirklich brauchen kann und Spass macht"
+
+
+
+Merke: 
+- Datenanalyse macht Spass! Es hat fast etwas von Detektivarbeit... 
+- Datenanalyse ist selber ein spannender Teil der Forschung! 
+- Datenanalyse ist die Schnittstelle zwischen Mathematik und Biologie (oder anderen Forschungsfeldern, z.B. Medizin, Geographie etc)
+
+
+
