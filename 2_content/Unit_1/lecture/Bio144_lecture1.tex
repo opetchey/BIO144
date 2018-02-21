@@ -1,0 +1,680 @@
+\documentclass[english,9pt,aspectraio=169]{beamer}
+\usepackage{etex}
+\usetheme{uzhneu-en-informal}
+%\usepackage{uarial}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\RequirePackage{graphicx,ae}
+\usepackage{bm}
+\usepackage{fancybox,amssymb,color}
+\usepackage{pgfpages}
+\usepackage{booktabs}
+\usepackage{verbatim}
+\usepackage{animate}
+\usepackage{numprint}
+\usepackage{dsfont}
+\usepackage{tikz}
+\usepackage{amsmath,natbib}
+\usepackage{mathbbol}
+\usepackage{babel}
+\usepackage{SweaveSlides}
+\usepackage{multicol}
+\usepackage{hyperref}
+
+
+\usetheme{uzhneu-en-informal}
+\DeclareMathOperator{\po}{Poisson}
+\DeclareMathOperator{\G}{Gamma}
+\DeclareMathOperator{\Be}{Beta}
+\DeclareMathOperator{\logit}{logit}
+\def\n{\mathop{\mathcal N}}
+
+\definecolor{Gray}{RGB}{139,137,137}
+\definecolor{darkred}{rgb}{0.8,0,0}
+\definecolor{Green}{rgb}{0,0.8,0.3}
+\definecolor{Blue}{rgb}{0,0,1}
+\def\myalert{\textcolor{darkred}}
+\def\myref{\textcolor{Gray}}
+\def\hl{\textcolor{blue}}
+\setbeamercovered{invisible}
+
+\renewcommand{\baselinestretch}{1.2}
+\beamertemplateballitem
+\DeclareMathOperator{\cn}{cn} % Copy number
+\DeclareMathOperator{\ccn}{ccn} % common copy number
+\DeclareMathOperator{\p}{p} % common copy number
+\DeclareMathOperator{\E}{E} % common copy number
+\DeclareMathOperator{\given}{|} % common copy number
+\def\given{\,|\,}
+\def\na{\tt{NA}}
+\def\nin{\noindent}
+\pdfpageattr{/Group <</S /Transparency /I true /CS /DeviceRGB>>}
+\def\eps{\varepsilon}
+
+\renewcommand{\P}{\operatorname{\mathsf{Pr}}} % Wahrscheinlichkeitsmaß
+\def\eps{\varepsilon}
+\def\logit{\text{logit}}
+%\newcommand{\E}{\mathsf{E}} % Erwartungswert
+\newcommand{\Var}{\text{Var}} % Varianz
+\newcommand{\NBin}{\text{NBin}}
+\newcommand{\Po}{\text{Po}}
+
+
+\newcommand{\ball}[1]{\begin{pgfpicture}{-1ex}{-0.65ex}{1ex}{1ex}
+\usebeamercolor[fg]{item projected}
+
+{\pgftransformscale{1.75}\pgftext{\normalsize\pgfuseshading{bigsphere}}}
+{\pgftransformshift{\pgfpoint{0pt}{0.5pt}}
+\pgftext{\usebeamerfont*{item projected}{#1}}}
+\end{pgfpicture}}%
+\usepackage{multicol}
+\newcommand{\ballsmall}[1]{\begin{pgfpicture}{-1ex}{-0.65ex}{.2ex}{.2ex}
+\usebeamercolor[fg]{item projected}
+
+{\pgftransformscale{1}\pgftext{\normalsize\pgfuseshading{bigsphere}}}
+{\pgftransformshift{\pgfpoint{0pt}{0.5pt}}
+\pgftext{\usebeamerfont*{item projected}{#1}}}
+\end{pgfpicture}}%
+
+
+\begin{document}
+
+\frame{
+\title[]{ \centering \Huge Course Bio144: \\
+Data Analysis in Biology}%\\[.3cm]
+\author[Stefanie Muff, Owen L.\ Petchey]{\centering Owen L.\ Petchey (Practicals) \& Stefanie Muff (Lectures) }
+\date[]{Lecture 1: Introduction and Outlook\\ 22./23. February 2018}
+
+
+\maketitle
+}
+
+
+
+% \frame{\frametitle{Organization}
+% All important details, such as testate conditions, exam dates etc. are provided on the OpenEdX course page:\\[2mm]
+% 
+% \url{https://openedx.mnf.uzh.ch/courses/course-v1:UZH+BIO144+FS2018/about}
+% \vspace{10mm}
+% 
+% \begin{center}Lecture times: {\bf from 15:00 to 15:45} and {\bf from 16:00 to 16:45}.\end{center}
+% }
+
+% \frame{\frametitle{Prerequisite for Bio144}
+% \begin{itemize}
+% \item Mat183 ``Stochastik f\"ur die Naturwissenschaften'' (2nd semester)
+% \end{itemize}
+% 
+% }
+
+\frame{\frametitle{Literature}
+Compulsory literature (books available as ebooks from uzh):
+\begin{enumerate}[1.]
+\item \emph{Lineare Regression} by W. Stahel (pdf on course webpage)
+\item \emph{Getting Started with R, An introduction for biologists} (2017, {\bf Second Edition}) Beckerman, Childs \& Petchey (DO NOT USE THE FIRST EDITION!).\\
+{\scriptsize A UZH library link to the second edition will be added asap, probably mid March. }
+\item \emph{The New Statistics With R} by A. Hector, Oxford University Press;
+ISBN 978-0-19-872906-8 \\[5mm]
+\end{enumerate}
+
+\begin{center}
+\includegraphics[width=2.7cm]{pictures/petchey_buch.jpeg} \qquad \qquad
+\includegraphics[width=2.7cm]{pictures/hector.jpeg}
+\end{center}
+
+}
+
+\frame{
+\frametitle{Complementary literature:}
+\begin{itemize}
+\item \emph{Statistics – An Introduction Using R} by M.J. Crawley (similar to 3.) above)\\[3mm]
+\item \emph{The Analysis of Biological Data} by M.C. Whitlock and D. Schluter\\[3mm]
+\item \emph{Regression - Modelle, Methoden und Anwendungen} by Fahrmeier, Kneib, Lang\\[3mm]
+\item  \emph{The Essential Guide to Effect Sizes. Statistical Power, Meta-Analysis, and the Interpretation of Research Results} (2010, First Edition) Ellis. Ebook via \href{http://ezproxy.uzh.ch/login?url=http://dx.doi.org/10.1017/CBO9780511761676} {\beamergotobutton{UZH library}}.
+\end{itemize}
+}
+
+
+
+\frame{\frametitle{Schedule (12 lecture weeks + 2 self-study weeeks)}
+\vspace{-8mm}
+
+\begin{multicols}{2}
+{\bf Week 1} Introduction and outlook \\[1mm]
+{\bf Week 2} Simple linear regression\\[1mm]
+{\bf Week 3} Residual analysis, model validation\\[1mm]
+{\bf Week 4} Multiple linear regression \\[1mm]
+{\bf Week 5} ANOVA  \\[1mm]
+{\bf Self-study week} \\[1mm]
+{\bf Week 6} ANCOVA Matrix Algebra \\[1mm]
+{\bf Week 7} Model selection  \\[4mm]
+{\bf Week 8} Interpretation of results, causality \\[1mm]
+{\bf Week 9} Count data (Poisson regression) \\[1mm]
+{\bf Self-study week} \\[1mm]
+{\bf Week 10} Binary Data (logistic regression)\\[1mm]
+{\bf Week 11} Measurement error, random effects \\[1mm]
+{\bf Week 12} Selected topics, repetition and outlook \\
+\end{multicols}
+~\\
+ 
+}
+
+
+
+\frame{\frametitle{Overarching goals of the course}
+
+\begin{itemize}
+\item Provide a solid foundation for answering biological questions with quantitative data.\\[3mm]
+\item Help students to understand the language of a statistician.\\[3mm]
+\item Ability to understand and interpret results in research articles.\\[3mm]
+\item Give the students a challenging, engaging, and enjoyable learning experience.\\[7mm]
+\end{itemize}
+
+My belief: A solid foundation in statistics makes you independent!  \\[2mm]
+
+}
+
+
+
+
+
+
+\frame{\frametitle{Why is statistical data analysis so relevant for the biological and medical sciences?}
+
+
+Awareness that, without a profound knowledge in statistical data analysis, it will be hard to analyze your data from Bachelor, Master or PhD theses.... \\[6mm]
+
+Examples:
+\begin{itemize}
+\item \hl{Medicine:} Whath is the effect of a drug? Which factors cause cancer?
+\item \textcolor{green}{Ecology:} What is a suitable habitat for a certain animal? Which resources does it need or prefer?
+\item \textcolor{red}{Evolutionary biology:} Do highly inbred animals have decreased chances to survive or reproduce?
+\end{itemize}
+}
+
+\frame{\frametitle{!!}
+ "Learning by doing" is often {\bf not advisable} in statistics. Experience is essential, there are many pitfalls.\\[5mm]
+
+A good foundation in statistics \hl{makes you more independent} from consultants or the goodwill of colleagues. Without such a knowledge, you will always need help from others.\\[5mm]
+
+Data analysis is itself an exciting part of research! \\[5mm]
+ 
+Data analysis is at the \hl{interface between mathematics and biology/medicine} (and many other applied research fields).
+
+}
+
+
+\frame{\frametitle{What are the purposes of data analysis?}
+\begin{itemize}
+\item To \myalert{find and quantify associations} through graphical representations and modelling.\\[3mm]
+\item To \myalert{draw conclusion} from data.\\[3mm]
+\item To \myalert{quantify the uncertainty} of these conclusions.\\
+\end{itemize}
+}
+
+\frame{\frametitle{Own examples}
+\myalert{\large Otter (lutra lutra)}\\[2mm]
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+\emph{Research questions:} What is the preferred habitat by otters? How do otters adapt to human altered landscapes?
+\end{minipage}}\\[3mm]
+\emph{Method:} Study in Austria, 9 Otter were radio-tracked and monitored during 2-3 years.\\
+
+\includegraphics[width=10cm]{pictures/otters.jpeg}
+}
+
+
+\frame{
+\myalert{\large Inbreeding in Alpine ibex}\\[2mm]
+\colorbox{lightgray}{\begin{minipage}{10cm}
+\emph{Research question:} Does inbreeding in Alpine ibex populations have a negative effect on long-term population growth? Inbreeding depression!
+\end{minipage}}\\[4mm]
+
+\begin{multicols}{2}
+\emph{Methods:} Genetic information from blood samples allow to quantify the level of inbreeding in each ibex population. In addition, long-term monitoring of population sizes and harvest rates.\\[3mm]
+
+%\begin{center}
+%\includegraphics[width=4cm]{pictures/steinbock.jpg} \hspace{1cm}
+\includegraphics[width=4cm]{pictures/ibex_graph.png}
+%\end{center}
+\end{multicols}
+\vspace{-1cm}
+\includegraphics[width=3cm]{pictures/steinbock.jpg}
+}
+
+\frame{\frametitle{}
+\myalert{Mercury (Hg) in the soil} \\[2mm]
+
+\includegraphics[width=8cm]{pictures/wallis.png} \\[2mm]
+\colorbox{lightgray}{\begin{minipage}{10cm}
+\emph{Research question:} Is the Hg level in the environment (soil) of people's homes associated to the Hg levels in their bodies (urin, hair)?
+\end{minipage}}\\[2mm]
+\emph{Method:} Measurements of Hg concentrations on people's properties, as well as measurements and survey of children and their mothers living in these properties.\\[2mm]
+
+Highly delicate, emotionally charged, political question!\\
+\href{http://www.srf.ch/news/regional/bern-freiburg-wallis/quecksilber-im-walliser-boden-schadete-der-gesundheit-nicht}
+{\beamergotobutton{Schweiz Aktuell, 20. Juni 2016}}
+ 
+}
+
+
+\frame{\frametitle{}
+\vspace{2mm}
+\myalert{Physical activity in children (Splashy study)} \\[4mm]
+
+\begin{center}
+\includegraphics[width=6cm]{pictures/kids.jpg} \\
+{\scriptsize  splashy.ch}\\[2mm]
+\end{center}
+
+%\includegraphics{pictures/g}
+\colorbox{lightgray}{\begin{minipage}{10cm}
+\emph{Research question:} Which factors influence physical activity patterns in children aged 2-6 years?
+\end{minipage}}\\[4mm]
+
+\emph{Method:} The children had to wear accelerometers for several days. In addition, their parents had to fill in a detailed questionnaire.\\[4mm]
+Observed variables were, e.g., media consumption, behavior of the parents, age, weight, social structure,...\\[7mm]
+
+% \href{http://splashy.ch/}
+% {\beamergotobutton{Link to Splashy study}}
+ 
+}
+
+
+
+\frame{\frametitle{Statistics in the news (April 2016)}
+ \includegraphics[width=9cm]{pictures/NZZ1.jpeg}\\
+
+}
+
+\frame{\frametitle{Producing nonsense with statistics..}
+... is too easy ...\\[10mm]
+
+A profound knowledge of data analysis and statistics protects you from producing nonsense -- and helps to detect it. See for example:\\[6mm]
+
+\textcolor{blue}{\href{https://www.theguardian.com/science/2016/jul/17/politicians-dodgy-statistics-tricks-guide?&tc=eml}{Finding dodgy statistics (The Guardian, July 17, 2016)}}\\[6mm]
+ 
+\textcolor{blue}{\href{http://callingbullshit.org/syllabus.html}{``Calling bullshit'' course (University of Washington)}}
+}
+
+
+\frame[containsverbatim]{\frametitle{Data example 1: Prognostic factors for body fat}
+\vspace{-1cm}
+{\scriptsize (From Theo Gasser \& Burkhardt Seifert \emph{Grundbegriffe der Biostatistik})}\\[6mm]
+
+Body fat is an important indicator for overweight, but difficult to measure. \\
+{\bf Question:}  Which factors allow for precise estimation (prediction) of body fat? \\[4mm]
+
+Study with 241 male participants. Measured variable were, among others, body fat (\%), age, weight, body size, BMI, neck thickness and abdominal girth.\\[4mm]
+
+\begin{Schunk}
+\begin{Sinput}
+> glimpse(d.bodyfat)
+\end{Sinput}
+\begin{Soutput}
+Observations: 243
+Variables: 7
+$ bodyfat <dbl> 12.3, 6.1, 25.3, 10.4, 28.7, 20.9, 19.2, 12.4, 4.1, 11.7, 7...
+$ age     <int> 23, 22, 22, 26, 24, 24, 26, 25, 25, 23, 26, 27, 32, 30, 35,...
+$ gewicht <dbl> 70.03, 78.66, 69.92, 83.88, 83.65, 95.45, 82.17, 79.90, 86....
+$ hoehe   <dbl> 172.09, 183.52, 168.28, 183.52, 180.98, 189.87, 177.17, 184...
+$ bmi     <dbl> 23.65, 23.36, 24.69, 24.91, 25.54, 26.48, 26.18, 23.56, 24....
+$ neck    <dbl> 36.2, 38.5, 34.0, 37.4, 34.4, 39.0, 36.4, 37.8, 38.1, 42.1,...
+$ abdomen <dbl> 85.2, 83.0, 87.9, 86.4, 100.0, 94.4, 90.7, 88.5, 82.5, 88.6...
+\end{Soutput}
+\end{Schunk}
+ 
+
+}
+
+
+\frame[containsverbatim]{\frametitle{}
+ 
+\setkeys{Gin}{width=0.75\textwidth}
+\begin{Schunk}
+\begin{Sinput}
+> pairs(d.bodyfat)
+\end{Sinput}
+\end{Schunk}
+\includegraphics{Bio144_lecture1-pairs}
+
+%\texttt{pairs()} returns the scatterplots of all against all variables.
+}
+
+
+
+\frame{\frametitle{}
+\vspace{-0.5cm}
+\begin{center}
+\setkeys{Gin}{width=0.7\textwidth}
+\includegraphics{Bio144_lecture1-004}
+\end{center}
+
+We are looking for a \emph{model} that \myalert{predicts} body fat as precisely as possible from variables that are easy to measure. 
+}
+
+
+
+\frame[containsverbatim]{\frametitle{Data example 2: Mercury (Hg) in Valais (Switzerland)}
+{\bf Question:} Association between Hg concentrations in the soil and in the urin of the people living in the respective properties. We use a slightly modified data set here.\\[5mm]
+
+\begin{Schunk}
+\begin{Sinput}
+> glimpse(d.hg)
+\end{Sinput}
+\begin{Soutput}
+Observations: 156
+Variables: 10
+$ Hg_urin        <dbl> 0.25806452, 0.03597122, 0.16025641, 0.31428571, 0.28...
+$ Hg_soil        <dbl> 0.49, 0.42, 0.18, 0.49, 0.24, 0.20, 0.10, 14.00, 0.1...
+$ veg_garden     <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1...
+$ migration      <int> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+$ smoking        <int> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+$ amalgam        <int> 3, 0, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0...
+$ age            <int> 51, 11, 34, 8, 6, 40, 7, 48, 11, 38, 7, 5, 35, 4, 39...
+$ fish           <int> 3, 2, 5, 4, 4, 2, 2, 4, 0, 7, 2, 4, 0, 0, 4, 0, 0, 0...
+$ last_time_fish <int> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+$ mother         <fctr> 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, ...
+\end{Soutput}
+\end{Schunk}
+
+}
+
+
+\frame[containsverbatim]{\frametitle{}
+\vspace{1cm}
+A first visual inspection is not very informative. There is no association visible by eye:
+%
+\begin{center}
+\setkeys{Gin}{width=0.6\textwidth}
+\includegraphics{Bio144_lecture1-hg1}
+\end{center}
+
+}
+
+\frame[containsverbatim]{\frametitle{}
+Which other factors might be responsible for high Hg concentrations in urin?\\[4mm]
+
+\begin{center}
+\setkeys{Gin}{width=1.0\textwidth}
+\includegraphics{Bio144_lecture1-hg2}
+\end{center}
+\vspace{5mm}
+
+From these plots it is hard to tell which factors exactly influence the Hg pollution in humans.
+
+}
+
+
+\frame[containsverbatim]{\frametitle{}
+It is always useful to look at the distribution of the variables in the model. Let us plot the histogram of Hg concentrations:\\[4mm]
+
+\begin{center}
+\setkeys{Gin}{width=0.85\textwidth}
+\includegraphics{Bio144_lecture1-hghist}
+\end{center}
+
+All Hg values seem to ``stick'' at 0.
+
+
+}
+
+\frame[containsverbatim]{\frametitle{}
+In such cases in can help to \emph{log-transform} the respective variables.\\[2mm]
+
+ \begin{center}
+\setkeys{Gin}{width=0.85\textwidth}
+\includegraphics{Bio144_lecture1-hghist2}
+\end{center}
+}
+
+\frame[containsverbatim]{\frametitle{}
+The scatterplot does also look much more reasonable with log-transformed values:
+\vspace{-8mm}
+\begin{center}
+\setkeys{Gin}{width=0.55\textwidth}
+\includegraphics{Bio144_lecture1-hg1_log}
+\end{center}
+
+Remember: The idea to log-transform the variables was mainly obvious thanks to \myalert{visual inspection}!
+
+}
+
+
+
+
+
+\frame[containsverbatim]{\frametitle{Data example 3: Diet and blood glucose level}
+\vspace{-3mm}
+{\scriptsize\citep[p. 190]{elpelt.hartung1987}}\\[2mm]
+%
+24 persons were split into 4 groups. Each group followed another diet \small{(DIAET)}. The blood glucose concentrations were measured at the beginning and at the end (after 2 weeks). The difference of these values was stored \small{(BLUTZUCK)}.\\[2mm]
+{\bf Question:} Are there differences among the groups with respect to changes in blood glucose concentrations?\\[3mm]
+
+Let's look at the raw data (points and boxplots):
+
+\begin{center}
+\setkeys{Gin}{width=0.4\textwidth}
+\includegraphics{Bio144_lecture1-blz_plot}
+\end{center}
+
+}
+
+
+\frame[containsverbatim]{\frametitle{}
+Does this question seem familiar to you? \\
+Hint: what would you do for two groups? \\[4mm]
+
+For more than 2 groups we need the \emph{ANOVA} (=ANalysis Of VAriance) approach (see chapter 10.1 in the Mat183 script).\\[4mm]
+
+We will see in lecture 5 that there are in fact differences between the diets. \\[4mm]
+
+The next question then is: which diets are \emph{pairwise} different.
+
+}
+
+\frame[containsverbatim]{\frametitle{Data example 4: Blood-screening}
+\vspace{-5mm}
+{\scriptsize\citep[From ][Chapter 7.1]{hothorn.everitt2014}}\\[4mm]
+
+Is a high ESR (erythrocyte sedimentation rate) an indicator for certain diseases (rheumatic disease, chronic inflammations)?\\[3mm]
+
+{\bf  Specifically: } Is there an association between ESR level ESR$<20mm/hr$ and the concentrations of the plasma proteins Fibrinogen and Globulin?\\[3mm]
+
+Load data from the package that comes with \citet{hothorn.everitt2014}:\\[2mm]
+
+\begin{Schunk}
+\begin{Sinput}
+> library(HSAUR3)
+> data("plasma",package="HSAUR3")
+\end{Sinput}
+\end{Schunk}
+\begin{Schunk}
+\begin{Sinput}
+> plasma[c(1,5,9,10,15,29),]
+\end{Sinput}
+\begin{Soutput}
+   fibrinogen globulin      ESR
+1        2.52       38 ESR < 20
+5        3.41       37 ESR < 20
+9        3.15       39 ESR < 20
+10       2.60       41 ESR < 20
+19       2.60       38 ESR < 20
+15       2.38       37 ESR > 20
+\end{Soutput}
+\end{Schunk}
+}
+
+\frame[containsverbatim]{\frametitle{}
+The distinction ESR$<20mm/hr$ vs.\ ESR$\geq 20mm/hr$ leads to a \myalert{binary} response variable.\\
+
+The relation between the plasmaprotein levels and the binary indicator can be captured by a \myalert{\emph{conditional density plot}}.
+
+\begin{center}
+\setkeys{Gin}{width=0.9\textwidth}
+\begin{Schunk}
+\begin{Sinput}
+> par(mfrow=c(1,2))
+> cdplot(ESR ~ fibrinogen,plasma)
+> cdplot(ESR ~ globulin,plasma)
+\end{Sinput}
+\end{Schunk}
+\includegraphics{Bio144_lecture1-cdplot_ESR}
+\end{center}
+
+}
+
+
+\frame{\frametitle{What is a model?}
+A model is an approximation of the reality. {\bf Understanding how the real world works} is usually only possible thanks to simplifying assumptions. This is exactly {\bf the purpose of statistical data analysis}.\\[6mm]
+
+In 2014, David Hand wrote:\\[4mm]
+
+\emph{In general, when building statistical models, we must
+not forget that the aim is to understand something about
+the real world. Or predict, choose an action, make
+a decision, summarize evidence, and so on, but always
+about the real world, not an abstract mathematical
+world: our models are not the reality -- a point well
+made by George Box in his oft-cited remark that \myalert{``all
+models are wrong, but some are useful'' \citep{box1979}.}
+}
+
+}
+
+
+\frame{\frametitle{Steps in a modelling process (``work flow'')}
+\begin{enumerate}
+\item Formulate a precise question
+\item Plan your the analysis of your data, collect the data (experiments or surveys).
+\item Tidy and clean the data
+\item {\bf Graphical representation of the data}
+\item Choose an appropriate \emph{model}
+\item Estimate model parameters and uncertainties
+\item {\bf Check modelling assumptions}
+\item If needed, improve the model; back to step 6
+\item {\bf Interpret your results} and compare to step 1
+\item {\bf Communicate results} precisely, carefully and critically (publication, articles..)
+\end{enumerate}
+
+}
+
+
+\frame{\frametitle{The scopes of statistical data analysis}
+\begin{enumerate}[a)]
+\item \myalert{Prediction (extrapolation), interpolation}. Example body fat: use substitute measurements to predict body fat of a person.\\[3mm]
+\item \myalert{Estimation of parameters.} Example: Effect size of a novel drug.\\[3mm]
+\item \myalert{Explanation;  determination of important variables}. Example physical activity of children: The study aims to find factors that (positively or negatively) influence the movement behavior of children. \\[3mm]
+\item Optimization. \\[3mm]
+\item Calibration.\\[8mm]
+\end{enumerate}
+
+In this course we are concerned with a)-c).
+}
+
+\frame{\frametitle{Goals of the course (part 2)}
+By the end of the course you will be able\\[2mm]
+\begin{itemize}
+\item to analyze all data examples introduced here using R (and of course many more),\\[2mm]
+\item to report and interpret the results,\\[2mm]
+\item to draw conclusions from them,\\[2mm]
+\item to give graphical descriptions of the data and the results,\\[2mm]
+\item to be critical about what you see.
+\end{itemize}
+
+}
+
+
+\frame[containsverbatim]{\frametitle{Graphical representation of data}
+You should remember the following options for graphical data descriptions. Several of them appeared already in previous examples.\\[4mm]
+
+\begin{tabular}{ll}
+Representation & Useful for \\
+\hline
+ Scatterplots & Pairwise dependency of continuous \\
+    &  variables. \\[1mm]
+ Histograms & Distribution of numerical variables.\\[1mm]
+ Boxplots  & Distribution of numerical variables, ev. \\
+    & conditionally on categories.\\[1mm]
+ Conditional density plots &  Dependency of a binary variable from\\
+    &  a continuous variable.\\[1mm]
+%Barplots & As  (see chapter 10.1 in the Mat183 script)boxplots. \\[1mm]
+Coplots & Dependencies among multiple variables. \\
+\hline
+\end{tabular}
+
+
+}
+
+ 
+\frame[containsverbatim]{\frametitle{Coplots}
+Ideal to graphically display dependencies when more than two variables are involved. Very useful for categorical variables. Example: Mercury in Valais.
+
+\begin{center}
+\setkeys{Gin}{width=0.7\textwidth}
+\begin{Schunk}
+\begin{Sinput}
+> coplot(log(Hg_urin) ~  age | mother * migration ,d.hg,panel=panel.smooth)
+\end{Sinput}
+\end{Schunk}
+\includegraphics{Bio144_lecture1-coplot}
+\end{center}
+
+}
+
+\frame[containsverbatim]{\frametitle{}
+There are many ``fancy'' ways to graphically display data ({\bf nice-to-know}):
+
+\begin{itemize}
+\item 3D-plots\\[1mm]
+\item Spatial representations (using geodata)\\[1mm]
+\item Interactive graphs and animations\\[6mm]
+\end{itemize}
+
+Many R packages are available for various purposes. Interactive apps can, for example, be generated with Shiny. Check out the shiny gallery:\\[2mm]
+
+\url{http://shiny.rstudio.com/gallery/}
+
+
+%' <<>>=
+%' library(shiny)
+%' runApp("/home/steffi/Shiny/Tutorial/census-app")
+%' @
+}
+
+%\frame{\frametitle{Experimental vs observational data}
+%To do, ev mention only later in weeks 7/8}
+
+\frame{\frametitle{Next week: Simple linear regression}
+It will be partially a repetition of what you heard in Mat183, chapter 10.2.
+}
+
+
+
+\frame{References:
+\bibliographystyle{Chicago}
+\bibliography{refs}
+}
+
+
+
+
+%\frame[containsverbatim]{\frametitle{Conditional density plots}
+%Ideal, um Einfluss einer kontinuierlichen Variable auf einen bin\"aren Outcome (z.B. krank ja/nein) darzustellen
+%\begin{center}
+%<<echo=T>>=
+%par(mfrow=c(1,1))
+%fail <- factor(c(2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1,1, 2, 1, 1, 1, 1, 1),
+%               levels = 1:2, labels = c("no", "yes"))
+%temperature <- c(53, 57, 58, 63, 66, 67, 67, 67, 68, 69, 70, 70,
+%                 70, 70, 72, 73, 75, 75, 76, 76, 78, 79, 81)
+%@
+%\setkeys{Gin}{width=0.5\textwidth}
+%<<cdplot,fig=T,echo=T,width=4,height=4>>=
+%cdens <- cdplot(fail ~ temperature)
+%@
+%\end{center}
+%}
+
+
+\end{document}

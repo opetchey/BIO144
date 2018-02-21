@@ -1,3 +1,0 @@
-Effektgroesse v.s. Evidenz (p-Werte) 
-Gebe Beispiel WHO: Krebsrisiko fuer Wurstessen 1.18 mal hoeher, im Vergleich dazu 25x hoeheres Risiko fuer Raucher.... Gleiche/aehnliche Evidenz, aber total verschiedene Effektgroessen. See point 9 here:
-http://www.who.int/features/qa/cancer-red-meat/en/
