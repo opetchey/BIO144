@@ -111,11 +111,11 @@ Data Analysis in Biology}%\\[.3cm]
 Compulsory literature (books available as ebooks from uzh):
 \begin{enumerate}[1.]
 \item \emph{Lineare Regression} by W. Stahel (pdf on course webpage)
-\item \emph{Getting Started with R, An introduction for biologists} (2017, {\bf Second Edition}) Beckerman, Childs \& Petchey (DO NOT USE THE FIRST EDITION!).\\
-{\scriptsize A UZH library link to the second edition will be added asap, probably mid March. }
-\item \emph{The New Statistics With R} by A. Hector, Oxford University Press;
-ISBN 978-0-19-872906-8 \\[5mm]
+\item \emph{Getting Started with R, An introduction for biologists} ({\bf Second Edition}) Beckerman, Childs \& Petchey, Oxford University Press (DO NOT USE THE FIRST EDITION!).\\
+\item \emph{The New Statistics With R} by A. Hector, Oxford University Press; \\[2mm]
 \end{enumerate}
+$\rightarrow$ See ``Course texts/material'' on course website.\\
+ 
 
 \begin{center}
 \includegraphics[width=2.7cm]{pictures/petchey_buch.jpeg} \qquad \qquad

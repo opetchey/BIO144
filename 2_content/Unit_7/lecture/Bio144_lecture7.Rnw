@@ -62,7 +62,7 @@
 \newcommand{\Po}{\text{Po}}
 \newcommand{\N}{\mathsf{N}}
 
-\newcommand{\hl}{\textcolor{red}}
+\newcommand{\hl}{\textcolor{blue}}
 
 \newcommand{\ball}[1]{\begin{pgfpicture}{-1ex}{-0.65ex}{1ex}{1ex}
 \usebeamercolor[fg]{item projected}
@@ -124,7 +124,7 @@ The lecture material of today is based on the following literature:\\[4mm]
 \vspace{4mm}
 \textcolor{blue}{\bf Optional reading:}
 \begin{itemize}
-\item Paper by \citet{freedman1983}: ``A Note on Screening Regression Equations''
+\item Paper by \citet{freedman1983}: ``A Note on Screening Regression Equations'' (Sections 1 and 2 are sufficient to get the point)
 \end{itemize}
 }
 
@@ -180,7 +180,7 @@ Let us look at the mercury example. The {\bf research question} was: \\
 
 \alert{In addition}, the following variables were monitored for each person, because they might influence the mercury level in a person's body:\\[2mm]
 
-\emph{smoking status; number of amalgam fillings; age; number of monthly fish meals; indicator if fish was eaten in the last 3 days; mother; indicator if vegetables from garden are eaten; migration background; height; weight; BMI; sex; education level.}\\[2mm]
+\emph{smoking status; number of amalgam fillings; age; number of monthly fish meals; indicator if fish was eaten in the last 3 days; mother vs child; indicator if vegetables from garden are eaten; migration background; height; weight; BMI; sex; education level.}\\[2mm]
 
 {\bf Thus: In total additional 13 variables!}
 }
@@ -199,7 +199,8 @@ In the mercury example there are 156 individuals, so a {\bf maximum of 15 variab
 {\bf Remarks:}
 \begin{itemize}
 \item Categorical variables with $k$ levels already require $k-1$ dummy variables. For example, if `education level' has three categories, 2 variables are used up.\\[2mm]
-\item Whenever possible, the model should {\bf not be blown up} unneccessarily. Even if there are many data points, the use of too many variables may lead to an {\bf overfitted} model.
+\item Whenever possible, the model should {\bf not be blown up} unneccessarily. Even if there are many data points, the use of too many variables may lead to an {\bf overfitted} model.\\
+$\rightarrow$ {\scriptsize See \href{https://en.wikipedia.org/wiki/Overfitting}{https://en.wikipedia.org/wiki/Overfitting}.}
 \end{itemize}
  
 
@@ -228,10 +229,6 @@ mother & Mother or child?  & binary\\
 
 }
 
-% \frame{Ev list additional variables that were available in the mercury study. \\
-% Examples: Height, weight, BMI, sex, the education level (3 categories), the duration of housing in the region (in months).\\[2mm]
-% 
-% say that no more than 10\% of the number of data points should be used in a model.}
 
 
 \frame[containsverbatim]{Let us now fit the full model (including all covariates) in R:\\[2mm]
@@ -266,16 +263,12 @@ tableRegression(r.lm1)
 Remember from slides 7-10 of week 4 that the dependency of mercury in urine on age is different for mothers and children:
 
 \begin{center}
-\setkeys{Gin}{width=0.55\textwidth}
-<<fig=T,echo=F,width=4.5,height=4>>=
-# path <- "../../data_examples/Hg/"
-# d.hg <- read.table(paste(path,"Hg_urin.csv",sep=""),header=T, sep=",")
-# d.hg <- d.hg[,c(1,2,5,6,7,8,10)]
-# names(d.hg) <- c("Hg_urin", "Hg_soil", "smoking","amalgam", "age", "fish","mother")
-plot(log(Hg_urin) ~ age, d.hg,col=mother+1,cex.lab=1.5)
-legend("topright",legend=c("children","mothers"),col=1:2,pch=1)
-abline(lm(log(Hg_urin)~age,data=subset(d.hg,mother==0)))
-abline(lm(log(Hg_urin)~age,data=subset(d.hg,mother==1)),col=2)
+\setkeys{Gin}{width=0.6\textwidth}
+<<fig=T,echo=F,width=4.5,height=3>>=
+library(dplyr)
+library(ggplot2)
+d.hg <- mutate(d.hg,mother=factor(mother))
+ggplot(d.hg,aes(x=age,y=log(Hg_urin),colour=mother)) + geom_point() + geom_smooth(method="lm") + theme_bw()
 @
 \end{center}
 
@@ -303,16 +296,15 @@ $\rightarrow$ The interaction term apparently improved the model.
 }
 
 \frame[containsverbatim]{
-A model checking step (always needed, but we did it already in weeks 4):
+A model checking step (always needed, but we did it already in weeks 4):\\[2mm]
 \setkeys{Gin}{width=0.8\textwidth}
-<<modelChecksHg,fig=T,width=7,height=4,echo=F>>=
-par(mfrow=c(1,2))
-plot(r.lm2$fitted,r.lm2$residuals,xlab="Fitted values", ylab="Residuals")
-abline(h=0,lty=2)
-qqnorm(r.lm2$residuals)
-qqline(r.lm2$residuals)
+\begin{center}
+<<modelChecksHg,fig=T,width=7,height=3.5,echo=F>>=
+library(ggfortify)
+autoplot(r.lm2,which=c(1,2),smooth.col=NA)
 @
-\vspace{2mm}
+\end{center}
+\vspace{6mm}
 
 This looks ok, no need to improve the model from this point of view.
 }
@@ -332,7 +324,7 @@ Often, the desire is to find a model that is in some sense ``optimal'' or ``best
 
 
 \frame{\frametitle{Is importance reflected by $p$-values?}
-A widely used practice to determine the ``importance'' of a term is to look at the $p$ value from the $t$ or $F$-test and check if it falls below a certain threshold (usually $p<0.05$). \\[4mm]
+A widely used practice to determine the ``importance'' of a term is to look at the $p$ value from the $t$ or $F$-test and check if it falls below a certain threshold (usually $p<0.05$). \\[1mm]
 
 {\bf However, there are a few problems with this approach:}\\[2mm]
 
@@ -458,13 +450,15 @@ Please note that {\bf we therefore strongly discourage the use of automated mode
 
 \underline{Remember:} $R^2$ is not suitable for model selection, because it \emph{always} increases (improves) when a new variable is included.\\[4mm] 
 
-In 2002, Burnham and Anderson suggested the use of so-called \alert{information-criteria} for model selection. \\[4mm]
+In 2002, Burnham and Anderson suggested the use of so-called \alert{information-criteria} for model selection. \\[6mm]
 
-The idea is to find a \alert{balance between}\\[4mm]
+\colorbox{lightgray}{\begin{minipage}{10cm}
+The idea is to find a \alert{balance between} 
 
 \begin{center}
 {\bf Good model fit} $\quad\leftrightarrow\quad$ {\bf Low model complexity}
 \end{center}
+\end{minipage}}
 
 ~\\[4mm]
 $\rightarrow$ Penalize models with more parameters.
@@ -508,7 +502,7 @@ Burnham and Anderson {\bf recommend to use AIC$_c$ in general, but for sure when
 In the \alert{mercury example}, we have 156 data points and 11 parameters (including the intercetp $\beta_0$), thus $n/p = 156/11 \approx 14 <40$ $\Rightarrow$ AIC$_c$ should be used! 
 }
 
-\frame{\frametitle{BIC, the brother of AIC}
+\frame{\frametitle{BIC, the brother/sister of AIC}
 Other information criteria were suggested as well. Another prominent example is the \alert{BIC (Bayesian Information Criterion)}, which is similar in spirit to the AIC. \\[2mm]
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
@@ -640,7 +634,7 @@ VIF_j = \frac{1}{1-R_j^2} \qquad
 \begin{itemize}
 \item \alert{Avoid} it, e.g. in experiments.\\[2mm]
 \item \alert{Remove the variable} with an inacceptably high $R^2_j$ or $VIF_j$. The tolerance of VIFs are different in the literature and range from 4 to 10 as a maximum tolerable VIF.\\[2mm]
-\item Be \alert{aware} of it and interpret your results with the respectivie care.\\[2mm]
+\item Be \alert{aware} of it and interpret your results with the respective care.\\[2mm]
 \item See also Stahel 5.4(i) for a ``recipe''.
 \end{itemize}}
 
@@ -670,7 +664,7 @@ When the aim is \emph{prediction}, the best model is the one that best predicts 
 However, when used for \emph{explanation} the best model will depend on the scientific question being asked, {\bf and automatic selection strategies have no place}. 
 \end{minipage}}\\[5mm]
 
-{\scriptsize\citep{clayton.hills1993}}
+{\scriptsize\citep[][chapters 27.1 and 27.2]{clayton.hills1993}}
 
 }
 
@@ -694,7 +688,7 @@ Automatic model selection procedures using criteria like AIC, AIC$_c$, BIC may t
 {\bf Then please select your covariates according to \alert{a priori} knowledge.}\\[6mm]
 
 \includegraphics[width=10.5cm]{graphics/claytonHills.jpg}\\
-{\scriptsize\citep{clayton.hills1993}}
+{\scriptsize\citep[][chapters 27.1 and 27.2]{clayton.hills1993}}
 }
 
 \frame{\frametitle{Correct way of model selection for explanatory models}
@@ -786,8 +780,8 @@ tableRegression(r.AIC)
 @
 ~\\[3mm]
 
-{\bf Note:}  AICc minimization may lead to a model that retains variables with relatively large $p$-values (e.g., ankle).\\[2mm]
-{\bf Again:} Such a procedure should not be applied for an explanatory model. Moreover, the coefficients should not be (over-)interpreted.
+{\bf Note:}  AICc minimization may lead to a model that may retain variables with relatively large $p$-values (e.g., ankle).\\[2mm]
+{\bf Again:} Such a procedure should \hl{not be applied for an explanatory model}. Moreover, the coefficients should not be (over-)interpreted.
 }
 
 
