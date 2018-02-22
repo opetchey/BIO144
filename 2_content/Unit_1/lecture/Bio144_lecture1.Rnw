@@ -186,7 +186,7 @@ Awareness that, without a profound knowledge in statistical data analysis, it wi
 
 Examples:
 \begin{itemize}
-\item \hl{Medicine:} Whath is the effect of a drug? Which factors cause cancer?
+\item \hl{Medicine:} What is the effect of a drug? Which factors cause cancer?
 \item \textcolor{green}{Ecology:} What is a suitable habitat for a certain animal? Which resources does it need or prefer?
 \item \textcolor{red}{Evolutionary biology:} Do highly inbred animals have decreased chances to survive or reproduce?
 \end{itemize}
@@ -204,13 +204,6 @@ Data analysis is at the \hl{interface between mathematics and biology/medicine} 
 }
 
 
-\frame{\frametitle{What are the purposes of data analysis?}
-\begin{itemize}
-\item To \myalert{find and quantify associations} through graphical representations and modelling.\\[3mm]
-\item To \myalert{draw conclusion} from data.\\[3mm]
-\item To \myalert{quantify the uncertainty} of these conclusions.\\
-\end{itemize}
-}
 
 \frame{\frametitle{Own examples}
 \myalert{\large Otter (lutra lutra)}\\[2mm]
@@ -313,11 +306,10 @@ path <- "../../data_examples/bodyFat/"
 d.bodyfat <- read.table(paste(path,"bodyfat.clean.txt",sep=""),header=T)
 d.bodyfat <- d.bodyfat[,c("bodyfat","age","gewicht","hoehe","bmi","neck","abdomen")]
 @
-<<echo=T>>=
-glimpse(d.bodyfat)
-@ 
+% <<echo=T>>=
+% glimpse(d.bodyfat)
+% @ 
  
-
 }
 
 
@@ -447,8 +439,8 @@ In such cases in can help to \emph{log-transform} the respective variables.\\[2m
  \begin{center}
 \setkeys{Gin}{width=0.85\textwidth}
 <<hghist2,fig=T,height=2,width=4,echo=F>>=
-plot.1 <- ggplot(d.hg,aes(x=log(Hg_soil))) + geom_histogram(bins=30) + xlab("Hg soil")
-plot.2 <- ggplot(d.hg,aes(x=log(Hg_urin))) + geom_histogram(bins=30) + xlab("Hg urine")
+plot.1 <- ggplot(d.hg,aes(x=log(Hg_soil))) + geom_histogram(bins=30) + xlab("log(Hg soil)")
+plot.2 <- ggplot(d.hg,aes(x=log(Hg_urin))) + geom_histogram(bins=30) + xlab("log(Hg urine)")
 plot_grid(plot.1, plot.2,ncol=2)
 @
 \end{center}
@@ -502,8 +494,7 @@ ggplot(d.blz,aes(x=factor(DIAET),y=BLUTZUCK)) + geom_boxplot() + geom_point(size
 
 
 \frame[containsverbatim]{\frametitle{}
-Does this question seem familiar to you? \\
-Hint: what would you do for two groups? \\[4mm]
+Does this question seem familiar to you? (What would you do for two groups?) \\[4mm]
 
 For more than 2 groups we need the \emph{ANOVA} (=ANalysis Of VAriance) approach (see chapter 10.1 in the Mat183 script).\\[4mm]
 
@@ -567,35 +558,46 @@ models are wrong, but some are useful'' \citep{box1979}.}
 }
 
 
-\frame{\frametitle{Steps in a modelling process (``work flow'')}
-\includegraphics[width=11cm]{pictures/workflow.png}
-% \begin{enumerate}
-% \item Formulate a precise question
-% \item Plan the analysis of your data, collect the data (experiments or surveys).
-% \item Tidy and clean the data
-% \item {\bf Graphical representation of the data}
-% \item Choose an appropriate \emph{model}
-% \item Estimate model parameters and uncertainties
-% \item {\bf Check modelling assumptions}
-% \item If needed, improve the model; back to step 6
-% \item {\bf Interpret your results} and compare to step 1
-% \item {\bf Communicate results} precisely, carefully and critically (publication, articles..)
-% \end{enumerate}
-
-}
+% \frame{\frametitle{Steps in a modelling process (``work flow'')}
+% \includegraphics[width=11cm]{pictures/workflow.png}
+% % \begin{enumerate}
+% % \item Formulate a precise question
+% % \item Plan the analysis of your data, collect the data (experiments or surveys).
+% % \item Tidy and clean the data
+% % \item {\bf Graphical representation of the data}
+% % \item Choose an appropriate \emph{model}
+% % \item Estimate model parameters and uncertainties
+% % \item {\bf Check modelling assumptions}
+% % \item If needed, improve the model; back to step 6
+% % \item {\bf Interpret your results} and compare to step 1
+% % \item {\bf Communicate results} precisely, carefully and critically (publication, articles..)
+% % \end{enumerate}
+% 
+% }
 
 
 \frame{\frametitle{The scopes of statistical data analysis}
 \begin{enumerate}[a)]
 \item \myalert{Prediction (extrapolation), interpolation}. Example body fat: use substitute measurements to predict body fat of a person.\\[3mm]
 \item \myalert{Explanation;  determination of important variables}. Example physical activity of children: The study aims to find factors that (positively or negatively) influence the movement behavior of children. \\[3mm]
-\item \myalert{Estimation of parameters.} Example: Effect size of a novel drug.\\[3mm]
+\item \myalert{Estimation of parameters and quantify the uncertainty.} Example: Effect size of a novel drug.\\[3mm]
 \item Optimization. \\[3mm]
 \item Calibration.\\[8mm]
 \end{enumerate}
 
 In this course we are concerned with a)-c).
 }
+
+
+
+% \frame{\frametitle{What are the purposes of data analysis?}
+% \begin{itemize}
+% \item To \myalert{find and quantify associations} through graphical representations and modelling.\\[3mm]
+% \item To \myalert{draw conclusion} from data.\\[3mm]
+% \item To \myalert{quantify the uncertainty} of these conclusions.\\
+% \end{itemize}
+% }
+
 
 \frame{\frametitle{Goals of the course (part 2)}
 By the end of the course you will be able\\[2mm]
