@@ -124,15 +124,15 @@ $\rightarrow$ See ``Course texts/material'' on course website.\\
 
 }
 
-\frame{
-\frametitle{Complementary literature:}
-\begin{itemize}
-\item \emph{Statistics – An Introduction Using R} by M.J. Crawley (similar to 3.) above)\\[3mm]
-\item \emph{The Analysis of Biological Data} by M.C. Whitlock and D. Schluter\\[3mm]
-\item  \emph{The Essential Guide to Effect Sizes. Statistical Power, Meta-Analysis, and the Interpretation of Research Results} (2010, First Edition) Ellis. Ebook via \href{http://ezproxy.uzh.ch/login?url=http://dx.doi.org/10.1017/CBO9780511761676} {\beamergotobutton{UZH library}}.\\[3mm]
-\item \emph{Regression - Modelle, Methoden und Anwendungen} by Fahrmeier, Kneib, Lang (for a deeper understanding) 
-\end{itemize}
-}
+% \frame{
+% \frametitle{Complementary literature:}
+% \begin{itemize}
+% \item \emph{Statistics – An Introduction Using R} by M.J. Crawley (similar to 3.) above)\\[3mm]
+% \item \emph{The Analysis of Biological Data} by M.C. Whitlock and D. Schluter\\[3mm]
+% \item  \emph{The Essential Guide to Effect Sizes. Statistical Power, Meta-Analysis, and the Interpretation of Research Results} (2010, First Edition) Ellis. Ebook via \href{http://ezproxy.uzh.ch/login?url=http://dx.doi.org/10.1017/CBO9780511761676} {\beamergotobutton{UZH library}}.\\[3mm]
+% \item \emph{Regression - Modelle, Methoden und Anwendungen} by Fahrmeier, Kneib, Lang (for a deeper understanding) 
+% \end{itemize}
+% }
 
 
 
@@ -187,12 +187,12 @@ Awareness that, without a profound knowledge in statistical data analysis, it wi
 Examples:
 \begin{itemize}
 \item \hl{Medicine:} What is the effect of a drug? Which factors cause cancer?
-\item \textcolor{green}{Ecology:} What is a suitable habitat for a certain animal? Which resources does it need or prefer?
+\item {\bf Ecology:} What is a suitable habitat for a certain animal? Which resources does it need or prefer?
 \item \textcolor{red}{Evolutionary biology:} Do highly inbred animals have decreased chances to survive or reproduce?
 \end{itemize}
 }
 
-\frame{\frametitle{!!}
+\frame{\frametitle{!! Warning !!}
  "Learning by doing" is often {\bf not advisable} in statistics. Experience is essential, there are many pitfalls.\\[5mm]
 
 A good foundation in statistics \hl{makes you more independent} from consultants or the goodwill of colleagues. Without such a knowledge, you will always need help from others.\\[5mm]
@@ -211,9 +211,11 @@ Data analysis is at the \hl{interface between mathematics and biology/medicine} 
 \colorbox{lightgray}{\begin{minipage}{10cm}
 \emph{Research questions:} What is the preferred habitat by otters? How do otters adapt to human altered landscapes?
 \end{minipage}}\\[3mm]
-\emph{Method:} Study in Austria, 9 Otter were radio-tracked and monitored during 2-3 years.\\
+\emph{Method:} Study in Austria, 9 Otter were radio-tracked and monitored during 2-3 years.\\[10mm]
 
-\includegraphics[width=10cm]{pictures/otters.jpeg}
+\includegraphics[width=10cm]{pictures/otter.jpg}\\
+{\scriptsize http://www.prolutra.ch/}
+%\includegraphics[width=10cm]{pictures/otters.jpeg}
 }
 
 
@@ -231,8 +233,8 @@ Data analysis is at the \hl{interface between mathematics and biology/medicine} 
 \includegraphics[width=4cm]{pictures/ibex_graph.png}
 %\end{center}
 \end{multicols}
-\vspace{-1cm}
-\includegraphics[width=3cm]{pictures/steinbock.jpg}
+\vspace{-1.5cm}
+\includegraphics[width=4cm]{pictures/steinbock.jpg}
 }
 
 \frame{\frametitle{}
@@ -306,16 +308,16 @@ path <- "../../data_examples/bodyFat/"
 d.bodyfat <- read.table(paste(path,"bodyfat.clean.txt",sep=""),header=T)
 d.bodyfat <- d.bodyfat[,c("bodyfat","age","gewicht","hoehe","bmi","neck","abdomen")]
 @
-% <<echo=T>>=
-% glimpse(d.bodyfat)
-% @ 
+<<echo=T>>=
+glimpse(d.bodyfat)
+@
  
 }
 
 
 \frame[containsverbatim]{\frametitle{}
  
-\setkeys{Gin}{width=0.75\textwidth}
+\setkeys{Gin}{width=0.85\textwidth}
 <<pairs,fig=T,height=6,width=6>>=
 pairs(d.bodyfat)
 @ 
@@ -498,9 +500,7 @@ Does this question seem familiar to you? (What would you do for two groups?) \\[
 
 For more than 2 groups we need the \emph{ANOVA} (=ANalysis Of VAriance) approach (see chapter 10.1 in the Mat183 script).\\[4mm]
 
-We will see in lecture 5 that there are in fact differences between the diets. \\[4mm]
-
-The next question then is: which diets are \emph{pairwise} different.
+We will see in lecture 5 that there are in fact differences between the diets.
 
 }
 
@@ -541,7 +541,9 @@ cdplot(ESR ~ globulin,plasma)
 
 
 \frame{\frametitle{What is a model?}
-A model is an approximation of the reality. {\bf Understanding how the real world works} is usually only possible thanks to simplifying assumptions. This is exactly {\bf the purpose of statistical data analysis}.\\[6mm]
+A model is an approximation of the reality. {\bf Understanding how the real world works} is usually only possible thanks to simplifying assumptions.\\
+
+$\rightarrow$ This is exactly {\bf the purpose of statistical data analysis}.\\[6mm]
 
 In 2014, David Hand wrote:\\[4mm]
 
@@ -551,7 +553,8 @@ the real world. Or predict, choose an action, make
 a decision, summarize evidence, and so on, but always
 about the real world, not an abstract mathematical
 world: our models are not the reality -- a point well
-made by George Box in his oft-cited remark that \myalert{``all
+made by George Box in his often-cited remark that\\
+\myalert{``all
 models are wrong, but some are useful'' \citep{box1979}.}
 }
 
