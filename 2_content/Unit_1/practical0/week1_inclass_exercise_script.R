@@ -54,7 +54,8 @@ class_RTs
 ## Timestamp should be a character
 ## ID should be a character
 ## Gender should be a character
-## The remaining four variables should be numeric (<dbl> if fractional, <int> if whole numbers).
+## Handed should be character
+## The remaining variables should be numeric (<dbl> if fractional, <int> if whole numbers).
 class_RTs
 #######################################################
 
