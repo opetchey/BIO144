@@ -122,19 +122,19 @@ The lecture material of today is based on the following literature:\\[4mm]
 
 \frame[containsverbatim]{\frametitle{The body fat example}
 Remember: Aim is to find prognostic factors for body fat, without actually measuring it. \\
-Even simpler question: How good is BMI as a predictor for body fat?
-\vspace{-5mm}
+Even simpler question: How good is BMI as a predictor for body fat?\\[8mm]
+ 
 \begin{center}
 <<read.bodyfat,echo=F,eval=T>>=
 path <- "../../data_examples/bodyFat/"
 d.bodyfat <- read.table(paste(path,"bodyfat.clean.txt",sep=""),header=T)
 d.bodyfat <- d.bodyfat[,c("bodyfat","age","gewicht","hoehe","bmi","neck","abdomen","hip")]
 @
-\setkeys{Gin}{width=0.6\textwidth}
-<<fig=T,width=3.5,height=4,echo=F>>=
+\setkeys{Gin}{width=0.55\textwidth}
+<<fig=T,width=3.5,height=3,echo=F>>=
 library(ggplot2)
-plot(bodyfat ~ bmi,d.bodyfat,xlab="BMI (x)", ylab="body fat (y)")
-#ggplot(d.bodyfat,aes(x=bmi,y=bodyfat)) + geom_point() + theme_bw()
+#plot(bodyfat ~ bmi,d.bodyfat,xlab="BMI (x)", ylab="body fat (y)")
+ggplot(d.bodyfat,aes(x=bmi,y=bodyfat)) + geom_point() + theme_bw()
 @
 \end{center}
 
@@ -164,7 +164,7 @@ But which is the ``true'' or ``best'' line?
 \vspace{-6mm}
 \begin{center}
 \setkeys{Gin}{width=0.6\textwidth}
-<<fig=T,width=4,height=4.5,echo=F>>=
+<<fig=T,width=4.5,height=4.5,echo=F>>=
 plot(bodyfat ~ bmi,d.bodyfat,xlab="BMI (x)", ylab="bodyfat (y)",xlim=c(15,40))
 abline(lm(bodyfat~bmi,d.bodyfat),lwd=2)
 abline(c(-25,1.7),col=2,lwd=2)
@@ -219,12 +219,12 @@ Note:
 }
 
 \frame{\frametitle{}
-This is a general approach in statistics:\\[4mm]
-\begin{itemize}
-\item Formulate a model and modelling assumptions that seem plausible for your data. {\bf A model emerges in our mind}.\\[2mm]
-\item Estimate the parameters.\\[2mm]
-\item Only now it is a \emph{specific} model.\\[6mm]
-\end{itemize}
+% This is a general approach in statistics:\\[4mm]
+% \begin{itemize}
+% \item Formulate a model and modelling assumptions that seem plausible for your data. {\bf A model emerges in our mind}.\\[2mm]
+% \item Estimate the parameters.\\[2mm]
+% \item Only now it is a \emph{specific} model.\\[6mm]
+% \end{itemize}
 
 {\bf Note:} 
 \begin{itemize}
@@ -244,39 +244,40 @@ This is a general approach in statistics:\\[4mm]
 Generate an independent (explanatory) variable $\bm{x}$ and {\bf two} samples of a dependent variable $\bm{y}$ assuming that
 $$y_i = 4 - 2x_i + e_i \ , \quad e_i\sim \N(0,0.5^2) \ .$$
 
+\setkeys{Gin}{width=0.6\textwidth}
 
 \begin{center}
 \setkeys{Gin}{width=0.4\textwidth}
 <<fig=T,width=3.5,height=3.5,echo=F>>=
 set.seed(134539)
 par(mar=c(4,4,1,1))
-x <- runif(15,-2,2)
-y1 <- 4 - 2*x + rnorm(15,0,sd=0.5)
-y2 <- 4 - 2*x + rnorm(15,sd=0.5)
+x <- runif(25,-2,2)
+y1 <- 4 - 2*x + rnorm(25,0,sd=0.5)
+y2 <- 4 - 2*x + rnorm(25,sd=0.5)
 plot(x,y1,ylim=c(min(c(y1,y2)),max(c(y1,y2))),ylab="y")
 points(x,y2,col=2)
 abline(c(4,-2))
 legend("topright",legend=c("sample 1","sample 2"),col=1:2, pch=1)
 @
 \end{center}
-Note the different y-coordinates for the two samples.
+%Note the different y-coordinates for the two samples.\\[2mm]
+
+$\rightarrow$ Random variation is always present. This leads us to the next question.
 
 }
 
 
-\frame[containsverbatim]{\frametitle{}
-Or one larger sample:
-\setkeys{Gin}{width=0.6\textwidth}
-\begin{center}
-<<fig=T,width=4,height=3.8>>=
-x <- rnorm(100)
-y <- 4 - 2*x + rnorm(100,0,sd=0.5)
-plot(x,y);abline(c(4,-2))
-@
-\end{center}
-
-Random variation is always present. This leads us to the next question.
-}
+% \frame[containsverbatim]{\frametitle{}
+% Or one larger sample:
+% \setkeys{Gin}{width=0.6\textwidth}
+% \begin{center}
+% <<fig=T,width=4,height=3.8>>=
+% x <- rnorm(100)
+% y <- 4 - 2*x + rnorm(100,0,sd=0.5)
+% plot(x,y);abline(c(4,-2))
+% @
+% \end{center}
+%}
 
 
 
@@ -372,16 +373,16 @@ $\Rightarrow$ $\hat\alpha=\Sexpr{round(r.bodyfat$coef[1],2)}$ ,  $\hat\beta=\Sex
 
 
 \frame[containsverbatim]{
-Plotting the resulting line into the scatterplot is simple:\\[4mm]
+Plotting the resulting line into the scatterplot is simple:\\[10mm]
+
 \begin{center}
-\setkeys{Gin}{width=0.55\textwidth}
+\setkeys{Gin}{width=0.65\textwidth}
 <<echo=F>>=
 library(reporttools)
 library(biostatUZH)
 @
-<<plotbodyfat,fig=T,width=4.5,height=4.5>>=
-plot(bodyfat ~ bmi,d.bodyfat,xlab="BMI")
-abline(r.bodyfat,lwd=2)
+<<plotbodyfat,fig=T,width=4,height=3>>=
+ggplot(d.bodyfat,aes(bmi,bodyfat)) + geom_point() + geom_smooth(method='lm',se=F) 
 @
 \end{center}
 
@@ -444,7 +445,8 @@ Let us look again at the regression output, this time only for the coefficients:
 summary(r.bodyfat)$coef
 @
 ~\\[6mm]
-The second column shows a standard error of the estimate. The estimates thus seem to contain \myalert{uncertainty}!\\[4mm]
+The second column shows a standard error of the estimate. \\
+$\rightarrow$ This implies: the estimates contain \myalert{uncertainty}!\\[4mm]
 
 The logical next question is: what is the distribution of the estimates?
 
@@ -469,7 +471,7 @@ pars[ii,] <- lm(y~x)$coef
 }
 @
 ~\\[2mm]
-Doing it \texttt{niter=} \numprint{1000} times, we obtain the following distributions for $\hat\alpha$ and $\hat\beta$.
+Doing it \texttt{niter <-} \numprint{1000} times, we obtain the following distributions for $\hat\alpha$ and $\hat\beta$.
 }
 
 \frame[containsverbatim]{\label{sl:dists}
@@ -493,26 +495,31 @@ In fact, from theory:
 }
 
 \frame{
-The standard deviations ${\sigma^{(\beta)2}}$ and ${\sigma^{(\alpha)2}}$ are defined as
+For formulas of the standard deviations ${\sigma^{(\beta)2}}$ and ${\sigma^{(\alpha)2}}$, please consult Stahel 2.2.h.\\[6mm]
 
-$$\sigma^{(\beta)2} = \sigma_e^2 / \text{SSQ}^{(X)} \qquad \sigma^{(\alpha)2} = \sigma_e^2 \left(\frac{1}{n} + \overline{x}^2/\text{SSQ}^{(X)}\right)$$
 
-with the sum-of-squares for $X$ given as
-$$\text{SSQ}^{(X)} = \sum_{i=1}^n (x_i-\overline{x})^2 \ .$$
 
-{\small(See also Stahel 2.2.h)}\\[2mm]
-\colorbox{lightgreen}{\begin{minipage}{10cm}
-Don't worry, you do not need to know these formulas by heart! 
-\end{minipage}}
-~\\
+% $$\sigma^{(\beta)2} = \sigma_e^2 / \text{SSQ}^{(X)} \qquad \sigma^{(\alpha)2} = \sigma_e^2 \left(\frac{1}{n} + \overline{x}^2/\text{SSQ}^{(X)}\right)$$
+% 
+% with the sum-of-squares for $X$ given as
+% $$\text{SSQ}^{(X)} = \sum_{i=1}^n (x_i-\overline{x})^2 \ .$$
+% 
+% {\small(See also Stahel 2.2.h)}\\[2mm]
+% \colorbox{lightgreen}{\begin{minipage}{10cm}
+% Don't worry, you do not need to know these formulas by heart! 
+% \end{minipage}}
+% ~\\
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
-{\bf You should know that}
+{\bf No need to remember these formulas, but you should know that}
 \begin{itemize}
 \item the parameters estimates $\hat\alpha$ and $\hat\beta$ are \myalert{normally distributed.}
-\item the formulas to calculate the variances depend on the residual variance $\sigma_e^2$, the sample size $n$ and SSQ$^{(X)}$.
+\item the formulas to calculate the variances depend on the residual variance $\sigma_e^2$, the sample size $n$ and SSQ$^{(X)(\star)}$.
 \end{itemize}
 \end{minipage}}
+
+\vspace{2cm}
+$^{(\star)}$  $\text{SSQ}^{(X)} = \sum_{i=1}^n (x_i-\overline{x})^2 \ $
 }
 
 
@@ -553,7 +560,7 @@ In simple linear regression, $R^2$ is the squared correlation between the indepe
 Generally, $R^2$ indicates the proportion of variability of the response variable $\bm{y}$ that is {\bf explained by the ensemble of all covariates}.\\[4mm] 
 
 The {\bf larger} $R^2$ \\ 
-$\Rightarrow$  the {\bf more} variability of $\bm{y}$ is captured by the covariates \\
+$\Rightarrow$  the {\bf more} variability of $\bm{y}$ is captured (``explained'') by the covariate \\
 $\Rightarrow$ the {\bf ``better''} is the model. \\[2mm]
 
 {\scriptsize(However, we will qualify this statement later in the course...)}\\[6mm]
@@ -604,17 +611,25 @@ $$H_A: \quad \beta \neq  0  \ ,$$
 \frame{
 Remember: To carry out a statistical test, we need a \emph{test statistic}.\\[4mm]
 
-What is a test statistic? \\[6mm]%(Clicker exercise!)
+\begin{center}
+\colorbox{lightgray}{\begin{minipage}{5cm}
+\begin{center}
+What is a test statistic? %\\[6mm]%(Clicker exercise!)
+\end{center}
+\end{minipage}}
+\end{center}
 
-\pause
+%\pause
+\vspace{2mm}
+$\rightarrow$ It is some type of {\bf summary statistic} that follows a known distribution under $H_0$. For our purpose, we use the so-called {\bf $T$-statistic} \\[4mm]
 
-It is some type of summary statistic that follows a known distribution under $H_0$. For our purpose, we use the so-called $T$-statistic\\[4mm]
-
-\colorbox{lightgray}{\begin{minipage}{10cm}
+\begin{center}
+\colorbox{lightgray}{\begin{minipage}{5cm}
 \begin{equation}\label{eq:beta}
-T=\frac{\hat\beta - \beta_0}{se^{(\beta)}} \quad \text{with} \quad se^{(\beta)}=\sqrt{\hat\sigma_e^2/SSQ^{(X)}}  \ .
+T=\frac{\hat\beta - \beta_0}{se^{(\beta)}}\ . %\quad \text{with} \quad se^{(\beta)}=\sqrt{\hat\sigma_e^2/SSQ^{(X)}}  \ .
 \end{equation}
 \end{minipage}}
+\end{center}
 
 ~\\[2mm]
 Again: typically, $\beta_0=0$, so the formula simplifies to.... (please think:-))\\[2mm]
@@ -721,11 +736,16 @@ However, we will put a lot of attention to a more reasonable and cautionary inte
 
 
 \frame{\frametitle{Confidence intervals of regression parameters}
-Question 2 from slide \ref{sl:testsCI}: ``Which values of the parameters are compatible with the data?''\\[4mm]
+Question 2 from slide \ref{sl:testsCI}: \\[2mm]
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+``Which values of the parameters are compatible with the data?''
+\end{minipage}}
+~\\[4mm]
 
 To answer this question, we can determine the confidence intervals of the regression parameters.\\[4mm]
 
-Let us collect the facts we know about $\hat\beta$:
+{\bf Facts we know about $\hat\beta$}:
 \begin{itemize}
 \item $\hat\beta$ is estimated with a standard error of $\sigma^{(\beta)}$.
 \item The distribution of $\hat\beta$ is normal, namely $\hat\beta\sim\N(\beta,\sigma^{(\beta)2})$.
@@ -868,7 +888,7 @@ Where does a {\bf future observation} lie with a certain confidence (i.e., 95\%)
 To answer this question, we have to \alert{consider not only the uncertainty in the predicted value} $\hat y_0 =  \hat\alpha + \hat\beta x_0$, but also the \alert{error in the equation $e_i \sim \N(0,\sigma_e^2)$}. \\[6mm]
 
 
-This is the reason why the prediction range is always wider than the confidence range.
+This is the reason why the {\bf prediction range is always wider than the confidence range}.
 
 }
 
