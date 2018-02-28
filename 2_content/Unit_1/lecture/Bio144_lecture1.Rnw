@@ -512,11 +512,12 @@ Is a high ESR (erythrocyte sedimentation rate) an indicator for certain diseases
 
 {\bf  Specifically: } Is there an association between ESR level ESR$<20mm/hr$ and the concentrations of the plasma proteins Fibrinogen and Globulin?\\[3mm]
 
-Load data from the package that comes with \citet{hothorn.everitt2014}:\\[2mm]
+The \texttt{plasma} data come with the package \texttt{HSAUR3} \citep{hothorn.everitt2014}.\\[2mm]
 
-<<>>=
-library(HSAUR3)
+<<echo=FALSE>>=
+library("HSAUR3")
 data("plasma",package="HSAUR3")
+plasma$status <- factor(ifelse(plasma$ESR=="ESR < 20","healthy","sick"))
 @
 <<>>=
 plasma[c(1,5,9,10,15,29),]
@@ -524,16 +525,17 @@ plasma[c(1,5,9,10,15,29),]
 }
 
 \frame[containsverbatim]{\frametitle{}
-The distinction ESR$<20mm/hr$ vs.\ ESR$\geq 20mm/hr$ leads to a \myalert{binary} response variable.\\
+The distinction ESR$<20mm/hr$ (healthy) vs.\ ESR$\geq 20mm/hr$ (sick) leads to a \myalert{binary} response variable.\\[3mm]
 
-The relation between the plasmaprotein levels and the binary indicator can be captured by a \myalert{\emph{conditional density plot}}.
+\begin{center}$\rightarrow$ \hl{\emph{conditional density plot}}\end{center}
+
 
 \begin{center}
 \setkeys{Gin}{width=0.9\textwidth}
 <<cdplot_ESR,fig=T,width=7,height=4>>=
 par(mfrow=c(1,2))
-cdplot(ESR ~ fibrinogen,plasma)
-cdplot(ESR ~ globulin,plasma)
+cdplot(status ~ fibrinogen,plasma)
+cdplot(status ~ globulin,plasma)
 @
 \end{center}
 

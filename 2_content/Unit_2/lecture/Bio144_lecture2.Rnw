@@ -626,7 +626,7 @@ Under $H_0$, $T$ has a $t$-distribution with $n-2$ degrees of freedom ($n=$ numb
 }
 
 
-\frame[containsverbatim]{
+\frame[containsverbatim]{\label{sl:bmi}
 So let's again go back to the bodyfat regression output:\\[4mm]
 
 <<lmbodyfatTest,echo=T,eval=T>>=
@@ -634,12 +634,11 @@ summary(r.bodyfat)$coef
 @
 ~\\[6mm]
 
-2 tasks:
-\begin{enumerate}
-\item Please use equation \eqref{eq:beta} to find out how the first three columns (Estimate, Std. Error and t value) are related! Check your ideas by doing some calculations...\\[7mm]
-\item Then think how we get the fourth column from the third. \\
-Hint: last column contains the {\bf $p$-value} of the test $\beta=0$.\\[2mm]
-\end{enumerate}
+Task:\\[2mm]
+$\rightarrow$ Please use equation \eqref{eq:beta} to find out how the first three columns (Estimate, Std. Error and t value) are related! Check your ideas by doing some calculations...\\[7mm]
+
+Note: The last column contains the {\bf $p$-value} of the test $\beta=0$.\\[2mm]
+ 
 }
 
 
@@ -691,17 +690,15 @@ text(-3,0.05,labels="2.5%")
 
 
 \frame[containsverbatim]{
-For task 2 above we can use the built-in ``distribution table'' of the t-distribution in R (two-sided $p$-value):\\[2mm]
+The regression output on slide \ref{sl:bmi} indicates that the $p$-value for BMI is very small ($p<0.0001$).
 
-<<lmbodyfatTest,echo=T,eval=T>>=
-2*pt(16.787522,241,lower.tail=F)
-@
+
 ~\\[6mm]
 Conclusion: there is {\bf very strong evidence} that the BMI is associated with bodyfat, because $p$ is extremely small (thus it is very unlikely that such a slope $\hat\beta$ would be seen if there was no effect of BMI on body fat).\\[4mm]
 
 This basically answers question 1 from slide \ref{sl:testsCI}.\\[6mm]
 
-\textcolor{gray}{\small (Remark: if you forgot the details of the $p$-value, I have a special task for you: Go back to the book ``Statistische Datenanalyse'' from W. Stahel and read chapter 8.7.)}
+%\textcolor{gray}{\small (Remark: if you forgot the details of the $p$-value, I have a special task for you: Go back to the book ``Statistische Datenanalyse'' from W. Stahel and read chapter 8.7.)}
 }
 
 
