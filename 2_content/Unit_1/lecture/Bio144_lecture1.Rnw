@@ -625,8 +625,8 @@ Representation & Useful for \\
 \hline
  Scatterplots & Pairwise dependency of continuous \\
     &  variables. \\[1mm]
- Histograms & Distribution of numerical variables.\\[1mm]
- Boxplots  & Distribution of numerical variables, ev. \\
+ Histograms & Distribution of continuous variables.\\[1mm]
+ Boxplots  & Distribution of continuous variables, ev. \\
     & conditionally on categories.\\[1mm]
  Conditional density plots &  Dependency of a binary variable from\\
     &  a continuous variable.\\[1mm]

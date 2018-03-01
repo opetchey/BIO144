@@ -482,8 +482,8 @@ par(mfrow=c(1,2))
  # library(reshape2)
  # pars <- melt(pars)
  # ggplot(pars,aes(x=value)) + geom_histogram() + facet_wrap(~Var2,scales="free_x") + theme_bw()
-hist(pars[,1],xlab =expression(alpha),main="",freq=F,nclass=20)
-hist(pars[,2],xlab=expression(beta),main="",freq=F,nclass=20)
+hist(pars[,1],xlab =expression(hat(alpha)),main="",freq=F,nclass=20)
+hist(pars[,2],xlab=expression(hat(beta)),main="",freq=F,nclass=20)
 @
 \end{center}
 
