@@ -843,13 +843,14 @@ Where does $\hat y_0 = \hat\alpha + \hat\beta x_0$ lie with a certain confidence
 
 This question is not trivial, because both $\hat\alpha$ and $\hat\beta$ are estimates from the data and contain uncertainty. \\[2mm]
 
-The details of the calculation are given in Stahel 2.4b. (Idea: $\hat y_0 \pm q\cdot se^{(\hat{y}_0)}$.) \\[6mm]
+The details of the calculation are given in Stahel 2.4b. \\[6mm]%(Idea: $\hat y_0 \pm q\cdot se^{(\hat{y}_0)}$.) \\[6mm]
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
-For \emph{each} $x_0$ one obtains a confidence interval for the expected value $\hat y_0 = \hat\alpha + \hat\beta x_0$. Plotting this interval for all values of $x_0$ one obtains the {\bf confidence range} or {\bf confidence band for the expected values} of $y$.
+%For \emph{each} $x_0$ one obtains a confidence interval for the expected value $\hat y_0 = \hat\alpha + \hat\beta x_0$. 
+Plotting the confidence interval around all $\hat y_0$ values one obtains the {\bf confidence range} or {\bf confidence band for the expected values} of $y$.
 \end{minipage}}\\[2mm]
 
-
+~\\[2mm]
 Note: For the confidence range, only the uncertainty in the estimates $\hat\alpha$ and $\hat\beta$ are decisive.
 }
 
