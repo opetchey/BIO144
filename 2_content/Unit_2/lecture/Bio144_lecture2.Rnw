@@ -514,7 +514,7 @@ For formulas of the standard deviations ${\sigma^{(\beta)2}}$ and ${\sigma^{(\al
 {\bf No need to remember these formulas, but you should know that}
 \begin{itemize}
 \item the parameters estimates $\hat\alpha$ and $\hat\beta$ are \myalert{normally distributed.}
-\item the formulas to calculate the variances depend on the residual variance $\sigma_e^2$, the sample size $n$ and SSQ$^{(X)(\star)}$.
+\item the formulas to calculate the variances depend on the residual variance $\sigma_e^2$, the sample size $n$ and the variance of $X$ (SSQ$^{(X)(\star)})$.
 \end{itemize}
 \end{minipage}}
 
