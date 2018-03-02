@@ -599,12 +599,22 @@ How do these things help us to answer the two questions above?
 
 \frame{\frametitle{Testing the effect of a covariate}
 Remember: in a statistical test you first need to specify the \emph{null hypothesis}. Here, typically, the null hypothesis is
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
 $$H_0: \quad \beta = \beta_0 =  0  \ .$$
-Included in $H_0$ is the assumption that the data follow the simple linear regression model. \\
-{\small (However, you might want to test against another null hypothesis, see Stahel 2.3 a,b).}\\[2mm]
+
+\begin{center}
+In words: $H_0$ =   ``no effect'' \\
+\end{center}
+\end{minipage}}
+~\\[2mm]
+{\small (Included in $H_0$ is the assumption that the data follow the simple linear regression model!)} \\[8mm]
+%{\small (However, you might want to test against another null hypothesis, see Stahel 2.3 a,b).}\\[2mm]
 
 Here, the \emph{alternative hypothesis} is given by
-$$H_A: \quad \beta \neq  0  \ ,$$
+\colorbox{lightgray}{\begin{minipage}{10cm}
+$$H_A: \quad \beta \neq  0  $$
+\end{minipage}}
 
  }
  
@@ -663,7 +673,7 @@ Note: The last column contains the {\bf $p$-value} of the test $\beta=0$.\\[2mm]
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
 % The $p$-value is the probability, under the assumption of no effect (the ``Null hypothesis''), of obtaining a result equal to or more extreme than what was actually observed.\\[2mm]
-The {\bf formal definition of $p$-value} is the probability of an observed data summary (e.g., an average) and its more extreme values, given a specified mathematical model and hypothesis (usually the ``Null'', indicating ``no effect'').
+The {\bf formal definition of $p$-value} is the probability to observe a data summary (e.g., an average) that is at least as extreme as the one observed, given that the Null Hypothesis is correct.
 \end{minipage}}\\
 %{\scriptsize \citep{goodman2016}}
 
