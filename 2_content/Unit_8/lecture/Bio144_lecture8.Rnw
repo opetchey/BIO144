@@ -106,7 +106,7 @@ Datenanalyse in der Biologie}%\\[.3cm]
 \item Bradford-Hill criteria for causal inference\\[2mm]
 \item Experimental vs observational studies\\[2mm]
 \item Todo: Ev. introduce the idea of Bayes factors!
-\item Todo: Give p-hacking app in BC material (or for one of the study weeks)
+%\item Todo: Give p-hacking app in BC material (or for one of the study weeks)
 \end{itemize}
 
  
@@ -117,13 +117,13 @@ Datenanalyse in der Biologie}%\\[.3cm]
 
 The lecture material of today is based on the following literature:\\[4mm]
 \begin{itemize}
-\item All literature and articles from the self-study week.
+\item Literature and articles that you will have to read in the second self-study week (second week of May).
 \end{itemize}
 
 
 }
 
-\frame[containsverbatim]{\frametitle{Recap of previous lecture (before Easter)}
+\frame[containsverbatim]{\frametitle{Recap of previous lecture}
 \begin{itemize}
 \item Model selection is difficult.\\[2mm]
 \item Information criteria: AIC, AIC$_c$ and BIC \\
@@ -158,7 +158,7 @@ Such tests are useful whenever a {\bf decision} needs to be made (e.g., in clini
 
 \frame[containsverbatim]{\frametitle{$P$-values in regression models}
 
-In regression modelling, the $p$-value is often used as an indicator of covariate importance. Remember the mercury example:
+In regression modeling, the $p$-value is often used as an indicator of covariate importance. Remember the mercury example:
 
 <<echo=F,width=4.5,height=4>>=
 d.hg <- read.table("../../data_examples/Hg/Hg_urin.csv",header=T, sep=",")
@@ -224,14 +224,15 @@ The misuse of $p$-values has led to a \alert{reproducibility crisis} in science!
 {\tiny \citep{ioannidis2005}}
 }
 
+
+
 \frame{\frametitle{What is the problem with the $p$-value?}
 
 Many applied researchers do not \alert{really} understand what the $p$-value actually is.\\[2mm]
 
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
-% The $p$-value is the probability, under the assumption of no effect (the ``Null hypothesis''), of obtaining a result equal to or more extreme than what was actually observed.\\[2mm]
-The {\bf formal definition of $p$-value} is the probability of an observed data summary (e.g., an average) and its more extreme values, given a specified mathematical model and hypothesis (usually the ``Null'', indicating ``no effect'').
+The {\bf formal definition of $p$-value} is the probability to observe a data summary (e.g., an average) that is at least as extreme as the one observed, given that the Null Hypothesis is correct.
 \end{minipage}}\\
 %{\scriptsize \citep{goodman2016}}
 
@@ -387,6 +388,20 @@ $p < 0.001 $ & very strong evidence\\[8mm]
 But: The level of significance must also depend on the context!
 \end{minipage}}
 }
+
+\frame{\frametitle{}
+The most recent suggestion by 72 authors in the field:\\[4mm]
+
+\includegraphics[width=10cm]{pictures/benjamin.png}\\
+{\tiny (Benjamin et al., 2017, Nature Human Behaviour)}\\[6mm]
+
+Their suggestion: replace $p<0.05$ by $p<0.005$. More precisely:\\[2mm]
+\begin{itemize}
+\item Use $p<0.005$ for {\bf statistical significance.}
+\item Use $0.005 < p < 0.05$ as {\bf suggestive evidence}.
+\end{itemize}
+}
+
 
 
 \frame[containsverbatim]{
@@ -620,10 +635,10 @@ There are several limitations to it:
 \end{itemize}
 }
 
-\frame{
-Groemping 2007:\\[3mm]
-``...a request for a decomposition of $R^2$ is often driven by a desire to prioritize intervention actions with the intention to influence the response. It is important to notice that \myalert{any intervention bears the risk [...] of not only influencing the targeted regressor but also the correlation structure among regressors.} Thus, unexpected results may occur regarding changes of the response's variance. In this way, the benefit of the concept of decomposing $R^2$ is more limited than the typical user might realize.''
-}
+% \frame{
+% Groemping 2007:\\[3mm]
+% ``...a request for a decomposition of $R^2$ is often driven by a desire to prioritize intervention actions with the intention to influence the response. It is important to notice that \myalert{any intervention bears the risk [...] of not only influencing the targeted regressor but also the correlation structure among regressors.} Thus, unexpected results may occur regarding changes of the response's variance. In this way, the benefit of the concept of decomposing $R^2$ is more limited than the typical user might realize.''
+% }
 
 
 \frame[containsverbatim]{\frametitle{Example}\label{sl:example}
@@ -706,7 +721,7 @@ Look at a regression model including covariate $\bm{x}$ and response $\bm{y}$. I
 This is the desired situation!\\[4mm]
 
 \item $\bm{y}$ (partially) causes $\bm{x}$, that is $\bm{y} \rightarrow \bm{x}$.\\[2mm]
-{\bf Example:} $\bm{x}$ is \emph{knowledge} or \emph{IQ} and $\bm{y}$ is \emph{school education}.\\[2mm]
+{\bf Example:} $\bm{x}$ is \emph{IQ} and $\bm{y}$ is \emph{school education}.\\[2mm]
 In that case, the model is not correctly specified!\\[4mm]
 
 \item There is another covariate $\bm{z}$ that both influences $\bm{x}$ and $\bm{y}$\\
@@ -724,9 +739,9 @@ Ideas:
 \begin{itemize}
 \item No breakfast ($\bm{x}$) $\rightarrow$ Obesity ($\bm{y}$)\\[4mm]
 \item Obesity ($\bm{y}$) $\rightarrow$ No breakfast ($\bm{x}$)\\[4mm]
-\item Too much dinner ($\bm{z}$) $\rightarrow$ Obesity ($\bm{y}$)\\[2mm]
+\item Large dinner ($\bm{z}$) $\rightarrow$ Obesity ($\bm{y}$)\\[2mm]
 {\centering\emph{and}} \\[2mm]
-Too much dinner ($\bm{z}$) $\rightarrow$ No breakfast ($\bm{x}$)\\[4mm]
+Large dinner ($\bm{z}$) $\rightarrow$ No breakfast ($\bm{x}$)\\[4mm]
 
 
 \end{itemize}
