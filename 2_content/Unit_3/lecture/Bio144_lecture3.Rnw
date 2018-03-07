@@ -131,7 +131,7 @@ r.bodyfat <- lm(bodyfat ~ bmi,d.bodyfat)
 \begin{itemize}
 \item The linear regression model for the data $\bm{y}=(y_1,\ldots,y_n)$ given $\bm{x}=(x_1,\ldots,x_n)$ is
 $$y_i = \alpha + \beta x_i + e_i \ , \qquad e_i \sim \N(0,\sigma_e^2) \  \text{independent}.$$\\[2mm]
-\item Estimate the parameters $\alpha$, $\beta$ and $\sigma_e^2$ by least squares.\\[2mm]
+\item Estimate the parameters $\alpha$, $\beta$ and $\sigma_e^2$ by  \href{http://students.brown.edu/seeing-theory/regression-analysis/index.html#section1}{\textcolor{blue}{least squares}}.\\[2mm]
 \item The estimated parameters $\hat\alpha$, $\hat\beta$ contain \myalert{uncertainty} and are normally distributed around the true values. %(actually, also $\hat\sigma_e^2$...). \\[2mm]
 \item Use the knowledge about the distribution to formulate \myalert{statistical tests}, such as: Is $\beta=0$?\\
 $\rightarrow$ \alert{$T$-test} with $n-2$ degrees of freedom.\\[2mm]
@@ -183,7 +183,7 @@ The assumption in linear regression is that the residuals follow a $\N(0,\sigma_
 \end{enumerate}
 \end{minipage}}
 ~\\
-We started to do some residual analysis using the \myalert{Tukey-Anscombe plot} and the \myalert{Histogram} of the residuals $R_i$.\\[-4mm]
+We started to do some residual analysis using the \myalert{Tukey-Anscombe plot} and the \myalert{histogram} of the residuals $R_i$.\\[-4mm]
 
 \begin{center}
 \setkeys{Gin}{width=0.6\textwidth}
@@ -242,8 +242,8 @@ arrows(x[s], y[s], x[s+1], y[s+1])
 
 
 
-You may want to watch the youtube video given here for more explanation:
-\url{https://www.youtube.com/watch?v=-KXy4i8awOg}
+\textcolor{gray}{Optional:You may want to watch the youtube video given here for more explanation
+\href{https://www.youtube.com/watch?v=-KXy4i8awOg}{\bf here}.}
 }
 
 \frame{
@@ -253,7 +253,7 @@ You may want to watch the youtube video given here for more explanation:
 }
 
 \frame[containsverbatim]{\frametitle{Bodyfat example}
-We have so far modelled bodyfat in dependence of bmi, that is: $(body fat)_i = \alpha + \beta \cdot bmi_i + e_i$.\\[2mm]
+We have so far modeled bodyfat in dependence of bmi, that is: $(body fat)_i = \alpha + \beta \cdot bmi_i + e_i$.\\[2mm]
 
 However, other predictors might also be relevant for an accurate prediction of bodyfat.\\[4mm]
 
@@ -325,7 +325,7 @@ Let us regress the proportion (\%) of bodyfat (from last week) on the predictors
 \begin{enumerate}
 \item Does the {\bf ensemble} of all covariates have an effect on the response?\\[4mm]
 \item If yes, which covariates are relevant predictors of bodyfat? \\[4mm]
-\item Which proportion of response variability is explained by the model?
+\item Which proportion of response variability ($\sigma_y^2$) is explained by the model?
 \end{enumerate}
 
 }
@@ -345,14 +345,17 @@ summary(r.bodyfatM)
 
 \frame[containsverbatim]{\frametitle{Model checking}
 Before we look at the results, we have to check if the modelling assumptions are fulfilled:
+
 \begin{center}
 \setkeys{Gin}{width=0.9\textwidth}
-<<modelChecks,fig=T,width=7,height=4,echo=F>>=
-par(mfrow=c(1,2))
-plot(r.bodyfatM$fitted,r.bodyfat$residuals,xlab="Fitted", ylab="Residuals")
-abline(h=0,lty=2)
-qqnorm(r.bodyfatM$residuals)
-qqline(r.bodyfatM$residuals)
+<<modelChecks,fig=T,width=6,height=3,echo=F>>=
+library(ggfortify)
+autoplot(r.bodyfatM, which=c(1,2),smooth.colour=NA)
+# par(mfrow=c(1,2))
+# plot(r.bodyfatM$fitted,r.bodyfat$residuals,xlab="Fitted", ylab="Residuals")
+# abline(h=0,lty=2)
+# qqnorm(r.bodyfatM$residuals)
+# qqline(r.bodyfatM$residuals)
 @
 \end{center}
 
@@ -377,7 +380,7 @@ So apparently (and we already suspected that) the model has some explanatory pow
 \begin{equation*}
 \frac{SSQ^{(R)}/m}{SSQ^{(E)}/(n-p)} \sim F_{m,n-p}
 \end{equation*}
-follows an $F$-distribution (\texttt{df()} in R) with $m$ and $(n-p)$ degrees of freedom, where $m$ are the number of variables, $n$ the number of data points, $p$ the number of $\beta$-parameters (typically $m+1$). $SSQ^{(E)}=\sum_{i=1}^nR_i^2$ is the squared sum of the residuals, and $SSQ^{(R)} = SSQ^{(Y)} - SSQ^{(E)}$ with $SSQ^{(y)}=\sum_{i=1}^n(y_i-\overline{y})^2$.
+follows an $F$-distribution with $m$ and $(n-p)$ degrees of freedom, where $m$ are the number of variables, $n$ the number of data points, $p$ the number of $\beta$-parameters (typically $m+1$). $SSQ^{(E)}=\sum_{i=1}^nR_i^2$ is the squared sum of the residuals, and $SSQ^{(R)} = SSQ^{(Y)} - SSQ^{(E)}$ with $SSQ^{(y)}=\sum_{i=1}^n(y_i-\overline{y})^2$.
 }
 
 <<Ftest,eval=T,echo=F>>=
@@ -403,12 +406,15 @@ summary(r.bodyfatM)$coef
 
 To answer this question, again look at the \alert{$t$-tests}, for which the $p$-values are given in the final column. Each $p$-value refers to the test for the null hypothesis $ \beta^{(j)}_0=0$ for covariate $x^{(j)}$.\\[2mm]
 
+\colorbox{lightgray}{\begin{minipage}{10cm}
 As in simple linear regression, the $T$-statistic for the $j$-th covariate is calculated as 
 %
 \begin{equation}\label{eq:beta}
 T_j =  \frac{\hat\beta_j}{se^{(\beta_j)}}\ ,
 \end{equation}
-with  $se^{(\beta_j)}$ given in the second column of the regression output.\\[2mm]
+with  $se^{(\beta_j)}$ given in the second column of the regression output.
+\end{minipage}}
+~\\[2mm]
 The distribution of this statistic is $T_j \sim t_{n-p}$. 
 
 
@@ -426,12 +432,14 @@ Here, we have
 
 Thus both, bmi and age seem to have some predictive power for bodyfat. \\[6mm]
 
-Again, a 95\% CI for $\beta_j$ can be calculated with $[\hat\beta - c \cdot \sigma^{(\beta)} ; \hat\beta + c \cdot \sigma^{(\beta)}]$, where $c$ is the 97.5\% quantile of the $t$-distribution with $n-p$ degrees of freedom  (compare to slides 37-39 of last week). With R:\\[4mm]
+Again, a 95\% CI for $\beta_j$ can be calculated with R: \\[4mm] 
 
 <<>>=
 confint(r.bodyfatM)
 @
 
+~\\[2mm]
+{\scriptsize (The CI is again $[\hat\beta - c \cdot \sigma^{(\beta)} ; \hat\beta + c \cdot \sigma^{(\beta)}]$, where $c$ is the 97.5\% quantile of the $t$-distribution with $n-p$ degrees of freedom; compare to slides 37-39 of last week).}
 }
 
 \frame[containsverbatim]{\frametitle{}
@@ -508,8 +516,8 @@ $R^2$ is also called the \emph{coefficient of determination} or \myalert{``Besti
 R^2 = SSQ^{(R)} / SSQ^{(Y)} = 1 - SSQ^{(E)}/ SSQ^{(Y)}
 \end{equation*}
 \end{minipage}}
-~~\\
-Remembering that \\
+~~\\[2mm]
+With \\
 \begin{eqnarray*}
 \text{total variability} &=&  \text{explained variability} + \text{  residual variability} \\[2mm]
 \sum_{i=1}^n (y_i - \overline{y})^2 &=&  \sum_{i=1}^n (\hat{y_i}-\overline{y})^2 \qquad \quad + \quad \qquad \sum_{i=1}^n (y_i - \hat{y_i})^2 \\[2mm]
@@ -546,7 +554,7 @@ summary(r.bodyfatM)$r.squared
 summary(r.bodyfatM2)$r.squared
 @
  ~\\[2mm]
-The models thus explain  $\Sexpr{round(summary(r.bodyfat)$r.squared*100,0)}$ \%, $\Sexpr{round(summary(r.bodyfatM)$r.squared*100,0)}$ \% and $\Sexpr{round(summary(r.bodyfatM2)$r.squared*100,0)}$ \% of the total variability of $y$.\\[5mm]
+The models thus explain  $\Sexpr{round(summary(r.bodyfat)$r.squared*100,0)}$\%, $\Sexpr{round(summary(r.bodyfatM)$r.squared*100,0)}$\% and $\Sexpr{round(summary(r.bodyfatM2)$r.squared*100,0)}$\% of the total variability of $y$.\\[5mm]
 
 It thus \emph{seems} that larger models are ``better''. However, $R^2$ does always increase when new variables are included, but this does not mean that the model is more reasonable. \\[2mm]
 
@@ -562,7 +570,7 @@ R^2_a = 1-(1-R^2 )\frac{n-1}{n-m-1}
 ~\\
 Why $R^2_a$? \\[2mm] 
 
-Penalization for adding more independent variables that do not fit the model!\\[2mm]
+It {\bf penalizes for adding more variables} if they do not really improve the model!\\[2mm]
 
 {\bf Note:} $R_a$ may decrease when a new variable is added.
 }
@@ -654,7 +662,7 @@ So far, the covariates $x$ were always continuous. \\[2mm]
 
 In reality, there are {\bf no restrictions assumed with respect to the $x$ variables}. \\[2mm]
 
-One very frequent data type of covariates are {\bf binary} variables, that is, variables that can only attain values 0 or 1. \\[6mm]
+One very frequent data type are {\bf binary} variables, that is, variables that can only attain values 0 or 1. \\[6mm]
 
 See section 3.2c of the Stahel script: 
 \colorbox{lightgray}{\begin{minipage}{10cm}
@@ -720,7 +728,6 @@ First check the modelling assumptions:\\[4mm]
 \begin{center}
 \setkeys{Gin}{width=0.8\textwidth}
 <<Hgcheck,fig=T,width=5,height=2.5,echo=F>>=
-library(ggfortify)
 autoplot(r1.urin.mother,which=c(1,2),smooth.colour=NA) 
 @
 \end{center}
@@ -751,7 +758,7 @@ Non-smokers:  $y_i = -1.01  + 0.092\cdot amalgam_i + 0.032\cdot fish_i  + e_i$
 
 
 \frame{\frametitle{Factor covariates}
-Some covariates indicate a {\bf category}, for instance the species of an animal or a plant. This type of covariatc is called a {\bf factor}. The trick: convert a factor with $k$ levels (for instance 3 species) into $k$ dummy variables $x_i^{(j)}$ with 
+Some covariates indicate a {\bf category}, for instance the species of an animal or a plant. This type of covariate is called a {\bf factor}. The trick: convert a factor with $k$ levels (for instance 3 species) into $k$ dummy variables $x_i^{(j)}$ with 
 \colorbox{lightgray}{\begin{minipage}{10cm}
 \begin{equation*}
 x_i^{(j)} = \left\{ 
@@ -769,7 +776,9 @@ y_i = \beta_0 + \beta_1 x^{(1)} + \ldots + \beta_k x^{(k)} + e_i \ .
 \end{equation*}
 
 \vspace{6mm}
-However:  this model is \alert{not identifiable}. I could add a constant to $\beta_1, \beta_2, ...\beta_k$ and subtract it from $\beta_0$, and the model would fit as good to the data.\\[2mm]
+However:  this model is \alert{not identifiable}$^\star$.\\[2mm]
+
+{\scriptsize $^\star$ What does that mean? I could add a constant to $\beta_1, \beta_2, ...\beta_k$ and subtract it from $\beta_0$, and the model would fit as good to the data.} 
 
 }
 
@@ -809,7 +818,7 @@ $\rightarrow$ The \alert{degrees of freedom} are also reduced by $k-1$.
 
 {\bf Frage:} Besteht eine Beziehung zwischen dem Umfang des Muskelmagenteilchens und dem Gewicht des Regenwurms?\\[4mm]
 
-Data set of $n=143$ worms with three species (Lumbricus, Nicodrilus, Octolasion), weight, stomachic circumference (Magenumfang). 
+Data set of $n=143$ worms with three species (Lumbricus, Nicodrilus, Octolasion), weight, stomach circumference (Magenumfang). 
 
 
 }
