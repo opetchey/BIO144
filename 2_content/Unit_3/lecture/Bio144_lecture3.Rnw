@@ -648,7 +648,7 @@ Questions:\\
 \begin{enumerate}
 \item Is $x_1$ an influential covariate?
 \item Is $x_2$ an influential covariate?
-\item Are both covariates needed?
+\item Are both covariates needed in the model?
 \item Interpretation of the results?\\[4mm]
 \end{enumerate}
 %To understand what is going on, the regression results of $y$ on $x^{(1)}$ and $x^{(2)}$ alone may be useful:

@@ -595,8 +595,8 @@ In simple regression, the leverage of individual $i$ is defined as $H_{ii} = (1/
 Data points with $x_i$ values far from the mean have a stronger leverage effect than when $x_i\approx \overline{x}$:
 
 \begin{center}
-\setkeys{Gin}{width=1.1\textwidth}
-<<echo=F,fig=T,width=6,height=2.3>>=
+\setkeys{Gin}{width=1.0\textwidth}
+<<echo=F,fig=T,width=6,height=2.1>>=
 set.seed(37489)
 par(mfrow=c(1,3),mar=c(4,4,1,1))
 x <- sort(rnorm(18))
@@ -616,9 +616,13 @@ abline(lm(y2~x),col=2,lty=2)
 @
 \end{center}
 
-The outlier in the middle plot ``pulls'' the regression line in its direction and biases the slope.
+The outlier in the middle plot ``pulls'' the regression line in its direction and biases the slope.\\
 
+\hspace{2cm}$\rightarrow$ \href{http://students.brown.edu/seeing-theory/regression-analysis/index.html}{Click here} to do it manually!
 }
+
+
+
 
 \frame[containsverbatim]{\frametitle{Leverage plot (Hebelarm-Diagramm)}
 In the leverage plot, (standardized) residuals $\tilde{R_i}$ are plotted against the leverage $H_{ii}$ (continuing with the Hg example):
