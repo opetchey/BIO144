@@ -149,7 +149,7 @@ ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point() + 
 \end{center}
 
 \item The \alert{$F$-test} is used to test if $\beta_2=\beta_3=...=\beta_k=0$ at the same time for a factor covariate with $k$ levels. Use the \texttt{anova()} function in R to carry out this test.\\[3mm]
-\item The $F$-test is a \alert{generalization of the $t$-test}, which is used to test if $\beta_j = 0$ for one single variable $x^{(j)}$.
+\item The $F$-test is a \alert{generalization of the $t$-test}, because the latter is used to test $\beta_j = 0$ for one single variable $x^{(j)}$.
 \end{itemize}
 }
 
@@ -185,7 +185,7 @@ For simplicity, let us look at a binary covariate ($x_i \in \{0,1\}$). \\
 
 Remember the mercury (Hg) example from last week. We now extended the dataset and include mothers \emph{and} children ($\leq 11$ years).\\[2mm]
 
-It is known that Hg concentrations may change over the lifetime of humans. So let us look at \texttt{log(Hg$_\text{urin}$)} depending on the participants age:\\
+It is known that Hg concentrations may change over the lifetime of humans. So let us look at \texttt{log(Hg$_\text{urin}$)} depending on the age of the participants:\\
 
 \begin{center}
 \setkeys{Gin}{width=0.6\textwidth}
@@ -206,14 +206,19 @@ ggplot(d.hg,aes(x=age,y=log(Hg_urin),colour=mother)) + geom_point() + geom_smoot
 
 \frame{
 
-An important observation is that children and mothers show different dependencies of age!\\[2mm]
-$\rightarrow$ Formulate a model that allows for \alert{different intercepts \emph{and} slopes}, depending on group membership (mother/child).
+Observation: {\bf The regression lines are not parallel.}\\[2mm]
+
+$\rightarrow$ Children and mothers seem to depend differently on age!\\[8mm]
+
+
+What does this mean for the model?\\[2mm]
+ 
+$\rightarrow$ Formulate a model that allows for \alert{different intercepts \emph{and} slopes}, depending on group membership (mother/child).\\[2mm]
+
+$\rightarrow$ This can be achieved by introducing a so-called \alert{interaction term} into the regression equation.
 }
 
 \frame{
-
-
-This can be achieved by introducing a so-called \alert{interaction term} into the regression equation.\\[2mm]
 
 The smallest possible model is then given as\\
 \colorbox{lightgray}{\begin{minipage}{10cm}
@@ -222,15 +227,14 @@ y_i =  \beta_0 + \beta_1 \text{mother}_i + \beta_2 \text{age}_i + \beta_3\text{a
 \end{equation}
 \end{minipage}}
 ~\\
-where $y_i=\log(Hg_{\text{urin}})_i$, and \texttt{mother} is a binary ``dummy'' variable that indicates if the person is a mother (1) or a child (0).\\[4mm]
+where $y_i=\log(Hg_{\text{urin}})_i$, and \texttt{mother} is a binary ``dummy'' variable that indicates if the person is a mother (1) or a child (0).\\[8mm]
 
 This results in essentially {\bf two} models with group specific intercept and slope:\\[2mm]
 \colorbox{lightgray}{\begin{minipage}{10cm}
-Mothers ($x_i=1$): $\hat{y}_i = \beta_0 +  \beta_1 + (\beta_2 +\beta_3)\text{age}_i $  \\[2mm]
+Mothers ($x_i=1$): $\hat{y}_i = \beta_0 +  \beta_1 + (\beta_2 +\beta_3)\text{age}_i  $  \\[2mm]
 Children ($x_i=0$): $\hat{y}_i = \beta_0  + \beta_2 \text{age}_i $  
 \end{minipage}}
-~\\
-{\scriptsize Question: why is there a hat on $\hat{y}_i$ now? Difference to $y_i$?}
+ 
 }
 
 
@@ -265,8 +269,12 @@ Children: $\hat{y}_i = \Sexpr{round(r.hg$coefficients[1],2)}  + (\Sexpr{round(r.
 \frame{
 On the previous slide we have actually fitted 2 models at the same time. \\[4mm]
 
-What is the advantage of this? Why is this usually better than fitting two separate models, one for children and one for mothers?\\[5mm]
+\begin{itemize}
+\item What is the advantage of this? 
+\item Why is this usually better than fitting two separate models, one for children and one for mothers?
+\end{itemize} 
 
+~\\[2mm]
 $\rightarrow$ Clicker exercise \href{http://www.klicker.uzh.ch/bkx}{http://www.klicker.uzh.ch/bkx}
 
 }
@@ -304,7 +312,7 @@ autoplot(r.hg,which=c(1,2),smooth.col=NA)
 }
 
 
-\frame{\frametitle{Linear regression is even more powerful}
+\frame{\frametitle{Linear regression is even more powerful!}
 We have seen that it is possible to include continuous, binary or factorial covariates in a regression model.\\[6mm]
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
@@ -351,7 +359,7 @@ Chapter 3.3c in the Stahel script illustrates the point on four artificial examp
 y_i = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + e_i \  ,
 \end{equation*}
 
-where $\bm{x}^{(1)}$ is a continuous variable, and $\bm{x}^{(2)}$ is a binary grouping variable (thus taking values 0 for group 0 and 1 for group 1).\\[4mm]
+where $\bm{x}^{(1)}$ is a continuous variable, and $\bm{x}^{(2)}$ is a binary grouping variable (thus taking values 0 and 1 to indicate the group).\\[4mm]
 
 Thus the model is 
 \begin{equation*}
@@ -473,7 +481,7 @@ lines(aa$x,predict(lo), col='red', lwd=2,lty=5)
 \vspace{5mm}
 ~\\[1cm]
 % \end{center}
-The TA plot (again) indicates that there is a small problem in the range of -0.7 to -0.6, namely due to an outlier...\\
+The TA plot (again) indicates that there is an outlier in the range of -0.7 to -0.6.\\
 \end{multicols}
 
 \vspace{-5mm}
@@ -565,9 +573,10 @@ qqline(ss,xlab="")
 }
 
 \frame[containsverbatim]{\frametitle{Scale-location plot (Streuungs-Diagramm)}
-The scale-location plot is particularly suited to check the assumption of equal variances ({\bf homoscedasticity / Homoskedastizit\"at}).\\[2mm]
+The scale-location plot is particularly suited to check the assumption of equal variances ({\bf homoscedasticity / Homoskedastizit\"at}).\\[4mm]
 
-The idea is to plot the square root of the residuals $\sqrt{|R_i|}$ against the fitted values $\hat{y_i}$ {\scriptsize (again using the Hg example with the mothers)}:\\[2mm]
+The idea is to plot the square root of the residuals $\sqrt{|R_i|}$ against the fitted values $\hat{y_i}$. There should be {\bf no trend} {\scriptsize (Continue with the Hg example)}:\\ 
+\vspace{-3mm}
 \begin{center}
 \setkeys{Gin}{width=0.6\textwidth}
 <<slPlot,fig=T,echo=F,width=4,height=3.5>>=
@@ -751,6 +760,7 @@ autoplot(r4.urin.mother,smooth.colour=NA) + theme_bw()
 }
 
 \frame[containsverbatim]{\frametitle{Outliers}
+\vspace{-3mm}
 {\scriptsize (See Stahel chapter 4.5)}\\[2mm]
 
 The above plots illustrate that outliers are visible in all diagnostic plots. \\[4mm]
