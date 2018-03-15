@@ -316,7 +316,7 @@ autoplot(r.hg,which=c(1,2),smooth.col=NA)
 We have seen that it is possible to include continuous, binary or factorial covariates in a regression model.\\[6mm]
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
-Even \alert{transformations} of covariates be included in (almost) any form. For instance, include the square of a variable $\bm{x}$
+Even \alert{transformations} of covariates can be included in (almost) any form. For instance the square of a variable $\bm{x}$
 \begin{equation*}
 y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + e_i \ , 
 \end{equation*}
@@ -354,14 +354,14 @@ Why?
 }
 
 \frame{\frametitle{Illustration}
-Chapter 3.3c in the Stahel script illustrates the point on four artificial examples. The model is always given as 
+Chapter 3.3c in the Stahel script illustrates the point on four artificial examples. The ``correct'' model is always given as 
 \begin{equation*}
 y_i = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + e_i \  ,
 \end{equation*}
 
-where $\bm{x}^{(1)}$ is a continuous variable, and $\bm{x}^{(2)}$ is a binary grouping variable (thus taking values 0 and 1 to indicate the group).\\[4mm]
+where $\bm{x}^{(1)}$ is a continuous variable, and $\bm{x}^{(2)}$ is a binary grouping variable (thus taking values 0 and 1 to indicate the group).\\[6mm]
 
-Thus the model is 
+Thus the correct model is 
 \begin{equation*}
 \begin{array}{lll}
 \hat{y_i} &= \beta_0 +  \beta_1 x_i^{(1)} & \text{if $x_i^{(2)}=0$.} \\
@@ -399,7 +399,7 @@ This idea is similar in spirit to an experimental design, where the influence of
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
 \begin{quote}
-To extend our analogy, the data analyst is in a position like that of an experimental scientist who has the capability to plan and carry out many experiments within a single day. Not surprisingly, a cool head is required!
+[...] the data analyst is in a position like that of an experimental scientist who has the capability to plan and carry out many experiments within a single day. Not surprisingly, a cool head is required!
 \end{quote}
 \end{minipage}}
 }
@@ -409,7 +409,7 @@ Remember that in linear regression the modeling assumption is that the residuals
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
 \begin{enumerate}[a)]
-\item The expected value of $e_i$ is 0: $\E(e_i)=0$.\\[2mm]
+\item The expected value of each residual $e_i$ is 0: $\E(e_i)=0$.\\[2mm]
 \item All $e_i$ have the same variance: $\Var(e_i)=\sigma_e^2$. \\[2mm]
 \item The $e_i$ are normally distributed.\\[2mm]
 \item The $e_i$ are independent of each other.
@@ -433,7 +433,7 @@ All models are wrong, but some are useful. \scriptsize{(Box 1978)}
 
 \frame{\frametitle{Overview of model-checking tools}
 
-Complete overview of those used in this course:\\[2mm]
+Complete overview of tools used in this course:\\[2mm]
 
 \begin{itemize}
 \item Tukey-Anscombe plot (see lectures 2 and 3)\\
@@ -520,7 +520,7 @@ d1 <- data.frame(obsNr= 1:length(residuals(r1.urin.mother)),
                  amalgam = d.hg.m$amalgam,
                  fish = d.hg.m$fish)
 p1 <- ggplot(d1, aes(x=obsNr,y=resid))+  geom_point() +  geom_hline(yintercept = 0,linetype=2,size=0.3,col=2) +
-  xlab("Observation number") +
+  xlab("Observation number (time)") +
   ylab("Residuals")
 p2 <- ggplot(d1, aes(x=amalgam,y=resid))+  geom_point() +  geom_hline(yintercept = 0,linetype=2,size=0.3,col=2) +
   xlab("No. of amalgam fillings") +
@@ -555,7 +555,7 @@ autoplot(r1.urin.mother,2) + theme_bw()
 %\end{minipage}}
 %\vspace{0mm}
 
-There is no quantitative rule to answer this question, experience is needed. However, you can gain this experience from \alert{simulations}. To this end, generate the same number of data points of a normally distributed variable and compare to your plot. \\
+There is {\bf no quantitative rule} to answer this question, experience is needed. However, you can gain this experience from \alert{simulations}. To this end, generate the same number of data points of a normally distributed variable and compare to your plot. \\
 Example: Generate 59 points $e_i \sim \N(0,1)$ each time:\\[2mm]
 
 \begin{center}
@@ -576,16 +576,18 @@ qqline(ss,xlab="")
 The scale-location plot is particularly suited to check the assumption of equal variances ({\bf homoscedasticity / Homoskedastizit\"at}).\\[4mm]
 
 The idea is to plot the square root of the residuals $\sqrt{|R_i|}$ against the fitted values $\hat{y_i}$. There should be {\bf no trend} {\scriptsize (Continue with the Hg example)}:\\ 
-\vspace{-3mm}
+ 
 \begin{center}
-\setkeys{Gin}{width=0.6\textwidth}
-<<slPlot,fig=T,echo=F,width=4,height=3.5>>=
-par(mar=c(4,5,2,1))
-plot(fitted(r1.urin.mother),sqrt(abs(residuals(r1.urin.mother))),xlab="Fitted values",ylab=expression(sqrt(abs(R[i]))),cex.lab=1.2)
-aa <- data.frame(cbind(x=fitted(r1.urin.mother), y=sqrt(abs(residuals(r1.urin.mother)))))
-aa <- aa[order(aa$x),]
-lo <- loess(y ~ x, aa)
-lines(aa$x,predict(lo), col='red', lwd=2,lty=5)
+\setkeys{Gin}{width=0.5\textwidth}
+<<slPlot,fig=T,echo=F,width=3.5,height=3.0>>=
+autoplot(r1.urin.mother,which=3) + theme_bw()
+
+# par(mar=c(4,5,2,1))
+# plot(fitted(r1.urin.mother),sqrt(abs(residuals(r1.urin.mother))),xlab="Fitted values",ylab=expression(sqrt(abs(R[i]))),cex.lab=1.2)
+# aa <- data.frame(cbind(x=fitted(r1.urin.mother), y=sqrt(abs(residuals(r1.urin.mother)))))
+# aa <- aa[order(aa$x),]
+# lo <- loess(y ~ x, aa)
+# lines(aa$x,predict(lo), col='red', lwd=2,lty=5)
 @
 \end{center}
 }
@@ -594,8 +596,16 @@ lines(aa$x,predict(lo), col='red', lwd=2,lty=5)
 \frame{\frametitle{Leverages}
 To understand the leverage plot, we need to introduce the idea of the \emph{leverage} (``Hebel''), see Stahel 4.3 h).\\[2mm]
 
-In simple regression, the leverage of individual $i$ is defined as $H_{ii} = (1/n) + (x_i-\overline{x})^2 SSQ^{(X)}$, which becomes larger the further away from the mean...\\[6mm]
+In simple regression, the leverage of individual $i$ is defined as $H_{ii} = (1/n) + (x_i-\overline{x})^2 SSQ^{(X)}$. Think about when leverages are expected to be large/small, and answer the two questions here:\\[2mm]
 
+\begin{center}
+\href{http://www.klicker.uzh.ch/bkx}{http://www.klicker.uzh.ch/bkx}
+\end{center}
+
+%which becomes larger the further away from the mean...\\[6mm]
+}
+
+\frame{
 \includegraphics[width=11cm]{pictures/leverage.jpg}
 
 }
@@ -749,6 +759,7 @@ For instance, the number of amalgam fillings and the number of monthly fish meal
 <<sqrt>>=
 r4.urin.mother <- lm(log10(Hg_urin) ~  smoking + sqrt(amalgam) + sqrt(fish),data=d.hg.m)
 @
+~\\
 \begin{center}
 \setkeys{Gin}{width=0.6\textwidth}
 <<hgFig,fig=T,echo=F,width=5,height=5>>=
@@ -769,7 +780,7 @@ What to do in this case?
 
 \begin{enumerate}
 \item Start by checking the correctness of the data. Is there a typo or a digital point that was shifted by mistake? Check the covariates and the response.\\[2mm]
-\item If not, ask whether the model has been misspecified. Do reasonable transformations of the response or the covariables eliminate the outlier? Have the residuals a distribution with a long tail (which makes it more likely that extreme observations occur)?\\[2mm]
+\item If not, ask whether the model has been misspecified. Do reasonable transformations of the response or the covariates eliminate the outlier? Do the residuals have a distribution with a long tail (which makes it more likely that extreme observations occur)?\\[2mm]
 \item Sometimes, an outlier may be the most interesting observation in a dataset!\\[2mm]
 \item Consider that outliers can also occur by chance!
 \end{enumerate}
