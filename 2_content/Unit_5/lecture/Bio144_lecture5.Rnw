@@ -136,7 +136,7 @@ Introduction by Sir R.\ A.\ Fisher (1890-1962). He worked at the agricultural re
 Questions of AN(C)OVA:
 \begin{itemize}
 \item Generally: Are the means of two or more groups different?\\[2mm]
-\item Example: Are different plant breeds different in important aspects (e.g., yiels / Ertrag)?\\[2mm]
+\item Example: Are different plant breeds different in important aspects (e.g., yields / Ertrag)?\\[2mm]
 \item Example: What is the influence of different treatments on plants (Biology) or patients (Medicine)? \\[2mm]
 \end{itemize}
 }
@@ -298,15 +298,18 @@ and $\hat{y}_{ij} = \overline{y}_{\cdot i} = \mu + \beta_i$ can be interpreted a
 
 \frame{\frametitle{The ANOVA test: The $F$-test}
 
-{\bf Aim of ANOVA}: to test \emph{globally} if the groups differ. That is:\\
+{\bf Aim of ANOVA}: to test \emph{globally} if the groups differ. That is:\\[2mm]
 
+\colorbox{lightgray}{\begin{minipage}{10cm}
+\vspace{-4mm}
 \begin{eqnarray*}
-H_0 &:& \mu_1=\mu_2=\ldots = \mu_g  \quad \text{or, equivalently} \quad  \beta_1=\beta_2 = \ldots = \beta_g   \\[2mm]
-H_1 &:& \text{At least two groups are different}
+\bm{H_0} &:& \mu_1=\mu_2=\ldots = \mu_g  \quad \text{or, equivalently} \quad  \beta_1=\beta_2 = \ldots = \beta_g   \\[2mm]
+\bm{H_1} &:& \text{At least two groups are different}
 \end{eqnarray*}
+\end{minipage}}
 
-~\\[2mm]
-Remember from slide 45 of week 3 (or Stahel script p.33): We have already used the $F$-test for categorical variables (see $F$-test for the earthworms, slide 46 of week 3). This was equivalent to testing if all $\beta$s that belong to a categorical variable are =0 at the same time. \\[2mm]
+~\\[4mm]
+Remember from slides 45/46 of week 3 (or Stahel script p.33): We have already used the $F$-test for categorical variables (see $F$-test for the earthworms, slide 47 of week 3). This was equivalent to testing if all $\beta$s that belong to a categorical variable are =0 at the same time. \\[2mm]
 
 $\rightarrow$ equivalent to test if the (categorical!) covariate is needed in the model.\\[2mm] 
 
@@ -320,7 +323,7 @@ This is \alert{the very same problem here}, thus we need the $F$-test again!\\[2
 
 
 \frame{\frametitle{Variance decomposition}
-To derive the ingredients of the $F$-test, we again look at the decomposition of variance (Remember this idea from week 3, slide 23, and replace $\hat{y_{ij}}$ by $\overline{y}_{\cdot i}$):
+To derive the ingredients of the $F$-test, we look at the decomposition of variance (Remember this idea from week 3, slide 23, and replace $\hat{y_{ij}}$ by $\overline{y}_{\cdot i}$):
 \vspace{-4mm}
 
 \begin{eqnarray*}
@@ -485,14 +488,14 @@ anova(r.mais)
 @
 ~\\[2mm]
 
-You can see that the value of $F=\Sexpr{format(summary(r.mais)$fstatistic[1],nsmall=2,digits=2)}$ is $F$-distributed with 3 and 16 degrees of freedom, and the $p$-value of the test ``$\beta_1=\beta_2=\beta_3=\beta_4$ ?'' is $<0.0001$.\\[4mm]
+You can see that the value of $F=\Sexpr{format(summary(r.mais)$fstatistic[1],nsmall=2,digits=2)}$ is $F$-distributed with 3 and 16 degrees of freedom, and the $p$-value of the test ``$\beta_2=\beta_3=\beta_4$ ?'' is $<0.0001$.\\[4mm]
 
-\colorbox{lightgreen}{\begin{minipage}{10cm}
+\colorbox{lightgray}{\begin{minipage}{10cm}
 Conclusion: There are differences among the four groups!
 \end{minipage}}
 
 ~\\[2mm]
-\colorbox{lightgreen}{\begin{minipage}{10cm}
+\colorbox{lightgray}{\begin{minipage}{10cm}
 $\rightarrow$ This is equivalent to  ``The group variable is relevant for the model''.
 \end{minipage}}
 
@@ -522,7 +525,7 @@ summary(r.mais)
 @
 ~\\[2mm]
 
-The table contains the estimates of the intercept \Sexpr{format(summary(r.mais)$coef[1,1],2,2,2)} ($\mu$ in ANOVA notation, $\beta_0$ in regression notation), and estimates for $\beta_2$, $\beta_3$, $\beta_4$ (while $\beta_1=0$).\\
+The table contains the estimates of the intercept \Sexpr{format(summary(r.mais)$coef[1,1],2,2,2)} ($\mu$ in ANOVA notation, $\beta_0$ in regression notation), and estimates for $\beta_2$, $\beta_3$, $\beta_4$ (while the reference was set to $\beta_1=0$).\\
 {\bf Hint:} Check also the $F$-test on the last line...
 }
 
@@ -572,11 +575,13 @@ To remember:
 \item The $F$-Test is used to check whether \myalert{any two group means} differ. 
 \item Using pairwise tests is not a very good idea (see slide \ref{sl:naive}), because this leads to a \myalert{multiple testing problem}: \\[2mm]
 
- \colorbox{lightgreen}{\begin{minipage}{10cm}
+ \colorbox{lightgray}{\begin{minipage}{10cm}
 When many tests are carried out, the probability to find a ``significant'' result {\bf by chance} increases.
 \end{minipage}}
 ~\\[6mm]
-For instance, for four groups there are $4\cdot 3/2= 6$ pairwise combinations that could be tested. The probability to find \emph{at least one result by pure chance} is much higher than the 5\% error level!!!\\[6mm]
+For instance, for four groups there are $4\cdot 3/2= 6$ pairwise combinations that could be tested. \\[2mm]
+
+$\rightarrow$ The probability to find \emph{at least one result by pure chance under $H_0$} is much higher than the 5\% error level!!!\\[6mm]
 \end{itemize}
 
 }
@@ -681,7 +686,7 @@ In the ``Blutzucker'' example, this could be, for intance:\\[2mm]
 \begin{center}{\bf ``Is diet 1 different from diets 2-4?''}\\[10mm]
 \end{center}
 
-(Check also chapter 5.6.5 in GSWR, 2nd edition)
+(Check also chapter 5.6.5 in GSWR)
 }
 
 \frame[containsverbatim]{\frametitle{Choosing the reference level}
@@ -808,8 +813,9 @@ theme_bw()
 
 {\bf Note:} if the additive model $\beta_i + \gamma_j$ holds, the lines would be parallel.\\[4mm]
 
-However, these lines are \myalert{not parallel}, indicating that \myalert{there is an interaction} between type and source!\\[4mm
-]
+However, these lines are \myalert{not parallel}, indicating that \myalert{there is an interaction} between type and source!\\[4mm]
+
+In words: The type (low/how) has a different influence for the Beef and Cereal diets.
 
 }
 
@@ -865,14 +871,14 @@ Group 3: beef / low &  $\hat{y}_{beef,low} = 100 + 0 + (-20.8) + 0 = 79.2$\\
 Group 4: cereal / low & $\hat{y}_{cereal,low} = 100 + (-14.1) + (-20.8) + 18.8 = 83.9$\\[6mm]
 \end{tabular}
 
-Compare these values to slide \ref{sl:mean}!
+%Compare these values to slide \ref{sl:mean}!
 }
 
 \frame[containsverbatim]{\frametitle{A cautionary note}
 \vspace{-4mm}
 {\bf Be careful:} In the presence of interactions, the $p$-values of the main effects can no longer be interpreted as before!\\[2mm]
 
-It is then required that separate analyses are carried out. For example for "Beef" and "Cereal" protein sources:\\[4mm]
+It is then required that separate ``stratified'' analyses are carried out. For example for "Beef" and "Cereal" protein sources:\\[4mm]
 
 <<>>=
 anova(lm(weightgain ~ type,subset(weightgain,source=="Beef")))
@@ -944,7 +950,7 @@ anova(r.duenger)
 
 ~\\[2mm]
 What is  the problem??\\[4mm] 
-$\rightarrow$ Look at the TA and the scale-location plots)? \\[2mm]
+$\rightarrow$ Look at the TA and the scale-location plots. \\[2mm]
 $\rightarrow$ Ideas? \\[2mm]
 $\rightarrow$ Interpretation? 
 }
