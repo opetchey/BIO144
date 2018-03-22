@@ -323,7 +323,7 @@ This is \alert{the very same problem here}, thus we need the $F$-test again!\\[2
 
 
 \frame{\frametitle{Variance decomposition}
-To derive the ingredients of the $F$-test, we look at the decomposition of variance (Remember this idea from week 3, slide 23, and replace $\hat{y_{ij}}$ by $\overline{y}_{\cdot i}$):
+To derive the ingredients of the $F$-test, we look at the decomposition of variance (Remember this idea from week 3, slide 23):
 \vspace{-4mm}
 
 \begin{eqnarray*}
@@ -359,7 +359,7 @@ MS_E = \frac{SS_{\text{within}}}{n-g}
 \item $MS_E$: Quantifies the variability {\bf within} groups.\\[4mm]
 \end{itemize}
 
-Thus $F = \frac{MS_G}{MS_E}$ is large when $MS_G$ is ``large'' with respect to $MS_E$. The larger $F$, the less likely is the data seen under $H_0$. \\[4mm]
+\vspace{6mm}
 
 {\bf Example:}
 \vspace{-15mm}
@@ -391,6 +391,7 @@ text(3.8,58,expression(bar(y[4])),col=2,cex=1.0)
 }
 
 \frame{\frametitle{Interpretation of the $F$ statistic II}
+Remember: $F =\frac{MS_G}{MS_E}$. \\[2mm]
 
 \begin{itemize}
 \item $F$ increases 
@@ -404,6 +405,8 @@ text(3.8,58,expression(bar(y[4])),col=2,cex=1.0)
 \item when the variability within groups increases.\\[6mm]
 \end{itemize}
 \end{itemize}
+
+$\rightarrow$ The larger $F$, the less likely is the data seen under $H_0$. \\[4mm]
 
 
 \href{https://gallery.shinyapps.io/anova_shiny_rstudio/}
@@ -480,8 +483,8 @@ autoplot(r.mais,smooth.colour=NA)
 }
 
 
-\frame[containsverbatim]{
-Always when we needed to do an $F$-test and when categorical covariates were involved, the \texttt{anova()} table was required:\\[3mm]
+\frame[containsverbatim]{\frametitle{}
+{\bf Always} when we needed to do an $F$-test and when categorical covariates were involved, the \texttt{anova()} table was required:\\[3mm]
 
 <<r.mais.anova,eval=T,echo=T>>=
 anova(r.mais)
@@ -518,15 +521,15 @@ abline(v=17.7,lwd=2,lty=2)
 
 
 \frame[containsverbatim]{
-You may also want to look at the summary table of the \texttt{lm()} output:\\[4mm]
+What happens if you apply \texttt{summary()} to the \texttt{lm()} object?\\[4mm]
 
 <<r.aov.mais>>=
 summary(r.mais)
 @
 ~\\[2mm]
 
-The table contains the estimates of the intercept \Sexpr{format(summary(r.mais)$coef[1,1],2,2,2)} ($\mu$ in ANOVA notation, $\beta_0$ in regression notation), and estimates for $\beta_2$, $\beta_3$, $\beta_4$ (while the reference was set to $\beta_1=0$).\\
-{\bf Hint:} Check also the $F$-test on the last line...
+The table contains the estimates of the intercept \Sexpr{format(summary(r.mais)$coef[1,1],2,2,2)} ($\mu$ in ANOVA notation, $\beta_0$ in regression notation), and estimates for $\beta_2$, $\beta_3$, $\beta_4$ (while the reference was set to $\beta_1=0$).\\[2mm]
+{\scriptsize {\bf Hint:} Check also the $F$-test on the last line...}
 }
 
 
@@ -549,24 +552,27 @@ ggplot(d.blz,aes(x=factor(DIAET),y=BLUTZUCK)) + geom_boxplot() + geom_point(size
 }
 
 \frame[containsverbatim]{
-Interpret the results and the residual plots (why is \texttt{mutate()} needed first?):\\[4mm]
+Interpret the results:\\[4mm]
 <<>>=
 d.blz <- mutate(d.blz,DIAET=as.factor(DIAET))
 anova(lm(BLUTZUCK ~ DIAET,d.blz))
 @
 
-\begin{center}
-\setkeys{Gin}{width=0.5\textwidth}
-<<blz_plot_res,fig=T,height=5,width=5,echo=F>>=
-autoplot(lm(BLUTZUCK ~ DIAET,d.blz),smooth.colour=NA)
-# par(mfrow=c(1,2))
-# r.aov.blz <- aov(BLUTZUCK ~ DIAET,d.blz)
-# plot(r.aov.blz$fitted,r.aov.blz$residuals,xlab="Fitted values", ylab="Residuals")
-# abline(h=0,lty=2)
-# qqnorm(r.aov.blz$residuals)
-# qqline(r.aov.blz$residuals)
-@
-\end{center}
+\vspace{8mm}
+Question: Why is \texttt{mutate()} needed first?
+
+% \begin{center}
+% \setkeys{Gin}{width=0.5\textwidth}
+% <<blz_plot_res,fig=T,height=5,width=5,echo=F>>=
+% autoplot(lm(BLUTZUCK ~ DIAET,d.blz),smooth.colour=NA)
+% # par(mfrow=c(1,2))
+% # r.aov.blz <- aov(BLUTZUCK ~ DIAET,d.blz)
+% # plot(r.aov.blz$fitted,r.aov.blz$residuals,xlab="Fitted values", ylab="Residuals")
+% # abline(h=0,lty=2)
+% # qqnorm(r.aov.blz$residuals)
+% # qqline(r.aov.blz$residuals)
+% @
+% \end{center}
 }
 
 \frame{\frametitle{Multiple comparisons, multiple tests}
@@ -682,7 +688,7 @@ Fisher $p$-values: \\
 \frame{\frametitle{Other contrasts}
 Sometimes additional comparisons are of interest. For example, a new diet is to be compared to other, existing diets. \\[4mm]
 
-In the ``Blutzucker'' example, this could be, for intance:\\[2mm] 
+In the ``Blutzucker'' example, this could be, for instance:\\[2mm] 
 \begin{center}{\bf ``Is diet 1 different from diets 2-4?''}\\[10mm]
 \end{center}
 
@@ -691,7 +697,7 @@ In the ``Blutzucker'' example, this could be, for intance:\\[2mm]
 
 \frame[containsverbatim]{\frametitle{Choosing the reference level}
 \vspace{-2mm}
-Back to the Hybrid mais example. R orders the levels alphabetically and takes the first level as reference level. \\[2mm]
+Back to the Hybrid Mais example. R orders the levels alphabetically and takes the first level as reference level. \\[2mm]
 
 This can be changed manually:\\[2mm]
 
@@ -725,19 +731,19 @@ low & group 3 & group 4\\
 
 \frame[containsverbatim]{\label{sl:mean}
 ~\\
-Start by looking at means and standard deviations in the groups, as well at a graphical description of the means: \\[2mm]
+Start by looking at means and standard deviations in the groups, as well as at a graphical description of the means: \\[2mm]
 <<echo=F>>=
 library(HSAUR3)
-weightgain <- mutate(weightgain,type = relevel(type,ref="Low"))
+d.weightgain <- mutate(weightgain,type = relevel(type,ref="Low"))
 @
 <<echo=T>>=
-weightgain %>% group_by(source,type) %>% summarise(meanW = mean(weightgain),sdW = sd(weightgain))
+d.weightgain %>% group_by(source,type) %>% summarise(meanW = mean(weightgain),sdW = sd(weightgain))
 @
 ~\\[2mm]
 \begin{multicols}{2}
 \setkeys{Gin}{width=0.5\textwidth}
 <<fig=T,width=5,height=4>>=
-plot.design(weightgain)
+plot.design(d.weightgain)
 @
 % # ggplot(sumWeight, aes(x = source, y = meanW,
 % #                    colour = type, group = type)) +
@@ -783,7 +789,7 @@ Again, additional constraints are needed!
 \frame[containsverbatim]{\frametitle{Two-way ANOVA in R}
 In R, a two-way ANOVA is as simple as one-way ANOVA, just add another variable:\\[4mm]
 <<>>=
-r.weight <- lm(weightgain ~ source + type,weightgain)
+r.weight <- lm(weightgain ~ source + type, d.weightgain)
 anova(r.weight)
 @
 ~\\[4mm]
@@ -802,7 +808,7 @@ A so-called \myalert{interaction plot} helps to understand if the additive model
 # interaction.plot(x.factor=weightgain$type,
 #                  trace.factor=weightgain$source,
 #                  response=weightgain$weightgain,ylab="mean of weightgain",xlab="type",trace.label="Source")
-sumWeight <- summarise(group_by(weightgain,source,type),meanWeight = mean(weightgain),sdW = sd(weightgain))
+sumWeight <- summarise(group_by(d.weightgain,source,type),meanWeight = mean(weightgain),sdW = sd(weightgain))
 ggplot(sumWeight, aes(x = type, y = meanWeight,
 colour = source, group = source)) +
 geom_point() +
@@ -840,10 +846,10 @@ y_{ijk} = \mu + \beta_i + \gamma_j + (\beta\gamma)_{ij} + e_{ijk} \quad \text{wi
 
 \frame[containsverbatim]{\frametitle{Two-way ANOVA in R -- Including an interaction}
 
-Again the rats example, this time including the interaction term:\\[4mm]
+Let's include an interaction term in the rats example:\\[4mm]
 
 <<>>=
-r.weight2 <- lm(weightgain ~ source * type,weightgain)
+r.weight2 <- lm(weightgain ~ source * type,d.weightgain)
 anova(r.weight2)
 @
 ~\\[4mm]
@@ -858,17 +864,17 @@ summary(r.weight2)$coef
 {\bf Interpretation of the coefficients} 
 \myalert{This works in the same way as for categorical covariates in regression!} To see this, let us estimate the means from the model. From the above output, we have {\scriptsize [because of using treatment contrasts]}:\\[4mm]
 
-$\hat\beta_{beef}=0$, $\hat\beta_{cereal}=-14.1$, \\
-$\hat\gamma_{high}=0$, $\hat\gamma_{low}=-20.8$,\\
-$\hat{(\beta\gamma)}_{cereal/low}=18.8$, $\hat{(\beta\gamma)}_{beef/high}=\hat{(\beta\gamma)}_{beef/low}=\hat(\beta\gamma)_{cereal/high}=0$.\\[4mm]
+$\hat\beta_{beef}=0$, $\hat\beta_{cereal}=4.7$, \\
+$\hat\gamma_{low}=0$, $\hat\gamma_{high}=20.8$,\\
+$\hat{(\beta\gamma)}_{cereal/high}= -18.8$, $\hat{(\beta\gamma)}_{beef/high}=\hat{(\beta\gamma)}_{beef/low}=\hat(\beta\gamma)_{cereal/low}=0$.\\[4mm]
 
 Therefore:\\[2mm]
 
 \begin{tabular}{l l}
-Group 1: beef / high &  $\hat{y}_{beef,high} = 100 + 0 + 0 + 0 = 100$\\
-Group 2: cereal / high & $\hat{y}_{cereal,high} = 100 + (-14.1) + 0 + 0 = 85.9$\\
-Group 3: beef / low &  $\hat{y}_{beef,low} = 100 + 0 + (-20.8) + 0 = 79.2$\\
-Group 4: cereal / low & $\hat{y}_{cereal,low} = 100 + (-14.1) + (-20.8) + 18.8 = 83.9$\\[6mm]
+Group 1: beef / low &  $\hat{y}_{beef,low} = 79.2 + 0 + 0 + 0 = 79.2$\\
+Group 2: cereal / low & $\hat{y}_{cereal,low} = 79.2 + 4.7 + 0 + 0 = 83.9$\\
+Group 3: beef / high &  $\hat{y}_{beef,high} = 79.2 + 0 + 20.8 + 0 = 100$\\
+Group 4: cereal / high & $\hat{y}_{cereal,high} = 79.2 + 4.7 + 20.8 - 18.8 = 85.9$\\[6mm]
 \end{tabular}
 
 %Compare these values to slide \ref{sl:mean}!
@@ -881,8 +887,8 @@ Group 4: cereal / low & $\hat{y}_{cereal,low} = 100 + (-14.1) + (-20.8) + 18.8 =
 It is then required that separate ``stratified'' analyses are carried out. For example for "Beef" and "Cereal" protein sources:\\[4mm]
 
 <<>>=
-anova(lm(weightgain ~ type,subset(weightgain,source=="Beef")))
-anova(lm(weightgain ~ type,subset(weightgain,source=="Cereal")))
+anova(lm(weightgain ~ type,subset(d.weightgain,source=="Beef")))
+anova(lm(weightgain ~ type,subset(d.weightgain,source=="Cereal")))
 @
 
 }
