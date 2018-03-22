@@ -303,7 +303,7 @@ and $\hat{y}_{ij} = \overline{y}_{\cdot i} = \mu + \beta_i$ can be interpreted a
 \colorbox{lightgray}{\begin{minipage}{10cm}
 \vspace{-4mm}
 \begin{eqnarray*}
-\bm{H_0} &:& \mu_1=\mu_2=\ldots = \mu_g  \quad \text{or, equivalently} \quad  \beta_1=\beta_2 = \ldots = \beta_g   \\[2mm]
+\bm{H_0} &:& \mu_1=\mu_2=\ldots = \mu_g  \quad \text{or, equivalently} \quad  \beta_2 = \ldots = \beta_g =0  \\[2mm]
 \bm{H_1} &:& \text{At least two groups are different}
 \end{eqnarray*}
 \end{minipage}}
