@@ -90,7 +90,7 @@
 Datenanalyse in der Biologie}%\\[.3cm]
 \author[Stefanie Muff, Owen L.\ Petchey]{\centering Stefanie Muff  \& Owen L.\ Petchey }
 %\institute[]{Institute of Social and Preventive Medicine \\ Institute of Evolutionary Biology and Environmental Studies}
-\date[]{Lecture 6: ANCOVA, Short introduction to Linear Algebra\\ 12./13. April 2018}
+\date[]{Lecture 6: ANCOVA, short introduction to Linear Algebra\\ 12./13. April 2018}
 
 
 \maketitle
@@ -145,16 +145,20 @@ An ANCOVA is an analysis of variance (ANOVA), \alert{including} also at least on
 \vspace{6mm}
 
 $\rightarrow$ ANCOVA is a \alert{combination of ANOVA and regression}, so in principle, there is nothing new to it...\\[6mm]
+}
 
-Given a categorical covariate $x_i$ and a continuous covariate $z_i$. Then the ANCOVA equation (without interactions) is given as
+\frame{
+Given a categorical covariate $x_i$ and a continuous covariate $z_i$. Then the ANCOVA equation (without interactions) is given as\\[4mm]
+
 \colorbox{lightgray}{\begin{minipage}{10cm}
 \begin{equation*}
 y_i = \beta_0 + \beta_1x_i^{(1)} + ... + \beta_kx_i^{(k)} + \beta_z z_i + e_i \ ,
 \end{equation*}
 where $x_i^{(k)}$ is the $k$th dummy variable ($x_i^{(k)}$=1 if $i$th observation belongs to category $k$, 0 otherwise).
 \end{minipage}}
-~\\
-{\bf Note:} It is straightforward to add an interaction of $x_i$ with $z_i$.
+~\\[8mm]
+{\bf Note 1:} It is straightforward to add an interaction of $x_i$ with $z_i$.\\
+{\bf Note 2:} Again, for identifiability reason, we typically set $\beta_1=0$.
 }
 
 \frame{\frametitle{}
@@ -227,7 +231,7 @@ $\rightarrow$ $p=0.167$, thus interaction is probably not relevant.
 
 
 \frame[containsverbatim]{\frametitle{A new example: cholesterol levels}
-{\bf Example:} Cholesterol levels [mg/ml] for 30 women from two US states, Iowa and Nebraska, were measured. \\[2mm]
+{\bf Example:} Cholesterol levels [mg/ml] for 30 women from three US states (Iowa, Nebraska, Arizona), were measured. \\[2mm]
 {\bf Question:} Do these levels differ between the states? \\[2mm]
 Age (years) may be a relevant covariable. \\
 
@@ -263,14 +267,16 @@ $\rightarrow$ We include state, age and the interaction of the two.
 }
 
 \frame[containsverbatim]{
-The model equation is thus given as\\[6mm]
-%
-\colorbox{lightgray}{\begin{minipage}{10cm}
-\vspace{-5mm}
-\begin{equation*}
-y_i = \beta_0 + \beta_1 \cdot(state)_i + \beta_2\cdot (age)_i + \beta_3 \cdot(state)_i \cdot(age)_i + e_i  \ , \quad e_i \sim \N(0,\sigma_e^2) \ .
-\end{equation*}
-\end{minipage}}
+% The model equation is thus given as\\[6mm]
+% %
+% \colorbox{lightgray}{\begin{minipage}{10cm}
+% \vspace{-5mm}
+% \begin{equation*}
+% y_i = \beta_0 + \beta_1 \cdot(state)_i + \beta_2\cdot (age)_i + \beta_3 \cdot(state)_i \cdot(age)_i + e_i  \ , \quad e_i \sim \N(0,\sigma_e^2) \ .
+% \end{equation*}
+% \end{minipage}}
+ 
+ Doing the analysis:
  
 ~\\[4mm]
 <<echo=T>>=
@@ -413,7 +419,7 @@ This is the so-called \alert{design matrix} with a vector of 1's in the first co
 \bm{y} = \bm{\tilde{X}} \cdot \bm{\tilde\beta} + \bm{e}  \ ,
 \end{equation*}
 
-with $\bm{\tilde\beta}$ the vector of regression coefficients and $\bm{\epsilon}$ the vector of residuals.
+with $\bm{\tilde\beta}$ the vector of regression coefficients and $\bm{e}$ the vector of residuals.
 \end{itemize}
 }
 
@@ -809,7 +815,7 @@ The \alert{length of a vector} $\bm{a}^\top=(a_1,a_2,\ldots, a_n)$ is defined as
 
 This is basically the \alert{Pythagoras} idea in 2, 3, ... $n$ dimensions.\\[4mm]
 
-In 2 dimensions: $||\bm{a}||^2 = a_1^2 + a_2^2$:
+In 2 dimensions: $||\bm{a}|| = \sqrt{a_1^2 + a_2^2}$:
 
 \begin{center}
 \includegraphics[width=4cm]{graphics/pythagoras.pdf}
@@ -818,7 +824,7 @@ In 2 dimensions: $||\bm{a}||^2 = a_1^2 + a_2^2$:
 
 
 \frame{\frametitle{Identity matrix (Einheitsmatrix)}
-The identity matrix (of dimension $m$) is probably the simples matrix that exists. It has 1's on the diagonal and 0's everywhere else:
+The identity matrix (of dimension $m$) is probably the simplest matrix that exists. It has 1's on the diagonal and 0's everywhere else:
 
 \begin{equation*}
 \bm{I} = 
@@ -997,15 +1003,15 @@ solve(t(Xtilde) %*% Xtilde)  %*%  t(Xtilde) %*% t.Y
 }
 
 
-\frame{\frametitle{Distribution of the $\bm{\beta}$ coefficients}
-See chapter 3.5 in Stahel: Linear algebra is useful to find the actual distribution of the regression coefficients $\bm\beta$.\\[4mm]
-
-No need to know this by heart -- but please remember:\\[2mm]
-
-\colorbox{lightgray}{\begin{minipage}{10cm}
-Finding the joint distribution for $\bm\beta$ is {\bf much harder} without linear algebra.
-\end{minipage}}
-}
+%\frame{\frametitle{Distribution of the $\bm{\beta}$ coefficients}
+%See chapter 3.5 in Stahel: Linear algebra is useful to find the actual distribution of the regression coefficients $\bm\beta$.\\[4mm]
+%
+%No need to know this by heart -- but please remember:\\[2mm]
+%
+%\colorbox{lightgray}{\begin{minipage}{10cm}
+%Finding the joint distribution for $\bm\beta$ is {\bf much harder} without linear algebra.
+%\end{minipage}}
+%}
 
 
 % \frame{\frametitle{Summary}

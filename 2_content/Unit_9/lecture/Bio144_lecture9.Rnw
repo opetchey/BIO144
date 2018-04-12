@@ -90,7 +90,7 @@
 Datenanalyse in der Biologie}%\\[.3cm]
 \author[Stefanie Muff, Owen L.\ Petchey]{\centering Stefanie Muff  \& Owen L.\ Petchey }
 %\institute[]{Institute of Social and Preventive Medicine \\ Institute of Evolutionary Biology and Environmental Studies}
-\date[]{Lecture 9: Modelling count data \\ 3./4. May 2018}
+\date[]{Lecture 9: Modeling count data \\ 3./4. May 2018}
 
 
 \maketitle
@@ -105,7 +105,7 @@ library(ggfortify)
 @
 
 \begin{itemize}
-\item Non-continuous outcomes: counts\\[2mm]
+\item When the outcome ($y$) is a count\\[2mm]
 \item Generalized linear models\\[2mm]
 \item Poisson regression\\[2mm]
 \item Link function\\[2mm]
@@ -153,9 +153,17 @@ The research question then is: \\[2mm]
 \frame[containsverbatim]{\frametitle{Illustrative/working example: Soay sheep}
 Hirta, a small island of Scotland, is inhabited by an unmanaged and feral population of Soay sheep. \\[2mm]
 
-Ecologists were interested in the {\bf question} whether body mass of female animals influences their fitness, measured as their \alert{lifetime reproductive success} (the number of offspring over their lifespan).\\[2mm]
+Ecologists were interested in the {\bf question} whether body mass of female animals influences their fitness, measured as their \alert{lifetime reproductive success} (the number of offspring over their lifespan).\\[4mm]
 
-``Are heavier females fitter than lighter females?'' \\[6mm]
+
+\colorbox{lightgray}{\begin{minipage}{9cm}
+\begin{center}
+{\bf Question:} ``Are heavier females fitter than lighter females?''  
+\end{center}
+\end{minipage}}
+
+
+~\\[4mm]
 
 <<echo=F>>=
 soay <-  read.table("../../data_examples/GSWR_datasets/SoaySheepFitness.csv",header=T, sep=",")
@@ -207,7 +215,7 @@ r.soay <- lm(fitness ~ body.size ,data=soay)
 autoplot(r.soay,smooth.colour = NA)
 @
 \end{center}
-$\rightarrow$ The diagnostic plots show that the {\bf linear regression assumptions are violated}!
+$\rightarrow$ The diagnostic plots indicate that the {\bf linear regression assumptions are violated}!
 }
 
 
@@ -238,7 +246,7 @@ $\rightarrow$ This looks a bit better. However...
 }
 
 \frame{\frametitle{What is the problem?}
-There is still a clear upwards trend in scale-location plot, indicating that the \alert{variance increases} as the fitted values grow larger (I used the smoother to make this obvious).\\[8mm]
+There is still a clear upward trend in the scale-location plot, indicating that the \alert{variance increases} as the fitted values grow larger (I used the smoother to make this obvious).\\[8mm]
 
 
 Moreover, the \alert{normal distribution} for count data is obviously \alert{violated}. Why?\\[2mm]
@@ -281,7 +289,7 @@ Some examples:
 \includegraphics[width=10cm]{graphics/poisson.png}
 \end{center}
 
-So: How can one use the Poisson distribution for regression modelling?
+So: How can one use the Poisson distribution for regression modeling?
 }
 
 
@@ -293,7 +301,8 @@ The aim of the GLM approach is that we can still use a \alert{linear predictor} 
 
 ~\\[2mm]
 \begin{itemize}
-\item In {\bf linear regression}, $\eta_i$ is the \alert{predicted value} for the mean $\E(y_i)=\eta_i$  (Why? Because the residual term $+ e_i$ is missing!).\\[2mm]
+\item In {\bf linear regression}, $\eta_i$ is the \alert{predicted value} for the mean $\E(y_i)=\eta_i$.\\  
+{\small (Why $\E(y_i)$ and not $y_i$? Because the residual/error term $+ e_i$ is missing!)}\\[2mm]
 
 \item However, for counts we cannot simply set $\eta_i$ equal to $\E(y_i)$, if $y_i$ is a \alert{count}!\\[2mm]
 
@@ -303,7 +312,7 @@ The aim of the GLM approach is that we can still use a \alert{linear predictor} 
 \frame{
 Why can't we set $\E(y_i)=\eta_i$ for count data? \\[2mm]
 
-{\bf Because nothing prevents $\eta_i$ from being negative!}\\[4mm]
+{\bf $\rightarrow$ Because nothing prevents $\eta_i$ from being negative!}\\[4mm]
 
 Let us try to use the same approach as in linear regression, assuming that $\E(y_i)=\eta_i$ for our soay sheep counts, that is,
 
@@ -315,7 +324,7 @@ What is the predicted number of offspring for a 1kg sheep? Plug-in: $-2 + 1.2\cd
 
 This is very unreasonable, right?\\[6mm]
 
-A trick is thus needed!
+$\rightarrow$ We need a trick!
 }
 
 \frame{\frametitle{The trick: Use a link function}
@@ -403,7 +412,7 @@ autoplot(soay.glm,smooth.colour = NA)
 
 \frame{
 \begin{itemize}
-\item Model diagnostics seem ok. In particular, the scale location plot is much better than when using the quadratic term in linear regression (slide \ref{sl:quadratic}).\\[2mm]
+\item Model diagnostics seem ok. In particular, the scale location plot is a bit better than when using the quadratic term in linear regression (slide \ref{sl:quadratic}).\\[2mm]
 
 \item Do you find it strange that the same diagnostic plot can be used as in simple linear regression?\\[2mm]
 
@@ -477,7 +486,7 @@ anova(soay.glm)
 
 ~\\[4mm]
 {\bf Note:} The deviance is essentially a difference of likelihoods.\\
-In brief, the larger the likelihood, the better fits the data to your model...
+In brief, the larger the likelihood, the better fits your model to the data...
 }
 
 \frame[containsverbatim]{
@@ -488,7 +497,7 @@ Of this, 37.041 is \alert{explained by bodysize}.\\[2mm]
 The question is, whether this is ``much''? This can be tested by a $\chi^2$ test, because the value is $\chi^2$ distributed with 1 degree of freedom:\\[2mm]
 
 <<>>=
-1-pchisq(37.041,1)
+pchisq(37.041,1,lower.tail=F)
 @
 
 ~\\[4mm]
@@ -603,7 +612,7 @@ summary(polyps.glm)
 
 \frame{\frametitle{Overdispersion}
 
-``Overdispersion'' means ``extra variability''. Why could this be a problem?\\[4mm]
+{\bf ``Overdispersion''} means {\bf ``extra variability''}. Why could this be a problem?\\[4mm]
 
 {\bf Remember:} The variance of the Poisson distribution increases with the mean, because \alert{\bf mean=variance} (see slide \ref{sl:poisson}). \\[8mm]
 
@@ -629,7 +638,11 @@ Look at the summary output from your GLM object, check the ``Residual deviance''
 
 The residual deviance should be approximately $\chi^2$ distributed with df degrees of freedom. This means that one should check wheter\\
 \begin{center}
+\colorbox{lightgray}{\begin{minipage}{6cm}
+\begin{center}
 \texttt{Residual deviance} $\approx$ \texttt{df} .
+\end{center}
+\end{minipage}}
 \end{center}
 
 The sheep data seem fine, but the polyps data have\\ 

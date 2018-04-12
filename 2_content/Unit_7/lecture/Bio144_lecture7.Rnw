@@ -441,7 +441,7 @@ The distribution of the $p$-values is now skewed: many of them reach rather smal
 {\scriptsize See, e.g., \citet{freedman1983, copas1983}.}
 \vspace{6mm}
 
-Please note that {\bf we therefore strongly discourage the use of automated model selection procedures}. So please ignore large parts of chapter 5.3 in the Stahel script!! \\[2mm]
+Please note that {\bf we therefore strongly discourage the use of automated model selection procedures}, at least when the aim is {\bf explanation} (see later on slide \ref{sl:pred_vs_exp}). So please ignore large parts of chapter 5.3 in the Stahel script!! \\[2mm]
 
 (Or read it to see how you should {\bf not} do it.)
 }
@@ -639,7 +639,7 @@ VIF_j = \frac{1}{1-R_j^2} \qquad
 \end{itemize}}
 
 
-\frame{\frametitle{Predictive and explanatory models}
+\frame{\frametitle{Predictive and explanatory models}\label{sl:pred_vs_exp}
 
 Before we continue to discuss model selection, let us introduce an important discrimination between models that aim at explanation and those that aim at prediction:\\[2mm]
 

@@ -993,7 +993,7 @@ Questions: Number of parameters? Degrees of freedom (60 data points)?
 \begin{itemize}
 \item The $t$-test to compare the mean of \myalert{two gropus} is a \myalert{special case of ANOVA}.\\[2mm]
 \item Even more, the $F$-test is a special case of the $t$-test: $F_{1,n} = t^2_n$.\\[2mm]
-\item ANOVA is a \myalert{special cases of the linear regression model}.\\[2mm]
+\item ANOVA is a \myalert{special case of the linear regression model}.\\[2mm]
 \item ANOVA is often taught in separate lectures, although it could be integrated in a lecture on linear regression. \\[2mm]
 \item ANOVA is traditionally most used to analyze \myalert{experimental data}.\\[2mm]
 \end{itemize}
