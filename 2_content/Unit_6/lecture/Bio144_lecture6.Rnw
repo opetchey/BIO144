@@ -231,7 +231,7 @@ $\rightarrow$ $p=0.167$, thus interaction is probably not relevant.
 
 
 \frame[containsverbatim]{\frametitle{A new example: cholesterol levels}
-{\bf Example:} Cholesterol levels [mg/ml] for 30 women from three US states (Iowa, Nebraska, Arizona), were measured. \\[2mm]
+{\bf Example:} Cholesterol levels [mg/ml] for 45 women from three US states (Iowa, Nebraska, Arizona), were measured. \\[2mm]
 {\bf Question:} Do these levels differ between the states? \\[2mm]
 Age (years) may be a relevant covariable. \\
 
