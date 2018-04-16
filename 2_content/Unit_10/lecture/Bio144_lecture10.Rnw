@@ -101,8 +101,8 @@ Datenanalyse in der Biologie}%\\[.3cm]
 
 \frame{\frametitle{Overview }
 
-Do not anymore follow the Hector book, which starts with aggregated data. This is confusing. Better start with binary data and then explain aggregated data from it! Ev. use the script by Stahel, but leave away the $\chi^2$ repetition and directly go for logistic regression.
-Better: Binary data -> doing it wrong -> doing it right (logistic regression) -> binomial (aggregated) data -> Model validation, overdispersion etc.
+%Do not anymore follow the Hector book, which starts with aggregated data. This is confusing. Better start with binary data and then explain aggregated data from it! Ev. use the script by Stahel, but leave away the $\chi^2$ repetition and directly go for logistic regression.
+%Better: Binary data -> doing it wrong -> doing it right (logistic regression) -> binomial (aggregated) data -> Model validation, overdispersion etc.
 \begin{itemize}
 \item Binary response variables
 \item Contingency tables, $\chi^2$ test
@@ -110,7 +110,6 @@ Better: Binary data -> doing it wrong -> doing it right (logistic regression) ->
 \item Logistic regression
 \item Residual analysis / model checking / deviances
 \item Interpretation of the results
-\item Todo: say that logit is default link in \texttt{glm()} function with \texttt{family=binomial}.
 \end{itemize}
 <<echo=F>>=
 library(dplyr)
@@ -185,7 +184,7 @@ T = \sum_{\text{all entries}} \frac{(\text{observed} - \text{expected})^2}{\text
 \end{equation*}
 \end{minipage}}
 
-~\\[8mm]
+~\\[4mm]
 By hand, $T$ is obtained as 
 %
 \begin{equation*}
@@ -200,35 +199,38 @@ The $p$-value of this test is given as $\Pr(X\geq 8.329)=\Sexpr{format(1-pchisq(
 <<>>=
 pchisq(8.329,1,lower.tail=F)
 @
+
+~\\
+{\bf $\rightarrow $ There is \alert{strong evidence} for an association of hormonal contraception with heart attacks!}
 }
 
-\frame[containsverbatim]{
-Of course, R can do this for us:\\[2mm]
-
-<<chisq1>>=
-contYes <- c(23,34)
-contNo <- c(35,132)
-data.table <- data.frame(rbind(contYes,contNo))
-chisq.test(data.table,correct=FALSE)
-@
-
-<<echo=F>>=
-#names( data.table) <- c("heartYes","heartNo")
-n <- sum(c(contYes,contNo))
-TT <- (23 - 58*57/n)^2 /(58*57/n) + (34 - 166*57/n)^2/(166*57/n) + (35 - 58*167/n)^2/(58*167/n) + (132 - 166*167/n)^2/ (166*167/n)
-@
-~\\[8mm]
-
-Please note: You may sometimes prefer to have \texttt{correct=TRUE} to obtain a better approximation to the $\chi^2$ distribution when expected values in the cells are small (continuity correction of Yates):\\[2mm]
-
-<<chisq2>>=
-chisq.test(data.table,correct=TRUE)
-@
-
-
-~\\[4mm]
-{\bf In any case, there is \alert{strong evidence} for an association of hormonal contraception with heart attacks!}
-}
+% \frame[containsverbatim]{
+% Of course, R can do this for us:\\[2mm]
+% 
+% <<chisq1>>=
+% contYes <- c(23,34)
+% contNo <- c(35,132)
+% data.table <- data.frame(rbind(contYes,contNo))
+% chisq.test(data.table,correct=FALSE)
+% @
+% 
+% <<echo=F>>=
+% #names( data.table) <- c("heartYes","heartNo")
+% n <- sum(c(contYes,contNo))
+% TT <- (23 - 58*57/n)^2 /(58*57/n) + (34 - 166*57/n)^2/(166*57/n) + (35 - 58*167/n)^2/(58*167/n) + (132 - 166*167/n)^2/ (166*167/n)
+% @
+% ~\\[8mm]
+% 
+% Please note: You may sometimes prefer to have \texttt{correct=TRUE} to obtain a better approximation to the $\chi^2$ distribution when expected values in the cells are small (continuity correction of Yates):\\[2mm]
+% 
+% <<chisq2>>=
+% chisq.test(data.table,correct=TRUE)
+% @
+% 
+% 
+% ~\\[4mm]
+% {\bf In any case, there is \alert{strong evidence} for an association of hormonal contraception with heart attacks!}
+% }
 
 %\frame{\frametitle{Fisher's exact test}}
 
@@ -429,7 +431,7 @@ Clarification of the difference between count data and binomial data:\\[4mm]
 {\bf Binomial data:}
 \begin{itemize} 
 \item Aggregated version of many binary experiments, that is, each can be 0 or 1. 
-\item Therefore, there is an upper limit on the number of times an ``event'' can be observed (e.g., number of deaths cannot be greater than number of living individuals).
+\item Therefore, there is an upper limit on the number of times an ``event'' can be observed (e.g., number of deaths cannot be greater than total number of individuals).
 \item Successes can be expressed as proportion (number of successes/number of trials).
 \end{itemize}
 }
@@ -554,8 +556,10 @@ with $\E(y_i) = \P(y_i=1) \ .$
 
 \frame[containsverbatim]{\frametitle{Doing it right: Fitting a logistic regression}
 \begin{itemize}
-\item As for the Poisson GLM, we can estimate the parameters $\beta_0, \beta_1, \ldots $ by maximum-likelihood estimation.\\[4mm]
-\item Luckily, the \texttt{glm()} function in R can also handle binomial and binary data!\\[4mm]
+\item As for the Poisson GLM, we can estimate the parameters $\beta_0, \beta_1, \ldots $ by maximum-likelihood estimation.\\[3mm]
+\item Luckily, the \texttt{glm()} function in R can also handle binomial and binary data!\\[3mm]
+
+\item For \texttt{glm(..., family=binomial)}, the default link function is the logistic link. \\[3mm]
 
 \item A complication comes from the fact that we need to tell the function \alert{two numbers for the response}:
   \begin{itemize}
@@ -577,8 +581,10 @@ As always, before looking at the regression output, let's do some model diagnost
 \begin{center}
 \setkeys{Gin}{width=0.6\textwidth}
 <<fig=T,width=5,height=4.5,echo=F>>=
-par(mfrow=c(2,2),mar=c(3,4,2,1))
-plot(beetle.glm)
+# par(mfrow=c(2,2),mar=c(3,4,2,1))
+# plot(beetle.glm)
+library(ggfortify)
+autoplot(beetle.glm)
 @
 \end{center}
 }
@@ -784,15 +790,23 @@ with $\E(y_i)=\P(y_i=1)=\pi_i$. \\
 }
 
 \frame[containsverbatim]{\frametitle{Complication 1 with binary data: Graphical description}
-Plotting the response $y$ (indictor for ESR$>20$) against the covariats does not lead to very illustrative graphs:
-\vspace{-6mm}
+Plotting the response $y$ (indictor for ESR$>20$) against the covariats does not lead to very illustrative graphs:\\[4mm]
 
 \begin{center}
-\setkeys{Gin}{width=1\textwidth}
-<<fig=T,echo=F,width=6,height=3.5>>=
-par(mfrow=c(1,2))
-plot(y ~ fibrinogen,plasma,ylab="ESR>20")
-plot(y ~ globulin,plasma,ylab="ESR>20")
+\setkeys{Gin}{width=0.9\textwidth}
+<<fig=T,echo=F,width=5,height=2.3>>=
+require(cowplot)
+theme_set(theme_cowplot(font_size=10))
+
+p1 <- ggplot(plasma, aes(x = fibrinogen, y = y)) + theme_bw() +
+geom_point() +
+xlab("Fibrinogen") + ylab("ESR>20") 
+
+p2 <- ggplot(plasma, aes(x = globulin, y = y)) + theme_bw() +
+geom_point() +
+xlab("Globulin") + ylab("ESR>20") 
+
+plot_grid(p1, p2, ncol=2)
 @
 \end{center}
 }
@@ -811,31 +825,21 @@ cdplot(ESR ~ globulin,plasma)
 \end{center}
 }
 
-% \frame[containsverbatim]{
-%  
-% 
-% \begin{center}
-% \setkeys{Gin}{width=0.9\textwidth}
-% <<cdplot_ESR,fig=T,width=7,height=4,echo=F>>=
-% par(mfrow=c(1,2))
-% qplot(fibrinogen,y,data=plasma,geom=c("point","smooth")) + theme_bw()
-% @
-% \end{center}
-% }
 
 
 \frame[containsverbatim]{\frametitle{Complication 2: Model diagnostics}\label{sl:binary}
 {\bf a) Residuals plots:}\\[2mm]
 
 \alert{Plotting the residuals} is possible, but \alert{not meaningful}. \\
-{\scriptsize Why? Becasue the model checking assumptions rely on aggregated data!}
+{\scriptsize Why? Becasue the model checking assumptions rely on aggregated data!}\\[2mm]
 
 \begin{center}
 \setkeys{Gin}{width=0.6\textwidth}
-<<fig=T,width=5,height=4.5,echo=F>>=
+<<fig=T,width=4,height=3.8,echo=F>>=
 plasma.glm <- glm(y ~ fibrinogen + globulin, data = plasma, family=binomial)
-par(mfrow=c(2,2),mar=c(3,4,2,1))
-plot(plasma.glm)
+# par(mfrow=c(2,2),mar=c(3,4,2,1))
+# plot(plasma.glm)
+autoplot(plasma.glm)
 @
 \end{center}
 }
