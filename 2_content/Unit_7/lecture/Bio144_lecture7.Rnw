@@ -254,7 +254,7 @@ tableRegression(r.lm1)
 \vspace{3mm}
 \begin{itemize}
 \item There is no evidence that mercury in soil influences mercury in urine ($p=\Sexpr{format(summary(r.lm1)$coef[2,4],2,2,2)}$).\\[2mm]
-\item We find $R^2=\Sexpr{format(summary(r.lm1)$r.squared,2,2,2)}$. Is this ``good''?\\[2mm]
+\item We find $R^2=\Sexpr{format(summary(r.lm1)$r.squared,2,2,2)}$ and $R_a^2=\Sexpr{format(summary(r.lm1)$adj.r.squared,2,2,2)}$. Is this ``good''?\\[2mm]
 \item Are there additional terms that might be important?\\[2mm]
 \end{itemize}
 }
@@ -289,7 +289,7 @@ tableRegression(r.lm2)
 \vspace{3mm}
 \begin{itemize}
 \item There is evidence that the interaction is relevant ($p<0.001$).\\[2mm]
-\item $R^2$ has now clearly increased to $\Sexpr{format(summary(r.lm2)$r.squared,2,2,2)}$.\\[2mm]
+\item $R^2$ has now clearly increased to $\Sexpr{format(summary(r.lm2)$r.squared,2,2,2)}$ (and $R_a^2=\Sexpr{format(summary(r.lm2)$adj.r.squared,2,2,2)}$).\\[2mm]
 \end{itemize}
 
 $\rightarrow$ The interaction term apparently improved the model.
@@ -386,7 +386,7 @@ names(data)[51] <- "Y"
 @
 \vspace{1mm}
 
-\texttt{data} is a 100$\times$ 51 matrix, where the last column is the response. The \alert{data were generated completely independent}, the covariates do not have any explanatory power for the response! 
+\texttt{data} is a 100$\times$ 51 matrix, where the last column is the response. The \alert{data were generated completely independently}, the covariates do not have any explanatory power for the response! 
 \end{enumerate}
 }
 
@@ -415,7 +415,7 @@ hist(summary(r.lm)$coef[-1,4],freq=T,main="50 variables",xlab="p-values")
 \frame[containsverbatim]{
 \begin{enumerate}
 \setcounter{enumi}{2}
-\item Then pick all variables that have a $p<0.25$ and re-fit the model using only these. 11 variables fulfil this criterion:\\[2mm]
+\item Then pick all variables that have a $p<0.25$ and re-fit the model using only these. 11 variables fulfill this criterion here:\\[2mm]
 <<>>=
 # select all variables with p<0.25
 r.lm.red <- lm(Y ~ X1 + X2 + X4 + X5 + X14 + X18 + X20 + X27 + X36 + X38 + X49,data)
@@ -444,6 +444,15 @@ The distribution of the $p$-values is now skewed: many of them reach rather smal
 Please note that {\bf we therefore strongly discourage the use of automated model selection procedures}, at least when the aim is {\bf explanation} (see later on slide \ref{sl:pred_vs_exp}). So please ignore large parts of chapter 5.3 in the Stahel script!! \\[2mm]
 
 (Or read it to see how you should {\bf not} do it.)
+}
+
+
+\frame{\frametitle{Your turn!}
+
+Please answer the following klicker questions
+\begin{center}
+\href{http://www.klicker.uzh.ch/bkx}{http://www.klicker.uzh.ch/bkx}
+\end{center}
 }
 
 \frame{\frametitle{More modern ways to do model selection}
@@ -693,7 +702,7 @@ Automatic model selection procedures using criteria like AIC, AIC$_c$, BIC may t
 
 \frame{\frametitle{Correct way of model selection for explanatory models}
 
-Automatic model selection strategies are thus {\bf not recommended for explanatory models} (example: mercury study). We therefore recommend the following steps:\\[2mm]
+Automatic model selection strategies are thus {\bf not recommended for explanatory models} (example: mercury study). We therefore recommend the following steps:\\
 
 \begin{itemize}
 \item {\bf Think about a suitable model \alert{before} you start}. This includes the model family (e.g., linear model), but also potential variables that are relevant using \emph{a priori} knowledge.\\[2mm]
@@ -729,7 +738,7 @@ Systematic effects should be included in a model {\bf only} if there is convinci
 \frame[containsverbatim]{\frametitle{Final comments on the mercury example}
 Given that the mercury model is an {\bf explanatory model}, we should not remove a variable (e.g., migration) simply because it reduces AIC (see slide \ref{sl:migration}).\\[2mm]
 
-Therefore, given the a priori selection of variables and the model validation results, the model from slide \ref{sl:mercury_final} was used in the final publication \citep{imo.etal2017}.
+$\rightarrow$ Therefore, given the a priori selection of variables and the model validation results, the model from slide \ref{sl:mercury_final} was used in the final publication \citep{imo.etal2017}.
 }
 
 
@@ -780,7 +789,7 @@ tableRegression(r.AIC)
 @
 ~\\[3mm]
 
-{\bf Note:}  AICc minimization may lead to a model that may retain variables with relatively large $p$-values (e.g., ankle).\\[2mm]
+{\bf Note:}  AICc minimization may lead to a model that retains variables with relatively large $p$-values (e.g., ankle).\\[2mm]
 {\bf Again:} Such a procedure should \hl{not be applied for an explanatory model}. Moreover, the coefficients should not be (over-)interpreted.
 }
 
@@ -797,20 +806,20 @@ tableRegression(r.AIC)
 \end{itemize}
 }
 
-\frame{\frametitle{Reading for the self-study week}
-You can find all reading tasks in the first ``Self study week'' on OpenEdX. The following pdfs are provided there:\\[2mm]
-\begin{itemize}
-\item Statistical significanc vs. biological importance (Interleaf from Whitlock and Schluter)
-\item Correlation vs. causation (Interleaf from Whitlock and Schluter)
-\item P-Werte in der NZZ (3. April 2016) 
-\item S. Goodman (2016): Aligning statistical and scientific reasoning (a really thoughtful article in one of the world's leading scientific journals)\\[4mm]
-\end{itemize}
-
-And {\bf optionally}:\\[2mm]
-\begin{itemize}
-\item Paper by \citet{freedman1983}: ``A Note on Screening Regression Equations''
-\end{itemize}
-}
+% \frame{\frametitle{Reading for the self-study week}
+% You can find all reading tasks in the first ``Self study week'' on OpenEdX. The following pdfs are provided there:\\[2mm]
+% \begin{itemize}
+% \item Statistical significanc vs. biological importance (Interleaf from Whitlock and Schluter)
+% \item Correlation vs. causation (Interleaf from Whitlock and Schluter)
+% \item P-Werte in der NZZ (3. April 2016) 
+% \item S. Goodman (2016): Aligning statistical and scientific reasoning (a really thoughtful article in one of the world's leading scientific journals)\\[4mm]
+% \end{itemize}
+% 
+% And {\bf optionally}:\\[2mm]
+% \begin{itemize}
+% \item Paper by \citet{freedman1983}: ``A Note on Screening Regression Equations''
+% \end{itemize}
+% }
 
 \frame{References:
 \bibliographystyle{Chicago}

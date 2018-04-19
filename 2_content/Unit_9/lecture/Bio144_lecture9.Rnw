@@ -749,6 +749,24 @@ The same remarks and warnings from the last weeks for linear models also apply t
 }
 
 
+
+\frame{\frametitle{Reading for the self-study week}
+You can find all reading tasks in the first ``Self study week'' on OpenEdX. The following pdfs are provided there:\\[2mm]
+\begin{itemize}
+\item Statistical significanc vs. biological importance (Interleaf from Whitlock and Schluter)
+\item Correlation vs. causation (Interleaf from Whitlock and Schluter)
+\item P-Werte in der NZZ (3. April 2016) 
+\item S. Goodman (2016): Aligning statistical and scientific reasoning (a really thoughtful article in one of the world's leading scientific journals)\\[4mm]
+\end{itemize}
+
+And {\bf optionally}:\\[2mm]
+\begin{itemize}
+\item Paper by \citet{freedman1983}: ``A Note on Screening Regression Equations''
+\end{itemize}
+}
+
+
+
 \frame{References:
 \bibliographystyle{Chicago}
 \bibliography{refs}
