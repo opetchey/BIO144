@@ -356,9 +356,9 @@ It would be very convenient if there were {\bf objective} or even {\bf automatic
 
 In fact, such procedures have been proposed in the past. For example:\\[4mm]
 \begin{itemize}
-\item \alert{Forward selection:}\\
-Start with a large/full model. In each step, remove the variable with the largest $p$-value. Do this until only variables with low $p$-values remain in the model.\\[4mm]
 \item \alert{Backward selection:}\\
+Start with a large/full model. In each step, remove the variable with the largest $p$-value. Do this until only variables with low $p$-values remain in the model.\\[4mm]
+\item \alert{Forward selection:}\\
 Start with an empty model. In each step, add the predictor with the highest importance (lowest $p$-value). Do this until none of the missing coefficients has a low $p$-value when adding it.\\[2mm]
 \end{itemize}
 
