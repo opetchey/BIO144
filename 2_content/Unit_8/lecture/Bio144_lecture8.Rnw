@@ -855,6 +855,18 @@ It is {\bf widely unknown} that a model can be broken by the inclusion of a ``wr
 }
 
 
+\frame{\frametitle{}
+
+Some further reading on a very recent case of a food researcher that conducted ``questionable'' science:\\
+
+\href{http://www.timvanderzee.com/the-wansink-dossier-an-overview/}
+{\beamergotobutton{http://www.timvanderzee.com/the-wansink-dossier-an-overview/}}\\[12mm]
+
+\includegraphics[width=10cm]{pictures/cell_phones.png}\\
+{\tiny From D. Randall \& C. Welser (2018). ``The irreproducibility crisis of modern science'', NAS report.}
+
+}
+
 
 
 \frame{\frametitle{Summary}
