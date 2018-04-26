@@ -105,7 +105,7 @@ Datenanalyse in der Biologie}%\\[.3cm]
 \item Causality vs correlation\\[2mm]
 \item Bradford-Hill criteria for causal inference\\[2mm]
 \item Experimental vs observational studies\\[2mm]
-\item Todo: Ev. introduce the idea of Bayes factors!
+%\item Todo: Ev. introduce the idea of Bayes factors!
 %\item Todo: Give p-hacking app in BC material (or for one of the study weeks)
 \end{itemize}
 
@@ -192,7 +192,7 @@ $P$-value {\bf criticism is} as {\bf old} as statistical significance testing (1
 \item Publication bias: Studies with $p<0.05$ are more likely to be published than ``non-significant'' results.\\[2mm]
 
 
-\item Recent articles in \emph{Science}, \emph{Nature} or a statement by the \emph{American Statistical Associaton (ASA)} in March 2016 show that the debate still continues \citep{claridge-chang.assam2016,goodman2016,wasserstein.lazar2016}.\\[2mm]
+\item Recent articles in \emph{Science}, \emph{Nature} or a statement by the \emph{American Statistical Associaton (ASA)} in March 2016 show that the debate still continues \citep{goodman2016,wasserstein.lazar2016}.\\[2mm]
 
 \item Model selection using $p$-values may lead to a \alert{model selection bias} (see last week).\\[2mm]
 \end{itemize}
@@ -342,14 +342,16 @@ Absence of evidence is not evidence of absence
 \vspace{4mm}
 
 In other words:\\[2mm]
-
+\begin{center}
 {\bf One cannot prove the Null Hypothesis!!}\\[6mm]
+\end{center}
 
 Several reasons may lead to large $p$-values:
 \begin{itemize}
 \item Low sample size ($\rightarrow$ low power).
 \item The truth is not ``far'' from the null hypothesis. \\
-Example: Small effect sizes in regression models. 
+Example: Small effect sizes in regression models. \\
+\item Collinear covariates.
 \end{itemize}
 }
 
@@ -379,7 +381,7 @@ Rather than a black-and-white decision ($p<0.05$), Martin Bland suggests to rega
 \begin{tabular}{ll}
 $p > 0.1$  & little or no evidence against the null hypothesis \\[2mm]
 $0.1 > p > 0.05$&  weak evidence\\[2mm]
-$0.05 > p > 0.01$ & evidence\\[2mm]
+$0.05 > p > 0.01$ & moderate evidence\\[2mm]
 $0.01 > p > 0.001$ & strong evidence\\[2mm]
 $p < 0.001 $ & very strong evidence\\[8mm]
 \end{tabular}
@@ -412,7 +414,7 @@ tableRegression(r.lm.hg)
 @
 \begin{itemize}
 \item {\bf Little or no evidence:} Hg soil, vegetables from garden, migration background\\
-\item {\bf Evidence:} Smoking
+\item {\bf Moderate evidence:} Smoking
 \item {\bf Strong evidence:} Mother, monthly fish consumption
 \item {\bf Very strong evidence:} Amalgam, age, last fish (> or < 3 days), interaction of age and mother
 \end{itemize}
@@ -437,11 +439,11 @@ Thus: Although both, meat consumption and smoking, are carcinogenic (``significa
 }
 
 \frame{
-Paul D.\ Ellis writes in his book \emph{The Essential Guide to Effect Sizes} (2010):\\[2mm]
+Paul D.\ Ellis writes in his book \emph{The Essential Guide to Effect Sizes} (2010, chapter 2):\\[2mm]
 
 \begin{quote}
-Indeed, statistical significance, which partly reflects sample size, may say nothing at all about the practical significance of a result. [....] To extract meaning from their results, social scientists need to look beyond $p$ values,
-and {\bf effect sizes and make informed judgments about what they see}.
+Indeed, statistical significance, which partly reflects sample size, may say nothing at all about the practical significance of a result. [....] To extract meaning from their results [...] scientists need to look beyond $p$ values
+and effect sizes and {\bf make informed judgments about what they see}.
 \end{quote}
 
 }
@@ -453,7 +455,7 @@ Ask: {\bf Which range of true effects is statistically consistent with the obser
 
 {\bf Example}\\[2mm] 
 
-Body fat example, slide 39 of week 1. \\[3mm]
+Body fat example, slide 39 of lecture 2. \\[3mm]
 
 The effect estimate for the effect of BMI on body fat is given as  $\hat\beta_{BMI} = 1.82$, 95\% CI from 1.61 to 2.03. \\[3mm]
 
@@ -482,7 +484,7 @@ Because this boils down to checking whether $p<0.05$ ...
 \frame{\frametitle{Suggestion 3:  Look at relative importances of covariates}
 
 \begin{itemize}
-\item Ultimately, the popularity of $p$-values is based on the wish to judge which covariates are {\bf relevant}
+\item Ultimately, the popularity of $p$-values in regression models is based on the wish to judge which covariates are {\bf relevant}
 in a model, particularly in observational studies.\\[4mm]
 
 \item The problem with this: Low $p$-values do not automatically imply high relevance \citep{cox1982}.\\[4mm]
