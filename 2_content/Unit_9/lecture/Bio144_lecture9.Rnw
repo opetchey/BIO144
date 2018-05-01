@@ -130,7 +130,7 @@ The lecture material of today is based on the following literature:\\[4mm]
 \item We have seen: Covariates in regression models can be \alert{continuous}, \alert{categorical} (binary or multi-level) or \alert{counted numbers} (integers).\\[2mm]
 \item However, the \alert{response variable} ($\bm{y}$) was so far \alert{always continuous}, and the assumption was that the residuals $e_i\sim \N(0,\sigma_e^2)$.\\[2mm]
 \item \alert{In reality}, the response variable can also be a count (an integer $\geq 0$) or a categorical variable (e.g., presence/absence data).\\[2mm]
-\item Here, we will look at the case where the response variable is a \alert{count}, that is, $y_i =0,1,2,\dots$.\\[4mm]
+\item Today we will look at the case where the response variable is a \alert{count}, that is, $y_i =0,1,2,\dots$.\\[4mm]
 \end{itemize}
 
 }
@@ -342,7 +342,7 @@ In order to prevent the expected value $\E(y_i)$ to be negative for count data $
 \item The $\log$ is called the \alert{link function}.\\[2mm]
 \item The advantage: The predicted fitness $\E(y_i)$ is now \alert{always positive}, because equation \eqref{eq:logLink} is identical to 
 $$\E(y_i) = \exp(\beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_p x_i^{(p)})  \ ,$$
-which is now {\bf always} $>0$! {\scriptsize (I really hope you remember what the $\exp()$ function looks like...)}
+which is now {\bf always} $>0$! {\scriptsize (Plot the $\exp()$ function if you forgot what it looks like...)}
 \end{itemize}
 
 }

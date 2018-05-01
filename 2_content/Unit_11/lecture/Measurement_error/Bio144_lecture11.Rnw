@@ -542,7 +542,7 @@ plot(r.simex)
 @
 \end{center}
 
-{\bf Note:} The \texttt{sex} variable has \emph{not} been mismeasured, but it is was also affected by the error in BMI.\\[2mm]
+{\bf Note:} The \texttt{sex} variable has \emph{not} been mismeasured, nevertheless it is affected by the error in BMI!\\[2mm]
 {\bf Reason:} \texttt{sex} and BMI are correlated.
 }
 
