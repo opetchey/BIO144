@@ -192,7 +192,7 @@ xlab("Body mass (kg)") + ylab("Lifetime fitness")
 {\bf What can we see from the plot?}
 \begin{itemize}
 \item Reproductive success seems to increase with female body weight (not surprising, right?).\\[2mm]
-\item The linear line seems unreasonable, the red seems better. Maybe a quadratic term would be useful?\\[2mm]
+\item The linear line seems unreasonable, the red (smoothed line) seems better. Maybe a quadratic term would be useful?\\[2mm]
 \item However, the problem with these data is more subtle.\\[8mm]
 \end{itemize}
 
@@ -340,7 +340,7 @@ In order to prevent the expected value $\E(y_i)$ to be negative for count data $
 
 \begin{itemize}
 \item The $\log$ is called the \alert{link function}.\\[2mm]
-\item The advantage: The predicted fitness $\E(y_i)$ is now \alert{always positive}, because equation \eqref{eq:logLink} is identical to 
+\item The {\bf advantage}: The predicted fitness $\E(y_i)$ is now \alert{always positive}, because equation \eqref{eq:logLink} is identical to 
 $$\E(y_i) = \exp(\beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_p x_i^{(p)})  \ ,$$
 which is now {\bf always} $>0$! {\scriptsize (Plot the $\exp()$ function if you forgot what it looks like...)}
 \end{itemize}
@@ -388,7 +388,7 @@ Uff... that was hard! But we finally have all the tools for fitting a Poisson GL
 \begin{itemize}
 \item Basically, the idea is again to perform \alert{maximum-likelihood estimation}, but the details are a bit more complicated (nothing for us).\\[4mm]
 
-\item Luckily, there is an R-function that works (almost) like \texttt{lm()}, namely \texttt{glm()}:
+\item Luckily, there is an R-function that works (almost) like \texttt{lm()}, namely \hl{\texttt{glm()}}:
 
 <<>>=
 soay.glm <- glm(fitness ~ body.size, data = soay, family = poisson(link=log))
@@ -722,11 +722,16 @@ Please read chapter 7.5.2 of GSWR for some ideas how to handle this case.
 Just as a reminder:\\[4mm]
 
 {\bf
-The same remarks and warnings from the last weeks for linear models also apply to GLMs!
+The same remarks and warnings from the last weeks for linear models regarding
+\begin{itemize}
+\item Caution with model selection  
+\item Interpretation of $p$-values
+\item Reproducibility aspects
+\end{itemize}
+also apply to GLMs!
 }
 
-% \vspace{4mm}
-% Btw: AIC can be used as in the linear model, it is also printed by the \texttt{summary()} function.
+ 
 }
 
 

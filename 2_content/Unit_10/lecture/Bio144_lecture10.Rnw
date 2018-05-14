@@ -128,7 +128,7 @@ The lecture material of today is based on the following literature:\\[4mm]
 \item Chapters 9.1 - 9.3 from \emph{The new statistics with R} (Hector book).\\[12mm]
 \end{itemize}
 
-Note that I have also uploaded the continuation of the Stahel script, chapters 7-9 that covers GLM models. This is {\bf not} mandatory literature.
+Note that I have also uploaded the continuation of the Stahel script, chapters 7-9 that cover GLM models. This is {\bf not} mandatory literature.
 }
 
 \frame{\frametitle{Recap of last week: GLMs and Poisson regression}
