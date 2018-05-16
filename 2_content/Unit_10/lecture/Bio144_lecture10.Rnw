@@ -275,7 +275,7 @@ Interpretation:
 
 \frame{\frametitle{The odds and the odds ratio}
 \begin{itemize}
-\item The {\bf odds} (``Wetteverh\"altnis''): For a probability $\pi$ the odds is $\pi/(1-\pi)$. For example, if the probability to win a game is 0.75, then the odds is given as 0.75/0.25 or 3:1.\\[4mm]
+\item The {\bf odds} (``Wettverh\"altnis''): For a probability $\pi$ the odds is $\pi/(1-\pi)$. For example, if the probability to win a game is 0.75, then the odds is given as 0.75/0.25 or 3:1.\\[4mm]
 
 \item The {\bf odds ratio} is given on the previous slide. It is a ratio of two ratios, or, the {\bf ratio of two odds}.\\[4mm]
 
@@ -350,7 +350,7 @@ with linear (blue) and smoothed line (red).
 {\bf What can we see from the plot?}
 \begin{itemize}
 \item Mortality increases with higher doses of the herbicide (not surprising, right?).\\[2mm]
-\item The linear line seems unreasonable. In particular, if one extrapolates to lower or higher doses, mortality would become $<0$ or $>1$, which is not possible. {\tiny (Remember: A probability is between 0 and 1 by definition.)}\\[8mm]
+\item The linear line seems unreasonable. In particular, extrapolation to lower or higher doses leads to mortalities $<0$ or $>1$, which is not possible. {\tiny (Remember: A probability is between 0 and 1 by definition.)}\\[8mm]
 \end{itemize}
 
 {\bf How does one analyze these data correctly?}
@@ -556,7 +556,8 @@ with $\E(y_i) = \P(y_i=1) \ .$
 
 \frame[containsverbatim]{\frametitle{Doing it right: Fitting a logistic regression}
 \begin{itemize}
-\item As for the Poisson GLM, we can estimate the parameters $\beta_0, \beta_1, \ldots $ by maximum-likelihood estimation.\\[3mm]
+\item As for the Poisson GLM, we can estimate the parameters $\beta_0, \beta_1, \ldots $ by maximizing the likelihood (ML estimation).\\[3mm]
+
 \item Luckily, the \texttt{glm()} function in R can also handle binomial and binary data!\\[3mm]
 
 \item For \texttt{glm(..., family=binomial)}, the default link function is the logistic link. \\[3mm]
@@ -584,14 +585,15 @@ As always, before looking at the regression output, let's do some model diagnost
 # par(mfrow=c(2,2),mar=c(3,4,2,1))
 # plot(beetle.glm)
 library(ggfortify)
-autoplot(beetle.glm)
+autoplot(beetle.glm,smooth.colour=NA)
 @
 \end{center}
+$\rightarrow$ Hard to see much due to very low number of data points.
 }
 
 \frame{
 \begin{itemize}
-\item As in Poisson regression, it is not clear how do define residuals, there are many ways...\\[3mm]
+\item As in Poisson regression, it is not clear how do define residuals, there are many ways (data scale, linear predictor scale, likelihood scale).\\[3mm]
 \item Again, different types of residuals are used in the plots. \\[3mm]
 \item \alert{Be careful}: such plots are only reasonable for \alert{aggregated data} (which we have here)! The larger the groups, the more precise are the underlying assumptions (approximate equality of distributions).\\[3mm]
 \item See example on slide \ref{sl:binary} for an example with non-aggregated (binary) data.
@@ -628,7 +630,7 @@ Remember the regression model
 \end{equation*}
 
 ~\\
-To understand what $\beta_1$ tells us, let's transform the equation such that $\E(y_i)=\P(y_i=1)$ is on the left. Some algebra leads to 
+To understand what $\beta_1$ tells us, let's rearrange the equation. Some algebra leads to 
 
 \begin{equation}\label{eq:prob}
 \P(y_i=1 \given Dose_i)= \frac{\exp(\beta_0 + \beta_1 Dose_i)}{1 + \exp(\beta_0 + \beta_1 Dose_i)} \ . 
@@ -636,7 +638,7 @@ To understand what $\beta_1$ tells us, let's transform the equation such that $\
 
 ~\\[2mm]
 \colorbox{lightgray}{\begin{minipage}{10cm}
-It is then possible to calculate the \alert{odds} (``Chance'') 
+It is then possible to calculate the \alert{odds} (``Chance'') with some algebra:
 \begin{equation*}
 \odds(y_i=1 \given Dose_i) = \frac{\P(y_i=1 \given Dose_i)}{\P(y_i=0\given Dose_i)}= \exp(\beta_0 + \beta_1 Dose_i)\ . 
 \end{equation*}
@@ -704,7 +706,7 @@ Remember :
 \begin{itemize}
 \item Slide \ref{sl:bernoulli}: $\E(Y)=\pi$ and $\Var(Y)=\pi(1-\pi)$, thus \alert{the variance is determined by the mean!} \\[2mm]
 
-\item ``Overdispersion'' means \alert{``extra variability''} (larger than the model predicts). \\[2mm]
+\item ``Overdispersion'' means \alert{``extra variability''} (larger than the model predicts or allows). \\[2mm]
 \item Reason: Variables are missing in the model!\\[2mm]
 \item Overdispersion leads to \alert{too small $p$-values}.\\[2mm]
 \item Detectable by looking at the \alert{residual deviance}: \\[2mm]
@@ -719,7 +721,7 @@ Remember :
 Here, the residual deviance is {\bf 8.44} with {\bf 6} degrees of freedom. Is this good or bad?\\[2mm]
 
 <<>>=
-1-pchisq(8.438,6)
+pchisq(8.438,6,lower.tail=F)
 @
 ~\\
 $\rightarrow$ $p=\Sexpr{format(1-pchisq(8.438,6),2,2,2)}$ seems not problematic.\\[6mm]
@@ -777,7 +779,7 @@ print(ttab2,  floating = TRUE, include.rownames=FALSE)
 \frame{\frametitle{}
 {\bf Question:} Is a high ESR (erythrocyte sedimentation rate) an indicator for certain diseases (rheumatic disease, chronic inflammations)?\\[3mm]
 
-{\bf  Specifically: } Are the concentrations of the plasma proteins Fibrinogen and Globulin (which are disease indicators) association between ESR level ESR$<20mm/hr$ and the ?\\[6mm]
+{\bf  Specifically: } Are the concentrations of the plasma proteins Fibrinogen and Globulin (which are disease indicators) associated with the probability that ESR$>20mm/hr$?\\[6mm]
 
 {\bf The model to be fitted:}\\
 
