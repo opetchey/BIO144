@@ -566,7 +566,7 @@ with $\pi_i = \P(y_i=1) \ .$
 \item A complication comes from the fact that we need to tell the function \alert{two numbers for the response}:
   \begin{itemize}
   \item The number of successes, encoded as 1 (here: number killed )
-  \item The number of failures, encoded as 0 (here: number died)
+  \item The number of failures, encoded as 0 (here: number survived)
   \end{itemize}
   \vspace{4mm}
 <<>>=
