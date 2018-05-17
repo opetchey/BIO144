@@ -92,7 +92,7 @@
 Datenanalyse in der Biologie}%\\[.3cm]
 \author[Stefanie Muff, Owen L.\ Petchey]{\centering Stefanie Muff  \& Owen L.\ Petchey }
 %\institute[]{Institute of Social and Preventive Medicine \\ Institute of Evolutionary Biology and Environmental Studies}
-\date[]{Lecture 10: Modelling binary data  \\ 17./18. May 2018}
+\date[]{Lecture 10: Modeling binary data  \\ 17./18. May 2018}
 
 
 \maketitle
@@ -266,8 +266,7 @@ where $\pi/(1-\pi)$ is the odds (die ``Chance'').\\[4mm]
 Interpretation:
 \begin{enumerate}
 \item   $OR=1$  $\rightarrow$ the two groups are independent.
-\item   $OR > 1$ $\rightarrow$ positive dependency.
-\item   $OR < 1$ $\rightarrow$ negative dependency.
+\item   $OR > 1 (<1) $ $\rightarrow$ positive (negative) dependency.
 \end{enumerate}
 \end{itemize}
 }
@@ -275,7 +274,10 @@ Interpretation:
 
 \frame{\frametitle{The odds and the odds ratio}
 \begin{itemize}
-\item The {\bf odds} (``Wettverh\"altnis''): For a probability $\pi$ the odds is $\pi/(1-\pi)$. For example, if the probability to win a game is 0.75, then the odds is given as 0.75/0.25 or 3:1.\\[4mm]
+\item The {\bf odds} (``Wettverh\"altnis''): For a probability $\pi$ the odds is \begin{equation}
+\frac{\pi}{(1-\pi)} = \frac{\text{Wahrscheinlichkeit}}{\text{Gegenwahrscheinlichkeit}} \ .
+\end{equation}
+For example, if the probability to win a game is 0.75, then the odds is given as 0.75/0.25 or 3:1.\\[4mm]
 
 \item The {\bf odds ratio} is given on the previous slide. It is a ratio of two ratios, or, the {\bf ratio of two odds}.\\[4mm]
 
@@ -284,11 +286,10 @@ Interpretation:
 \log(OR) = \log\left(\frac{\pi_1 / (1-\pi_1)}{\pi_2 / (1-\pi_2)} \right) \ .
 \end{equation*}
 
-Why is this simpler? Look at the interpretation:\\[2mm]
+%Why is this simpler? Look at the interpretation:\\[2mm]
 \begin{enumerate}
 \item   $\log(OR)=0$ $\rightarrow$ the two groups are independent.
-\item   $\log(OR)>0$ $\rightarrow$ positive dependency.
-\item   $\log(OR)<0$ $\rightarrow$ negative dependency.
+\item   $\log(OR)>0 (<0)$ $\rightarrow$ positive (negative) dependency.
 \end{enumerate}
 
 \end{itemize}
@@ -439,7 +440,7 @@ Clarification of the difference between count data and binomial data:\\[4mm]
 
 
 \frame{\frametitle{A model for binary data?}
-I hope you remember the Bernoulli distribution from Mat183:\\[4mm]
+Remember the Bernoulli distribution from Mat183:\\[4mm]
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
 The probability distribution of a binary random variable $Y$ $\in \{0,1\}$ with parameter $\pi$ is defined as
@@ -473,7 +474,7 @@ Binomial data is an \alert{aggregation of binary data}: \\[2mm]
 \end{itemize}
 
 \vspace{8mm}
-{\small Example: In the beetle data  49 beetles were tested for the lowest dose, of which $k=6$ died, thus $\hat\pi=6/49=0.122$.}
+{\small Example: In the beetle data  $n=49$ beetles were tested for the lowest dose, of which $k=6$ died, thus the success rate is $6/49=0.122$.}
 }
 
 \frame{\frametitle{The binomial distribution}
@@ -540,10 +541,10 @@ plot(x,log(x/(1-x)),xlab=expression(pi),ylab=expression(log(pi/(1-pi))),cex=0.8)
 \colorbox{lightgray}{\begin{minipage}{10cm}
 In order to prevent the expected value $\E(y_i)$ of a binary experiment (0/1) to attain unreasonable values, we thus formulate the \alert{logistic regression model} as
 \begin{equation*}
-\log\left( \frac{\E(y_i)}{1-\E(y_i)} \right) = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_p x_i^{(p)} \ 
+\log\left( \frac{\pi_i}{1-\pi_i} \right) = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_p x_i^{(p)} \ 
 \end{equation*}
 
-with $\E(y_i) = \P(y_i=1) \ .$
+with $\pi_i = \P(y_i=1) \ .$
 \end{minipage}}
 
 ~\\[4mm]
@@ -594,7 +595,7 @@ $\rightarrow$ Hard to see much due to very low number of data points.
 \frame{
 \begin{itemize}
 \item As in Poisson regression, it is not clear how do define residuals, there are many ways (data scale, linear predictor scale, likelihood scale).\\[3mm]
-\item Again, different types of residuals are used in the plots. \\[3mm]
+\item Again, different types of residuals are used in the plots, but \texttt{autoplot()} does it automatically right. \\[3mm]
 \item \alert{Be careful}: such plots are only reasonable for \alert{aggregated data} (which we have here)! The larger the groups, the more precise are the underlying assumptions (approximate equality of distributions).\\[3mm]
 \item See example on slide \ref{sl:binary} for an example with non-aggregated (binary) data.
 \end{itemize}
@@ -626,7 +627,7 @@ This is a {\bf qualitative interpretation} of the coefficients.\\[4mm]
 \frame{\frametitle{Quantitative interpretation of the coefficients}
 Remember the regression model
 \begin{equation*}
-\log\left( \frac{\E(y_i)}{1-\E(y_i)} \right) = \beta_0 + \beta_1 Dose_i \ . 
+\log\left( \frac{\pi_i}{1-\pi_i} \right) = \beta_0 + \beta_1 Dose_i \ . 
 \end{equation*}
 
 ~\\
@@ -746,7 +747,7 @@ summary(beetle.glm2)
 
 \frame{\frametitle{Binary response / non-aggregated data}
 \begin{itemize}
-\item In the beetle example, we were in a comfortable situation: For each level of the does, we had several beetles. For instance, 49 beetles at lowest dose (49.06), of which 6 died (1) and 43 survived (0). This was \alert{binomial} data, an aggregated version of 55 trials with 0 or 1 outcome.\\[3mm]
+\item In the beetle example, we were in a comfortable situation: For each level of the does, we had several beetles. For instance, 49 beetles at lowest dose (49.06), of which 6 died (1) and 43 survived (0). This was \alert{binomial} data, an aggregated version of many (here 49) trials with 0 or 1 outcome.\\[3mm]
 \item In reality, one often has only one trial (0/1) for a (combination of) covariate(s).\\[3mm]
 \item The analysis is the same as for aggregated data, however there are a few complications with graphical descriptions and model checking. \\[6mm]
 \end{itemize}
@@ -779,12 +780,12 @@ print(ttab2,  floating = TRUE, include.rownames=FALSE)
 \frame{\frametitle{}
 {\bf Question:} Is a high ESR (erythrocyte sedimentation rate) an indicator for certain diseases (rheumatic disease, chronic inflammations)?\\[3mm]
 
-{\bf  Specifically: } Are the concentrations of the plasma proteins Fibrinogen and Globulin (which are disease indicators) associated with the probability that ESR$>20mm/hr$?\\[6mm]
+{\bf  Specifically: } Do high concentrations of the plasma proteins Fibrinogen and Globulin (which are disease indicators) incrase the probability that ESR$>20mm/hr$?\\[6mm]
 
 {\bf The model to be fitted:}\\
 
 \begin{equation*}
-\log\left( \frac{\E(y_i)}{1-\E(y_i)} \right) = \beta_0 + \beta_1 fibrinogen_i + \beta_2 globulin_i \ ,
+\log\left( \frac{\pi_i}{1-\pi_i} \right) = \beta_0 + \beta_1 fibrinogen_i + \beta_2 globulin_i \ ,
 \end{equation*}
 \\[4mm]
 with $\E(y_i)=\P(y_i=1)=\pi_i$. \\
