@@ -865,7 +865,7 @@ plasma.glm <- glm(y ~ fibrinogen + globulin, data = plasma, family = binomial)
 Please look at the model outcomes (summary and anova table) on the next slides and answer the following questions:
 
 \begin{enumerate}
-\item Is there an an effect of fibrinogen and/or globulin on the outcome (ESR$>20$)?\\[2mm]
+\item Is there evidence for an an effect of fibrinogen and/or globulin on the outcome (ESR$>20$)?\\[2mm]
 \item What is the \emph{quantitative} interpretation of the $\beta_1$ coefficient (what happens to $\P(ESR>20)$ when fibrinogen incrases by 1 unit)? \\[2mm]
 \item Is a \texttt{quasibinomial} model more suitable for these data?
 \end{enumerate}
