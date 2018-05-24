@@ -5,19 +5,19 @@ library(ggfortify)
 
 dd <- read_csv("~/Desktop/MoleRatLayabouts.csv")
 
-The dataset you'll look at is about naked mole rats, and what influences how much energy the expend
-Naked mole rats are particularly interesting animals, because they are the only known mammals
-with distinct social castes (well, apart from humans perhaps). Within the worker caste there
-seem to be two castes: hard workers, and lazy individuals. Researchers were interested
-in physiological difference between the hard workers and the lazy individuals, so 
-measured their energy expenditure, and their body mass. Mass was measured because
-it was already known that the lazy individuals are bigger than the hard workers.
-So, the question was "after taking into account differences in mass, was there a difference
-in energy expenditure?".
-
-By the way, this example comes from the book "The analysis of biological data", by Whitlock and Schluter.
-
-Get the dataset and do the usual preliminaries in RStudio.
+# The dataset you'll look at is about naked mole rats, and what influences how much energy the expend
+# Naked mole rats are particularly interesting animals, because they are the only known mammals
+# with distinct social castes (well, apart from humans perhaps). Within the worker caste there
+# seem to be two castes: hard workers, and lazy individuals. Researchers were interested
+# in physiological difference between the hard workers and the lazy individuals, so 
+# measured their energy expenditure, and their body mass. Mass was measured because
+# it was already known that the lazy individuals are bigger than the hard workers.
+# So, the question was "after taking into account differences in mass, was there a difference
+# in energy expenditure?".
+# 
+# By the way, this example comes from the book "The analysis of biological data", by Whitlock and Schluter.
+# 
+# Get the dataset and do the usual preliminaries in RStudio.
 
 ## What is the question?
 ## Does the relationship differ between castes (intercept and slope)?

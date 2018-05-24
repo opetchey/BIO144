@@ -10,6 +10,8 @@ library(tidyverse)
 library(ggfortify)
 library(cowplot)
 
+
+
 ## load the dataset
 milk <- read_csv("https://github.com/opetchey/BIO144/raw/master/3_datasets/milk_rethinking.csv")
 
