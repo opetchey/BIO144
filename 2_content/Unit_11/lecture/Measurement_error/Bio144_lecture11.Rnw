@@ -142,11 +142,12 @@ The lecture material of today is partially based on the following literature:\\[
 \frame{\frametitle{The fundamental assumptions of regression analyses}
 
 \begin{itemize}
-\item {\bf Linear regression including ANOVA:} 
+\item {\bf Linear regression (including ANOVA):} 
 $$e_i \sim \N(0,\sigma_e^2) \ . $$
 \item {\bf Generalized linear model:} Implicit assumptions that can be checked by model diagnostic plots.\\[4mm]
-\item Basically, a fundamental assumption is that the distributional assumptions are fulfilled.\\[4mm]
 \end{itemize}
+
+$\rightarrow$  Basically, a fundamental assumption always is that the {\bf distributional assumptions are fulfilled}.
 }
 
 
@@ -206,6 +207,21 @@ text(-1.5,0.3,labels=expression(w[i]),cex=0.6)
 	\structure{Examples:}   Imprecise measurements of a concentration, a mass, a length etc. \\[2mm]
 $\rightarrow$The observed value $w_i$ varies around the true value $x_i$. \\
 	
+}
+
+
+\frame{\frametitle{Simulations and apps}
+
+% {\bf Bias the regression parameters}, mainly attenuation (underestimation) of the true effect.\\[2mm]
+
+Illustration with shiny apps for two error types in linear, logistic and Poisson regression:\\[6mm]
+
+\href{https://stefaniemuff.shinyapps.io/MEC_ChooseL/}
+{\beamergotobutton{Classical error}}
+
+\href{https://stefaniemuff.shinyapps.io/MEB_ChooseL/}
+{\beamergotobutton{Berkson error}}
+
 }
 
 
@@ -342,19 +358,7 @@ ggplot(mapping=aes(x=x,y=y,color="X")) +  geom_smooth(method="lm") + geom_point(
 
 
 
-\frame{\frametitle{Simulations and apps}
 
-% {\bf Bias the regression parameters}, mainly attenuation (underestimation) of the true effect.\\[2mm]
-
-Illustration with shiny apps for two error types in linear, logistic and Poisson regression:\\[6mm]
-
-\href{https://stefaniemuff.shinyapps.io/MEC_ChooseL/}
-{\beamergotobutton{Classical error}}
-
-\href{https://stefaniemuff.shinyapps.io/MEB_ChooseL/}
-{\beamergotobutton{Berkson error}}
-
-}
 
 
 \frame{\frametitle{Error in the outcome of regression models }
