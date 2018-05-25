@@ -363,11 +363,13 @@ ggplot(mapping=aes(x=x,y=y,color="X")) +  geom_smooth(method="lm") + geom_point(
 
 \frame{\frametitle{Error in the outcome of regression models }
 Example: \alert{Continuous} error in a linear regression outcome.\\[2mm]
-{\small Note: In the case when the observed response 
+Observe 
 \begin{equation*}
-s_i = y_i + v_i \quad v_i \sim \N(0,\sigma_v^2) \ ,
+s_i = y_i + v_i \quad v_i \sim \N(0,\sigma_v^2)  
 \end{equation*}
-the error variance is simply absorbed in the residual variance $\sigma^2_\epsilon$. }
+instead of $y_i$. 
+
+$\rightarrow$ the error variance is simply absorbed in the residual variance $\sigma^2_\epsilon$. 
 \vspace{-2mm}
 \begin{center}
 \setkeys{Gin}{width=0.8\textwidth}
