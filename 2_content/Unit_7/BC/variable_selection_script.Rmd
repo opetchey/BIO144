@@ -1,0 +1,179 @@
+---
+title: "Variable selection"
+author: "Owen Petchey & Stefanie Muff"
+date: "r format(Sys.time(), "%d %B, %Y")"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r}
+rm(list=ls())
+knitr::opts_chunk$set(eval=F, message=F, warning=F)
+
+```
+
+## Introduction
+
+We're going to work on the body fat data, and do some variable selection. That is, find a selection of the available explanatory variables that gives a good, even the best model of the data, or a set of good models.
+
+Note that we are going to be doing *a posteriori* variable selection. There are lots of different ways of doing this, but all share a feature in common: they cannot be used to gain explanation of patterns. They can only be used to make a predictive model.
+
+Note that you will be able to see lots of examples in the literature of using variable selection methods to infer explanation; its not that it doesn't sometimes work, its just that its very difficult to know when it has or has not worked!
+
+## An example with the body fat data.
+
+The aim here is to make a model that predicts percentage body fat from some relatively easily measured quantities.
+
+First lets do the preliminaries and get the data:
+
+```{r}
+library(tidyverse)
+library(MuMIn)
+dd_all <- read_delim("~/Desktop/bodyfat.txt", "\t", escape_double = FALSE, trim_ws = TRUE)
+```
+
+And, we'll do one more, and that is set R to fail if there are NAs. This is quite important, as some model comparison methods will happily compare models using different datasets, which can be caused by have NAs in some variables and not others.
+
+```{r}
+options(na.action = "na.fail")
+```
+
+And keep only the important variables, and remove duplicates:
+
+```{r}
+dd <- dplyr::select(dd_all, bodyfat, age, weight, height, neck, chest, abdomen,
+           hip, thigh, knee, ankle, biceps, forearm, wrist)
+```
+
+
+
+## Doing it ourselves
+
+Here we start with a model, and ourselves add or take away variables.
+Below, I start with the model with all main effects.
+Then I ask R to report the change in model performance when each single term is removed.
+I then remove the variable that results in the least decrease in model performance (might even increase it.
+We'll use AIC as the measure of model performance.
+
+
+```{r}
+m1 <- lm(bodyfat ~ age + weight + height + neck + chest + abdomen +
+           hip + thigh + knee + ankle + biceps + forearm + wrist, data=dd)
+
+dropterm(m1, sorted=TRUE)
+dt2 <- update(m1, . ~ . - knee)
+
+dropterm(dt2, sorted=TRUE)
+dt3 <- update(dt2, . ~ . - chest)
+
+dropterm(dt3, sorted=TRUE)
+dt4 <- update(dt3, . ~ . - height)
+
+dropterm(dt4, sorted=TRUE)
+dt5 <- update(dt4, . ~ . - ankle)
+
+dropterm(dt5, sorted=TRUE)
+dt6 <- update(dt5, . ~ . - biceps)
+
+dropterm(dt6, sorted=TRUE)
+dt7 <- update(dt6, . ~ . - hip)
+anova(dt7)
+```
+
+Now the difference between the full model and the next best one is 743.35 - 741.91 = 1.44
+
+We could remove more...
+
+We can conveniently look at all these models. We first put them in a list...
+
+```{r}
+mods <- list(m1=m1, dt2=dt2, dt3=dt3, dt4=dt4, dt5=dt5, dt6=dt6, dt7=dt7)
+model.sel(mods)
+```
+
+
+
+
+
+
+## Getting the computer to do the work
+
+### Stepwise variable selection
+
+Getting the computer to do the hard work
+
+```{r}
+fit1 <- lm(bodyfat ~ ., dd)
+fit2 <- lm(bodyfat ~ 1, dd)
+step_forward <- stepAIC(m1, direction = "forward", scope=list(upper=fit1,lower=fit2))
+step_backward <- stepAIC(m1, direction = "backward")
+step_both <- stepAIC(m1, direction = "both", scope=list(upper=fit1,lower=fit2))
+
+mods <- list(step_backward=step_backward, step_forward=step_forward, step_both=step_both)
+model.sel(mods)
+
+```
+
+Get a somewhat different result going in different directions. Have to be careful!
+
+
+## Dredge!!!
+
+
+
+```{r}
+
+s1 <- dredge(m1)
+
+```
+
+Describe what is in this table. Each row is a model. It is sorted by AIC. Best model is when the AIC is lowest.
+
+```{r}
+
+## to get the best model we look at the one with deltaAIC == 0
+s1_subset <- subset(s1, delta == 0)
+best_dredge <- get.models(s1, subset = delta==0)[[1]]
+anova(best_dredge)
+## This is exactly the same as when we did the model selection by removing largest p-value variables first!
+
+```
+
+## compare various approaches
+
+```{r}
+mods <- list(m7=m7, dt7=dt7, step_backward=step_backward, step_forward=step_forward, step_both=step_both,
+             best_dredge=best_dredge)
+model.sel(mods)
+```
+
+Step forward didn't work so well.
+The remaining five methods give two different models, with a delta AICc of 0.11 (i.e. nothing).
+
+
+
+
+
+## Model averaging 
+
+```{r}
+s1_subset <- get.models(s1, subset = delta < 3)
+mod_ave <- model.avg(s1_subset)
+summary(mod_ave)
+```
+
+
+
+
+
+## Model selection by cross validation???
+
+Describe what is cross validation.
+
+AIC is, in the limit, equivalent to leave one out CV.
+
+
+
+
+

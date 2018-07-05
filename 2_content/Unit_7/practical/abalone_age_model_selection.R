@@ -3,9 +3,9 @@ rm(list=ls())
 
 ## Load required libraries
 library(tidyverse)
-library(AICcmodavg)
-library(MASS)
-library(glmulti)
+#library(AICcmodavg)
+#library(MASS)
+#library(glmulti)
 library(ggfortify)
 
 ## see file abalone.names.txt for description of dataset
@@ -51,23 +51,24 @@ ggplot(dd, aes(x=Rings)) + geom_histogram(bins=15)
 ## the full model with no interactions
 full_mod <- lm(Rings ~ Sex + Length_mm + Diameter_mm + Height_mm + Whole_weight_g +
                  Shuck_weight_g + Viscera_weight_g + Shell_weight_g, dd)
-summary(full_mod)
-## remove length_mm
-m1 <- lm(Rings ~ Sex + Diameter_mm + Height_mm + Whole_weight_g +
-                 Shuck_weight_g + Viscera_weight_g + Shell_weight_g, dd)
-summary(m1)
-## remove shell weight
-m2 <- lm(Rings ~ Sex + Diameter_mm + Height_mm + Whole_weight_g +
-           Shuck_weight_g + Viscera_weight_g, dd)
-summary(m2)
-## remove height
-m3 <- lm(Rings ~ Sex + Diameter_mm + Whole_weight_g +
-           Shuck_weight_g + Viscera_weight_g, dd)
-summary(m3)
-autoplot(m3)
+dropterm(full_mod, sorted = T)
+dt1 <- update(full_mod, . ~ . - Length_mm)
 
-ggplot(mapping=aes(x=fitted(m3), y=dd$Rings)) + geom_point()
-cor(cbind(x=fitted(m3), y=dd$Rings))
+summary(full_mod)
+summary(dt1)
+
+dropterm(dt1, sorted = T)
+dt2 <- update(dt1, . ~ . - Shell_weight_g)
+
+dropterm(dt2, sorted = T)
+dt3 <- update(dt2, . ~ . - Height_mm)
+
+dropterm(dt3, sorted = T)
+
+autoplot(dt3)
+
+ggplot(mapping=aes(x=fitted(dt2), y=dd$Rings)) + geom_point()
+cor(cbind(x=fitted(dt3), y=dd$Rings))
 
 ## qqplot not great, and some increase in residuals with fitted...
 ## actually, we could have anticipated this, for a particular reason that
@@ -75,9 +76,8 @@ cor(cbind(x=fitted(m3), y=dd$Rings))
 ## Then we'll attempt to correct the situation.
 
 
-mods <- list(full_mod=full_mod, m1=m1, m2=m2, m3=m3)
-aictab(mods)
-
+mods <- list(full_mod=full_mod, dt1=dt1, dt2=dt2, dt3=dt3)
+model.sel(mods)
 
 
 ## Should do this at the beginning really!
@@ -92,30 +92,20 @@ s2 <- stepAIC(m0, direction = "forward", AICc=TRUE,
               scope=list(lower=m0, upper=full_mod))
 
 s3 <- stepAIC(m0, direction = "both", AICc=TRUE,
-              scope=list(lower=m0, upper=m1))
+              scope=list(lower=m0, upper=full_mod))
 
-aictab(list(m3=m3, s1=s1, s2=s2, s3=s3))
+model.sel(list(dt3=dt3, s1=s1, s2=s2, s3=s3))
 s1
 
-## package glmulti model selection:: the death star!
+## dredge
 
-multi1 <- glmulti(Rings ~ Sex + Length_mm + Diameter_mm + Height_mm + Whole_weight_g +
-                    Shuck_weight_g + Viscera_weight_g + Shell_weight_g, data=dd,
-                  level = 1,
-                  method = "h",
-                  crit = "aicc",
-                  confsetsize = 10,
-                  plotty=F, report=F,
-                  fitfunction = "lm")
+dredge_out <- dredge(full_mod)
+best_dredge <- get.models(dredge_out, subset = delta==0)[[1]]
+anova(best_dredge)
 
-print(multi1)
-plot(multi1, type="s")
-plot(multi1, type="p")
-plot(multi1, type="w")
 
-coef(multi1)
-
-predict(multi1)
-
+s1_subset <- get.models(dredge_out, subset = delta < 5)
+mod_ave <- model.avg(s1_subset)
+summary(mod_ave)
 
 
