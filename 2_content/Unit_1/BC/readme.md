@@ -1,1 +1,0 @@
-All BC material on openedx
