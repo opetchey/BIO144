@@ -1,12 +1,12 @@
 ---
 title: "Weekly Learning Objectives - BIO144, Data Analysis for Biologists"
 author: "Owen Petchey & Stephanie Muff"
-date: "`r format(Sys.time(), "%d %B, %Y")`"
+date: "September 2018"
 output:
+  pdf_document:
+    toc: yes
   html_document:
     df_print: paged
-    toc: yes
-  pdf_document:
     toc: yes
 ---
 
@@ -31,7 +31,7 @@ By the end of the course you will be able to:
 
 Below you will see that some learning objectives refer to sets of previous ones. E.g. "You will be able to do the same as before, but with a difference of some kind". Be sure to cover all of the previous learning objectives referred to.
 
-# Unit 1 - Introduction {-}
+# Units 1 and 2 - Introduction; all about data {-}
 
 By the end of this week you will be able to:
 
@@ -50,10 +50,9 @@ By the end of this week you will be able to:
 * Make simple graphs using the ggplot function.
 * Relate the difference between statistical and biological significance.
 
-(Please note that these skills are assessed in the Graded Assessment 0 & 1)
+(Please note that these skills are assessed in the Graded Assessments 1 and 2)
 
-
-# Unit 2 - Linear Regression {-}
+# Unit 3 - Linear Regression {-}
 
 By the end of this week you will be able to:
 
@@ -73,9 +72,9 @@ By the end of this week you will be able to:
 * Perform linear regression in R / Rstudio, including all of the above.
 
 
-(Please note that these skills are assessed in the Graded Assessment 2)
+(Please note that these skills are assessed in the Graded Assessment 3)
 
-# Unit 3 - Multiple linear regression part 1 {-}
+# Unit 4 - Multiple linear regression part 1 {-}
 
 By the end of this week you will be able to:
 
@@ -92,10 +91,10 @@ By the end of this week you will be able to:
 * In particular, interpret the R model `summary` and `anova` table for binary and factor covariates.
 
 
-(Please note that these skills are assessed in the Graded Assessment 3)
+(Please note that these skills are assessed in the Graded Assessment 4)
 
 
-# Unit 4 - Multiple linear regression part 2 {-}
+# Unit 5 - Multiple linear regression part 2 {-}
 
 By the end of this week you will be able to:
 
@@ -107,10 +106,10 @@ By the end of this week you will be able to:
 * Use the ggfortify add-on package to easily produce these four diagnostic graphs.
 * Recognise and fix two problems: non-normal residuals, and outliers.
 
-(Please note that these skills are assessed in the Graded Assessment 4)
+(Please note that these skills are assessed in the Graded Assessment 5)
 
 
-# Unit 5 - ANOVA {-}
+# Unit 6 - ANOVA {-}
 
 By the end of this week you will be able to:
 
@@ -124,10 +123,10 @@ By the end of this week you will be able to:
 * In particular, recognise that the model checking strategy is the same as for linear models from the previous weeks. 
 
 
-(Please note that these skills are assessed in the Graded Assessment 5)
+(Please note that these skills are assessed in the Graded Assessment 6)
 
 
-# Unit 6 - ANCOVA & Matrix alegbra {-}
+# Unit 7 - ANCOVA & Matrix alegbra {-}
 
 By the end of this week you will be able to:
 
@@ -140,10 +139,10 @@ By the end of this week you will be able to:
 * Be able to formulate a linear regression model in matrix notation.
 * Do some linear algebra in R.
 
-(Please note that these skills are assessed in the Graded Assessment 6)
+(Please note that these skills are assessed in the Graded Assessment 7)
 
 
-# Unit 7 - Model selection {-}
+# Unit 8 - Model selection {-}
 
 By the end of this week you will be able to:
 
@@ -156,10 +155,10 @@ By the end of this week you will be able to:
 * Understand why automatic model selection procedures are not recommended for explanatory models.
 * Recognise the importance of a priori hypotheses for escaping the nightmare that is model selection in explanatory models.
 
-(Please note that these skills are assessed in the Graded Assessment 7)
+(Please note that these skills are assessed in the Graded Assessment 8)
 
 
-# Unit 8 - Interpretation, causality, and cautionary notes {-}
+# Unit 9 - Interpretation, causality, and cautionary notes {-}
 
 By the end of this week you will be able to:
 
@@ -175,10 +174,10 @@ By the end of this week you will be able to:
 * Recall the nine Bradford-Hill-Criteria for causal inference.
 * Describe the difference between observational and experimental studies, and its importance for inference.
 
-(Please note that these skills are assessed in the Graded Assessment 8)
+(Please note that these skills are assessed in the Graded Assessment 9)
 
 
-# Unit 9 - Analysing count data {-}
+# Unit 10 - Analysing count data {-}
 
 By the end of this week you will be able to:
 
@@ -194,11 +193,11 @@ By the end of this week you will be able to:
 * Say what is different about the model summary table produced by R / RStudio.
 * Understand and check for a common problem with count data: overdispersion.
 
-(Please note that these skills are assessed in the Graded Assessment 9)
+(Please note that these skills are assessed in the Graded Assessment 10)
 
 
 
-# Unit 10 - Analysing binary data {-}
+# Unit 11 - Analysing binary data {-}
 
 By the end of this week you will be able to:
 
@@ -217,11 +216,11 @@ By the end of this week you will be able to:
 * Understand and check for overdispersion.
 
 
-(Please note that these skills are assessed in the Graded Assessment 10)
+(Please note that these skills are assessed in the Graded Assessment 11)
 
 
 
-# Unit 11 - Measurement error; repeated measures and random effects {-}
+# Unit 12 - Measurement error; repeated measures and random effects; recap and outlook {-}
 
 By the end of this week you will be able to:
 
@@ -238,14 +237,6 @@ By the end of this week you will be able to:
 * In R / RStudio, perform, check and interpret a simple linear mixed model.
 * **Do all of the same things as one does for a linear model.**
 * Say what is different about the model summary table produced by R / RStudio.
-
-(Please note that these skills are assessed in the Graded Assessment 11)
-
-
-# Unit 12 - Recap and outlook  {-}
-
-By the end of this week you will be able to:
-
 * Describe the type of biological / biomedical questions that require other statistical methods, including:
     + Time series analysis
     + Multivariate analysis, including ordination, clustering, and classification
@@ -262,7 +253,6 @@ By the end of this week you will be able to:
     + Power analysis
     + Randomisation based methods
 
-
-
+(Please note that these skills are assessed in the Graded Assessment 12)
 
 
