@@ -30,6 +30,7 @@ First lets do the preliminaries and get the data:
 ```{r}
 library(tidyverse)
 library(MuMIn)
+library(MASS)
 dd_all <- read_delim("~/Desktop/bodyfat.txt", "\t", escape_double = FALSE, trim_ws = TRUE)
 ```
 
@@ -143,7 +144,7 @@ anova(best_dredge)
 ## compare various approaches
 
 ```{r}
-mods <- list(m7=m7, dt7=dt7, step_backward=step_backward, step_forward=step_forward, step_both=step_both,
+mods <- list(dt7=dt7, step_backward=step_backward, step_forward=step_forward, step_both=step_both,
              best_dredge=best_dredge)
 model.sel(mods)
 ```
