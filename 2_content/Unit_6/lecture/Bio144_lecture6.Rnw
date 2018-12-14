@@ -91,7 +91,7 @@
 Datenanalyse in der Biologie}%\\[.3cm]
 \author[Stefanie Muff, Owen L.\ Petchey]{\centering Stefanie Muff  \& Owen L.\ Petchey }
 %\institute[]{Institute of Social and Preventive Medicine \\ Institute of Evolutionary Biology and Environmental Studies}
-\date[]{Lecture 5: ANOVA \\ 22./23. March 2018}
+\date[]{Lecture 6: ANOVA \\ 22./23. March 2018}
 
 
 \maketitle
