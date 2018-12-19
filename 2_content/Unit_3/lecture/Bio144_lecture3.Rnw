@@ -86,8 +86,7 @@
 \title[]{ \centering \Huge Kurs Bio144: \\
 Datenanalyse in der Biologie}%\\[.3cm]
 \author[Stefanie Muff, Owen L.\ Petchey]{\centering Stefanie Muff (Lecture) \& Owen L.\ Petchey (Practical)}
-%\institute[]{Institute of Social and Preventive Medicine \\ Institute of Evolutionary Biology and Environmental Studies}
-\date[]{Lecture 3: Simple linear regression\\ 1./2. March 2018}
+\date[]{Lecture 3: Simple linear regression\\ 4.~March 2019}
 
 
 \maketitle
