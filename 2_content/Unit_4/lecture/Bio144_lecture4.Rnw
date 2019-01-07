@@ -87,7 +87,7 @@
 Datenanalyse in der Biologie}%\\[.3cm]
 \author[Stefanie Muff, Owen L.\ Petchey]{\centering Stefanie Muff  \& Owen L.\ Petchey }
 %\institute[]{Institute of Social and Preventive Medicine \\ Institute of Evolutionary Biology and Environmental Studies}
-\date[]{Lecture 3: Multiple linear regression \\ 8./9. March 2018}
+\date[]{Lecture 4: Multiple linear regression \\ 11.~March 2019}
 
 
 \maketitle
