@@ -145,7 +145,7 @@ Getting the computer to do the hard work
 ```{r}
 fit1 <- lm(bodyfat ~ ., dd)
 fit2 <- lm(bodyfat ~ 1, dd)
-step_forward <- stepAIC(m1, direction = "forward", scope=list(upper=fit1,lower=fit2))
+step_forward <- stepAIC(fit2, direction = "forward", scope=list(upper=fit1,lower=fit2))
 step_backward <- stepAIC(m1, direction = "backward")
 step_both <- stepAIC(m1, direction = "both", scope=list(upper=fit1,lower=fit2))
 
