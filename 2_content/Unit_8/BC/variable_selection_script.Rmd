@@ -1,7 +1,7 @@
 ---
 title: "Variable selection"
 author: "Owen Petchey & Stefanie Muff"
-date: "r format(Sys.time(), "%d %B, %Y")"
+date: "Janunary 2019"
 output:
   pdf_document: default
   html_document: default
@@ -9,8 +9,7 @@ output:
 
 ```{r}
 rm(list=ls())
-knitr::opts_chunk$set(eval=F, message=F, warning=F)
-
+knitr::opts_chunk$set(eval=F, message=F, warning=F, cache=TRUE)
 ```
 
 ## Introduction
@@ -28,10 +27,13 @@ The aim here is to make a model that predicts percentage body fat from some rela
 First lets do the preliminaries and get the data:
 
 ```{r}
-library(tidyverse)
-library(MuMIn)
+library(dplyr)
+library(ggplot2)
+library(readr)
 library(MASS)
-dd_all <- read_delim("~/Desktop/bodyfat.txt", "\t", escape_double = FALSE, trim_ws = TRUE)
+library(MuMIn)
+
+dd_all <- read_delim("~/Desktop/bodyfat.clean.txt", "\t", escape_double = FALSE, trim_ws = TRUE)
 ```
 
 And, we'll do one more, and that is set R to fail if there are NAs. This is quite important, as some model comparison methods will happily compare models using different datasets, which can be caused by have NAs in some variables and not others.
@@ -43,10 +45,9 @@ options(na.action = "na.fail")
 And keep only the important variables, and remove duplicates:
 
 ```{r}
-dd <- dplyr::select(dd_all, bodyfat, age, weight, height, neck, chest, abdomen,
-           hip, thigh, knee, ankle, biceps, forearm, wrist)
+dd <- dplyr::select(dd_all, bodyfat, age, weight, height, bmi, neck, chest, abdomen,
+           hip, thigh, knee, ankle, biceps)
 ```
-
 
 
 ## Doing it ourselves
@@ -59,38 +60,76 @@ We'll use AIC as the measure of model performance.
 
 
 ```{r}
-m1 <- lm(bodyfat ~ age + weight + height + neck + chest + abdomen +
-           hip + thigh + knee + ankle + biceps + forearm + wrist, data=dd)
-
-dropterm(m1, sorted=TRUE)
-dt2 <- update(m1, . ~ . - knee)
-
-dropterm(dt2, sorted=TRUE)
-dt3 <- update(dt2, . ~ . - chest)
-
-dropterm(dt3, sorted=TRUE)
-dt4 <- update(dt3, . ~ . - height)
-
-dropterm(dt4, sorted=TRUE)
-dt5 <- update(dt4, . ~ . - ankle)
-
-dropterm(dt5, sorted=TRUE)
-dt6 <- update(dt5, . ~ . - biceps)
-
-dropterm(dt6, sorted=TRUE)
-dt7 <- update(dt6, . ~ . - hip)
-anova(dt7)
+m1 <- lm(bodyfat ~ ., dd)
+#m1 <- lm(bodyfat ~ age + weight + height + neck + chest + abdomen +
+#           hip + thigh + knee + ankle + biceps + forearm + wrist, data=dd)
+AICc(m1)
 ```
 
-Now the difference between the full model and the next best one is 743.35 - 741.91 = 1.44
+```{r}
+anova(m1)
+dropterm(m1, sorted=TRUE)
+dt2 <- update(m1, . ~ . - knee)
+AICc(dt2)
 
-We could remove more...
+dropterm(dt2, sorted=TRUE)
+dt3 <- update(dt2, . ~ . - age)
+AICc(dt3)
+
+dropterm(dt3, sorted=TRUE)
+dt4 <- update(dt3, . ~ . - biceps)
+AICc(dt4)
+
+dropterm(dt4, sorted=TRUE)
+dt5 <- update(dt4, . ~ . - chest)
+AICc(dt5)
+
+dropterm(dt5, sorted=TRUE)
+dt6 <- update(dt5, . ~ . - ankle)
+AICc(dt6)
+
+dropterm(dt6, sorted=TRUE)
+dt7 <- update(dt6, . ~ . - height)
+AICc(dt7)
+
+dropterm(dt7, sorted=TRUE)
+dt8 <- update(dt7, . ~ . - bmi)
+AICc(dt8)
+
+dropterm(dt8, sorted=TRUE)
+dt9 <- update(dt8, . ~ . - hip)
+AICc(dt9)
+
+dropterm(dt9, sorted=TRUE)
+dt10 <- update(dt9, . ~ . - thigh)
+AICc(dt10)
+
+dropterm(dt10, sorted=TRUE)
+dt11 <- update(dt10, . ~ . - neck)
+AICc(dt11)
+
+dropterm(dt11, sorted=TRUE)
+dt12 <- update(dt11, . ~ . - weight)
+AICc(dt12)
+
+dropterm(dt12, sorted=TRUE)
+dt13 <- update(dt12, . ~ . - abdomen)
+AICc(dt13)
+
+```
+
+
+Now the difference between the full model and the next best one is 1414 - 1409 =
+
+We could remove fewer, or more...
 
 We can conveniently look at all these models. We first put them in a list...
 
 ```{r}
-mods <- list(m1=m1, dt2=dt2, dt3=dt3, dt4=dt4, dt5=dt5, dt6=dt6, dt7=dt7)
+mods <- list(m1=m1, dt2=dt2, dt3=dt3, dt4=dt4, dt5=dt5, dt6=dt6, dt7=dt7,
+             dt8=dt8, dt9=dt9, dt10=dt10, dt11=dt11, dt12=dt12, dt13=dt13)
 model.sel(mods)
+
 ```
 
 
@@ -107,7 +146,7 @@ Getting the computer to do the hard work
 ```{r}
 fit1 <- lm(bodyfat ~ ., dd)
 fit2 <- lm(bodyfat ~ 1, dd)
-step_forward <- stepAIC(m1, direction = "forward", scope=list(upper=fit1,lower=fit2))
+step_forward <- stepAIC(fit2, direction = "forward", scope=list(upper=fit1,lower=fit2))
 step_backward <- stepAIC(m1, direction = "backward")
 step_both <- stepAIC(m1, direction = "both", scope=list(upper=fit1,lower=fit2))
 
@@ -134,17 +173,18 @@ Describe what is in this table. Each row is a model. It is sorted by AIC. Best m
 ```{r}
 
 ## to get the best model we look at the one with deltaAIC == 0
-s1_subset <- subset(s1, delta == 0)
-best_dredge <- get.models(s1, subset = delta==0)[[1]]
-anova(best_dredge)
-## This is exactly the same as when we did the model selection by removing largest p-value variables first!
+model.sel(get.models(s1, subset = delta<1))
 
+best_dredge <- get.models(s1, subset = delta==0)[[1]]
+model.sel(best_dredge)
+anova(best_dredge)
+summary(best_dredge)
 ```
 
 ## compare various approaches
 
 ```{r}
-mods <- list(dt7=dt7, step_backward=step_backward, step_forward=step_forward, step_both=step_both,
+mods <- list(dt11=dt11, step_backward=step_backward, step_forward=step_forward, step_both=step_both,
              best_dredge=best_dredge)
 model.sel(mods)
 ```
@@ -165,6 +205,20 @@ summary(mod_ave)
 ```
 
 
+## How good is the model?
+
+```{r}
+p1 <- tibble(dt11=predict(dt11),
+             dt12=predict(dt12))
+dd1 <- bind_cols(dd, p1)
+
+ggplot(dd1, aes(x=dt11, y=bodyfat)) +
+  geom_point()
+
+ggplot(dd1, aes(x=dt12, y=bodyfat)) +
+  geom_point()
+
+```
 
 
 
