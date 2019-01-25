@@ -83,7 +83,7 @@
 \title[]{ \centering \Huge Course Bio144: \\
 Data Analysis in Biology}%\\[.3cm]
 \author[Stefanie Muff, Owen L.\ Petchey]{\centering Owen L.\ Petchey (Practicals) \& Stefanie Muff (Lectures) }
-\date[]{Lecture 1: Introduction and Outlook\\ 22./23. February 2018}
+\date[]{Lecture 1: Introduction and Outlook\\ 18. February 2018}
 
 
 \maketitle
