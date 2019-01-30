@@ -90,7 +90,7 @@
 Datenanalyse in der Biologie}%\\[.3cm]
 \author[Stefanie Muff, Owen L.\ Petchey]{\centering Stefanie Muff  \& Owen L.\ Petchey }
 %\institute[]{Institute of Social and Preventive Medicine \\ Institute of Evolutionary Biology and Environmental Studies}
-\date[]{Lecture 12 (part 2): Measurement error in regression models \\ 27. May 2019}
+\date[]{Lecture 12 (part 2): Measurement error in regression models \\ 20. May 2019}
 
 
 \maketitle
