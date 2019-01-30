@@ -3,10 +3,10 @@ title: "Weekly Learning Objectives - BIO144, Data Analysis for Biologists"
 author: "Owen Petchey & Stephanie Muff"
 date: "September 2018"
 output:
-  pdf_document:
-    toc: yes
   html_document:
     df_print: paged
+    toc: yes
+  pdf_document:
     toc: yes
 ---
 
@@ -64,7 +64,8 @@ By the end of this week you will be able to:
 * Evaluation the assumptions of normality and of independence of residuals.
 * Interpret the biological meaning of the estimated parameters.
 * Quantify how good is the linear regression model.
-* Perform a relevant hypothesis test and get the confidence interval of the slope estimate.
+* Perform a relevant hypothesis test.
+* Calculate the 95% confidence interval of the estimated coefficients (e.g. intercept and slope).
 * Describe the difference between a confidence range and a prediction range.
 * Be able to calculate yourself the degrees of freedom of error for bivariate regression.
 * Get fitted values, residuals, and arbitrary predictions of a linear regression in R / RStudio.
