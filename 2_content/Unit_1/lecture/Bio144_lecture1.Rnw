@@ -83,7 +83,7 @@
 \title[]{ \centering \Huge Course Bio144: \\
 Data Analysis in Biology}%\\[.3cm]
 \author[Stefanie Muff, Owen L.\ Petchey]{\centering Owen L.\ Petchey (Practicals) \& Stefanie Muff (Lectures) }
-\date[]{Lecture 1: Introduction and Outlook\\ 18. February 2018}
+\date[]{Lecture 1: Introduction and Outlook\\ 18. February 2019}
 
 
 \maketitle
@@ -124,16 +124,7 @@ $\rightarrow$ See ``Course texts/material'' on course website.\\
 
 }
 
-% \frame{
-% \frametitle{Complementary literature:}
-% \begin{itemize}
-% \item \emph{Statistics – An Introduction Using R} by M.J. Crawley (similar to 3.) above)\\[3mm]
-% \item \emph{The Analysis of Biological Data} by M.C. Whitlock and D. Schluter\\[3mm]
-% \item  \emph{The Essential Guide to Effect Sizes. Statistical Power, Meta-Analysis, and the Interpretation of Research Results} (2010, First Edition) Ellis. Ebook via \href{http://ezproxy.uzh.ch/login?url=http://dx.doi.org/10.1017/CBO9780511761676} {\beamergotobutton{UZH library}}.\\[3mm]
-% \item \emph{Regression - Modelle, Methoden und Anwendungen} by Fahrmeier, Kneib, Lang (for a deeper understanding) 
-% \end{itemize}
-% }
-
+ 
 
 
 \frame{\frametitle{Schedule (12 lecture weeks + 2 self-study weeeks)}
@@ -141,19 +132,17 @@ $\rightarrow$ See ``Course texts/material'' on course website.\\
 
 \begin{multicols}{2}
 {\bf Week 1} Introduction and outlook \\[1mm]
-{\bf Week 2} Simple linear regression\\[1mm]
-{\bf Week 3} Residual analysis, model validation\\[1mm]
-{\bf Week 4} Multiple linear regression \\[1mm]
-{\bf Week 5} ANOVA  \\[1mm]
-{\bf Self-study week} \\[1mm]
-{\bf Week 6} ANCOVA; Matrix Algebra \\[1mm]
-{\bf Week 7} Model selection  \\[4mm]
-{\bf Week 8} Interpretation of results, causality \\[1mm]
-{\bf Week 9} Count data (Poisson regression) \\[1mm]
-{\bf Self-study week} \\[1mm]
-{\bf Week 10} Binary Data (logistic regression)\\[1mm]
-{\bf Week 11} Measurement error, random effects \\[1mm]
-{\bf Week 12} Selected topics, repetition and outlook \\
+{\bf Week 2} No lecture \\[1mm]
+{\bf Week 3} Simple linear regression\\[1mm]
+{\bf Week 4} Residual analysis, model validation\\[1mm]
+{\bf Week 5} Multiple linear regression \\[1mm]
+{\bf Week 6} ANOVA  \\[1mm]
+{\bf Week 7} ANCOVA; Matrix Algebra \\[5mm]
+{\bf Week 8} Model selection  \\[1mm]
+{\bf Week 9} Interpretation of results, causality \\[1mm]
+{\bf Week 10} Count data (Poisson regression) \\[1mm]
+{\bf Week 11} Binary Data (logistic regression)\\[1mm]
+{\bf Week 12} Measurement error, random effects, selected topics \\[1mm]
 \end{multicols}
 ~\\
  
@@ -192,8 +181,8 @@ Examples:
 \end{itemize}
 }
 
-\frame{\frametitle{!! Warning !!}
- "Learning by doing" is often {\bf not advisable} in statistics. Experience is essential, there are many pitfalls.\\[5mm]
+\frame{\frametitle{Learning by doing??}
+$\rightarrow$ {\bf Not advisable} in statistics. Experience is essential, there are many pitfalls.\\[5mm]
 
 A good foundation in statistics \hl{makes you more independent} from consultants or the goodwill of colleagues. Without such a knowledge, you will always need help from others.\\[5mm]
 
@@ -287,7 +276,7 @@ Observed variables were, e.g., media consumption, behavior of the parents, age, 
 
 A profound knowledge of data analysis and statistics protects you from producing nonsense -- and helps to detect it. See for example:\\[6mm]
 
-\textcolor{blue}{\href{https://www.theguardian.com/science/2016/jul/17/politicians-dodgy-statistics-tricks-guide?&tc=eml}{Finding dodgy statistics (The Guardian, July 17, 2016)}}\\[6mm]
+\textcolor{blue}{\href{https://medium.com/wintoncentre/the-risks-of-alcohol-again-2ae8cb006a4a}{The risks of alcohol (by David Spiegelhalter, 23.\ August 2018)}}\\[6mm]
  
 \textcolor{blue}{\href{http://callingbullshit.org/syllabus.html}{``Calling bullshit'' course (University of Washington)}}
 }
@@ -495,14 +484,13 @@ ggplot(d.blz,aes(x=factor(DIAET),y=BLUTZUCK)) + geom_boxplot() + geom_point(size
 }
 
 
-\frame[containsverbatim]{\frametitle{}
-Does this question seem familiar to you? (What would you do for two groups?) \\[4mm]
-
-For more than 2 groups we need the \emph{ANOVA} (=ANalysis Of VAriance) approach (see chapter 10.1 in the Mat183 script).\\[4mm]
-
-We will see in lecture 5 that there are in fact differences between the diets.
-
-}
+% \frame[containsverbatim]{\frametitle{}
+% 
+% For more than 2 groups we need the \emph{ANOVA} (=ANalysis Of VAriance) approach (see chapter 10.1 in the Mat183 script).\\[4mm]
+% 
+% We will see in lecture 6 that there are in fact differences between the diets.
+% 
+% }
 
 \frame[containsverbatim]{\frametitle{Data example 4: Blood-screening}
 \vspace{-5mm}
@@ -510,7 +498,7 @@ We will see in lecture 5 that there are in fact differences between the diets.
 
 Is a high ESR (erythrocyte sedimentation rate) an indicator for certain diseases (rheumatic disease, chronic inflammations)?\\[3mm]
 
-{\bf  Specifically: } Is there an association between ESR level ESR$<20mm/hr$ and the concentrations of the plasma proteins Fibrinogen and Globulin?\\[3mm]
+{\bf  Specifically: } Is there an association between the concentrations of the plasma proteins Fibrinogen and Globulin and ESR level ESR$<20mm/hr$?\\[3mm]
 
 The \texttt{plasma} data come with the package \texttt{HSAUR3} \citep{hothorn.everitt2014}.\\[2mm]
 
