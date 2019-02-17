@@ -551,22 +551,22 @@ models are wrong, but some are useful'' \citep{box1979}.}
 }
 
 
-% \frame{\frametitle{Steps in a modelling process (``work flow'')}
-% \includegraphics[width=11cm]{pictures/workflow.png}
-% % \begin{enumerate}
-% % \item Formulate a precise question
-% % \item Plan the analysis of your data, collect the data (experiments or surveys).
-% % \item Tidy and clean the data
-% % \item {\bf Graphical representation of the data}
-% % \item Choose an appropriate \emph{model}
-% % \item Estimate model parameters and uncertainties
-% % \item {\bf Check modelling assumptions}
-% % \item If needed, improve the model; back to step 6
-% % \item {\bf Interpret your results} and compare to step 1
-% % \item {\bf Communicate results} precisely, carefully and critically (publication, articles..)
-% % \end{enumerate}
-% 
-% }
+\frame{\frametitle{Steps in a modelling process (``work flow'')}
+\includegraphics[width=11cm]{pictures/workflow.png}
+% \begin{enumerate}
+% \item Formulate a precise question
+% \item Plan the analysis of your data, collect the data (experiments or surveys).
+% \item Tidy and clean the data
+% \item {\bf Graphical representation of the data}
+% \item Choose an appropriate \emph{model}
+% \item Estimate model parameters and uncertainties
+% \item {\bf Check modelling assumptions}
+% \item If needed, improve the model; back to step 6
+% \item {\bf Interpret your results} and compare to step 1
+% \item {\bf Communicate results} precisely, carefully and critically (publication, articles..)
+% \end{enumerate}
+
+}
 
 
 \frame{\frametitle{The scopes of statistical data analysis}
