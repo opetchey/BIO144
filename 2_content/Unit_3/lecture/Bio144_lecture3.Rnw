@@ -17,7 +17,7 @@
 \usepackage{amsmath,natbib}
 \usepackage{mathbbol}
 \usepackage{babel}
-\usepackage{SweaveSlides}
+%\usepackage{SweaveSlides}
 \usepackage{multicol}
 \usepackage{xcolor}
 
@@ -59,6 +59,7 @@
 \newcommand{\NBin}{\text{NBin}}
 \newcommand{\Po}{\text{Po}}
 \newcommand{\N}{\mathsf{N}}
+\newcommand{\hl}{\textcolor{blue}}
 
 \newcommand{\ball}[1]{\begin{pgfpicture}{-1ex}{-0.65ex}{1ex}{1ex}
 \usebeamercolor[fg]{item projected}
@@ -79,8 +80,27 @@
 
 
 \begin{document}
-\SweaveOpts{width=6,height=4}
+%\SweaveOpts{width=6,height=4}
 \fboxsep5pt
+
+
+<<setup, include=FALSE, cache=FALSE, results='hide'>>=
+library(knitr)
+## set global chunk options
+opts_chunk$set(fig.path='figure/', 
+cache.path='cache/', fig.align='center', 
+fig.show='hold', par=TRUE, fig.align='center', cache=FALSE, 
+message=FALSE, 
+warning=FALSE,
+echo=FALSE, out.width="0.4\\linewidth", fig.width=6, fig.height=4.5, size="scriptsize", width=40)
+## opts_chunk$set(fig.path='figure/', 
+## cache.path='cache/', echo=FALSE, out.width="0.55\\linewidth",fig.width=6,fig.height=6, fig.align="center", message = FALSE)
+## par(mar=c(1,4.1,4.1,1.1))
+opts_chunk$set(purl = TRUE)
+knit_hooks$set(purl = hook_purl)
+options(size="scriptsize")
+opts_chunk$set(message = FALSE)
+@
 
 \frame{
 \title[]{ \centering \Huge Kurs Bio144: \\
@@ -121,21 +141,24 @@ The lecture material of today is based on the following literature:\\[4mm]
 
 \frame[containsverbatim]{\frametitle{The body fat example}
 Remember: Aim is to find prognostic factors for body fat, without actually measuring it. \\
-Even simpler question: How good is BMI as a predictor for body fat?\\[8mm]
+Even simpler question: How good is BMI as a predictor for body fat?\\[2mm]
  
-\begin{center}
+
 <<read.bodyfat,echo=F,eval=T>>=
 path <- "../../data_examples/bodyFat/"
 d.bodyfat <- read.table(paste(path,"bodyfat.clean.txt",sep=""),header=T)
 d.bodyfat <- d.bodyfat[,c("bodyfat","age","gewicht","hoehe","bmi","neck","abdomen","hip")]
 @
-\setkeys{Gin}{width=0.55\textwidth}
-<<fig=T,width=3.5,height=3,echo=F>>=
+
+
+ 
+\begin{center}
+<<bmi2, eval=T,fig.width=3, fig.height=2.5,warning=FALSE,echo=F,out.width="7cm">>=
 library(ggplot2)
-#plot(bodyfat ~ bmi,d.bodyfat,xlab="BMI (x)", ylab="body fat (y)")
-ggplot(d.bodyfat,aes(x=bmi,y=bodyfat)) + geom_point() + theme_bw()
+ggplot(d.bodyfat,aes(x=bmi,y=bodyfat)) + geom_point() + theme_bw() + ylab("body fat (%)")
 @
 \end{center}
+ 
 
 }
 
@@ -160,70 +183,59 @@ $\beta$ is also denoted as the regression coefficient of $X$.\\[4mm]
 \frame[containsverbatim]{\frametitle{}
 
 But which is the ``true'' or ``best'' line?
-\vspace{-6mm}
+
+
 \begin{center}
-\setkeys{Gin}{width=0.6\textwidth}
-<<fig=T,width=4.5,height=4.5,echo=F>>=
-plot(bodyfat ~ bmi,d.bodyfat,xlab="BMI (x)", ylab="bodyfat (y)",xlim=c(15,40))
-abline(lm(bodyfat~bmi,d.bodyfat),lwd=2)
-abline(c(-25,1.7),col=2,lwd=2)
-abline(c(-35,2.1),col=3,lwd=2)
+<<eval=T,fig.width=3.5, fig.height=3,out.width="7cm">>=
+ggplot(d.bodyfat,aes(x=bmi,y=bodyfat)) + geom_point() + theme_bw() + ylab("body fat (%)")  + 
+  geom_abline(intercept = -25, slope = 1.7, color="red",   size=0.6) +
+  geom_abline(intercept = -35, slope = 2.1, color="green",    size=0.6) +
+geom_abline(intercept = -36, slope = 2.25, color="blue",    size=0.6) 
 @
 \end{center}
 
 {\bf Task:} Estimate the regression parameters $\alpha$ and $\beta$ (by ``eye'') and write them down.
 }
 
+ 
+
 \frame[containsverbatim]{\frametitle{}
 It is obvious that 
 \begin{itemize}
 \item the linear relationship does not describe the data perfectly.
-\item another realization of the data (other 243 males) would lead to a slightly different picture.\\[4mm]
+\item another realization of the data (other 243 males) would lead to a slightly different picture.\\[10mm]
 \end{itemize}
 
-$\Rightarrow$ The model should take this into account! \\[4mm]
-
-{\bf Solution:} Add an \myalert{error term} $e_i$ to the predictor
-$$(body fat)_i = \alpha + \beta \cdot bmi_i + e_i  \ ,$$
-where $e_i$ treated as a random variable with a \myalert{normally distributied}
-$$e_i ~\sim \N(0,\sigma_e^2) \quad \text{for } i = 1,\ldots, n \ .$$
-
-This is a \myalert{model} for $bodyfat$ given $bmi$.
-%The assumption is that the target value $bodyfat_i$ is the sum of a predicted value ($\alpha + \beta \cdot bmi_i$) plus an error term $e_i$.
+$\Rightarrow$ We need a {\bf model} that describes the relationship between BMI and bodyfat. \\[8mm]
 
 }
 
-\frame{\frametitle{The simple linear regression model}
-Generally:
-\colorbox{lightgray}{\begin{minipage}{10cm}
-The linear regression model for the data $\bm{y}=(y_1,\ldots,y_n)$ given $\bm{x}=(x_1,\ldots,x_n)$ is
 
+\frame{\frametitle{The simple linear regression model}
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+In the linear regression model the dependent variable $Y$ is related to the independent variable $x$ as
 %
-$$y_i = \alpha + \beta x_i + e_i \ , \qquad e_i \sim \N(0,\sigma_e^2) \  \text{independent}.$$
+$$Y = \alpha + \beta x + \epsilon \ , \qquad \epsilon \sim \N(0,\sigma^2) \ .$$
 \end{minipage}}
 ~\\[2mm]
-The assumption is that
-$$y_i \quad= \quad \underbrace{\text{\ prediction\ }}_{\alpha + \beta x_i} \quad + \quad \underbrace{\text{\ error\ }}_{e_i}$$
+In this formulation $Y$ is a random variable $Y \sim \N(\alpha + \beta x, \sigma^2$) where
+$$Y \quad= \quad \underbrace{\text{\ expected value\ }}_{\E(Y) = \alpha + \beta x} \quad + \quad \underbrace{\text{\ random error\ }}_{\epsilon}  \ .$$
 
 \vspace{2mm}
 Note:
 
 \begin{itemize}
-\item The model for $\bm{y}$ given $\bm{x}$ has \myalert{three parameters}: $\alpha$, $\beta$ and $\sigma_e^2$ .
-\item $\bm{x}$ is the \myalert{independent} or \myalert{explanatory} variable.
-\item $\bm{y}$ is the \myalert{dependent} or \myalert{outcome} variable. \\
+\item The model for $Y$ given $x$ has \myalert{three parameters}: $\alpha$, $\beta$ and $\sigma^2$ .
+\item $x$ is the \myalert{independent}/ \myalert{explanatory} / \myalert{regressor} variable.
+\item $Y$ is the \myalert{dependent} / \myalert{outcome} / \myalert{response} variable. \\
 \end{itemize}
-
 
 }
 
+
+
 \frame{\frametitle{}
-% This is a general approach in statistics:\\[4mm]
-% \begin{itemize}
-% \item Formulate a model and modelling assumptions that seem plausible for your data. {\bf A model emerges in our mind}.\\[2mm]
-% \item Estimate the parameters.\\[2mm]
-% \item Only now it is a \emph{specific} model.\\[6mm]
-% \end{itemize}
 
 {\bf Note:} 
 \begin{itemize}
@@ -232,22 +244,26 @@ Note:
 \end{itemize}
 }
 
-\frame{\frametitle{Visualization of regression assumptions}
+\frame{\frametitle{Visualization of the regression assumptions}
+ 
+The assumptions about the linear regression model lie in the error term $$\epsilon \sim \N(0,\sigma^2) \ . $$ 
 
+\vspace{-2mm}
 \includegraphics[width=11cm]{pictures/regrAssumptions.jpg}
+
+Note: The true regression line goes through $\E(Y)$.\\
 }
 
 \frame[containsverbatim]{\frametitle{Insight from data simulation}
 {\scriptsize (Simulation are \emph{always} a great way to understand statistics!!)}\\[2mm]
 
 Generate an independent (explanatory) variable $\bm{x}$ and {\bf two} samples of a dependent variable $\bm{y}$ assuming that
-$$y_i = 4 - 2x_i + e_i \ , \quad e_i\sim \N(0,0.5^2) \ .$$
+$$y_i = 4 - 2x_i + \epsilon_i \ , \quad \epsilon_i\sim \N(0,0.5^2) \ .$$
 
-\setkeys{Gin}{width=0.6\textwidth}
+
 
 \begin{center}
-\setkeys{Gin}{width=0.4\textwidth}
-<<fig=T,width=3.5,height=3.5,echo=F>>=
+<<eval=T,fig.width=3.5,fig.height=3.3>>=
 set.seed(134539)
 par(mar=c(4,4,1,1))
 x <- runif(25,-2,2)
@@ -265,31 +281,22 @@ $\rightarrow$ Random variation is always present. This leads us to the next ques
 
 }
 
-
-% \frame[containsverbatim]{\frametitle{}
-% Or one larger sample:
-% \setkeys{Gin}{width=0.6\textwidth}
-% \begin{center}
-% <<fig=T,width=4,height=3.8>>=
-% x <- rnorm(100)
-% y <- 4 - 2*x + rnorm(100,0,sd=0.5)
-% plot(x,y);abline(c(4,-2))
-% @
-% \end{center}
-%}
+ 
 
 
 
 \frame{\frametitle{Parameter estimation}
-Remember: There are \myalert{three parameters} $\alpha$, $\beta$ and $\sigma_e^2$ to be estimated.\\[4mm]
+In a regression analysis, the task is to estimate the \myalert{regression coefficients} $\alpha$, $\beta$ and the \myalert{residual variance} $\sigma^2$ for a given set of $(x,y)$ data.\\[4mm]
 
 \begin{itemize}
-\item {\bf Problem:} For more than two points there is generally no perfectly fitting line.\\[4mm]
-\item {\bf Aim:} We want to find the best fitting line.\\[4mm]
-\item {\bf Idea:} Minimize the deviations between the points and the line.\\[4mm]
+\item {\bf Problem:} For more than two points $(x_i,y_i)$, $i=1,\ldots, n$, there is generally no perfectly fitting line.\\[4mm]
+
+\item {\bf Aim:} We want to find the parameters $(a,b)$ of the best fitting line $Y = a + b x$. \\[4mm]
+
+\item {\bf Idea:} Minimize the deviations between the data points $(x_i,y_i)$ and the regression line. \\[8mm]
 \end{itemize}
 
-But how?
+But how? 
 
 }
 
@@ -297,46 +304,125 @@ But how?
 
 \frame{\frametitle{Should we minimize these distances...}
 
-\includegraphics[width=11cm]{pictures/orthRegr.jpg}
+\vspace{-1cm}
+\begin{center}
+<<eval=T,fig.width=5.7, fig.height=5,warning=FALSE,out.width="10cm">>=
+set.seed(9670)
+n <- 10
+x <- rnorm(n)
+y <- 4 - 2*x + rnorm(n,0,sd=1)
+x[11]  <- -0.5
+y[11] <- 6.2
+plot(x,y)
+x1 <- -0.66
+abline(c(4,-2),lwd=2)
+segments(x[11],y[11],x1,4-2*(x1),col=2,lwd=2)
+#text(-0.4, y=5.6,  labels=expression(d[i]),cex=1.3)
+@
+\end{center}
+
 }
 
 
-\frame{\frametitle{... or these?}
-
-\includegraphics[width=11cm]{pictures/regrFitting.jpg}
+\frame[containsverbatim]{\frametitle{... or these?}
+\vspace{-1cm}
+\begin{center}
+<<eval=T,fig.width=5.7, fig.height=5,warning=FALSE,out.width="10cm">>=
+set.seed(9670)
+n <- 10
+x <- rnorm(n)
+y <- 4 - 2*x + rnorm(n,0,sd=1)
+x[11]  <- -0.5
+y[11] <- 6.2
+plot(x,y)
+abline(c(4,-2),lwd=2)
+segments(x[11],y[11],x[11],4-2*x[11],col=2,lwd=2)
+#text(-0.35, y=5.5,  labels=expression(e[i]),cex=1.3)
+@
+\end{center}
 }
 
+\frame[containsverbatim]{\frametitle{Or maybe even these?}
+\vspace{-1cm}
+\begin{center}
+<<eval=T,fig.width=5.7, fig.height=5,warning=FALSE,out.width="10cm">>=
+set.seed(9670)
+n <- 10
+x <- rnorm(n)
+y <- 4 - 2*x + rnorm(n,0,sd=1)
+x[11]  <- -0.5
+y[11] <- 6.2
+plot(x,y)
+abline(c(4,-2),lwd=2)
+segments(x[11],y[11],(y[11]-4)/(-2),y[11],col=2,lwd=2)
+#text(-0.35, y=5.5,  labels=expression(e[i]),cex=1.3)
+@
+\end{center}
+}
 
 \frame{\frametitle{Least squares}
-For multiple reasons (theoretical aspects and mathematical convenience), the parameters are estimated using the \myalert{least squares} approach. In this, the second type of distances are minimized: \\[6mm]
+For multiple reasons (theoretical aspects and mathematical convenience), the parameters are estimated using the \myalert{least squares} approach. In this, yet something else is minimized: \\[6mm]
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
-The parameters are estimated such that the sum of \myalert{squared vertical distances}
+The parameters $\alpha$ and $\beta$ are estimated such that the sum of \myalert{squared vertical distances} (sum of squared residuals)
 
-$$\sum_{i=1}^n r_i^2 \ , \qquad r_i = y_i - (\alpha + \beta x_i) $$
+$$SSE = \sum_{i=1}^n e_i^2 \ , \qquad \text{where} \quad e_i = y_i - \underbrace{(a + b x_i)}_{=\hat{y}_i} $$
 
 is being minimized.
 \end{minipage}}
 
-\vspace{9mm}
-Note: The vertical deviations $r_i$ are called the \myalert{residuals}. \\[2mm]
-
-
+~\\[4mm]
+{\bf Note:} $\hat y_i = a + b x_i$ are the \myalert{predicted values}.
 }
 
 
-\frame{\frametitle{Formulas for regression line parameters}
+
+\frame[containsverbatim]{\frametitle{So we minimize the sum of these areas!}
+\vspace{-1cm}
+\begin{center}
+<<eval=T,fig.width=5.7, fig.height=5,warning=FALSE,out.width="10cm">>=
+set.seed(9670)
+n <- 10
+x <- rnorm(n)
+y <- 4 - 2*x + rnorm(n,0,sd=1)
+x[11]  <- -0.5
+y[11] <- 6.2
+dd <- 0.38
+from_x <- c(x[11],x[11],x[11]+dd,x[11] + dd) 
+from_y <- c(y[11],(4-2*x[11]),(4-2*x[11]),y[11])
+
+to_x <- c(x[11],x[11] + dd,x[11]+ dd,x[11])
+to_y <- c(4-2*x[11],4-2*x[11],y[11], y[11])
+
+plot(x,y)
+abline(c(4,-2),lwd=2)
+polygon(from_x,from_y,to_x,to_y,col=2,lwd=2)
+#segments(from_x,from_y,to_x,to_y,col=2,lwd=2)
+@
+\end{center}
+}
+
+
+\frame{\frametitle{Least squares estimates}
+For a given sample $(x_i,y_i), i=1,..,n$, with mean values $\overline{x}$ and $\overline{y}$, the least squares estimates $\hat\alpha$ and $\hat\beta$ are computed as \\[2mm]
+\colorbox{lightgray}{\begin{minipage}{10cm}
+\begin{eqnarray*}
+\hat\beta &=& \frac{\sum_{i=1}^n  (y_i - \overline{y}) (x_i - \overline{x})}{ \sum_{i=1}^n (x_i - \overline{x})^2 } = \frac{cov(x,y)}{var(x)} \ , \\[4mm]
+\hat\alpha &=& \overline{y} - \hat\beta \overline{x}  \ .
+\end{eqnarray*}
+\end{minipage}}
+~\\
+
+Moreover,\\[2mm]
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
 \begin{eqnarray*}
-\hat\beta &=& \frac{\sum_{i=1}^n  (y_i - \overline{y}) (x_i - \overline{x})}{ \sum_{i=1}^n (x_i - \overline{x})^2 } = \frac{cov(\bm{x},\bm{y})}{var(\bm{x})} \\[4mm]
-\hat\alpha &=& \overline{y} - \hat\beta \overline{x} \\[4mm]
-\hat\sigma_e^2 &=& \frac{1}{n-2}\sum_{i=1}^n R_i^2 \quad \text{with residuals  } R_i = y_i - (\hat\alpha - \hat\beta x_i)
+\hat\sigma^2 &=& \frac{1}{n-2}\sum_{i=1}^n e_i^2 \quad \text{with residuals  } e_i = y_i - (\hat\alpha + \hat\beta x_i)
 \end{eqnarray*}
 \end{minipage}}
-~\\[6mm]
+~\\
+is an unbiased estimate of the residual variance $\sigma^2$.
 
-The hat on the parameters ($\hat\alpha$,$\hat\beta$,$\hat\sigma_e$) indicates that these are \myalert{estimates}. \\[6mm]
 
 {\small (The derivation of the parameters can be looked up in the Stahel script 2.A b. Idea: Minimization through derivating equations and setting them =0.)}
 
@@ -359,7 +445,7 @@ You can do this here:\\[2mm]
 \frame[containsverbatim]{\frametitle{Estimation using R}
 Let's estimate the regression parameters from the bodyfat example\\[3mm]
 
-%\setkeys{Gin}{width=0.5\textwidth}
+
 <<lmbodyfat,echo=T,eval=T>>=
 r.bodyfat <- lm(bodyfat ~ bmi,d.bodyfat)
 
@@ -372,129 +458,228 @@ $\Rightarrow$ $\hat\alpha=\Sexpr{round(r.bodyfat$coef[1],2)}$ ,  $\hat\beta=\Sex
 
 
 \frame[containsverbatim]{
-Plotting the resulting line into the scatterplot is simple:\\[10mm]
+The resulting line can be added to the scatterplot:\\[4mm]
 
 \begin{center}
-\setkeys{Gin}{width=0.65\textwidth}
 <<echo=F>>=
 library(reporttools)
 library(biostatUZH)
 @
-<<plotbodyfat,fig=T,width=4,height=3>>=
-ggplot(d.bodyfat,aes(bmi,bodyfat)) + geom_point() + geom_smooth(method='lm',se=F) 
+<<plotbodyfat,eval=T,fig.width=3.5, fig.height=3,warning=FALSE,echo=F,out.width="7cm">>=
+ggplot(d.bodyfat,aes(bmi,bodyfat)) + geom_point() + geom_smooth(method='lm',se=F) + theme_bw()
+@
+\end{center}
+
+\underline{Interpretation:} for an increase in the BMI by one index point, we roughly expect a 1.82\% percentage increase in bodyfat.
+}
+
+
+\frame[containsverbatim]{\frametitle{Uncertainty in the estimates $\hat\alpha$ and $\hat\beta$}
+
+Important: $\hat\alpha$ and $\hat\beta$ are themselves \myalert{random variables} and as such contain \myalert{uncertainty}!\\[4mm]
+
+Let us look again at the regression output, this time only for the coefficients. The second column shows the standard error of the estimate:\\[2mm]
+
+<<lmbodyfat.uncertainty,echo=T,eval=T>>=
+summary(r.bodyfat)$coef
+@
+
+~\\
+$\rightarrow$ The logical next question is: what is the distribution of the estimates?
+
+}
+
+
+
+
+\frame[containsverbatim]{\frametitle{Distribution of the estimators for $\hat\alpha$ and $\hat\beta$}
+ 
+To obtain an idea, we generate data points according to model
+%
+$$y_i = 4 - 2x_i + \epsilon_i \ , \quad \epsilon_i\sim \N(0,0.5^2). $$
+In each round, we estimate the parameters and store them:
+
+<<>>=
+set.seed(1)
+@
+<<echo=T, eval=T>>=
+niter <- 1000
+pars <- matrix(NA,nrow=niter,ncol=2)
+for (ii in 1:niter){
+  x <- rnorm(100)
+  y <- 4 - 2*x + rnorm(100,0,sd=0.5)
+  pars[ii,] <- lm(y~x)$coef
+}
+@
+ 
+Doing it \numprint{1000} times, we obtain the following distributions for $\hat\alpha$ and $\hat\beta$:
+
+\begin{center}
+<<eval=T,fig.width=6, fig.height=3,warning=FALSE,out.width="5cm">>=
+library(cowplot)
+pars <- data.frame(pars)
+names(pars) <- c("alpha","beta")
+ 
+p1 <-  ggplot(pars,aes(x=alpha)) + geom_histogram() +  theme_bw()
+p2 <-  ggplot(pars,aes(x=beta)) + geom_histogram() +  theme_bw()
+p <- plot_grid(p1,p2,  ncol = 2, rel_heights = c(1, .2))
+p
+# 
+# hist(pars[,1],xlab =expression(hat(alpha)),main="",freq=F,nclass=20)
+# hist(pars[,2],xlab=expression(hat(beta)),main="",freq=F,nclass=20)
 @
 \end{center}
 
 }
 
+
+\frame{
+This looks suspiciously normal!\\[2mm]
+
+In fact, from theory it is known that  
+
+\begin{eqnarray*}
+\hat\beta \sim \N(\beta,{\sigma^{(\beta)2}}) & \quad \text{and} \quad & \hat\alpha \sim \N(\alpha,{\sigma^{(\alpha)2}})
+\end{eqnarray*}
+
+For formulas of the standard deviations ${\sigma^{(\beta)2}}$ and ${\sigma^{(\alpha)2}}$, please consult Stahel 2.2.h.\\[6mm]
+
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+{\bf To remember:}
+\begin{itemize}
+\item $\hat\alpha$ and $\hat\beta$ are \myalert{unbiased estimators} of $\alpha$ and $\beta$.
+\item the parameters estimates $\hat\alpha$ and $\hat\beta$ are \myalert{normally distributed.}
+\item the formulas for the variances depend on the residual variance $\sigma^2$, the sample size $n$ and the variability of $X$ (SSQ$^{(X)(\star)})$.
+\end{itemize}
+\end{minipage}}
+
+\vspace{1cm}
+$^{(\star)}$  $\text{SSQ}^{(X)} = \sum_{i=1}^n (x_i-\overline{x})^2 $
+
+}
+
+
 \frame{\frametitle{Are the modelling assumptions met?}
-Before we continue to look into the results, we need to \myalert{check if the modelling assumptions are met}!\\[2mm]
+In practice, it is advisable to check if all our \myalert{modelling assumptions are met}.\\[2mm]
 
-Why? Because otherwise we draw invalid conclusions from the results.\\[4mm]
+$\rightarrow$ Otherwise we might draw invalid conclusions from the results.\\[4mm]
 
-The assumption we took here is that the errors $e_i \sim \N(0,\sigma_e^2)$. This implies {\bf four things}:\\[2mm]
+Remember: Our assumption is that $\epsilon_i \sim \N(0,\sigma^2)$. This implies\\[2mm]
+
 \colorbox{lightgray}{\begin{minipage}{10cm}
 \begin{enumerate}[a)]
-\item The expected value of $e_i$ is 0: $\E(e_i)=0$.\\[2mm]
-\item All $e_i$ have the same variance: $\Var(e_i)=\sigma_e^2$. \\[2mm]
-\item The $e_i$ are normally distributed.\\[2mm]
-\item The $e_i$ are independent of each other.
+\item The expected value of $\epsilon_i$ is 0: $\E(\epsilon_i)=0$.\\[2mm]
+% which implies that for a given x, the y are distributed around  alpha + beta * x
+\item All $\epsilon_i$ have the same variance: $\Var(\epsilon_i)=\sigma^2$. \\[2mm]
+\item All $\epsilon_i$ are normally distributed.\\[2mm]
+%\item $\epsilon$ is independent of any variable, observation number etc.
+\end{enumerate}
+\end{minipage}}
+~\\
+
+In addition, it is assumed that\\[3mm]
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+\begin{enumerate}[d)]
+\item  $\epsilon_1, \epsilon_2, \ldots, \epsilon_n$ are independent.
 \end{enumerate}
 \end{minipage}}
 
-~\\[6mm]
-For the moment, we introduce two simple graphical model checking tools:
+~\\[2mm]
+{\bf Note:} We do not actually observe $\epsilon_i$, but only the residuals $e_i$.
+Let us introduce two simple graphical model checking tools for our residuals $e_i$.
 }
+
 
 \frame[containsverbatim]{\frametitle{Model checking tool I: Tukey-Anscombe diagram}
 
-The \myalert{Tukey-Anscombe} diagram plots the residuals against the fitted values:
+The \myalert{Tukey-Anscombe} diagram plots the residuals against the fitted values. For the bodyfat data it looks like this:\\
 \begin{center}
-\setkeys{Gin}{width=0.5\textwidth}
-<<TA,fig=T,width=4,height=4,echo=F>>=
-plot(r.bodyfat$fitted,r.bodyfat$residuals,xlab="Fitted", ylab="Residuals")
-abline(h=0,lty=2)
+<<TA,eval=T,fig.width=3, fig.height=3,warning=FALSE>>=
+library(ggfortify)
+autoplot(r.bodyfat,smooth.colour=NA)[1]#,r.bodyfat$residuals,xlab="Fitted", ylab="Residuals")
 @
 \end{center}
 This plot is ideal to check if assumptions a) and b) (and partially d)) are met. Here, this seems fine.
 }
 
 
-\frame[containsverbatim]{\frametitle{Model checking tool II: Histogram of residuals}
- 
-Look at the histogram of the residuals:
+\frame[containsverbatim]{\frametitle{Model checking tool II: Quantile-quantile diagram}
+Remember the QQ-plot from Section 8.8. We can generate the respective plot for the residuals:
 \begin{center}
-\setkeys{Gin}{width=0.5\textwidth}
-<<hist,fig=T,width=4,height=4,echo=F>>=
-hist(r.bodyfat$residuals,nclass=20,xlab="Residuals",main="")
+<<QQ,eval=T,fig.width=3, fig.height=3,warning=FALSE>>=
+library(ggfortify)
+autoplot(r.bodyfat,smooth.colour=NA)[2]#,r.bodyfat$residuals,xlab="Fitted", ylab="Residuals")
 @
 \end{center}
-The normal distribution assumption (c) seems ok as well.
+If the residuals are normally distributed, they should approximately lie on a straight line.
+$\rightarrow$ Assumption (c) seems ok here.
  
 }
 
 
 
 
+% \frame[containsverbatim]{\frametitle{Uncertainty in the estimates $\hat\alpha$ and $\hat\beta$}
+% Let us look again at the regression output, this time only for the coefficients:\\[6mm]
+% 
+% %<<lmbodyfat.uncertainty,echo=T,eval=T>>=
+% <<lmbodyfat.uncertainty2,eval=T>>=
+% summary(r.bodyfat)$coef
+% @
+% ~\\[6mm]
+% The second column shows a standard error of the estimate. \\
+% $\rightarrow$ This implies: the estimates contain \myalert{uncertainty}!\\[4mm]
+% 
+% The logical next question is: what is the distribution of the estimates?
+% 
+% }
 
-\frame[containsverbatim]{\frametitle{Uncertainty in the estimates $\hat\alpha$ and $\hat\beta$}
-Let us look again at the regression output, this time only for the coefficients:\\[6mm]
-
-<<lmbodyfat.uncertainty,echo=T,eval=T>>=
-summary(r.bodyfat)$coef
-@
-~\\[6mm]
-The second column shows a standard error of the estimate. \\
-$\rightarrow$ This implies: the estimates contain \myalert{uncertainty}!\\[4mm]
-
-The logical next question is: what is the distribution of the estimates?
-
-}
 
 
+% \frame[containsverbatim]{\frametitle{Distribution of $\hat\alpha$ and $\hat\beta$}
+% \vspace{-6mm}
+% Again, a simulation can help to get an idea. We generate data points according to the model
+% %
+% $$y_i = 4 - 2x_i + e_i \ , \quad e_i\sim \N(0,0.5^2). $$
+% In each round, we estimate the parameters and store them:\\[3mm]
+% 
+% <<echo=T, eval=T>>=
+% niter <- 1000
+% pars <- matrix(NA,nrow=niter,ncol=2)
+% for (ii in 1:niter){
+% x <- rnorm(100)
+% y <- 4 - 2*x + rnorm(100,0,sd=0.5)
+% pars[ii,] <- lm(y~x)$coef
+% }
+% @
+% ~\\[2mm]
+% Doing it \texttt{niter <-} \numprint{1000} times, we obtain the following distributions for $\hat\alpha$ and $\hat\beta$.
+% }
 
-\frame[containsverbatim]{\frametitle{Distribution of $\hat\alpha$ and $\hat\beta$}
-\vspace{-6mm}
-Again, a simulation can help to get an idea. We generate data points according to the model
-%
-$$y_i = 4 - 2x_i + e_i \ , \quad e_i\sim \N(0,0.5^2). $$
-In each round, we estimate the parameters and store them:\\[3mm]
+% \frame[containsverbatim]{\label{sl:dists}
+% \begin{center}
+% \setkeys{Gin}{width=0.85\textwidth}
+% <<eval=T,fig.width=7,fig.height=3.5>>=
+% par(mfrow=c(1,2))
+%  # library(reshape2)
+%  # pars <- melt(pars)
+%  # ggplot(pars,aes(x=value)) + geom_histogram() + facet_wrap(~Var2,scales="free_x") + theme_bw()
+% hist(pars[,1],xlab =expression(hat(alpha)),main="",freq=F,nclass=20)
+% hist(pars[,2],xlab=expression(hat(beta)),main="",freq=F,nclass=20)
+% @
+% \end{center}
+% 
+% This looks suspiciously normal... \\[2mm]
+% In fact, from theory:
+% \begin{eqnarray*}
+% \hat\beta \sim \N(\beta,{\sigma^{(\beta)2}}) & \quad \text{and} \quad & \hat\alpha \sim \N(\alpha,{\sigma^{(\alpha)2}})
+% \end{eqnarray*}
+% }
 
-<<echo=T, eval=T>>=
-niter <- 1000
-pars <- matrix(NA,nrow=niter,ncol=2)
-for (ii in 1:niter){
-x <- rnorm(100)
-y <- 4 - 2*x + rnorm(100,0,sd=0.5)
-pars[ii,] <- lm(y~x)$coef
-}
-@
-~\\[2mm]
-Doing it \texttt{niter <-} \numprint{1000} times, we obtain the following distributions for $\hat\alpha$ and $\hat\beta$.
-}
-
-\frame[containsverbatim]{\label{sl:dists}
-\begin{center}
-\setkeys{Gin}{width=0.85\textwidth}
-<<fig=T,width=7,height=3.5,echo=F>>=
-par(mfrow=c(1,2))
- # library(reshape2)
- # pars <- melt(pars)
- # ggplot(pars,aes(x=value)) + geom_histogram() + facet_wrap(~Var2,scales="free_x") + theme_bw()
-hist(pars[,1],xlab =expression(hat(alpha)),main="",freq=F,nclass=20)
-hist(pars[,2],xlab=expression(hat(beta)),main="",freq=F,nclass=20)
-@
-\end{center}
-
-This looks suspiciously normal... \\[2mm]
-In fact, from theory:
-\begin{eqnarray*}
-\hat\beta \sim \N(\beta,{\sigma^{(\beta)2}}) & \quad \text{and} \quad & \hat\alpha \sim \N(\alpha,{\sigma^{(\alpha)2}})
-\end{eqnarray*}
-}
-
-\frame{
-For formulas of the standard deviations ${\sigma^{(\beta)2}}$ and ${\sigma^{(\alpha)2}}$, please consult Stahel 2.2.h.\\[6mm]
+% \frame{
+% For formulas of the standard deviations ${\sigma^{(\beta)2}}$ and ${\sigma^{(\alpha)2}}$, please consult Stahel 2.2.h.\\[6mm]
 
 
 
@@ -509,17 +694,17 @@ For formulas of the standard deviations ${\sigma^{(\beta)2}}$ and ${\sigma^{(\al
 % \end{minipage}}
 % ~\\
 
-\colorbox{lightgray}{\begin{minipage}{10cm}
-{\bf No need to remember these formulas, but you should know that}
-\begin{itemize}
-\item the parameters estimates $\hat\alpha$ and $\hat\beta$ are \myalert{normally distributed.}
-\item the formulas to calculate the variances depend on the residual variance $\sigma_e^2$, the sample size $n$ and the variance of $X$ (SSQ$^{(X)(\star)})$.
-\end{itemize}
-\end{minipage}}
-
-\vspace{2cm}
-$^{(\star)}$  $\text{SSQ}^{(X)} = \sum_{i=1}^n (x_i-\overline{x})^2 \ $
-}
+% \colorbox{lightgray}{\begin{minipage}{10cm}
+% {\bf No need to remember these formulas, but you should know that}
+% \begin{itemize}
+% \item the parameters estimates $\hat\alpha$ and $\hat\beta$ are \myalert{normally distributed.}
+% \item the formulas to calculate the variances depend on the residual variance $\sigma_e^2$, the sample size $n$ and the variance of $X$ (SSQ$^{(X)(\star)})$.
+% \end{itemize}
+% \end{minipage}}
+% 
+% \vspace{2cm}
+% $^{(\star)}$  $\text{SSQ}^{(X)} = \sum_{i=1}^n (x_i-\overline{x})^2 \ $
+% }
 
 
 
@@ -529,7 +714,7 @@ This is, per se, a difficult question.... \\[2mm]
 One often considered index is the {\bf coefficient of determination (Bestimmtheitsmass)} $R^2$.
 Let us again look at the regression output form the bodyfat example:\\[4mm]
 
-<<lmbodyfat2,echo=T,eval=T>>=
+<<lmbodyfat4,echo=T,eval=T>>=
 summary(r.bodyfat)$r.squared
 @
 
@@ -537,7 +722,7 @@ summary(r.bodyfat)$r.squared
 This is the $R^2$ from the regression of bodyfat against bmi. \\
 Compare this to the correlation between the two variables:\\[2mm]
 
-<<lmbodyfat2,echo=T,eval=T>>=
+<<lmbodyfat3,echo=T,eval=T>>=
 cor(d.bodyfat$bodyfat,d.bodyfat$bmi)
 @
 ~\\
@@ -653,7 +838,7 @@ Under $H_0$, $T$ has a $t$-distribution with $n-2$ degrees of freedom ($n=$ numb
 \frame[containsverbatim]{\label{sl:bmi}
 So let's again go back to the bodyfat regression output:\\[4mm]
 
-<<lmbodyfatTest,echo=T,eval=T>>=
+<<echo=T,eval=T>>=
 summary(r.bodyfat)$coef
 @
 ~\\[6mm]
@@ -668,10 +853,9 @@ Note: The last column contains the {\bf $p$-value} of the test $\beta=0$.\\[2mm]
 
 \frame{\frametitle{Recap: Formal definition of the $p$-value}
 
-%Many applied researchers do not \alert{really} understand what the $p$-value actually is.\\[2mm]
+ 
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
-% The $p$-value is the probability, under the assumption of no effect (the ``Null hypothesis''), of obtaining a result equal to or more extreme than what was actually observed.\\[2mm]
 The {\bf formal definition of $p$-value} is the probability to observe a data summary (e.g., an average) that is at least as extreme as the one observed, given that the Null Hypothesis is correct.
 \end{minipage}}\\
 %{\scriptsize \citep{goodman2016}}
@@ -681,7 +865,8 @@ Example (normal distribution): Assume the observed test-statistic leads to a $z$
 $\Rightarrow$ $\P(|z|\geq 1.96)=0.05$ and $\P(z\leq-1.96)=0.025$ .
  
 \setkeys{Gin}{width=1\textwidth}
-<<pValFig,fig=T,width=8,height=4,echo=F>>=
+%<<pValFig,fig=T,width=8,height=4,echo=F>>=
+<<pValFig,eval=T,fig.width=8,fig.height=4,out.width="10cm">>=
 par(mfrow=c(1,2))
 
 zz1 <- qnorm(0.025)
@@ -794,7 +979,7 @@ confint(r.bodyfat,level=c(0.95))
 ~\\[8mm]
 
 In summary,
-<<results=tex,echo=F>>=
+<<results="asis",echo=F>>=
 tableRegression(r.bodyfat)
 @
 ~\\[6mm]
@@ -818,10 +1003,9 @@ $\Rightarrow$ This leads to the {\bf prediction range}.
 
 
 \frame{\frametitle{Bodyfat example}
-\vspace{-5mm}
+\vspace{-10mm}
 \begin{center}
-\setkeys{Gin}{width=0.65\textwidth}
-<<confpred,fig=T,eval=T,echo=F,width=5,height=5>>=
+<<confpred,eval=T,fig.width=5,fig.height=5,out.width="7cm">>=
 t.range <- range(d.bodyfat$bmi)
 t.xwerte <- seq(t.range[1]-1,t.range[2]+1,by=1)
 t.vert <- predict(r.bodyfat,se.fit=T,newdata=data.frame(bmi=t.xwerte),
@@ -855,7 +1039,7 @@ This question is not trivial, because both $\hat\alpha$ and $\hat\beta$ are esti
 The details of the calculation are given in Stahel 2.4b. \\[6mm]%(Idea: $\hat y_0 \pm q\cdot se^{(\hat{y}_0)}$.) \\[6mm]
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
-%For \emph{each} $x_0$ one obtains a confidence interval for the expected value $\hat y_0 = \hat\alpha + \hat\beta x_0$. 
+
 Plotting the confidence interval around all $\hat y_0$ values one obtains the {\bf confidence range} or {\bf confidence band for the expected values} of $y$.
 \end{minipage}}\\[2mm]
 
@@ -867,8 +1051,7 @@ Note: For the confidence range, only the uncertainty in the estimates $\hat\alph
 \frame{
 \vspace{-5mm}
 \begin{center}
-\setkeys{Gin}{width=0.65\textwidth}
-<<conf,fig=T,eval=T,echo=F,width=5,height=5>>=
+<<conf,eval=T,fig.width=5,fig.height=5,out.width="7cm">>=
 t.range <- range(d.bodyfat$bmi)
 t.xwerte <- seq(t.range[1]-1,t.range[2]+1,by=1)
 t.vert <- predict(r.bodyfat,se.fit=T,newdata=data.frame(bmi=t.xwerte),
@@ -906,8 +1089,7 @@ This is the reason why the {\bf prediction range is always wider than the confid
 \frame{
 \vspace{-5mm}
 \begin{center}
-\setkeys{Gin}{width=0.65\textwidth}
-<<pred,fig=T,eval=T,echo=F,width=5,height=5>>=
+<<pred,eval=T,fig.width=5,fig.height=5,out.width="7cm">>=
 t.range <- range(d.bodyfat$bmi)
 t.xwerte <- seq(t.range[1]-1,t.range[2]+1,by=1)
 t.vert <- predict(r.bodyfat,se.fit=T,newdata=data.frame(bmi=t.xwerte),
