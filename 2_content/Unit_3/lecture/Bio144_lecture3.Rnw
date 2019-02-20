@@ -712,36 +712,41 @@ $\rightarrow$ Assumption (c) seems ok here.
 This is, per se, a difficult question.... \\[2mm]
 
 One often considered index is the {\bf coefficient of determination (Bestimmtheitsmass)} $R^2$.
-Let us again look at the regression output form the bodyfat example:\\[4mm]
+Let us again look at the regression output form the bodyfat example:\\
 
 <<lmbodyfat4,echo=T,eval=T>>=
 summary(r.bodyfat)$r.squared
 @
 
-~\\[0mm]
-This is the $R^2$ from the regression of bodyfat against bmi. \\
-Compare this to the correlation between the two variables:\\[2mm]
-
-<<lmbodyfat3,echo=T,eval=T>>=
-cor(d.bodyfat$bodyfat,d.bodyfat$bmi)
-@
-~\\
-... and square it:\\[2mm]
+% ~\\[0mm]
+% This is the $R^2$ from the regression of bodyfat against bmi. \\
+Compare this to the squared correlation between the two variables:\\[2mm]
+% 
+% <<lmbodyfat3,echo=T,eval=T>>=
+% cor(d.bodyfat$bodyfat,d.bodyfat$bmi)
+% @
+% ~\\
+% ... and square it:\\[2mm]
 <<lmbodyfat2,echo=T,eval=T>>=
 cor(d.bodyfat$bodyfat,d.bodyfat$bmi)^2
 @
+
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+$\rightarrow$ In simple linear regression, $R^2$ is the squared correlation between the independent and the dependent variable.
+\end{minipage}}\\[6mm]
 }
 
 \frame{
 
-We conclude:\\[2mm]
+
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
-In simple linear regression, $R^2$ is the squared correlation between the independent and the dependent variable.
-\end{minipage}}\\[6mm]
-
-
-Generally, $R^2$ indicates the proportion of variability of the response variable $\bm{y}$ that is {\bf explained by the ensemble of all covariates}.\\[4mm] 
+\begin{itemize} 
+\item $R^2$ indicates the proportion of variability of the response variable $\bm{y}$ that is {\bf explained by the ensemble of all covariates}. 
+\item Its value lies between 0 and 1.
+\end{itemize}
+ \end{minipage}}\\[10mm] 
 
 The {\bf larger} $R^2$ \\ 
 $\Rightarrow$  the {\bf more} variability of $\bm{y}$ is captured (``explained'') by the covariate \\
@@ -749,7 +754,7 @@ $\Rightarrow$ the {\bf ``better''} is the model. \\[2mm]
 
 {\scriptsize(However, we will qualify this statement later in the course...)}\\[6mm]
 
-$R^2$ becomes more interesting in \emph{multiple} linear regression.\\
+%$R^2$ becomes more interesting in \emph{multiple} linear regression.\\
 
 }
 
@@ -976,7 +981,7 @@ Even easier: directly ask R to give you the CIs.\\[2mm]
 <<echo=T,eval=T>>=
 confint(r.bodyfat,level=c(0.95))
 @
-~\\[8mm]
+~\\[2mm]
 
 In summary,
 <<results="asis",echo=F>>=
@@ -1109,14 +1114,14 @@ lty=8, cex=1,col=c(4),lwd=2)
 
 
 
-\frame{\frametitle{Tasks until next week}
+\frame{\frametitle{Tasks until the next practical (Thu/Fri)}
 
-The idea of the course is that as a preparation for next week's practical part you will do the following:\\[2mm]
+The idea of the course is that as a preparation for the practical part you will do the following:\\[2mm]
 
 \begin{itemize}
 \item Understand what today's lecture was about. You will certainly need to click through it again.\\[2mm]
-\item {\bf If necessary} (if things are not clear on the slides), consult the "Course material covered today" (see slide 3: today it was chapter 2 of the Stahel script \emph{Lineare Regression}).\\[2mm]
-\item Go to OpenEdX and do all the "Before class (BC)" tasks.\\[6mm]
+%\item {\bf If necessary} (if things are not clear on the slides), consult the "Course material covered today" (see slide 3: today it was chapter 2 of the Stahel script \emph{Lineare Regression}).\\[2mm]
+\item Go to openedX and do all the "Before class (BC)" tasks.\\[6mm]
 \end{itemize}
 
 {\bf $\rightarrow$ The same procedure applies to all course weeks.}
