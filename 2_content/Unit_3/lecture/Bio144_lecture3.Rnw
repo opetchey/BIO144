@@ -131,8 +131,7 @@ Datenanalyse in der Biologie}%\\[.3cm]
 The lecture material of today is based on the following literature:\\[4mm]
 
 \begin{itemize}
-\item Chapter 2 of \emph{Lineare Regression}, p.7-20 (Stahel script),
-\item Alternatively, chapters 13.1 - 13.4 in the Stahel book ``Statistische Datenanalyse''.\\[6mm]
+\item Chapter 2 of \emph{Lineare Regression}, p.7-20 (Stahel script)
 \end{itemize}
 
  
@@ -153,7 +152,7 @@ d.bodyfat <- d.bodyfat[,c("bodyfat","age","gewicht","hoehe","bmi","neck","abdome
 
  
 \begin{center}
-<<bmi2, eval=T,fig.width=3, fig.height=2.5,warning=FALSE,echo=F,out.width="7cm">>=
+<<bmi2, eval=T,fig.width=3.5, fig.height=3,warning=FALSE,echo=F,out.width="6.5cm">>=
 library(ggplot2)
 ggplot(d.bodyfat,aes(x=bmi,y=bodyfat)) + geom_point() + theme_bw() + ylab("body fat (%)")
 @
@@ -186,7 +185,7 @@ But which is the ``true'' or ``best'' line?
 
 
 \begin{center}
-<<eval=T,fig.width=3.5, fig.height=3,out.width="7cm">>=
+<<eval=T,fig.width=3.5, fig.height=3,warning=FALSE,echo=F,out.width="6.5cm">>=
 ggplot(d.bodyfat,aes(x=bmi,y=bodyfat)) + geom_point() + theme_bw() + ylab("body fat (%)")  + 
   geom_abline(intercept = -25, slope = 1.7, color="red",   size=0.6) +
   geom_abline(intercept = -35, slope = 2.1, color="green",    size=0.6) +
@@ -465,7 +464,7 @@ The resulting line can be added to the scatterplot:\\[4mm]
 library(reporttools)
 library(biostatUZH)
 @
-<<plotbodyfat,eval=T,fig.width=3.5, fig.height=3,warning=FALSE,echo=F,out.width="7cm">>=
+<<plotbodyfat,eval=T,fig.width=3.5, fig.height=3,warning=FALSE,echo=F,out.width="6.5cm">>=
 ggplot(d.bodyfat,aes(bmi,bodyfat)) + geom_point() + geom_smooth(method='lm',se=F) + theme_bw()
 @
 \end{center}
@@ -524,9 +523,6 @@ p1 <-  ggplot(pars,aes(x=alpha)) + geom_histogram() +  theme_bw()
 p2 <-  ggplot(pars,aes(x=beta)) + geom_histogram() +  theme_bw()
 p <- plot_grid(p1,p2,  ncol = 2, rel_heights = c(1, .2))
 p
-# 
-# hist(pars[,1],xlab =expression(hat(alpha)),main="",freq=F,nclass=20)
-# hist(pars[,2],xlab=expression(hat(beta)),main="",freq=F,nclass=20)
 @
 \end{center}
 
@@ -605,16 +601,15 @@ This plot is ideal to check if assumptions a) and b) (and partially d)) are met.
 }
 
 
-\frame[containsverbatim]{\frametitle{Model checking tool II: Quantile-quantile diagram}
-Remember the QQ-plot from Section 8.8. We can generate the respective plot for the residuals:
-\begin{center}
-<<QQ,eval=T,fig.width=3, fig.height=3,warning=FALSE>>=
-library(ggfortify)
-autoplot(r.bodyfat,smooth.colour=NA)[2]#,r.bodyfat$residuals,xlab="Fitted", ylab="Residuals")
+\frame[containsverbatim]{\frametitle{Model checking tool II: Histogram of residuals}
+ 
+Look at the histogram of the residuals:
+\vspace{-3mm}
+<<hist, fig.width=4,fig.height=4,echo=F,out.width="5.5cm">>=
+hist(r.bodyfat$residuals,nclass=20,xlab="Residuals",main="")
 @
-\end{center}
-If the residuals are normally distributed, they should approximately lie on a straight line.
-$\rightarrow$ Assumption (c) seems ok here.
+ 
+The normal distribution assumption (c) seems ok as well.
  
 }
 
