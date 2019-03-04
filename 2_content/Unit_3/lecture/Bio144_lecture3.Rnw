@@ -592,7 +592,7 @@ Let us introduce two simple graphical model checking tools for our residuals $e_
 
 The \myalert{Tukey-Anscombe} diagram plots the residuals against the fitted values. For the bodyfat data it looks like this:\\
 \begin{center}
-<<TA,eval=T,fig.width=3, fig.height=3,warning=FALSE>>=
+<<TA,eval=T,fig.width=3.5, fig.height=3.5,warning=FALSE,out.width="5cm">>=
 library(ggfortify)
 autoplot(r.bodyfat,smooth.colour=NA)[1]#,r.bodyfat$residuals,xlab="Fitted", ylab="Residuals")
 @
@@ -747,7 +747,7 @@ The {\bf larger} $R^2$ \\
 $\Rightarrow$  the {\bf more} variability of $\bm{y}$ is captured (``explained'') by the covariate \\
 $\Rightarrow$ the {\bf ``better''} is the model. \\[2mm]
 
-{\scriptsize(However, we will qualify this statement later in the course...)}\\[6mm]
+{\scriptsize(However, it's a bit more complicated, see later in the course...)}\\[6mm]
 
 %$R^2$ becomes more interesting in \emph{multiple} linear regression.\\
 
@@ -826,7 +826,7 @@ T=\frac{\hat\beta - \beta_0}{se^{(\beta)}}\ . %\quad \text{with} \quad se^{(\bet
 \end{center}
 
 ~\\[2mm]
-Again: typically, $\beta_0=0$, so the formula simplifies to.... (please think:-))\\[2mm]
+Again: typically, $\beta_0=0$, so the formula simplifies to $T=\frac{\hat\beta}{se^{(\beta)}}$.\\[2mm]
 
 Under $H_0$, $T$ has a $t$-distribution with $n-2$ degrees of freedom ($n=$ number of data points).\\[2mm]
 
@@ -844,7 +844,7 @@ summary(r.bodyfat)$coef
 ~\\[6mm]
 
 Task:\\[2mm]
-$\rightarrow$ Please use equation \eqref{eq:beta} to find out how the first three columns (Estimate, Std. Error and t value) are related! Check your ideas by doing some calculations...\\[7mm]
+$\rightarrow$ Please use equation \eqref{eq:beta} to find out how the first three columns (Estimate, Std. Error and t value) are related! Check by a calculation...\\[7mm]
 
 Note: The last column contains the {\bf $p$-value} of the test $\beta=0$.\\[2mm]
  
@@ -943,7 +943,7 @@ To answer this question, we can determine the confidence intervals of the regres
 \begin{itemize}
 \item $\hat\beta$ is estimated with a standard error of $\sigma^{(\beta)}$.
 \item The distribution of $\hat\beta$ is normal, namely $\hat\beta\sim\N(\beta,\sigma^{(\beta)2})$.
-\item However, since we need to estimate $\sigma^{(\beta)2}$ from the data, we have a $t$-distribution.
+\item However, since we need to estimate $\sigma^{(\beta)}$ from the data (the standard error), we have a $t$-distribution.
 \end{itemize}
 }
 
@@ -1044,7 +1044,7 @@ Plotting the confidence interval around all $\hat y_0$ values one obtains the {\
 \end{minipage}}\\[2mm]
 
 ~\\[2mm]
-Note: For the confidence range, only the uncertainty in the estimates $\hat\alpha$ and $\hat\beta$ are decisive.
+Note: For the confidence range, only the uncertainty in the estimates $\hat\alpha$ and $\hat\beta$ matters.
 }
 
 
@@ -1078,7 +1078,7 @@ Given a fixed value of $x$, say $x_0$. The question is: \\[6mm]
 Where does a {\bf future observation} lie with a certain confidence (i.e., 95\%)? 
 \end{minipage}}\\[6mm]
 
-To answer this question, we have to \alert{consider not only the uncertainty in the predicted value} $\hat y_0 =  \hat\alpha + \hat\beta x_0$, but also the \alert{error in the equation $e_i \sim \N(0,\sigma_e^2)$}. \\[6mm]
+To answer this question, we have to \alert{consider not only the uncertainty in the predicted value} $\hat y_0 =  \hat\alpha + \hat\beta x_0$, but also the \alert{error in the equation $\epsilon_i \sim \N(0,\sigma^2)$}. \\[6mm]
 
 
 This is the reason why the {\bf prediction range is always wider than the confidence range}.
