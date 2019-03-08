@@ -133,7 +133,7 @@ The lecture material of today is based on the following literature:\\[4mm]
 \begin{itemize}
 \item Chapters 3.1, 3.2a-q of \emph{Lineare Regression}
 \item Chapters 4.1 4.2f, 4.3a-e of \emph{Lineare Regression}
-\item Chapter 11.2 in the Stahel book \emph{Statistische Datenanalyse} 
+%\item Chapter 11.2 in the Stahel book \emph{Statistische Datenanalyse} 
 \end{itemize}
 }
 
@@ -167,7 +167,7 @@ summary(r.bodyfat)$coef
 
 \frame[containsverbatim]{\frametitle{Recap of last week II}
 Remember: 
-The assumption in linear regression is that the residuals follow a $\N(0,\sigma_e^2)$ distribution, implying that :\\[2mm]
+The assumption in linear regression is that the residuals follow a $\N(0,\sigma^2)$ distribution, implying that :\\[2mm]
 \colorbox{lightgray}{\begin{minipage}{10cm}
 \begin{enumerate}[a)]
 \item The expected value of $\epsilon_i$ is 0: $\E(\epsilon_i)=0$.\\[2mm]
@@ -264,8 +264,9 @@ plot(bodyfat ~ hip,d.bodyfat,xlab="hip", ylab="bodyfat (y)")
 }
 
 \frame[containsverbatim]{
+\vspace{2mm}
 Or again the pairs plot:
- \vspace{-3mm}
+ \vspace{-4mm}
 <<fig3, eval=T,fig.width=6, fig.height=6,warning=FALSE,echo=F,out.width="9cm">>=
 pairs(d.bodyfat)
 @
@@ -328,9 +329,8 @@ Let us regress the proportion (\%) of bodyfat (from last week) on the predictors
 Let's now fit the model with R, and quickly glance at the output:\\
 
 <<r.bodyfatM,eval=T,echo=T>>=
-r.bodyfatM <- lm(bodyfat ~ bmi + age ,d.bodyfat) 
-@
-<<summary.bf,eval=T,echo=T>>=
+r.bodyfatM <- lm(bodyfat ~ bmi + age, d.bodyfat) 
+
 summary(r.bodyfatM)
 @
 }
@@ -356,7 +356,7 @@ This seems ok, so continue with answering questions 1-3.
 
 
 
-\frame[containsverbatim]{\frametitle{Question 1: Do the covariates have an effect on the response?}
+\frame[containsverbatim]{\frametitle{Question 1: Are the covariates associated with the response?}
 \vspace{-2mm}
 To answer question 1, we need to perform a so-called \alert{$F$-test}. The results of the test are displayed in the final line of the regression summary. Here, it says:\\[2mm]
 
@@ -387,7 +387,8 @@ invisible(pf(F,m,n-p,lower.tail=FALSE))
 @
 }
 
-\frame[containsverbatim]{\frametitle{Question 2: Which variables influence the response?}
+\frame[containsverbatim]{\frametitle{Question 2: Which variables are associated with the response?}
+\vspace{-4mm}
 <<summary.bf2,echo=T>>= 
 summary(r.bodyfatM)$coef
 @
@@ -421,7 +422,7 @@ Here, we have
 
 Thus both, bmi and age seem to have some predictive power for bodyfat. \\[6mm]
 
-Again, a 95\% CI for $\beta_j$ can be calculated with R: \\[4mm] 
+Again, a 95\% CI for $\hat\beta_j$ can be calculated with R: \\[4mm] 
 
 <<echo=T>>=
 confint(r.bodyfatM)
@@ -445,7 +446,7 @@ tableRegression(r.bodyfatM2)
 #summary(r.bodyfatM2)$coef
 @
 ~\\[6mm]
-It is now much \myalert{less clear what the influences of age ($p=0.60$) and bmi ($p=0.06$) are}.  \\[2mm]
+It is now much \myalert{less clear how strongly age ($p=0.60$) and bmi ($p=0.07$) are associated with bodyfat}.  \\[2mm]
 
 
 }
@@ -454,22 +455,19 @@ It is now much \myalert{less clear what the influences of age ($p=0.60$) and bmi
 \frame[containsverbatim]{\frametitle{ }
 
 Basically, the problem is that the \alert{variables in the model are correlated} and therefore explain similar aspects of \% bodyfat. \\[2mm]
-{\bf Example:} Abdomen (Bauchumfang) seems to be a relevant predictor and it is obvious that abdomen and BMI are correlated:
-\vspace{-5mm}
-\begin{center}
+{\bf Example:} Abdomen (Bauchumfang) seems to be a relevant predictor and it is obvious that abdomen and BMI are correlated:\\[2mm]
 
-<<fig4, eval=T,fig.width=4, fig.height=4.5,warning=FALSE,echo=F,out.width="4cm">>=
-plot(abdomen ~ bmi,d.bodyfat)
+<<fig4, eval=T,fig.width=3.5, fig.height=3.5,warning=FALSE,echo=F,out.width="4cm">>=
+ggplot(d.bodyfat, aes(y=abdomen ,x=bmi)) + geom_point()
 @
-\end{center}
-\vspace{-1mm}
+ 
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
 This problem of \alert{collinearity} is at the heart of many confusions of regression analysis, and we will talk about such issues later in the course (lectures 8 and 9).
 \end{minipage}}
 
 \vspace{2mm}
-Please see also IC: practical 4 (todo: check) for an example and more thoughts.
+Please see also IC: practical 4 (milk example) for an analysis and more thoughts.
 
 
 
@@ -533,7 +531,7 @@ text(35,40,expression(hat(y)),cex=1.5)
 Let us look at the $R^2$s from the three bodyfat models \\
 (model 1: $y\sim bmi$\\
 model 2: $y\sim bmi + age$\\
-model 3: $y\sim bmi + age + neck + hip + abdomen$):\\[4mm]
+model 3: $y\sim bmi + age + neck + hip + abdomen$): 
 
 <<r.squared,eval=T,echo=T>>=
 summary(r.bodyfat)$r.squared
@@ -571,7 +569,7 @@ Apart from model checking and thinking about questions 1-3, it is probably even 
 \end{center}
 
 <<results="asis",echo=F>>=
-tableRegression(r.bodyfatM,caption="Parameter estimates of model 3.", label="tab:m3")
+tableRegression(r.bodyfatM,caption="Parameter estimates of model 2.", label="tab:m3")
 @
 
 Task in teams: Interpret the coefficients, 95\% CIs and $p$-values.
@@ -679,7 +677,7 @@ We fit the following linear regression model: \\
 ~\\[2mm]
 Where 
 \begin{itemize}
-\item $\log(Hg_{urin})_i$ is the urine mercury concentration.
+\item $\log(Hg_{urin})$ is the urine mercury concentration.
 \item $x^{(1)}$ is the binary smoking indicator (0/1), denoted as {\bf dummy variable}.
 \item $x^{(2)}$ the number of amalgam fillings.
 \item $x^{(3)}$ the monthly number of marine fish meals.
@@ -729,7 +727,7 @@ tableRegression(r1.urin.mother)
 ~\\[2mm]
 There is some weak ($p=0.12$) indication that smokers have an increased Hg concentration in their body. Their $\log(Hg_{urin})$ is in average by 0.22 higher than for nonsmokers. \\[4mm]
 
-In principle, we have now -- at the same time -- fitted {\bf two models:} one for smokers and one for non-smokers, assuming that the slopes of the other covariates are the same for both groups.\\[2mm]
+In principle, we have now -- at the same time -- fitted {\bf two models:} one for smokers and one for non-smokers, assuming that the slopes of the remaining covariates are the same for both groups.\\[2mm]
 \colorbox{lightgray}{\begin{minipage}{10cm}
 Smokers: $y_i = -1.01 + 0.22  + 0.092\cdot amalgam _i+ 0.032\cdot fish_i + \epsilon_i$ \\
 Non-smokers:  $y_i = -1.01  + 0.092\cdot amalgam_i + 0.032\cdot fish_i  + \epsilon_i$ 
@@ -865,7 +863,7 @@ autoplot(r.lm,which=c(1,2),smooth.colour=NA)
 @
 \end{center}
  
-$\rightarrow$ This seems ok.
+$\rightarrow$ This seems ok (although the TA plot is a bit funnel-like).
 }
 
 \frame[containsverbatim]{
@@ -961,7 +959,7 @@ The function \texttt{anova()} in R does the $F$-test for categorical variables. 
 <<echo=T>>=
 anova(r.lm)
 @
-~\\
+
 
 {\bf Note:} Here, the $F$-value for \texttt{Gattung} is distributed as $F_{2,139}$ under the Null-Hypothesis.
 ~\\[4mm]
