@@ -28,7 +28,7 @@ ggplot(data=gather(bodyfat, key=variable, value=value),
 ## to get an idea of which variables might best predict body fat.
 ggpairs(bodyfat)
 
-select(arrange(bodyfat, bodyfat, decreasing=T))
+select(arrange(bodyfat, desc(bodyfat)))
 
 options(dplyr.width = Inf)
 arrange(bodyfat, desc(bodyfat))

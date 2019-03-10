@@ -34,7 +34,10 @@ ggplot(fhc1, aes(x=child_mort)) + geom_histogram()
 ggplot(fhc1, aes(x=health_exp_total)) + geom_histogram()
 
 ## Look to see if log transformation help the situation
-ggplot(data=fhc1, aes(x=log10(health_exp_total), y=log10(child_mort))) + geom_point()
+ggplot(data=fhc1, aes(x=log10(health_exp_total), y=log10(child_mort))) +
+  geom_point() +
+  ylim(0,5) +
+  xlim(0,5)
 ggplot(fhc1, aes(x=log10(child_mort))) + geom_histogram(bins=20)
 ggplot(fhc1, aes(x=log10(health_exp_total))) + geom_histogram(bins=20)
 
