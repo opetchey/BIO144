@@ -316,8 +316,8 @@ Let us regress the proportion (\%) of bodyfat (from last week) on the predictors
 \frame[containsverbatim]{\frametitle{}
 \emph{Before} we estimate the parameters, let us ask the questions that we intend to answer:\\[6mm]
 \begin{enumerate}
-\item Does the {\bf ensemble} of all covariates have an effect on the response?\\[4mm]
-\item If yes, which covariates are relevant predictors of bodyfat? \\[4mm]
+\item Is the {\bf ensemble} of all covariates associated with the response?\\[4mm]
+\item If yes, which covariates are associated with the response? \\[4mm]
 \item Which proportion of response variability ($\sigma_y^2$) is explained by the model?
 \end{enumerate}
 
@@ -420,7 +420,7 @@ Here, we have
 \item $p<0.001$ for age
 \end{itemize}
 
-Thus both, bmi and age seem to have some predictive power for bodyfat. \\[6mm]
+Thus both, bmi and age seem to be associated with bodyfat. \\[6mm]
 
 Again, a 95\% CI for $\hat\beta_j$ can be calculated with R: \\[4mm] 
 
@@ -454,7 +454,7 @@ It is now much \myalert{less clear how strongly age ($p=0.60$) and bmi ($p=0.07$
 
 \frame[containsverbatim]{\frametitle{ }
 
-Basically, the problem is that the \alert{variables in the model are correlated} and therefore explain similar aspects of \% bodyfat. \\[2mm]
+Basically, the problem is that the \alert{variables in the model are correlated} and therefore explain similar aspects of bodyfat. \\[2mm]
 {\bf Example:} Abdomen (Bauchumfang) seems to be a relevant predictor and it is obvious that abdomen and BMI are correlated:\\[2mm]
 
 <<fig4, eval=T,fig.width=3.5, fig.height=3.5,warning=FALSE,echo=F,out.width="4cm">>=
@@ -513,9 +513,9 @@ SSQ^{(Y)} &=& SSQ^{(R)} \qquad\qquad \quad + \qquad\quad\qquad SSQ^{(E)} \\[2mm]
 }
 
 \frame[containsverbatim]{
-
-\begin{center}
-<<fig6, eval=T,fig.width=5, fig.height=5,warning=FALSE,echo=F,out.width="8cm">>=
+This can be visualized for a model with only one predictor:
+ \vspace{-4mm}
+<<fig6, eval=T,fig.width=5, fig.height=5.3,warning=FALSE,echo=F,out.width="7cm">>=
 r.bodyft <- lm(bodyfat ~ bmi , d.bodyfat)
 plot(bodyfat~bmi,d.bodyfat,cex.lab=1.5)
 abline(h=mean(d.bodyfat$bodyfat),lty=2)
@@ -523,7 +523,7 @@ abline(r.bodyfat)
 text(35,15,expression(bar(y)),cex=1.5)
 text(35,40,expression(hat(y)),cex=1.5)
 @
-\end{center}
+ 
 }
 
 
@@ -682,7 +682,7 @@ Where
 \item $x^{(2)}$ the number of amalgam fillings.
 \item $x^{(3)}$ the monthly number of marine fish meals.
 \end{itemize}
-{\scriptsize(Remember from week 1 that the log of Hg concentrations is needed to obtain useful distributions.)}\\[6mm]
+{\scriptsize(Remember from week 1 that the log of Hg concentrations is needed to obtain ``useful'' distributions.)}\\[6mm]
 
 }
 
@@ -821,7 +821,7 @@ boxplot(GEWICHT ~ Gattung, d.wurm,xlab="Gattung",ylab="Gewicht (g)")
 boxplot(MAGENUMF ~ Gattung, d.wurm,xlab="Gattung",ylab="Magenumfang")
 @
  
-<<wurmP2, eval=T,fig.width=5, fig.height=3.5,warning=FALSE,echo=F,out.width="5.5cm">>=
+<<wurmP2, eval=T,fig.width=4.2, fig.height=2.9,warning=FALSE,echo=F,out.width="5.5cm">>=
 library(ggplot2)
 ggplot(d.wurm,aes(x=MAGENUMF,y= GEWICHT,colour=Gattung)) + geom_point() + theme_bw()
 @
@@ -834,7 +834,7 @@ However, data inspection also suggests that there is not really a linear relatio
 Therefore, \alert{log-transform} the response (weight), and it looks much better:\\[6mm]
 
 \begin{center}
-<<wurmP3, eval=T,fig.width=6, fig.height=4.2,warning=FALSE,echo=F,out.width="8cm">>=
+<<wurmP3, eval=T,fig.width=5, fig.height=3.4,warning=FALSE,echo=F,out.width="8cm">>=
 ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point()  + theme_bw()
 
 # xyplot(log10(GEWICHT) ~ MAGENUMF, d.wurm,
