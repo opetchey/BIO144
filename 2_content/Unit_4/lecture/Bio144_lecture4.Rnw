@@ -934,7 +934,7 @@ Moreover, the $R^2=0.76$ is relatively high and almost identical to $R^2_a$.\\[6
 
 {\bf Question:} Is the ``Gattung'' covariate relevant in the model, that is, do the model intercepts differ for the three species? \\[6mm]
 
-{\bf Problem:} The $p$-values of the worm species are not very meaningful. They belong to tests that compare the actual level with the reference level. However, the question is whether the variable \texttt{Gattung} has an effect in total.\\[6mm]
+{\bf Problem:} The $p$-values of the worm species are not very meaningful. They belong to tests that compare the intercept of a factor level with the intercept of the reference level (i.e., the \emph{difference} in intercepts!). However, the question is whether the variable \texttt{Gattung} has an effect in total.\\[6mm]
 
 {\bf Solution:} When a factor covariate with $k$ levels is in the model, it occupies $k-1$ parameters. Therefore, \alert{the $t$-test needs to be replaced by the $F$-test.}
 
