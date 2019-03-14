@@ -17,7 +17,7 @@
 \usepackage{amsmath,natbib}
 \usepackage{mathbbol}
 \usepackage{babel}
-\usepackage{SweaveSlides}
+%\usepackage{SweaveSlides}
 \usepackage{multicol}
 \usepackage{xcolor}
 
@@ -37,6 +37,7 @@
 \definecolor{Blue}{rgb}{0,0,1}
 \def\myalert{\textcolor{darkred}}
 \def\myref{\textcolor{Gray}}
+\def\myblue{\textcolor{Blue}}
 \setbeamercovered{invisible}
 
 \renewcommand{\baselinestretch}{1.2}
@@ -82,8 +83,23 @@
 
 
 \begin{document}
-\SweaveOpts{width=6,height=4}
+ 
 \fboxsep5pt
+<<setup, include=FALSE, cache=FALSE, results='hide'>>=
+library(knitr)
+## set global chunk options
+opts_chunk$set(fig.path='figure/', 
+cache.path='cache/', fig.align='center', 
+fig.show='hold', par=TRUE, fig.align='center', cache=FALSE, 
+message=FALSE, 
+warning=FALSE,
+echo=FALSE, out.width="0.4\\linewidth", fig.width=6, fig.height=4.5, size="scriptsize", width=40)
+opts_chunk$set(purl = TRUE)
+knit_hooks$set(purl = hook_purl)
+options(size="scriptsize")
+opts_chunk$set(message = FALSE)
+@
+
 
 \frame{
 \title[]{ \centering \Huge Kurs Bio144: \\
@@ -119,7 +135,7 @@ The lecture material of today is based on the following literature:\\[4mm]
 
 \frame[allowframebreaks]{\frametitle{Recap of last week}
 \begin{itemize}
-\item Multiple linear regression model $y_i= \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_m x_i^{(m)} + e_i $.\\[3mm]
+\item Multiple linear regression model $y_i= \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_m x_i^{(m)} + \epsilon_i $.\\[3mm]
 \item \alert{Binary} and \alert{factor} covariates: The idea is to introduce \alert{dummy variables} such that
 \colorbox{lightgray}{\begin{minipage}{10cm}
 \begin{equation*}
@@ -137,8 +153,7 @@ x_i^{(j)} = \left\{
 \item The factor covariates of last week were used to allow for \alert{group-specific intercepts} (see earthworm example).\\[3mm]
 
 \begin{center}
-\setkeys{Gin}{width=0.55\textwidth}
-<<fig=T,echo=F,width=4.5,height=3>>=
+<<fig1, eval=T,fig.width=5, fig.height=4,warning=FALSE,out.width="6.5cm">>=
 library(ggplot2)
 d.wurm <- read.table ("../../data_examples/ancova/Projekt6Regenwuermer/RegenwuermerDaten_Haupt.txt",header=T)
 d.wurm[d.wurm$Gattung=="N","GEWICHT"] <- d.wurm[d.wurm$Gattung=="N","GEWICHT"]*0.5
@@ -151,6 +166,17 @@ ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point() + 
 \item The \alert{$F$-test} is used to test if $\beta_2=\beta_3=...=\beta_k=0$ at the same time for a factor covariate with $k$ levels. Use the \texttt{anova()} function in R to carry out this test.\\[3mm]
 \item The $F$-test is a \alert{generalization of the $t$-test}, because the latter is used to test $\beta_j = 0$ for one single variable $x^{(j)}$.
 \end{itemize}
+
+~\\[4mm]
+\myblue{\large Cooking rule:}\\
+
+\begin{itemize}
+\item Test for a single $\beta_j=0$ $\rightarrow$ $t$-test.
+\item Test for several $\beta_1 = \beta_2 = ... = \beta_{k}=0$ simultaneously $\rightarrow$ $F$-test.\\
+$\rightarrow$ \texttt{anova()} 
+\end{itemize}
+
+Thus you will {\bf always} need the $F$-test (\texttt{anova()}) to obtain a $p$-value for a factor covariate with more than 2 levels!
 }
 
 
@@ -164,14 +190,13 @@ ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point() + 
 It may happen that \alert{groups do not only differ in their intercept ($\beta_0$), but also in their slopes ($\beta_x$)}.\\[2mm]
 In the earthworm example, allowing for different intercepts and slopes:
 \begin{center}
-\setkeys{Gin}{width=0.6\textwidth}
-<<fig=T,echo=F,width=4.5,height=3>>=
+<<fig2, eval=T,fig.width=5.5, fig.height=4,warning=FALSE,out.width="6.5cm">>=
 library(ggplot2)
 library(dplyr)
 ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point() + geom_smooth(method="lm") + theme_bw()
 @
 \end{center}
-{\bf Important:} This model will be fitted in the BC videos of week 5.
+{\bf Important:} This model will be fitted in this week's BC videos.
 }
 
 
@@ -188,8 +213,7 @@ Remember the mercury (Hg) example from last week. We now extended the dataset an
 It is known that Hg concentrations may change over the lifetime of humans. So let us look at \texttt{log(Hg$_\text{urin}$)} depending on the age of the participants:\\
 
 \begin{center}
-\setkeys{Gin}{width=0.6\textwidth}
-<<fig=T,echo=F,width=4.5,height=3>>=
+<<fig3, eval=T,fig.width=5.5, fig.height=3.7,warning=FALSE,out.width="6.5cm">>=
 path <- "../../data_examples/Hg/"
 d.hg <- read.table(paste(path,"Hg_urin.csv",sep=""),header=T, sep=",")
 d.hg <- d.hg[,c(1,2,5,6,7,8,10)]
@@ -223,7 +247,7 @@ $\rightarrow$ This can be achieved by introducing a so-called \alert{interaction
 The smallest possible model is then given as\\
 \colorbox{lightgray}{\begin{minipage}{10cm}
 \begin{equation}\label{eq:HgInt}
-y_i =  \beta_0 + \beta_1 \text{mother}_i + \beta_2 \text{age}_i + \beta_3\text{age}_i\cdot \text{mother}_i + e_i \ , 
+y_i =  \beta_0 + \beta_1 \text{mother}_i + \beta_2 \text{age}_i + \beta_3\text{age}_i\cdot \text{mother}_i + \epsilon_i \ , 
 \end{equation}
 \end{minipage}}
 ~\\
@@ -241,7 +265,7 @@ Children ($x_i=0$): $\hat{y}_i = \beta_0  + \beta_2 \text{age}_i $
 
 
 \frame[containsverbatim]{\frametitle{}
-Fitting model \eqref{eq:HgInt} in R is done as follows, where \texttt{age:mother} denotes the interaction term ($\text{age}_i\cdot \text{mother}_i$):\\[6mm]
+Fitting model \eqref{eq:HgInt} in R is done as follows, where \texttt{age:mother} denotes the interaction term ($\text{age}_i\cdot \text{mother}_i$):\\[2mm]
 
 <<echo=F>>=
 # path <- "~/Teaching/Bio144/data_examples/Hg/"
@@ -253,7 +277,7 @@ Fitting model \eqref{eq:HgInt} in R is done as follows, where \texttt{age:mother
 r.hg <- lm(log(Hg_urin)~  mother + age + age:mother,d.hg)
 summary(r.hg)$coef
 @
-~\\[4mm]
+~\\
 
 Interpretation: \\[2mm]
 
@@ -280,13 +304,13 @@ $\rightarrow$ Clicker exercise \href{http://www.klicker.uzh.ch/bkx}{http://www.k
 }
 
 \frame[containsverbatim]{\frametitle{}
-Remember (from last week), however, that the Hg model also included smoking status, amalgam fillings and fish consumption as important predictors. It is very straightforward to just include these predictors in model \eqref{eq:HgInt}, which leads to the following model \\[6mm]
+Remember (from last week), however, that the Hg model also included smoking status, amalgam fillings and fish consumption as important predictors. It is very straightforward to just include these predictors in model \eqref{eq:HgInt}, which leads to the following model \\
 
 <<echo=T>>=
 r.hg <- lm(log(Hg_urin)~  mother * age + smoking + amalgam + fish,d.hg)
 @
 
-<<results=tex,echo=F>>=
+<<results="asis">>=
 library(biostatUZH)
 tableRegression(r.hg)
 @
@@ -297,9 +321,9 @@ tableRegression(r.hg)
 \frame[containsverbatim]{
 Again, for completeness, some model checking (which one usually does before looking at the results): \\[8mm]
 
-\setkeys{Gin}{width=0.8\textwidth}
+
 \begin{center}
-<<modelChecksHg,fig=T,width=7,height=3.5,echo=F>>=
+<<modelChecksHg, eval=T,fig.width=7, fig.height=3.5,warning=FALSE,out.width="8.5cm">>=
 library(ggfortify)
 autoplot(r.hg,which=c(1,2),smooth.col=NA)
 # par(mfrow=c(1,2))
@@ -318,7 +342,7 @@ We have seen that it is possible to include continuous, binary or factorial cova
 \colorbox{lightgray}{\begin{minipage}{10cm}
 Even \alert{transformations} of covariates can be included in (almost) any form. For instance the square of a variable $\bm{x}$
 \begin{equation*}
-y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + e_i \ , 
+y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \epsilon_i \ , 
 \end{equation*}
 which leads to a {\bf quadratic} or {\bf polynomial} regression (if higher order terms are used).
 \end{minipage}}
@@ -341,8 +365,8 @@ The word \emph{linear} refers to the \alert{linearity in the coefficients}, and 
 
 Question: Given multiple regression covariates $\bm{x}^{(1)}, \bm{x}^{(2)},...$. Could I simply fit separate simple models for each variable, that is\\[2mm]
 
-$y_i = \alpha + \beta x_i^{(1)} + e_i$\\
-$y_i = \alpha + \beta x_i^{(2)} + e_i$ \\[2mm]
+$y_i = \alpha + \beta x_i^{(1)} + \epsilon_i$\\
+$y_i = \alpha + \beta x_i^{(2)} + \epsilon_i$ \\[2mm]
 etc.? \\[4mm]
 
 \pause
@@ -356,7 +380,7 @@ Why?
 \frame{\frametitle{Illustration}
 Chapter 3.3c in the Stahel script illustrates the point on four artificial examples. The ``correct'' model is always given as 
 \begin{equation*}
-y_i = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + e_i \  ,
+y_i = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \epsilon_i \  ,
 \end{equation*}
 
 where $\bm{x}^{(1)}$ is a continuous variable, and $\bm{x}^{(2)}$ is a binary grouping variable (thus taking values 0 and 1 to indicate the group).\\[6mm]
@@ -405,14 +429,14 @@ This idea is similar in spirit to an experimental design, where the influence of
 }
 
 \frame{\frametitle{Checking modeling assumptions}
-Remember that in linear regression the modeling assumption is that the residuals $e_i$ are independently normally distributed around zero, that is, $e_i \sim \N(0,\sigma_e^2)$. This implies four things:\\[6mm]
+Remember that in linear regression the modeling assumption is that the errors $\epsilon_i$ are independently normally distributed around zero, that is, $\epsilon_i \sim \N(0,\sigma^2)$. This implies four things:\\[6mm]
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
 \begin{enumerate}[a)]
-\item The expected value of each residual $e_i$ is 0: $\E(e_i)=0$.\\[2mm]
-\item All $e_i$ have the same variance: $\Var(e_i)=\sigma_e^2$. \\[2mm]
-\item The $e_i$ are normally distributed.\\[2mm]
-\item The $e_i$ are independent of each other.
+\item The expected value of each residual $\epsilon_i$ is 0: $\E(\epsilon_i)=0$.\\[2mm]
+\item All $\epsilon_i$ have the same variance: $\Var(\epsilon_i)=\sigma^2$. \\[2mm]
+\item The $\epsilon_i$ are normally distributed.\\[2mm]
+\item The $\epsilon_i$ are independent of each other.
 \end{enumerate}
 \end{minipage}}
 ~\\[2mm]
@@ -463,13 +487,12 @@ names(d.hg.m) <- c("Hg_urin", "Hg_soil", "smoking","amalgam", "age", "fish")
 @
 
 
-It is sometimes useful to enrich the TA-plot by adding a ``running mean'' or a ``smoothed mean'', which can give hints on the trend of the residuals. For the mercury example where $\log(Hg_{\text{urin}})$ is regressed on smoking, amalgam  and fish consumption for mothers only (slides 32-34 of lecture 3): 
+It is sometimes useful to enrich the TA-plot by adding a ``running mean'' or a ``smoothed mean'', which can give hints on the trend of the residuals. For the mercury example where $\log(Hg_{\text{urin}})$ is regressed on smoking, amalgam  and fish consumption for mothers only (slides 32-34 of lecture 4): 
 \vspace{-10mm}
 
 \begin{multicols}{2} 
 % \begin{center}
-\setkeys{Gin}{width=0.5\textwidth}
-<<TAplot,fig=T,echo=F,width=4,height=4>>=
+<<TAplot, eval=T,fig.width=4, fig.height=4,warning=FALSE,out.width="5cm">>=
 r1.urin.mother <- lm(log10(Hg_urin) ~  smoking + amalgam + fish,data=d.hg.m)
 plot(fitted(r1.urin.mother),residuals(r1.urin.mother),xlab="Fitted values",ylab="Residuals")
 abline(h=0,lty=2)
@@ -496,23 +519,19 @@ However, generally we recommend to \alert{not} add a smoothing line, because it 
 \frame{
 The TA plot is also able to check the \emph{independence assumption} d). But how?\\[4mm]
 
-A dependency would be reflected by some kind of \myalert{trend}. \\[4mm]
-
-Other ideas to plot residuals to check for a dependency? Please discuss!
+A dependency would be reflected by some kind of \myalert{trend}. \\[8mm]
 
 }
 
 % Todo: hide the following slide in the published version of the slides!!
 \frame{
-The dependency is not necessarily on the fitted values ($x$-axis of TA plot). Ideas:
+But: The dependency is not necessarily on the fitted values ($x$-axis of TA plot). Ideas:
 \begin{itemize}
 \item Plot residuals in dependency of time (if available) or sequence of obervations.
-\item Plot residuals against the covariates. 
+\item Plot residuals against the covariates. \\[6mm]
 \end{itemize}
-\vspace{5mm}
-\begin{center}
-\setkeys{Gin}{width=1\textwidth}
-<<hgFigCov,fig=T,echo=F,width=7,height=2.3>>=
+ 
+<<hgFigCov,fig.width=7, fig.height=2.5,warning=FALSE,out.width="11cm">>=
 library(ggplot2)
 library(gridExtra)
 d1 <- data.frame(obsNr= 1:length(residuals(r1.urin.mother)), 
@@ -531,15 +550,14 @@ p3 <- ggplot(d1, aes(x=fish,y=resid))+  geom_point() +  geom_hline(yintercept = 
 grid.arrange(p1, p2, p3, ncol=3)
 
 @
-\end{center}
+ 
 }
 
 \frame{\frametitle{QQ-plot}
 
 The \myalert{outlier} recorded above is also visible in the (well-known) QQ-plot, which is useful to check normal distribution of residuals (assumption c):
 \begin{center}
-\setkeys{Gin}{width=0.6\textwidth}
-<<hgFigQQ,fig=T,echo=F,width=4,height=3.5>>=
+<<hgFigQQ, eval=T,fig.width=3.5, fig.height=3.5,warning=FALSE,out.width="5cm">>=
 library(ggfortify)
 autoplot(r1.urin.mother,2) + theme_bw()
 # qqnorm(residuals(r1.urin.mother))
@@ -556,11 +574,10 @@ autoplot(r1.urin.mother,2) + theme_bw()
 %\vspace{0mm}
 
 There is {\bf no quantitative rule} to answer this question, experience is needed. However, you can gain this experience from \alert{simulations}. To this end, generate the same number of data points of a normally distributed variable and compare to your plot. \\
-Example: Generate 59 points $e_i \sim \N(0,1)$ each time:\\[2mm]
+Example: Generate 59 points $\epsilon_i \sim \N(0,1)$ each time:\\[2mm]
 
 \begin{center}
-\setkeys{Gin}{width=0.75\textwidth}
-<<fig=T,echo=F,width=6,height=4>>=
+<<fig4, eval=T,fig.width=6.5, fig.height=4.0,warning=FALSE,out.width="8.5cm">>=
 set.seed(390457)
 par(mfrow=c(2,3),mar=c(4,4,1,1))
 for (ii in 1:6){
@@ -575,11 +592,10 @@ qqline(ss,xlab="")
 \frame[containsverbatim]{\frametitle{Scale-location plot (Streuungs-Diagramm)}
 The scale-location plot is particularly suited to check the assumption of equal variances ({\bf homoscedasticity / Homoskedastizit\"at}).\\[4mm]
 
-The idea is to plot the square root of the residuals $\sqrt{|R_i|}$ against the fitted values $\hat{y_i}$. There should be {\bf no trend} {\scriptsize (Continue with the Hg example)}:\\ 
+The idea is to plot the square root of the (standardized) residuals $\sqrt{|R_i|}$ against the fitted values $\hat{y_i}$. There should be {\bf no trend} {\scriptsize (Again Hg example)}: 
  
 \begin{center}
-\setkeys{Gin}{width=0.5\textwidth}
-<<slPlot,fig=T,echo=F,width=3.5,height=3.0>>=
+<<slPlot, eval=T,fig.width=3.5, fig.height=3.5,warning=FALSE,out.width="4.8cm">>=
 autoplot(r1.urin.mother,which=3) + theme_bw()
 
 # par(mar=c(4,5,2,1))
@@ -614,8 +630,7 @@ In simple regression, the leverage of individual $i$ is defined as $H_{ii} = (1/
 Data points with $x_i$ values far from the mean have a stronger leverage effect than when $x_i\approx \overline{x}$:
 
 \begin{center}
-\setkeys{Gin}{width=1.0\textwidth}
-<<echo=F,fig=T,width=6,height=2.1>>=
+<<fig5, eval=T,fig.width=6.5, fig.height=2.3,warning=FALSE,out.width="9.5cm">>=
 set.seed(37489)
 par(mfrow=c(1,3),mar=c(4,4,1,1))
 x <- sort(rnorm(18))
@@ -644,15 +659,15 @@ The outlier in the middle plot ``pulls'' the regression line in its direction an
 
 
 \frame[containsverbatim]{\frametitle{Leverage plot (Hebelarm-Diagramm)}
-In the leverage plot, (standardized) residuals $\tilde{R_i}$ are plotted against the leverage $H_{ii}$ (continuing with the Hg example):
-~\vspace{-8mm}
-\begin{center}
-\setkeys{Gin}{width=0.55\textwidth}
-<<echo=F,fig=T,width=4.5,height=4>>=
-plot(r1.urin.mother,which=5)
+In the leverage plot, (standardized) residuals $\tilde{R_i}$ are plotted against the leverage $H_{ii}$ (continuing with the Hg example):\\[2mm]
+ 
+ 
+<<fig7, fig.width=3.5, fig.height=3.5,out.width="5cm">>=
+#plot(r1.urin.mother,which=5)
+autoplot(r1.urin.mother,which=5)
 @
-\end{center}
-{\scriptsize Note: Cook's distance measures how much the regression changes when the $i$th observation is omitted.}\\[2mm]
+ 
+% {\scriptsize Note: Cook's distance measures how much the regression changes when the $i$th observation is omitted.}\\[2mm]
 \myalert{Critical ranges} are the top and bottom right corners!!\\
 Here, individuals 95, 101 and 106 are potential \myalert{outliers}.
 }
@@ -664,9 +679,9 @@ Here, individuals 95, 101 and 106 are potential \myalert{outliers}.
 \item ...
 % \item Violation of assumptions:
 % \begin{itemize}
-% \item $\E(e_i)\neq 0$
-% \item $\Var(e_i)$ not constant
-% \item $e_i$ not normally distributed.
+% \item $\E(\epsilon_i)\neq 0$
+% \item $\Var(\epsilon_i)$ not constant
+% \item $\epsilon_i$ not normally distributed.
 % \item Heteroscedasticity
 % \end{itemize}
 % \item Outliers
@@ -679,7 +694,7 @@ Here, individuals 95, 101 and 106 are potential \myalert{outliers}.
 \item \hl{Transform the outcome or the covariables.}\\[2mm]
 \item \hl{Take care of outliers.}\\[2mm]
 \item Use weighted regression (not discussed here).\\[2mm]
-\item Improve the model, e.g., by adding additional terms or interactions (see ``model selection'' in week 7).\\[2mm]
+\item Improve the model, e.g., by adding additional terms or interactions (see ``model selection'' in lecture 8).\\[2mm]
 \item Use another model family (generalized or nonlinear regression model).\\[2mm]
 \end{enumerate}
 }
@@ -691,8 +706,7 @@ Example: Use again the mercury study, include only mothers. Use the response (Hg
 r2.urin.mother <- lm(Hg_urin ~  smoking  + amalgam + fish,data=d.hg.m)
 @
 \begin{center}
-\setkeys{Gin}{width=0.55\textwidth}
-<<fig=T,width=5,height=5,echo=F>>=
+<<fig8,fig.width=5.5, fig.height=5.5,out.width="6cm">>=
 autoplot(r2.urin.mother) + theme_bw()
 # par(mfrow=c(2,2),mar=c(4,4,2,0.5))
 # plot(r2.urin.mother)
@@ -703,8 +717,7 @@ autoplot(r2.urin.mother) + theme_bw()
 \frame[containsverbatim]{
 Also the ``old-fashioned'' histogram of the residuals is illustrative, it is \myalert{very skewed}:
 \begin{center}
-\setkeys{Gin}{width=0.6\textwidth}
-<<fig=T,width=4,height=4,echo=F>>=
+<<fig9, fig.width=4, fig.height=4,out.width="5.5cm">>=
 ggplot(mapping=aes(x=residuals(r2.urin.mother)))+ geom_histogram(bins=25) + xlab("Residuals")
 # hist(residuals(r2.urin.mother),nclass=20)
 @
@@ -714,12 +727,11 @@ ggplot(mapping=aes(x=residuals(r2.urin.mother)))+ geom_histogram(bins=25) + xlab
 \frame[containsverbatim]{
 An in-summary comparison of the model with log-transformed response:
 
-<<r1urin,echo=F>>=
+<<r1urin.2,echo=F>>=
 r3.urin.mother <- lm(log10(Hg_urin) ~  smoking  + amalgam + fish,data=d.hg.m)
 @
 \begin{center}
-\setkeys{Gin}{width=0.55\textwidth}
-<<fig=T,width=5,height=5,echo=F>>=
+<<fig10,fig.width=5.5, fig.height=5.5,out.width="6cm">>=
 autoplot(r3.urin.mother,smooth.colour=NA) + theme_bw()
 # par(mfrow=c(2,2),mar=c(4,4,2,0.5))
 # plot(r3.urin.mother)
@@ -759,20 +771,18 @@ For instance, the number of amalgam fillings and the number of monthly fish meal
 <<sqrt>>=
 r4.urin.mother <- lm(log10(Hg_urin) ~  smoking + sqrt(amalgam) + sqrt(fish),data=d.hg.m)
 @
-~\\
-\begin{center}
-\setkeys{Gin}{width=0.6\textwidth}
-<<hgFig,fig=T,echo=F,width=5,height=5>>=
+
+<<hgFig, fig.width=5.5, fig.height=5.5,out.width="7cm">>=
 autoplot(r4.urin.mother,smooth.colour=NA) + theme_bw()
 # par(mfrow=c(2,2),mar=c(4,4,2,0.5))
 # plot(r4.urin.mother)
 @
-\end{center}
+
 }
 
 \frame[containsverbatim]{\frametitle{Outliers}
 \vspace{-3mm}
-{\scriptsize (See Stahel chapter 4.5)}\\[2mm]
+
 
 The above plots illustrate that outliers are visible in all diagnostic plots. \\[4mm]
 
@@ -811,8 +821,7 @@ d.hg.m["106","amalgam"]<-5
 r5.urin.mother <- lm(log10(Hg_urin) ~  smoking + sqrt(amalgam) + sqrt(fish),data=d.hg.m)
 @
 \begin{center}
-\setkeys{Gin}{width=0.6\textwidth}
-<<hgFigOut,fig=T,echo=F,width=5,height=5>>=
+<<hgFigOu, eval=T,fig.width=5, fig.height=5,warning=FALSE,out.width="6cm">>=
 autoplot(r5.urin.mother,smooth.colour=NA) + theme_bw()
 # par(mfrow=c(2,2),mar=c(4,4,2,0.5))
 # plot(r5.urin.mother)
@@ -821,6 +830,22 @@ autoplot(r5.urin.mother,smooth.colour=NA) + theme_bw()
 
 }
 
+
+\frame{\frametitle{Feedback about today's lecture}
+
+Please give us your opinion about the lecture regarding
+\begin{itemize}
+\item unclearest (``muddiest'') point
+\item the take-home message of today.
+\end{itemize}
+
+via this link: \\[2mm]
+
+\centering{\href{http://www.klicker.uzh.ch/bkx}{http://www.klicker.uzh.ch/bkx}}
+
+~\\[2mm]
+\centering{Thank you!!}
+}
 
 
 % \frame{References:
