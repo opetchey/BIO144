@@ -35,6 +35,7 @@
 \definecolor{darkred}{rgb}{0.8,0,0}
 \definecolor{Green}{rgb}{0,0.8,0.3}
 \definecolor{lightgreen}{rgb}{0,0.9,0.3}
+\definecolor{lightblue}{rgb}{0.52,0.8,0.98}
 \definecolor{Blue}{rgb}{0,0,1}
 \def\myalert{\textcolor{darkred}}
 \def\myref{\textcolor{Gray}}
@@ -157,7 +158,11 @@ O: $\hat{y}_i = \Sexpr{format(worm.coef[1,1],2,2,2)} + (\Sexpr{format(worm.coef[
 \end{minipage}}
 
 ~\\[5mm]
-To remember: The \texttt{Gattung} or \texttt{MAGENUMF:Gattung} terms in the model output are always the differences (in intercept or slope) {\bf with respect to the reference level}.
+To remember: 
+\begin{itemize}
+\item The ``{\bf\texttt{Gattung}}'' terms in the model output are the {\bf differences in intercepts} with respect to the reference level.
+\item The ``{\bf\texttt{MAGENUMF:Gattung}}'' terms in the model output are the {\bf differences in slopes} with respect to the reference level.
+\end{itemize}
 
 }
 
@@ -211,12 +216,12 @@ Central question of AN(C)OVA:\\[2mm]
 Are the means of two or more groups different?
 \end{minipage}}
 
-~\\[1mm]
-Examples:
-\begin{itemize}
-\item Are different plant breeds different in important aspects (e.g., yields / Ertrag)? 
-\item What is the influence of different treatments on plants (Biology) or patients (Medicine)? \\[2mm]
-\end{itemize}
+% ~\\[1mm]
+% Examples:
+% \begin{itemize}
+% \item Are different plant breeds different in important aspects (e.g., yields / Ertrag)? 
+% \item What is the influence of different treatments on plants (Biology) or patients (Medicine)? \\[2mm]
+% \end{itemize}
 }
 
 
@@ -353,7 +358,7 @@ Interpretation: The effects $\beta_1$, $\beta_2$ etc give the deviation from the
 }
 
 \frame{\frametitle{ANOVA as a special case of a linear model}
-\colorbox{lightgreen}{\begin{minipage}{10cm}
+\colorbox{lightblue}{\begin{minipage}{10cm}
 The clou is: Model \eqref{eq:aov} is identical to the regression model with a factor covariate, see slides 35/36 from lecture 4. 
 \end{minipage}}
 ~\\[4mm]
@@ -386,7 +391,7 @@ Thus (assuming $\beta_1=0$):\\
 \end{minipage}}
 
 ~\\[4mm]
-Remember lectures 4 and 5 (or Stahel script p.33): We have already used the $F$-test for categorical variables (see $F$-test for the earthworms in lecture 4 or cooking rule on slide 6 in lecture 5). This was equivalent to testing if all $\beta$s that belong to a categorical variable are =0 at the same time. \\[2mm]
+Remember lectures 4 and 5: We have already used the $F$-test for categorical variables (see $F$-test for the earthworms in lecture 4 or cooking rule on slide 6 in lecture 5). This was equivalent to testing if all $\beta$s that belong to a categorical variable are =0 at the same time. \\[2mm]
 
 $\rightarrow$ Equivalent to testing if the categorical covariate is needed in the model.\\[5mm] 
 
@@ -467,7 +472,7 @@ text(3.8,58,expression(bar(y[4])),col=2,cex=1.0)
 }
 
 \frame{\frametitle{Interpretation of the $F$ statistic II}
-Remember: $F =\frac{MS_G}{MS_E}$. \\[2mm]
+%Remember: $F =\frac{MS_G}{MS_E}$. \\[2mm]
 
 \begin{itemize}
 \item $F$ increases 
@@ -600,7 +605,7 @@ What happens if you apply \texttt{summary()} to the \texttt{lm()} object?
 <<r.aov.mais,echo=T>>=
 summary(r.mais)
 @
-The table contains the estimates of the intercept \Sexpr{format(summary(r.mais)$coef[1,1],2,2,2)} ($\mu$ in ANOVA notation, $\beta_0$ in regression notation), and estimates for $\beta_2$, $\beta_3$, $\beta_4$ (while the reference was set to $\beta_1=0$). ({\scriptsize {\bf Hint:} Check also the $F$-test on the last line...})
+The table contains the estimates of the intercept \Sexpr{format(summary(r.mais)$coef[1,1],2,2,2)} ($\mu$ in ANOVA notation, $\beta_0$ in regression notation), and estimates for $\beta_2$, $\beta_3$, $\beta_4$ (while the reference was set to $\beta_1=0$). %({\scriptsize {\bf Hint:} Check also the $F$-test on the last line...})
 }
 
 
