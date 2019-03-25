@@ -146,13 +146,13 @@ worm.coef <- summary(r.lm)$coef
 
 \frame{\frametitle{}
 
-We have now actually fitted {\bf three} models, one model for each species:\\[2mm]
+We have now actually fitted {\bf three} models, one model for each species:\\[4mm]
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
-L: $\hat{y}_i = \Sexpr{format(worm.coef[1,1],2,2,2)} + \Sexpr{round(worm.coef[2,1],2)}\cdot \text{MAGENUMF}$ \\[2mm]
+L: $\hat{y}_i = \Sexpr{format(worm.coef[1,1],2,2,2)} + \Sexpr{round(worm.coef[2,1],2)}\cdot \text{MAGENUMF}$ \\
 
 N: $\hat{y}_i = \Sexpr{format(worm.coef[1,1],2,2,2)} + (\Sexpr{format(worm.coef[3,1],2,2,2)})  + (\Sexpr{round(worm.coef[2,1],2)} + \Sexpr{round(worm.coef[5,1],2)} )\cdot \text{MAGENUMF}
-$ \\[2mm]
+$ \\
 
 O: $\hat{y}_i = \Sexpr{format(worm.coef[1,1],2,2,2)} + (\Sexpr{format(worm.coef[4,1],2,2,2)})  + (\Sexpr{round(worm.coef[2,1],2)} + \Sexpr{round(worm.coef[6,1],2)} )\cdot \text{MAGENUMF} $
 \end{minipage}}
@@ -518,7 +518,7 @@ Variation & df & SS & MS = SS/df & F & $p$ \\
 \frame[containsverbatim]{\frametitle{Our first ANOVA: Hybrid Mais example}
 \vspace{-5mm}
  \begin{multicols}{2}
-<<echo=FALSE,results="asis">>=
+<<echo=FALSE,results="asis",size="tiny">>=
 library(xtable)
 mais1 <- d.mais[1:10,]
 mais2 <- d.mais[11:20,]
@@ -810,10 +810,11 @@ low & group 3 & group 4\\
 Start by looking at means and standard deviations in the groups, as well as at a graphical description of the means: 
 <<echo=F>>=
 library(HSAUR3)
-d.weightgain <- mutate(weightgain,type = relevel(type,ref="Low"))
+names(weightgain) <- c("source","amount","weightgain")
+d.weightgain <- mutate(weightgain,amount = relevel(amount,ref="Low"))
 @
 <<echo=T>>=
-d.weightgain %>% group_by(source,type) %>% summarise(meanW = mean(weightgain),sdW = sd(weightgain))
+d.weightgain %>% group_by(source,amount) %>% summarise(meanW = mean(weightgain),sdW = sd(weightgain))
 @
 
 \begin{multicols}{2}
@@ -839,13 +840,15 @@ y_{ijk} = \mu + \beta_i + \gamma_j +  \epsilon_{ijk} \quad \text{with} \quad \ep
 \end{eqnarray}
 \end{minipage}}
 ~\\[5mm]
-{\scriptsize
-Again, additional constraints are needed!
+
+Note: We again need additional constraints. Here we always use the R default (\myalert{``treatment contrasts''})
 \begin{itemize}
-\item $\beta_1=\gamma_1=0$ (\myalert{treatment contrast}; default in R).
-\item $\sum_i\beta_i = \sum_i\gamma_i = 0$ (\myalert{sum-to-zero contrast}).
+\item $\beta_1=\gamma_1=0$.
+%\item
 \end{itemize}
-}
+
+~\\[2mm]
+{\scriptsize Alternative:  $\sum_i\beta_i = \sum_i\gamma_i = 0$ (\myalert{sum-to-zero contrast}).}
 }
 
 
@@ -854,7 +857,7 @@ Again, additional constraints are needed!
 In R, a two-way ANOVA is as simple as one-way ANOVA, just add another variable:
 
 <<echo=T>>=
-r.weight <- lm(weightgain ~ source + type, d.weightgain)
+r.weight <- lm(weightgain ~ source + amount, d.weightgain)
 anova(r.weight)
 @
  
@@ -869,11 +872,11 @@ However: what if the additive model does not hold?
 A so-called \myalert{interaction plot} helps to understand if the additive model is reasonable:\\[2mm]
 \begin{center}
 <<fig5,fig.width=4.5, fig.height=2.6,out.width="6cm">>=
-# interaction.plot(x.factor=weightgain$type,
+# interaction.plot(x.factor=weightgain$amount,
 #                  trace.factor=weightgain$source,
-#                  response=weightgain$weightgain,ylab="mean of weightgain",xlab="type",trace.label="Source")
-sumWeight <- summarise(group_by(d.weightgain,source,type),meanWeight = mean(weightgain),sdW = sd(weightgain))
-ggplot(sumWeight, aes(x = type, y = meanWeight,
+#                  response=weightgain$weightgain,ylab="mean of weightgain",xlab="amount",trace.label="Source")
+sumWeight <- summarise(group_by(d.weightgain,source,amount),meanWeight = mean(weightgain),sdW = sd(weightgain))
+ggplot(sumWeight, aes(x = amount, y = meanWeight,
 colour = source, group = source)) +
 geom_point() +
 geom_line() +
@@ -883,9 +886,9 @@ theme_bw()
 
 {\bf Note:} if the additive model $\beta_i + \gamma_j$ holds, the lines would be parallel.\\[4mm]
 
-However, these lines are \myalert{not parallel}, indicating that \myalert{there is an interaction} between type and source!\\[4mm]
+However, these lines are \myalert{not parallel}, indicating that \myalert{there is an interaction} between amount and source!\\[4mm]
 
-In words: The type (low/how) has a different influence for the Beef and Cereal diets.
+In words: The amount (low/how) has a different influence for the Beef and Cereal diets.
 
 }
 
@@ -913,7 +916,7 @@ y_{ijk} = \mu + \beta_i + \gamma_j + (\beta\gamma)_{ij} + \epsilon_{ijk} \quad \
 Let's include an interaction term in the rats example: 
 
 <<echo=T>>=
-r.weight2 <- lm(weightgain ~ source * type,d.weightgain)
+r.weight2 <- lm(weightgain ~ source * amount,d.weightgain)
 anova(r.weight2)
 @
  
@@ -951,8 +954,8 @@ Group 4: cereal / high & $\hat{y}_{cereal,high} = 79.2 + 4.7 + 20.8 - 18.8 = 85.
 It is then required that separate ``stratified'' analyses are carried out. For example for "Beef" and "Cereal" protein sources: 
 
 <<echo=T>>=
-anova(lm(weightgain ~ type,subset(d.weightgain,source=="Beef")))
-anova(lm(weightgain ~ type,subset(d.weightgain,source=="Cereal")))
+anova(lm(weightgain ~ amount,subset(d.weightgain,source=="Beef")))
+anova(lm(weightgain ~ amount,subset(d.weightgain,source=="Cereal")))
 @
 
 }
@@ -969,7 +972,7 @@ autoplot(r.weight2,smooth.colour=NA)
 
 
 \frame[containsverbatim]{\frametitle{Exercise: }
-In an experiment the influence of four levels of fertilizer (DUENGER) on the yield (ERTRAG) on 5 species (SORTE) of crops was investigated. For each DUENGER $\times$ ERTRAG level, 3 repeats were taken. \\[2mm]
+In an experiment the influence of four levels of fertilizer (DUENGER) on the yield (ERTRAG) on 5 species (SORTE) of crops was investigated. For each DUENGER $\times$ ERTRAG combination, 3 repeats were taken. \\[2mm]
 
 The data contain the following colums:\\
 \texttt{DUENGER} (4 levels) \hspace{1cm} \texttt{SORTE} (5 levels) \hspace{1cm} \texttt{ERTRAG} (continuous) \\[6mm]
@@ -993,34 +996,36 @@ interaction.plot(d.duenger$DUENGER,d.duenger$SORTE,d.duenger$ERTRAG,xlab="Duenge
 \end{multicols}
 }
 
-\frame[containsverbatim]{
-The interaction plot indicates that an interaction between SORTE and DUENGER is needed in the analysis. The results and residal plots are given here and on the next slide:
 
+\frame[containsverbatim]{
+<<echo=T>>=
+d.duenger <- mutate(d.duenger,SORTE=as.factor(SORTE),DUENGER=as.factor(DUENGER))
+r.duenger <- lm(ERTRAG ~ DUENGER*SORTE,d.duenger)
+anova(r.duenger)
+@
+
+But: Look at the TA and the scale-location plots (next slide). 
+}
+
+
+\frame[containsverbatim]{
+~\\[2mm]
+What is  the problem?\\
+$\rightarrow$ Interpretation?  Ideas?\\[2mm]
+ 
 <<>>=
 d.duenger <- mutate(d.duenger,SORTE=as.factor(SORTE),DUENGER=as.factor(DUENGER))
 r.duenger <- lm(ERTRAG ~ DUENGER*SORTE,d.duenger)
 @
 
-~\\
-\begin{center}
 <<fig7,fig.width=5, fig.height=5,out.width="7cm">>=
 autoplot(r.duenger,smooth.colour=NA)
 @
-\end{center}
 
 
 }
 
-\frame[containsverbatim]{
-<<echo=T>>=
-anova(r.duenger)
-@
 
-What is  the problem??\\[4mm] 
-$\rightarrow$ Look at the TA and the scale-location plots. \\[2mm]
-$\rightarrow$ Ideas? \\[2mm]
-$\rightarrow$ Interpretation? 
-}
 
 \frame[containsverbatim]{
 %don't show this slide previously!\\
