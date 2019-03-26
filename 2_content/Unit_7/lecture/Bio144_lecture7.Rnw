@@ -18,7 +18,6 @@
 \usepackage{amsmath,natbib}
 \usepackage{mathbbol}
 \usepackage{babel}
-\usepackage{SweaveSlides}
 \usepackage{multicol}
 \usepackage{xcolor}
 
@@ -82,8 +81,22 @@
 
 
 \begin{document}
-\SweaveOpts{width=6,height=4}
 \fboxsep5pt
+<<setup, include=FALSE, cache=FALSE, results='hide'>>=
+library(knitr)
+## set global chunk options
+opts_chunk$set(fig.path='figure/', 
+cache.path='cache/', fig.align='center', 
+fig.show='hold', par=TRUE, fig.align='center', cache=FALSE, 
+message=FALSE, 
+warning=FALSE,
+echo=FALSE, out.width="0.4\\linewidth", fig.width=6, fig.height=4.5, size="scriptsize", width=40)
+opts_chunk$set(purl = TRUE)
+knit_hooks$set(purl = hook_purl)
+options(size="scriptsize")
+opts_chunk$set(message = FALSE)
+@
+
 
 \frame{
 \title[]{ \centering \Huge Kurs Bio144: \\
@@ -100,7 +113,6 @@ Datenanalyse in der Biologie}%\\[.3cm]
 \frame{\frametitle{Overview}
 \begin{itemize}
 \item ANCOVA
-\item ANCOVA as special cases of a linear model
 \item Introduction to linear Algebra\\[6mm]
 \end{itemize}
 
@@ -124,16 +136,57 @@ The lecture material of today is based on the following literature:\\[4mm]
 \item ANOVA is a method to test if the means of \alert{two or more groups are different}.\\[2mm]
 \item Post-hoc tests and contrasts, including correction for $p$-values, to understand the differences between the groups. \\[2mm]
 \item Two-way ANOVA for factorial designs, interactions.\\[2mm]
-\item Interpretation of the results.\\[2mm]
-\item Model checking.\\[2mm]
 \item ANOVA is a special case of linear regression with categorical covariates.
 \end{itemize}
 }
 
-% \frame{\frametitle{Recap of ANOVA II}
-% To do, if needed.
-% }
 
+\frame[containsverbatim]{\frametitle{Recap of two-way ANOVA example}
+Remember: Influence of four levels of fertilizer (DUENGER) on the yield (ERTRAG) on 5 species (SORTE) of crops was investigated. For each DUENGER $\times$ ERTRAG combination, 3 repeats were taken. \\[5mm]
+
+ 
+<<dmais2,eval=T,echo=F>>=
+library(dplyr)
+path <- "../../data_examples/WBL/"
+d.duenger <- read.table(paste(path,"duenger.dat",sep=""),header=T,sep=",")
+d.duenger <- mutate(d.duenger,SORTE=as.factor(SORTE),DUENGER=as.factor(DUENGER))
+@
+
+ 
+
+Interaction plot with ERTRAG and log(ERTRAG) as response:
+<<fig6,fig.width=4, fig.height=4,out.width="4.5cm">>=
+interaction.plot(d.duenger$DUENGER,d.duenger$SORTE,(d.duenger$ERTRAG),xlab="Duenger",ylab="Mean Ertrag",trace.label="Sorte")
+
+interaction.plot(d.duenger$DUENGER,d.duenger$SORTE,log(d.duenger$ERTRAG),xlab="Duenger",ylab="Mean Ertrag",trace.label="Sorte")
+@
+
+Remember: We used log(ERTRAG), because the residual plots were otherwise not ok.
+}
+
+
+\frame[containsverbatim]{
+
+<<echo=T>>=
+r.duenger2 <- lm(log(ERTRAG) ~ DUENGER*SORTE,d.duenger)
+anova(r.duenger2)
+@
+
+Questions: 
+\begin{itemize}
+\item Number of parameters? 
+\item Degrees of freedom (60 data points)?
+\item Interpretation?
+\end{itemize}
+}
+
+\frame[containsverbatim]{
+
+<<echo=T,size="tiny">>=
+summary(r.duenger2)
+@
+
+}
 
 
 
@@ -144,187 +197,9 @@ An ANCOVA is an analysis of variance (ANOVA), \alert{including} also at least on
 \end{minipage}}
 \vspace{6mm}
 
-$\rightarrow$ ANCOVA is a \alert{combination of ANOVA and regression}, so in principle, there is nothing new to it...\\[6mm]
-}
-
-\frame{
-Given a categorical covariate $x_i$ and a continuous covariate $z_i$. Then the ANCOVA equation (without interactions) is given as\\[4mm]
-
-\colorbox{lightgray}{\begin{minipage}{10cm}
-\begin{equation*}
-y_i = \beta_0 + \beta_1x_i^{(1)} + ... + \beta_kx_i^{(k)} + \beta_z z_i + e_i \ ,
-\end{equation*}
-where $x_i^{(k)}$ is the $k$th dummy variable ($x_i^{(k)}$=1 if $i$th observation belongs to category $k$, 0 otherwise).
-\end{minipage}}
-~\\[8mm]
-{\bf Note 1:} It is straightforward to add an interaction of $x_i$ with $z_i$.\\
-{\bf Note 2:} Again, for identifiability reason, we typically set $\beta_1=0$.
-}
-
-\frame{\frametitle{}
-{\bf Example:} Remember the earthworm study from week 3:\\
-
-``Magenumfang'' was used to predict ``Gewicht'' of the worm, including as covariate also the worm species.\\[2mm]
-
-<<echo=F,eval=T>>=
-d.wurm <- read.table ("../../data_examples/ancova/Projekt6Regenwuermer/RegenwuermerDaten_Haupt.txt",header=T)
-d.wurm[d.wurm$Gattung=="N","GEWICHT"] <- d.wurm[d.wurm$Gattung=="N","GEWICHT"]*0.5
-@
-
-\begin{center}
-\setkeys{Gin}{width=0.6\textwidth}
-<<earthworm1,fig=T,echo=F,width=4.5,height=3>>=
-library(ggplot2)
-library(dplyr)
-ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point() + theme_bw()
-@
-\end{center}
+%$\rightarrow$ ANCOVA is a \alert{combination of ANOVA and regression}, so in principle, there is nothing new to it...\\[6mm]
 
 
-
-\alert{Categorical} and \alert{continuous} covariates were used to predict a continuous outcome (the weight of the worm).
-}
-\frame[containsverbatim]{
-
-
-<<fitWurm,echo=T,eval=T>>=
-r.lm <- lm(log(GEWICHT) ~  MAGENUMF + Gattung,d.wurm)
- summary(r.lm)$coef
-@
-
-\vspace{3mm}
-{\bf Remember:} What do the $p$-values ($p=0.48$ and $p<0.0001$) of the categorical covariate ``Gattung'' mean? \\[5mm]
-
-To understand if ``Gattung'' has an effect, {\bf we need to carry out an $F$-test} (see slides 46/47, week 3). To this end, plot the ANOVA table:\\[2mm]
-<<anovaWurm,echo=T,eval=T>>=
-anova(r.lm)
-@
-}
-
-
-\frame[containsverbatim]{
-Remember that we can also include an \alert{interaction} term between \texttt{MAGENUMF} and \texttt{Gattung} to allow for different slopes:\\[6mm]
-
-\begin{center}
-\setkeys{Gin}{width=0.6\textwidth}
-<<earthworm2,fig=T,echo=F,width=4.5,height=3>>=
-library(ggplot2)
-library(dplyr)
-ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point() + geom_smooth(method="lm") + theme_bw()
-@
-\end{center}
-}
-
-\frame[containsverbatim]{
-The \alert{$F$-test} is also needed to check whether the respective interaction term is needed: \\[2mm]
-
-<<fitWurm2,echo=T,eval=T>>=
-r.lm2<- lm(log(GEWICHT) ~  MAGENUMF * Gattung,d.wurm)
-summary(r.lm2)$coef
-anova(r.lm2)
-@
-
-~\\[2mm]
-$\rightarrow$ $p=0.167$, thus interaction is probably not relevant. 
-}
-
-
-
-\frame[containsverbatim]{\frametitle{A new example: cholesterol levels}
-{\bf Example:} Cholesterol levels [mg/ml] for 45 women from three US states (Iowa, Nebraska, Arizona), were measured. \\[2mm]
-{\bf Question:} Do these levels differ between the states? \\[2mm]
-Age (years) may be a relevant covariable. \\
-
-<<echo=F>>=
-d.chol <- read.table ("../../data_examples/ancova/cholesterol/cholesterol.txt",header=T)
- set.seed(23)
- age <- as.integer(runif(15,19,65))
- dd2 <- data.frame(cholesterol=round(rnorm(15,10 + 4.5*age,35),0),age=age,state=rep("Arizona",15))
- d.chol <- rbind(d.chol,dd2)
-@
-\begin{center}
-\setkeys{Gin}{width=0.60\textwidth}
-<<chol,fig=T,width=4,height=3,eval=T, echo=F>>=
-library(ggplot2)
-ggplot(d.chol,aes(x=state,y=cholesterol)) + geom_boxplot()
-#plot(cholesterol ~ state,data=d.chol)
-@
-\end{center}
-}
-
-\frame{
-The scatter plot gives an idea about the model that might be useful here:\\[2mm]
-\begin{center}
-\setkeys{Gin}{width=0.7\textwidth}
-<<statedata,fig=T,echo=F,width=4.5,height=3>>=
-library(ggplot2)
-library(dplyr)
-ggplot(d.chol,aes(x=age,y=cholesterol,colour=state)) + geom_point() + geom_smooth(method="lm") + theme_bw()
-@
-\end{center}
-
-$\rightarrow$ We include state, age and the interaction of the two. 
-}
-
-\frame[containsverbatim]{
-% The model equation is thus given as\\[6mm]
-% %
-% \colorbox{lightgray}{\begin{minipage}{10cm}
-% \vspace{-5mm}
-% \begin{equation*}
-% y_i = \beta_0 + \beta_1 \cdot(state)_i + \beta_2\cdot (age)_i + \beta_3 \cdot(state)_i \cdot(age)_i + e_i  \ , \quad e_i \sim \N(0,\sigma_e^2) \ .
-% \end{equation*}
-% \end{minipage}}
- 
- Doing the analysis:
- 
-~\\[4mm]
-<<echo=T>>=
-r.lm <- lm(cholesterol ~ age*state,data=d.chol)
-anova(r.lm)
-@
-\vspace{5mm}
-
-Interpretation?
-}
-
- 
-\frame[containsverbatim]{
-Compare the results from the previous slide to the estimated coefficients:\\[3mm]
-<<echo=T>>=
-r.lm <- lm(cholesterol ~ age*state,data=d.chol)
-summary(r.lm)$coef
-@
-\vspace{5mm}
- 
-{\bf Note:} The $p$-values for the \texttt{age} coefficient is not the same as in the anova table...\\[2mm]
-
-Compare the results for ``state'' also to the model without interaction:\\[3mm]
-<<echo=T>>=
-r.lm2 <- lm(cholesterol ~ age ,data=d.chol)
-summary(r.lm2)$coef
-@
-~\\[2mm]
-{\small {\bf Note:} the $p$-value for `state' is similar to the previous slide (anova table).}\\
-\colorbox{lightgray}{\begin{minipage}{10cm}
-Reason: anova tests the models against one another in the {\bf order} specified.
-\end{minipage}}
-} 
-
-
-\frame[containsverbatim]{
-As always, some model checking is necessary:\\[4mm]
-
-\setkeys{Gin}{width=0.9\textwidth}
-<<fig=T,width=7,height=3,echo=F>>=
-library(ggfortify)
-autoplot(r.lm,which=c(1,2),smooth.colour=NA)
-@
-~\\[4mm]
-$\rightarrow$ This seems ok.
-}
- 
-\frame{\frametitle{A final word on ANCOVA}
 ANCOVA unifies several concepts that we approached in this course so far:\\[2mm]
 
 \begin{itemize}
@@ -334,8 +209,183 @@ ANCOVA unifies several concepts that we approached in this course so far:\\[2mm]
 \item Analysis of Variance (ANOVA)\\[6mm]
 \end{itemize}
 
-As such, it is a {\bf special case of the linear model}.
+As such, it is a {\bf special case of the linear regression model}.
+
+}
+
+\frame{
+Given a categorical covariate $x_i$ and a continuous covariate $z_i$. Then the ANCOVA equation (without interactions) is given as\\[4mm]
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+\begin{equation*}
+y_i = \beta_0 + \beta_1x_i^{(1)} + ... + \beta_kx_i^{(k)} + \beta_z z_i + \epsilon_i \ ,
+\end{equation*}
+where $x_i^{(k)}$ is the $k$th dummy variable ($x_i^{(k)}$=1 if $i$th observation belongs to category $k$, 0 otherwise).
+\end{minipage}}
+~\\[8mm]
+{\bf Note 1:} It is straightforward to add an interaction of $x_i$ with $z_i$.\\
+{\bf Note 2:} Again, for identifiability reason, we typically set $\beta_1=0$.
+}
+
+\frame{\frametitle{Once more: the earthworms}
+
+``Magenumfang'' was used to predict ``Gewicht'' of the worm, including as covariate also the worm species.\\[4mm]
+
+<<echo=F,eval=T>>=
+d.wurm <- read.table ("../../data_examples/ancova/Projekt6Regenwuermer/RegenwuermerDaten_Haupt.txt",header=T)
+d.wurm[d.wurm$Gattung=="N","GEWICHT"] <- d.wurm[d.wurm$Gattung=="N","GEWICHT"]*0.5
+@
+
+
+<<earthworm1, fig.width=5, fig.height=3.5,out.width="6.5cm">>=
+library(ggplot2)
+library(dplyr)
+ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point() + theme_bw()
+@
+
+~\\
+\alert{Categorical} and \alert{continuous} covariates were used to predict a continuous outcome $\rightarrow$ ANCOVA.
+}
+\frame[containsverbatim]{
+
+
+<<fitWurm,echo=T,eval=T>>=
+r.lm <- lm(log(GEWICHT) ~  MAGENUMF + Gattung,d.wurm)
+ summary(r.lm)$coef
+@
+
+ 
+{\bf Important:} The $p$-values for the entries \texttt{GattungN} and \texttt{GattungOc} are not very meaningful (why?).   \\[3mm]
+
+To understand if ``Gattung'' has an effect, {\bf we need to carry out an $F$-test} $\rightarrow$ ANOVA table:
+
+<<anovaWurm,echo=T,eval=T>>=
+anova(r.lm)
+@
+}
+
+
+\frame[containsverbatim]{
+We also included an {\bf interaction term} between \texttt{MAGENUMF} and \texttt{Gattung} to allow for different slopes:\\[6mm]
+
+ 
+<<earthworm2, fig.width=5, fig.height=3.5,out.width="6.5cm">>=
+library(ggplot2)
+library(dplyr)
+ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point() + geom_smooth(method="lm") + theme_bw()
+@
+ 
+}
+
+\frame[containsverbatim]{
+$\rightarrow$ We again need the {\bf $F$-test} to check whether the respective interaction term is needed:  
+
+<<fitWurm2,echo=T,eval=T>>=
+r.lm2<- lm(log(GEWICHT) ~  MAGENUMF * Gattung,d.wurm)
+anova(r.lm2)
+@
+
+
+$\rightarrow$ $p=0.167$, thus interaction is probably not relevant. 
+}
+
+
+
+\frame[containsverbatim]{\frametitle{A new example: cholesterol levels}
+{\bf Example:} Cholesterol levels [mg/ml] for 45 women from three US states (Iowa, Nebraska, Arizona), were measured. \\[2mm]
+{\bf Question:} Do these levels differ between the states? \\[2mm]
+Age (years) may be a relevant covariable. \\[3mm]
+
+<<echo=F>>=
+d.chol <- read.table ("../../data_examples/ancova/cholesterol/cholesterol.txt",header=T)
+ set.seed(23)
+ age <- as.integer(runif(15,19,65))
+ dd2 <- data.frame(cholesterol=round(rnorm(15,10 + 4.5*age,35),0),age=age,state=rep("Arizona",15))
+ d.chol <- rbind(d.chol,dd2)
+@
+ 
+
+<<chol,fig.width=4, fig.height=3.5,out.width="5.7cm">>=
+library(ggplot2)
+ggplot(d.chol,aes(x=state,y=cholesterol)) + geom_boxplot()
+@
+ 
+}
+
+\frame{
+The scatter plot gives an idea about the model that might be useful here:\\[4mm]
+ 
+<<statedata, fig.width=5, fig.height=3.5,out.width="6.5cm">>=
+library(ggplot2)
+library(dplyr)
+ggplot(d.chol,aes(x=age,y=cholesterol,colour=state)) + geom_point() + geom_smooth(method="lm") + theme_bw()
+@
+ 
+~\\
+$\rightarrow$ We include state, age and the interaction of the two. 
+}
+
+\frame[containsverbatim]{
+% The model equation is thus given as\\[6mm]
+% %
+% \colorbox{lightgray}{\begin{minipage}{10cm}
+% \vspace{-5mm}
+% \begin{equation*}
+% y_i = \beta_0 + \beta_1 \cdot(state)_i + \beta_2\cdot (age)_i + \beta_3 \cdot(state)_i \cdot(age)_i + \epsilon_i  \ , \quad \epsilon_i \sim \N(0,\sigma^2) \ .
+% \end{equation*}
+% \end{minipage}}
+ 
+ Doing the analysis:
+ 
+
+<<echo=T>>=
+r.lm <- lm(cholesterol ~ age*state,data=d.chol)
+anova(r.lm)
+@
+\vspace{5mm}
+
+Interpretation?
+}
+
+
+\frame[containsverbatim]{
+Compare the results from the previous slide to the estimated coefficients:
+
+<<echo=T>>=
+r.lm <- lm(cholesterol ~ age*state,data=d.chol)
+summary(r.lm)$coef
+@
+ 
+{\bf Note:} The $p$-values for the \texttt{age} coefficient is not the same as in the ANOVA table.\\[2mm]
+{\bf Reason:} \texttt{anova()} tests the models against one another in the {\bf order} specified.
+
+% Compare the results for ``state'' also to the model without interaction:
+% 
+% <<echo=T>>=
+% r.lm2 <- lm(cholesterol ~ age ,data=d.chol)
+% summary(r.lm2)$coef
+% @
+
+%{\bf Note:} the $p$-value for `state' is similar to the previous slide (anova table). \\
+
+ 
+
+
 } 
+
+
+\frame[containsverbatim]{
+As always, some model checking is necessary:\\[4mm]
+
+ 
+<<fig1,fig.width=6, fig.height=3.5,out.width="7.5cm">>=
+library(ggfortify)
+autoplot(r.lm,which=c(1,2),smooth.colour=NA)
+@
+~\\[4mm]
+$\rightarrow$ This seems ok.
+}
+ 
  
  
 \frame{\frametitle{An introduction to linear Algebra}
@@ -419,7 +469,7 @@ This is the so-called \alert{design matrix} with a vector of 1's in the first co
 \bm{y} = \bm{\tilde{X}} \cdot \bm{\tilde\beta} + \bm{e}  \ ,
 \end{equation*}
 
-with $\bm{\tilde\beta}$ the vector of regression coefficients and $\bm{e}$ the vector of residuals.
+with $\bm{\tilde\beta}$ the vector of regression coefficients and $\bm{e}$ the vector of errors
 \end{itemize}
 }
 
@@ -591,10 +641,10 @@ b_1  & b_2  & \hdots & b_n
 {\bf Note:} By definition (by default), a vector is always a column vector. 
 }
 
-\frame{\frametitle{Addition and substraction}
+\frame{\frametitle{Addition and subtraction}
 \begin{itemize}
-\item Adding and substracting matrices and vectors is only possible when the objects have the \alert{same dimension}.
-\item Examples: Elementwise addition (or substraction)
+\item Adding and subtracting matrices and vectors is only possible when the objects have the \alert{same dimension}.
+\item Examples: Elementwise addition (or subtraction)
 
 \begin{equation*}
 \left(
@@ -934,14 +984,17 @@ $i$ & $x_i^{(1)}$ & $x_i^{(2)}$ \\
 
 Thus the model is given as 
 \begin{equation*}
-y_i = 10 + 5 x_i^{(1)}  -2 x_i^{(2)} + e_i \ , \text{for }\quad 1\leq i \leq n \ . 
+y_i = 10 + 5 x_i^{(1)}  -2 x_i^{(2)} + \epsilon_i \ , \text{for }\quad 1\leq i \leq n \ . 
 \end{equation*}
 Let us start by generating the ``true'' response, calculated as $\bm{\tilde{X}} \bm{\tilde\beta}$:\\[2mm]
 }
 
+ 
+
+
 \frame[containsverbatim]{
 
-<<>>=
+<<echo=T>>=
 x1 <- c(0,1,2,3,4)
 x2 <- c(4,1,0,1,4)
 Xtilde <- matrix(c(rep(1,5),x1,x2),ncol=3)
@@ -950,29 +1003,28 @@ t.beta <- c(10,5,-2)
 t.y <- Xtilde%*%t.beta
 t.y
 @
-~\\[2mm]
 
 Matrix multiplication in R is done by the \alert{\texttt{\%*\%}} symbol. 
  }
 
-\frame[containsverbatim]{
-Next, we generate the vector containing the $e_i \sim \N(0,\sigma_e^2)$ with $\sigma_e^2=1$:\\[2mm]
 
-<<>>=
+\frame[containsverbatim]{
+Next, we generate the vector containing the $\epsilon_i \sim \N(0,\sigma^2)$ with $\sigma^2=1$:
+
+<<echo=T>>=
 t.e <- rnorm(5,0,1)
 t.e
 @
 
-~\\[2mm]
-which we add to the ``true'' $\bm{y}=\bm{\tilde{X}} \bm{\tilde\beta}$ values, to obtain the ``observed'' values:\\[2mm]
-<<>>=
+ 
+which we add to the ``true'' $\bm{y}=\bm{\tilde{X}} \bm{\tilde\beta}$ values, to obtain the ``observed'' values: 
+<<echo=T>>=
 t.Y <- t.y  + t.e
 t.Y
 @
 
-~\\[2mm]
-It is now possible to fit the model with \texttt{lm}:\\[2mm]
-<<>>=
+It is now possible to fit the model with \texttt{lm}: 
+<<echo=T>>=
 r.lm <- lm(t.Y ~ x1 + x2)
 summary(r.lm)$coef
 @
@@ -987,12 +1039,11 @@ Alternatively, we can use formula
 \hat{\bm\beta} = (\tilde{\bm{X}}^\top \tilde{\bm{X}})^{-1}   \tilde{\bm{X}}^\top   \bm{y} 
 \end{equation*}
 
-to find the parameter estimates:\\[2mm]
+to find the parameter estimates: 
 
-<<>>=
+<<echo=T>>=
 solve(t(Xtilde) %*% Xtilde)  %*%  t(Xtilde) %*% t.Y
-@
-~\\[2mm]
+@ 
 
 \begin{itemize}
 \item \texttt{solve()} calculates the \alert{inverse} (here the inverse of $\tilde{\bm{X}}^\top \tilde{\bm{X}}$).
@@ -1003,20 +1054,7 @@ solve(t(Xtilde) %*% Xtilde)  %*%  t(Xtilde) %*% t.Y
 }
 
 
-%\frame{\frametitle{Distribution of the $\bm{\beta}$ coefficients}
-%See chapter 3.5 in Stahel: Linear algebra is useful to find the actual distribution of the regression coefficients $\bm\beta$.\\[4mm]
-%
-%No need to know this by heart -- but please remember:\\[2mm]
-%
-%\colorbox{lightgray}{\begin{minipage}{10cm}
-%Finding the joint distribution for $\bm\beta$ is {\bf much harder} without linear algebra.
-%\end{minipage}}
-%}
-
-
-% \frame{\frametitle{Summary}
-% 
-% }
+ 
 
 
 \frame{\frametitle{}
@@ -1029,13 +1067,12 @@ solve(t(Xtilde) %*% Xtilde)  %*%  t(Xtilde) %*% t.Y
 Reading vectors and a matrices into R:\\[2mm]
 
 
-<<>>=
+<<echo=T>>=
 a <- c(1,2,3)
 a
 @
 
-\vspace{10mm}
-<<>>=
+<<echo=T>>=
 A <- matrix(c(1,2,3,4,5,6),byrow=T,nrow=2)
 B <- matrix(c(6,5,4,3,2,1),byrow=T,nrow=2)
 A
@@ -1044,52 +1081,45 @@ B
 
 }
 
+
 \frame[containsverbatim]{
-~\\[2mm]
-Adding and subtracting:\\[2mm]
-<<>>=
+
+Adding and subtracting: 
+<<echo=T>>=
 A + B
 A - B
 @
 
-\vspace{10mm}
-However, be careful, R sometims does unreasonable things:\\[2mm]
-<<>>=
+ 
+However, be careful, R sometims does unreasonable things: 
+<<echo=T>>=
 A + a
 @
-~\\[2mm]
+ 
 What happened here??
 }
 
 
 \frame[containsverbatim]{
-Matrix multiplication:\\[2mm]
-
-<<>>=
+Matrix multiplication: 
+<<echo=T>>=
 C <- A %*% t(B)
 C
 A%*%a
 @
 
-\vspace{6mm}
-Matrix inversion (possible for quadratic matrices only):\\[2mm]
-
-<<>>=
+ 
+Matrix inversion (possible for quadratic matrices only):
+<<echo=T>>=
 solve(C)
 C %*% solve(C)
 @
 
-\vspace{6mm}
+
 Why does \texttt{solve(A)} or \texttt{solve(B)} not work?
 }
 
 
-
-
-% \frame{References:
-% \bibliographystyle{Chicago}
-% \bibliography{refs}
-% }
 
 
 
