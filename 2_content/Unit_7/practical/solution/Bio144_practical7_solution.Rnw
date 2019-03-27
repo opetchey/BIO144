@@ -1,0 +1,233 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage{url}
+\usepackage{xifthen}            % for \isempty
+\newboolean{isstudent}
+\setboolean{isstudent}{false}
+\def\pobs{p_\mathrm{obs}}
+\def\pexp{p_\mathrm{exp}}
+
+%-----------------------------------------------------------------------
+% Switching between "student" and "solution" version of the document:
+\usepackage{comment}
+\specialcomment{solution}{\ \\ \textbf{Solution: }}{}
+% Comment out the next line to get the "Student" version
+\ifthenelse{\boolean{isstudent}}{\excludecomment{solution}}{}
+
+\specialcomment{student}{}{}
+\newcommand{\studentspace}[2]{\ifthenelse{\boolean{isstudent}}{\vspace{#1}\\#2}{}}
+% Comment out the following four lines to get the "Solution" version
+
+ \ifthenelse{\boolean{isstudent}}{}{\excludecomment{student}
+ \usepackage{draftwatermark}\SetWatermarkText{Solution}\SetWatermarkScale{2}}
+
+%-----------------------------------------------------------------------
+
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{enumerate}
+\usepackage{bm}
+\usepackage{datetime}\newcommand{\dating}[1]{#1$\mid$%
+\newdateformat{mydate}{\THEYEAR-\twodigit{\THEMONTH}-\twodigit{\THEDAY}}%
+\mydate\today}
+\usepackage{natbib}
+% a4 is size 8.3 × 11.7
+\textwidth6.8in
+\textheight10.2in
+\topmargin0in
+\oddsidemargin-.25in
+\evensidemargin-.25in
+\headsep-.25in
+\headheight0pt
+\tabcolsep0pt
+\parindent0pt
+\parskip10pt plus2pt minus1pt
+
+%\input{newCommands}
+\pagestyle{empty}
+
+
+
+\begin{document}
+\begin{center}
+{\bf Bio144, 4./5. April 2019} \\[8mm] 
+{\large Solution to practical part 7: Exercise on linear algebra}\\[10mm]
+\end{center}
+
+ 
+
+\noindent{\bf 1.}
+The matrices and vectors can be generated in R:
+
+<<>>=
+A <- matrix(c(4,2,3,1,4,6),byrow=TRUE,nrow=2)
+B <- matrix(c(0,3,6,-1,-1,0),byrow=TRUE,nrow=2)
+x <- c(-1,2,-3)
+y <- c(5,3,-2)
+@
+
+\begin{enumerate}[a)]
+\item 
+<<>>=
+2*A
+@
+\item 
+<<>>=
+A + B
+@
+\item Calculating the results by hand: 
+\begin{equation*}
+\left[\begin{array}{ccc} 4 & 2 & 3 \\ 1 &4 & 6 \end{array}\right] \cdot \begin{bmatrix} 0 & -1 \\ 3 & -1 \\ 6 & 0\end{bmatrix}
+= \begin{bmatrix}
+4\cdot 0 + 2\cdot 3 + 3\cdot 6 \quad & \quad 4\cdot (-1) + 2\cdot (-1) + 3\cdot 0 \\
+1\cdot 0 + 4\cdot 3 + 6\cdot 6 \quad & \quad 1\cdot (-1) + 4\cdot (-1) + 6\cdot 0 \\
+\end{bmatrix} =  \begin{bmatrix}
+24 &  -6 \\
+48 & -5\\
+\end{bmatrix} 
+\end{equation*}
+Checking with R:
+<<>>=
+A%*%t(B)
+@
+\item Again, start by hand:
+
+\begin{equation*}
+\left[\begin{array}{ccc} 4 & 2 & 3 \\ 1 &4 & 6 \end{array}\right] \cdot \begin{bmatrix}
+-1 \\
+2 \\
+-3\\
+\end{bmatrix}
+=  
+\begin{bmatrix}
+4\cdot (-1) + 2\cdot 2 + 3\cdot (-3)\\
+1\cdot (-1) + 4 \cdot 2 + 6\cdot (-3)
+\end{bmatrix}
+= 
+\begin{bmatrix}
+-9 \\ -11
+\end{bmatrix}
+\end{equation*}
+
+And check by R:
+<<>>=
+A %*% x
+@
+\item Not defined, wrong dimensions.
+\item Not defined, wrong dimensions.
+\item 
+<<>>=
+A %*% t(A)
+@
+\item 
+<<>>=
+t(A) %*% A
+@
+\item
+<<>>=
+t(x)%*%x
+@
+\item
+<<>>=
+x%*%t(x)
+@
+\end{enumerate}
+
+
+
+\noindent{\bf 2.}
+\begin{enumerate}[a)]
+\item In the lecture we have defined the covariate vectors $\bm{x^{(1)}}$ and $\bm{x^{(2)}}$, the data matrix $\bm{\tilde{X}}$, the $\bm\beta$ vector, and the response vector:
+<<>>=
+x1 <- c(0,1,2,3,4)
+x2 <- c(4,1,0,1,4)
+Xtilde <- matrix(c(rep(1,5),x1,x2),ncol=3)
+t.beta <- c(10,5,-2)
+t.y <- Xtilde%*%t.beta
+
+t.e <- rnorm(5,0,1)
+t.Y <- t.y  + t.e
+r.lm <- lm(t.Y ~ x1 + x2)
+summary(r.lm)$coef
+
+solve(t(Xtilde) %*% Xtilde)  %*%  t(Xtilde) %*% t.Y
+@
+
+\item Generate a matrix of true value \texttt{t.y} and a matrix of residual errors \texttt{t.E} (instead of generating a separate \texttt{t.e} each time). The 100 observed vectors are then stored in a $5\times 100$ matrix \texttt{t.Y}: 
+<<>>=
+t.y <- matrix(rep(t.y,100),nrow=5,byrow=F)
+t.E <- matrix(rnorm(500,0,1),nrow=5)
+t.Y <- t.y  + t.E
+@
+
+% The \texttt{apply} functions applies the defined function on all columns of \texttt{t.Y} (note that if the second argument was \texttt{=1} the function would be applied to all rows) 
+% <<>>=
+% r.coef <- t(apply(t.Y, 2, FUN = function(y) lm(y ~ x1 + x2)$coefficients))
+% @
+100 iterations of the regression:
+<<>>=
+r.coef <- matrix(NA,ncol=3, nrow=100)
+for (i in 1:100) {
+  r.coef[i,] <- lm(t.Y[,i] ~x1 + x2)$coefficients
+}
+@
+
+\item We procude the required graphs using \texttt{ggplot}. Load the libraries:
+<<warning=FALSE,message=FALSE>>=
+library(ggplot2)
+library(tidyr)
+library(dplyr)
+@
+
+For the histograms, first convert \texttt{r.coef} into a data frame and rename the columns:
+<<>>=
+r.coef <- data.frame(r.coef)
+names(r.coef) <- c("beta0","beta1","beta2")
+@
+Then either produce three separate plots using
+<<echo=T, eval=F>>=
+ggplot(r.coef,aes(x=beta0)) + geom_histogram()
+ggplot(r.coef,aes(x=beta1)) + geom_histogram()
+ggplot(r.coef,aes(x=beta2)) + geom_histogram()
+@
+
+Or use the \texttt{gather()} function from the \texttt{tidyr} package, which has the advantage that you can then use \texttt{facet\_wrap()}:
+
+<<fig1,fig.width=7, fig.height=3.5,out.width="12cm">>=
+ggplot(gather(r.coef, key=variable, value=value), aes(value)) +
+  geom_histogram(bins=10) + facet_wrap(~variable, scales = "free") + 
+  theme_bw()
+@
+
+
+
+
+% Plotting results using base R:
+% \setkeys{Gin}{width=0.9\textwidth}
+% <<fig=T,echo=T,width=6.5,height=3>>=
+% par(mfrow=c(1,3))
+% hist(r.coef[,1],xlab="beta0",main="")
+% hist(r.coef[,2],xlab="beta1",main="")
+% hist(r.coef[,3],xlab="beta2",main="")
+% @
+% 
+% \eject
+For the scatterplots we can continue to use \texttt{r.coef}:
+
+ 
+<<fig2,fig.width=3.5, fig.height=3.5,out.width="5cm">>=
+ggplot(r.coef,aes(x=beta0,y=beta1)) + geom_point()  
+@
+<<fig3,fig.width=3.5, fig.height=3.5,out.width="5cm">>=
+ggplot(r.coef,aes(x=beta0,y=beta2)) + geom_point()
+@
+<<fig4,fig.width=3.5, fig.height=3.5,out.width="5cm">>=
+ggplot(r.coef,aes(x=beta1,y=beta2)) + geom_point()
+@
+
+Observation:  $\beta_0$ seems to be correlated with $\beta_1$ and $\beta_2$.
+
+\end{enumerate}
+
+\end{document}

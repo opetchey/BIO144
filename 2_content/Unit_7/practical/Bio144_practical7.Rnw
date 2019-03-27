@@ -1,0 +1,129 @@
+\documentclass[a4paper,12pt]{scrartcl}
+
+\usepackage{amsmath,natbib}
+\usepackage[utf8]{inputenc}
+\usepackage{bm}
+\usepackage{url}
+\usepackage[printonlyused]{acronym}
+\usepackage{Sweave}
+\usepackage{color}
+\usepackage{mathbbol}
+\usepackage{numprint}
+\usepackage{enumerate}
+\usepackage{setspace}
+\usepackage[left=2.5cm,top=2cm,right=3cm,bottom=3cm,bindingoffset=0.5cm]{geometry}
+\usepackage{titlesec}
+\usepackage{lineno}
+%\usepackage{enumitem}
+
+\usepackage{tabularx}
+
+
+\def\logit{\mathsf{logit}}
+\DeclareMathOperator{\E}{\mathsf{E}} 
+\def\SBP{\text{SBP}}
+\def\G{\text{G}}
+\def\T{\text{T}}
+\def\o{_{\text{obs}}}
+\def\given{\,|\,}
+\def\na{\tt{NA}}
+\def\nin{\noindent}
+\def\mm#1{\ensuremath{\boldsymbol{#1}}} % version: amsmath
+\definecolor{grey}{rgb}{.6,.6,.6}
+\newcommand{\p}{\operatorname{{p}}} % Density function
+\newcommand{\Var}{\text{Var}} % Varianz
+\newcommand{\Cor}{\text{Cor}} % correlation
+\newcommand{\latin}[1]{\textit{#1}}
+\newcommand{\abk}[1]{\mbox{#1}\xdot}
+\DeclareRobustCommand\xdot{\futurelet\token\Xdot}
+\def\Xdot{%
+  \ifx\token\bgroup.%
+  \else\ifx\token\egroup.%
+  \else\ifx\token\/.%
+  \else\ifx\token\ .%
+  \else\ifx\token!.%
+  \else\ifx\token,.%
+  \else\ifx\token:.%
+  \else\ifx\token;.%
+  \else\ifx\token?.%
+  \else\ifx\token/.%
+  \else\ifx\token'.%
+  \else\ifx\token).%
+  \else\ifx\token-.%
+  \else\ifx\token+.%
+  \else\ifx\token~.%
+  \else\ifx\token.%
+  \else.\ %
+  \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi%
+}
+\newcommand{\eg}{\abk{\latin{e.\,g}}}
+\newcommand{\ie}{\abk{\latin{i.\,e}}}
+%\newcommand{\hl}{\textcolor{blue}} 
+\newcommand{\hll}{\textcolor{blue}}
+
+
+
+
+\begin{document}
+\begin{center}
+{\bf Bio144, 4./5. April 2019} \\[8mm] 
+{\large Practical part 7: Exercise on linear algebra}\\[10mm]
+\end{center}
+
+ 
+
+\begin{enumerate}[\bf{1.}]
+\item Let us use the following matrices and vectors:
+\begin{equation*}
+\mathbf{A}=\left[\begin{array}{ccc} 4 & 2 & 3 \\ 1 &4 & 6 \end{array}\right]\ , \quad
+\mathbf{B} = \begin{bmatrix} 0 & 3 & 6 \\ -1 & -1 & 0\end{bmatrix}\ , \quad \bm{x}=\begin{bmatrix}-1 \\ 2 \\ -3 \end{bmatrix} \ , \quad \bm{y}=\begin{bmatrix}5 \\ 3 \\ -2 \end{bmatrix}
+\end{equation*}
+
+Calculate all of the following expressions, if they are defined. Solve at least a)-d) by hand.\\[2mm]
+ 
+
+\begin{tabularx}{\columnwidth}{XXXl}%
+ {\bf a)} $2\cdot \mathbf{A}$  & {\bf b)} $\mathbf{A}+\mathbf{B}$  & {\bf c)} $\mathbf{A}\cdot\mathbf{B}^\T$ & {\bf d)} $\mathbf{A}\cdot\bm{x}$\\[2mm]
+ {\bf e)} $\mathbf{A}\cdot \mathbf{B}$ & {\bf f)} $\mathbf{B}^\T \cdot \bm{y}$ & {\bf g)} $\mathbf{A}\cdot \mathbf{A}^\T$ & {\bf h)}  $\mathbf{A}^\T\cdot \mathbf{A}$ \\[2mm]
+ {\bf i)} $\bm{x}^\T\cdot\bm{x}$ &  {\bf j)} $\bm{x}\cdot\bm{x}^\T$\\[8mm]
+\end{tabularx}
+{\bf R-hints:}
+\begin{itemize}
+\item A matrix can be created for example as \\
+\texttt{A <- matrix(c(4,2,3,1,4,6),byrow=TRUE,nrow=2)}
+\item \texttt{t(A)} corresponds to $\mathbf{A}^\T$ \ .
+\item Make sure you understand the difference between $\mathbf{A}$\texttt{*}$\mathbf{B}$ and $\mathbf{A}$\texttt{\%*\%}$\mathbf{B}$ .\\[4mm]
+\end{itemize}
+\end{enumerate} 
+
+\begin{enumerate}[\bf{2.}] \item 
+\begin{enumerate}[a)]  \item Repeat the example given in slides 35--38 of lecture 6 using R. \\ 
+\item Repeat the procedure from a) 100 times. In each iteration, store the estimated coefficient vector $(\hat\beta_0,\hat\beta_1,\hat\beta_2)$. Note that the estimates will be a bit different in each iteration, because another residual vector \texttt{t.e} is used.\\ 
+\item Plot the histograms of the $\beta$s, the coefficients as a function of the simulation number, and scatterplots of $\hat\beta_1$ vs.\ $\hat\beta_0$, $\hat\beta_2$ vs.\ $\hat\beta_0$ and $\hat\beta_2$ vs.\ $\hat\beta_1$.\\
+\end{enumerate}
+
+{\bf R-hints:} The 100 simulations can be generated elegantly as follows:
+\begin{itemize}
+\item Generate an error matrix of dimension $5\times 100$. Each column  contains the errors of one experiment:\\
+\texttt{t.E <- matrix(rnorm(500),ncol=...)}
+
+\item Use \texttt{t.E} to generate the observations:\\
+\texttt{t.y <- matrix(rep(t.y,100),nrow=5,byrow=F)} \\
+\texttt{t.Y <- t.y + t.E}
+
+\item Define a results matrix of dimension $3\times 100$ that contains in each column the estimates $(\hat\beta_0,\hat\beta_1,\hat\beta_2)$ of an experiment, and fill it with the results of the 100 iterations, \emph{e.g.}:\\
+\texttt{r.coef <- matrix(NA,ncol=3, nrow=100)} \\
+\texttt{for (i in 1:100) \{  }\\
+\;\;\qquad \mbox{\texttt{  r.coef[i,] <- lm(t.Y[,i] $\sim$ x1 + x2)\$coefficients }}\\ 
+\texttt{\}}
+
+
+
+% or more elegantly with \texttt{apply()}:\\
+% \texttt{r.coef <- t(apply(t.Y, 2, FUN = function(y) lm(...)\$...))}
+\end{itemize}
+
+\end{enumerate}
+ 
+
+\end{document}
