@@ -158,7 +158,7 @@ Interaction plot with ERTRAG and log(ERTRAG) as response:
 <<fig6,fig.width=4, fig.height=4,out.width="4.5cm">>=
 interaction.plot(d.duenger$DUENGER,d.duenger$SORTE,(d.duenger$ERTRAG),xlab="Duenger",ylab="Mean Ertrag",trace.label="Sorte")
 
-interaction.plot(d.duenger$DUENGER,d.duenger$SORTE,log(d.duenger$ERTRAG),xlab="Duenger",ylab="Mean Ertrag",trace.label="Sorte")
+interaction.plot(d.duenger$DUENGER,d.duenger$SORTE,log(d.duenger$ERTRAG),xlab="Duenger",ylab="log(Mean Ertrag)",trace.label="Sorte")
 @
 
 Remember: We used log(ERTRAG), because the residual plots were otherwise not ok.
@@ -454,7 +454,7 @@ y_n
 \bm{\tilde{X}} = 
 \left(
 \begin{array}{ccc}
-1 & x_1^{(1)} &  x_2^{(1)}\\
+1 & x_1^{(1)} &  x_1^{(2)}\\
 1 & x_2^{(1)} & x_2^{(2)} \\
 ... & ... &... \\
 1 & x_n^{(1)} & x_n^{(2)}
@@ -944,7 +944,7 @@ Task: Verify this now, using a model with two variables $\bm{x}^{(1)}$ and $\bm{
 \bm{\tilde{X}} = 
 \left(
 \begin{array}{ccc}
-1 & x_1^{(1)} &  x_2^{(1)}\\
+1 & x_1^{(1)} &  x_1^{(2)}\\
 1 & x_2^{(1)} & x_2^{(2)} \\
 ... & ... &... \\
 1 & x_n^{(1)} & x_n^{(2)}
