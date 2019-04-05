@@ -18,7 +18,6 @@
 \usepackage{amsmath,natbib}
 \usepackage{mathbbol}
 \usepackage{babel}
-\usepackage{SweaveSlides}
 \usepackage{multicol}
 \usepackage{xcolor}
 
@@ -34,6 +33,7 @@
 \definecolor{darkred}{rgb}{0.8,0,0}
 \definecolor{Green}{rgb}{0,0.8,0.3}
 \definecolor{lightgreen}{rgb}{0,0.7,0.3}
+\definecolor{lightblue}{rgb}{0.52,0.8,0.98}
 \definecolor{Blue}{rgb}{0,0,1}
 \def\myalert{\textcolor{darkred}}
 \def\myref{\textcolor{Gray}}
@@ -82,14 +82,26 @@
 
 
 \begin{document}
-\SweaveOpts{width=6,height=4}
 \fboxsep5pt
+<<setup, include=FALSE, cache=FALSE, results='hide'>>=
+library(knitr)
+## set global chunk options
+opts_chunk$set(fig.path='figure/', 
+cache.path='cache/', fig.align='center', 
+fig.show='hold', par=TRUE, fig.align='center', cache=FALSE, 
+message=FALSE, 
+warning=FALSE,
+echo=FALSE, out.width="0.4\\linewidth", fig.width=6, fig.height=4.5, size="scriptsize", width=40)
+opts_chunk$set(purl = TRUE)
+knit_hooks$set(purl = hook_purl)
+options(size="scriptsize")
+opts_chunk$set(message = FALSE)
+@
 
 \frame{
 \title[]{ \centering \Huge Kurs Bio144: \\
-Datenanalyse in der Biologie}%\\[.3cm]
+Datenanalyse in der Biologie}
 \author[Stefanie Muff, Owen L.\ Petchey]{\centering Stefanie Muff  \& Owen L.\ Petchey }
-%\institute[]{Institute of Social and Preventive Medicine \\ Institute of Evolutionary Biology and Environmental Studies}
 \date[]{Lecture 8: Model selection \\ 8. April 2019}
 
 
@@ -98,16 +110,16 @@ Datenanalyse in der Biologie}%\\[.3cm]
 
 
 \frame{\frametitle{Overview}
+
+ 
 \begin{itemize}
-\item Model selection and model checking.\\[2mm]
+\item Predictive vs explanatory models.\\[2mm]
+\item Selection criteria: AIC, AIC$_c$, BIC. \\[2mm]
 \item Automatic model selection and its caveats.\\[2mm]
 \item Model selection bias.\\[2mm]
-\item Selection criteria: AIC, AIC$_c$, BIC \\[2mm]
 \item Collinearity of covariates \\[2mm]
-\item Explanation vs prediction. \\[2mm]
 \item Occam's razor principle.\\[2mm]
 \end{itemize}
-
  
 }
 
@@ -132,16 +144,18 @@ The lecture material of today is based on the following literature:\\[4mm]
 \frame{\frametitle{Developing a model}
 So far, our regression models ``fell from heaven'': The model family and the terms in the model were almost always given.\\[4mm]
 
-However, it is often \alert{not clear \emph{a priori}} which terms are relevant for a model. \\[2mm]
+However, it is often not immediately obvious which terms are relevant to include in a model. \\[2mm] 
 
-The two {\bf extreme situations} are\\[2mm]
+Importantly, the approach to find a model {\bf heavily depends on the aim} for which the model is built. \\[4mm]
+
+The following distinction is important:\\ 
 \begin{enumerate}
-\item \alert{It is clear/known} that $\bm{y}$ depends on a set of regressors $\bm{x}^{(1)}, \bm{x}^{(2)}, \ldots, \bm{x}^{(m)}$. \\[2mm]
-\item The study has the aim \alert{to find connections} between the outcome $\bm{y}$ and the regressors. It is not known \emph{how} or \emph{if} each regressor influences $\bm{y}$.\\[2mm]
+\item The aim is to \alert{predict} future values of $\bm{y}$ from known regressors.
+\item The aim is to \alert{explain} $\bm{y}$ using known regressors. Ultimately, the aim is to find causal relationships.
 \end{enumerate}
 
-The \alert{reality lies often in between}:\\
-Interest centers around one predictor (e.g., a new medication), but the effect of other potential influence factors must be taken into account.
+% The \alert{reality lies often in between}:\\
+% Interest centers around one predictor (e.g., a new medication), but the effect of other potential influence factors must be taken into account.
 }
 
 \frame{\frametitle{Why is finding a model so hard?}
@@ -162,7 +176,7 @@ $\rightarrow$ Finding a model with good properties is sometimes an art...\\[2mm]
 }
 
 \frame{
-$\rightarrow$ Even among statisticians there is no real consensus about how (or if!) to do model selection:\\[2mm]
+$\rightarrow$ Even among statisticians there is no real consensus about how, if, or when to select a model:\\[2mm]
 
 \includegraphics[width=10cm]{graphics/brewer_title.jpg}\\
 \includegraphics[width=10cm]{graphics/brewer.jpg}\\[2mm]
@@ -170,296 +184,78 @@ $\rightarrow$ Even among statisticians there is no real consensus about how (or 
 Note: The first sentence of a paper in \emph{Methods in Ecology and Evolution} from 2016 is: ``Model selection is difficult.''
 }
 
-\frame{\frametitle{Mercury example}
-Let us look at the mercury example. The {\bf research question} was: \\
-``Gibt es einen Zusammenhang zwischen Quecksilber(Hg)-Bodenwerten von Wohnh\"ausern und der Hg-Belastung im K\"orper (Urin, Haar) der Bewohner?''\\[2mm]
+
+\frame{\frametitle{Predictive and explanatory models}\label{sl:pred_vs_exp}
+
+Before we continue to discuss model/variable selection, we need to be clear about the scope of the model:\\[2mm]
+
 \begin{itemize}
-\item \emph{Hg concentration in urine} ($Hg_{urine}$) is the {\bf response}.
-\item \emph{Hg concentration in the soil} ($Hg_{soil}$) is the {\bf predictor of interest}.\\[5mm]
+\item \alert{\bf Predictive models}: These are models that aim to predict the outcome of future subjects.\\
+\underline{Example:} In the bodyfat example the aim is to predict people's bodyfat from factors that are easy to measure (age, BMI, weight,..).\\[2mm]
+
+\item \alert{\bf Explanatory models}: These are models that aim at understanding the (causal) relationship between covariates and the response. \\
+\underline{Example:} The mercury study aims to understand if Hg-concentrations in the soil (covariable) influence the Hg-concentrations in humans (response).\\[2mm]
 \end{itemize}
 
-\alert{In addition}, the following variables were monitored for each person, because they might influence the mercury level in a person's body:\\[2mm]
-
-\emph{smoking status; number of amalgam fillings; age; number of monthly fish meals; indicator if fish was eaten in the last 3 days; mother vs child; indicator if vegetables from garden are eaten; migration background; height; weight; BMI; sex; education level.}\\[2mm]
-
-{\bf Thus: In total additional 13 variables!}
-}
-
-
-\frame{\frametitle{How many variables can I include in my model?}
-
-{\bf Rule of thumb:}\\[1mm] 
+~\\
 \colorbox{lightgray}{\begin{minipage}{10cm}
-Include no more than $n/10$ (10\% of $n$) variables into your linear regression model, where $n$ is the number of data points.
-\end{minipage}}
-
-~\\[2mm]
-In the mercury example there are 156 individuals, so a {\bf maximum of 15 variables} should be included in the model.\\[2mm]
-
-{\bf Remarks:}
-\begin{itemize}
-\item Categorical variables with $k$ levels already require $k-1$ dummy variables. For example, if `education level' has three categories, 2 variables are used up.\\[2mm]
-\item Whenever possible, the model should {\bf not be blown up} unneccessarily. Even if there are many data points, the use of too many variables may lead to an {\bf overfitted} model.\\
-$\rightarrow$ {\scriptsize See \href{https://en.wikipedia.org/wiki/Overfitting}{https://en.wikipedia.org/wiki/Overfitting}.}
-\end{itemize}
- 
-
-}
-
-
-
-\frame{
-In the mercury study, the following variables were included using \emph{a priori} knowledge:\\[4mm]
-
-\begin{tabular}{llll}
-Variable & Meaning & type & transformation\\
-\hline
-Hg$\_$urin & Hg conc.\ in urine (response) & continuous & $\log$\\ 
-Hg$\_$soil & Hg conc.\ in the soil  & continuous & $\log$\\
-vegetables & Eats vegetables from garden? & binary\\
-migration & Migration background & binary \\
-smoking & Smoking status & binary \\
-amalgam & No.\ of amalgam fillings & count & $\sqrt{.}$ \\
-age & Age of participant &  continuous\\ 
-fish & Number of fish meals/month & count  & $\sqrt{.}$\\
-last$\_$fish & Fish eaten in last 3 days? &   binary\\
-mother & Mother or child?  & binary\\
-\end{tabular}
-\vspace{2mm}
-
-}
-
-
-
-\frame[containsverbatim]{Let us now fit the full model (including all covariates) in R:\\[2mm]
-<<echo=F,width=4.5,height=4>>=
-d.hg <- read.table("../../data_examples/Hg/Hg_urin.csv",header=T, sep=",")
-d.hg["106","amalgam_quant"] <- 5 # correct for the outlier
-d.hg <- d.hg[-11]
-names(d.hg) <- c("Hg_urin", "Hg_soil", "vegetables","migration", "smoking","amalgam", "age", "fish","last_fish","mother")
-@
-
-<<echo=F>>=
-r.lm1 <- lm(log10(Hg_urin) ~ log10(Hg_soil) + vegetables + migration + smoking + 
-             sqrt(amalgam) + age + mother + sqrt(fish) + last_fish,d.hg)
-# summary(r.lm)$coef
-# summary(r.lm)$adj.r.squared
-@
-
-<<results=tex,echo=F>>=
-library(biostatUZH)
-tableRegression(r.lm1)
-@
-
-\vspace{3mm}
-\begin{itemize}
-\item There is no evidence that mercury in soil influences mercury in urine ($p=\Sexpr{format(summary(r.lm1)$coef[2,4],2,2,2)}$).\\[2mm]
-\item We find $R^2=\Sexpr{format(summary(r.lm1)$r.squared,2,2,2)}$ and $R_a^2=\Sexpr{format(summary(r.lm1)$adj.r.squared,2,2,2)}$. Is this ``good''?\\[2mm]
-\item Are there additional terms that might be important?\\[2mm]
-\end{itemize}
-}
-
-\frame{
-Remember from slides 7-10 of week 4 that the dependency of mercury in urine on age is different for mothers and children:
-
-\begin{center}
-\setkeys{Gin}{width=0.6\textwidth}
-<<fig=T,echo=F,width=4.5,height=3>>=
-library(dplyr)
-library(ggplot2)
-d.hg <- mutate(d.hg,mother=factor(mother))
-ggplot(d.hg,aes(x=age,y=log(Hg_urin),colour=mother)) + geom_point() + geom_smooth(method="lm") + theme_bw()
-@
-\end{center}
-
-$\rightarrow$ We need to include an interaction term \emph{mother}$\cdot$\emph{age}.
-}
-
-\frame[containsverbatim]{\label{sl:mercury_final}
-Fitting the model again with the additional term:
-<<echo=F>>=
-r.lm2 <- lm(log10(Hg_urin) ~ log10(Hg_soil) + vegetables + migration + smoking + 
-             sqrt(amalgam) + age * mother + sqrt(fish) + last_fish,d.hg)
-@
-<<results=tex,echo=F>>=
-library(biostatUZH)
-tableRegression(r.lm2)
-@
-
-\vspace{3mm}
-\begin{itemize}
-\item There is evidence that the interaction is relevant ($p<0.001$).\\[2mm]
-\item $R^2$ has now clearly increased to $\Sexpr{format(summary(r.lm2)$r.squared,2,2,2)}$ (and $R_a^2=\Sexpr{format(summary(r.lm2)$adj.r.squared,2,2,2)}$).\\[2mm]
-\end{itemize}
-
-$\rightarrow$ The interaction term apparently improved the model.
-}
-
-\frame[containsverbatim]{
-A model checking step (always needed, but we did it already in weeks 4):\\[2mm]
-\setkeys{Gin}{width=0.8\textwidth}
-\begin{center}
-<<modelChecksHg,fig=T,width=7,height=3.5,echo=F>>=
-library(ggfortify)
-autoplot(r.lm2,which=c(1,2),smooth.col=NA)
-@
-\end{center}
-\vspace{6mm}
-
-This looks ok, no need to improve the model from this point of view.
-}
-
-\frame{
-Even if the model checking step revealed no violations of the assumptions (the model seems to be fine), we sometimes want to know:\\[2mm]
-
-\begin{itemize}
-\item Which of the terms are \alert{important/relevant}?\\[2mm]
-\item Are there \alert{additional terms} that might be important?\\[2mm]
-\item Would it be possible to further \alert{``improve'' the model}?\\[3mm]
-\end{itemize}
-\vspace{3mm}
-
-Often, the desire is to find a model that is in some sense ``optimal'' or ``best''.  
-}
-
-
-\frame{\frametitle{Is importance reflected by $p$-values?}
-A widely used practice to determine the ``importance'' of a term is to look at the $p$ value from the $t$ or $F$-test and check if it falls below a certain threshold (usually $p<0.05$). \\[1mm]
-
-{\bf However, there are a few problems with this approach:}\\[2mm]
-
-\colorbox{lightgray}{\begin{minipage}{10cm}
-\begin{itemize}
-\item {\bf A small $p$-value does not necessarily mean that a term is (biologically, medically) important -- and vice versa!}\\[2mm]
-\item When carrying out the tests with $H_0: \beta_j=0$ for all variables sequentially, one runs into a \alert{multiple testing problem}.\\
-{(\scriptsize Remember the ANOVA lecture, week 5, slide 23).}\\[2mm]
-\item The respective tests depend crucially on the correctness of the \alert{normality assumption}.\\[2mm]
-\item Covariates are sometimes \alert{collinear}, which leads to more uncertainty in the estimation of the respective regression parameters, and thus to larger $p$-values.\\[2mm]
-\end{itemize}
+$\rightarrow$ The model selection strategy depends on this distinction.
 \end{minipage}}
 }
 
-\frame{
-For all these reasons, we {\bf strongly disagree} with the remark in Stahel's script 5.2, second part in paragraph d.\\[4mm]
 
-The first part is ok:\\[2mm]
-\includegraphics[width=10cm]{graphics/52d_1.pdf}\\[2mm]
-
-But we disagree with this:\\[2mm]
-
-\includegraphics[width=10cm]{graphics/52d_2.pdf}
-}
-
-
-\frame{\frametitle{Automatic model selection procedures}
-It would be very convenient if there were {\bf objective} or even {\bf automatic} procedures to select the ``best'' model. Wouldn't it?\\[2mm]
-
-In fact, such procedures have been proposed in the past. For example:\\[4mm]
-\begin{itemize}
-\item \alert{Backward selection:}\\
-Start with a large/full model. In each step, remove the variable with the largest $p$-value. Do this until only variables with low $p$-values remain in the model.\\[4mm]
-\item \alert{Forward selection:}\\
-Start with an empty model. In each step, add the predictor with the highest importance (lowest $p$-value). Do this until none of the missing coefficients has a low $p$-value when adding it.\\[2mm]
-\end{itemize}
-
-
-}
-
-
-\frame[containsverbatim]{\frametitle{Model selection bias}
-Let us reproduce an illustrative example that was described by \citet{freedman1983}. \\[2mm] 
-
-{\bf Aim of the example:} \\[2mm]
+\frame{\frametitle{Prediction vs explanation}
 \colorbox{lightgray}{\begin{minipage}{10cm}
-To illustrate how model selection purely based on $p$-values can lead to biased parameters and overestimated effects.
-\end{minipage}}
-\vspace{2mm}
+When the aim is \emph{prediction}, the best model is the one that best predicts the fate of a future subject. This is a well defined task and automatic strategies to find the model which is best in this sense are potentially useful. \\[4mm]
 
-Procedure:
-\begin{enumerate}
-\item \alert{Randomly generate} 100 data points for 50 covariables $\bm{x}^{(1)},\ldots, \bm{x}^{(50)}$ and a response $\bm{y}$: \\[4mm]
+However, when used for \emph{explanation} the best model will depend on the scientific question being asked, {\bf and automatic selection strategies have no place}. 
+\end{minipage}}\\[5mm]
 
-<<freedman,echo=T,eval=T>>=
-set.seed(9856)
-data <- data.frame(matrix(rnorm(51*100),ncol=51))
-names(data)[51] <- "Y"
-@
-\vspace{1mm}
+{\scriptsize\citep[][chapters 27.1 and 27.2]{clayton.hills1993}}
 
-\texttt{data} is a 100$\times$ 51 matrix, where the last column is the response. The \alert{data were generated completely independently}, the covariates do not have any explanatory power for the response! 
-\end{enumerate}
 }
 
-\frame[containsverbatim]{
-\begin{enumerate}
-\setcounter{enumi}{1}
-\item Fit a linear regression model of $\bm{y}$ against all the 50 variables
-\begin{equation*}
-y_i = \beta_0 + \beta_1 x_i^{(1)} + \ldots + \beta_{50}x_i^{(50)} + e_i \ .
-\end{equation*}
+\frame[containsverbatim]{\frametitle{A predictive model: The bodyfat example}
+The bodyfat study is a typical example for a {\bf predictive model}.\\[2mm] 
+
+There are 12 potential predictors (plus the response). Let's fit the full model (without interactions):\\[2mm]
+
+<<read.bodyfat,echo=F,eval=T>>=
+d.bodyfat <- read.table("../../data_examples/bodyFat/bodyfat.clean.txt",header=T)
+d.bodyfat <- d.bodyfat[,c("bodyfat","age","gewicht","hoehe","bmi","neck","chest","abdomen","hip","thigh","knee","ankle","biceps")]
+@
+
+
 <<>>=
-r.lm <- lm(Y~.,data)
+r.bodyfat <- lm(bodyfat ~ ., d.bodyfat)
 @
 
-As expected, the distribution of the $p$-value is (more or less) uniform between 0 and 1:\\
-\begin{center}
-\setkeys{Gin}{width=0.5\textwidth}
-<<fig=T,width=4,height=4,echo=F>>=
-par(mfrow=c(1,1))
-hist(summary(r.lm)$coef[-1,4],freq=T,main="50 variables",xlab="p-values")
+<<results="asis",echo=F>>=
+library(biostatUZH)
+tableRegression(r.bodyfat)
 @
-\end{center}
-\end{enumerate}
-}
-
-\frame[containsverbatim]{
-\begin{enumerate}
-\setcounter{enumi}{2}
-\item Then pick all variables that have a $p<0.25$ and re-fit the model using only these. 11 variables fulfill this criterion here:\\[2mm]
-<<>>=
-# select all variables with p<0.25
-r.lm.red <- lm(Y ~ X1 + X2 + X4 + X5 + X14 + X18 + X20 + X27 + X36 + X38 + X49,data)
-@
-
-\begin{center}
-\setkeys{Gin}{width=0.48\textwidth}
-<<fig=T,width=4,height=4,echo=F>>=
-hist(summary(r.lm.red)$coef[-1,4],freq=T,main="11 'best' variables",xlab="p-values")
-@
-\end{center}
-
-The distribution of the $p$-values is now skewed: many of them reach rather small values (7 have $p<0.05$). This happened \alert{although none of the variables has any explanatory power!}
-\end{enumerate}
 }
 
 
 
-\frame{\frametitle{Important note}
-\colorbox{lightgray}{\begin{minipage}{10cm}
-{\bf Automatic model selection procedures may lead to biased parameter estimates and wrong conclusions!}
-\end{minipage}}
-{\scriptsize See, e.g., \citet{freedman1983, copas1983}.}
-\vspace{6mm}
+\frame{\frametitle{Model selection for predictive models}
+\begin{itemize}
+\item \underline{Remember:} $R^2$ is not suitable for model selection, because it \emph{always} increases (improves) when a new variable is included.\\[4mm] 
 
-Please note that {\bf we therefore strongly discourage the use of automated model selection procedures}, at least when the aim is {\bf explanation} (see later on slide \ref{sl:pred_vs_exp}). So please ignore large parts of chapter 5.3 in the Stahel script!! \\[2mm]
+\item Ideally, the predictive ability of a model is tested by a cross-validation (CV) approach.
+\href{https://en.wikipedia.org/wiki/Cross-validation_(statistics)}
+{\beamergotobutton{Find a description of the CV idea here.}}\\[4mm]
 
-(Or read it to see how you should {\bf not} do it.)
+\item CV can be a bit cumbersome, and sometimes would require additional coding.\\[4mm]
+
+\item Approximations to CV: So-called \alert{information-criteria} like AIC, AIC$_c$, BIC. \\[4mm]
+
+\item The idea is that the ``best'' model is the one with the smallest value of the information criterion.
+\end{itemize}
 }
 
-
-\frame{\frametitle{Your turn!}
-
-Please answer the following klicker questions
-\begin{center}
-\href{http://www.klicker.uzh.ch/bkx}{http://www.klicker.uzh.ch/bkx}
-\end{center}
-}
-
-\frame{\frametitle{More modern ways to do model selection}
-
-\underline{Remember:} $R^2$ is not suitable for model selection, because it \emph{always} increases (improves) when a new variable is included.\\[4mm] 
-
-In 2002, Burnham and Anderson suggested the use of so-called \alert{information-criteria} for model selection. \\[6mm]
+\frame{\frametitle{Information-criteria}
+Information-criteria for model selection were made popular by \citet{burnham.anderson2002}. \\[6mm]
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
 The idea is to find a \alert{balance between} 
@@ -469,8 +265,10 @@ The idea is to find a \alert{balance between}
 \end{center}
 \end{minipage}}
 
-~\\[4mm]
+~\\[8mm]
+$\rightarrow$ Reward models with better model fit.\\[2mm]
 $\rightarrow$ Penalize models with more parameters.
+
 }
 
 \frame{\frametitle{AIC}
@@ -508,7 +306,7 @@ AIC_c = -2\log(L) + 2p\cdot\frac{n}{n-p-1} \ .
 
 Burnham and Anderson {\bf recommend to use AIC$_c$ in general, but for sure when the ratio $n/p<40$.}\\[2mm]
 
-In the \alert{mercury example}, we have 156 data points and 11 parameters (including the intercetp $\beta_0$), thus $n/p = 156/11 \approx 14 <40$ $\Rightarrow$ AIC$_c$ should be used! 
+In the \alert{bodyfat example}, we have 243 data points and 13 parameters (including the intercetp $\beta_0$), thus $n/p = 143/13 \approx 19 <40$ $\Rightarrow$ AIC$_c$ should be used for model selection! 
 }
 
 \frame{\frametitle{BIC, the brother/sister of AIC}
@@ -528,9 +326,12 @@ The only difference to AIC is the complexity penalization. The BIC criterion is 
 }
 
 \frame{
-\colorbox{lightgreen}{\begin{minipage}{10cm}
+\colorbox{lightblue}{\begin{minipage}{10cm}
 Don't worry: No need to remember all these AIC and BIC formulas by heart!
 \end{minipage}}
+
+
+
 
 \vspace{8mm}
 What you should remember: \\[2mm]
@@ -538,56 +339,472 @@ What you should remember: \\[2mm]
 AIC, AIC$_c$ and BIC all have the {\bf aim to find a good quality model by penalizing model complexity}.
 }
 
-\frame[containsverbatim]{\frametitle{Example of AIC use}
-\vspace{-10mm}
-{\scriptsize (Essentially the same as BIC use.)}\\[4mm]
+\frame{\frametitle{Model selection with AIC/AICc/BIC}
 
-Remember that we first fitted the mercury example {\bf without} (\texttt{r.lm1}) and {\bf with} (\texttt{r.lm2}) the interaction $mother\cdot age$. The model improvement is also confirmed by the {\bf reduction in AIC$_c$} (which we used because $n/p<40$):\\[6mm]
+Given $m$ potential variables to be included in a model.\\
+%
+\begin{itemize}
+\item In principle it is possible to minimize the AIC/AICc/BIC over all $2^m$ possible models. Simply fit all models and take the ``best'' one (lowest AIC).\\[2mm]
+\item This is cumbersome to to ``by hand''. Useful to rely on implemented procedures in R, which search for the model with minimal AIC/AICc/BIC.\\[2mm]
+%\item Sometimes several models have a very similar, low AIC. It is then possible to do {\bf model averaging}, e.g.\ over the 3 models with lowest AIC, by weighting them according to the AIC (not done in this course).\\[6mm]
+% \end{itemize}
+% 
+% Forward vs backward selection: 
+% \begin{itemize}
+\item \alert{Backward selection:}\\
+{\bf Start with a large/full model.} In each step, {\bf remove} the variable that leads to the largest improvement (smallest AIC/AICc/BIC). Do this until no further improvement is possible.\\[2mm]
+\item \alert{Forward selection:}\\
+{\bf Start with an empty model.} In each step, {\bf add} the predictor that leads to the largest improvement (smallest AIC/AICc/BIC). Do this until no further improvement is possible.\\[2mm]
+\end{itemize}
+}
 
-<<>>=
+
+\frame[containsverbatim]{\frametitle{``Best'' predictive model for bodyfat}
+
+Given the predictive nature of the model, we search for the model with minimal AICc, for instance using the \texttt{stepAIC()} function from the \texttt{MASS} package:\\[2mm]
+
+<<echo=T>>=
+library(MASS)
 library(AICcmodavg)
-AICc(r.lm1)
-AICc(r.lm2)
+
+r.AIC <- stepAIC(r.bodyfat, direction = c("both"), trace = FALSE,AICc=TRUE)
+AICc(r.bodyfat)
+AICc(r.AIC)
 @
-~\\[6mm]
-\underline{Interpretation:} The AIC$_c$ of the model with interaction is clearly lower, thus the model with interaction is to be preferred.\\[4mm]
+
+
+$\rightarrow$ The AICc for the optimal model is $\Sexpr{format(AICc(r.AIC),1,1,1)}$, compared to the full model with an AICc of $\Sexpr{format(AICc(r.bodyfat),1,1,1)}$. This is not a very dramatic improvement, though...
+
+\scriptsize{Note: Owen will also use \texttt{direction=c("forward")} and \texttt{direction=c("backward")} in the BC videos.}
+}
+
+\frame[containsverbatim]{
+But at least the model was now reduced, and only 8 of the 12 variables retain:\\[2mm]
+
+<<results="asis",echo=F>>=
+tableRegression(r.AIC)
+@
+~\\[3mm]
+
+{\bf Note 1:} AICc minimization may lead to a model that retains variables with relatively large $p$-values (e.g., ankle).\\[2mm]
+{\bf Note 2:} We could continue here and for example include interactions, transformations of variables etc.
+%{\bf Again:} Such a procedure should \hl{not be applied for an explanatory model}. Moreover, the coefficients should not be (over-)interpreted.
+}
+
+
+\frame{\frametitle{Cautionary note about the ``best'' predictive model}  
+It is tempting to look at the coefficients and try to interpret what you see, in the sense of ''Increasing the weight by 1kg will cause a bodyfat reduction by -0.75 percentage points.''\\[6mm]
+
+However, the coefficients of such an optimized ``best'' model should {\bf not be interpreted} like that!\\[8mm]
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+$\rightarrow$ {\bf Model selection may lead to biased parameter estimates, thus do not draw (biological, medical,..) conclusions from models that were optimized for prediction, for example by AIC/AICc/BIC minimization!}
+\end{minipage}}
+{\scriptsize See, e.g., \citet{freedman1983, copas1983}.}
+\vspace{6mm}
+}
+
+
+
+
+
+\frame{\frametitle{Your aim is explanation?}  
+
+``Explanation'' means that you will want to interpret the regression coefficients, 95\% CIs and $p$-values. It is then often assumed that some sort of causality ($x\rightarrow y$) exists.\\[4mm]
+
+In such a situation, you should start with a \alert{confirmatory model}:\\ [2mm]
+\begin{itemize}
+\item {\bf Start with a clear hypothesis.}\\[1mm]
+\item {\bf Select your covariates according to \alert{a priori} knowledge.}\\[1mm]
+\item Ideally, formulate {\bf only one} or a few model(s) {\bf before you start analysing your data}.
+\end{itemize}
+~\\[2mm]
 
 }
 
-\frame[containsverbatim]{\label{sl:migration}
-We can further play around with AIC and, for instance, fit a model withouth the binary \emph{migration} variable:\\[4mm]
+\frame{
+Confirmatory models have a long tradition medicine. In fact, the main conclusions in a study are only allowed to be drawn from the main model (which needs to be specified even before data are collected):\\[5mm]
 
+\includegraphics[width=10.5cm]{graphics/claytonHills.jpg}\\
+{\scriptsize\citep[][chapters 27.1 and 27.2]{clayton.hills1993}}
+}
+
+
+\frame{\frametitle{Confirmatory vs exploratory}
+
+Any {\bf additional analyses} that you potentially do with your data have the character of {\bf exploratory models}.\\[4mm]
+
+$\rightarrow$ Two sorts of {\bf explanatory models/analyses}:\\[2mm]
+
+\begin{itemize}
+\item \alert{Confirmatory}: 
+\begin{itemize}
+\item Clear hypothesis and \emph{\bf a priori} selection of regressors for $\bm{y}$.
+\item {\bf No variable selection!}
+\item Allowed to interpret the results and draw quantitative conclusions. \\[4mm]
+\end{itemize}
+
+\item \alert{Exploratory}: 
+\begin{itemize}
+\item Build whatever model you want, but the results should only be used to generate new hypotheses, a.k.a. ``speculations''.
+\item Clearly label the results as ``exploratory''.
+\end{itemize}
+
+\end{itemize}
+}
+
+
+
+\frame{\frametitle{Interpretation of exploratory models?}
+Results from exploratory models can be used to generate new hypotheses, but it is then \alert{not allowed to draw conclusions from them.}\\[6mm]
+
+
+$\rightarrow$ In biological publications it is (unfortunately) still common practice that exploratory models, which were optimized with model selection criteria (like AIC), are used to draw conclusions as if the models were confirmatory.\\[4mm]
+
+
+$\rightarrow$ We illustrate why this is a problem on the next slides.
+}
+
+
+
+
+\frame[containsverbatim]{\frametitle{Model selection bias}
+%Let us reproduce an illustrative example, described by \citet{freedman1983}. \\[2mm] 
+
+{\bf Aim of the example:} \\[2mm]
+\colorbox{lightgray}{\begin{minipage}{10cm}
+To illustrate how model selection purely based on AIC can lead to biased parameters and overestimated effects.
+\end{minipage}}
+\vspace{4mm}
+
+Procedure:
+\begin{enumerate}
+\item Randomly generate 100 data points for 50 covariables $\bm{x}^{(1)},\ldots, \bm{x}^{(50)}$ and a response $\bm{y}$: 
+
+<<freedman,echo=T,eval=T>>=
+set.seed(123456)
+data <- data.frame(matrix(rnorm(51*100),ncol=51))
+names(data)[51] <- "Y"
+@
+\vspace{1mm}
+
+\texttt{data} is a 100$\times$ 51 matrix, where the last column is the response. The {\bf data were generated completely independently}, the covariates do not have any explanatory power for the response! 
+\end{enumerate}
+}
+
+\frame[containsverbatim]{
+\begin{enumerate}
+\setcounter{enumi}{1}
+\item Fit a linear regression model of $\bm{y}$ against all the 50 variables
+\begin{equation*}
+y_i = \beta_0 + \beta_1 x_i^{(1)} + \ldots + \beta_{50}x_i^{(50)} + \epsilon_i \ .
+\end{equation*}
 <<>>=
-r.lm3 <- lm(log10(Hg_urin) ~ log10(Hg_soil) + vegetables  + smoking + 
-             sqrt(amalgam) + age * mother + sqrt(fish) + last_fish,d.hg)
-AICc(r.lm3)
+r.lm <- lm(Y~.,data)
 @
 
-~\\[4mm]
-\underline{Interpretation:} We observe a further reduction of the AIC. \\[4mm]
+As expected, the distribution of the $p$-values is (more or less) uniform between 0 and 1, with none below 0.05: \\
+ 
+<<pvalues,fig.width=4, fig.height=4.5,out.width="5cm">>=
+par(mfrow=c(1,1))
+hist(summary(r.lm)$coef[-1,4],freq=T,main="50 variables",xlab="p-values")
+@
+ 
+\end{enumerate}
+}
 
-This ``success'' brings us to another idea:\\[2mm]
+\frame[containsverbatim]{
+\begin{enumerate}
+\setcounter{enumi}{2}
+\item Then use AICc minimization to obtain the objectively ``best'' model:
+
+ 
+<<echo=T>>=
+r.AICmin <- stepAIC(r.lm, direction = c("both"), trace = FALSE,AICc=TRUE)
+@
+
+ 
+<<pvaluesHist,fig.width=4, fig.height=4.5,out.width="5cm">>=
+hist(summary(r.AICmin)$coef[-1,4],freq=T,main="18 variables of minimal AICc model",xlab="p-values")
+@
+ 
+
+The distribution of the $p$-values is now skewed: many of them reach rather small values ($\Sexpr{sum(summary(r.AICmin)$coef[-1,4]<0.05)}$ have $p<0.05$). This happened \alert{although none of the variables has any explanatory power!}
+\end{enumerate}
+}
+
+\frame{
+So what does the above example show us?
+\begin{center}
+\href{http://www.klicker.uzh.ch/bkx}{http://www.klicker.uzh.ch/bkx}
+\end{center}
+}
+
+\frame{
+Main problem with model selection:\\[2mm]
+
 \colorbox{lightgray}{\begin{minipage}{10cm}
-{\bf Could we do model selection simply by minimizing the AIC?}\\
-Without actually ``thinking''?
+When model selection is carried out based on objective criteria, the effect sizes will to be too large and the uncertainty too small. So you end up being too sure about a too large effect. 
+\end{minipage}}
+
+~\\[4mm]
+$\rightarrow$ This is why such procedures should in general not be used when the aim is explanation.
+}
+
+\frame{\frametitle{Variable selection using $p$-values?}
+
+When you read publications, you might eventually see that people use $p$-values to do model selection. Also Stahel (Section 5.3) recommends such a procedure. However:\\[6mm]
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+$\rightarrow$ Variable selection using $p$-values is an especially bad idea.
+\end{minipage}}
+~\\
+\begin{center}
+$\rightarrow$ \alert{Please NEVER do variable selection based on $p$-values$^{(\star)}$.}\\[6mm]
+\end{center}
+
+What is the problem?\\[6mm]
+
+{\scriptsize $^{(\star)}$Even not when the aim is prediction.}
+}
+
+\frame{\frametitle{Importance is not reflected by $p$-values}
+A widely used practice to determine the ``importance'' of a term is to look at the $p$ value from the $t$ or $F$-test and check if it falls below a certain threshold (usually $p<0.05$). \\[1mm]
+
+{\bf However, there are a few problems with this approach:}\\[2mm]
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+\begin{itemize}
+\item {\bf A small $p$-value does not necessarily mean that a term is (biologically, medically) important -- and vice versa!}\\[2mm]
+\item When carrying out the tests with $H_0: \beta_j=0$ for all variables sequentially, one runs into a \alert{multiple testing problem}.\\
+{(\scriptsize Remember the ANOVA lecture of week 6, slide 28).}\\[2mm]
+\item The respective tests depend crucially on the correctness of the \alert{normality assumption}.\\[2mm]
+\item Covariates are sometimes \alert{collinear}, which leads to more uncertainty in the estimation of the respective regression parameters, and thus to larger $p$-values.\\[2mm]
+\end{itemize}
 \end{minipage}}
 }
 
-\frame{\frametitle{Model selection with AIC?}
+\frame{
+For all these reasons, we {\bf strongly disagree} with the remark in Stahel's script 5.2, second part in paragraph d.\\[4mm]
 
-Given $m$ potential variables to be included in a model.\\[2mm]
+
+\includegraphics[width=10cm]{graphics/52d_2.pdf}
+
+~\\[2mm]
+And we disagree with $p$-values based model selection suggested in Section 5.3 because\\[2mm]
 
 \begin{itemize}
-\item In principle it is possible to minimize the AIC over all $2^m$ possible models. Simply fit all models and take the ``best'' one (lowest AIC).\\[2mm]
-\item Sometimes several models have a very similar, low AIC. It is then possible to do {\bf model averaging}, e.g.\ over the 3 models with lowest AIC, by weighting them according to the AIC (not done in this course).\\[6mm]
+\item It will also lead to model selection bias \citep[see][]{freedman1983}.\\
+\item $P$-values are even less suitable for model selection than AIC/AICc/BIC for the reasons mentioned on the previous slide.
 \end{itemize}
 
-{\bf However:}
-\begin{itemize}
-\item As always when one tries to circumvent ``thinking'', this may lead to unreasonable models.\\[2mm]
-\item AIC is in some sense equivalent to $p$-values-based statistics for {\bf nested models} (i.e., when the smaller model contains a subset of the larger model).
-\end{itemize}
 }
+
+
+
+
+\frame{\frametitle{An explanatory model: Mercury example}
+Let us look at the mercury example. The {\bf research question} was: \\
+``Gibt es einen Zusammenhang zwischen Quecksilber(Hg)-Bodenwerten von Wohnh\"ausern und der Hg-Belastung im K\"orper (Urin, Haar) der Bewohner?''\\[2mm]
+\begin{itemize}
+\item \emph{Hg concentration in urine} ($Hg_{urine}$) is the {\bf response}.
+\item \emph{Hg concentration in the soil} ($Hg_{soil}$) is the {\bf predictor of interest}.\\[5mm]
+\end{itemize}
+
+\alert{In addition}, the following variables were monitored for each person, because they might influence the mercury level in a person's body:\\[2mm]
+
+\emph{smoking status; number of amalgam fillings; age; number of monthly fish meals; indicator if fish was eaten in the last 3 days; mother vs child; indicator if vegetables from garden are eaten; migration background; height; weight; BMI; sex; education level.}\\[2mm]
+
+{\bf Thus: In total additional 13 variables!}
+}
+
+
+\frame{\frametitle{How many variables can I include in my model?}
+
+{\bf Rule of thumb:}\\[1mm] 
+\colorbox{lightgray}{\begin{minipage}{10cm}
+Include no more than $n/10$ (10\% of $n$) variables into your linear regression model, where $n$ is the number of data points.
+\end{minipage}}
+
+~\\[2mm]
+In the mercury example there are 156 individuals, so a {\bf maximum of 15 variables} should be included in the model.\\[2mm]
+
+{\bf Remarks:}
+\begin{itemize}
+\item Categorical variables with $k$ levels already require $k-1$ dummy variables. For example, if `education level' has three categories, 2 parameters are used up.\\[2mm]
+\item Whenever possible, the model should {\bf not be blown up} unneccessarily. Even if there are many data points, the use of too many variables may lead to an {\bf overfitted} model.\\
+$\rightarrow$ {\scriptsize See \href{https://en.wikipedia.org/wiki/Overfitting}{https://en.wikipedia.org/wiki/Overfitting}.}
+\end{itemize}
+ 
+
+}
+
+
+
+\frame{
+In the mercury study, the following variables were included using \emph{a priori} knowledge/expectations:\\[4mm]
+
+\begin{tabular}{llll}
+Variable & Meaning & type & transformation\\
+\hline
+Hg$\_$urin & Hg conc.\ in urine (response) & continuous & $\log$\\ 
+Hg$\_$soil & Hg conc.\ in the soil  & continuous & $\log$\\
+vegetables & Eats vegetables from garden? & binary\\
+migration & Migration background & binary \\
+smoking & Smoking status & binary \\
+amalgam & No.\ of amalgam fillings & count & $\sqrt{.}$ \\
+age & Age of participant &  continuous\\ 
+fish & Number of fish meals/month & count  & $\sqrt{.}$\\
+last$\_$fish & Fish eaten in last 3 days? &   binary\\
+mother & Mother or child?  & binary\\
+mother:age & Interaction term & binary:continuous\\
+\end{tabular}
+\vspace{2mm}
+
+}
+
+
+
+\frame[containsverbatim]{\label{sl:mercury_final}
+
+Let us now fit the full model (including all covariates) in R:
+
+<<hg0,fig.width=5, fig.height=5,out.width="5cm">>=
+d.hg <- read.table("../../data_examples/Hg/Hg_urin.csv",header=T, sep=",")
+d.hg["106","amalgam_quant"] <- 5 # correct for the outlier
+d.hg <- d.hg[-11]
+names(d.hg) <- c("Hg_urin", "Hg_soil", "vegetables","migration", "smoking","amalgam", "age", "fish","last_fish","mother")
+@
+
+<<echo=F>>=
+r.lm1 <- lm(log10(Hg_urin) ~ log10(Hg_soil) + vegetables + migration + smoking + 
+             sqrt(amalgam) + age * mother + sqrt(fish) + last_fish,d.hg)
+@
+
+<<results="asis",echo=F>>=
+tableRegression(r.lm1)
+@
+
+\vspace{3mm}
+\begin{itemize}
+\item The $p$-value for mercury in soil, $\log_{10}(Hg_{soil})$, is rather high: $p=\Sexpr{format(summary(r.lm1)$coef[2,4],2,2,2)}$.\\[2mm]
+%\item We find $R^2=\Sexpr{format(summary(r.lm1)$r.squared,2,2,2)}$ and $R_a^2=\Sexpr{format(summary(r.lm1)$adj.r.squared,2,2,2)}$. Is this ``good''?\\[2mm]
+%\item Are there additional terms that might be important?\\[2mm]
+\item {\bf Question:} What is the answer to the main research question?
+\end{itemize}
+ 
+
+\begin{center}
+\href{http://www.klicker.uzh.ch/bkx}{http://www.klicker.uzh.ch/bkx}
+\end{center}
+}
+
+% \frame{
+% Remember from slides 8-11 of lecture 5 that the dependency of mercury in urine on age is different for mothers and children:\\[4mm]
+%  
+% <<hg1,fig.width=4.5, fig.height=3.5,out.width="5.5cm">>=
+% library(dplyr)
+% library(ggplot2)
+% d.hg <- mutate(d.hg,mother=factor(mother))
+% ggplot(d.hg,aes(x=age,y=log(Hg_urin),colour=mother)) + geom_point() + geom_smooth(method="lm") + theme_bw()
+% @
+%  
+% ~\\
+% $\rightarrow$ We need to include an interaction term \emph{mother}$\cdot$\emph{age}.
+% }
+% 
+% \frame[containsverbatim]{\label{sl:mercury_final}
+% Fitting the model again with the additional term:
+% <<echo=F>>=
+% r.lm2 <- lm(log10(Hg_urin) ~ log10(Hg_soil) + vegetables + migration + smoking + 
+%              sqrt(amalgam) + age * mother + sqrt(fish) + last_fish,d.hg)
+% @
+% <<results="asis",echo=F>>=
+% library(biostatUZH)
+% tableRegression(r.lm2)
+% @
+% 
+% \vspace{3mm}
+% \begin{itemize}
+% \item There is evidence that the interaction is relevant ($p<0.001$).\\[2mm]
+% \item $R^2$ has now clearly increased to $\Sexpr{format(summary(r.lm2)$r.squared,2,2,2)}$ (and $R_a^2=\Sexpr{format(summary(r.lm2)$adj.r.squared,2,2,2)}$).\\[2mm]
+% \end{itemize}
+% 
+% $\rightarrow$ The interaction term apparently improved the model.
+% }
+
+\frame[containsverbatim]{
+A model checking step (always needed, but we did it already in lecture 5): \\[4mm]
+ 
+<<modelChecksHg,fig.width=7, fig.height=4,out.width="8cm">>=
+library(ggfortify)
+autoplot(r.lm1,which=c(1,2),smooth.col=NA)
+@
+ 
+\vspace{6mm}
+
+This looks ok, no need to improve the model from this point of view.
+}
+
+\frame{
+Even if the model checking step revealed no violations of the assumptions (the model seems to be fine), we sometimes want to know:\\[2mm]
+
+\begin{itemize}
+\item Which of the terms are {\bf important/relevant}?\\[2mm]
+\item Are there {\bf additional terms} that might be important?\\[2mm]
+\item Can we find {\bf additional patterns} in the data?\\[3mm]
+\end{itemize}
+\vspace{3mm}
+
+$\rightarrow$ We can go on from here and analyse the model in an \alert{exploratory} manner. Such analyses can be useful to generate new hypotheses.
+}
+
+
+
+\frame[containsverbatim]{
+It would be tempting to check if there would be models with lower AICc.\\[2mm]
+
+<<echo=F>>=
+r.lm0 <- lm(log10(Hg_urin) ~ log10(Hg_soil) + vegetables + migration + smoking + 
+             sqrt(amalgam) + age + mother + sqrt(fish) + last_fish,d.hg)
+@
+
+
+For example, we can fit models where certain terms are omitted. Let's start with a model where the interaction $mother\cdot age$ is removed (denoted as \texttt{r.lm0}). The AICc then increases clearly, confirming that the term is relevant:\\[2mm]
+
+<<echo=T>>=
+AICc(r.lm0)
+AICc(r.lm1)
+@
+}
+
+\frame[containsverbatim]{
+On the other hand, the model where we omit the binary \emph{migration} variable would give a reduced AICc:\\[4mm]
+
+<<echo=T>>=
+r.lm0 <- lm(log10(Hg_urin) ~ log10(Hg_soil) + vegetables  + smoking + 
+             sqrt(amalgam) + age * mother + sqrt(fish) + last_fish,d.hg)
+AICc(r.lm0)
+@
+
+{\bf But:} Given that the mercury model is an {\bf explanatory, confirmatory model}, we should not remove a variable (e.g., migration) simply because it reduces AICc.\\[2mm]
+
+$\rightarrow$ Therefore, given the a priori selection of variables and the model validation results, the model from slide \ref{sl:mercury_final} was used in the final publication \citep{imo.etal2017}.\\[2mm]
+
+$\rightarrow$ Any further analyses with other models would need to be labelled as \alert{exploratory}.
+}
+
+
+% \frame{\frametitle{Your turn!}
+% 
+% Please answer the following klicker questions
+% \begin{center}
+% \href{http://www.klicker.uzh.ch/bkx}{http://www.klicker.uzh.ch/bkx}
+% \end{center}
+% }
+
+
+
 
 \frame{\frametitle{Another complication: Collinearity of covariates}
 {\small (See Stahel chapter 5.4)}\\[4mm]
@@ -609,18 +826,20 @@ the set of covariates is said to be \alert{collinear}. \\[4mm]
 
 
 \frame{\frametitle{}
-In statistics, the expression ``collinearity'' is also used when such a collinearity relationship is \emph{approximately} true. For example, when two variables $\bm{x^{(1)}}$ and $\bm{x^{(2)}}$ have a high correlation.\\[4mm]
+In statistics, the expression ``collinearity'' is also used when such a collinearity relationship is \emph{approximately} true. For example, when two variables $\bm{x^{(1)}}$ and $\bm{x^{(2)}}$ have a high correlation.\\[6mm]
 
 {\bf What is the problem with collinearity?}
 
-I like to do simple (and extreme) examples to understand the point. An extreme form of collinearity is when two covariates are identical $\bm{x^{(1)}}=\bm{x^{(2)}}$. In the regression model
+A simple (and extreme) example to understand the point: Assume two covariates are identical $\bm{x^{(1)}}=\bm{x^{(2)}}$. In the regression model
 \begin{equation*}
-y_i = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + e_i \ ,
+y_i = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \epsilon_i \ ,
 \end{equation*}
 
-the slope coefficients $\beta_1$ and $\beta_2$ \alert{cannot be uniquely determined} (there are many equally ``optimal'' solutions to the equation)! \\[2mm]
+the slope coefficients $\beta_1$ and $\beta_2$ \alert{cannot be uniquely determined} (there are many equally ``optimal'' solutions to the equation)! \\[4mm]
 
-When the variables are collinear, this problem is less severe, but the $\beta$ coefficients can be estimated \alert{less precisely} $\rightarrow$ standard errors too high $\rightarrow$ $p$-values too large.
+When the variables are collinear, this problem is less severe, but the $\beta$ coefficients can be estimated \alert{less precisely} \\
+$\rightarrow$ standard errors too high. \\
+$\rightarrow$ $p$-values too large.
 }
 
 \frame{\frametitle{Detecting collinearity}
@@ -642,92 +861,65 @@ VIF_j = \frac{1}{1-R_j^2} \qquad
 \frame{\frametitle{What do do against collinearity?}
 \begin{itemize}
 \item \alert{Avoid} it, e.g. in experiments.\\[2mm]
-\item \alert{Remove the variable} with an inacceptably high $R^2_j$ or $VIF_j$. The tolerance of VIFs are different in the literature and range from 4 to 10 as a maximum tolerable VIF.\\[2mm]
+\item Consider to \alert{not include a variable} with an inacceptably high $R^2_j$ or $VIF_j$. The tolerance of VIFs are different in the literature and range from 4 to 10 as a maximum tolerable VIF.\\[2mm]
 \item Be \alert{aware} of it and interpret your results with the respective care.\\[2mm]
-\item See also Stahel 5.4(i) for a ``recipe''.
-\end{itemize}}
-
-
-\frame{\frametitle{Predictive and explanatory models}\label{sl:pred_vs_exp}
-
-Before we continue to discuss model selection, let us introduce an important discrimination between models that aim at explanation and those that aim at prediction:\\[2mm]
-
-\begin{itemize}
-\item \alert{\bf Explanatory models}: These are models that aim at understanding the (causal) relationship between covariates and the response. \\
-\underline{Example:} The mercury study aims to understand if Hg-concentrations in the soil (covariable) influence the Hg-concentrations in humans (response).\\[2mm]
-
-\item \alert{\bf Predictive models}: These are models that aim to predict the outcome of future subjects.\\
-\underline{Example:} In the bodyfat example the aim is to predict people's bodyfat from factors that are easy to measure (age, BMI, weight,..).
+\item See also Stahel 5.4(i) for a ``recipe''.\\[6mm]
 \end{itemize}
 
-~\\
-\colorbox{lightgray}{\begin{minipage}{10cm}
-{\bf Please note:} The model selection strategy depends on this distinction.
-\end{minipage}}
-}
-
-\frame{\frametitle{Prediction vs explanation}
-\colorbox{lightgray}{\begin{minipage}{10cm}
-When the aim is \emph{prediction}, the best model is the one that best predicts the fate of a future subject. This is a well defined task and automatic strategies to find the model which is best in this sense are potentially useful. \\[4mm]
-
-However, when used for \emph{explanation} the best model will depend on the scientific question being asked, {\bf and automatic selection strategies have no place}. 
-\end{minipage}}\\[5mm]
-
-{\scriptsize\citep[][chapters 27.1 and 27.2]{clayton.hills1993}}
-
+{\bf Important note:} We would not care much about collinearity in a predictive model. If collinearity was a problem, AIC/AICc/BIC would probably anyway select a subset where some collinearity is eliminated (because model complexity is balanced against model fit).
 }
 
 
-\frame{\frametitle{Your aim is prediction?}
- 
-Ideally, the predictive ability of a model is tested by a cross-validation (CV) approach, but
-AIC, AIC$_c$, BIC are useful approximations to CV.\\[4mm]  
- 
-Automatic model selection procedures using criteria like AIC, AIC$_c$, BIC may threfore be useful.\\[4mm]
 
 
-\vspace{4mm}
-\href{https://en.wikipedia.org/wiki/Cross-validation_(statistics)}
-{\beamergotobutton{Find a description of the CV idea here.}}
-}
-
-
-\frame{\frametitle{Your aim is explanation?}  
-
-{\bf Then please select your covariates according to \alert{a priori} knowledge.}\\[6mm]
-
-\includegraphics[width=10.5cm]{graphics/claytonHills.jpg}\\
-{\scriptsize\citep[][chapters 27.1 and 27.2]{clayton.hills1993}}
-}
-
-\frame{\frametitle{Correct way of model selection for explanatory models}
-
-Automatic model selection strategies are thus {\bf not recommended for explanatory models} (example: mercury study). We therefore recommend the following steps:\\
+\frame{\frametitle{Recommended procedure for explanatory models I}
+\vspace{-3mm}
+Before you start:\\
 
 \begin{itemize}
-\item {\bf Think about a suitable model \alert{before} you start}. This includes the model family (e.g., linear model), but also potential variables that are relevant using \emph{a priori} knowledge.\\[2mm]
-\item After fitting the model, \alert{check if modelling assumptions are met}.\\[2mm]
-\item If modelling assumptions are not met, {\bf try to find out why and adapt the model}.  
-  \begin{itemize}
-  \item Is a transformation of variables needed? 
-  \item Wrong model family (e.g., linear regression is not suitable)?
-  \item Are terms missing in the model?
-  \item Outliers?
+\item {\bf Think about a suitable model}. This includes the model family (e.g., linear model), but also potential variables that are relevant using \emph{a priori} knowledge.\\[2mm]
+\item Declare a strategy what you do if \emph{e.g.} modelling assumptions are not met or in the presence of collinearity.
+ \begin{itemize}
+  \item What kind of variable transformations would you try, in which order, and why?
+  \item What model simplifications will be considered it it is not possible to fit the intended model?
+  \item How will you deal with outliers?
+  \item How will you treat missing values in the data?
+  \item How will you treat collinear covariates?
   \item ... 
   \end{itemize}
-\item Interpret the model coefficients (effect sizes) and the $p$-values properly (see next week).
+\end{itemize}  
+ 
+It is advisable to write your strategy down as a ``protocol'' before doing any analyses. 
+
+}
+
+\frame{\frametitle{Recommended procedure for explanatory models II}
+
+Analyze the data following your ``protocol'':\\
+
+\begin{itemize}
+\item Fit the model and check if modelling assumptions are met.\\[2mm]
+\item If modelling assumptions are not met, {\bf adapt the model} as outlined in your protocol.\\[2mm]  
+\item Interpret the model coefficients (effect sizes) and the $p$-values properly (see next week).\\[8mm]
+\end{itemize}
+
+
+After the analysis that was specified in the ``protocol'':\\
+
+\begin{itemize}
+\item Any additional analyses, which you did not specify in advance, are purely exploratory.
 \end{itemize}
 
 }
 
-\frame{\frametitle{Occam's Razor principle}
+\frame{\frametitle{One more thing: Occam's Razor principle}
 
 The principle essentially says that an {\bf explanatory model} should not be made more complicated than necessary.\\[4mm]
 
 This is also known as the \alert{principle of {\bf parsimony}} (Prinzip der Sparsamkeit):\\[4mm]
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
-Systematic effects should be included in a model {\bf only} if there is convincing evidence for the need of them.
+Systematic effects should be included in a model {\bf only} if there is knowledge or convincing evidence for the need of them.
 \end{minipage}}
 
 \vspace{4mm}
@@ -735,74 +927,20 @@ Systematic effects should be included in a model {\bf only} if there is convinci
 {\beamergotobutton{See Wikipedia for ``Ockham's Rasiermesser''}}
 }
 
-\frame[containsverbatim]{\frametitle{Final comments on the mercury example}
-Given that the mercury model is an {\bf explanatory model}, we should not remove a variable (e.g., migration) simply because it reduces AIC (see slide \ref{sl:migration}).\\[2mm]
-
-$\rightarrow$ Therefore, given the a priori selection of variables and the model validation results, the model from slide \ref{sl:mercury_final} was used in the final publication \citep{imo.etal2017}.
-}
 
 
-
-
-\frame[containsverbatim]{\frametitle{A predictive model: The bodyfat example}
-The bodyfat study is a typical example for a {\bf predictive model}.\\[2mm] 
-
-There are 12 potential predictors (plus the response). Let's fit the full model:\\[2mm]
-
-<<read.bodyfat,echo=F,eval=T>>=
-# library(reporttools)
-# library(biostatUZH)
-d.bodyfat <- read.table("../../data_examples/bodyFat/bodyfat.clean.txt",header=T)
-d.bodyfat <- d.bodyfat[,c("bodyfat","age","gewicht","hoehe","bmi","neck","chest","abdomen","hip","thigh","knee","ankle","biceps")]
-@
-
-
-<<>>=
-r.bodyfat <- lm(bodyfat ~ ., d.bodyfat)
-@
-
-<<results=tex,echo=F>>=
-tableRegression(r.bodyfat)
-@
-}
-
-\frame[containsverbatim]{
-Given the predictive nature of the model, we do some automatic model selection for this dataset, for instance using the \texttt{stepAIC()} function from the \texttt{MASS} package:\\[6mm]
-
-<<>>=
-library(MASS)
-# model with optimal AIC:
-r.AIC <- stepAIC(r.bodyfat, direction = c("backward"), trace = FALSE,AICc=TRUE)
-AICc(r.bodyfat)
-AICc(r.AIC)
-@
-~\\[6mm]
-
-$\rightarrow$ The AICc for the optimal model is $\Sexpr{format(AICc(r.AIC),1,1,1)}$, compared to the full model with an AICc of $\Sexpr{format(AICc(r.bodyfat),1,1,1)}$. This is not a very dramatic improvement, though...
-}
-
-\frame[containsverbatim]{
-But at least the model was now reduced, and only 8 of the 12 variables retain:\\[2mm]
-
-<<results=tex,echo=F>>=
-tableRegression(r.AIC)
-@
-~\\[3mm]
-
-{\bf Note:}  AICc minimization may lead to a model that retains variables with relatively large $p$-values (e.g., ankle).\\[2mm]
-{\bf Again:} Such a procedure should \hl{not be applied for an explanatory model}. Moreover, the coefficients should not be (over-)interpreted.
-}
 
 
 
 
 \frame{\frametitle{Summary}
 \begin{itemize}
-\item Model selection is difficult and controversial.\\[2mm]
+\item Model/variable selection is difficult and controversial.\\[2mm]
 \item Different approaches for predictive or explanatory models.\\[2mm]
+\item AIC, AIC$_c$, BIC: balance between model fit and model complexity.\\[2mm]
 \item Automatic model selection procedures are inappropriate for explanatory models.\\[2mm]
-\item $P$-values should not be used for model selection.\\[2mm]
-\item AIC, AIC$_c$, BIC: balance between model fit and model complexity.
+\item Model ``optimization'' leads to biased parameter estimates and $p$-values.\\[2mm]
+\item $P$-values should not be used for model selection, even not for predictive models.\\[2mm]
 \end{itemize}
 }
 
@@ -818,6 +956,17 @@ tableRegression(r.AIC)
 % And {\bf optionally}:\\[2mm]
 % \begin{itemize}
 % \item Paper by \citet{freedman1983}: ``A Note on Screening Regression Equations''
+% \end{itemize}
+% }
+
+% 
+% \frame{
+% This needs shifting somewhere:\\
+% 
+% {\bf However:}
+% \begin{itemize}
+% \item As always when one tries to circumvent ``thinking'', this may lead to unreasonable models.\\[2mm]
+% \item AIC is in some sense equivalent to $p$-values-based statistics for {\bf nested models} (i.e., when the smaller model contains a subset of the larger model).
 % \end{itemize}
 % }
 
