@@ -364,7 +364,7 @@ Given $m$ potential variables to be included in a model.\\
 
 \frame[containsverbatim]{\frametitle{``Best'' predictive model for bodyfat}
 
-Given the predictive nature of the model, we search for the model with minimal AICc, for instance using the \texttt{stepAIC()} function from the \texttt{MASS} package:\\[2mm]
+Given the predictive nature of the bodyfat model, we search for the model with minimal AICc, for instance using the \texttt{stepAIC()} function from the \texttt{MASS} package:\\[2mm]
 
 <<echo=T>>=
 library(MASS)
@@ -376,13 +376,13 @@ AICc(r.AIC)
 @
 
 
-$\rightarrow$ The AICc for the optimal model is $\Sexpr{format(AICc(r.AIC),1,1,1)}$, compared to the full model with an AICc of $\Sexpr{format(AICc(r.bodyfat),1,1,1)}$. This is not a very dramatic improvement, though...
+$\rightarrow$ The AICc for the optimal model is $\Sexpr{format(AICc(r.AIC),1,1,1)}$, compared to the full model with an AICc of $\Sexpr{format(AICc(r.bodyfat),1,1,1)}$. %This is not a very dramatic improvement, though...
 
 \scriptsize{Note: Owen will also use \texttt{direction=c("forward")} and \texttt{direction=c("backward")} in the BC videos.}
 }
 
 \frame[containsverbatim]{
-But at least the model was now reduced, and only 8 of the 12 variables retain:\\[2mm]
+The model was reduced, and only 8 of the 12 variables retain:\\[2mm]
 
 <<results="asis",echo=F>>=
 tableRegression(r.AIC)
@@ -415,7 +415,7 @@ $\rightarrow$ {\bf Model selection may lead to biased parameter estimates, thus 
 
 ``Explanation'' means that you will want to interpret the regression coefficients, 95\% CIs and $p$-values. It is then often assumed that some sort of causality ($x\rightarrow y$) exists.\\[4mm]
 
-In such a situation, you should start with a \alert{confirmatory model}:\\ [2mm]
+In such a situation, you should formulate a \alert{confirmatory model}:\\ [2mm]
 \begin{itemize}
 \item {\bf Start with a clear hypothesis.}\\[1mm]
 \item {\bf Select your covariates according to \alert{a priori} knowledge.}\\[1mm]
@@ -459,7 +459,7 @@ $\rightarrow$ Two sorts of {\bf explanatory models/analyses}:\\[2mm]
 
 
 \frame{\frametitle{Interpretation of exploratory models?}
-Results from exploratory models can be used to generate new hypotheses, but it is then \alert{not allowed to draw conclusions from them.}\\[6mm]
+Results from exploratory models can be used to generate new hypotheses, but it is then \alert{not allowed to draw causal conclusions from them}, or to over-interpret effect-sizes.\\[6mm]
 
 
 $\rightarrow$ In biological publications it is (unfortunately) still common practice that exploratory models, which were optimized with model selection criteria (like AIC), are used to draw conclusions as if the models were confirmatory.\\[4mm]
@@ -634,7 +634,7 @@ In the mercury example there are 156 individuals, so a {\bf maximum of 15 variab
 
 {\bf Remarks:}
 \begin{itemize}
-\item Categorical variables with $k$ levels already require $k-1$ dummy variables. For example, if `education level' has three categories, 2 parameters are used up.\\[2mm]
+\item Categorical variables with $k$ levels already require $k-1$ dummy variables. For example, if `education level' has $k=3$ categories, $k-1=2$ parameters are used up.\\[2mm]
 \item Whenever possible, the model should {\bf not be blown up} unneccessarily. Even if there are many data points, the use of too many variables may lead to an {\bf overfitted} model.\\
 $\rightarrow$ {\scriptsize See \href{https://en.wikipedia.org/wiki/Overfitting}{https://en.wikipedia.org/wiki/Overfitting}.}
 \end{itemize}
@@ -823,7 +823,7 @@ the set of covariates is said to be \alert{collinear}. \\[4mm]
 
 \begin{itemize}
 \item Three vectors in a 2D-plane are always collinear.\\[2mm]
-\item A covariate can be written a a linear combination of two others: $\bm{x^{(j)}} = c_1\cdot \bm{x^{(1)}} + c_2 \cdot \bm{x^{(2)}} $, then the three variables are collinear.
+\item A covariate can be written as a linear combination of two others: $\bm{x^{(j)}} = c_1\cdot \bm{x^{(1)}} + c_2 \cdot \bm{x^{(2)}} $, then the three variables are collinear.
 \end{itemize}
 }
 
