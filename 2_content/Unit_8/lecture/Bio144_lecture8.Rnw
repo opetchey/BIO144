@@ -126,7 +126,7 @@ Datenanalyse in der Biologie}
 
 \frame{\frametitle{Course material covered today}
 
-The lecture material of today is based on the following literature:\\[4mm]
+The lecture material of today is partially based on the following literature:\\[4mm]
 
 \begin{itemize}
 \item ``Lineare regression'' chapters 5.1-5.4
@@ -158,6 +158,18 @@ The following distinction is important:\\
 % Interest centers around one predictor (e.g., a new medication), but the effect of other potential influence factors must be taken into account.
 }
 
+
+
+\frame{
+$\rightarrow$ Even among statisticians there is no real consensus about how, if, or when to select a model:\\[2mm]
+
+\includegraphics[width=10cm]{graphics/brewer_title.jpg}\\
+\includegraphics[width=10cm]{graphics/brewer.jpg}\\[2mm]
+
+Note: The first sentence of a paper in \emph{Methods in Ecology and Evolution} from 2016 is: ``Model selection is difficult.''
+}
+
+
 \frame{\frametitle{Why is finding a model so hard?}
 Remember from week 1:\\[2mm]
 
@@ -173,15 +185,6 @@ $\rightarrow$ There is often not a ``right'' or a ``wrong'' model -- but there a
 $\rightarrow$ Finding a model with good properties is sometimes an art...\\[2mm]
 
 
-}
-
-\frame{
-$\rightarrow$ Even among statisticians there is no real consensus about how, if, or when to select a model:\\[2mm]
-
-\includegraphics[width=10cm]{graphics/brewer_title.jpg}\\
-\includegraphics[width=10cm]{graphics/brewer.jpg}\\[2mm]
-
-Note: The first sentence of a paper in \emph{Methods in Ecology and Evolution} from 2016 is: ``Model selection is difficult.''
 }
 
 
@@ -206,9 +209,9 @@ $\rightarrow$ The model selection strategy depends on this distinction.
 
 \frame{\frametitle{Prediction vs explanation}
 \colorbox{lightgray}{\begin{minipage}{10cm}
-When the aim is \emph{prediction}, the best model is the one that best predicts the fate of a future subject. This is a well defined task and automatic strategies to find the model which is best in this sense are potentially useful. \\[4mm]
+When the aim is \emph{\bf prediction}, the best model is the one that best predicts the fate of a future subject. This is a well defined task and ``objective'' variable selection strategies to find the model which is best in this sense are potentially useful. \\[4mm]
 
-However, when used for \emph{explanation} the best model will depend on the scientific question being asked, {\bf and automatic selection strategies have no place}. 
+However, when used for \emph{\bf explanation} the best model will depend on the scientific question being asked, {\bf and automatic variable selection strategies have no place}. 
 \end{minipage}}\\[5mm]
 
 {\scriptsize\citep[][chapters 27.1 and 27.2]{clayton.hills1993}}
@@ -250,7 +253,7 @@ tableRegression(r.bodyfat)
 
 \item Approximations to CV: So-called \alert{information-criteria} like AIC, AIC$_c$, BIC. \\[4mm]
 
-\item The idea is that the ``best'' model is the one with the smallest value of the information criterion.
+\item The idea is that the ``best'' model is the one with the smallest value of the information criterion (where the criterion is selected in advance).
 \end{itemize}
 }
 
