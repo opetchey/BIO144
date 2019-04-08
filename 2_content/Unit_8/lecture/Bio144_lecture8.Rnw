@@ -102,7 +102,7 @@ opts_chunk$set(message = FALSE)
 \title[]{ \centering \Huge Kurs Bio144: \\
 Datenanalyse in der Biologie}
 \author[Stefanie Muff, Owen L.\ Petchey]{\centering Stefanie Muff  \& Owen L.\ Petchey }
-\date[]{Lecture 8: Model selection \\ 8. April 2019}
+\date[]{Lecture 8: Model/variable selection \\ 8. April 2019}
 
 
 \maketitle
@@ -502,7 +502,7 @@ names(data)[51] <- "Y"
 \begin{equation*}
 y_i = \beta_0 + \beta_1 x_i^{(1)} + \ldots + \beta_{50}x_i^{(50)} + \epsilon_i \ .
 \end{equation*}
-<<>>=
+<<echo=T>>=
 r.lm <- lm(Y~.,data)
 @
 
@@ -931,21 +931,36 @@ Systematic effects should be included in a model {\bf only} if there is knowledg
 }
 
 
-
-
-
-
-
 \frame{\frametitle{Summary}
 \begin{itemize}
 \item Model/variable selection is difficult and controversial.\\[2mm]
 \item Different approaches for predictive or explanatory models.\\[2mm]
+\item Discriminate explanatory models into confirmatory and exploratory.\\[2mm]
 \item AIC, AIC$_c$, BIC: balance between model fit and model complexity.\\[2mm]
-\item Automatic model selection procedures are inappropriate for explanatory models.\\[2mm]
-\item Model ``optimization'' leads to biased parameter estimates and $p$-values.\\[2mm]
+\item Automatic model selection leads to biased parameter estimates and $p$-values.\\[2mm]
+\item Threfore, automatic model selection procedures are inappropriate for explanatory models.\\[2mm]
 \item $P$-values should not be used for model selection, even not for predictive models.\\[2mm]
 \end{itemize}
 }
+
+
+\frame{\frametitle{Feedback about today's lecture}
+
+Please give us your opinion about the lecture regarding
+\begin{itemize}
+\item unclearest (``muddiest'') point
+\item the take-home message of today.
+\end{itemize}
+
+via this link: \\[2mm]
+
+\centering{\href{http://www.klicker.uzh.ch/bkx}{http://www.klicker.uzh.ch/bkx}}
+
+~\\[2mm]
+\centering{Thank you!!}
+}
+
+
 
 % \frame{\frametitle{Reading for the self-study week}
 % You can find all reading tasks in the first ``Self study week'' on OpenEdX. The following pdfs are provided there:\\[2mm]
