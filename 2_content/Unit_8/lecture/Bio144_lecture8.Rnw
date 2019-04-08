@@ -943,6 +943,17 @@ Systematic effects should be included in a model {\bf only} if there is knowledg
 \end{itemize}
 }
 
+\frame{\frametitle{Self-study week 9}
+
+Next week is no lecture, so you can
+\begin{itemize}
+\item Consolidate, review, reinforce, expand.
+\item Read the assigned literature to prepare for week 10. \\[4mm]
+\end{itemize}
+
+$\rightarrow$ Please check on openedx.
+}
+
 
 \frame{\frametitle{Feedback about today's lecture}
 
