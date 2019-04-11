@@ -18,7 +18,6 @@
 \usepackage{amsmath,natbib}
 \usepackage{mathbbol}
 \usepackage{babel}
-\usepackage{SweaveSlides}
 \usepackage{multicol}
 \usepackage{xcolor}
 
@@ -82,8 +81,21 @@
 
 
 \begin{document}
-\SweaveOpts{width=6,height=4}
 \fboxsep5pt
+<<setup, include=FALSE, cache=FALSE, results='hide'>>=
+library(knitr)
+## set global chunk options
+opts_chunk$set(fig.path='figure/', 
+cache.path='cache/', fig.align='center', 
+fig.show='hold', par=TRUE, fig.align='center', cache=FALSE, 
+message=FALSE, 
+warning=FALSE,
+echo=FALSE, out.width="0.4\\linewidth", fig.width=6, fig.height=4.5, size="scriptsize", width=40)
+opts_chunk$set(purl = TRUE)
+knit_hooks$set(purl = hook_purl)
+options(size="scriptsize")
+opts_chunk$set(message = FALSE)
+@
 
 \frame{
 \title[]{ \centering \Huge Kurs Bio144: \\
@@ -160,7 +172,7 @@ Such tests are useful whenever a {\bf decision} needs to be made (e.g., in clini
 
 In regression modeling, the $p$-value is often used as an indicator of covariate importance. Remember the mercury example:
 
-<<echo=F,width=4.5,height=4>>=
+<<echo=F>>=
 d.hg <- read.table("../../data_examples/Hg/Hg_urin.csv",header=T, sep=",")
 d.hg["106","amalgam_quant"] <- 5 # correct for the outlier
 d.hg <- d.hg[-11]
@@ -170,7 +182,7 @@ r.lm.hg <- lm(log10(Hg_urin) ~ log10(Hg_soil) + vegetables + migration + smoking
              sqrt(amalgam) + age * mother + sqrt(fish) + last_fish,d.hg)
 @
 
-<<results=tex,echo=F>>=
+<<results="asis",echo=F>>=
 library(biostatUZH)
 tableRegression(r.lm.hg)
 @
@@ -238,8 +250,7 @@ The {\bf formal definition of $p$-value} is the probability to observe a data su
 
 
  
-\setkeys{Gin}{width=1\textwidth}
-<<pValFig,fig=T,width=8,height=4,echo=F>>=
+<<pValFig,fig.width=9, fig.height=4.5,out.width="9cm">>=
 par(mfrow=c(1,2))
 
 zz1 <- qnorm(0.025)
@@ -392,7 +403,7 @@ But: The level of significance must also depend on the context!
 }
 
 \frame{\frametitle{}
-The most recent suggestion by 72 authors in the field:\\[4mm]
+A suggestion from 2017 by 72 authors in the field:\\[4mm]
 
 \includegraphics[width=10cm]{pictures/benjamin.png}\\
 {\tiny (Benjamin et al., 2017, Nature Human Behaviour)}\\[6mm]
@@ -405,10 +416,26 @@ Their suggestion: replace $p<0.05$ by $p<0.005$. More precisely:\\[2mm]
 }
 
 
+\frame{\frametitle{}
+The most recent suggestion, signed by $>800$ researchers:
+
+\begin{center}
+\includegraphics[width=8cm]{pictures/retire_significance.png} 
+\end{center}
+%{\tiny (Amrhein et al., 2019, Nature)}
+
+Their suggestion: Do not use the term ``statistical significance'' at all.\\[2mm]
+% \begin{itemize}
+% \item Use $p<0.005$ for {\bf statistical significance.}
+% \item Use $0.005 < p < 0.05$ as {\bf suggestive evidence}.
+% \end{itemize}
+}
+
+
 
 \frame[containsverbatim]{
 In the Hg example:
-<<results=tex,echo=F>>=
+<<results="asis",echo=F>>=
 library(biostatUZH)
 tableRegression(r.lm.hg)
 @
@@ -548,7 +575,7 @@ To understand the problem of ideas 1 and 2, let us fit three models for $\log(Hg
 \end{itemize}
 These two variables are correlated (people who consume a lot of fish are more likely to have it consumed within the last 3 days).\\[-10mm]
 
-<<echo=F,width=4.5,height=4>>=
+<<echo=F>>=
 r.lm_fish <- lm(log10(Hg_urin) ~ sqrt(fish),d.hg)
 r.lm_amalgam <- lm(log10(Hg_urin) ~ last_fish,d.hg)
 r.lm_fish_amalgam <- lm(log10(Hg_urin) ~ last_fish+ sqrt(fish),d.hg)
