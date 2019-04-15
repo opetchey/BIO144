@@ -109,6 +109,24 @@ Datenanalyse in der Biologie}%\\[.3cm]
 }
 
 
+\frame[containsverbatim]{\frametitle{Recap of previous lecture}
+\begin{itemize}
+\item Model selection is difficult.\\[2mm]
+\item {\bf Predictive} vs {\bf explanatory} models.\\[2mm]
+\item Information criteria for predictive models: AIC, AIC$_c$ and BIC \\
+$\qquad \qquad\rightarrow$ {\bf model fit vs model complexity}\\[2mm]
+
+\item Automatic model selection is inappropriate for explanatory models!\\[2mm]
+\item Types of explanatory models
+\begin{itemize}
+\item confirmatory
+\item exploratory
+\end{itemize}
+\item Strategies to fit explanatory models.
+\end{itemize}
+}
+
+
 \frame{\frametitle{Overview}
 \begin{itemize}
 \item $P$-values: Interpretation and (mis-)use\\[2mm]
@@ -120,32 +138,15 @@ Datenanalyse in der Biologie}%\\[.3cm]
 %\item Todo: Ev. introduce the idea of Bayes factors!
 %\item Todo: Give p-hacking app in BC material (or for one of the study weeks)
 \end{itemize}
-
  
 }
 
 
 \frame{\frametitle{Course material covered today}
 
-The lecture material of today is based on the following literature:\\[4mm]
-\begin{itemize}
-\item Literature and articles that you will have to read in the second self-study week (second week of May).
-\end{itemize}
-
+The lecture material of today is based on the literature that you studied during the self-study week (before Easter).
 
 }
-
-\frame[containsverbatim]{\frametitle{Recap of previous lecture}
-\begin{itemize}
-\item Model selection is difficult.\\[2mm]
-\item Information criteria: AIC, AIC$_c$ and BIC \\
-$\qquad \qquad\rightarrow$ {\bf model fit vs model complexity}\\[2mm]
-\item {\bf Predictive} vs {\bf explanatory} models.\\[2mm]
-\item Automatic model selection is inappropriate for explanatory models!\\[2mm]
-\item Caveats of $p$-values: biological relevance vs statistical significance
-\end{itemize}
-}
-
 
 
 
@@ -164,7 +165,7 @@ $P$-values are often used for \emph{statistical testing}, e.g.\ by checking if $
 \item Test if a regression coefficient $\beta_x\neq 0$ in a regression model.\\[6mm]
 \end{itemize}
 
-Such tests are useful whenever a {\bf decision} needs to be made (e.g., in clinical trials, intervention actions in ecology etc.).
+Such tests might be useful whenever a {\bf decision} needs to be made (e.g., in clinical trials, intervention actions in ecology etc.).
 }
 
 
@@ -331,11 +332,12 @@ A: Because that's what they were taught in college or grad school.
 In regression models:\\[2mm]
 \begin{itemize}
 \item A low $p$-value does not automatically imply that a variable is ``important''.
-\item ``Is there an effect?'' v.s. ''How much of an effect is there?''.\\[6mm]
+\item ``Is there an effect?'' v.s. ''How much of an effect is there?''.\\[3mm]
 \end{itemize}
 \begin{center}
- \includegraphics[width=7cm]{pictures/pValueEffectSize.jpg}
+ \includegraphics[width=6.8cm]{pictures/pValueEffectSize.jpg}
  \end{center}
+ \vspace{-5mm}
  {(\scriptsize from Goodman, 2008)}
 }
 
@@ -482,9 +484,9 @@ Ask: {\bf Which range of true effects is statistically consistent with the obser
 
 {\bf Example}\\[2mm] 
 
-Body fat example, slide 39 of lecture 2. \\[3mm]
+Body fat example, slide 40 of lecture 3. \\[3mm]
 
-The effect estimate for the effect of BMI on body fat is given as  $\hat\beta_{BMI} = 1.82$, 95\% CI from 1.61 to 2.03. \\[3mm]
+The estimate for the slope of BMI in the regression for body fat is given as  $\hat\beta_{BMI} = 1.82$, 95\% CI from 1.61 to 2.03. \\[3mm]
 
 {\bf Interpretation:} for an increase in the bmi by one index point, roughly 1.82\% percentage points more bodyfat are expected, and all true values for $\beta_{BMI}$ between 1.61 and 2.03 are {\bf compatible with the observed data}. \\[2mm]
 
@@ -547,7 +549,7 @@ Further, it is required that
 
 
 \frame{
-	\frametitle{Question: How would you define/calculate relative importance?}
+	\frametitle{How would you define/calculate relative importance?}
 
 	\begin{itemize}
 		\item {\bf Idea 1:} Fit simple models including only one covariate at the time, \emph{i.e.}:
@@ -705,7 +707,7 @@ lmg.hg.2 <- calc.relimp(r.lm.hg2)$lmg
 
 \frame{\frametitle{Causality vs correlation}
 
-In {\bf explanatory models} the ultimate goal usually is to reveal \alert{causal relationships} between the covariates and the response.\\[2mm]
+In {\bf explanatory models} the ultimate goal is to reveal \alert{causal relationships} between the covariates and the response.\\[2mm]
 
 {\bf Examples:}
 \begin{itemize}
@@ -855,7 +857,7 @@ An observed effect is more likely to be \emph{causal} if participants were \emph
  \hline 
  {\bf Situation} & Existing, cannot be influenced  & Artificial, designed \\[3mm]
  {\bf Analysis} & Difficult & Simple    \\
-   & (see model selection issues) & \alert{no model selection}   \\[3mm]
+   & (model selection issues) & \alert{no model selection}   \\[3mm]
  {\bf Interpretation} & Difficult, & Clear,   \\
   & especially w.r.t.\ causality & ``proofs'' causal relationship 
  \end{tabular}
@@ -865,7 +867,7 @@ An observed effect is more likely to be \emph{causal} if participants were \emph
 
 
 
-\frame{\frametitle{Causality considerations for model selection}
+\frame{\frametitle{Causality considerations for model building}
  
 
 It is {\bf widely unknown} that a model can be broken by the inclusion of a ``wrong'' covariate, which is causally associated in the wrong direction:\\[4mm]
