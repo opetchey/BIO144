@@ -144,7 +144,7 @@ $\qquad \qquad\rightarrow$ {\bf model fit vs model complexity}\\[2mm]
 
 \frame{\frametitle{Course material covered today}
 
-The lecture material of today is based on the literature that you studied during the self-study week (before Easter).
+The lecture material of today is based, in part, on the literature that you studied during the self-study week (before Easter).
 
 }
 
@@ -205,7 +205,7 @@ $P$-value {\bf criticism is} as {\bf old} as statistical significance testing (1
 \item Publication bias: Studies with $p<0.05$ are more likely to be published than ``non-significant'' results.\\[2mm]
 
 
-\item Recent articles in \emph{Science}, \emph{Nature} or a statement by the \emph{American Statistical Associaton (ASA)} in March 2016 show that the debate still continues \citep{goodman2016,wasserstein.lazar2016}.\\[2mm]
+\item Recent articles in \emph{Science}, \emph{Nature} or a statement by the \emph{American Statistical Associaton (ASA)} in March 2016 show that the debate still continues \citep{goodman2016,wasserstein.lazar2016,amrhein.etal2019}.\\[2mm]
 
 \item Model selection using $p$-values may lead to a \alert{model selection bias} (see last week).\\[2mm]
 \end{itemize}
@@ -319,7 +319,7 @@ The $p$-value is {\bf not} the probability that the Null Hypothesis is true!!!
 In February, 2014, George Cobb, Professor Emeritus of Mathematics and Statistics at Mount
 Holyoke College, posed these questions to an ASA discussion forum:\\[4mm]
 
-Q: Why do so many colleges and grad schools teach p = .05?\\
+Q: Why do so many colleges and grad schools teach p = 0.05?\\
 A: Because that's still what the scientific community and journal editors use.\\[2mm]
 
 Q: Why do so many people still use p = 0.05?\\
@@ -379,9 +379,9 @@ Example: Small effect sizes in regression models. \\
 Suggestions:
 \begin{enumerate}
 \item Use $p$-values, but don't over-interpret them, \alert{use them properly}.\\[2mm]
-\item Look at \alert{effect sizes} and \alert{confidence intervals}.\\[2mm]
-\item Look at \alert{relative importances} of covariates.\\[2mm]
-\item {\bf Don't use $p$-values for model selection.} \\[2mm]
+\item Also look at \alert{effect sizes} and \alert{confidence intervals}.\\[2mm]
+\item Also look at \alert{relative importances} of covariates.\\[2mm]
+\item {\bf NEVER use $p$-values for model selection.} \\[2mm]
 \end{enumerate}
 
 }
@@ -456,11 +456,11 @@ Ask: {\bf Is the effect size \emph{relevant}?}
 \end{minipage}}\\[8mm]
 
 {\bf Example}\\[2mm] 
-WHO recommendation concerning smoking and the consumption of processed meat. Both, smoking and meat consumption, appear to be carcinogenic.
+WHO recommendation concerning smoking and the consumption of processed meat. Both, smoking and meat consumption, are ``significantly'' increasing the probability to get cancer.
 
 \begin{itemize}
 \item 50g processed meat per day increases the risk for colon cancer by a factor of 1.18 (+18\%).
-\item Smoking increases the risk for cancer by a factor of 3.6 (+260\%).\\[6mm]
+\item Smoking increases the risk to get any type of cancer by a factor of 3.6 (+260\%).\\[6mm]
 \end{itemize}
 
 Thus: Although both, meat consumption and smoking, are carcinogenic (``significant''), their {\bf effect sizes are vastly different}!
@@ -527,7 +527,7 @@ in a model, particularly in observational studies.\\[4mm]
 \frame{\frametitle{Relative importance: Decomposing $R^2$}
 {\bf Remember:} $R^2$ indicates the proportion of variance explained by {\bf all} covariates in a model
 \begin{equation*}
-y_i = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_2 x_i^{(m)} + e_i   \ . 
+y_i = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_2 x_i^{(m)} + \epsilon_i   \ . 
 \end{equation*}
 ~\\
 
@@ -554,7 +554,7 @@ Further, it is required that
 	\begin{itemize}
 		\item {\bf Idea 1:} Fit simple models including only one covariate at the time, \emph{i.e.}:
 		\begin{equation*}
-y_i = \beta_0 + \beta_j x_i^{(j)} + e_i   
+y_i = \beta_0 + \beta_j x_i^{(j)} + \epsilon_i   
 \end{equation*}
 for each variable $x^{(j)}$ and use the respective $R^2$ as $r_j$. \\[6mm]
 
@@ -585,9 +585,9 @@ r.lm_fish_amalgam <- lm(log10(Hg_urin) ~ last_fish+ sqrt(fish),d.hg)
 
 \vspace{8mm}
 \begin{eqnarray} 
-y_i = \beta_0 + \beta_{1}  x^{(1)}_i  +   + e_i   & \quad &  R^2 = \Sexpr{format(summary(r.lm_fish)$r.squared,nsmall=2,digits=1)}\\
-y_i = \beta_0 + \beta_{2}  x^{(2)}_i  +   + e_i   & \quad &  R^2 = \Sexpr{format(summary(r.lm_amalgam)$r.squared,nsmall=2,digits=1)}\\
-y_i = \beta_0 + \beta_{1}   x^{(1)}_i  + \beta_{2}  x^{(2)}_i    + e_i  & \quad & R^2 = \Sexpr{format(summary(r.lm_fish_amalgam)$r.squared,2,2,2)} 
+y_i = \beta_0 + \beta_{1}  x^{(1)}_i  +   + \epsilon_i   & \quad &  R^2 = \Sexpr{format(summary(r.lm_fish)$r.squared,nsmall=2,digits=1)}\\
+y_i = \beta_0 + \beta_{2}  x^{(2)}_i  +   + \epsilon_i   & \quad &  R^2 = \Sexpr{format(summary(r.lm_amalgam)$r.squared,nsmall=2,digits=1)}\\
+y_i = \beta_0 + \beta_{1}   x^{(1)}_i  + \beta_{2}  x^{(2)}_i    + \epsilon_i  & \quad & R^2 = \Sexpr{format(summary(r.lm_fish_amalgam)$r.squared,2,2,2)} 
 \end{eqnarray}
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
@@ -614,7 +614,7 @@ Various proposals to calculate relative importance ($R^2$ decomposition) have be
 \end{itemize}
 
 
-{\bf Luckily, the {\tt R}-package \myalert{{\tt relaimpo}}  (Groemping 2006) contains the function {\tt calc.relimp()} that does this for us!}
+Luckily, the {\tt R}-package \myalert{{\tt relaimpo}}  (Groemping 2006) contains the function {\tt calc.relimp()} that does this for us!
 
 }
 
@@ -691,8 +691,8 @@ lmg.hg.2 <- calc.relimp(r.lm.hg2)$lmg
 ~\\[4mm]
 
 \begin{itemize}
-\item {\bf Case 1:} Relative importance of \texttt{fish}: \Sexpr{format(lmg.hg[8]*100,2,2,2)}\% (see slide \ref{sl:relimp}).\\[2mm]
-\item {\bf Case 2:} Relative importance of \texttt{fish}: $\Sexpr{format(lmg.hg.2[8]*100,2,2,2)}$\% .\\[8mm] 
+\item {\bf Model 1:} Relative importance of \texttt{fish}: \Sexpr{format(lmg.hg[8]*100,2,2,2)}\% (see slide \ref{sl:relimp}).\\[2mm]
+\item {\bf Model 2:} Relative importance of \texttt{fish}: $\Sexpr{format(lmg.hg.2[8]*100,2,2,2)}$\% .\\[8mm] 
 \end{itemize}
 
 {\bf Interpretation:} If one of two correlated variables is removed, the other absorbs some of the importance from it.
