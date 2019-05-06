@@ -229,7 +229,7 @@ $\rightarrow$ The diagnostic plots indicate that the {\bf linear regression assu
 
 
 \frame[containsverbatim]{
-The same plot with smoothed lines (makes the problems even more obvious):
+The same plot with smoothed lines (makes the problems more obvious):\\[2mm]
  
 <<soayFig3,fig.width=6, fig.height=6,out.width="6.5cm">>=
 autoplot(r.soay)
@@ -269,7 +269,7 @@ Moreover, the \alert{normal distribution} for count data is obviously \alert{vio
 
 }
 
-\frame[allowframebreaks]{\frametitle{A model for count data?} \label{sl:poisson}
+\frame[allowframebreaks]{\frametitle{A model for count data?} 
 Do you remember a distribution for count values from Mat183?\\[4mm]
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
@@ -282,6 +282,7 @@ In short: $$Y \sim \Po(\lambda) \ .$$\\
 
 ~\\[20mm]
 {\bf Characteristics of the Poisson distribution:}
+\label{sl:poisson}
 \begin{itemize}
 \item Suitable to model unbounded counts ($k=0,1,2,...$).
 \item $\E(Y) = \Var(Y) = \lambda$. In words: \\[2mm]
@@ -373,7 +374,7 @@ In words: $y_i$ is a realization of a Poisson random variable distributed as $\P
 In summary, we have introduced three terms related to GLMs:\\[2mm]
 
 \begin{itemize}
-\item \emph{\bf Family}: The family corresponds to the likelihood model that is used for the (transformed) response. Here, the family is Poisson. Another very common distribution is the \alert{binomial} family for \alert{binary} outcome (see next week). Other families are the gamma or the negative binomial. The family is determined by the data type!\\[2mm]
+\item \emph{\bf Family}: The family corresponds to the likelihood model that is used for the (transformed) response. Here, the family is \alert{Poisson}. Another very common distribution is the \alert{binomial} family for binary outcome (see next week). Other families are the gamma or the negative binomial. The family is determined by the data type!\\[2mm]
 
 \item \emph{\bf Linear predictor}: The linear predictor is always given as
 \begin{equation*}
@@ -617,7 +618,7 @@ summary(polyps.glm)
 
 {\bf ``Overdispersion''} means {\bf ``extra variability''}. Why could this be a problem?\\[4mm]
 
-{\bf Remember:} The variance of the Poisson distribution increases with the mean, because \alert{\bf mean=variance} (see slide \ref{sl:poisson}). \\[8mm]
+{\bf Remember:} The variance of the Poisson distribution increases with the mean, because \alert{\bf mean=variance} (see slide 14). \\[8mm]
 
 In Poisson regression it is assumed that, for each observation $i$,
 $$y_i \sim \Po (\E(y_i)) \ .$$
