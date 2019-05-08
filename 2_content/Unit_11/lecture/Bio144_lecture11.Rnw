@@ -18,7 +18,6 @@
 \usepackage{amsmath,natbib}
 \usepackage{mathbbol}
 \usepackage{babel}
-\usepackage{SweaveSlides}
 \usepackage{multicol}
 \usepackage{xcolor}
 
@@ -84,8 +83,21 @@
 
 
 \begin{document}
-\SweaveOpts{width=6,height=4}
 \fboxsep5pt
+<<setup, include=FALSE, cache=FALSE, results='hide'>>=
+library(knitr)
+## set global chunk options
+opts_chunk$set(fig.path='figure/', 
+cache.path='cache/', fig.align='center', 
+fig.show='hold', par=TRUE, fig.align='center', cache=FALSE, 
+message=FALSE, 
+warning=FALSE,
+echo=FALSE, out.width="0.4\\linewidth", fig.width=6, fig.height=4.5, size="scriptsize", width=40)
+opts_chunk$set(purl = TRUE)
+knit_hooks$set(purl = hook_purl)
+options(size="scriptsize")
+opts_chunk$set(message = FALSE)
+@
 
 \frame{
 \title[]{ \centering \Huge Kurs Bio144: \\
@@ -162,9 +174,11 @@ Question: which variables influence the survival probability of premature babies
 \frame{\frametitle{Some repetition: The $\chi^2$ test}
 You have dealt with binary (categorical) data in Mat183! Remember the $\chi^2$ test for contingency tables (simplest: 2$\times$2 tables).\\[2mm]
 
-Example: Heart attack and hormonal contraception (Verh\"utungspille) (from Stahel): \\[2mm] %, see Stahel 7.3.j:\\[2mm]
-
-\includegraphics[width=6cm]{graphics/table1.png}\\[2mm]
+Example: Heart attack and hormonal contraception (Verh\"utungspille) (from Stahel): 
+\vspace{-2mm}
+\begin{center}
+\includegraphics[width=6cm]{graphics/table1.png}
+\end{center}
 {\small ``Hormonal contraception'' is the predictor ($x$) and ``heart attack'' the outcome ($y$).}\\[2mm]
 
 {\bf Question:} Does hormonal contraception ($x$) have an influence on heart attacks ($y$)?\\[2mm]
@@ -196,11 +210,10 @@ and is expected to be $\chi^2_{1}$ distributed {\tiny(one degree of freedom: $(2
 
 The $p$-value of this test is given as $\Pr(X\geq 8.329)=\Sexpr{format(1-pchisq(8.329,1),4,4,4)}$. \\[2mm]
 
-<<>>=
+<<echo=T>>=
 pchisq(8.329,1,lower.tail=F)
 @
 
-~\\
 {\bf $\rightarrow $ There is \alert{strong evidence} for an association of hormonal contraception with heart attacks!}
 }
 
@@ -316,7 +329,7 @@ $\rightarrow$ A regression model is needed again!
 \frame[containsverbatim]{\frametitle{Illustrative/working example}
 Let us look at an example from chapter 9.2 in Hector (2015): \\[2mm]
 
-Eight groups of beetles were exposed to carbon disulphide (an insecticide) for 5h. For each beetle it was then reported if it was killed or not (1 or 0), but the data were reported in {\bf aggregated} form:\\[6mm]
+Eight groups of beetles were exposed to carbon disulphide (an insecticide) for 5h. For each beetle it was then reported if it was killed or not (1 or 0), but the data were reported in {\bf aggregated} form:\\[2mm]
 
 <<echo=F>>=
 library(AICcmodavg)
@@ -324,24 +337,22 @@ data(beetle)
 beetle
 @
 
-~\\[6mm]
+~\\
 {\bf Question:} (How) does the insecticide ($\bm{x}$) affect the survival probability ($\bm{y}$) of the beetles?
 }
 
 
 \frame[containsverbatim]{\frametitle{}
-As always, start with a graph:
+As always, start with a graph:\\[2mm]
 
-\begin{center}
-\setkeys{Gin}{width=0.6\textwidth}
-<<fig=T,width=3.5,height=2.5,echo=F>>=
+<<beetleFig,fig.width=4, fig.height=3,out.width="6cm">>=
 ggplot(beetle, aes(x = Dose, y = Mortality_rate)) + theme_bw() +
 geom_point() +
 geom_smooth(method = "lm", se = FALSE) +
 geom_smooth(span = 1, colour = "red", se = FALSE) +
 xlab("Dose") + ylab("Mortality rate")
 @
-\end{center}
+
 
 with linear (blue) and smoothed line (red).
 }
@@ -378,7 +389,6 @@ lm(Mortality_rate ~ Dose, data=beetle)
 r.lm <- lm(Mortality_rate ~ Dose, data=beetle)
 @
 
-~\\ 
 This leads to $\hat\beta_0=\Sexpr{format(r.lm$coef[1],2,2,2)}$ and $\hat\beta_1=\Sexpr{format(r.lm$coef[2],2,2,2)}$. This means for instance that, for a zero dose, the probability to die would be $\E(y_i)=\Sexpr{format(r.lm$coef[1],2,2,2)}$.
 
 ~\\
@@ -386,8 +396,8 @@ This leads to $\hat\beta_0=\Sexpr{format(r.lm$coef[1],2,2,2)}$ and $\hat\beta_1=
 {\bf Problems:} 
 \begin{itemize}
 \item Linear regression leads to impossible predicted probability values! \\
-$\Rightarrow$ \alert{Unrealistic predictions!}
-\item For $y_i = \beta_0 + \beta_1 Dose_i + e_i$, residuals $e_i$ are {\bf not} normally distributed!
+$\Rightarrow$ \alert{Impossible predictions!}
+\item For $y_i = \beta_0 + \beta_1 Dose_i + \epsilon_i$, residuals $\epsilon_i$ are {\bf not} normally distributed!
 \end{itemize}
 \end{minipage}}
 }
@@ -411,12 +421,11 @@ glm(Number_killed ~ Dose, data=beetle,family=poisson)
 r.pois <- glm(Number_killed ~ Dose, data=beetle,family=poisson)
 @
 
-~\\[2mm]
 This leads to $\hat\beta_0=\Sexpr{format(r.pois$coef[1],2,2,2)}$ and $\hat\beta_1=\Sexpr{format(r.pois$coef[2],2,2,2)}$. \\[4mm]
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
 {\bf Problem:} This means for instance that, for a dose of 76, one expects that $\E(y_i)=\exp(\hat\beta_0 + \hat\beta_1 \cdot 76) = 
-\Sexpr{format(exp(r.pois$coef[1] + r.pois$coef[2]*76),2,2,2)}$ beetles die. However, there are only around 60 beetles in each group, so the predicted number killed is more than what is available. $\Rightarrow$ \alert{Unrealistic predictions!}
+\Sexpr{format(exp(r.pois$coef[1] + r.pois$coef[2]*76),2,2,2)}$ beetles die. However, there are only around 60 beetles in each group, so the predicted number killed is more than what is available. $\Rightarrow$ \alert{Impossible predictions!}
 \end{minipage}}
 }
 
@@ -525,15 +534,12 @@ $$g(\pi) = \log \left(\frac{\pi}{1-\pi}\right) = \log(\pi) - \log(1-\pi) \ .$$
 
 ~\\[2mm]
 A graph depicts the functional form of $g(\cdot)$: 
-\vspace{-6mm}
-\begin{center}
-\setkeys{Gin}{width=0.45\textwidth}
-<<fig=T,echo=F,width=4,height=4>>=
+\vspace{-1cm}
+<<formG,fig.width=4, fig.height=4,out.width="5.5cm">>=
 x <- seq(0,1,0.001)
-plot(x,log(x/(1-x)),xlab=expression(pi),ylab=expression(log(pi/(1-pi))),cex=0.8)
+plot(x,log(x/(1-x)),xlab=expression(pi),ylab=expression(log(pi/(1-pi))),cex=0.7)
 @
-\end{center}
-\vspace{-4mm}
+\vspace{-2mm}
 {\small See also Box 9.2 (p.\ 123) in \emph{The new statistics with R}.}
 }
 
@@ -569,7 +575,7 @@ with $\pi_i = \P(y_i=1) \ .$
   \item The number of failures, encoded as 0 (here: number survived)
   \end{itemize}
   \vspace{4mm}
-<<>>=
+<<echo=T>>=
 beetle$Number_survived <- beetle$Number_tested - beetle$Number_killed
 beetle.glm <- glm(cbind(Number_killed,Number_survived) ~ Dose, 
              data = beetle, family = binomial)
@@ -580,15 +586,14 @@ beetle.glm <- glm(cbind(Number_killed,Number_survived) ~ Dose,
 \frame[containsverbatim]{\frametitle{Doing it right: Model diagnostics}
 As always, before looking at the regression output, let's do some model diagnostics:
 
-\begin{center}
-\setkeys{Gin}{width=0.6\textwidth}
-<<fig=T,width=5,height=4.5,echo=F>>=
+ 
+<<autoplot,fig.width=5, fig.height=5,out.width="6cm">>=
 # par(mfrow=c(2,2),mar=c(3,4,2,1))
 # plot(beetle.glm)
 library(ggfortify)
 autoplot(beetle.glm,smooth.colour=NA)
 @
-\end{center}
+
 $\rightarrow$ Hard to see much due to very low number of data points.
 }
 
@@ -603,12 +608,11 @@ $\rightarrow$ Hard to see much due to very low number of data points.
 
 
 \frame[containsverbatim]{\frametitle{Doing it right: Interpreting the coefficients}
-Let's look at the coefficients:\\[2mm]
+Let's look at the coefficients:\\
 
-<<>>=
+<<echo=T,size="tiny">>=
 summary(beetle.glm)$coef
 @
-~\\[4mm]
 
 The intercept and slope are estimated as  
 \begin{equation*}
@@ -617,7 +621,7 @@ The intercept and slope are estimated as
 
 with standard errors and $p$-values. Very clearly, the dose influences the survival probability ($p<<0.001$), and $\hat\beta_1 >0$, thus, \alert{the larger the dose, the larger the mortality probability} (positive relation; {\scriptsize be careful, this is wrong in the Hector book!!}). \\[2mm]
 
-This is a {\bf qualitative interpretation} of the coefficients.\\[4mm]
+This is a {\bf qualitative interpretation} of the coefficients.\\[3mm]
 
 {\small Note: The $\beta$ coefficients are approximately normally distributed as $\N(\hat\beta,\hat\sigma^2_\beta)$. }\\
 {\small $\rightarrow$ confidence intervals etc.\ can be calculated as in the linear case!}
@@ -626,22 +630,22 @@ This is a {\bf qualitative interpretation} of the coefficients.\\[4mm]
 
 \frame{\frametitle{Quantitative interpretation of the coefficients}
 Remember the regression model
-\begin{equation*}
+\begin{equation}\label{eq:logmodel}
 \log\left( \frac{\pi_i}{1-\pi_i} \right) = \beta_0 + \beta_1 Dose_i \ . 
-\end{equation*}
+\end{equation}
 
 ~\\
-To understand what $\beta_1$ tells us, let's rearrange the equation. Some algebra leads to 
+To understand what $\beta_1$ tells us, let's rearrange the equation. Solving the equation for $\pi_i$ leads to
 
 \begin{equation}\label{eq:prob}
-\P(y_i=1 \given Dose_i)= \frac{\exp(\beta_0 + \beta_1 Dose_i)}{1 + \exp(\beta_0 + \beta_1 Dose_i)} \ . 
+\pi_i = \P(y_i=1 \given Dose_i)= \frac{\exp(\beta_0 + \beta_1 Dose_i)}{1 + \exp(\beta_0 + \beta_1 Dose_i)} \ . 
 \end{equation}
 
 ~\\[2mm]
 \colorbox{lightgray}{\begin{minipage}{10cm}
-It is then possible to calculate the \alert{odds} (``Chance'') with some algebra:
+From model \eqref{eq:logmodel} is possible to calculate the \alert{odds} (``Chance''):
 \begin{equation*}
-\odds(y_i=1 \given Dose_i) = \frac{\P(y_i=1 \given Dose_i)}{\P(y_i=0\given Dose_i)}= \exp(\beta_0 + \beta_1 Dose_i)\ . 
+ \odds(y_i=1 \given Dose_i) = \frac{\pi_i}{1-\pi_i} = \frac{\P(y_i=1 \given Dose_i)}{\P(y_i=0\given Dose_i)}= \exp(\beta_0 + \beta_1 Dose_i)\ . 
 \end{equation*}
 \end{minipage}}
 }
@@ -668,13 +672,12 @@ Moreover, taking the $\log$ on the above equation shows that {\bf $\beta_1$ can 
 }
 
 \frame[containsverbatim]{\frametitle{Doing it right: The \texttt{anova()} table}
-We can look at the \alert{Analysis of Deviance} table (directly using \texttt{test="Chisq"}):\\[4mm]
+We can look at the \alert{Analysis of Deviance} table (directly using \texttt{test="Chisq"}):\\
 
-<<>>=
+<<echo=T,size="tiny">>=
 anova(beetle.glm,test="Chisq")
 @
 
-~\\[4mm]
 {\bf Interpretation:} The total deviance is 267.66, and of this 259.23 is explained by \texttt{Dose} (using 1 degree of freedom). This seems really good, because the $\chi^2$ test gives a $p$-value that is reeeeallly small ($<2.2e-16$).
 }
 
@@ -682,11 +685,9 @@ anova(beetle.glm,test="Chisq")
 
 \frame[containsverbatim]{\frametitle{Plotting the fit}
 
-A fitted curve can be added to the raw data by plotting $\P(y_i=1)$ against the Dose, using equation (\ref{eq:prob}):
+A fitted curve can be added to the raw data by plotting $\P(y_i=1)$ against the Dose, using equation (\ref{eq:prob}):\\[1mm]
 
-\begin{center}
-\setkeys{Gin}{width=0.6\textwidth}
-<<fig=T,width=3.5,height=2.5,echo=F>>=
+<<figDose,fig.width=4, fig.height=3,out.width="6cm">>=
 xx <- seq(45,80,0.01)
 eta <- -14.578 + 0.2455*xx
 ppi <- exp(eta)/(1+exp(eta))
@@ -697,7 +698,7 @@ xlab("Dose") + ylab("Mortality rate (Pr(Y=1))")  +
 geom_line(aes(xx, ppi,colour = "red"), dd, size=1.2) + 
   scale_color_discrete(guide = FALSE)
 @
-\end{center}
+
 
 (Compare to Figure 9.1 in the Hector book \emph{The new statistics with R}.)
 }
@@ -708,7 +709,7 @@ Remember :
 \item Slide \ref{sl:bernoulli}: $\E(Y)=\pi$ and $\Var(Y)=\pi(1-\pi)$, thus \alert{the variance is determined by the mean!} \\[2mm]
 
 \item ``Overdispersion'' means \alert{``extra variability''} (larger than the model predicts or allows). \\[2mm]
-\item Reason: Variables are missing in the model!\\[2mm]
+\item Probable reason: Variables are missing in the model!\\[2mm]
 \item Overdispersion leads to \alert{too small $p$-values}.\\[2mm]
 \item Detectable by looking at the \alert{residual deviance}: \\[2mm]
 \texttt{Residual deviance} $>>$ \texttt{df} $\quad\rightarrow$ Overdispersion \\[2mm]
@@ -721,7 +722,7 @@ Remember :
 \frame[containsverbatim]{
 Here, the residual deviance is {\bf 8.44} with {\bf 6} degrees of freedom. Is this good or bad?\\[2mm]
 
-<<>>=
+<<echo=T>>=
 pchisq(8.438,6,lower.tail=F)
 @
 ~\\
@@ -734,7 +735,7 @@ One can nevertheless account for overdispersion by switching to a \alert{\texttt
 \frame[containsverbatim]{
 
 
-<<>>=
+<<echo=T>>=
 beetle.glm2 <- glm(cbind(Number_killed,Number_survived) ~ Dose, 
              data = beetle, family = quasibinomial)
 summary(beetle.glm2)
@@ -756,15 +757,16 @@ summary(beetle.glm2)
 }
 
 \frame[containsverbatim]{\frametitle{Blood screening example}
-<<>>=
+<<echo=T,size="tiny">>=
 library(HSAUR3)
 data("plasma",package="HSAUR3")
 plasma$y <- as.integer(plasma$ESR)-1
 @
  
+ \vspace{-7mm}
 {\small
 \begin{multicols}{2}
-<<echo=FALSE,results=tex>>=
+<<echo=FALSE,results="asis">>=
 library(xtable)
 pol1 <- plasma[1:16,]
 pol2 <- plasma[17:32,]
@@ -780,12 +782,12 @@ print(ttab2,  floating = TRUE, include.rownames=FALSE)
 \frame{\frametitle{}
 {\bf Question:} Is a high ESR (erythrocyte sedimentation rate) an indicator for certain diseases (rheumatic disease, chronic inflammations)?\\[3mm]
 
-{\bf  Specifically: } Do high concentrations of the plasma proteins Fibrinogen and Globulin (which are disease indicators) incrase the probability that ESR$>20mm/hr$?\\[6mm]
+{\bf  Specifically: } Do high concentrations of the plasma proteins Fibrinogen and Globulin (which are disease indicators) increase the probability that an individual is sick (ESR$>20mm/hr$, encoded as $y_i=1$)?\\[6mm]
 
 {\bf The model to be fitted:}\\
 
 \begin{equation*}
-\log\left( \frac{\pi_i}{1-\pi_i} \right) = \beta_0 + \beta_1 fibrinogen_i + \beta_2 globulin_i \ ,
+\log\left( \frac{\pi_i}{1-\pi_i} \right) = \beta_0 + \beta_1\cdot fibrinogen_i + \beta_2 \cdot globulin_i \ ,
 \end{equation*}
 \\[4mm]
 with $\E(y_i)=\P(y_i=1)=\pi_i$. \\
@@ -793,58 +795,55 @@ with $\E(y_i)=\P(y_i=1)=\pi_i$. \\
 }
 
 \frame[containsverbatim]{\frametitle{Complication 1 with binary data: Graphical description}
-Plotting the response $y$ (indictor for ESR$>20$) against the covariats does not lead to very illustrative graphs:\\[4mm]
+Plotting the response $y$ ($y=1$ if ESR$>20$ and $y=0$ otherwise) against the covariats does not lead to very illustrative graphs: \\[4mm]
 
-\begin{center}
-\setkeys{Gin}{width=0.9\textwidth}
-<<fig=T,echo=F,width=5,height=2.3>>=
+
+<<esrFig,fig.width=5.5, fig.height=2.5,out.width="8cm">>=
 require(cowplot)
 theme_set(theme_cowplot(font_size=10))
 
 p1 <- ggplot(plasma, aes(x = fibrinogen, y = y)) + theme_bw() +
 geom_point() +
-xlab("Fibrinogen") + ylab("ESR>20") 
+xlab("Fibrinogen") + ylab("y") + scale_y_continuous(breaks=c(0,1))
 
 p2 <- ggplot(plasma, aes(x = globulin, y = y)) + theme_bw() +
 geom_point() +
-xlab("Globulin") + ylab("ESR>20") 
+xlab("Globulin") + ylab("y") + scale_y_continuous(breaks=c(0,1))
 
 plot_grid(p1, p2, ncol=2)
 @
-\end{center}
+
 }
 
 \frame[containsverbatim]{
 It is a bit more illustrative to give a \alert{conditional density plot} (\texttt{cdplot()}): 
 \vspace{-2mm}
 
-\begin{center}
-\setkeys{Gin}{width=0.9\textwidth}
-<<cdplot_ESR,fig=T,width=7,height=4,echo=F>>=
+<<cdplot_ESR,fig.width=7, fig.height=4.5,out.width="10cm">>=
 par(mfrow=c(1,2))
-cdplot(ESR ~ fibrinogen,plasma)
-cdplot(ESR ~ globulin,plasma)
+plasma$y <- as.factor(plasma$y)
+cdplot(y ~ fibrinogen,plasma)
+cdplot(y ~ globulin,plasma)
 @
-\end{center}
+
 }
 
 
 
 \frame[containsverbatim]{\frametitle{Complication 2: Model diagnostics}\label{sl:binary}
-{\bf a) Residuals plots:}\\[2mm]
+{\bf a) Residual plots:}\\[2mm]
 
 \alert{Plotting the residuals} is possible, but \alert{not meaningful}. \\
 {\scriptsize Why? Becasue the model checking assumptions rely on aggregated data!}\\[2mm]
 
-\begin{center}
-\setkeys{Gin}{width=0.6\textwidth}
-<<fig=T,width=4,height=3.8,echo=F>>=
+ 
+<<esr_plot,fig.width=5, fig.height=4.5,out.width="6.5cm">>=
 plasma.glm <- glm(y ~ fibrinogen + globulin, data = plasma, family=binomial)
 # par(mfrow=c(2,2),mar=c(3,4,2,1))
 # plot(plasma.glm)
 autoplot(plasma.glm)
 @
-\end{center}
+
 }
 
 \frame{\frametitle{}
@@ -861,7 +860,7 @@ Apart from the above complications, fitting and interpreting the model is analog
 plasma.glm <- glm(y ~ fibrinogen + globulin, data = plasma, family = binomial)
 @
 
-~\\[2mm]
+
 Please look at the model outcomes (summary and anova table) on the next slides and answer the following questions:
 
 \begin{enumerate}
@@ -872,13 +871,13 @@ Please look at the model outcomes (summary and anova table) on the next slides a
 }
 
 \frame[containsverbatim]{
-<<>>=
+<<echo=T>>=
 summary(plasma.glm)
 @
 }
 
 \frame[containsverbatim]{
-<<>>=
+<<echo=T>>=
 anova(plasma.glm,test="Chisq")
 @
 }
