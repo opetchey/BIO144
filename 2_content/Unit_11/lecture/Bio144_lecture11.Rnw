@@ -338,7 +338,7 @@ beetle
 @
 
 ~\\
-{\bf Question:} (How) does the insecticide ($\bm{x}$) affect the survival probability ($\bm{y}$) of the beetles?
+{\bf Question:} (How) does the dose of the insecticide ($\bm{x}$) affect the survival probability ($\bm{y}$) of the beetles?
 }
 
 
@@ -425,7 +425,7 @@ This leads to $\hat\beta_0=\Sexpr{format(r.pois$coef[1],2,2,2)}$ and $\hat\beta_
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
 {\bf Problem:} This means for instance that, for a dose of 76, one expects that $\E(y_i)=\exp(\hat\beta_0 + \hat\beta_1 \cdot 76) = 
-\Sexpr{format(exp(r.pois$coef[1] + r.pois$coef[2]*76),2,2,2)}$ beetles die. However, there are only around 60 beetles in each group, so the predicted number killed is more than what is available. $\Rightarrow$ \alert{Impossible predictions!}
+\Sexpr{format(exp(r.pois$coef[1] + r.pois$coef[2]*76),2,2,2)}$ beetles die. However, there are only 60 beetles in each group, so the predicted number killed is more than what is available. $\Rightarrow$ \alert{Impossible predictions!}
 \end{minipage}}
 }
 
@@ -442,7 +442,7 @@ Clarification of the difference between count data and binomial data:\\[4mm]
 \begin{itemize} 
 \item Aggregated version of many binary experiments, that is, each can be 0 or 1. 
 \item Therefore, there is an upper limit on the number of times an ``event'' can be observed (e.g., number of deaths cannot be greater than total number of individuals).
-\item Successes can be expressed as proportion (number of successes/number of trials).
+\item Successes can be expressed as a proportion (number of successes/number of trials).
 \end{itemize}
 }
 
@@ -469,7 +469,7 @@ $\rightarrow$ The variance of the distribution is determined by its mean.\\[4mm]
 }
 
 
-\frame{\frametitle{From binary to binomial data}
+\frame{\frametitle{From binary to binomial data}\label{sl:from}
 Binomial data is an \alert{aggregation of binary data}: \\[2mm]
 
 \begin{itemize}
@@ -483,12 +483,12 @@ Binomial data is an \alert{aggregation of binary data}: \\[2mm]
 \end{itemize}
 
 \vspace{8mm}
-{\small Example: In the beetle data  $n=49$ beetles were tested for the lowest dose, of which $k=6$ died, thus the success rate is $6/49=0.122$.}
+{\small Example: In the beetle data  $n=49$ beetles were tested for the lowest dose, of which $k=6$ died, thus the ``success rate'' is $6/49=0.122$.}
 }
 
 \frame{\frametitle{The binomial distribution}
 
-The {\bf binomial distribution} assigns the probability of seeing $k$ success out of $n$ trials, where the success probability of a single trial is $\pi$.\\[2mm] 
+The {\bf binomial distribution} assigns the probability of seeing $k$ successes out of $n$ trials, where the success probability of a single trial is $\pi$.\\[2mm] 
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
 \begin{equation*}
@@ -706,7 +706,7 @@ geom_line(aes(xx, ppi,colour = "red"), dd, size=1.2) +
 \frame{\frametitle{Overdispersion}
 Remember :
 \begin{itemize}
-\item Slide \ref{sl:bernoulli}: $\E(Y)=\pi$ and $\Var(Y)=\pi(1-\pi)$, thus \alert{the variance is determined by the mean!} \\[2mm]
+\item Slides \ref{sl:from} and \ref{sl:bernoulli}: $\E(Y)=\pi$ and $\Var(Y)=\pi(1-\pi)$, thus \alert{the variance is determined by the mean!} \\[2mm]
 
 \item ``Overdispersion'' means \alert{``extra variability''} (larger than the model predicts or allows). \\[2mm]
 \item Probable reason: Variables are missing in the model!\\[2mm]
