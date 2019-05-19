@@ -18,7 +18,6 @@
 \usepackage{amsmath,natbib}
 \usepackage{mathbbol}
 \usepackage{babel}
-\usepackage{SweaveSlides}
 \usepackage{multicol}
 \usepackage{xcolor}
 
@@ -82,8 +81,21 @@
 
 
 \begin{document}
-\SweaveOpts{width=6,height=4}
 \fboxsep5pt
+<<setup, include=FALSE, cache=FALSE, results='hide'>>=
+library(knitr)
+## set global chunk options
+opts_chunk$set(fig.path='figure/', 
+cache.path='cache/', fig.align='center', 
+fig.show='hold', par=TRUE, fig.align='center', cache=FALSE, 
+message=FALSE, 
+warning=FALSE,
+echo=FALSE, out.width="0.4\\linewidth", fig.width=6, fig.height=4.5, size="scriptsize", width=40)
+opts_chunk$set(purl = TRUE)
+knit_hooks$set(purl = hook_purl)
+options(size="scriptsize")
+opts_chunk$set(message = FALSE)
+@
 
 \frame{
 \title[]{ \centering \Huge Kurs Bio144: \\
@@ -141,17 +153,19 @@ The lecture material of today is partially based on the following literature:\\[
 
 \frame{\frametitle{The fundamental assumptions of regression analyses}
 
+A fundamental assumption always is that some {\bf distributional assumptions are fulfilled}, for example:\\[4mm]
+
 \begin{itemize}
 \item {\bf Linear regression (including ANOVA):} 
-$$e_i \sim \N(0,\sigma_e^2) \ . $$
+$$\epsilon_i \sim \N(0,\sigma^2) \ . $$
 \item {\bf Generalized linear model:} Implicit assumptions that can be checked by model diagnostic plots.\\[4mm]
 \end{itemize}
 
-$\rightarrow$  Basically, a fundamental assumption always is that the {\bf distributional assumptions are fulfilled}.
+
 }
 
 
-\frame{\frametitle{Another fundamental assumption that is often neglected}
+\frame{\frametitle{Another fundamental assumption (often neglected!)}
 
 \begin{itemize}
 \item It is a \alert{fundamental assumption}  that explanatory variables are measured or estimated \alert{without error}, for instance for 
@@ -180,7 +194,7 @@ $\rightarrow$ Measurement error in the covariates ($\bm{x}$) violates an assumpt
 	\begin{column}{.4\textwidth}
 	\begin{eqnarray*}
 	w_i &=& x_i + u_i \nonumber\\
-	u_i &\sim& \mathcal{N}(0,\sigma^2_{u})  \  \label{CErrorModel} \ , \nonumber
+	u_i &\sim& \N(0,\sigma^2_{u})  \  \label{CErrorModel} \ , \nonumber
 	\end{eqnarray*}
 	is the {\bf classical ME model}.
 	\end{column}
@@ -188,8 +202,7 @@ $\rightarrow$ Measurement error in the covariates ($\bm{x}$) violates an assumpt
 	\vspace*{-3cm}
 	\begin{center}
 	\hspace*{-3.5cm}
-\setkeys{Gin}{width=2\textwidth}
-<<echo=FALSE,fig=TRUE,height=2.5,width=2.3>>=
+<<classicalError,fig.width=3, fig.height=3,out.width="6cm">>=
 tx<-seq(-4,4,0.01)
 par(mfrow=c(1,1))
 plot(tx,dnorm(tx,0,1),type="l",xaxt="n",yaxt="n",xlab="",ylab="")
@@ -210,36 +223,20 @@ $\rightarrow$The observed value $w_i$ varies around the true value $x_i$. \\
 }
 
 
-\frame{\frametitle{Simulations and apps}
 
-% {\bf Bias the regression parameters}, mainly attenuation (underestimation) of the true effect.\\[2mm]
-
-Illustration with shiny apps for two error types in linear, logistic and Poisson regression:\\[6mm]
-
-\href{https://stefaniemuff.shinyapps.io/MEC_ChooseL/}
-{\beamergotobutton{Classical error}}
-
-\href{https://stefaniemuff.shinyapps.io/MEB_ChooseL/}
-{\beamergotobutton{Berkson error}}
-
-}
 
 
 \frame{\frametitle{Illustration of the problem}
 	~\\
 	Find regression parameters $\beta_0$ and $\beta_x$ for the model with covariate $\bm{x}$:
 	\begin{eqnarray*}
-	y_i= 1 \cdot x_i + \epsilon_i, \quad \epsilon_i \sim \N(0,\sigma^2_{\epsilon}) \ .
+	y_i= 1 \cdot x_i + \epsilon_i, \quad \epsilon_i \sim \N(0,\sigma^2) \ .
 	\end{eqnarray*}
-	% 	but assume that only an erroneous proxy $\bm{w}$ is observed with
-	% \begin{eqnarray*}
-	% w_i = x_i + u_i \qquad u_i \sim \N(0,\sigma_u^2) \quad \text{with } \quad \sigma^2_u = \sigma^2_x \ .
-	% \end{eqnarray*}
+
 
 	\vspace{1mm}
-	\begin{center}
-\setkeys{Gin}{width=.6\textwidth}
-<<echo=FALSE, fig=TRUE, width=4.3, height=3>>=
+
+<<plot,fig.width=4.5, fig.height=3.5,out.width="6cm">>=
 library(ggplot2)
 set.seed(84522)
 col1 <- "red"
@@ -266,7 +263,7 @@ ggplot(mapping=aes(x=x,y=y,col="X")) +  geom_smooth(method="lm") + geom_point(si
   ylim(c(-2.7,2.7)) +
   theme_bw()
 @
-	\end{center}
+
 }
 
 
@@ -276,13 +273,12 @@ ggplot(mapping=aes(x=x,y=y,col="X")) +  geom_smooth(method="lm") + geom_point(si
 
 		However, assume that only an erroneous proxy $\bm{w}$ is observed with classical ME
 	\begin{eqnarray*}
-	w_i = x_i + u_i \qquad u_i \sim \N(0,\sigma_u^2) \quad \text{with } \quad \sigma^2_u = \sigma^2_x \ .
+	w_i = x_i + u_i \ , \qquad u_i \sim \N(0,\sigma_u^2) \quad \text{with } \quad \sigma^2_u = \sigma^2_x \ .
 	\end{eqnarray*}
 
 	\vspace{1mm}
-	\begin{center}
-\setkeys{Gin}{width=.6\textwidth}
-<<echo=FALSE, fig=TRUE, width=4.3, height=3>>=
+
+<<plot2,fig.width=4.5, fig.height=3.5,out.width="6cm">>=
 library(ggplot2)
 set.seed(84522)
 col1 <- "red"
@@ -307,9 +303,23 @@ ggplot(mapping=aes(x=x,y=y,color="X")) +  geom_smooth(method="lm") + geom_point(
   xlab("X or W") +
   theme_bw()
 @
-	\end{center}
+
 }
 
+
+\frame{\frametitle{Simulations and apps}
+
+% {\bf Bias the regression parameters}, mainly attenuation (underestimation) of the true effect.\\[2mm]
+
+Illustration with shiny apps for two error types in linear, logistic and Poisson regression:\\[6mm]
+
+\href{https://stefaniemuff.shinyapps.io/MEC_ChooseL/}
+{\beamergotobutton{Classical error}}
+
+\href{https://stefaniemuff.shinyapps.io/MEB_ChooseL/}
+{\beamergotobutton{Berkson error}}
+
+}
 
  
 
@@ -321,12 +331,11 @@ ggplot(mapping=aes(x=x,y=y,color="X")) +  geom_smooth(method="lm") + geom_point(
 
 \item ME leads to a \alert{loss of power} for detecting signals.\\[4mm]
 
-\item ME \alert{masks imporant features} of the data, making graphical model inspection difficult.\\[6mm]
+\item ME \alert{masks imporant features} of the data, making graphical model inspection difficult.\\
 \end{enumerate}
 
-\begin{center}
-\setkeys{Gin}{width=.5\textwidth}
-<<echo=FALSE, fig=TRUE, width=4.5, height=3>>=
+ 
+<<plot3,fig.width=4, fig.height=3,out.width="5.5cm">>=
 library(ggplot2)
 set.seed(84522)
 col1 <- "red"
@@ -352,7 +361,6 @@ ggplot(mapping=aes(x=x,y=y,color="X")) +  geom_smooth(method="lm") + geom_point(
   xlab("X or W") +
   theme_bw()
 @
-	\end{center}
 
 }
 
@@ -361,34 +369,32 @@ ggplot(mapping=aes(x=x,y=y,color="X")) +  geom_smooth(method="lm") + geom_point(
 
 
 
-\frame{\frametitle{Error in the outcome of regression models }
-Example: \alert{Continuous} error in a linear regression outcome.\\[2mm]
-Observe 
-\begin{equation*}
-s_i = y_i + v_i \quad v_i \sim \N(0,\sigma_v^2)  
-\end{equation*}
-instead of $y_i$. 
-
-$\rightarrow$ the error variance is simply absorbed in the residual variance $\sigma^2_\epsilon$. 
-\vspace{-2mm}
-\begin{center}
-\setkeys{Gin}{width=0.8\textwidth}
-<<echo=FALSE,fig=TRUE,height=3.5,width=6.5,include=TRUE>>=
-par(mfrow=c(1,2))
-x <- runif(100,-2,2)
-y <- x + rnorm(100,0,1)
-ystar <- y + rnorm(100,0,2)
-plot(y~x,xlab="",ylab="",main="",ylim=c(-6,6))
-mtext("without response error",3,cex=1.2,padj=-1)
-abline(c(0,1))
-plot(ystar~x,xlab="",ylab="",main="",ylim=c(-6,6))
-mtext("with response error",3,cex=1.2,padj=-1)
-abline(c(0,1))
-@
-\end{center}
-\vspace{-8mm}
-$\rightarrow$ Error in the response seems to be less of a problem. However, this is \emph{not} true for other regression types (logistic, Poisson) or other error structures.
-}
+% \frame{\frametitle{Error in the outcome of regression models }
+% Example: \alert{Continuous} error in a linear regression outcome.\\[2mm]
+% Observe 
+% \begin{equation*}
+% s_i = y_i + v_i \quad v_i \sim \N(0,\sigma_v^2)  
+% \end{equation*}
+% instead of $y_i$. 
+% 
+% $\rightarrow$ the error variance is simply absorbed in the residual variance. \\[-3mm]
+% 
+%  
+% <<plot4, fig.width=7, fig.height=4.0,out.width="8cm">>=
+% par(mfrow=c(1,2))
+% x <- runif(100,-2,2)
+% y <- x + rnorm(100,0,1)
+% ystar <- y + rnorm(100,0,2)
+% plot(y~x,xlab="",ylab="",main="",ylim=c(-6,6))
+% mtext("without response error",3,cex=1.2,padj=-1)
+% abline(c(0,1))
+% plot(ystar~x,xlab="",ylab="",main="",ylim=c(-6,6))
+% mtext("with response error",3,cex=1.2,padj=-1)
+% abline(c(0,1))
+% @
+% \vspace{-5mm}
+% $\rightarrow$ Error in the response seems to be less of a problem. However, this is \emph{not} true for other regression types (logistic, Poisson) or other error structures.
+% }
 
 \frame{\frametitle{How to correct for error?}
 \begin{itemize}
@@ -407,9 +413,9 @@ $\rightarrow$ Error in the response seems to be less of a problem. However, this
 
 \frame{\frametitle{Attenuation in simple linear regression}
 
-Given the simple linear regression equation $y_i = \beta_0 + \beta_x x_i + e_i$ with $w_i = x_i + u_i$.
+Given the simple linear regression equation $y_i = \beta_0 + \beta_x x_i + \epsilon_i$ with $w_i = x_i + u_i$.
 Assume that $w_i$ instead of $x_i$ is used in the regression:
-$$y_i = \beta^\star_0 + \beta^\star_x w_i + e_i \ .$$
+$$y_i = \beta^\star_0 + \beta^\star_x w_i + \epsilon_i \ .$$
 ~\\
 
 The {\bf naive slope parameter $\beta_x^\star$} is then underestimated with respect to the true slope $\beta_x$, with {\bf attenuation factor} $\lambda$: 
@@ -460,10 +466,8 @@ Idea: \\[2mm]
 
 Parameter of interest: $\beta_x$ (\emph{e.g.} a regression slope).\\
 Problem: The respective covariate $x$ was estimated with error: $$w=x+u\ , \quad u\sim \N(0,\sigma_u^2) \ .$$
-
-\begin{center}
-\setkeys{Gin}{width=0.6\textwidth}
-<<fig=T,width=4.5,height=3.8,echo=F>>=
+ 
+<<simex,fig.width=5, fig.height=4,out.width="6cm">>=
 set.seed(212356)
 sigmax <- 1
 sigmau <- 0.25
@@ -485,14 +489,14 @@ legend("topright",legend=c("Naive","Corrected"),pch=18,col=c(2,3),cex=1.2)
 lines(4*xx0,yy0,lty=2,lwd=2)
 abline(v=1,lty=3,lwd=1)
 @
-\end{center}
+ 
 }
 
 \frame[containsverbatim]{\frametitle{Example of SIMEX use}
 
 Let's consider a linear regression model
 \begin{equation*}
-y_i = \beta_0 + \beta_x x_i + \beta_z z_i + e_i \ , \quad e_i = \N(0,\sigma_e^2)
+y_i = \beta_0 + \beta_x x_i + \beta_z z_i + \epsilon_i \ , \quad \epsilon_i = \N(0,\sigma^2)
 \end{equation*}
 with
 \begin{itemize}
@@ -504,7 +508,7 @@ $$w_i = x_i + u_i \ , \quad u_i \sim \N(0,4)  \ .$$
 \item $\bm{z}=(z_1,\ldots, z_{100})^\top$ a binary covariate that indicates if the $i$-th person was a male ($z_i=1$) or female ($z_i=0$).\\[4mm]
 \end{itemize}
 
-$\rightarrow$ apply the SIMEX procedure!
+$\rightarrow$ Apply the SIMEX procedure!
 }
 
 \frame[containsverbatim]{
@@ -522,14 +526,14 @@ names(data) <- c("BMI","sex","bodyfat")
 
 
 Use the error-prone BMI variable to fit a ``naive'' regression:\\[2mm]
-<<>>=
+<<echo=T>>=
 r.lm <- lm(bodyfat ~ BMI + sex,data,x=TRUE)
 summary(r.lm)$coef
 @
-~\\[4mm]
+
 
 Then run the simex procedure using the \texttt{simex()} function from the respective package:\\[2mm]
-<<>>=
+<<echo=T>>=
 library(simex)
 r.simex <- simex(r.lm,SIMEXvariable="BMI",measurement.error=sqrt(4),
                  lambda=seq(0.1,2.5,0.1),B=100,fitting.method="quadratic")
@@ -540,13 +544,12 @@ summary(r.simex)$coef$asymptotic
 
 \frame[containsverbatim]{
 Graphical results with quadratic extrapolation function:
-\begin{center}
-\setkeys{Gin}{width=.95\textwidth}
-<<fig=T,width=5,height=2.5>>=
+ 
+<<simexplot,fig.width=6, fig.height=3,out.width="10cm">>=
 par(mfrow=c(1,3),mar=c(4,4,2,1))
 plot(r.simex)
 @
-\end{center}
+
 
 {\bf Note:} The \texttt{sex} variable has \emph{not} been mismeasured, nevertheless it is affected by the error in BMI!\\[2mm]
 {\bf Reason:} \texttt{sex} and BMI are correlated.
