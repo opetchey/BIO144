@@ -23,7 +23,13 @@ ggplot(dd, aes(x=Rings)) + geom_histogram(bins=15)
 full_mod <- glm(Rings ~ Sex + Length_mm + Diameter_mm + Height_mm + Whole_weight_g +
                  Shuck_weight_g + Viscera_weight_g + Shell_weight_g, data=dd,
                 family=poisson)
+full_mod2 <- glm(Rings ~ Sex +  Diameter_mm + Height_mm + Whole_weight_g +
+                  Shuck_weight_g + Viscera_weight_g + Shell_weight_g +Length_mm, data=dd,
+                family=poisson)
+
 summary(full_mod)
+anova(full_mod)
+anova(full_mod2)
 ## remove length_mm
 m1 <- glm(Rings ~ Sex + Diameter_mm + Height_mm + Whole_weight_g +
                  Shuck_weight_g + Viscera_weight_g + Shell_weight_g, data=dd,
