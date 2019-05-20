@@ -103,9 +103,8 @@ opts_chunk$set(message = FALSE)
 
 \frame{
 \title[]{ \centering \Huge Kurs Bio144: \\
-Datenanalyse in der Biologie}%\\[.3cm]
+Datenanalyse in der Biologie} 
 \author[Stefanie Muff, Owen L.\ Petchey]{\centering Stefanie Muff  \& Owen L.\ Petchey }
-%\institute[]{Institute of Social and Preventive Medicine \\ Institute of Evolutionary Biology and Environmental Studies}
 \date[]{Lecture 5: Multiple linear regression (finalize) / Residual analysis / Checking modeling assumptions\\ 18. March 2019}
 
 
@@ -153,7 +152,7 @@ x_i^{(j)} = \left\{
 \item The factor covariates of last week were used to allow for \alert{group-specific intercepts} (see earthworm example).\\[3mm]
 
 \begin{center}
-<<fig1, eval=T,fig.width=5, fig.height=4,warning=FALSE,out.width="6.5cm">>=
+<<fig1,fig.width=5, fig.height=4,out.width="6.5cm">>=
 library(ggplot2)
 d.wurm <- read.table ("../../data_examples/ancova/Projekt6Regenwuermer/RegenwuermerDaten_Haupt.txt",header=T)
 d.wurm[d.wurm$Gattung=="N","GEWICHT"] <- d.wurm[d.wurm$Gattung=="N","GEWICHT"]*0.5
@@ -172,7 +171,7 @@ ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point() + 
 
 \begin{itemize}
 \item Test for a single $\beta_j=0$ $\rightarrow$ $t$-test.
-\item Test for several $\beta_1 = \beta_2 = ... = \beta_{k}=0$ simultaneously $\rightarrow$ $F$-test.\\
+\item Test for several $\beta_2 = ... = \beta_{k}=0$ simultaneously $\rightarrow$ $F$-test.\\
 $\rightarrow$ \texttt{anova()} 
 \end{itemize}
 
@@ -439,16 +438,20 @@ Remember that in linear regression the modeling assumption is that the errors $\
 \item The $\epsilon_i$ are independent of each other.
 \end{enumerate}
 \end{minipage}}
-~\\[2mm]
-So far, we have discussed the Tukey-Anscombe plot and the QQ-plot.
+~\\[5mm]
+So far, we have discussed 
+\begin{itemize}
+\item the Tukey-Anscombe plot.
+\item the QQ-plot.
+\end{itemize}
 }
 
 \frame{
-Stahel 4.1b:
-\includegraphics[width=11cm]{pictures/41b.pdf}
-~\\[6mm]
+% Stahel 4.1b:
+% \includegraphics[width=11cm]{pictures/41b.pdf}
+% ~\\[6mm]
 
-The aim is to find a model that describes the data well. But always keep in mind the following statement from a wise man:\\[6mm]
+The aim is to formulate a model that describes the data well. But always keep in mind the following statement from a wise man:\\[6mm]
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
 All models are wrong, but some are useful. \scriptsize{(Box 1978)}
@@ -460,10 +463,10 @@ All models are wrong, but some are useful. \scriptsize{(Box 1978)}
 Complete overview of tools used in this course:\\[2mm]
 
 \begin{itemize}
-\item Tukey-Anscombe plot (see lectures 2 and 3)\\
+\item Tukey-Anscombe plot (see lectures 3 and 4)\\
 $\Rightarrow$ \myalert{To check assumptions a), b) and d)}\\[2mm]
 
-\item Quantile-quantile (QQ) plot (see lectures 2 and 3)\\
+\item Quantile-quantile (QQ) plot (see lectures 3 and 4)\\
 $\Rightarrow$ \myalert{To check assumption c)}\\[2mm]
 
 
@@ -519,7 +522,7 @@ However, generally we recommend to \alert{not} add a smoothing line, because it 
 \frame{
 The TA plot is also able to check the \emph{independence assumption} d). But how?\\[4mm]
 
-A dependency would be reflected by some kind of \myalert{trend}. \\[8mm]
+$\rightarrow$ A dependency would be reflected by some kind of \myalert{trend}. \\[8mm]
 
 }
 
@@ -550,12 +553,14 @@ p3 <- ggplot(d1, aes(x=fish,y=resid))+  geom_point() +  geom_hline(yintercept = 
 grid.arrange(p1, p2, p3, ncol=3)
 
 @
- 
+~\\
+Again, not pattern = good.
 }
 
 \frame{\frametitle{QQ-plot}
 
-The \myalert{outlier} recorded above is also visible in the (well-known) QQ-plot, which is useful to check normal distribution of residuals (assumption c):
+The \myalert{outlier} recorded above is also visible in the (well-known) QQ-plot, which is useful to check for normal distribution of residuals (assumption c):\\[2mm]
+
 \begin{center}
 <<hgFigQQ, eval=T,fig.width=3.5, fig.height=3.5,warning=FALSE,out.width="5cm">>=
 library(ggfortify)
@@ -609,8 +614,8 @@ autoplot(r1.urin.mother,which=3) + theme_bw()
 }
 
 
-\frame{\frametitle{Leverages}
-To understand the leverage plot, we need to introduce the idea of the \emph{leverage} (``Hebel''), see Stahel 4.3 h).\\[2mm]
+\frame{\frametitle{Leverages (``Hebel'')}
+To understand the leverage plot, we need to introduce the idea of the \emph{leverage} (``Hebel'').\\[6mm]
 
 In simple regression, the leverage of individual $i$ is defined as $H_{ii} = (1/n) + (x_i-\overline{x})^2 SSQ^{(X)}$. Think about when leverages are expected to be large/small, and answer the two questions here:\\[2mm]
 
@@ -621,10 +626,10 @@ In simple regression, the leverage of individual $i$ is defined as $H_{ii} = (1/
 %which becomes larger the further away from the mean...\\[6mm]
 }
 
-\frame{
-\includegraphics[width=11cm]{pictures/leverage.jpg}
-
-}
+% \frame{
+% \includegraphics[width=11cm]{pictures/leverage.jpg}
+% 
+% }
 
 \frame{\frametitle{Graphical illustration of the leverage effect}
 Data points with $x_i$ values far from the mean have a stronger leverage effect than when $x_i\approx \overline{x}$:
@@ -659,7 +664,7 @@ The outlier in the middle plot ``pulls'' the regression line in its direction an
 
 
 \frame[containsverbatim]{\frametitle{Leverage plot (Hebelarm-Diagramm)}
-In the leverage plot, (standardized) residuals $\tilde{R_i}$ are plotted against the leverage $H_{ii}$ (continuing with the Hg example):\\[2mm]
+In the leverage plot, (standardized) residuals $\tilde{R_i}$ are plotted against the leverage $H_{ii}$ (still for the Hg example):\\[2mm]
  
  
 <<fig7, fig.width=3.5, fig.height=3.5,out.width="5cm">>=
@@ -714,18 +719,18 @@ autoplot(r2.urin.mother) + theme_bw()
 \end{center}
 }
 
-\frame[containsverbatim]{
-Also the ``old-fashioned'' histogram of the residuals is illustrative, it is \myalert{very skewed}:
-\begin{center}
-<<fig9, fig.width=4, fig.height=4,out.width="5.5cm">>=
-ggplot(mapping=aes(x=residuals(r2.urin.mother)))+ geom_histogram(bins=25) + xlab("Residuals")
-# hist(residuals(r2.urin.mother),nclass=20)
-@
-\end{center}
-}
+% \frame[containsverbatim]{
+% Also the ``old-fashioned'' histogram of the residuals is illustrative, it is \myalert{very skewed}:
+% \begin{center}
+% <<fig9, fig.width=4, fig.height=4,out.width="5.5cm">>=
+% ggplot(mapping=aes(x=residuals(r2.urin.mother)))+ geom_histogram(bins=25) + xlab("Residuals")
+% # hist(residuals(r2.urin.mother),nclass=20)
+% @
+% \end{center}
+% }
 
 \frame[containsverbatim]{
-An in-summary comparison of the model with log-transformed response:
+Comparison to the model with log-transformed response:
 
 <<r1urin.2,echo=F>>=
 r3.urin.mother <- lm(log10(Hg_urin) ~  smoking  + amalgam + fish,data=d.hg.m)

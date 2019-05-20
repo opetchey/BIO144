@@ -1,76 +1,57 @@
-\documentclass[a4paper,12pt]{scrartcl}
+\documentclass[a4paper,11pt]{article}
 
-\usepackage{amsmath,natbib}
-\usepackage[utf8]{inputenc}
-\usepackage{bm}
 \usepackage{url}
-\usepackage[printonlyused]{acronym}
-\usepackage{Sweave}
-\usepackage{color}
-\usepackage{mathbbol}
-\usepackage{numprint}
+\usepackage{xifthen}            % for \isempty
+\newboolean{isstudent}
+\setboolean{isstudent}{false}
+\def\pobs{p_\mathrm{obs}}
+\def\pexp{p_\mathrm{exp}}
+
+%-----------------------------------------------------------------------
+% Switching between "student" and "solution" version of the document:
+\usepackage{comment}
+\specialcomment{solution}{\ \\ \textbf{Solution: }}{}
+% Comment out the next line to get the "Student" version
+\ifthenelse{\boolean{isstudent}}{\excludecomment{solution}}{}
+
+\specialcomment{student}{}{}
+\newcommand{\studentspace}[2]{\ifthenelse{\boolean{isstudent}}{\vspace{#1}\\#2}{}}
+% Comment out the following four lines to get the "Solution" version
+
+ \ifthenelse{\boolean{isstudent}}{}{\excludecomment{student}
+ \usepackage{draftwatermark}\SetWatermarkText{Solution}\SetWatermarkScale{2}}
+
+%-----------------------------------------------------------------------
+
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
 \usepackage{enumerate}
-\usepackage{setspace}
-\usepackage[left=2.5cm,top=2cm,right=3cm,bottom=3cm,bindingoffset=0.5cm]{geometry}
-\usepackage{titlesec}
-\usepackage{lineno}
-%\usepackage{enumitem}
+\usepackage{bm}
+\usepackage{datetime}\newcommand{\dating}[1]{#1$\mid$%
+\newdateformat{mydate}{\THEYEAR-\twodigit{\THEMONTH}-\twodigit{\THEDAY}}%
+\mydate\today}
+\usepackage{natbib}
+% a4 is size 8.3 × 11.7
+\textwidth6.8in
+\textheight10.2in
+\topmargin0in
+\oddsidemargin-.25in
+\evensidemargin-.25in
+\headsep-.25in
+\headheight0pt
+\tabcolsep0pt
+\parindent0pt
+\parskip10pt plus2pt minus1pt
 
-\usepackage{tabularx}
-
-
-\def\logit{\mathsf{logit}}
-\DeclareMathOperator{\E}{\mathsf{E}} 
-\def\SBP{\text{SBP}}
-\def\G{\text{G}}
-\def\T{\text{T}}
-\def\o{_{\text{obs}}}
-\def\given{\,|\,}
-\def\na{\tt{NA}}
-\def\nin{\noindent}
-\def\mm#1{\ensuremath{\boldsymbol{#1}}} % version: amsmath
-\definecolor{grey}{rgb}{.6,.6,.6}
-\newcommand{\p}{\operatorname{{p}}} % Density function
-\newcommand{\Var}{\text{Var}} % Varianz
-\newcommand{\Cor}{\text{Cor}} % correlation
-\newcommand{\latin}[1]{\textit{#1}}
-\newcommand{\abk}[1]{\mbox{#1}\xdot}
-\DeclareRobustCommand\xdot{\futurelet\token\Xdot}
-\def\Xdot{%
-  \ifx\token\bgroup.%
-  \else\ifx\token\egroup.%
-  \else\ifx\token\/.%
-  \else\ifx\token\ .%
-  \else\ifx\token!.%
-  \else\ifx\token,.%
-  \else\ifx\token:.%
-  \else\ifx\token;.%
-  \else\ifx\token?.%
-  \else\ifx\token/.%
-  \else\ifx\token'.%
-  \else\ifx\token).%
-  \else\ifx\token-.%
-  \else\ifx\token+.%
-  \else\ifx\token~.%
-  \else\ifx\token.%
-  \else.\ %
-  \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi%
-}
-\newcommand{\eg}{\abk{\latin{e.\,g}}}
-\newcommand{\ie}{\abk{\latin{i.\,e}}}
-%\newcommand{\hl}{\textcolor{blue}} 
-\newcommand{\hll}{\textcolor{blue}}
-
-\titleformat*{\section}{\large\bfseries\sffamily}
-\titleformat*{\subsection}{\large\bfseries\sffamily}
-\titleformat*{\subsubsection}{\bfseries\sffamily}
-\titleformat*{\paragraph}{\bfseries\sffamily}
+%\input{newCommands}
+\pagestyle{empty}
 
 
 
 \begin{document}
 \begin{center}
-{\bf Bio144, 6./7. April 2017} \\[8mm] 
+{\bf Bio144, 4./5. April 2019} \\[8mm] 
 {\large Solution to practical part 7: Exercise on linear algebra}\\[10mm]
 \end{center}
 
@@ -193,7 +174,7 @@ for (i in 1:100) {
 @
 
 \item We procude the required graphs using \texttt{ggplot}. Load the libraries:
-<<>>=
+<<warning=FALSE,message=FALSE>>=
 library(ggplot2)
 library(tidyr)
 library(dplyr)
@@ -212,7 +193,8 @@ ggplot(r.coef,aes(x=beta2)) + geom_histogram()
 @
 
 Or use the \texttt{gather()} function from the \texttt{tidyr} package, which has the advantage that you can then use \texttt{facet\_wrap()}:
-<<fig=T,echo=T,width=6,height=3>>=
+
+<<fig1,fig.width=7, fig.height=3.5,out.width="12cm">>=
 ggplot(gather(r.coef, key=variable, value=value), aes(value)) +
   geom_histogram(bins=10) + facet_wrap(~variable, scales = "free") + 
   theme_bw()
@@ -233,14 +215,14 @@ ggplot(gather(r.coef, key=variable, value=value), aes(value)) +
 % \eject
 For the scatterplots we can continue to use \texttt{r.coef}:
 
-\setkeys{Gin}{width=0.3\textwidth}
-<<fig=T,echo=T,width=3,height=3>>=
+ 
+<<fig2,fig.width=3.5, fig.height=3.5,out.width="5cm">>=
 ggplot(r.coef,aes(x=beta0,y=beta1)) + geom_point()  
 @
-<<fig=T,echo=T,width=3,height=3>>=
+<<fig3,fig.width=3.5, fig.height=3.5,out.width="5cm">>=
 ggplot(r.coef,aes(x=beta0,y=beta2)) + geom_point()
 @
-<<fig=T,echo=T,width=3,height=3>>=
+<<fig4,fig.width=3.5, fig.height=3.5,out.width="5cm">>=
 ggplot(r.coef,aes(x=beta1,y=beta2)) + geom_point()
 @
 

@@ -61,16 +61,12 @@
 %\newcommand{\hl}{\textcolor{blue}} 
 \newcommand{\hll}{\textcolor{blue}}
 
-\titleformat*{\section}{\large\bfseries\sffamily}
-\titleformat*{\subsection}{\large\bfseries\sffamily}
-\titleformat*{\subsubsection}{\bfseries\sffamily}
-\titleformat*{\paragraph}{\bfseries\sffamily}
 
 
 
 \begin{document}
 \begin{center}
-{\bf Bio144, 6./7. April 2017} \\[8mm] 
+{\bf Bio144, 4./5. April 2019} \\[8mm] 
 {\large Practical part 7: Exercise on linear algebra}\\[10mm]
 \end{center}
 

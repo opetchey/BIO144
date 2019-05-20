@@ -18,7 +18,6 @@
 \usepackage{amsmath,natbib}
 \usepackage{mathbbol}
 \usepackage{babel}
-\usepackage{SweaveSlides}
 \usepackage{multicol}
 \usepackage{xcolor}
 
@@ -82,8 +81,21 @@
 
 
 \begin{document}
-\SweaveOpts{width=6,height=4}
 \fboxsep5pt
+<<setup, include=FALSE, cache=FALSE, results='hide'>>=
+library(knitr)
+## set global chunk options
+opts_chunk$set(fig.path='figure/', 
+cache.path='cache/', fig.align='center', 
+fig.show='hold', par=TRUE, fig.align='center', cache=FALSE, 
+message=FALSE, 
+warning=FALSE,
+echo=FALSE, out.width="0.4\\linewidth", fig.width=6, fig.height=4.5, size="scriptsize", width=40)
+opts_chunk$set(purl = TRUE)
+knit_hooks$set(purl = hook_purl)
+options(size="scriptsize")
+opts_chunk$set(message = FALSE)
+@
 
 \frame{
 \title[]{ \centering \Huge Kurs Bio144: \\
@@ -94,6 +106,24 @@ Datenanalyse in der Biologie}%\\[.3cm]
 
 
 \maketitle
+}
+
+
+\frame[containsverbatim]{\frametitle{Recap of previous lecture}
+\begin{itemize}
+\item Model selection is difficult.\\[2mm]
+\item {\bf Predictive} vs {\bf explanatory} models.\\[2mm]
+\item Information criteria for predictive models: AIC, AIC$_c$ and BIC \\
+$\qquad \qquad\rightarrow$ {\bf model fit vs model complexity}\\[2mm]
+
+\item Automatic model selection is inappropriate for explanatory models!\\[2mm]
+\item Types of explanatory models
+\begin{itemize}
+\item confirmatory
+\item exploratory
+\end{itemize}
+\item Strategies to fit explanatory models.
+\end{itemize}
 }
 
 
@@ -108,32 +138,15 @@ Datenanalyse in der Biologie}%\\[.3cm]
 %\item Todo: Ev. introduce the idea of Bayes factors!
 %\item Todo: Give p-hacking app in BC material (or for one of the study weeks)
 \end{itemize}
-
  
 }
 
 
 \frame{\frametitle{Course material covered today}
 
-The lecture material of today is based on the following literature:\\[4mm]
-\begin{itemize}
-\item Literature and articles that you will have to read in the second self-study week (second week of May).
-\end{itemize}
-
+The lecture material of today is based, in part, on the literature that you studied during the self-study week (before Easter).
 
 }
-
-\frame[containsverbatim]{\frametitle{Recap of previous lecture}
-\begin{itemize}
-\item Model selection is difficult.\\[2mm]
-\item Information criteria: AIC, AIC$_c$ and BIC \\
-$\qquad \qquad\rightarrow$ {\bf model fit vs model complexity}\\[2mm]
-\item {\bf Predictive} vs {\bf explanatory} models.\\[2mm]
-\item Automatic model selection is inappropriate for explanatory models!\\[2mm]
-\item Caveats of $p$-values: biological relevance vs statistical significance
-\end{itemize}
-}
-
 
 
 
@@ -152,7 +165,7 @@ $P$-values are often used for \emph{statistical testing}, e.g.\ by checking if $
 \item Test if a regression coefficient $\beta_x\neq 0$ in a regression model.\\[6mm]
 \end{itemize}
 
-Such tests are useful whenever a {\bf decision} needs to be made (e.g., in clinical trials, intervention actions in ecology etc.).
+Such tests might be useful whenever a {\bf decision} needs to be made (e.g., in clinical trials, intervention actions in ecology etc.).
 }
 
 
@@ -160,7 +173,7 @@ Such tests are useful whenever a {\bf decision} needs to be made (e.g., in clini
 
 In regression modeling, the $p$-value is often used as an indicator of covariate importance. Remember the mercury example:
 
-<<echo=F,width=4.5,height=4>>=
+<<echo=F>>=
 d.hg <- read.table("../../data_examples/Hg/Hg_urin.csv",header=T, sep=",")
 d.hg["106","amalgam_quant"] <- 5 # correct for the outlier
 d.hg <- d.hg[-11]
@@ -170,7 +183,7 @@ r.lm.hg <- lm(log10(Hg_urin) ~ log10(Hg_soil) + vegetables + migration + smoking
              sqrt(amalgam) + age * mother + sqrt(fish) + last_fish,d.hg)
 @
 
-<<results=tex,echo=F>>=
+<<results="asis",echo=F>>=
 library(biostatUZH)
 tableRegression(r.lm.hg)
 @
@@ -192,7 +205,7 @@ $P$-value {\bf criticism is} as {\bf old} as statistical significance testing (1
 \item Publication bias: Studies with $p<0.05$ are more likely to be published than ``non-significant'' results.\\[2mm]
 
 
-\item Recent articles in \emph{Science}, \emph{Nature} or a statement by the \emph{American Statistical Associaton (ASA)} in March 2016 show that the debate still continues \citep{goodman2016,wasserstein.lazar2016}.\\[2mm]
+\item Recent articles in \emph{Science}, \emph{Nature} or a statement by the \emph{American Statistical Associaton (ASA)} in March 2016 show that the debate still continues \citep{goodman2016,wasserstein.lazar2016,amrhein.etal2019}.\\[2mm]
 
 \item Model selection using $p$-values may lead to a \alert{model selection bias} (see last week).\\[2mm]
 \end{itemize}
@@ -238,8 +251,7 @@ The {\bf formal definition of $p$-value} is the probability to observe a data su
 
 
  
-\setkeys{Gin}{width=1\textwidth}
-<<pValFig,fig=T,width=8,height=4,echo=F>>=
+<<pValFig,fig.width=9, fig.height=4.5,out.width="9cm">>=
 par(mfrow=c(1,2))
 
 zz1 <- qnorm(0.025)
@@ -307,7 +319,7 @@ The $p$-value is {\bf not} the probability that the Null Hypothesis is true!!!
 In February, 2014, George Cobb, Professor Emeritus of Mathematics and Statistics at Mount
 Holyoke College, posed these questions to an ASA discussion forum:\\[4mm]
 
-Q: Why do so many colleges and grad schools teach p = .05?\\
+Q: Why do so many colleges and grad schools teach p = 0.05?\\
 A: Because that's still what the scientific community and journal editors use.\\[2mm]
 
 Q: Why do so many people still use p = 0.05?\\
@@ -320,11 +332,12 @@ A: Because that's what they were taught in college or grad school.
 In regression models:\\[2mm]
 \begin{itemize}
 \item A low $p$-value does not automatically imply that a variable is ``important''.
-\item ``Is there an effect?'' v.s. ''How much of an effect is there?''.\\[6mm]
+\item ``Is there an effect?'' v.s. ''How much of an effect is there?''.\\[3mm]
 \end{itemize}
 \begin{center}
- \includegraphics[width=7cm]{pictures/pValueEffectSize.jpg}
+ \includegraphics[width=6.8cm]{pictures/pValueEffectSize.jpg}
  \end{center}
+ \vspace{-5mm}
  {(\scriptsize from Goodman, 2008)}
 }
 
@@ -366,9 +379,9 @@ Example: Small effect sizes in regression models. \\
 Suggestions:
 \begin{enumerate}
 \item Use $p$-values, but don't over-interpret them, \alert{use them properly}.\\[2mm]
-\item Look at \alert{effect sizes} and \alert{confidence intervals}.\\[2mm]
-\item Look at \alert{relative importances} of covariates.\\[2mm]
-\item {\bf Don't use $p$-values for model selection.} \\[2mm]
+\item Also look at \alert{effect sizes} and \alert{confidence intervals}.\\[2mm]
+\item Also look at \alert{relative importances} of covariates.\\[2mm]
+\item {\bf NEVER use $p$-values for model selection.} \\[2mm]
 \end{enumerate}
 
 }
@@ -392,7 +405,7 @@ But: The level of significance must also depend on the context!
 }
 
 \frame{\frametitle{}
-The most recent suggestion by 72 authors in the field:\\[4mm]
+A suggestion from 2017 by 72 authors in the field:\\[4mm]
 
 \includegraphics[width=10cm]{pictures/benjamin.png}\\
 {\tiny (Benjamin et al., 2017, Nature Human Behaviour)}\\[6mm]
@@ -405,10 +418,26 @@ Their suggestion: replace $p<0.05$ by $p<0.005$. More precisely:\\[2mm]
 }
 
 
+\frame{\frametitle{}
+The most recent suggestion, signed by $>800$ researchers:
+
+\begin{center}
+\includegraphics[width=8cm]{pictures/retire_significance.png} 
+\end{center}
+%{\tiny (Amrhein et al., 2019, Nature)}
+
+Their suggestion: Do not use the term ``statistical significance'' at all.\\[2mm]
+% \begin{itemize}
+% \item Use $p<0.005$ for {\bf statistical significance.}
+% \item Use $0.005 < p < 0.05$ as {\bf suggestive evidence}.
+% \end{itemize}
+}
+
+
 
 \frame[containsverbatim]{
 In the Hg example:
-<<results=tex,echo=F>>=
+<<results="asis",echo=F>>=
 library(biostatUZH)
 tableRegression(r.lm.hg)
 @
@@ -427,11 +456,11 @@ Ask: {\bf Is the effect size \emph{relevant}?}
 \end{minipage}}\\[8mm]
 
 {\bf Example}\\[2mm] 
-WHO recommendation concerning smoking and the consumption of processed meat. Both, smoking and meat consumption, appear to be carcinogenic.
+WHO recommendation concerning smoking and the consumption of processed meat. Both, smoking and meat consumption, are ``significantly'' increasing the probability to get cancer.
 
 \begin{itemize}
 \item 50g processed meat per day increases the risk for colon cancer by a factor of 1.18 (+18\%).
-\item Smoking increases the risk for cancer by a factor of 3.6 (+260\%).\\[6mm]
+\item Smoking increases the risk to get any type of cancer by a factor of 3.6 (+260\%).\\[6mm]
 \end{itemize}
 
 Thus: Although both, meat consumption and smoking, are carcinogenic (``significant''), their {\bf effect sizes are vastly different}!
@@ -455,9 +484,9 @@ Ask: {\bf Which range of true effects is statistically consistent with the obser
 
 {\bf Example}\\[2mm] 
 
-Body fat example, slide 39 of lecture 2. \\[3mm]
+Body fat example, slide 40 of lecture 3. \\[3mm]
 
-The effect estimate for the effect of BMI on body fat is given as  $\hat\beta_{BMI} = 1.82$, 95\% CI from 1.61 to 2.03. \\[3mm]
+The estimate for the slope of BMI in the regression for body fat is given as  $\hat\beta_{BMI} = 1.82$, 95\% CI from 1.61 to 2.03. \\[3mm]
 
 {\bf Interpretation:} for an increase in the bmi by one index point, roughly 1.82\% percentage points more bodyfat are expected, and all true values for $\beta_{BMI}$ between 1.61 and 2.03 are {\bf compatible with the observed data}. \\[2mm]
 
@@ -498,7 +527,7 @@ in a model, particularly in observational studies.\\[4mm]
 \frame{\frametitle{Relative importance: Decomposing $R^2$}
 {\bf Remember:} $R^2$ indicates the proportion of variance explained by {\bf all} covariates in a model
 \begin{equation*}
-y_i = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_2 x_i^{(m)} + e_i   \ . 
+y_i = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_2 x_i^{(m)} + \epsilon_i   \ . 
 \end{equation*}
 ~\\
 
@@ -520,12 +549,12 @@ Further, it is required that
 
 
 \frame{
-	\frametitle{Question: How would you define/calculate relative importance?}
+	\frametitle{How would you define/calculate relative importance?}
 
 	\begin{itemize}
 		\item {\bf Idea 1:} Fit simple models including only one covariate at the time, \emph{i.e.}:
 		\begin{equation*}
-y_i = \beta_0 + \beta_j x_i^{(j)} + e_i   
+y_i = \beta_0 + \beta_j x_i^{(j)} + \epsilon_i   
 \end{equation*}
 for each variable $x^{(j)}$ and use the respective $R^2$ as $r_j$. \\[6mm]
 
@@ -548,7 +577,7 @@ To understand the problem of ideas 1 and 2, let us fit three models for $\log(Hg
 \end{itemize}
 These two variables are correlated (people who consume a lot of fish are more likely to have it consumed within the last 3 days).\\[-10mm]
 
-<<echo=F,width=4.5,height=4>>=
+<<echo=F>>=
 r.lm_fish <- lm(log10(Hg_urin) ~ sqrt(fish),d.hg)
 r.lm_amalgam <- lm(log10(Hg_urin) ~ last_fish,d.hg)
 r.lm_fish_amalgam <- lm(log10(Hg_urin) ~ last_fish+ sqrt(fish),d.hg)
@@ -556,9 +585,9 @@ r.lm_fish_amalgam <- lm(log10(Hg_urin) ~ last_fish+ sqrt(fish),d.hg)
 
 \vspace{8mm}
 \begin{eqnarray} 
-y_i = \beta_0 + \beta_{1}  x^{(1)}_i  +   + e_i   & \quad &  R^2 = \Sexpr{format(summary(r.lm_fish)$r.squared,nsmall=2,digits=1)}\\
-y_i = \beta_0 + \beta_{2}  x^{(2)}_i  +   + e_i   & \quad &  R^2 = \Sexpr{format(summary(r.lm_amalgam)$r.squared,nsmall=2,digits=1)}\\
-y_i = \beta_0 + \beta_{1}   x^{(1)}_i  + \beta_{2}  x^{(2)}_i    + e_i  & \quad & R^2 = \Sexpr{format(summary(r.lm_fish_amalgam)$r.squared,2,2,2)} 
+y_i = \beta_0 + \beta_{1}  x^{(1)}_i  +   + \epsilon_i   & \quad &  R^2 = \Sexpr{format(summary(r.lm_fish)$r.squared,nsmall=2,digits=1)}\\
+y_i = \beta_0 + \beta_{2}  x^{(2)}_i  +   + \epsilon_i   & \quad &  R^2 = \Sexpr{format(summary(r.lm_amalgam)$r.squared,nsmall=2,digits=1)}\\
+y_i = \beta_0 + \beta_{1}   x^{(1)}_i  + \beta_{2}  x^{(2)}_i    + \epsilon_i  & \quad & R^2 = \Sexpr{format(summary(r.lm_fish_amalgam)$r.squared,2,2,2)} 
 \end{eqnarray}
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
@@ -585,7 +614,7 @@ Various proposals to calculate relative importance ($R^2$ decomposition) have be
 \end{itemize}
 
 
-{\bf Luckily, the {\tt R}-package \myalert{{\tt relaimpo}}  (Groemping 2006) contains the function {\tt calc.relimp()} that does this for us!}
+Luckily, the {\tt R}-package \myalert{{\tt relaimpo}}  (Groemping 2006) contains the function {\tt calc.relimp()} that does this for us!
 
 }
 
@@ -662,8 +691,8 @@ lmg.hg.2 <- calc.relimp(r.lm.hg2)$lmg
 ~\\[4mm]
 
 \begin{itemize}
-\item {\bf Case 1:} Relative importance of \texttt{fish}: \Sexpr{format(lmg.hg[8]*100,2,2,2)}\% (see slide \ref{sl:relimp}).\\[2mm]
-\item {\bf Case 2:} Relative importance of \texttt{fish}: $\Sexpr{format(lmg.hg.2[8]*100,2,2,2)}$\% .\\[8mm] 
+\item {\bf Model 1:} Relative importance of \texttt{fish}: \Sexpr{format(lmg.hg[8]*100,2,2,2)}\% (see slide \ref{sl:relimp}).\\[2mm]
+\item {\bf Model 2:} Relative importance of \texttt{fish}: $\Sexpr{format(lmg.hg.2[8]*100,2,2,2)}$\% .\\[8mm] 
 \end{itemize}
 
 {\bf Interpretation:} If one of two correlated variables is removed, the other absorbs some of the importance from it.
@@ -678,7 +707,7 @@ lmg.hg.2 <- calc.relimp(r.lm.hg2)$lmg
 
 \frame{\frametitle{Causality vs correlation}
 
-In {\bf explanatory models} the ultimate goal usually is to reveal \alert{causal relationships} between the covariates and the response.\\[2mm]
+In {\bf explanatory models} the ultimate goal is to reveal \alert{causal relationships} between the covariates and the response.\\[2mm]
 
 {\bf Examples:}
 \begin{itemize}
@@ -828,7 +857,7 @@ An observed effect is more likely to be \emph{causal} if participants were \emph
  \hline 
  {\bf Situation} & Existing, cannot be influenced  & Artificial, designed \\[3mm]
  {\bf Analysis} & Difficult & Simple    \\
-   & (see model selection issues) & \alert{no model selection}   \\[3mm]
+   & (model selection issues) & \alert{no model selection}   \\[3mm]
  {\bf Interpretation} & Difficult, & Clear,   \\
   & especially w.r.t.\ causality & ``proofs'' causal relationship 
  \end{tabular}
@@ -838,7 +867,7 @@ An observed effect is more likely to be \emph{causal} if participants were \emph
 
 
 
-\frame{\frametitle{Causality considerations for model selection}
+\frame{\frametitle{Causality considerations for model building}
  
 
 It is {\bf widely unknown} that a model can be broken by the inclusion of a ``wrong'' covariate, which is causally associated in the wrong direction:\\[4mm]

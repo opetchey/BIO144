@@ -46,7 +46,8 @@ And keep only the important variables, and remove duplicates:
 
 ```{r}
 dd <- dplyr::select(dd_all, bodyfat, age, weight, height, bmi, neck, chest, abdomen,
-           hip, thigh, knee, ankle, biceps)
+           hip, thigh, knee, ankle, biceps) %>%
+  na.omit()
 ```
 
 
