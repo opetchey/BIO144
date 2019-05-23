@@ -13,14 +13,14 @@ names(class_RTs) <- c("Timestamp", "ID", "Gender", "Pref_Reaction_time_1",
                       "Weight_kgs", "Handed", "Nonpref_Reactiontime",  
                       "Pref_Reaction_time_2", "Pref_Reaction_time_3",  
                       "Pref_Reaction_time_4", "Pref_Reaction_time_5",
-                      "Pref_Reactiontime")
+                      "Pref_Reactiontime", "Random_number")
 
-dd <- mutate(class_RTs,Nonpref_Reactiontime=Nonpref_Reactiontime*1000)
+dd <- mutate(class_RTs,Nonpref_Reactiontime=Nonpref_Reactiontime)
 
 Mean_pref_reactiontime <-  select(dd, Pref_Reaction_time_1, Pref_Reaction_time_2, Pref_Reaction_time_3, Pref_Reaction_time_4, Pref_Reaction_time_5)  %>% rowMeans
 
 dd <- mutate(dd, Pref_Reactiontime = Mean_pref_reactiontime)
-dd <- filter(dd,Nonpref_Reactiontime > Pref_Reactiontime-200 & Nonpref_Reactiontime <1000)
+#dd <- filter(dd,Nonpref_Reactiontime > Pref_Reactiontime-200 & Nonpref_Reactiontime <1000)
 
 ggplot(dd,aes(x=Pref_Reactiontime,y=Nonpref_Reactiontime)) + geom_point()
 #ggplot(dd,aes(x=log10(Pref_Reactiontime),y=log10(Nonpref_Reactiontime))) + geom_point()
@@ -29,7 +29,11 @@ ggplot(dd,aes(x=Pref_Reactiontime,y=Nonpref_Reactiontime)) + geom_point()
 
 #write.table(dd2,file="/home/steffi/Teaching/Bio144/practical/practical11/reaction_times.csv",sep=",",quote=FALSE,row.names=F)
 
-ggplot(dd,aes(x=Pref_Reactiontime,y=Nonpref_Reactiontime)) + geom_point() + geom_smooth(method="lm",col=1) + geom_point(mapping=aes(x=Pref_Reaction_time_1),colour=2) + geom_smooth(mapping=aes(x=Pref_Reaction_time_1),method="lm",col=2)#+ xlim(0,700) + ylim(0,700)  
+ggplot(dd,aes(x=Pref_Reactiontime,y=Nonpref_Reactiontime)) +
+  geom_point() +
+  geom_smooth(method="lm",col=1) +
+  geom_point(mapping=aes(x=Pref_Reaction_time_1),colour=2) +
+  geom_smooth(mapping=aes(x=Pref_Reaction_time_1),method="lm",col=2)#+ xlim(0,700) + ylim(0,700)  
 
 
 
