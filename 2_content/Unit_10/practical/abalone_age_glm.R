@@ -20,46 +20,41 @@ ggplot(dd, aes(x=Rings)) + geom_histogram(bins=15)
 ## not too bad, lets leave it like this
 
 ## the full model with no interactions
-full_mod <- glm(Rings ~ Sex + Length_mm + Diameter_mm + Height_mm + Whole_weight_g +
+full_glm <- glm(Rings ~ Sex + Length_mm + Diameter_mm + Height_mm + Whole_weight_g +
                  Shuck_weight_g + Viscera_weight_g + Shell_weight_g, data=dd,
                 family=poisson)
 
-full_mod2 <- glm(Rings ~ Sex +  Diameter_mm + Height_mm + Whole_weight_g +
-                  Shuck_weight_g + Viscera_weight_g + Shell_weight_g +Length_mm, data=dd,
-                family=poisson)
 
-summary(full_mod)
-anova(full_mod)
-anova(full_mod2)
+summary(full_glm)
+anova(full_glm)
 
+dropterm(full_glm, sorted = T)
 ## remove length_mm
-m1 <- glm(Rings ~ Sex + Diameter_mm + Height_mm + Whole_weight_g +
-                 Shuck_weight_g + Viscera_weight_g + Shell_weight_g, data=dd,
-          family=poisson)
-summary(m1)
-## remove shell weight
-m2 <- glm(Rings ~ Sex + Diameter_mm + Height_mm + Whole_weight_g +
-           Shuck_weight_g + Viscera_weight_g, data=dd,
-          family=poisson)
-summary(m2)
-## remove height
-m3 <- glm(Rings ~ Sex + Diameter_mm + Whole_weight_g +
-           Shuck_weight_g + Viscera_weight_g, data=dd,
-          family=poisson)
-summary(m3)
-## at this point in the lm we stopped. All were significant at 0.05
-## Viscera_weight_g -14.5064     4.1044  -3.534 0.000457 ***
+glm1 <- update(full_glm, . ~ . - Length_mm)
 
-m4 <- glm(Rings ~ Sex + Diameter_mm + Whole_weight_g +
-            Shuck_weight_g, data=dd,
-          family=poisson)
-summary(m4)
+dropterm(glm1, sorted = T)
+## remove length_mm
+glm2 <- update(glm1, . ~ . - Shell_weight_g)
 
-m5 <- glm(Rings ~ Diameter_mm + Whole_weight_g +
-            Shuck_weight_g, data=dd,
-          family=poisson)
-summary(m5)
-autoplot(m5)
+dropterm(glm2, sorted = T)
+## remove length_mm
+glm3 <- update(glm2, . ~ . - Height_mm)
+
+dropterm(glm3, sorted = T)
+## remove length_mm
+glm4 <- update(glm3, . ~ . - Sex)
+
+dropterm(glm4, sorted = T)
+## remove length_mm
+glm5 <- update(glm4, . ~ . - Sex)
+
+dropterm(glm5, sorted = T)
+## remove length_mm
+glm6 <- update(glm5, . ~ . - Viscera_weight_g)
+
+dropterm(glm6, sorted = T)
+
+
 
 ## for next line to work, need to do linear m3
 lm3 <- lm(Rings ~ Sex + Diameter_mm + Whole_weight_g +
