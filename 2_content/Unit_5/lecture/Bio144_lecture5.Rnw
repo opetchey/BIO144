@@ -432,7 +432,7 @@ Remember that in linear regression the modeling assumption is that the errors $\
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
 \begin{enumerate}[a)]
-\item The expected value of each residual $\epsilon_i$ is 0: $\E(\epsilon_i)=0$.\\[2mm]
+\item The expected value of each residual $\epsilon_i$ is 0: $\E(\epsilon_i)=0$. (This is not the same as asumming that all residuals equal 0.\\[2mm]
 \item All $\epsilon_i$ have the same variance: $\Var(\epsilon_i)=\sigma^2$. \\[2mm]
 \item The $\epsilon_i$ are normally distributed.\\[2mm]
 \item The $\epsilon_i$ are independent of each other.
