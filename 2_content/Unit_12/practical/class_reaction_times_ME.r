@@ -47,7 +47,7 @@ dd2 <- select(dd,Pref_Reaction_time_1,
               Pref_Reaction_time_3,
               Pref_Reaction_time_4,
               Pref_Reaction_time_5)
-error_var <- sum((dd2 - rowMeans(dd2))^2) / (115*4) /5
+error_var <- sum((dd2 - rowMeans(dd2))^2) / (nrow(dd2)*4) /5
 
 
 r.lm <- lm(Nonpref_Reactiontime ~ Pref_Reactiontime, dd,x=TRUE)
