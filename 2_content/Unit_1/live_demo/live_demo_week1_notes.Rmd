@@ -32,6 +32,8 @@ And we should be able to collect the data, within our current constraints, neces
 
 The question we will address is "do male and female reaction times of students at the University of Zurich differ?".
 
+More specifically "how different is the average reaction time of a man compared to the average reaction time of a woman"? And is that difference large or small relative to the variation among men, and among women?
+
 Why this question? Reaction times are important, safety, sport...
 
 ## Expectation
@@ -291,6 +293,13 @@ And the difference between the means: [r round(diff(my_ttest$estimate),3)] and t
 * What could have been done better?
 * What are the implications of the findings?
 
+## Practical significance
+
+100 km per hour is 100 x 10^3 m per hour = 10^5 m per hour = 10^5 / 3600 m per sec
+10^5 / 3600 = 27 m per sec
+
+How many individual women are faster than the average of men?
+And the other way around?
 
 
 
