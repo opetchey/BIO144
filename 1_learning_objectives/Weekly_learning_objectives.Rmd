@@ -3,14 +3,16 @@ title: "Weekly Learning Objectives - BIO144, Data Analysis for Biologists"
 author: "Owen Petchey & Stephanie Muff"
 date: "September 2018"
 output:
+  pdf_document:
+    toc: yes
   html_document:
     df_print: paged
     toc: yes
-  pdf_document:
-    toc: yes
 ---
 
+# Document history
 
+Checked and in use for FS2020.
 
 # Overarching learning objectives {-}
 
