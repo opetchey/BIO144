@@ -112,7 +112,7 @@ library(dplyr)
 library(ggplot2)
 
 ## Now read in the data, using the read_csv() function. We give it the URL of the published version of the google sheet data.
-the_URL <- "https://docs.google.com/spreadsheets/d/e/2PACX-1vQFgYX1QhF9-UXep22XmPow1ZK5nbFHix9nkQIa0DzqUhPtZRxH1HtY-hsno32zDiuIHiLb2Hvphk1L/pub?gid=1188775314&single=true&output=csv"
+the_URL <- "https://docs.google.com/spreadsheets/d/e/2PACX-1vS1ebhHb4gnepfKzXadFeZdqBIRP-mQfxgZ5_FZ3i9ZBbC9nRHZ5xoXX5_OsQWrPtDsidRoG-9XwD3o/pub?gid=1188775314&single=true&output=csv"
 class_RTs <- read_csv(the_URL)
 
 ## Have a look at the data in R
@@ -280,7 +280,7 @@ Lots of information there. We will teach you how to read this in later lectures.
 
 For now, we can find the p-value: [r round(my_ttest$p.value, 5)].
 And the difference between the means: [r round(diff(my_ttest$estimate),3)] and the lower ([r round(my_ttest$conf.int[1],3)]) and upper ([r round(my_ttest$conf.int[2],3)]) 95% confidence limits on that difference.
-```
+
 
 
 ## Critical thinking
@@ -292,6 +292,7 @@ And the difference between the means: [r round(diff(my_ttest$estimate),3)] and t
 * How do the qualitative and quantitative findings compare to those in previous studies?
 * What could have been done better?
 * What are the implications of the findings?
+
 
 ## Practical significance
 
