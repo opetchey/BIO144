@@ -39,12 +39,21 @@ class_RTs
 ## Clean up the column / variable names:
 ## Must be very careful to get the next line right!!! Really important!!!
 ## Otherwise columns will have the wrong names, which would be very confusing
-names(class_RTs) <- c("Timestamp", "ID", "Gender", "Pref_Reaction_time_1",
-                      "Verbal_memory_score", "Number_memory_score",
+names(class_RTs) <- c("Timestamp",
+                      "ID",
+                      "Gender",
+                      "Pref_Reaction_time_1",
+                      "Verbal_memory_score",
+                      "Number_memory_score",
                       "Visual_memory_score",
-                      "Weight_kgs", "Handed", "Nonpref_Reaction_time_ave",  "Pref_Reaction_time_2",
-                      "Pref_Reaction_time_3",  "Pref_Reaction_time_4", "Pref_Reaction_time_5",
-                      "Pref_Reaction_time", "Random_number")
+                      "Weight_kgs", "Handed",
+                      "Nonpref_Reaction_time_ave",
+                      "Pref_Reaction_time_2",
+                      "Pref_Reaction_time_3", 
+                      "Pref_Reaction_time_4",
+                      "Pref_Reaction_time_5",
+                      "Pref_Reaction_time",
+                      "Random_number")
 ## check the variable names are what we just tried to set them to be
 class_RTs
 #######################################################
@@ -107,7 +116,8 @@ ggplot(data=class_RTs, aes(x=Gender, y=Pref_Reaction_time)) +
 ## - Do you think the residuals will be normally distributed?
 ## - Do the two groups have similar variance?
 ## - Do there seem to be any outliers?
-## - Are data points independent? (You don't get this from the graph, but rather from knowing how the data were collected.)
+## - Are data points independent? (You don't get this from the graph,
+# but rather from knowing how the data were collected.)
 #######################################################
 
 
@@ -123,7 +133,8 @@ my_ttest
 ## Critical thinking
 # How might the work be flawed?
 # How might the analysis be flawed (assumptions violated)?
-# Is the difference (i.e. effect size) small, medium, large, relative to differences caused by other factors?
+# Is the difference (i.e. effect size) small, medium, large,
+# relative to differences caused by other factors?
 # How general might be the finding?
 # How do the qualitative and quantitative findings compare to those in previous studies?
 # What could have been done better?
