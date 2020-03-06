@@ -163,6 +163,7 @@ my_ttest
 ## Write a sentence that gives the direction and extent of difference,
 ## and a measure of certainty / uncertainty in that finding.
 ## Make a beautiful graph that very clearly communicates the findings!
-ggplot(data=???, aes(x=???, y=???)) +
+ggplot(data=class_RTs_filtered, aes(x=Gender, y=Pref_Reaction_time)) +
   geom_boxplot() +
-  ylab("Reaction time (seconds)")
+  geom_jitter(width= 0.1) +
+  ylab("Reaction time (milliseconds)")
