@@ -1,0 +1,935 @@
+\documentclass[english,9pt,aspectraio=169]{beamer}
+\usepackage{etex}
+\usetheme{uzhneu-en-informal}
+%\usepackage{uarial}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\RequirePackage{graphicx,ae}
+\usepackage{bm}
+\usepackage{fancybox,amssymb,color}
+\usepackage{pgfpages}
+\usepackage{booktabs}
+\usepackage{verbatim}
+\usepackage{animate}
+\usepackage{numprint}
+\usepackage{dsfont}
+\usepackage{tikz}
+\usepackage{amsmath,natbib}
+\usepackage{mathbbol}
+\usepackage{babel}
+%\usepackage{SweaveSlides}
+\usepackage{multicol}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\usetheme{uzhneu-en-informal}
+\DeclareMathOperator{\po}{Poisson}
+\DeclareMathOperator{\G}{Gamma}
+\DeclareMathOperator{\Be}{Beta}
+\DeclareMathOperator{\logit}{logit}
+\def\n{\mathop{\mathcal N}}
+
+\definecolor{Gray}{RGB}{139,137,137}
+\definecolor{darkred}{rgb}{0.8,0,0}
+\definecolor{Green}{rgb}{0,0.8,0.3}
+\definecolor{Blue}{rgb}{0,0,1}
+\def\myalert{\textcolor{darkred}}
+\def\myref{\textcolor{Gray}}
+\setbeamercovered{invisible}
+
+\renewcommand{\baselinestretch}{1.2}
+\beamertemplateballitem
+\DeclareMathOperator{\cn}{cn} % Copy number
+\DeclareMathOperator{\ccn}{ccn} % common copy number
+\DeclareMathOperator{\p}{p} % common copy number
+\DeclareMathOperator{\E}{E} % common copy number
+\DeclareMathOperator{\given}{|} % common copy number
+\def\given{\,|\,}
+\def\na{\tt{NA}}
+\def\nin{\noindent}
+\pdfpageattr{/Group <</S /Transparency /I true /CS /DeviceRGB>>}
+\def\eps{\varepsilon}
+
+\renewcommand{\P}{\operatorname{\mathsf{Pr}}} % Wahrscheinlichkeitsmaß
+\def\eps{\varepsilon}
+\def\logit{\text{logit}}
+%\newcommand{\E}{\mathsf{E}} % Erwartungswert
+\newcommand{\Var}{\text{Var}} % Varianz
+\newcommand{\NBin}{\text{NBin}}
+\newcommand{\Po}{\text{Po}}
+\newcommand{\N}{\mathsf{N}}
+
+\newcommand{\ball}[1]{\begin{pgfpicture}{-1ex}{-0.65ex}{1ex}{1ex}
+\usebeamercolor[fg]{item projected}
+
+{\pgftransformscale{1.75}\pgftext{\normalsize\pgfuseshading{bigsphere}}}
+{\pgftransformshift{\pgfpoint{0pt}{0.5pt}}
+\pgftext{\usebeamerfont*{item projected}{#1}}}
+\end{pgfpicture}}%
+\usepackage{multicol}
+\newcommand{\ballsmall}[1]{\begin{pgfpicture}{-1ex}{-0.65ex}{.2ex}{.2ex}
+
+{\pgftransformscale{1}\pgftext{\normalsize\pgfuseshading{bigsphere}}}
+{\pgftransformshift{\pgfpoint{0pt}{0.5pt}}
+\pgftext{\usebeamerfont*{item projected}{#1}}}
+\end{pgfpicture}}%
+
+
+
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+%\SweaveOpts{width=6,height=4}
+\fboxsep5pt
+
+
+<<setup, include=FALSE, cache=FALSE, results=hide>>=
+library(knitr)
+## set global chunk options
+opts_chunk$set(fig.path='figure/', 
+cache.path='cache/', fig.align='center', 
+fig.show='hold', par=TRUE, fig.align='center', cache=FALSE, 
+message=FALSE, 
+warning=FALSE,
+echo=FALSE, out.width="0.4\\linewidth", fig.width=6, fig.height=4.5, size="scriptsize", width=40)
+## opts_chunk$set(fig.path='figure/', 
+## cache.path='cache/', echo=FALSE, out.width="0.55\\linewidth",fig.width=6,fig.height=6, fig.align="center", message = FALSE)
+## par(mar=c(1,4.1,4.1,1.1))
+opts_chunk$set(purl = TRUE)
+knit_hooks$set(purl = hook_purl)
+options(size="scriptsize")
+opts_chunk$set(message = FALSE)
+@
+
+
+
+\frame{
+\title[]{ \centering \Huge Kurs Bio144: \\
+Datenanalyse in der Biologie}%\\[.3cm]
+\author[Stefanie Muff, Owen L.\ Petchey]{\centering Stefanie Muff  \& Owen L.\ Petchey }
+%\institute[]{Institute of Social and Preventive Medicine \\ Institute of Evolutionary Biology and Environmental Studies}
+\date[]{Lecture 4: Multiple linear regression \\ 11.~March 2019}
+
+
+\maketitle
+}
+
+
+\frame{\frametitle{Overview}
+\begin{itemize}
+
+\item Checking the assumptions of linear regression: the QQ-plot\\[2mm]
+\item Multiple predictors $x_1$, $x_2$, \ldots, $x_m$\\[2mm]
+\item $R^2$ in multiple linear regression\\[2mm]
+\item $t$-tests, $F$-tests and $p$-values\\[2mm]
+\item Binary and factor covariates\\[2mm]
+
+\end{itemize}
+}
+
+
+
+\frame{\frametitle{Course material covered today}
+
+The lecture material of today is based on the following literature:\\[4mm]
+\begin{itemize}
+\item Chapters 3.1, 3.2a-q of \emph{Lineare Regression}
+\item Chapters 4.1 4.2f, 4.3a-e of \emph{Lineare Regression}
+%\item Chapter 11.2 in the Stahel book \emph{Statistische Datenanalyse} 
+\end{itemize}
+}
+
+\frame[containsverbatim]{\frametitle{Recap of last week I}
+<<read.bodyfat,echo=F,eval=T>>=
+library(reporttools)
+library(biostatUZH)
+path <- "../../../data_examples/bodyfat/"
+d.bodyfat <- read.table(paste(path,"bodyfat.clean.txt",sep=""),header=T)
+d.bodyfat <- d.bodyfat[,c("bodyfat","age","gewicht","bmi","neck","abdomen","hip")]
+r.bodyfat <- lm(bodyfat ~ bmi,d.bodyfat)
+@
+
+\begin{itemize}
+\item The linear regression model for the data $\bm{y}=(y_1,\ldots,y_n)$ given $\bm{x}=(x_1,\ldots,x_n)$ is
+$$y_i = \alpha + \beta x_i + \epsilon_i \ , \qquad \epsilon_i\sim \N(0,\sigma^2) \  \text{independent}.$$\\[2mm]
+\item Estimate the parameters $\alpha$, $\beta$ and $\sigma^2$ by  \href{http://students.brown.edu/seeing-theory/regression-analysis/index.html#section1}{\textcolor{blue}{least squares}}.\\[2mm]
+\item The estimated parameters $\hat\alpha$, $\hat\beta$ contain \myalert{uncertainty} and are normally distributed around the true values. %(actually, also $\hat\sigma_e^2$...). \\[2mm]
+\item Use the knowledge about the distribution to formulate \myalert{statistical tests}, such as: Is $\beta=0$?\\
+$\rightarrow$ \alert{$T$-test} with $n-2$ degrees of freedom.\\[2mm]
+\item All this is done automatically by R:
+<<lmbodyfat,echo=T,eval=T>>=
+summary(r.bodyfat)$coef
+@
+\end{itemize}
+
+}
+
+
+ 
+
+\frame[containsverbatim]{\frametitle{Recap of last week II}
+Remember: 
+The assumption in linear regression is that the residuals follow a $\N(0,\sigma^2)$ distribution, implying that :\\[2mm]
+\colorbox{lightgray}{\begin{minipage}{10cm}
+\begin{enumerate}[a)]
+\item The expected value of $\epsilon_i$ is 0: $\E(\epsilon_i)=0$.\\[2mm]
+\item All $\epsilon_i$ have the same variance: $\Var(\epsilon_i)=\sigma^2$. \\[2mm]
+\item The $\epsilon_i$ are normally distributed.\\[2mm]
+\item The $\epsilon_i$ are independent of each other.
+\end{enumerate}
+\end{minipage}}
+~\\
+We started to do some residual analysis using the \myalert{Tukey-Anscombe plot} and the \myalert{histogram} of the residuals $R_i$.
+\vspace{-4mm}
+\begin{center}
+
+<<MCc, eval=T,fig.width=8, fig.height=4,warning=FALSE,echo=F,out.width="7cm">>=
+par(mfrow=c(1,2))
+plot(r.bodyfat$fitted,r.bodyfat$residuals,xlab="Fitted", ylab="Residuals")
+abline(h=0,lty=2)
+hist(r.bodyfat$residuals,nclass=20,xlab="Residuals",main="")
+@
+\end{center}
+
+}
+
+\frame[containsverbatim]{\frametitle{Another useful diagnostic plot: The QQ-plot}
+Usually, not the histogram of the residuals is plotted, but the so-called \myalert{quantile-quantile} (QQ) plot. The quantiles of the observed distribution are plotted against the quantiles of the respective theoretical (normal) distribution:
+
+\begin{multicols}{2}
+<<<QQ1, eval=T,fig.width=4.5, fig.height=4.5,warning=FALSE,echo=F,out.width="5cm">>=
+qqnorm(residuals(r.bodyfat))
+qqline(residuals(r.bodyfat))
+@
+\\[4mm]
+~\\
+If the points lie approximately on a straight line, the data is fairly normally distributed.\\[2mm]
+
+This is often ``tested'' by eye, and needs some experience.
+\end{multicols}
+}
+
+\frame[containsverbatim]{
+
+% Please read ``Quantil-Quantil-Diagramme'', Chapter 11.2., p.258-261, in ``Statistische Datenenalyse'' by W. Stahel (Mat183 literature).\\[2mm]
+% 
+% It gives a very nice and intuitive description of QQ diagrams! 
+The idea is that, for each observed point, theoretical quantiles are plotted against the sample quantiles.
+
+\vspace{-6mm}
+\begin{center}
+<<fig1, eval=T,fig.width=6.5, fig.height=4.5,warning=FALSE,echo=F,out.width="8cm">>=
+par(mfrow=c(1,2))
+x<-seq(-3,3,0.1)
+stdr <- sort(scale(r.bodyfat$residuals))
+
+s <- seq(2)  # one shorter than data
+x <- c(-2.5,qnorm(0.6),qnorm(0.6))
+y <- c(0.6,0.6,0)
+
+plot(stdr,pnorm(stdr),xlab="Theoretical quantiles",ylab="Cumulative distribution (F)")
+arrows(x[s], y[s], x[s+1], y[s+1])
+n<-nrow(d.bodyfat)
+plot(stdr,(1:n)/n,xlab="Sample quantiles",ylab="Empirical cumulative distribution")
+arrows(x[s], y[s], x[s+1], y[s+1])
+@
+\end{center}
+
+
+
+\textcolor{gray}{Optional:You may want to watch the youtube video for more explanation
+\href{https://www.youtube.com/watch?v=smJBsZ4YQZw}{\bf given here}.}
+}
+
+\frame{
+\begin{center}
+{\Large\textcolor{blue}{Multiple linear regression}}
+\end{center}
+}
+
+\frame[containsverbatim]{\frametitle{Bodyfat example}
+We have so far modeled bodyfat in dependence of bmi, that is: $(body fat)_i = \alpha + \beta \cdot bmi_i + \epsilon_i$.\\[2mm]
+
+However, other predictors might also be relevant for an accurate prediction of bodyfat.\\[4mm]
+
+{\bf Examples:} Age, neck fat (Nackenfalte), hip circumference, abdomen circumference etc.
+\vspace{-2mm}
+ 
+<<fig2, eval=T,fig.width=6, fig.height=3,warning=FALSE,echo=F,out.width="9.5cm">>=
+par(mfrow=c(1,3))
+plot(bodyfat ~ age,d.bodyfat,xlab="age", ylab="bodyfat (y)")
+plot(bodyfat ~ neck,d.bodyfat,xlab="neck", ylab="bodyfat (y)")
+plot(bodyfat ~ hip,d.bodyfat,xlab="hip", ylab="bodyfat (y)")
+@
+
+
+}
+
+\frame[containsverbatim]{
+\vspace{2mm}
+Or again the pairs plot:
+ \vspace{-4mm}
+<<fig3, eval=T,fig.width=6, fig.height=6,warning=FALSE,echo=F,out.width="9cm">>=
+pairs(d.bodyfat)
+@
+ 
+}
+
+\frame[containsverbatim]{\frametitle{Multiple linear regression model}
+The idea is simple: Just {\bf extend the linear model by additional predictors}.\\[4mm]
+
+\begin{itemize}
+\item Given several influence factors $x_i^{(1)}$, \ldots, $x_i^{(m)}$, 
+the straightforward extension of the simple linear model is\\[4mm]
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+\vspace{-3mm}
+\begin{eqnarray*}
+y_i &=& \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_m x_i^{(m)} + \epsilon_i  \\[2mm]
+\text{with  } \ \epsilon_i &\sim& \N (0,\sigma^2).
+\end{eqnarray*}
+\end{minipage}}
+~\\[6mm]
+\item The parameters of this model are $\bm\beta=(\beta_0,\beta_1,\ldots,\beta_m)$ and $\sigma^2$.
+\end{itemize}
+}
+
+\frame{\frametitle{}
+The components of $\bm\beta$ are again estimated using the {\bf least squares} method. Basically, the idea is (again) to minimize 
+$$\sum_{i=1}^n e_i^2$$
+with 
+$$e_i = y_i - (\beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_m x_i^{(m)}) $$ 
+
+It is a bit more complicated than for simple linear regression, see Section 3.4 of the Stahel script. \\[4mm]
+
+Some {\bf linear algebra} is needed to understand these sections, but we do not look into this for the moment. \\[4mm]
+
+
+}
+
+\frame{\frametitle{Multiple linear regression for bodyfat}
+Let us regress the proportion (\%) of bodyfat (from last week) on the predictors {\bf bmi} and {\bf age} simultaneously. The model is thus given as\\[4mm]
+\begin{eqnarray*}
+(bodyfat)_i &=& \beta_0 + \beta_1 \cdot bmi_i + \beta_2 \cdot age_i + \epsilon_i \ , \\
+\text{with} \quad \epsilon_i &\sim& \N(0,\sigma^2) \ .
+\end{eqnarray*}
+}
+
+\frame[containsverbatim]{\frametitle{}
+\emph{Before} we estimate the parameters, let us ask the questions that we intend to answer:\\[6mm]
+\begin{enumerate}
+\item Is the {\bf ensemble} of all covariates associated with the response?\\[4mm]
+\item If yes, which covariates are associated with the response? \\[4mm]
+\item Which proportion of response variability ($\sigma_y^2$) is explained by the model?
+\end{enumerate}
+
+}
+
+
+\frame[containsverbatim]{\frametitle{Multiple linear regression with R}
+
+Let's now fit the model with R, and quickly glance at the output:\\
+
+<<r.bodyfatM,eval=T,echo=T>>=
+r.bodyfatM <- lm(bodyfat ~ bmi + age, d.bodyfat) 
+
+summary(r.bodyfatM)
+@
+}
+
+\frame[containsverbatim]{\frametitle{Model checking}
+Before we look at the results, we have to check if the modelling assumptions are fulfilled:
+
+\begin{center}
+
+<<fmodelChecks, eval=T,fig.width=6, fig.height=3,warning=FALSE,echo=F,out.width="8.5cm">>=
+library(ggfortify)
+autoplot(r.bodyfatM, which=c(1,2),smooth.colour=NA)
+# par(mfrow=c(1,2))
+# plot(r.bodyfatM$fitted,r.bodyfat$residuals,xlab="Fitted", ylab="Residuals")
+# abline(h=0,lty=2)
+# qqnorm(r.bodyfatM$residuals)
+# qqline(r.bodyfatM$residuals)
+@
+\end{center}
+
+This seems ok, so continue with answering questions 1-3.
+}
+
+
+
+\frame[containsverbatim]{\frametitle{Question 1: Are the covariates associated with the response?}
+\vspace{-2mm}
+To answer question 1, we need to perform a so-called \alert{$F$-test}. The results of the test are displayed in the final line of the regression summary. Here, it says:\\[2mm]
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+\texttt{F-statistic: 165.9 on 2 and 240 DF, p-value: < 2.2e-16}
+\end{minipage}}\\[2mm]
+
+So apparently (and we already suspected that) the model has some explanatory power.\\[8mm]
+
+\scriptsize{
+*The $F$-statistic and -test is briefly recaptured in 3.1.f) of the Stahel script, but see also Mat183 chapter 6.2.5. It uses the fact that
+%\includegraphics[width=11cm]{pictures/fstar.jpg}
+\begin{equation*}
+\frac{SSQ^{(R)}/m}{SSQ^{(E)}/(n-p)} \sim F_{m,n-p}
+\end{equation*}
+follows an $F$-distribution with $m$ and $(n-p)$ degrees of freedom, where $m$ are the number of variables, $n$ the number of data points, $p$ the number of $\beta$-parameters (typically $m+1$). $SSQ^{(E)}=\sum_{i=1}^nR_i^2$ is the squared sum of the residuals, and $SSQ^{(R)} = SSQ^{(Y)} - SSQ^{(E)}$ with $SSQ^{(y)}=\sum_{i=1}^n(y_i-\overline{y})^2$.
+}
+
+<<Ftest,eval=T,echo=F>>=
+y <- d.bodyfat$bodyfat
+n<-nrow(d.bodyfat)
+m <- 2
+p <- m+1
+ssQE <- sum((predict(r.bodyfatM)-y)^2) 
+ssQR <- sum((y-mean(y))^2) - ssQE
+F <- ssQR/m / (ssQE/(n-p))
+invisible(pf(F,m,n-p,lower.tail=FALSE))
+@
+}
+
+\frame[containsverbatim]{\frametitle{Question 2: Which variables are associated with the response?}
+\vspace{-4mm}
+<<summary.bf2,echo=T>>= 
+summary(r.bodyfatM)$coef
+@
+
+
+To answer this question, again look at the \alert{$t$-tests}, for which the $p$-values are given in the final column. Each $p$-value refers to the test for the null hypothesis $ \beta^{(j)}_0=0$ for covariate $x^{(j)}$.\\[2mm]
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+As in simple linear regression, the $T$-statistic for the $j$-th covariate is calculated as 
+%
+\begin{equation}\label{eq:beta}
+T_j =  \frac{\hat\beta_j}{se^{(\beta_j)}}\ ,
+\end{equation}
+with  $se^{(\beta_j)}$ given in the second column of the regression output.
+\end{minipage}}
+~\\[2mm]
+The distribution of this statistic is $T_j \sim t_{n-p}$. 
+
+
+}
+
+\frame[containsverbatim]{
+
+Therefore:  A ``small'' $p$-value indicates that the variable is relevant in the model.\\[2mm]
+
+Here, we have 
+\begin{itemize}
+\item $p<0.001$ for bmi
+\item $p<0.001$ for age
+\end{itemize}
+
+Thus both, bmi and age seem to be associated with bodyfat. \\[6mm]
+
+Again, a 95\% CI for $\hat\beta_j$ can be calculated with R: \\[4mm] 
+
+<<echo=T>>=
+confint(r.bodyfatM)
+@
+
+
+{\scriptsize (The CI is again $[\hat\beta - c \cdot \sigma^{(\beta)} ; \hat\beta + c \cdot \sigma^{(\beta)}]$, where $c$ is the 97.5\% quantile of the $t$-distribution with $n-p$ degrees of freedom; compare to slides 38-40 of last week).}
+}
+
+\frame[containsverbatim]{\frametitle{}
+{\bf !However!: }\\[2mm]
+
+The $p$-value and $T$-statistics should only be used as a {\bf rough guide} for the ``significance'' of the coefficients.\\[2mm]
+
+For illustration, let us extend the model a bit more, including also neck, hip and abdomen:\\[4mm]
+
+%<<r.bodyfat2M,eval=T,echo=T>>=
+<<results=verbatim,echo=F>>=
+r.bodyfatM2 <- lm(bodyfat ~ bmi + age + neck + hip + abdomen,d.bodyfat)
+tableRegression(r.bodyfatM2)
+#summary(r.bodyfatM2)$coef
+@
+~\\[6mm]
+It is now much \myalert{less clear how strongly age ($p=0.60$) and bmi ($p=0.07$) are associated with bodyfat}.  \\[2mm]
+
+
+}
+
+
+\frame[containsverbatim]{\frametitle{ }
+
+Basically, the problem is that the \alert{variables in the model are correlated} and therefore explain similar aspects of bodyfat. \\[2mm]
+{\bf Example:} Abdomen (Bauchumfang) seems to be a relevant predictor and it is obvious that abdomen and BMI are correlated:\\[2mm]
+
+<<fig4, eval=T,fig.width=3.5, fig.height=3.5,warning=FALSE,echo=F,out.width="4cm">>=
+ggplot(d.bodyfat, aes(y=abdomen ,x=bmi)) + geom_point()
+@
+ 
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+This problem of \alert{collinearity} is at the heart of many confusions of regression analysis, and we will talk about such issues later in the course (lectures 8 and 9).
+\end{minipage}}
+
+\vspace{2mm}
+Please see also IC: practical 4 (milk example) for an analysis and more thoughts.
+
+
+
+
+}
+
+\frame[containsverbatim]{\frametitle{Question 3: Which proportion of variability is explained?}
+To answer this question, we can look at the \myalert{multiple $R^2$} (see Stahel 3.1.h). It is a generalized version of $R^2$ for simple linear regression:\\[2mm]
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+$R^2$ {\bf for multiple linear regression} is defined as the squared correlation between $(y_1,\ldots,y_n)$ and $(\hat{y}_1,\ldots,\hat{y}_n)$, where the $\hat y$ are the fitted values 
+\begin{equation*}
+\hat{y}_i = \hat\beta_0 + \hat\beta_1 x^{(1)} + \ldots + \hat\beta_m x^{(m)}
+\end{equation*}
+\end{minipage}}
+\vspace{-8mm}
+\begin{center}
+<<fig5, eval=T,fig.width=4, fig.height=4.3,warning=FALSE,echo=F,out.width="5.0cm">>=
+par(mfrow=c(1,1))
+plot(r.bodyfatM$fitted.values,d.bodyfat$bodyfat,xlab=expression(paste("fitted values (",hat(y),")")),ylab="true values y")
+abline(c(0,1))
+@
+\end{center}
+}
+
+
+\frame{
+$R^2$ is also called the \emph{coefficient of determination} or \myalert{``Bestimmtheitsmass''}, because it measures the proportion of the reponse's variability that is explained by the ensemble of all covariates:\\[4mm]
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+\begin{equation*}
+R^2 = SSQ^{(R)} / SSQ^{(Y)} = 1 - SSQ^{(E)}/ SSQ^{(Y)}
+\end{equation*}
+\end{minipage}}
+~~\\[2mm]
+With \\
+\begin{eqnarray*}
+\text{total variability} &=&  \text{explained variability} + \text{  residual variability} \\[2mm]
+\sum_{i=1}^n (y_i - \overline{y})^2 &=&  \sum_{i=1}^n (\hat{y_i}-\overline{y})^2 \qquad \quad + \quad \qquad \sum_{i=1}^n (y_i - \hat{y_i})^2 \\[2mm]
+SSQ^{(Y)} &=& SSQ^{(R)} \qquad\qquad \quad + \qquad\quad\qquad SSQ^{(E)} \\[2mm]
+\end{eqnarray*}
+
+}
+
+\frame[containsverbatim]{
+This can be visualized for a model with only one predictor:
+ \vspace{-4mm}
+<<fig6, eval=T,fig.width=5, fig.height=5.3,warning=FALSE,echo=F,out.width="7cm">>=
+r.bodyft <- lm(bodyfat ~ bmi , d.bodyfat)
+plot(bodyfat~bmi,d.bodyfat,cex.lab=1.5)
+abline(h=mean(d.bodyfat$bodyfat),lty=2)
+abline(r.bodyfat)
+text(35,15,expression(bar(y)),cex=1.5)
+text(35,40,expression(hat(y)),cex=1.5)
+@
+ 
+}
+
+
+\frame[containsverbatim]{
+Let us look at the $R^2$s from the three bodyfat models \\
+(model 1: $y\sim bmi$\\
+model 2: $y\sim bmi + age$\\
+model 3: $y\sim bmi + age + neck + hip + abdomen$): 
+
+<<r.squared,eval=T,echo=T>>=
+summary(r.bodyfat)$r.squared
+summary(r.bodyfatM)$r.squared
+summary(r.bodyfatM2)$r.squared
+@
+
+The models explain  $\Sexpr{round(summary(r.bodyfat)$r.squared*100,0)}$\%, $\Sexpr{round(summary(r.bodyfatM)$r.squared*100,0)}$\% and $\Sexpr{round(summary(r.bodyfatM2)$r.squared*100,0)}$\% of the total variability of $y$.\\[2mm]
+
+It thus \emph{seems} that larger models are ``better''. However, $R^2$ does always increase when new variables are included, but this does not mean that the model is more reasonable. \\[2mm]
+
+\myalert{Model selection} is a topic that will be treated in more detail later in this course (week 8).
+}
+
+\frame{\frametitle{Adjusted $R^2$}
+When the sample size $n$ is small with respect to the number of variables $m$ included in the model, an \myalert{adjusted} $R^2$ gives a better (``fairer'') estimation of the actual variability that is explained by the covariates:
+
+\begin{equation*}
+R^2_a = 1-(1-R^2 )\frac{n-1}{n-m-1}
+\end{equation*}
+~\\
+Why $R^2_a$? \\[2mm] 
+
+It {\bf penalizes for adding more variables} if they do not really improve the model!\\[2mm]
+
+{\bf Note:} $R_a$ may decrease when a new variable is added.
+}
+
+
+\frame[containsverbatim]{\frametitle{Interpretation of the coefficients}
+Apart from model checking and thinking about questions 1-3, it is probably even {\bf more important to understand what you \emph{see}.} Look at the output and ask yourself:\\[2mm]
+
+\begin{center}
+\textcolor{blue}{\bf What does the regression output actually \emph{mean}?}
+\end{center}
+
+<<results=verbatim,echo=F>>=
+tableRegression(r.bodyfatM,caption="Parameter estimates of model 2.", label="tab:m3")
+@
+
+Task in teams: Interpret the coefficients, 95\% CIs and $p$-values.
+}
+
+\frame[containsverbatim]{\frametitle{Example: Catheter Data}
+<<echo=F,eval=T>>=
+path <- "../../../data_examples/WBL/"
+d.cath <- read.table(paste(path,"catheter.dat",sep=""),header=T)
+r.cath <- lm(y~x1+x2,data=d.cath)
+@
+
+Catheter length ($y$) for heart surgeries depending on two characteristic variables $x^{(1)}$ and $x^{(2)}$ of the patients. \\[2mm]
+
+Aim: estimate $y$ from $x^{(1)}$ and  $x^{(2)}$ ($n=12$). \\[2mm]
+
+Again look at the data first ($x^{(1)}$ and $x^{(2)}$ are highly correlated!):
+
+<<pairs, eval=T,fig.width=5, fig.height=5,warning=FALSE,echo=F,out.width="5cm">>=
+pairs(d.cath)
+@
+
+}
+
+\frame[containsverbatim]{\frametitle{}
+Regression results with both variables: $R^2=\Sexpr{round(summary(r.cath)$r.squared,2)}$, $R^2_a = \Sexpr{round(summary(r.cath)$adj.r.squared,2)}$, $F$-test $p=0.0006$.
+<<results=verbatim,echo=F>>=
+tableRegression(r.cath)
+@
+ %$p$-value of the $F$-test $p=0.0006$, and diagnostic residual plots:
+
+~\\[2mm]
+With $x_1$ only: $R^2=0.78, R_a^2=0.75$, $F$-test $p=0.0002$
+<<results=verbatim,echo=F>>=
+tableRegression(lm(y~x1,d.cath))
+@
+
+~\\[2mm]
+With $x_2$ only:  $R^2=0.80, R_a^2=0.78$, $F$-test $p=0.0001$
+<<results=verbatim,echo=F>>=
+tableRegression(lm(y~x2,d.cath))
+@
+
+% \begin{center}
+% \setkeys{Gin}{width=0.8\textwidth}
+% <<fig=T,width=7,height=3.3,echo=F>>=
+% par(mfrow=c(1,2))
+% plot(r.cath$fitted,r.cath$resid,xlab="Fitted values",ylab="Residuals",main="Tukey-Anscombe")
+% abline(h=0,lty=2)
+% qqnorm(r.cath$fitted)
+% qqline(r.cath$fitted)
+% @
+% \end{center}
+}
+
+
+\frame[containsverbatim]{\frametitle{}
+Questions:\\
+\begin{enumerate}
+\item Is $x_1$ an influential covariate?
+\item Is $x_2$ an influential covariate?
+\item Are both covariates needed in the model?
+\item Interpretation of the results?\\[4mm]
+\end{enumerate}
+%To understand what is going on, the regression results of $y$ on $x^{(1)}$ and $x^{(2)}$ alone may be useful:
+
+$\rightarrow$ Go to the klicker link \textcolor{blue}{\href{http://www.klicker.uzh.ch/bkx}{http://www.klicker.uzh.ch/nfn}} to answer the questions.\\[6mm]
+}
+
+
+\frame{\frametitle{Binary covariates}
+So far, the covariates $x$ were always continuous. \\[2mm]
+
+In reality, there are {\bf no restrictions assumed with respect to the $x$ variables}. \\[2mm]
+
+One very frequent data type are {\bf binary} variables, that is, variables that can only attain values 0 or 1. \\[6mm]
+
+See section 3.2c of the Stahel script: 
+\colorbox{lightgray}{\begin{minipage}{10cm}
+If the binary variable $x$ is the only variable in the model $y_i = \beta_0 + \beta_1 x_i + \epsilon_i$, the model has only two predicted outcomes (plus error):\\
+\begin{equation*}
+y_i = \left\{ 
+\begin{array}{ll}
+ \beta_0  + \epsilon_i \quad &\text{if } x_i=0 \\
+ \beta_0 + \beta_1 + \epsilon_i \quad &\text{if } x_i =1\\
+\end{array}
+\right .
+\end{equation*}
+\end{minipage}}
+
+}
+
+
+
+
+\frame{\frametitle{Factor covariates}
+Some covariates indicate a {\bf category}, for instance the species of an animal or a plant. This type of covariate is called a {\bf factor}. The trick: convert a factor with $k$ levels (for instance 3 species) into $k$ dummy variables $x_i^{(j)}$ with 
+\colorbox{lightgray}{\begin{minipage}{10cm}
+\begin{equation*}
+x_i^{(j)} = \left\{ 
+\begin{array} {ll}
+1, & \text{if the $i$th observation belongs to group $j$}.\\
+0, & \text{otherwise.}
+\end{array}\right.
+\end{equation*}
+\end{minipage}}
+~\\[2mm]
+
+Each of the covariates $x^{(1)},\ldots, x^{(k)}$ can then be included as a binary variable in the model
+\begin{equation*}
+y_i = \beta_0 + \beta_1 x^{(1)} + \ldots + \beta_k x^{(k)} + \epsilon_i \ .
+\end{equation*}
+
+\vspace{6mm}
+However:  this model is \alert{not identifiable}$^\star$.\\[2mm]
+
+{\scriptsize $^\star$ What does that mean? I could add a constant to $\beta_1, \beta_2, ...\beta_k$ and subtract it from $\beta_0$, and the model would fit equally well to the data, so it cannot be decided which set of the parameters is best.} 
+
+}
+
+\frame{\frametitle{}
+
+{\bf Solution: } One of the $k$ categories must be selected as a \emph{reference category} and is \emph{not included in the model}. Typically: the first category is the reference, thus $\beta_1=0$.\\[4mm]
+
+
+The model thus discriminates between the factor levels, such that (assuming $\beta_1=0$)
+
+\begin{equation*}
+\hat y_i = \left\{
+\begin{array}{ll}
+\beta_0 , & \text{if $x_i^{(1)}=1$ }\\
+\beta_0 + \beta_2 , & \text{if $x_i^{(2)}=1$ }\\
+...\\
+\beta_0 + \beta_k , & \text{if $x_i^{(k)}=1$ } \ .
+\end{array}\right.
+\end{equation*} 
+
+~\\[4mm]
+\textcolor{gray}{Please also consult Stahel 3.2e and g.}\\[4mm]
+
+}
+
+\frame{\frametitle{!!Important to remember!!}
+\textcolor{gray}{(Common aspect that leads to confusion!)}\\[10mm]
+
+Please note that \alert{a factor covariate with $k$ factor levels requires $k-1$ parameters!}\\[2mm]
+$\rightarrow$ The \alert{degrees of freedom} are also reduced by $k-1$.
+}
+
+\frame[containsverbatim]{\frametitle{Example: Earthworm study}
+{\tiny (Angelika von Förster und Burgi Liebst)}
+
+{\scriptsize Die Dachse im Sihlwald ernähren sich zu einem grossen Prozentsatz von Regenwürmern. Ein Teil des Muskelmagens der Regenwürmer wird während der Passage durch den Dachsdarm nicht verdaut und mit dem Kot ausgeschieden. Wenn man aus der Grösse des Muskelmagenteilchens auf das Gewicht des Regenwurms schliessen kann, ist die Energiemenge berechnenbar, die der Dachs aufgenommen hat.}\\[4mm]
+
+{\bf Frage:} Besteht eine Beziehung zwischen dem Umfang des Muskelmagenteilchens und dem Gewicht des Regenwurms?\\[4mm]
+
+Data set of $n=143$ worms with three species (Lumbricus, Nicodrilus, Octolasion), weight, stomach circumference (Magenumfang). 
+
+
+}
+
+
+\frame[containsverbatim]{\frametitle{}
+~\\[2mm]
+Data inspection suggests that the three species have different weight and stomach sizes:\\
+\vspace{-8mm}
+
+\begin{center}
+<<wurmP, eval=T,fig.width=6, fig.height=3.5,warning=FALSE,echo=F,out.width="6.5cm">>=
+library(lattice)
+par(mfrow=c(1,2))
+d.wurm <- read.table ("../../../data_examples/ancova/Projekt6Regenwuermer/RegenwuermerDaten_Haupt.txt",header=T)
+d.wurm[d.wurm$Gattung=="N","GEWICHT"] <- d.wurm[d.wurm$Gattung=="N","GEWICHT"]*0.5
+boxplot(GEWICHT ~ Gattung, d.wurm,xlab="Gattung",ylab="Gewicht (g)")
+boxplot(MAGENUMF ~ Gattung, d.wurm,xlab="Gattung",ylab="Magenumfang")
+@
+ 
+<<wurmP2, eval=T,fig.width=4.2, fig.height=2.9,warning=FALSE,echo=F,out.width="5.5cm">>=
+library(ggplot2)
+ggplot(d.wurm,aes(x=MAGENUMF,y= GEWICHT,colour=Gattung)) + geom_point() + theme_bw()
+@
+\end{center}
+}
+
+\frame[containsverbatim]{\frametitle{}
+However, data inspection also suggests that there is not really a linear relationship between weight and stomach size -- rather it looks \alert{exponential}! \\[2mm]
+
+Therefore, \alert{log-transform} the response (weight), and it looks much better:\\[6mm]
+
+\begin{center}
+<<wurmP3, eval=T,fig.width=5, fig.height=3.4,warning=FALSE,echo=F,out.width="8cm">>=
+ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point()  + theme_bw()
+
+# xyplot(log10(GEWICHT) ~ MAGENUMF, d.wurm,
+#        grid = TRUE,
+#        scales = list(x = list(log = 10, equispaced.log = FALSE)),
+#        group = Gattung, auto.key = list(columns = nlevels(d.wurm$Gattung)),
+#        lwd = 2)
+@
+\end{center}
+}
+
+\frame[containsverbatim]{\frametitle{}
+Formulate a model with $\log_{10}(\text{Gewicht})$ as response and \texttt{Magenumfang} and \texttt{Gattung} as covariates.
+This is simple in R:\\ 
+{\scriptsize ({\bf Hint:} Make sure that \texttt{Gattung} is stored as a factor in R (check by \texttt{glimpse(d.wurm)}))} \\
+
+<<fitWurm,echo=T,eval=T>>=
+r.lm <- lm(log10(GEWICHT) ~  MAGENUMF + Gattung,d.wurm)
+@
+
+~\\
+Before doing anything else, check the modeling assumptions:\\[-4mm]
+\begin{center}
+<<fig7, eval=T,fig.width=6, fig.height=3,warning=FALSE,echo=F,out.width="8cm">>=
+autoplot(r.lm,which=c(1,2),smooth.colour=NA) 
+@
+\end{center}
+ 
+$\rightarrow$ This seems ok (although the TA plot is a bit funnel-like).
+}
+
+\frame[containsverbatim]{
+
+
+~\\[2mm]
+{\bf Results:}
+<<results=verbatim,echo=F>>=
+tableRegression(r.lm)
+@
+$R^2=0.76$, $R^2_a = 0.75$.
+
+~\\[2mm]
+\colorbox{lightgray}{\begin{minipage}{10cm}
+\begin{itemize}
+\item Question: Why is Gattung Lumbricus (L) not in the results table? \\
+\item Answer: L was chosen as the ``reference category'', thus $\beta_L=0$. 
+\end{itemize}
+\end{minipage}}
+
+\vspace{8mm}
+{\bf Degrees of freedom:} We had 143 data points. How many degrees of freedom are left for the residual error?\\
+{Answer:} We estimated 4 parameters, thus $143-4=139$.
+
+
+<<echo=F>>=
+worm.coef <- summary(r.lm)$coef
+@
+
+}
+
+
+\frame[containsverbatim]{\frametitle{Interpreting the results I}
+
+\begin{itemize} 
+\item $\beta_0=\Sexpr{format(worm.coef[1,1],2,2,2)}$ is the intercept.
+\item $\beta_1=\Sexpr{round(worm.coef[2,1],2)}$ is the slope for \texttt{MAGENUMF}.
+\item $\beta_2=\Sexpr{round(worm.coef[3,1],2)}$ is the coefficient for Gattung=Nicodrilus.
+\item $\beta_3=\Sexpr{format(worm.coef[4,1],2,2,2)}$ is the coefficient for Gattung =Octolasion.
+\item No coefficient is needed for Gattung Lumbricus, because $\beta_L=0$.\\[6mm]
+\end{itemize}
+
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+We have now actually fitted {\bf three} models, one model for each species:\\[2mm]
+
+Lumbricus: $\hat{y}_i = \Sexpr{format(worm.coef[1,1],2,2,2)} + \Sexpr{round(worm.coef[2,1],2)}\cdot \text{MAGENUMF}$ \\[2mm]
+Nicodrilus: $\hat{y}_i = \Sexpr{format(worm.coef[1,1],2,2,2)} + (\Sexpr{round(worm.coef[3,1],2)})  + \Sexpr{round(worm.coef[2,1],2)}\cdot \text{MAGENUMF}$ \\[2mm]
+Octolasion: $\hat{y}_i = \Sexpr{format(worm.coef[1,1],2,2,2)} + (\Sexpr{format(worm.coef[4,1],2,2,2)})  + \Sexpr{round(worm.coef[2,1],2)}\cdot \text{MAGENUMF}$
+\end{minipage}}
+}
+
+
+
+\frame[containsverbatim]{\frametitle{Interpreting the results II}
+{\bf Main question:} Is there a relation between stomach size and body mass? \\[4mm]
+
+{\bf Results:} \texttt{MAGENUMF} has a positive slope estimate with $p<0.0001$, thus very strong evidence that the relation exists. Increasing \texttt{MAGENUMF} by 1 unit increases $\log_{10}$(\texttt{GEWICHT}) by +0.31.\\[4mm]
+
+Moreover, the $R^2=0.76$ is relatively high and almost identical to $R^2_a$.\\[6mm]
+
+}
+
+
+
+\frame[containsverbatim]{\frametitle{Interpreting the results III}
+
+
+{\bf Question:} Is the ``Gattung'' covariate relevant in the model, that is, do the model intercepts differ for the three species? \\[6mm]
+
+{\bf Problem:} The $p$-values of the worm species are not very meaningful. They belong to tests that compare the intercept of a factor level with the intercept of the reference level (i.e., the \emph{difference} in intercepts!). However, the question is whether the variable \texttt{Gattung} has an effect in total.\\[6mm]
+
+{\bf Solution:} When a factor covariate with $k$ levels is in the model, it occupies $k-1$ parameters. Therefore, \alert{the $t$-test needs to be replaced by the $F$-test.}
+
+}
+
+
+
+\frame[containsverbatim]{\frametitle{$F$-test to compare models}
+ 
+
+\includegraphics[width=11cm]{pictures/Ftest.pdf}\\
+{\small Remember: $F_{1,n-p} = t^2_{n-p}$}
+}
+
+
+
+\frame[containsverbatim]{\frametitle{$F$-test for the earthworms}
+
+
+The function \texttt{anova()} in R does the $F$-test for categorical variables. \\[2mm]
+
+<<echo=T>>=
+anova(r.lm)
+@
+
+
+{\bf Note:} Here, the $F$-value for \texttt{Gattung} is distributed as $F_{2,139}$ under the Null-Hypothesis.
+~\\[4mm]
+This gives $p=\Sexpr{format(anova(r.lm)[2,5],2,4,2)}$, thus a clear difference in the regression models for the three species (``Gattung is relevant'').
+}
+
+
+
+\frame[containsverbatim]{\frametitle{Plotting the earthworms results}
+All species have the same slope (this is a modeling assumption), but different intercepts:
+
+\begin{center}
+<<fig8, eval=T,fig.width=5, fig.height=4,warning=FALSE,echo=F,out.width="8cm">>=
+cc <- r.lm$coefficients
+# plot(log10(GEWICHT)~MAGENUMF,d.wurm,col=as.numeric(Gattung),cex=0.8,ylim=c(-1.5,1.5),xlim=c(0,8))
+# abline(c(cc[1],cc[2]),col=1)
+# abline(c(cc[1]+cc[3],cc[2]),col=2)
+# abline(c(cc[1]+cc[4],cc[2]),col=3)
+ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point() + geom_line(aes(y=cc[1]+cc[2]*MAGENUMF),colour=2)  + geom_line(aes(y=cc[1]+cc[3]+cc[2]*MAGENUMF),colour=3)  + geom_line(aes(y=cc[1]+cc[4] + cc[2]*MAGENUMF),colour=4) + theme_bw()
+@
+\end{center}
+}
+
+
+
+% \frame{\frametitle{Summary} 
+% To remember:
+% \begin{itemize}
+% \item Multiple linear regression model $y_i= \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_m x_i^{(m)} + e_i $.\\[2mm]
+% \item The degrees of freedom are reduced with each slope parameter $\beta_k$.\\[2mm]
+% \item The $F$-statistic is used to test whether the ensemble of all covariates has some predictive/explanatory power.\\[2mm]
+% \item Collinearity of covariates is a problem.\\[2mm]
+% \item Adjusted $R_a^2$ used to correct for the number of covariates by penalization.\\[2mm]
+% \item Binary covariates: Implicitly fit two models.\\[2mm]
+% \item Factor covariates with $k$ levels: Implicitly fit $k-1$ models.\\[2mm]
+% \item Use the $F$-test to test if factor covariates are relevant.
+% \end{itemize}
+% }
+%\frame{References:
+%\bibliographystyle{Chicago}
+%\bibliography{refs}
+%}
+
+\end{document}
