@@ -3,8 +3,8 @@ title: "Analysing binary data"
 author: "Owen Petchey"
 date: "2/17/2017"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -19,7 +19,7 @@ library(ggfortify)
 
 # Insect death
 
-The wuestion is about the effects of three pesticides on the death of some
+The question is about the effects of three pesticides on the death of some
 insects. The pesticides were applied at a range of different doses to
 all of the individual insects in vial. This results in a dataset with
 the pesticide used(called ``product''), the dose of that pesticide, the
@@ -38,11 +38,11 @@ to understand and remember the ANCOVA example from the previous chapter.
 
 Import that data:
 ```{r, eval=FALSE}
-insect_death <- read.csv("new_pesticide_study.csv"), row.names=1)
+insect_death <- read_csv("new_pesticide_study.csv"), row.names=1)
 ```
 
 ```{r, echo=FALSE}
-insect_death <- readr::read_csv("https://raw.githubusercontent.com/opetchey/getting_started_with_R/master/datasets/new_pesticide_study.csv")
+insect_death <- readr::read_csv("https://raw.githubusercontent.com/opetchey/BIO144/master/3_datasets/new_pesticide_study.csv")
 ```
 
 ```{r}
