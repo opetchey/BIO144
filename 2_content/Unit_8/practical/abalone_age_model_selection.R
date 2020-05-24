@@ -4,7 +4,7 @@ rm(list=ls())
 ## Load required libraries
 library(tidyverse)
 #library(AICcmodavg)
-#library(MASS)
+library(MASS)
 #library(glmulti)
 library(ggfortify)
 
@@ -49,12 +49,30 @@ ggplot(dd, aes(x=Rings)) + geom_histogram(bins=15)
 ## not too bad, lets leave it like this
 
 ## the full model with no interactions
+
 full_mod <- lm(Rings ~ Sex + Length_mm + Diameter_mm + Height_mm + Whole_weight_g +
-                 Shuck_weight_g + Viscera_weight_g + Shell_weight_g, dd)
-dropterm(full_mod, sorted = T)
-dt1 <- update(full_mod, . ~ . - Length_mm)
+                      Shuck_weight_g + Viscera_weight_g + Shell_weight_g, dd)
+
+
+AIC(full_mod)
+
+extractAIC(full_mod)
+dropterm(full_mod, sorted = T) ## dropterm and stepAIC use extract AIC
+## find the reason why AIC and extract AIC differ on this page:
+## https://bookdown.org/egarpor/PM-UC3M/lm-ii-modsel.html
+## at the first yellow-triangle-exclamation mark note
 
 summary(full_mod)
+anova(full_mod)
+
+
+dropterm(full_mod_lm, sorted = T)
+dt1 <- update(full_mod, . ~ . - Length_mm)
+
+AIC(full_mod)
+summary(full_mod)
+anova(full_mod)
+
 summary(dt1)
 
 dropterm(dt1, sorted = T)
@@ -107,5 +125,15 @@ anova(best_dredge)
 s1_subset <- get.models(dredge_out, subset = delta < 5)
 mod_ave <- model.avg(s1_subset)
 summary(mod_ave)
+
+
+
+
+## and by a glm with gaussian family
+full_mod_glm <- glm(Rings ~ Sex + Length_mm + Diameter_mm + Height_mm + Whole_weight_g +
+                      Shuck_weight_g + Viscera_weight_g + Shell_weight_g, dd, family = "gaussian")
+AIC(full_mod_glm)
+extractAIC(full_mod_glm)
+dropterm(full_mod_glm, sorted = T)
 
 

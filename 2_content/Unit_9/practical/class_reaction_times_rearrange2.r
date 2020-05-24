@@ -13,14 +13,23 @@ names(class_RTs) <- c("Timestamp", "ID", "Gender", "Pref_Reactiontime1",
                       "Visual_memory_score",
                       "Weight_kgs", "Handed", "Nonpref_Reactiontime",  "Pref_Reactiontime2",
                       "Pref_Reactiontime3",  "Pref_Reactiontime4", "Pref_Reactiontime5",
-                      "Pref_Reactiontime")
+                      "Pref_Reactiontime", "random_num")
 
 ## now we use some R magic to sort out the data into the long format we need it in
 ## to be able to use ggplot and do a linear model
 class_RTs <- select(class_RTs, ID, Gender, Pref_Reactiontime1, Pref_Reactiontime2,
                     Pref_Reactiontime3, Pref_Reactiontime4, Pref_Reactiontime5)
-dd <- tidyr::gather(class_RTs, key=key, value=Reaction_time, c(3:7))
+dd <- tidyr::gather(class_RTs, key=Variable, value=Reaction_time, c(3:7))
 ?spread
+
+dd %>%
+  arrange(ID, Gender, Variable) %>%
+select(ID, Gender, Variable) %>%
+duplicated()
+
+tidyr::spread(dd, key=Variable, value=Reaction_time)
+tidyr::pivot_wider(data=dd, names_from = Variable, values_from = Reaction_time)
+
 
 m1 <- lmer(Reaction_time ~ Gender + (1 | ID), data=dd)
 
