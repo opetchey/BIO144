@@ -27,6 +27,7 @@ the_URL - "https://docs.google.com/spreadsheets/d/e/2PACX-1vQFgYX1QhF9-UXep22XmP
 class_RTs <- read_cvs(the_URL)
 #######################################################
 
+## DO NOT USE read.csv above!!!
 
 #######################################################
 ## Have a look at the data in R, does it look OK?
