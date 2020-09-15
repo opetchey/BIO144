@@ -29,6 +29,9 @@ class_RTs <- read_cvs(the_URL)
 
 ## DO NOT USE read.csv above!!!
 
+## --->>> Once more, and even if a TA tells you to, do not use read.csv on line 27.
+## --->>> You must keep the underscore (_) and not replace it with a dot (.)
+
 #######################################################
 ## Have a look at the data in R, does it look OK?
 clas_RTs
