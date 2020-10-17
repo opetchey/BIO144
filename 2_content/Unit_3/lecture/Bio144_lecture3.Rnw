@@ -80,6 +80,7 @@
 
 
 \begin{document}
+\SweaveOpts{concordance=TRUE}
 %\SweaveOpts{width=6,height=4}
 \fboxsep5pt
 

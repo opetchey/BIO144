@@ -81,6 +81,7 @@
 
 
 \begin{document}
+\SweaveOpts{concordance=TRUE}
 \fboxsep5pt
 <<setup, include=FALSE, cache=FALSE, results='hide'>>=
 library(knitr)

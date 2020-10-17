@@ -1,0 +1,1 @@
+Cholesterol levels [mg/ml] for 30 women from two US states, Iowa and Nebraska. Age [years] may be a relevant covariable. 
