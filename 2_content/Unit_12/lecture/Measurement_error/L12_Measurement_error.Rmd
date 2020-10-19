@@ -7,7 +7,7 @@ date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   beamer_presentation:
     includes:
-      in_header: preamble.tex
+      in_header: ../../../beamer_stuff/preamble.tex
 classoption: "aspectratio=169"
 ---
 
@@ -32,7 +32,7 @@ The lecture material of today is partially based on the following literature:
 * Chapter 6.1 in "Lineare regression" (BC reading)
 
 
-## Sources of measurement uncertainty / measurement error (ME)
+## Sources of measurement error (ME)
 
 * **Measurement imprecision** in the field or in the lab (length, weight, blood pressure, etc.).
 * Errors due to **incomplete** or **biased observations** (e.g., self-reported dietary aspects, health history).
