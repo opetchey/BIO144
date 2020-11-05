@@ -1,0 +1,241 @@
+---
+title: "Lecture 8: Model/variable selection"
+subtitle: "BIO144 Data Analysis in Biology"
+author: "Stephanie Muff & Owen Petchey"
+institute: "University of Zurich"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  beamer_presentation:
+    includes:
+      in_header: ../../beamer_stuff/preamble.tex
+bibliography: ../../Unit_1/lecture/refs.bib
+classoption: "aspectratio=169"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(xtable.comment = FALSE)
+```
+
+## Overview
+
+* Predictive vs explanatory models.
+* Selection criteria: AIC, AIC$_c$, BIC.
+* Automatic model selection and its caveats.
+* Model selection bias.
+* Collinearity of covariates
+* Occam's razor principle.
+
+## Course material covered today
+
+The lecture material of today is partially based on the following literature:
+
+* "Lineare regression" chapters 5.1-5.4
+* Chapter 27.1 and 27.2 by Clayton and Hills "Choice and Interpretation of Models" (pdf provided)
+
+\textcolor{blue}{\bf Optional reading:}
+
+* Paper by freedman1983: "A Note on Screening Regression Equations" (Sections 1 and 2 are sufficient to get the point)
+
+## Developing a model
+
+So far, our regression models "fell from heaven": The model family and the terms in the model were almost always given.
+
+However, it is often not immediately obvious which terms are relevant to include in a model. 
+
+Importantly, the approach to find a model __heavily depends on the aim__ for which the model is built. 
+
+The following distinction is important:
+
+* The aim is to \alert{predict} future values of __y__ from known regressors.
+* The aim is to \alert{explain} __y__ using known regressors. Ultimately, the aim is to find causal relationships.
+
+## 
+$\rightarrow$ Even among statisticians there is no real consensus about how, if, or when to select a model:
+
+<!-- \includegraphics[width=10cm]{graphics/brewer_title.jpg}\\ -->
+<!-- \includegraphics[width=10cm]{graphics/brewer.jpg}\\[2mm] -->
+
+Note: The first sentence of a paper in _Methods in Ecology and Evolution_ from 2016 is: "Model selection is difficult."
+
+## Why is finding a model so hard?
+
+Remember from week 1:
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+Ein Modell ist eine Ann\"aherung an die Realit\"at. Das Ziel der Statistik und Datenanalyse ist es immer, dank Vereinfachungen der wahren Welt gewisse Zusammenh\"ange zu erkennen.
+\end{minipage}}
+
+Box (1979): \alert{"All models are wrong, but some are useful."}
+
+$\rightarrow$ There is often not a "right" or a "wrong" model -- but there are more and less useful ones.
+
+$\rightarrow$ Finding a model with good properties is sometimes an art...
+
+## Predictive and explanatory models
+
+Before we continue to discuss model/variable selection, we need to be clear about the scope of the model:
+
+* \alert{\bf Predictive models}: These are models that aim to predict the outcome of future subjects.  
+\underline{Example:} In the bodyfat example the aim is to predict people's bodyfat from factors that are easy to measure (age, BMI, weight,..).  
+
+* \alert{\bf Explanatory models}: These are models that aim at understanding the (causal) relationship between covariates and the response.  
+\underline{Example:} The mercury study aims to understand if Hg-concentrations in the soil (covariable) influence the Hg-concentrations in humans (response).  
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+$\rightarrow$ The model selection strategy depends on this distinction.
+\end{minipage}}
+
+## Prediction vs explanation
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+When the aim is \emph{\bf prediction}, the best model is the one that best predicts the fate of a future subject. This is a well defined task and "objective" variable selection strategies to find the model which is best in this sense are potentially useful.\\
+\\However, when used for \emph{\bf explanation} the best model will depend on the scientific question being asked, {\bf and automatic variable selection strategies have no place}. 
+\end{minipage}}
+
+\scriptsize(Clayton and Hills, 1993, chapters 27.1 and 27.2)
+
+## A predictive model: The bodyfat example
+
+The bodyfat study is a typical example for a __predictive model__.  
+
+There are 12 potential predictors (plus the response). Let's fit the full model (without interactions):  
+
+
+```{r, echo=FALSE, eval=TRUE, results='asis', message=FALSE, warning=FALSE}
+d.bodyfat <- read.table("../../../3_datasets/bodyfat.clean.txt",header=T)
+d.bodyfat <- d.bodyfat[,c("bodyfat","age","gewicht","hoehe","bmi","neck","chest","abdomen","hip","thigh","knee","ankle","biceps")]
+
+r.bodyfat <- lm(bodyfat ~ ., d.bodyfat)
+
+library(biostatUZH)
+
+tableRegression(r.bodyfat)
+
+```
+
+## Model selection for predictive models
+
+* \underline{Remember:} $R^2$ is not suitable for model selection, because it \emph{always} increases (improves) when a new variable is included.
+
+* Ideally, the predictive ability of a model is tested by a cross-validation (CV) approach.
+\href{https://en.wikipedia.org/wiki/Cross-validation_(statistics)}
+{\beamergotobutton{Find a description of the CV idea here.}}
+
+* CV can be a bit cumbersome, and sometimes would require additional coding.  
+
+* Approximations to CV: So-called \alert{information-criteria} like AIC, AIC$_c$, BIC.  
+
+* The idea is that the "best" model is the one with the smallest value of the information criterion (where the criterion is selected in advance).
+
+## Information-criteria
+
+Information-criteria for model selection were made popular by 
+<!-- \citet{burnham.anderson2002}. -->
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+The idea is to find a \alert{balance between}  
+
+\begin{center}  
+
+{\bf Good model fit} $\quad\leftrightarrow\quad$ {\bf Low model complexity}
+\end{center}
+\end{minipage}}  
+
+$\rightarrow$ Reward models with better model fit.  
+\
+$\rightarrow$ Penalize models with more parameters.
+
+## AIC
+
+The most prominent criterion is the \alert{AIC (Akaike Information Criterion)}, which measures the \alert{quality of a model}.  
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+The AIC of a model with likelihood $L$ and $p$ parameters is given as
+\begin{equation*}
+AIC = -2\log(L) + 2p \ .
+\end{equation*}
+\end{minipage}}
+\
+__Important: The \underline{lower} the AIC, the \underline{better} the model!__  
+
+The AIC is a \alert{compromise} between:
+
+* a high likelihood $L$ (good model fit) 
+* few model parameters $p$ (low complexity)
+
+## AIC$_c$: The AIC for low sample sizes
+
+When the number of data points $n$ is small with respect to the number of parameters $p$ in a model, the use of a \alert{corrected AIC, the AIC$_c$} is recommended.
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+The {\bf corrected AIC} of a model with $n$ data points, likelihood $L$ and $p$ parameters is given as
+\begin{equation*}
+AIC_c = -2\log(L) + 2p\cdot\frac{n}{n-p-1} \ .
+\end{equation*}
+\end{minipage}}
+
+Burnham and Anderson __recommend to use AIC$_c$ in general, but for sure when the ratio__ $n/p<40$.  
+
+In the \alert{bodyfat example}, we have 243 data points and 13 parameters (including the intercept $\beta_0$), thus $n/p = 143/13 \approx 19 <40$ $\Rightarrow$ AIC$_c$ should be used for model selection! 
+
+## BIC, the brother/sister of AIC
+
+Other information criteria were suggested as well. Another prominent example is the \alert{BIC (Bayesian Information Criterion)}, which is similar in spirit to the AIC.  
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+The BIC of a model for $n$ data points with likelihood $L$ and $p$ parameters is given as
+\begin{equation*}
+BIC = -2\log(L) + p \cdot \ln(n) \ .
+\end{equation*}
+\end{minipage}}
+
+__Again: The \underline{lower} the BIC, the \underline{better} the model!__  
+
+The only difference to AIC is the complexity penalization. The BIC criterion is often __claimed to estimate the predictive quality__ of a model. More recent research indicates that AIC and BIC perform well under different data structures 
+<!-- \citep{brewer.etal2016}. -->
+
+## 
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+Don't worry: No need to remember all these AIC and BIC formulas by heart!
+\end{minipage}}
+\
+What you should remember:  
+\
+AIC, AIC$_c$ and BIC all have the __aim to find a good quality model by penalizing model complexity__.
+
+## Model selection with AIC/AICc/BIC
+
+Given $m$ potential variables to be included in a model.
+\  
+
+* In principle it is possible to minimize the AIC/AICc/BIC over all $2^m$ possible models. Simply fit all models and take the ``best'' one (lowest AIC).  
+
+* This is cumbersome to to "by hand". Useful to rely on implemented procedures in R, which search for the model with minimal AIC/AICc/BIC.
+
+* \alert{Backward selection:}
+__Start with a large/full model.__ In each step, __remove__ the variable that leads to the largest improvement (smallest AIC/AICc/BIC). Do this until no further improvement is possible.
+
+* \alert{Forward selection:}
+__Start with an empty model__ In each step, __add__ the predictor that leads to the largest improvement (smallest AIC/AICc/BIC). Do this until no further improvement is possible.
+
+## "Best" predictive model for bodyfat
+
+Given the predictive nature of the bodyfat model, we search for the model with minimal AICc, for instance using the `stepAIC()` function from the `MASS` package:
+
+```{r, echo=TRUE}
+library(MASS)
+library(AICcmodavg)
+
+r.AIC <- stepAIC(r.bodyfat, direction = c("both"), 
+                 trace = FALSE,AICc=TRUE)
+AICc(r.bodyfat)
+AICc(r.AIC)
+
+```
+
+$\rightarrow$ The AICc for the optimal model is 1, compared to the full model with an AICc of 2. 
+
+\scriptsize Note: Owen will also use `direction=c("forward")` and `direction=c("backward")` in the BC videos.
+
