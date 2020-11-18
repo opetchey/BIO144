@@ -467,7 +467,7 @@ __Remarks:__
 
     $\rightarrow$ \scriptsize See \href{https://en.wikipedia.org/wiki/Overfitting}{https://en.wikipedia.org/wiki/Overfitting}.
     
-##
+## 
 
 In the mercury study, the following variables were included using _a priori_ knowledge/expectations:  
 
@@ -494,11 +494,232 @@ Let us now fit the full model (including all covariates) in R:
 __MISSING DATASET__
 
 ```{r fig.height=5, out.width="5cm"}
-d.hg <- read.table("../../data_examples/Hg/Hg_urin.csv",header=T, sep=",")
-d.hg["106","amalgam_quant"] <- 5 # correct for the outlier
-d.hg <- d.hg[-11]
-names(d.hg) <- c("Hg_urin", "Hg_soil", "vegetables","migration", "smoking","amalgam", "age", "fish","last_fish","mother")
+#d.hg <- read.table("../../data_examples/Hg/Hg_urin.csv",header=T, sep=",")
+#d.hg["106","amalgam_quant"] <- 5 # correct for the outlier
+#d.hg <- d.hg[-11]
+#names(d.hg) <- c("Hg_urin", "Hg_soil", "vegetables","migration", "smoking","amalgam", "age", "fish","last_fish","mother")
 ```
+
+
+```{r, echo=FALSE}
+#r.lm1 <- lm(log10(Hg_urin) ~ log10(Hg_soil) + vegetables + migration + smoking + 
+#             sqrt(amalgam) + age * mother + sqrt(fish) + last_fish,d.hg)
+
+```
+
+```{r results="asis", echo = FALSE}
+#tableRegression(r.lm1)
+```
+
+
+* The $p$-value for mercury in soil, $MISSING VALUE$, is rather high: $MISSIING VALUE$.
+
+* __Question:__ What is the answer to the main research question?
+
+\begin{center}
+\href{http://www.klicker.uzh.ch/bkx}{http://www.klicker.uzh.ch/bkx}
+\end{center}
+
+## 
+
+A model checking step (always needed, but we did it alreayd in lecture 5):
+
+```{r fig.width=7, fig.height=4,out.width="8cm"}
+library(ggfortify)
+# autoplot(r.lm1,which=c(1,2),smooth.col=NA)
+```
+
+This looks ok, no need to improve the model from this point of view.
+
+## 
+
+Even if the model checking step revealed no violations of the assumptions (the model seems to be fine), we sometimes want to know:
+
+* Which of the terms are __important/relevant__?
+* Are there __additional terms__ that might be important?
+* Can we find __additional patterns__ in the data?
+
+$\rightarrow$ We can go on from here and analyse the model in an \alert{exploratory} manner. Such analyses can be useful to generate new hypotheses.  
+
+## 
+
+It would be tempting to check if there would be models with lower AICc.
+
+```{r echo = FALSE}
+#r.lm0 <- lm(log10(Hg_urin) ~ log10(Hg_soil) + vegetables + migration + smoking + 
+#             sqrt(amalgam) + age + mother + sqrt(fish) + last_fish,d.hg)
+```
+
+For example, we can fit models where certain terms are omitted. Let's start with a model where the interaction $mother\cdot age$ is removed (denoted as `r.lm0`). The AICc then increases clearly, confirming that the term is relevant:
+
+```{r echo = TRUE}
+#AICc(r.lm0)
+#AICc(r.lm1)
+```
+
+## 
+
+On the other hand, the model where we omit the binary \emph{migration} variable would give a reduced AICc:  
+
+```{r echo = TRUE}
+#r.lm0 <- lm(log10(Hg_urin) ~ log10(Hg_soil) + vegetables  + smoking + 
+#             sqrt(amalgam) + age * mother + sqrt(fish) + last_fish,d.hg)
+#AICc(r.lm0)
+```
+
+__But:__ Given that the mercury model is an __explanatory, confirmatory model__, we should not remove a variable (e.g., migration) simply because it reduces AICc.
+
+$\rightarrow$ Therefore, given the a priori selection of variables and the model validation results, the model from slide  was used in the final publication CITATION:imo.etal2017.
+
+$\rightarrow$ Any further analyses with other models would need to be labelled as \alert{exploratory}.
+
+## Another complication: Collinearity of covariates
+
+\small (See Stahel chapter 5.4)  
+
+\
+
+Given a set of covariates ${x^{(1)}}, {x^{(2)}}, {x^{(3)}}, ...,{x^{(p)}}$. If it is possible for one of the covariates to be written as a \alert{linear combination of the others}
+\begin{equation*}
+x_i^{(j)} = \sum_{k\neq j} c_k x_i^{(k)} \quad \text{for all} \quad  i=1,...,n
+\end{equation*}
+
+the set of covariates is said to be \alert{collinear}.  
+
+
+__Examples:__ 
+
+* Three vectors in a 2D-plane are always collinear.
+* A covariate can be written as a linear combination of two others: $x^{(j)} = c_1\cdot x^{(1)} + c_2 \cdot x^{(2)}$, then the three variables are collinear.
+
+## 
+
+In statistics, the expression "collinearity" is also used when such a collinearity relationship is \emph{approximately} true. For example, when two variables ${x^{(1)}}$ and ${x^{(2)}}$ have a high correlation.  
+
+
+__What is the problem with collinearity?__
+
+A simple (and extreme) example to understand the point: Assume two covariates are identical ${x^{(1)}}={x^{(2)}}$. In the regression model
+\begin{equation*}
+y_i = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \epsilon_i \ ,
+\end{equation*}
+
+the slope coefficients $\beta_1$ and $\beta_2$ \alert{cannot be uniquely determined} (there are many equally "optimal" solutions to the equation)!
+
+When the variables are collinear, this problem is less severe, but the $\beta$ coefficients can be estimated \alert{less precisely}  
+
+$\rightarrow$ standard errors too high.
+
+$\rightarrow$ $p$-values too large.
+
+## Detecting collinearity
+
+The \alert{variance inflation factor} (VIF) is a measure for collinearity. It is defined for each covariate ${x^{(j)}}$ as 
+\begin{equation*}
+VIF_j = \frac{1}{1-R_j^2} \qquad
+\end{equation*}
+ where $R_j^2$ is the $R^2$ of the regression of ${{x^{(j)}}}$ against all other covariates. (Note: if $R_j^2$ is large, this means large collinearity and thus a large VIF).  
+ 
+__Examples__ 
+
+* $R^2_j=0$ $\rightarrow$ no collinearity $\rightarrow$ VIF=1/1 = 1.
+* $R^2_j=0.5$ $\rightarrow$ some collinearity $\rightarrow$ VIF=1/(1-0.5) = 2.  
+* $R^2_j=0.9$ $\rightarrow$  high collinearity $\rightarrow$ VIF=1/(1-0.9) = 10.
+
+## What to do against collineartiy
+
+* \alert{Avoid} it, e.g. in experiments.
+* Consider to \alert{not include a variable} with an inacceptably high $R^2_j$ or $VIF_j$. The tolerance of VIFs are different in the literature and range from 4 to 10 as a maximum tolerable VIF.
+* Be \alert{aware} of it and interpret your results with the respective care.
+* See also Stahel 5.4(i) for a "recipe".  
+
+\
+__Important note:__ We would not care much about collinearity in a predictive model. If collinearity was a problem, AIC/AICc/BIC would probably anyway select a subset where some collinearity is eliminated (because model complexity is balanced against model fit).
+
+## Recommended procedure for explanatory models I
+
+Before you start:
+
+* __Think about a suitable model__. This includes the model family (e.g., linear model), but also potential variables that are relevant using __a priori__ knowledge.  
+* Declare a strategy what you do if _e.g._ modelling assumptions are not met or in the presence of collinearity.
+  
+  * What kind of variable transformations would you try, in which order, and why?
+  * What model simplifications will be considered it it is not possible to fit the intended model?
+  * How will you deal with outliers?
+  * How will you treat missing values in the data?
+  * How will you treat collinear covariates?
+  * ...
+  
+It is advisable to write your strategy down as a "protocol" before doing any analyses. 
+
+## Recommended procedure for explanatory models II
+
+Analyze the data following your "protocol":
+
+* Fit the model and check if modelling assumptions are met.
+* If modelling assumptions are not met, __adapt the model__ as outlined in your protocol.
+* Interpret the model coefficients (effect sizes) and the $p$-values properly (see next week).  
+
+\
+After the analysis that was specified in the "protocol":
+
+* Any additional analyses, which you did not specify in advance, are purely exploratory.
+
+## One more thing: Occam's Razor principle
+
+The principle essentially says that an __explanatory model__ should not be made more complicated than necessary.  
+
+This is also known as the \alert{principle of \bf{parsimony}} (Prinzip der Sparsamkeit):  
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+Systematic effects should be included in a model \textbf{only} if there is knowledge or convincing evidence for the need of them.
+\end{minipage}}  
+
+\href{https://de.wikipedia.org/wiki/Ockhams_Rasiermesser}
+{\beamergotobutton{See Wikipedia for ``Ockham's Rasiermesser''}}  
+
+## Summary
+
+* Model/variable selection is difficult and controversial.  
+
+* Different approaches for predictive or explanatory models.  
+
+* Discriminate explanatory models into confirmatory and exploratory.  
+* AIC, AIC$_c$, BIC: balance between model fit and model complexity.
+
+* Automatic model selection leads to biased parameter estimates and $p$-values.
+
+* Threfore, automatic model selection procedures are inappropriate for explanatory models.
+
+* $P$-values should not be used for model selection, even not for predictive models.
+
+## Self-study week 
+
+Next week is no lecture, so you can
+
+* Consolidate, review, reinforce, expand.
+
+* Read the assigned literature to prepare for week 10.
+
+$\rightarrow$ Please check on openedx.  
+
+## Feedback about today's lecture
+
+Please give us your opinion about the lecture regarding
+
+* unclearest ("muddiest") point
+* the take-home message of today.
+
+via this link:  
+
+\centering{\href{http://www.klicker.uzh.ch/bkx}{http://www.klicker.uzh.ch/bkx}}  
+
+\centering{Thank you!!}
+
+
+## References
+
+
 
 
 
