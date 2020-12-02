@@ -396,3 +396,363 @@ In addition, it is assumed that
 
 __Note:__ We do not actually observe $\epsilon_i$, but only the residuals $e_i$.
 Let us introduce two simple graphical model checking tools for our residuals $e_i$.
+
+## Model checking tool II: Histogram of residuals
+
+Look at the histogram of the residuals:
+
+```{r fig.width=4,fig.height=4,echo=FALSE,out.width='5.5cm', fig.align='center'}
+hist(r.bodyfat$residuals,nclass=20,xlab="Residuals",main='')
+```
+
+The normal distribution assumption (c) seems ok as well.
+
+## How good is the regression model?
+
+This is, per se, a difficult question....
+
+One often considered index is the __coefficient of determination (Bestimmtheitsmass)__ $R^2$.
+Let us again look at the regression output form the bodyfat example:
+
+```{r echo=TRUE, eval = TRUE}
+summary(r.bodyfat)$r.squared
+```
+
+Compare this to the squared correlation between the two variables:
+
+```{r echo = TRUE, eval = TRUE}
+cor(d.bodyfat$bodyfat,d.bodyfat$bmi)^2
+```
+
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+$\rightarrow$ In simple linear regression, $R^2$ is the squared correlation between the independent and the dependent variable.
+\end{minipage}}
+
+##
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+\begin{itemize} 
+\item $R^2$ indicates the proportion of variability of the response variable ${y}$ that is \textbf{explained by the ensemble of all covariates}. 
+\item Its value lies between 0 and 1.
+\end{itemize}
+\end{minipage}}  
+
+\
+
+The __larger__ $R^2$  
+\
+$\Rightarrow$  the \textbf{more} variability of ${y}$ is captured ("explained") by the covariate  
+$\Rightarrow$ the \textbf{"better"} is the model.  
+
+\
+\scriptsize(However, it's a bit more complicated, see later in the course...)
+
+## Testing and Confidence Intervals
+
+After the regression parameters and their uncertainties have been estimated, there are typically two fundamental questions:  
+
+1. __"Are the parameters compatible with some specific value?"__  
+\
+Typically, the question is whether the slope $\beta$ might be 0 or not, that is: "Is there an effect of the covariate $x$ or not?"  
+\
+$\Rightarrow$ This leads to a \alert{\bf statistical test}.  
+\
+2. __"Which values of the parameters are compatible with the data?"__  
+\
+$\Rightarrow$ This leads us to determine \alert{\bf confidence intervals}.
+
+## 
+
+Let's first go back to the output from the bodyfat example: 
+
+```{r echo = TRUE, eval = TRUE}
+summary(r.bodyfat)$coef
+```
+\  
+Besides the estimate and the standard error (which we discussed before), there is a \alert{\texttt{t value}} and a probability \alert{\texttt{Pr(>|t|)}} that we need to understand.
+
+How do these things help us to answer the two questions above?
+
+## Testing the effect of a covariate  
+
+Remember: in a statistical test you first need to specify the \emph{null hypothesis}. Here, typically, the null hypothesis is
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+$$H_0: \quad \beta = \beta_0 =  0  \ .$$
+\begin{center}
+In words: $H_0$ =   "no effect" \\
+\end{center}
+\end{minipage}}
+
+\small (Included in $H_0$ is the assumption that the data follow the simple linear regression model!)  
+\
+
+Here, the \emph{alternative hypothesis} is given by
+\colorbox{lightgray}{\begin{minipage}{14cm}
+$$H_A: \quad \beta \neq  0  $$
+\end{minipage}}
+
+## 
+
+Remember: To carry out a statistical test, we need a \emph{test statistic}.
+
+\begin{center}
+\colorbox{lightgray}{\begin{minipage}{5cm}
+\begin{center}
+What is a test statistic? %\\[6mm]%(Clicker exercise!)
+\end{center}
+\end{minipage}}
+\end{center}
+
+\vspace{2mm}
+$\rightarrow$ It is some type of \textbf{summary statistic} that follows a known distribution under $H_0$. For our purpose, we use the so-called \textbf{$T$-statistic} 
+
+\begin{center}
+\colorbox{lightgray}{\begin{minipage}{5cm}
+\begin{equation}\label{eq:beta}
+T=\frac{\hat\beta - \beta_0}{se^{(\beta)}}\ . %\quad \text{with} \quad se^{(\beta)}=\sqrt{\hat\sigma_e^2/SSQ^{(X)}}  \ .
+\end{equation}
+\end{minipage}}
+\end{center}
+
+Again: typically, $\beta_0=0$, so the formula simplifies to $T=\frac{\hat\beta}{se^{(\beta)}}$.
+
+Under $H_0$, $T$ has a $t$-distribution with $n-2$ degrees of freedom ($n=$ number of data points).
+
+\small (You should try to recall the t-distribution. Check Mat183, keyword: t-test.)
+
+## 
+
+So let's again go back to the bodyfat regression output:
+
+```{r echo = TRUE, eval = TRUE}
+summary(r.bodyfat)$coef
+```
+\
+Task: 
+\
+$\rightarrow$ Please use equation \eqref{eq:beta} to find out how the first three columns (Estimate, Std. Error and t value) are related! Check by a calculation...
+
+Note: The last column contains the \textbf{$p$-value} of the test $\beta=0$.
+
+## Recap: Formal definition of the $p$-value
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+The \textbf{formal definition of $p$-value} is the probability to observe a data summary (e.g., an average) that is at least as extreme as the one observed, given that the Null Hypothesis is correct.
+\end{minipage}}  
+\
+Example (normal distribution): Assume the observed test-statistic leads to a $z$-value = -1.96  
+\
+$\Rightarrow$ $Pr(|z|\geq 1.96)=0.05$ and $Pr(z\leq-1.96)=0.025$.
+
+```{r eval=TRUE, fig.align='center',out.width="6cm",echo = FALSE}
+par(mfrow=c(1,2))
+
+zz1 <- qnorm(0.025)
+zz2 <- qnorm(0.975)
+zz3 <- qnorm(0.025)
+
+cord.x1 <- c(-4,seq(-4,zz1,0.01),zz1)
+cord.y1 <- c(0,dnorm(seq(-4,zz1,0.01)),0)
+
+cord.x2 <- c(zz2,seq(zz2,4,0.01),4)
+cord.y2 <- c(0,dnorm(seq(zz2,4,0.01)),0)
+
+curve(dnorm(x,0,1),-4,4,ylab="density",main="Two-sided p-value (0.05)",xlab="")
+polygon(cord.x1,cord.y1,col='gray')
+polygon(cord.x2,cord.y2,col='gray')
+text(-3,0.05,labels="2.5%")
+text(3,0.05,labels="2.5%")
+
+cord.x3 <- c(-4,seq(-4,zz3,0.01),zz3)
+cord.y3 <- c(0,dnorm(seq(-4,zz3,0.01)),0)
+
+curve(dnorm(x,0,1),-4,4,ylab="density",main="One-sided p-value (0.025)",xlab="")
+polygon(cord.x3,cord.y3,col='gray')
+text(-3,0.05,labels="2.5%")
+```
+
+## 
+
+The regression output on slide 33 indicates that the $p$-value for BMI is very small ($p<0.0001$).
+
+Conclusion: there is __very strong evidence__ that the BMI is associated with bodyfat, because $p$ is extremely small (thus it is very unlikely that such a slope $\hat\beta$ would be seen if there was no effect of BMI on body fat).
+
+This basically answers question 1 from slide 29.
+
+## A cautionary note on the use of $p$-values
+
+Maybe you have seen that in statistical testing, often the criterion $p\leq 0.05$ is used to test whether $H_0$ should be rejected. This is often done in a black-or-white manner.
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+However, we will put a lot of attention to a more reasonable and cautionary interpretation of $p$-values in this course! 
+\end{minipage}}
+
+## Confidence intervals of regression parameters
+
+Question 2 from slide 29:
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+However, we will put a lot of attention to a more reasonable and cautionary interpretation of $p$-values in this course! 
+\end{minipage}}
+
+To answer this question, we can determine the confidence intervals of the regression parameters.
+
+__Facts we know about $\hat\beta$__
+
+* $\hat\beta$ is estimated with a standard error of $\sigma^{(\beta)}$
+* The distribution of $\hat\beta$ is normal, namely $\hat\beta\sim N(\beta,\sigma^{(\beta)2})$.
+* However, since we need to estimate $\sigma^{(\beta)}$ from the data (the standard error), we have a $t$-distribution.
+
+## 
+
+Doing some calculations (similar to those in chapter 8.2.2 of Mat183 script) leads us to the 95\% confidence interval  
+
+\begin{center}
+\colorbox{lightgray}{\begin{minipage}{6cm}
+$$[\hat\beta - c \cdot \hat\sigma^{(\beta)} ; \hat\beta + c \cdot \hat\sigma^{(\beta)}] \ ,$$
+\end{minipage}}
+\end{center}
+
+where $c$ is the 97.5\% quantile of the $t$-distribution with $n-2$ degrees of freedom.
+
+Doing this for the bodfat example "by hand" is not hard. We have 241 degrees of freedom:
+
+```{r echo = TRUE, eval = TRUE}
+coefs <- summary(r.bodyfat)$coef
+beta <- coefs[2,1]
+sdbeta <- coefs[2,2] 
+beta + c(-1,1) * qt(0.975,241) * sdbeta 
+```
+
+## 
+
+Even easier: directly ask R to give you the CIs.
+
+```{r echo = TRUE, eval = TRUE}
+confint(r.bodyfat,level=c(0.95))
+```
+
+In summary,
+```{r results='asis', echo = FALSE}
+tableRegression(r.bodyfat)
+```
+
+\underline{Interpretation:} for an increase in the bmi by one index point, roughly 1.82\% percentage points more bodyfat are expected, and all true values for $\beta$ between 1.61 and 2.03 are compatible with the observed data.
+
+## Confidence and Prediction Ranges
+
+* Remember: When another sample from the same population was taken, the regression line would look slightly different.  
+
+* There are two questions to be asked:  
+
+
+1. Which other regression lines are compatible with the observed data?
+\
+$\Rightarrow$ This leads to the \textbf{confidence range}.
+ 
+2. Where do future observations with a given $x$ coordinate lie?
+\
+$\Rightarrow$ This leads to the \textbf{prediction range}.
+
+## Bodyfat example
+
+\begin{center}
+```{r eval=TRUE, fig.width=5, fig.height=5,out.width="7cm", echo=FALSE}
+t.range <- range(d.bodyfat$bmi)
+t.xwerte <- seq(t.range[1]-1,t.range[2]+1,by=1)
+t.vert <- predict(r.bodyfat,se.fit=T,newdata=data.frame(bmi=t.xwerte),
+interval ="confidence")$fit
+t.vorh <- predict(r.bodyfat,se.fit=T,newdata=data.frame(bmi=t.xwerte),
+interval ="prediction")$fit
+plot(d.bodyfat$bmi,d.bodyfat$bodyfat,main="",xlab="BMI",ylab="bodyfat",xlim=range(t.xwerte),ylim=c(-5,50),cex=0.8)
+abline(r.bodyfat,lwd=2)
+lines(x=t.xwerte,y=t.vert[,2],lty=8,lwd=2,col=2)
+lines(x=t.xwerte,y=t.vert[,3],lty=8,lwd=2,col=2)
+lines(x=t.xwerte,y=t.vorh[,2],lty=8,lwd=2,col=4)
+lines(x=t.xwerte,y=t.vorh[,3],lty=8,lwd=2,col=4)
+legend("bottomright", c("confidence range (95%)", "prediction range (95%)"),
+lty=8, cex=1,col=c(2,4),lwd=2)
+```
+\end{center}
+
+Note: The prediction range is much broader than the confidence range.
+
+## Calculation of the confidence range
+
+Given a fixed value of $x$, say $x_0$. The question is: 
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+Where does $\hat y_0 = \hat\alpha + \hat\beta x_0$ lie with a certain confidence (i.e., 95\%)? 
+\end{minipage}}
+
+This question is not trivial, because both $\hat\alpha$ and $\hat\beta$ are estimates from the data and contain uncertainty. 
+
+The details of the calculation are given in Stahel 2.4b. 
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+Plotting the confidence interval around all $\hat y_0$ values one obtains the \textbf{confidence range} or \textbf{confidence band for the expected values} of $y$.
+\end{minipage}}
+
+Note: For the confidence range, only the uncertainty in the estimates $\hat\alpha$ and $\hat\beta$ matters.
+
+## 
+
+
+```{r eval=TRUE, fig.width=5,fig.height=5, out.width='7cm', echo = FALSE, fig.align='center'}
+t.range <- range(d.bodyfat$bmi)
+t.xwerte <- seq(t.range[1]-1,t.range[2]+1,by=1)
+t.vert <- predict(r.bodyfat,se.fit=T,newdata=data.frame(bmi=t.xwerte),
+interval ="confidence")$fit
+t.vorh <- predict(r.bodyfat,se.fit=T,newdata=data.frame(bmi=t.xwerte),
+interval ="prediction")$fit
+plot(d.bodyfat$bmi,d.bodyfat$bodyfat,main="Confidence range",xlab="BMI",ylab="bodyfat",xlim=range(t.xwerte),ylim=c(-5,50),cex=0.8)
+abline(r.bodyfat,lwd=2)
+lines(x=t.xwerte,y=t.vert[,2],lty=8,lwd=2,col=2)
+lines(x=t.xwerte,y=t.vert[,3],lty=8,lwd=2,col=2)
+legend("bottomright", c("confidence range (95%)"),
+lty=8, cex=1,col=c(2),lwd=2)
+```
+
+
+## Calculations of the prediction range
+
+Given a fixed value of $x$, say $x_0$. The question is:  
+
+\colorbox{lightgray}{\begin{minipage}{10cm}
+Where does a {\bf future observation} lie with a certain confidence (i.e., 95\%)? 
+\end{minipage}}
+
+To answer this question, we have to \alert{consider not only the uncertainty in the predicted value} $\hat y_0 =  \hat\alpha + \hat\beta x_0$, but also the \alert{error in the equation $\epsilon_i \sim N(0,\sigma^2)$}.  
+
+This is the reason why the {\bf prediction range is always wider than the confidence range}.
+
+## 
+
+```{r eval=T,fig.width=5,fig.height=5,out.width="7cm",echo=FALSE, fig.align='center'}
+t.range <- range(d.bodyfat$bmi)
+t.xwerte <- seq(t.range[1]-1,t.range[2]+1,by=1)
+t.vert <- predict(r.bodyfat,se.fit=T,newdata=data.frame(bmi=t.xwerte),
+interval ="confidence")$fit
+t.vorh <- predict(r.bodyfat,se.fit=T,newdata=data.frame(bmi=t.xwerte),
+interval ="prediction")$fit
+plot(d.bodyfat$bmi,d.bodyfat$bodyfat,main="Prediction range",xlab="BMI",ylab="bodyfat",xlim=range(t.xwerte),ylim=c(-5,50),cex=0.8)
+abline(r.bodyfat,lwd=2)
+lines(x=t.xwerte,y=t.vorh[,2],lty=8,lwd=2,col=4)
+lines(x=t.xwerte,y=t.vorh[,3],lty=8,lwd=2,col=4)
+legend("bottomright", c( "prediction range (95%)"),
+lty=8, cex=1,col=c(4),lwd=2)
+```
+
+## Tasks until the next practical (Thu/Fri)
+
+The idea of the course is that as a preparation for the practical part you will do the following:
+
+* Understand what today's lecture was about. You will certainly need to click through it again.
+* Go to openedX and do all the "Before class (BC)" tasks.  
+
+\
+\bf $\rightarrow$ The same procedure applies to all course weeks.
+
+
