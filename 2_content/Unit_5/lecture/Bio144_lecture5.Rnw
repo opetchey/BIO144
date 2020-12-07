@@ -175,7 +175,7 @@ ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point() + 
 $\rightarrow$ \texttt{anova()} 
 \end{itemize}
 
-Thus you will {\bf always} need the $F$-test (\texttt{anova()}) to obtain a $p$-value for a factor covariate with more than 2 levels!
+Thus you will __always__ need the $F$-test `anova()` to obtain a $p$-value for a factor covariate with more than 2 levels!
 }
 
 

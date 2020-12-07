@@ -752,7 +752,7 @@ The idea of the course is that as a preparation for the practical part you will 
 * Understand what today's lecture was about. You will certainly need to click through it again.
 * Go to openedX and do all the "Before class (BC)" tasks.  
 
-\
+
 \bf $\rightarrow$ The same procedure applies to all course weeks.
 
 
