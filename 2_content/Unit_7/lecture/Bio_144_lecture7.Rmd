@@ -1,0 +1,316 @@
+---
+title: "Kurs Bio144: Datenanalyse in der Biologie"
+subtitle: "Lecture 7: ANCOVA, short introduction to Linear Algebra"
+author: "Stefanie Muff (Lecture) & Owen L.Petchey (Practical)"
+institute: "University of Zurich"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  beamer_presentation:
+  includes: 
+  in_header: ../../beamer_stuff/preamble.tex
+classoption: "aspectratio=169"
+---
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(xtable.comment = FALSE)
+```
+
+
+## Overview
+
+\begin{itemize}
+\item ANCOVA
+\item Introduction to linear Algebra
+\end{itemize}
+\ 
+Note: 
+ANCOVA = ANalysi of COVAriance (Kovarianzanalyse)
+
+## Course material covered today
+
+\begin{itemize}
+\item "Getting Started with R" chapter 6.3
+\item  "Lineare regression" chapters 3.A (p.\ 43-45) and 3.4, 3.5 (p.\ 39-42)
+\end{itemize}
+
+## Recap of ANOVA
+
+\begin{itemize}
+\item ANOVA is a method to test if the means of \alert{two or more groups are different}.\\[2mm]
+\item Post-hoc tests and contrasts, including correction for $p$-values, to understand the differences between the groups. \\[2mm]
+\item Two-way ANOVA for factorial designs, interactions.\\[2mm]
+\item ANOVA is a special case of linear regression with categorical covariates.
+\end{itemize}
+
+## Recap of two-way ANOVA example
+
+Remember: Influence of four levels of fertilizer (DUENGER) on the yield (ERTRAG) on 5 species (SORTE) of crops was investigated. For each DUENGER $\times$ ERTRAG combination, 3 repeats were taken.
+
+```{r message=FALSE, warning=FALSE, echo = FALSE, eval=TRUE}
+library(dplyr)
+path <- "../../../5_some_examples/data_examples/WBL/"
+d.duenger <- read.table(paste(path,"duenger.dat",sep=""),header=T,sep=",")
+d.duenger <- mutate(d.duenger,SORTE=as.factor(SORTE),DUENGER=as.factor(DUENGER))
+```
+
+Interaction plot with ERTRAG and log(ERTRAG) as response:
+```{r fig.width=4,fig.height=4,out.width="4.5cm", echo=FALSE, warning=FALSE,message=FALSE}
+require(cowplot)
+a = interaction.plot(d.duenger$DUENGER,d.duenger$SORTE,(d.duenger$ERTRAG),xlab="Duenger",ylab="Mean Ertrag",trace.label="Sorte")
+
+b = interaction.plot(d.duenger$DUENGER,d.duenger$SORTE,log(d.duenger$ERTRAG),xlab="Duenger",ylab="log(Mean Ertrag)",trace.label="Sorte")
+plot_grid(a,b)
+```
+
+Remember: We used log(ERTRAG), because the residual plots were otherwise not ok.
+
+
+## 
+
+\tiny
+```{r echo = TRUE}
+r.duenger2 <- lm(log(ERTRAG) ~ DUENGER*SORTE,d.duenger)
+anova(r.duenger2)
+```
+\ 
+\normalsize
+Questions: 
+\begin{itemize}
+\item Number of parameters? 
+\item Degrees of freedom (60 data points)?
+\item Interpretation?
+\end{itemize}
+
+## 
+\tiny
+```{r echo = TRUE, size = 'tiny'}
+summary(r.duenger2)
+```
+
+## Analysis of Covariance (ANCOVA)
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+An ANCOVA is an analysis of variance (ANOVA), \alert{including} also at least one \alert{continuous covariate}.
+\end{minipage}}
+\vspace{6mm}
+
+ANCOVA unifies several concepts that we approached in this course so far:
+
+\begin{itemize}
+\item Linear regression\\[3mm]
+\item Categorical covariates\\[3mm]
+\item Interactions (of continuous and categorical covariates)\\[3mm]
+\item Analysis of Variance (ANOVA)\\[6mm]
+\end{itemize}
+
+As such, it is a __special case of the linear regression model__.
+
+## 
+
+Given a categorical covariate $x_i$ and a continuous covariate $z_i$. Then the ANCOVA equation (without interactions) is given as
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+\begin{equation*}
+y_i = \beta_0 + \beta_1x_i^{(1)} + ... + \beta_kx_i^{(k)} + \beta_z z_i + \epsilon_i \ ,
+\end{equation*}
+where $x_i^{(k)}$ is the $k$th dummy variable ($x_i^{(k)}$=1 if $i$th observation belongs to category $k$, 0 otherwise).
+\end{minipage}}
+\ 
+
+
+__Note 1:__ It is straightforward to add an interaction of $x_i$ with $z_i$.
+\  
+
+__Note 2:__ Again, for identifiability reason, we typically set $\beta_1=0$.
+
+## Once more: the earthworms
+
+"Magenumfang" was used to predict "Gewicht" of the worm, including as covariate also the worm species.
+
+```{r echo = FALSE, eval = TRUE}
+d.wurm <- read.table ("../../../5_some_examples/data_examples/ancova/Projekt6Regenwuermer/RegenwuermerDaten_Haupt.txt",header=T)
+d.wurm[d.wurm$Gattung=="N","GEWICHT"] <- d.wurm[d.wurm$Gattung=="N","GEWICHT"]*0.5
+```
+
+```{r fig.width=5,fig.height=3.5,out.width="6.5cm", echo=FALSE, message=FALSE,warning=FALSE,fig.align='center'}
+require(ggplot2)
+require(dplyr)
+ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point() + theme_bw()
+```
+
+\alert{Categorical} and \alert{continuous} covariates were used to predict a continuous outcome $\rightarrow$ ANCOVA.
+
+## 
+\tiny
+```{r echo = TRUE, eval = TRUE}
+r.lm <- lm(log(GEWICHT) ~  MAGENUMF + Gattung,d.wurm)
+summary(r.lm)$coef
+```
+\normalsize  
+\ 
+
+__Important:__  The $p$-values for the entries `GattungN` and `GattungOc` are not very meaningful (why?).
+
+To understand if "Gattung" has an effect, __we need to carry out an $F$-test__ $\rightarrow$ ANOVA table:
+\tiny  
+
+\  
+
+```{r echo = TRUE, eval = TRUE}
+anova(r.lm)
+```
+
+## 
+
+We also included an __interaction term__ between `MAGENUMF` and `Gattung` to allow for different slopes:  
+
+\ 
+
+```{r fig.width=5, fig.height=3.5,out.width="6.5cm", fig.align='center', echo=FALSE, warning=FALSE, message=FALSE}
+library(ggplot2)
+library(dplyr)
+ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point() + geom_smooth(method="lm") + theme_bw()
+```
+
+## 
+
+$\rightarrow$ We again need the __$F$-test__ to check whether the respective interaction term is needed:  
+
+\ 
+
+\tiny
+```{r echo = TRUE, eval = TRUE}
+r.lm2<- lm(log(GEWICHT) ~  MAGENUMF * Gattung,d.wurm)
+anova(r.lm2)
+```
+\normalsize
+$\rightarrow$ $p=0.167$, thus interaction is probably not relevant. 
+
+## A new example: cholesterol levels
+
+__Example:__ Cholesterol levels [mg/ml] for 45 women from three US states (Iowa, Nebraska, Arizona), were measured.
+
+__Question:__ Do these levels differ between the states?
+
+Age (years) may be a relevant covariable.
+
+```{r echo = FALSE}
+d.chol <- read.table ("../../../5_some_examples/data_examples/ancova/cholesterol/cholesterol.txt",header=T)
+ set.seed(23)
+ age <- as.integer(runif(15,19,65))
+ dd2 <- data.frame(cholesterol=round(rnorm(15,10 + 4.5*age,35),0),age=age,state=rep("Arizona",15))
+ d.chol <- rbind(d.chol,dd2)
+```
+
+
+```{r fig.width=4, fig.height=3.5,out.width="5.7cm",fig.align='center',warning=FALSE,message=FALSE, echo = FALSE}
+library(ggplot2)
+ggplot(d.chol,aes(x=state,y=cholesterol)) + geom_boxplot()
+```
+
+## 
+
+The scatter plot gives an idea about the model that might be useful here:
+
+```{r, message=FALSE, warning=FALSE, echo = FALSE, fig.align='center',fig.width=5, fig.height=3.5,out.width="6.5cm"}
+library(ggplot2)
+library(dplyr)
+ggplot(d.chol,aes(x=age,y=cholesterol,colour=state)) + geom_point() + geom_smooth(method="lm") + theme_bw()
+```
+
+$\rightarrow$ We include state, age and the interaction of the two. 
+
+## 
+
+Doing the analysis:
+
+```{r echo = TRUE}
+r.lm <- lm(cholesterol ~ age*state,data=d.chol)
+anova(r.lm)
+```
+
+Interpretation?
+
+## 
+
+Compare the results from the previous slide to the estimated coefficients:
+
+```{r echo = TRUE}
+r.lm <- lm(cholesterol ~ age*state,data=d.chol)
+summary(r.lm)$coef
+```
+
+__Note:__ The $p$-values for the `age` coefficient is not the same as in the ANOVA table.
+__Reason:__ `anova()` tests the models against one another in the __order__ specified.
+
+## 
+
+As always, some model checking is necessary:  
+
+\ 
+```{r fig.width=6, fig.height=3.5,out.width="7.5cm", fig.align='center', echo = FALSE, message=FALSE, warning=FALSE}
+require(ggfortify)
+autoplot(r.lm,which=c(1,2),smooth.colour=NA)
+```
+
+\ 
+
+$\rightarrow$ This seems ok.
+
+## An introduction to linear Algebra
+
+Who has some knowledge of linear Algebra?
+
+__Overview__ 
+
+\begin{itemize}
+
+\item The basics about  
+\begin{itemize}
+\item vectors \\[1mm]
+\item matrices \\[1mm]
+\item matrix algebra \\[1mm]
+\item matrix multiplication \\[2mm]
+\end{itemize}
+\item Why is linear Algebra useful? \\[2mm]
+\item What does it have to do with data analysis and statistics?\\[2mm]
+\item Regression equations in matrix notation.
+\end{itemize}
+
+## Motivation
+
+Why are vectors, matrices and their algebraic rules useful?
+
+\begin{itemize}
+\item[\bf Example 1:] The observations for a covariate ${x}$ or the response ${y}$ for all individuals $1\leq i\leq n$ can be stored in a vector (vectors and matrices are always given in {\bf bold} letters):
+\begin{equation*}
+{x}=\left(
+\begin{array}{c}
+x_1 \\
+x_2 \\
+... \\
+x_n
+\end{array}
+\right) \ , \quad
+{y}=\left(
+\begin{array}{c}
+y_1 \\
+y_2 \\
+... \\
+y_n
+\end{array}
+\right)  \ .
+\end{equation*}
+~\\[2mm]
+\item[\bf Example 2:] Covariance matrices for multiple variables. Say we have ${x}^{(1)}$ and ${x}^{(2)}$. The \alert{covariance matrix} is then given as
+\begin{equation*}
+\left(
+\begin{array}{cc}
+Var({x}^{(1)}) & Cov({x}^{(1)},{x}^{(2)}) \\
+Cov({x}^{(1)},{x}^{(2)}) & Var({x}^{(2)}) \\
+\end{array}
+\right) \ .
+\end{equation*}
+~\\
+\end{itemize}
