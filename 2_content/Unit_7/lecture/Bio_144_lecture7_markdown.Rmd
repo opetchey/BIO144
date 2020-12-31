@@ -6,8 +6,8 @@ institute: "University of Zurich"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   beamer_presentation:
-  includes: 
-  in_header: ../../beamer_stuff/preamble.tex
+    includes:
+      in_header: ../../beamer_stuff/preamble.tex
 classoption: "aspectratio=169"
 ---
   
@@ -340,7 +340,7 @@ This is the so-called \alert{design matrix} with a vector of 1's in the first co
 
 with ${\tilde\beta}$ the vector of regression coefficients and ${e}$ the vector of errors
 \end{itemize}
-}
+
 
 ## 
 
@@ -974,7 +974,7 @@ What happened here??
 ##
 
 Matrix multiplication: 
-\small
+\tiny
 ```{r echo = TRUE}
 C <- A %*% t(B)
 C
@@ -984,7 +984,7 @@ A%*%a
 
 Matrix inversion (possible for quadratic matrices only):
 
-\small
+\tiny
 ```{r echo = TRUE}
 solve(C)
 C %*% solve(C)

@@ -6,8 +6,8 @@ institute: "University of Zurich"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   beamer_presentation:
-  includes: 
-  in_header: ../../beamer_stuff/preamble.tex
+    includes:
+      in_header: ../../beamer_stuff/preamble.tex
 classoption: "aspectratio=169"
 ---
   
@@ -340,7 +340,7 @@ print(ttab1, floating = TRUE, include.rownames=FALSE)
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 require(tidyverse)
 ```
-
+\tiny
 ```{r echo=TRUE}
 glimpse(d.mais)
 ```
@@ -362,8 +362,9 @@ autoplot(r.mais,smooth.colour=NA)
 ```
 
 ## 
-__Always__ when we needed to do an $F$-test and when categorical covariates were involved, the `anova()` table is required:
-\small
+__Always__ when we needed to do an $F$-test and when categorical covariates were involved, the `anova()` table is required: 
+
+\tiny
 ```{r eval=T,echo=T}
 anova(r.mais)
 ```

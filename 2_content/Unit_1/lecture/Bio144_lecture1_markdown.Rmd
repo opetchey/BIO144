@@ -92,7 +92,7 @@ Data analysis is at the \textcolor{blue}{interface between mathematics and biolo
 _Method:_ Study in Austria, 9 Otter were radio-tracked and monitored during 2-3 years.  
 
 \includegraphics[width=10cm]{pictures/otters.jpeg}
-{\scriptsize http://www.prolutra.ch/}
+\scriptsize http://www.prolutra.ch/
 
 ## 
 
@@ -112,7 +112,10 @@ _Method:_ Study in Austria, 9 Otter were radio-tracked and monitored during 2-3 
 
 ## \alert{Mercury (Hg) in the soil}
 
+\begin{center}
 \includegraphics[width=8cm]{pictures/wallis.png}
+\end{center}
+
 \colorbox{lightgray}{\begin{minipage}{14cm}
 \emph{Research question:} Is the Hg level in the environment (soil) of people's homes associated to the Hg levels in their bodies (urin, hair)?
 \end{minipage}}
@@ -143,7 +146,9 @@ Observed variables were, e.g., media consumption, behavior of the parents, age, 
 
 ## Statistics in the news (April 2016)
 
+\begin{center}
 \includegraphics[width=9cm]{pictures/NZZ1.jpeg}
+\end{center}
 
 ## Producing nonsense with statistics... 
 
@@ -424,9 +429,14 @@ Many R packages are available for various purposes. Interactive apps can, for ex
 
 It will be partially a repetition of what you heard in Mat183, chapter 10.2.
 
-## Refrences
+## 
 
-MISSING REFERENCES
+References
 
+Box, G.E.P. (1979). Robustness in the strategy of scientific model building. In R.L. Launer and G.N. Wilkinson (Eds.), _In Robustness in Statistics_, pp. 201-236. New York: Academic Press.
+
+Elpelt, B. and J. Hartung (1987). _Grundkurs Statistik, Lehr- und Übungsbuchder angewandten Statistik.
+
+Hothorn, T. and B.S. Everitt (2014). _A Handbook of Statistical Analyses Using R_ (3 ed.). Boca Raton: Chapman & Hall/CRC Press.
 <!--\bibliographystyle{Chicago}-->
 <!--\bibliography{refs}-->

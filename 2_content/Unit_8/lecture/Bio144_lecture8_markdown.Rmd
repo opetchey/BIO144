@@ -717,8 +717,21 @@ via this link:
 \centering{Thank you!!}
 
 
-## References
+## 
+References: \ 
 
+\small
+Brewer, M. J., A. Butler, and S.L. Cooksley (2016). The relative performance of $AIC$, $AIC_c$ and $bic$ in the presence of unobserved heterogeneity. _Methods in Ecology and Evolution 7_, 679-692.\  
+
+Burnham, K.P. and D.R. Anderson (2002). _Model selection and multimodel inference: a practical information-theoretic approach._ New York: Springer.\  
+
+Clayton, D. and M. Hills (1993). _Statistical Models in Epidemiology._ Oxford: Oxford University Press.\  
+
+Copas. J.B. (1983). Regression, prediction and shrinkage. _Journal of the Royal Statistical Society. Series B (Statistical Methodology) 45_, 311-354.\  
+
+Freedman, D.A. (1983). A note on screening regression equations. _The American Statistician 37,_ 152-155.\  
+
+Imo, D., S. Muff, R. Schierl, K. Byber, C. Hitzke, M. Bopp, M. Maggi, S. Bose-O'Reilly, L. Held, and H. Dressel (2017). Risk assessment for children and mothers in a mercury-contaminated area using human-biomonitoring and individual soil measurements: a cross-sectional study. _International Journal of Environmental Health Research 28,_ 1-16.
 
 
 

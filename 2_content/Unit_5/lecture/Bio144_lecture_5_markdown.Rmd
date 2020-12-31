@@ -6,8 +6,8 @@ institute: "University of Zurich"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   beamer_presentation:
-  includes:
-  in_header: ../../beamer_stuff/preamble.tex
+    includes:
+      in_header: ../../beamer_stuff/preamble.tex
 classoption: "aspectratio=169"
 ---
   
