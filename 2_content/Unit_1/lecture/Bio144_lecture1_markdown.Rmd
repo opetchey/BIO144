@@ -359,7 +359,9 @@ models are wrong, but some are useful."}
 
 ## Steps in a modelling process ("work flow")
 
-<!--\includegraphics[width=11cm]{pictures/workflow.png}-->
+\begin{center}
+\includegraphics[width=11cm]{pictures/workflow.png}
+\end{center}
 
 ## The scopes of statistical data analysis
 

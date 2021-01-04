@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.9.12)  31 DEC 2020 10:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.9.12)  4 JAN 2021 10:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1211,29 +1211,34 @@ Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 215.
 [5
 
 ]
+<pictures/table1.png, id=59, 412.54124pt x 163.61125pt>
+File: pictures/table1.png Graphic file (type png)
+<use pictures/table1.png>
+Package pdftex.def Info: pictures/table1.png  used on input line 244.
+(pdftex.def)             Requested size: 113.81102pt x 45.13676pt.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 240.
+(Font)              <10> on input line 244.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 240.
+(Font)              <7> on input line 244.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 240.
+(Font)              <5> on input line 244.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 240.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 244.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <7> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 240.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 244.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <5> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 240.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 244.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <14.4> on input line 240.
+(Font)              <14.4> on input line 244.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <14.4> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 240.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 244.
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 240.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 244.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [6
 
-]
+ <./pictures/table1.png>]
 \openout4 = `Bio144_lecture11_markdown.vrb'.
 
 (./Bio144_lecture11_markdown.vrb
@@ -1248,47 +1253,47 @@ File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <6> not available
 (Font)              Font shape `T1/lmtt/b/n' tried instead on input line 31.
 )
-Overfull \vbox (2.4034pt too high) detected at line 283
+Overfull \vbox (2.4034pt too high) detected at line 287
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 283.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 287.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [7
 
 ]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 302.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 306.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [8
 
 ]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 328.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 332.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [9
 
 ]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 351.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 355.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [10
 
 ]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 359.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 363.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [11
 
 ]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 375.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 379.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [12
 
@@ -1298,29 +1303,29 @@ Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 375.
 (./Bio144_lecture11_markdown.vrb)
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 401.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 405.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [13
 
 ]
-<Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-4-1.pdf, id=126, 2
+<Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-4-1.pdf, id=129, 2
 83.0575pt x 204.765pt>
 File: Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-4-1.pdf Graph
 ic file (type pdf)
 <use Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-4-1.pdf>
 Package pdftex.def Info: Bio144_lecture11_markdown_files/figure-beamer/unnamed-
-chunk-4-1.pdf  used on input line 413.
+chunk-4-1.pdf  used on input line 417.
 (pdftex.def)             Requested size: 170.71652pt x 123.50044pt.
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 413.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 417.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [14
 
  <./Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-4-1.pdf>]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 433.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 437.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [15
 
@@ -1331,13 +1336,13 @@ Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 433.
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
 (Font)              Font shape `T1/lmtt/b/n' tried instead on input line 12.
 )
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 30--465
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 30--469
 [][][][][][][]  
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 465.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 469.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [16
 
@@ -1345,38 +1350,38 @@ Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 465.
 \openout4 = `Bio144_lecture11_markdown.vrb'.
 
 (./Bio144_lecture11_markdown.vrb)
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 32--499
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 32--503
 [][][][][][][]  
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 499.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 503.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [17
 
 ]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 519.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 523.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [18
 
 ]
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 543--543
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 547--547
 [][][][][][][]  
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 543.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 547.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [19
 
 ]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 565.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 569.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [20
 
@@ -1402,48 +1407,48 @@ l.17 \label{sl:bernoulli}
                          )
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 593.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 597.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [21
 
 ]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 614.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 618.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [22
 
 ]
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 631--631
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 635--635
 [][][][][][][]  
  []
 
-<Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-9-1.pdf, id=202, 2
+<Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-9-1.pdf, id=205, 2
 59.97125pt x 212.795pt>
 File: Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-9-1.pdf Graph
 ic file (type pdf)
 <use Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-9-1.pdf>
 Package pdftex.def Info: Bio144_lecture11_markdown_files/figure-beamer/unnamed-
-chunk-9-1.pdf  used on input line 631.
+chunk-9-1.pdf  used on input line 635.
 (pdftex.def)             Requested size: 128.0374pt x 104.80295pt.
 
-Overfull \vbox (2.73586pt too high) detected at line 631
+Overfull \vbox (2.73586pt too high) detected at line 635
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 631.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 635.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [23
 
  <./Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-9-1.pdf>]
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 650--650
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 654--654
 [][][][][][][]  
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 650.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 654.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [24
 
@@ -1453,29 +1458,29 @@ Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 650.
 (./Bio144_lecture11_markdown.vrb)
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 679.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 683.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [25
 
 ]
-<Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-11-1.pdf, id=233, 
+<Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-11-1.pdf, id=236, 
 355.3275pt x 352.31625pt>
 File: Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-11-1.pdf Grap
 hic file (type pdf)
 <use Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-11-1.pdf>
 Package pdftex.def Info: Bio144_lecture11_markdown_files/figure-beamer/unnamed-
-chunk-11-1.pdf  used on input line 689.
+chunk-11-1.pdf  used on input line 693.
 (pdftex.def)             Requested size: 170.71652pt x 169.27115pt.
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 689.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 693.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [26
 
  <./Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-11-1.pdf>]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 699.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 703.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [27
 
@@ -1485,34 +1490,34 @@ Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 699.
 (./Bio144_lecture11_markdown.vrb)
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 743.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 747.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [28
 
 ]
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 764--764
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 768--768
 [][][][][][][]  
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 764.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 768.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [29
 
 ]
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 787--787
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 791--791
 [][][][][][][]  
  []
 
 
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 787--787
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 791--791
 [][][][][][][]  
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 787.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 791.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [30
 
@@ -1527,29 +1532,29 @@ File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ))
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 825.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 829.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [31
 
 ]
-<Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-14-1.pdf, id=292, 
+<Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-14-1.pdf, id=295, 
 283.0575pt x 204.765pt>
 File: Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-14-1.pdf Grap
 hic file (type pdf)
 <use Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-14-1.pdf>
 Package pdftex.def Info: Bio144_lecture11_markdown_files/figure-beamer/unnamed-
-chunk-14-1.pdf  used on input line 836.
+chunk-14-1.pdf  used on input line 840.
 (pdftex.def)             Requested size: 170.71652pt x 123.50044pt.
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 836.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 840.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [32
 
  <./Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-14-1.pdf>]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 855.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 859.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [33
 
@@ -1562,7 +1567,7 @@ LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10.95> not available
 )
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 879.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 883.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [34
 
@@ -1572,46 +1577,46 @@ Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 879.
 (./Bio144_lecture11_markdown.vrb)
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 920.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 924.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [35
 
 ]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 932.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 936.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [36
 
 ]
-Overfull \vbox (15.15352pt too high) detected at line 979
+Overfull \vbox (15.15352pt too high) detected at line 983
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 979.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 983.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [37
 
 ]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1001.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1005.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [38
 
 ]
-<Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-19-1.pdf, id=351, 
+<Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-19-1.pdf, id=354, 
 385.44pt x 170.6375pt>
 File: Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-19-1.pdf Grap
 hic file (type pdf)
 <use Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-19-1.pdf>
 Package pdftex.def Info: Bio144_lecture11_markdown_files/figure-beamer/unnamed-
-chunk-19-1.pdf  used on input line 1010.
+chunk-19-1.pdf  used on input line 1014.
 (pdftex.def)             Requested size: 227.62204pt x 100.76897pt.
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1010.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1014.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [39
 
@@ -1619,7 +1624,7 @@ Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1010.
 \openout4 = `Bio144_lecture11_markdown.vrb'.
 
 (./Bio144_lecture11_markdown.vrb
-<Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-20-1.pdf, id=366, 
+<Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-20-1.pdf, id=369, 
 495.8525pt x 257.96375pt>
 File: Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-20-1.pdf Grap
 hic file (type pdf)
@@ -1630,22 +1635,22 @@ chunk-20-1.pdf  used on input line 6.
 )
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1018.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1022.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [40
 
  <./Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-20-1.pdf>]
-<Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-21-1.pdf, id=381, 
+<Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-21-1.pdf, id=384, 
 354.32375pt x 317.185pt>
 File: Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-21-1.pdf Grap
 hic file (type pdf)
 <use Bio144_lecture11_markdown_files/figure-beamer/unnamed-chunk-21-1.pdf>
 Package pdftex.def Info: Bio144_lecture11_markdown_files/figure-beamer/unnamed-
-chunk-21-1.pdf  used on input line 1029.
+chunk-21-1.pdf  used on input line 1033.
 (pdftex.def)             Requested size: 184.9429pt x 165.56148pt.
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1029.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1033.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [41
 
@@ -1655,7 +1660,7 @@ Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1029.
 (./Bio144_lecture11_markdown.vrb)
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1044.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1048.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [42
 
@@ -1665,7 +1670,7 @@ Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1044.
 (./Bio144_lecture11_markdown.vrb)
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1071.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1075.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [43
 
@@ -1675,7 +1680,7 @@ Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1071.
 (./Bio144_lecture11_markdown.vrb)
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1108.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1112.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [44
 
@@ -1685,14 +1690,14 @@ Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1108.
 (./Bio144_lecture11_markdown.vrb)
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1137.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1141.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [45
 
 ]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1149.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1153.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [46
 
@@ -1706,20 +1711,20 @@ Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1149.
 \tf@snm=\write8
 \openout8 = `Bio144_lecture11_markdown.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1151.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1151.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1155.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1155.
 (./Bio144_lecture11_markdown.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1151.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 1151.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1155.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 1155.
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 24021 strings out of 492616
- 433494 string characters out of 6129481
- 526227 words of memory out of 5000000
- 27199 multiletter control sequences out of 15000+600000
+ 24028 strings out of 492616
+ 433612 string characters out of 6129481
+ 526225 words of memory out of 5000000
+ 27203 multiletter control sequences out of 15000+600000
  82646 words of font info for 111 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  56i,15n,55p,813b,447s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1745,10 +1750,10 @@ c/lm/lmtk10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/lm/lmtt1
 0.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/lm/lmtt12.pfb></us
 r/local/texlive/2019/texmf-dist/fonts/type1/public/lm/lmtt8.pfb></usr/local/tex
 live/2019/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on Bio144_lecture11_markdown.pdf (46 pages, 574593 bytes).
+Output written on Bio144_lecture11_markdown.pdf (46 pages, 639102 bytes).
 PDF statistics:
- 536 PDF objects out of 1000 (max. 8388607)
- 435 compressed objects within 5 object streams
+ 539 PDF objects out of 1000 (max. 8388607)
+ 436 compressed objects within 5 object streams
  141 named destinations out of 1000 (max. 500000)
- 12371 words of extra memory for PDF output out of 14400 (max. 10000000)
+ 12376 words of extra memory for PDF output out of 14400 (max. 10000000)
 

@@ -769,9 +769,9 @@ Moreover, the $R^2=0.76$ is relatively high and almost identical to $R^2_a$.
 
 ## $F$-test to compare models
 
-<!--
-\includegraphics[width=11cm]{pictures/Ftest.pdf}
--->
+\begin{center}
+\includegraphics[width=11cm]{pictures/Ftest.png}
+\end{center}
 
 \small Remember: $F_{1,n-p} = t^2_{n-p}$
 

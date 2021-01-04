@@ -129,13 +129,15 @@ The misuse of $p$-values has led to a \alert{reproducibility crisis} in science!
 \end{minipage}}
 
 ## 
-MISSING IMAGE Ioannidis2.png
-<!--
-\includegraphics[width=10cm]{pictures/Ioannidis2.png}\\
--->
 
 \tiny
 (Ioannidis, 2005)
+
+\begin{center}
+\includegraphics[width=9cm]{pictures/Ioannidis2.png}
+\end{center}
+
+
 
 ## What is the problem with the $p$-value?
 
@@ -224,12 +226,11 @@ In regression models:
 \item A low $p$-value does not automatically imply that a variable is "important".
 \item "Is there an effect?" v.s. "How much of an effect is there?".\\[3mm]
 \end{itemize}
-<!--
+
+
 \begin{center}
- \includegraphics[width=6.8cm]{pictures/pValueEffectSize.jpg}
- \end{center}
- -->
-\  
+\includegraphics[width=6.8cm]{pictures/pValueEffectSize.png}
+\end{center}
 
 \scriptsize from Goodman, 2008
  
@@ -291,9 +292,8 @@ But: The level of significance must also depend on the context!
 
 A suggestion from 2017 by 72 authors in the field:
 
-<!--
-\includegraphics[width=10cm]{pictures/benjamin.png}\\
--->
+\includegraphics[width=10cm]{pictures/benjamin.png}
+
 
 \tiny (Benjamin et al., 2017, Nature Human Behaviour)
 
@@ -308,11 +308,11 @@ Their suggestion: replace $p<0.05$ by $p<0.005$. More precisely:
 
 The most recent suggestion, signed by $>800$ researchers:
 
-<!--
+
 \begin{center}
 \includegraphics[width=8cm]{pictures/retire_significance.png} 
 \end{center}
--->
+
 
 \tiny (Amrhein et al., 2019, Nature)
 
@@ -628,11 +628,11 @@ Many other ideas are possible...
 
 In fact, see a recent article in NZZ am Sonntag (temporarily available from OpenEdX):
 
-<!--
+
 \begin{center}
-\includegraphics[width=6cm]{pictures/breakfast.png}
+\includegraphics[width=5cm]{pictures/breakfast.png}
 \end{center}
--->
+
 
 ## 
 
@@ -714,12 +714,11 @@ An observed effect is more likely to be \emph{causal} if participants were \emph
 
 It is \textbf{widely unknown} that a model can be broken by the inclusion of a "wrong" covariate, which is causally associated in the wrong direction:
 
-<!--
+
 \begin{center}
-\includegraphics[width=8cm]{pictures/causality.jpg}
+\includegraphics[width=8cm]{pictures/causality.png}
 \end{center}
-~\\[2mm]
--->
+
 
 \textbf{Remember:} Avoid to include covariates in your model that are \alert{caused} by the outcome!
 
@@ -731,10 +730,11 @@ Some further reading on a very recent case of a food researcher that conducted "
 
 \href{http://www.timvanderzee.com/the-wansink-dossier-an-overview/}
 {\beamergotobutton{http://www.timvanderzee.com/the-wansink-dossier-an-overview/}}
+\  
 
-<!--
+\begin{center}
 \includegraphics[width=10cm]{pictures/cell_phones.png}\\
--->
+\end{center}
 
 \tiny 
 From D. Randall \& C. Welser (2018). "The irreproducibility crisis of modern science", NAS report.

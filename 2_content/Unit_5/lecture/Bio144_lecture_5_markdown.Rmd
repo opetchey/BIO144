@@ -227,7 +227,9 @@ Other common transformations are (see also slide 38):
 
 __Note:__ The word _linear_ refers to the \alert{linearity in the coefficients}, and not on a linear relationship between ${y}$ and ${x}$!
 
-<!--\includegraphics[width=11cm]{pictures/multiplReg.pdf}-->
+\begin{center}
+\includegraphics[width=11cm]{pictures/multiplReg.png}
+\end{center}
 
 ## Multiple vs. many single regressions
 
@@ -250,7 +252,10 @@ $y_i = \alpha + \beta x_i^{(2)} + \epsilon_i$
 etc.?
 
 Answer (Stahel 3.3o):
-<!--\includegraphics[width=11cm]{pictures/citation.pdf}-->
+
+\begin{center}
+\includegraphics[width=11cm]{pictures/citation.png}
+\end{center}
 
 Why?
 
@@ -275,7 +280,9 @@ Thus the correct model is
 
 ## 
 
-<!--\includegraphics[width=11cm]{pictures/FigsAB.jpg}-->
+\begin{center}
+\includegraphics[width=11cm]{pictures/FigsAB.png}
+\end{center}
 
 Example A: Within-group slope is $>0$. Fitting $y$ against $x$ leads to an overestimated slope when group-variable is not included in the model.
 
@@ -283,7 +290,9 @@ Example B: Within-group slope is $0$, but fitting $y$ against $x$ leads to a slo
 
 ##
 
-<!--\includegraphics[width=11cm]{pictures/FigsCD.pdf}-->
+\begin{center}
+\includegraphics[width=11cm]{pictures/FigsCD.png}
+\end{center}
 
 Example C: Within-group slope is $<0$, but fitting $y$ against $x$ leads to an estimated slope of $>0$!
 

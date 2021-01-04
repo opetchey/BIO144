@@ -80,11 +80,11 @@ You have dealt with binary (categorical) data in Mat183! Remember the $\chi^2$ t
 Example: Heart attack and hormonal contraception (Verhütungspille) (from Stahel):  
 \  
 
-<!--
+
 \begin{center}
-\includegraphics[width=6cm]{graphics/table1.png}
+\includegraphics[width=4cm]{pictures/table1.png}
 \end{center}
--->
+
 
 \small 
 "Hormonal contraception" is the predictor ($x$) and "heart attack" the outcome ($y$).  

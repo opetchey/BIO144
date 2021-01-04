@@ -80,24 +80,25 @@ Ecologists were interested in the \textbf{question} whether body mass of female 
 \end{minipage}}
 
 ```{r echo = FALSE}
-print('missing DATA')
-#soay <- read.table("../../../3_datasets/soay_mass_data.csv",header = T, sep = ',')
+soay <- read.table("../../../3_datasets/SoaySheepFitness.csv",header = T, sep = ',')
 ```
+\  
 
+\small
 ```{r echo = TRUE}
-#glimpse(soay)
+glimpse(soay)
 ```
 
 ## 
 
 As always, start with a graph (see GSWR book for code to produce the figure):
 
-```{r echo = FALSE, fig.width=4, fig.height=4,out.width="6cm"}
-#ggplot(soay, aes(x = body.size, y = fitness)) +
-#geom_point() +
-#geom_smooth(method = "lm", se = FALSE) +
-#geom_smooth(span = 1, colour = "red", se = FALSE) +
-#xlab("Body mass (kg)") + ylab("Lifetime fitness")
+```{r echo = FALSE, fig.width=4, fig.height=4,out.width="6cm",fig.align='center',message=FALSE, warning=FALSE}
+ggplot(soay, aes(x = body.size, y = fitness)) +
+geom_point() +
+geom_smooth(method = "lm", se = FALSE) +
+geom_smooth(span = 1, colour = "red", se = FALSE) +
+xlab("Body mass (kg)") + ylab("Lifetime fitness")
 ```
 
 ## 
@@ -120,9 +121,9 @@ As always, start with a graph (see GSWR book for code to produce the figure):
 
 Use the `lm()` function to fit the linear model $y=\beta_0 + \beta_1 \cdot \text{bodySize} + \epsilon$ and look at the diagnostic plots:
 
-```{r echo = FALSE, fig.width=6, fig.height=6,out.width="5.6cm"}
-# r.soay <- lm(fitness ~ body.size ,data=soay)
-# autoplot(r.soay,smooth.colour = NA)
+```{r echo = FALSE, fig.width=6, fig.height=6,out.width="5.6cm",fig.align='center',message=FALSE,warning=FALSE}
+r.soay <- lm(fitness ~ body.size ,data=soay)
+autoplot(r.soay,smooth.colour = NA)
 ```
 
 $\rightarrow$ The diagnostic plots indicate that the \textbf{linear regression assumptions are violated}!
@@ -131,8 +132,8 @@ $\rightarrow$ The diagnostic plots indicate that the \textbf{linear regression a
 
 The same plot with smoothed lines (makes the problems more obvious):
 
-```{r echo = FALSE, fig.width=6, fig.height=6,out.width="6.5cm"}
-# autoplot(r.soay)
+```{r echo = FALSE, fig.width=6, fig.height=6,out.width="6.5cm",fig.align='center',message=FALSE,warning=FALSE}
+autoplot(r.soay)
 ```
 
 ## 
@@ -143,9 +144,9 @@ What about the model with a quadratic term?
 y=\beta_0 + \beta_1 \cdot \text{bodySize} + \beta_2 \cdot \text{bodySize}^2 + \epsilon
 \end{equation*}
 
-```{r echo = FALSE, fig.width=6, fig.height=6,out.width="6.5cm"}
-#r2.soay <- lm(fitness ~ body.size + I(body.size^2),data=soay)
-#autoplot(r2.soay)
+```{r echo = FALSE, fig.width=6, fig.height=6,out.width="6.5cm",fig.align='center',message=FALSE,warning=FALSE}
+r2.soay <- lm(fitness ~ body.size + I(body.size^2),data=soay)
+autoplot(r2.soay)
 ```
 
 $\rightarrow$ This looks a bit better. However...
@@ -191,12 +192,10 @@ $\rightarrow$ The variance of the distribution increases with the mean.\\[4mm]
 
 Some examples:
 
-MISSING IMAGE
-<!--
 \begin{center}
-\includegraphics[width=10cm]{graphics/poisson.png}
+\includegraphics[width=10cm]{pictures/poisson.png}
 \end{center}
--->
+
 
 So: How can one use the Poisson distribution for regression modeling?
 
@@ -300,16 +299,17 @@ You {\bf must} specify the \alert{family}, but you could leave away the \texttt{
 
 \end{itemize}
 
+\small
 ```{r echo = FALSE}
-#soay.glm <- glm(fitness ~ body.size, data = soay, family = poisson(link=log))
+soay.glm <- glm(fitness ~ body.size, data = soay, family = poisson(link=log))
 ```
 
 ## Doing it right: Model diagnostics
 
 Before we look at the output, let's do some model diagnostics (as we did it for linear regression):
 
-```{r echo = FALSE, fig.width=5.5, fig.height=5.5,out.width="6.2cm"}
-#autoplot(soay.glm,smooth.colour = NA)
+```{r echo = FALSE, fig.width=5.5, fig.height=5.5,out.width="6.2cm",fig.align='center',message=FALSE,warning=FALSE}
+autoplot(soay.glm,smooth.colour = NA)
 ```
 
 ## 
@@ -334,19 +334,19 @@ Before we look at the output, let's do some model diagnostics (as we did it for 
 Let's now look at the `summary()` output (yes! this works also for glm objects):
 
 \tiny
-```{r echo = TRUE}
-#summary(soay.glm)
+```{r echo = TRUE, }
+summary(soay.glm)
 ```
 
 ## 
 
 You see several (familiar and less familiar) components in the output. For the moment, we are interested in the coefficients, which are estimated as 
 
-<!--
+
 \begin{equation*}
-\hat\beta_0 = `#r format(summary(soay.glm)$coef[1,1],3,3,3)`} \quad \text{and}\quad \hat\beta_1 = `#r format(summary(soay.glm)$coef[2,1],3,3,3)`}
+\hat\beta_0 = `r format(summary(soay.glm)$coef[1,1],3,3,3)` \quad \text{and}\quad \hat\beta_1 = `r format(summary(soay.glm)$coef[2,1],3,3,3)`
 \end{equation*}
--->
+
 
 with respective standard errors and $p$-values. In particular, $p<0.001$ for $\hat\beta_1$ indicates \alert{very strong evidence for a positive (because $\hat\beta_1 >0$!) effect  of female weight on reproductive success} (number of offspring)!
 
@@ -361,29 +361,22 @@ Thus a 95\% CI can be approximated by the usual $\hat\beta\pm 2\cdot \hat\sigma_
 ## What do the coefficients tell us?
 
 Remember our model
-
 $$
 \log(E(y_i)) =\beta_0 + \beta_1 \cdot \text{bodySize}_i
 $$
-
 Thus the $\exp(\cdot)$ transformation leads to 
 $$ \quad E(y_i) = \exp(\beta_0 + \beta_1 \cdot \text{bodySize}_i) \ .$$
-
 Our estimates $\hat\beta_0$ and $\hat\beta_1$ can be plugged into this equation!
 
 For example, a 5~kg female has \textbf{expected fitness} (i.e., produces)
+$$\exp(`r format(summary(soay.glm)$coef[1,1],3,3,3)` + 
+`r format(summary(soay.glm)$coef[2,1],3,3,3)`\cdot 5) = 
+`r format(exp(summary(soay.glm)$coef[1,1] + summary(soay.glm)$coef[2,1]*5),2,2,2)` 
+\text{ lambs} \ ,$$
 
-<!--
-$$\exp(`#r format(summary(soay.glm)$coef[1,1],3,3,3)` + 
-`#r format(summary(soay.glm)$coef[2,1],3,3,3)`\cdot 5) = 
-`#r format(exp(summary(soay.glm)$coef[1,1] + summary(soay.glm)$coef[2,1]*5),2,2,2)` 
-\text{ lambs} \ ,$$ %lambs, \\
--->
 while a 7~kg female would already have \textbf{expected fitness} 
+$$\exp(`r format(summary(soay.glm)$coef[1,1],3,3,3)` + `r  format(summary(soay.glm)$coef[2,1],3,3,3)`\cdot 7) = `r format(exp(summary(soay.glm)$coef[1,1] + summary(soay.glm)$coef[2,1]*7),2,2,2)` \text{ lambs} \ .$$ 
 
-<!--
-$$\exp(`#r format(summary(soay.glm)$coef[1,1],3,3,3)` + `#r  format(summary(soay.glm)$coef[2,1],3,3,3)`\cdot 7) = `#r format(exp(summary(soay.glm)$coef[1,1] + summary(soay.glm)$coef[2,1]*7),2,2,2)` \text{ lambs} \ .$$ 
--->
 Makes sense, right?
 
 ## Doing it right: The \texttt{anova()} table
@@ -392,9 +385,9 @@ Remember: We were sometimes using ANOVA tables, for instance for linear regressi
 
 \texttt{anova()} is useful again, but it gives us the \alert{Analysis of Deviance} table:
 
+\small
 ```{r echo = TRUE}
-#anova(soay.glm)
-# MISSING DATA
+anova(soay.glm)
 ```
 
 \textbf{Note:} The deviance is essentially a difference of likelihoods.
@@ -415,32 +408,33 @@ pchisq(37.041,1,lower.tail=F)
 
 You would get the same if you directly specify the test you want to carry out in the \texttt{anova()} call:
 
+\small
 ```{r echo = TRUE, eval = FALSE}
-#anova(soay.glm, test="Chisq")
+anova(soay.glm, test="Chisq")
 ```
 
 ## Making a beautiful graph
 
 See section 7.4.5 in the GSWR book. Work through the code to obtain this one:
 
-```{r echo = FALSE, message=FALSE, warning=FALSE, fig.width=4, fig.height=4,out.width="6cm"}
-# min.size <- min(soay$body.size)
-# max.size <- max(soay$body.size)
-# 
-# new.x <- expand.grid(body.size =seq(min.size, max.size, length=1000))
-# 
-# new.y = predict(soay.glm, newdata = new.x, se.fit = TRUE)
-# new.y = data.frame(new.y)
-# addThese <- data.frame(new.x, new.y)
-# addThese <- mutate(addThese, fitness = exp(fit),
-# lwr = exp(fit - 1.96 * se.fit),
-# upr = exp(fit + 1.96 * se.fit))
-# 
-# ggplot(soay, aes(x = body.size, y = fitness)) +
-# # first show the raw data
-# geom_point(size = 3, alpha = 0.5) + 
-#   geom_smooth(data = addThese, aes(ymin = lwr, ymax = upr), stat = 'identity') +
-#   theme_bw()
+```{r echo = FALSE, message=FALSE, warning=FALSE, fig.width=4, fig.height=4,out.width="6cm",fig.align='center',message=FALSE,warning=FALSE}
+min.size <- min(soay$body.size)
+max.size <- max(soay$body.size)
+ 
+new.x <- expand.grid(body.size =seq(min.size, max.size, length=1000))
+
+new.y = predict(soay.glm, newdata = new.x, se.fit = TRUE)
+new.y = data.frame(new.y)
+addThese <- data.frame(new.x, new.y)
+addThese <- mutate(addThese, fitness = exp(fit),
+lwr = exp(fit - 1.96 * se.fit),
+upr = exp(fit + 1.96 * se.fit))
+ 
+ggplot(soay, aes(x = body.size, y = fitness)) +
+# first show the raw data
+geom_point(size = 3, alpha = 0.5) + 
+geom_smooth(data = addThese, aes(ymin = lwr, ymax = upr), stat = 'identity') +
+theme_bw()
 ```
 
 ## Your turn!

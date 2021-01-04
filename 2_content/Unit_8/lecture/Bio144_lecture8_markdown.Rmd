@@ -53,8 +53,9 @@ The following distinction is important:
 ## 
 $\rightarrow$ Even among statisticians there is no real consensus about how, if, or when to select a model:
 
-<!-- \includegraphics[width=10cm]{graphics/brewer_title.jpg}\\ -->
-<!-- \includegraphics[width=10cm]{graphics/brewer.jpg}\\[2mm] -->
+\begin{center}
+\includegraphics[width=10cm]{pictures/brewer_title.png}
+\end{center}
 
 Note: The first sentence of a paper in _Methods in Ecology and Evolution_ from 2016 is: "Model selection is difficult."
 

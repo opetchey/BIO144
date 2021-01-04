@@ -117,8 +117,10 @@ __Note__
 
 The assumptions about the linear regression model lie in the error term $$\epsilon \sim N(0,\sigma^2) \ . $$
 
+\begin{center}
+\includegraphics[width=11cm]{pictures/regrAssumptions.jpg}
+\end{center}
 
-<!--\includegraphics[width=11cm]{pictures/regrAssumptions.jpg}-->
 Note: The true regression line goes through $E(Y)$.
 
 ## Insights from data simulation

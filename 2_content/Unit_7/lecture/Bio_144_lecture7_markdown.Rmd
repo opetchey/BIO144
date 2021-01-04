@@ -735,10 +735,9 @@ This is basically the \alert{Pythagoras} idea in 2, 3, ... $n$ dimensions.
 
 In 2 dimensions: $||{a}|| = \sqrt{a_1^2 + a_2^2}$:
 
-<!--\begin{center}
-\includegraphics[width=4cm]{graphics/pythagoras.pdf}
+\begin{center}
+\includegraphics[width=4cm]{pictures/pythagoras.png}
 \end{center}
-}-->
 
 ## Identity matrix (Einheitsmatrix)
 
