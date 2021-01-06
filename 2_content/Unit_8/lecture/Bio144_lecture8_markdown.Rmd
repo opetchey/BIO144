@@ -279,7 +279,9 @@ In such a situation, you should formulate a \alert{confirmatory model}:
 
 Confirmatory models have a long tradition medicine. In fact, the main conclusions in a study are only allowed to be drawn from the main model (which needs to be specified even before data are collected):
 
-__IMAGE__
+\begin{center}
+\includegraphics[width=10.5cm]{pictures/claytonHills.png}
+\end{center}
 
 \scriptsize (chapters 27.1 and 27.2, clayton.hills1993)
 
@@ -425,7 +427,9 @@ __However, there are a few problems with this approach:__
 
 For all these reasons, we __strongly disagree__ with the remark in Stahel's script 5.2, second part in paragraph d.  
 
-__MISSING GRAPHICS__
+\begin{center}
+\includegraphics[width=10cm]{pictures/52d_2.png}
+\end{center}
 
 And we disagree with $p$-values based model selection suggested in Section 5.3 because
 
@@ -492,28 +496,26 @@ mother:age & Interaction term & binary:continuous\\
 
 Let us now fit the full model (including all covariates) in R:
 
-__MISSING DATASET__
-
-```{r fig.height=5, out.width="5cm"}
-#d.hg <- read.table("../../data_examples/Hg/Hg_urin.csv",header=T, sep=",")
-#d.hg["106","amalgam_quant"] <- 5 # correct for the outlier
-#d.hg <- d.hg[-11]
-#names(d.hg) <- c("Hg_urin", "Hg_soil", "vegetables","migration", "smoking","amalgam", "age", "fish","last_fish","mother")
+```{r fig.height=5, out.width="5cm", echo = FALSE}
+d.hg <- read.table("../../../3_datasets/hg_urine_fuzzed.csv",header=T, sep=",")
+d.hg["106","amalgam_quant"] <- 5 # correct for the outlier
+d.hg <- d.hg[-11]
+names(d.hg) <- c("Hg_urin", "Hg_soil", "vegetables","migration", "smoking","amalgam", "age", "fish","last_fish","mother")
 ```
 
 
 ```{r, echo=FALSE}
-#r.lm1 <- lm(log10(Hg_urin) ~ log10(Hg_soil) + vegetables + migration + smoking + 
-#             sqrt(amalgam) + age * mother + sqrt(fish) + last_fish,d.hg)
+r.lm1 <- lm(log10(Hg_urin) ~ log10(Hg_soil) + vegetables + migration + smoking + 
+             sqrt(amalgam) + age * mother + sqrt(fish) + last_fish,d.hg)
 
 ```
 
 ```{r results="asis", echo = FALSE}
-#tableRegression(r.lm1)
+tableRegression(r.lm1)
 ```
 
 
-* The $p$-value for mercury in soil, $MISSING VALUE$, is rather high: $MISSIING VALUE$.
+* The $p$-value for mercury in soil, $\log_{10}(Hg_{soil})$, is rather high: $p=`r format(summary(r.lm1)$coef[2,4],2,2,2)`$.
 
 * __Question:__ What is the answer to the main research question?
 
@@ -523,11 +525,11 @@ __MISSING DATASET__
 
 ## 
 
-A model checking step (always needed, but we did it alreayd in lecture 5):
+A model checking step (always needed, but we did it already in lecture 5):
 
-```{r fig.width=7, fig.height=4,out.width="8cm"}
+```{r fig.width=7, fig.height=4,out.width="8cm", echo=FALSE, message=FALSE,warning=FALSE, fig.align='center'}
 library(ggfortify)
-# autoplot(r.lm1,which=c(1,2),smooth.col=NA)
+autoplot(r.lm1,which=c(1,2),smooth.col=NA)
 ```
 
 This looks ok, no need to improve the model from this point of view.
@@ -546,16 +548,16 @@ $\rightarrow$ We can go on from here and analyse the model in an \alert{explorat
 
 It would be tempting to check if there would be models with lower AICc.
 
-```{r echo = FALSE}
-#r.lm0 <- lm(log10(Hg_urin) ~ log10(Hg_soil) + vegetables + migration + smoking + 
-#             sqrt(amalgam) + age + mother + sqrt(fish) + last_fish,d.hg)
+```{r echo = FALSE, warning=FALSE, message=FALSE}
+r.lm0 <- lm(log10(Hg_urin) ~ log10(Hg_soil) + vegetables + migration + smoking + 
+             sqrt(amalgam) + age + mother + sqrt(fish) + last_fish,d.hg)
 ```
 
 For example, we can fit models where certain terms are omitted. Let's start with a model where the interaction $mother\cdot age$ is removed (denoted as `r.lm0`). The AICc then increases clearly, confirming that the term is relevant:
 
 ```{r echo = TRUE}
-#AICc(r.lm0)
-#AICc(r.lm1)
+AICc(r.lm0)
+AICc(r.lm1)
 ```
 
 ## 
@@ -563,9 +565,9 @@ For example, we can fit models where certain terms are omitted. Let's start with
 On the other hand, the model where we omit the binary \emph{migration} variable would give a reduced AICc:  
 
 ```{r echo = TRUE}
-#r.lm0 <- lm(log10(Hg_urin) ~ log10(Hg_soil) + vegetables  + smoking + 
-#             sqrt(amalgam) + age * mother + sqrt(fish) + last_fish,d.hg)
-#AICc(r.lm0)
+r.lm0 <- lm(log10(Hg_urin) ~ log10(Hg_soil) + vegetables  + smoking + 
+             sqrt(amalgam) + age * mother + sqrt(fish) + last_fish,d.hg)
+AICc(r.lm0)
 ```
 
 __But:__ Given that the mercury model is an __explanatory, confirmatory model__, we should not remove a variable (e.g., migration) simply because it reduces AICc.

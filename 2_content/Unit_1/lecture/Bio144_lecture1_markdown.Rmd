@@ -211,55 +211,59 @@ We are looking for a _model_ that \alert{predicts} body fat as precisely as poss
 __Question:__ Association between Hg concentrations in the soil and in urine of the people living in the respective properties. We use a slightly modified data set here.
 
 ```{r echo = FALSE}
-#path <- "../../../3_datasets/"
-#d.hg <- read.table(paste(path,"Hg_urin.csv",sep=""),header=T, sep=",")
+path <- "../../../3_datasets/"
+d.hg <- read.table(paste(path,"hg_urine_fuzzed.csv",sep=""),header=T, sep=",")
 #d.hg <- d.hg[,-c(11)]
 #names(d.hg) <- c("Hg_urin", "Hg_soil", "veg_garden", "migration", "smoking","amalgam", "age", "fish", "last_time_fish", "mother")
-#d.hg$mother <- as.factor(d.hg$mother)
-#set.seed(234)
-#d.hg$Hg_soil <- d.hg$Hg_soil[sample(1:nrow(d.hg))]
+d.hg$mother <- as.factor(d.hg$mother)
+set.seed(234)
+d.hg$Hg_soil <- d.hg$Hg_soil[sample(1:nrow(d.hg))]
 ```
+\  
 
+\tiny
 ```{r echo = TRUE}
-#glimpse(d.hg)
+glimpse(d.hg)
 ```
 
 ## 
 
 A first visual inspection is not very informative. There is not much that is visible by eye:
+\  
 
-```{r,echo=FALSE, out.width='3.5cm', out.height='3.5cm', fig.pos='center', message=FALSE, warning=FALSE}
+```{r,echo=FALSE, out.width='6cm', fig.align='center', message=FALSE, warning=FALSE}
 library(ggplot2)
-#ggplot(d.hg,aes(x=Hg_soil,y=Hg_urin)) + geom_point() + 
-#  theme_bw() +
-#  xlab("Hg soil") +
-#  ylab("Hg urine")
+ggplot(d.hg,aes(x=Hg_soil,y=Hg_urin)) + geom_point() + 
+  theme_bw() +
+  xlab("Hg soil") +
+  ylab("Hg urine")
 ```
 
 ## 
 
 Which other factors might be responsible for high Hg concentrations in urine?
+\  
 
-```{r echo=FALSE, out.width='5.5cm', out.width='2cm', fig.pos='center', message=FALSE, warning=FALSE}
+```{r echo=FALSE, out.width='9cm', fig.align='center', message=FALSE, warning=FALSE}
 require(cowplot)
-#theme_set(theme_cowplot(font_size=10)) # reduce default font size
+theme_set(theme_cowplot(font_size=10)) # reduce default font size
 
-#plot.1 <- ggplot(d.hg,aes(x=amalgam,y=Hg_urin)) + geom_point(size=0.5) + 
-#  theme_bw() +
-#  xlab("Amalgam") +
-#  ylab("Hg urine")
+plot.1 <- ggplot(d.hg,aes(x=amalgam,y=Hg_urin)) + geom_point(size=0.5) + 
+  theme_bw() +
+  xlab("Amalgam") +
+  ylab("Hg urine")
 
-#plot.2 <- ggplot(d.hg,aes(x=age,y=Hg_urin)) + geom_point(size=0.5) + 
-#  theme_bw() +
-#  xlab("Age") +
-#  ylab("Hg urine")
+plot.2 <- ggplot(d.hg,aes(x=age,y=Hg_urin)) + geom_point(size=0.5) + 
+  theme_bw() +
+  xlab("Age") +
+  ylab("Hg urine")
 
-#plot.3 <- ggplot(d.hg,aes(x=fish,y=Hg_urin)) + geom_point(size=0.5) + 
-#  theme_bw() +
-#  xlab("Fish consumption") +
-#  ylab("Hg urine")
+plot.3 <- ggplot(d.hg,aes(x=fish,y=Hg_urin)) + geom_point(size=0.5) + 
+  theme_bw() +
+  xlab("Fish consumption") +
+  ylab("Hg urine")
 
-#plot_grid(plot.1, plot.2, plot.3, ncol=3)
+plot_grid(plot.1, plot.2, plot.3, ncol=3)
 ```
 
 From these plots it is hard to tell which factors exactly influence the Hg pollution in humans.
@@ -267,11 +271,12 @@ From these plots it is hard to tell which factors exactly influence the Hg pollu
 ## 
 
 It is always useful to look at the distribution of the variables in the model. Let us plot the histogram of Hg concentrations:  
+\  
 
-```{r out.height='2cm', out.width='4cm', echo=FALSE, fig.align='center'}
-#plot.1 <- ggplot(d.hg,aes(x=Hg_soil)) + geom_histogram() + xlab("Hg soil")
-#plot.2 <- ggplot(d.hg,aes(x=Hg_urin)) + geom_histogram() + xlab("Hg urine")
-#plot_grid(plot.1, plot.2,ncol=2)
+```{r out.width='6cm', echo=FALSE, fig.align='center', message=FALSE, warning=FALSE}
+plot.1 <- ggplot(d.hg,aes(x=Hg_soil)) + geom_histogram() + xlab("Hg soil")
+plot.2 <- ggplot(d.hg,aes(x=Hg_urin)) + geom_histogram() + xlab("Hg urine")
+plot_grid(plot.1, plot.2,ncol=2)
 ```
 
 All Hg values seem to "stick" at 0.
@@ -279,11 +284,12 @@ All Hg values seem to "stick" at 0.
 ## 
 
 The scatterplot does also look much more reasonable with log-transformed values:
+\  
 
-```{r out.height='4.5cm', out.width='4.5cm', echo=FALSE, fig.align='center'}
-#plot(log(Hg_urin) ~ log(Hg_soil), data=d.hg, xlab="log(Hg soil)", 
-#     ylab = "log(Hg Urin)",pch=21,bg=as.numeric(mother)+2,xlim=c(-4.5,4.5))
-#legend("topright",legend=c("Children","Mothers"),col=c(3,4),pch=21,pt.bg=c(3,4))
+```{r out.width='7cm', echo=FALSE, fig.align='center', message=FALSE, warning=FALSE}
+plot(log(Hg_urin) ~ log(Hg_soil), data=d.hg, xlab="log(Hg soil)", 
+     ylab = "log(Hg Urin)",pch=21,bg=as.numeric(mother)+2,xlim=c(-4.5,4.5))
+legend("topright",legend=c("Children","Mothers"),col=c(3,4),pch=21,pt.bg=c(3,4))
 ```
 
 Remember: The idea to log-transform the variables was mainly obvious thanks to \alert{visual inspection}! 

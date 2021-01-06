@@ -103,14 +103,13 @@ Remember the mercury (Hg) example from last week. We now extended the dataset an
 
 It is known that Hg concentrations may change over the lifetime of humans. So let us look at \texttt{log(Hg$_\text{urin}$)} depending on the age of the participants:
 
-```{r eval=T,fig.width=5.5, fig.height=3.7,warning=FALSE,out.width="6.5cm", fig.align='center', echo=FALSE, message=FALSE}
-print('Missing HG_URING.csv')
-#path <- "../../data_examples/Hg/"
-#d.hg <- read.table(paste(path,"Hg_urin.csv",sep=""),header=T, sep=",")
-#d.hg <- d.hg[,c(1,2,5,6,7,8,10)]
+```{r eval=T,warning=FALSE,out.width="6.5cm", fig.align='center', echo=FALSE, message=FALSE}
+path <- "../../../3_datasets/"
+d.hg <- read.table(paste(path,"hg_urine_fuzzed.csv",sep=""),header=T, sep=",")
+d.hg <- d.hg[,c(1,2,5,6,7,8,10)]
 #names(d.hg) <- c("Hg_urin", "Hg_soil", "smoking","amalgam", "age", "fish","mother")
-#d.hg <- mutate(d.hg,mother=factor(mother))
-#ggplot(d.hg,aes(x=age,y=log(Hg_urin),colour=mother)) + geom_point() + geom_smooth(method="lm") + theme_bw()
+d.hg <- mutate(d.hg,mother=factor(mother))
+ggplot(d.hg,aes(x=age,y=log(Hg_urin),colour=mother)) + geom_point() + geom_smooth(method="lm") + theme_bw()
 ```
 
 ## 
@@ -149,18 +148,20 @@ Children ($x_i=0$): $\hat{y}_i = \beta_0  + \beta_2 \text{age}_i $
 ## 
 
 Fitting model (1) in R is done as follows, where \texttt{age:mother} denotes the interaction term ($\text{age}_i\cdot \text{mother}_i$):
+\  
 
+\tiny
 ```{r echo=F}
-print("Missing HG DATA")
-#r.hg <- lm(log(Hg_urin)~  mother + age + age:mother,d.hg)
-#summary(r.hg)$coef
+r.hg <- lm(log(Hg_urin)~  mother + age + age:mother,d.hg)
+summary(r.hg)$coef
 ```
+\normalsize
 
 Interpretation:
 
-Mothers: $\hat{y}_i = -1.02 + (-2.42) + (-0.11 + 0.16) \cdot \text{age}_i$  
+Mothers: $\hat{y}_i = -1.06 + (-2.48) + (-0.10 + 0.16) \cdot \text{age}_i$  
 \
-Children: $\hat{y}_i = -1.02 + (-0.11) \cdot \text{age}$
+Children: $\hat{y}_i = -1.06 + (-0.10) \cdot \text{age}$
 
 * The Hg level drops in young children.
 * The Hg level increases in adults (mothers).
@@ -181,16 +182,16 @@ $\rightarrow$ Clicker exercise \href{http://www.klicker.uzh.ch/bkx}{http://www.k
 ## 
 
 Remember (from last week), however, that the Hg model also included smoking status, amalgam fillings and fish consumption as important predictors. It is very straightforward to just include these predictors in model (1), which leads to the following model
+\  
 
+\small
 ```{r echo = TRUE}
-print('MISSING HG DATA')
-#r.hg <- lm(log(Hg_urin)~  mother * age + smoking + amalgam + fish,d.hg)
+r.hg <- lm(log(Hg_urin)~  mother * age + smoking + amalgam + fish,d.hg)
 ```
 
 ```{r echo = FALSE, results='asis', message=FALSE, warning=FALSE}
-print('missing HG DATA')
-#library(biostatUZH)
-#tableRegression(r.hg)
+library(biostatUZH)
+tableRegression(r.hg)
 ```
 
 \small (Note that \texttt{mother*age} in R encodes for \texttt{mother} + \texttt{age} + \texttt{mother:age}.)
@@ -199,10 +200,9 @@ print('missing HG DATA')
 
 Again, for completeness, some model checking (which one usually does before looking at the results): 
 
-```{r  eval=T,fig.width=7, fig.height=3.5,warning=FALSE,out.width="8.5cm", echo = FALSE, message=FALSE, fig.align='center'}
-print('missing HG DATA')
-#library(ggfortify)
-#autoplot(r.hg,which=c(1,2),smooth.col=NA)
+```{r  eval=T,warning=FALSE,out.width="8.5cm", echo = FALSE, message=FALSE, fig.align='center'}
+library(ggfortify)
+autoplot(r.hg,which=c(1,2),smooth.col=NA)
 ```
 
 ## Linear regression is even more powerful!
@@ -286,7 +286,7 @@ Thus the correct model is
 
 Example A: Within-group slope is $>0$. Fitting $y$ against $x$ leads to an overestimated slope when group-variable is not included in the model.
 
-Example B: Within-group slope is $0$, but fitting $y$ against $x$ leads to a slope estimate $>0$, wich is only an artefact of not accounting for the group variable $x^{(2)}$.
+Example B: Within-group slope is $0$, but fitting $y$ against $x$ leads to a slope estimate $>0$, which is only an artifact of not accounting for the group variable $x^{(2)}$.
 
 ##
 
@@ -368,13 +368,23 @@ __Note:__ these four diagrams are plotted automatically by R when you use the \t
 It is sometimes useful to enrich the TA-plot by adding a "running mean" or a "smoothed mean", which can give hints on the trend of the residuals. For the mercury example where $\log(Hg_{\text{urin}})$ is regressed on smoking, amalgam  and fish consumption for mothers only (slides 32-34 of lecture 4):  
 
 ```{r echo= FALSE, message=FALSE, warning=FALSE}
-print('missing HG data')
-#library(ggfortify)
-#path <- "../../data_examples/Hg/"
-#d.hg <- read.table(paste(path,"Hg_urin.csv",sep=""),header=T, sep=",")
-#d.hg.m <- d.hg[d.hg$mother==1,-c(3,4,9,10,11)]
+library(ggfortify)
+path <- "../../../3_datasets/"
+d.hg <- read.table(paste(path,"hg_urine_fuzzed.csv",sep=""),header=T, sep=",")
+d.hg.m <- d.hg[d.hg$mother==1,-c(3,4,9,10,11)]
 #names(d.hg.m) <- c("Hg_urin", "Hg_soil", "smoking","amalgam", "age", "fish")
 ```
+
+```{r eval=T,echo=FALSE,message=FALSE,warning=FALSE,out.width="5cm",fig.align='center'}
+r1.urin.mother <- lm(log10(Hg_urin) ~  smoking + amalgam + fish,data=d.hg.m)
+plot(fitted(r1.urin.mother),residuals(r1.urin.mother),xlab="Fitted values",ylab="Residuals")
+abline(h=0,lty=2)
+aa <- data.frame(cbind(x=fitted(r1.urin.mother), y=residuals(r1.urin.mother)))
+aa <- aa[order(aa$x),]
+lo <- loess(y ~ x, aa)
+lines(aa$x,predict(lo), col='red', lwd=2,lty=5)
+```
+
 
 The TA plot (again) indicates that there is an outlier in the range of -0.7 to -0.6.
 
@@ -393,24 +403,23 @@ But: The dependency is not necessarily on the fitted values ($x$-axis of TA plot
 * Plot residuals in dependency of time (if available) or sequence of obervations.
 * Plot residuals against the covariates.
 
-```{r fig.width=7, fig.height=2.5,warning=FALSE,out.width="11cm", fig.align='center', message=FALSE, echo=FALSE}
+```{r warning=FALSE,out.width="8cm", fig.align='center', message=FALSE, echo=FALSE}
 library(ggplot2)
 library(gridExtra)
-print('Missing HG data')
-#d1 <- data.frame(obsNr= 1:length(residuals(r1.urin.mother)), 
-#                 resid = residuals(r1.urin.mother),
-#                 amalgam = d.hg.m$amalgam,
-#                 fish = d.hg.m$fish)
-#p1 <- ggplot(d1, aes(x=obsNr,y=resid))+  geom_point() +  geom_hline(yintercept = 0,linetype=2,size=0.3,col=2) +
-#  xlab("Observation number (time)") +
-#  ylab("Residuals")
-#p2 <- ggplot(d1, aes(x=amalgam,y=resid))+  geom_point() +  geom_hline(yintercept = 0,linetype=2,size=0.3,col=2) +
-#  xlab("No. of amalgam fillings") +
-#  ylab("")
-#p3 <- ggplot(d1, aes(x=fish,y=resid))+  geom_point() +  geom_hline(yintercept = 0,linetype=2,size=0.3,col=2) +
-#  xlab("No. of fish meals/month") +
-#  ylab("")
-#grid.arrange(p1, p2, p3, ncol=3)
+d1 <- data.frame(obsNr= 1:length(residuals(r1.urin.mother)), 
+                 resid = residuals(r1.urin.mother),
+                 amalgam = d.hg.m$amalgam,
+                 fish = d.hg.m$fish)
+p1 <- ggplot(d1, aes(x=obsNr,y=resid))+  geom_point() +  geom_hline(yintercept = 0,linetype=2,size=0.3,col=2) +
+  xlab("Observation number (time)") +
+  ylab("Residuals")
+p2 <- ggplot(d1, aes(x=amalgam,y=resid))+  geom_point() +  geom_hline(yintercept = 0,linetype=2,size=0.3,col=2) +
+  xlab("No. of amalgam fillings") +
+  ylab("")
+p3 <- ggplot(d1, aes(x=fish,y=resid))+  geom_point() +  geom_hline(yintercept = 0,linetype=2,size=0.3,col=2) +
+  xlab("No. of fish meals/month") +
+  ylab("")
+grid.arrange(p1, p2, p3, ncol=3)
 ```
 
 Again, no pattern = good.
@@ -419,10 +428,9 @@ Again, no pattern = good.
 
 The \alert{outlier} recorded above is also visible in the (well-known) QQ-plot, which is useful to check for normal distribution of residuals (assumption c):
 
-```{r eval=T,fig.width=3.5, fig.height=3.5,warning=FALSE,out.width="5cm",echo=FALSE, fig.align='center'}
-print('Missing HG data')
-#library(ggfortify)
-#autoplot(r1.urin.mother,2) + theme_bw()
+```{r eval=T,warning=FALSE,out.width="4cm",echo=FALSE, fig.align='center'}
+library(ggfortify)
+autoplot(r1.urin.mother,2) + theme_bw()
 ```
 
 ## How do I know if a QQ-plot looks "good"?
@@ -447,9 +455,8 @@ The scale-location plot is particularly suited to check the assumption of equal 
 
 The idea is to plot the square root of the (standardized) residuals $\sqrt{|R_i|}$ against the fitted values $\hat{y_i}$. There should be __no trend__ \scriptsize (Again Hg example): 
 
-```{r eval=T,fig.width=3.5, fig.height=3.5,warning=FALSE,out.width="4.8cm", fig.align='center', echo=FALSE}
-print('missing HG data')
-#autoplot(r1.urin.mother,which=3) + theme_bw()
+```{r eval=T,warning=FALSE,out.width="4cm", fig.align='center', echo=FALSE}
+autoplot(r1.urin.mother,which=3) + theme_bw()
 ```
 
 ## Leverages ("Hebel")
@@ -493,9 +500,8 @@ The outlier in the middle plot "pulls" the regression line in its direction and 
 
 In the leverage plot, (standardized) residuals $\tilde{R_i}$ are plotted against the leverage $H_{ii}$ (still for the Hg example):
 
-```{r fig.width=3.5, fig.height=3.5,out.width="5cm", fig.align='center', echo=FALSE}
-print('Missing HG data')
-#autoplot(r1.urin.mother,which=5)
+```{r out.width="3cm", fig.align='center', echo=FALSE, message=FALSE, warning=FALSE}
+autoplot(r1.urin.mother,which=5)
 ```
 
 \alert{Critical ranges} are the top and bottom right corners!!
@@ -517,15 +523,13 @@ Here, individuals 95, 101 and 106 are potential \alert{outliers}.
 ## Transformation of the response?
 
 Example: Use again the mercury study, include only mothers. Use the response (Hg-concentration in the urine) \alert{without log-transformation}. What would it look like?
-
+\small
 ```{r echo = TRUE}
-print('missing HG data')
-#r2.urin.mother <- lm(Hg_urin ~  smoking  + amalgam + fish,data=d.hg.m)
+r2.urin.mother <- lm(Hg_urin ~  smoking  + amalgam + fish,data=d.hg.m)
 ```
 
-```{r fig.width=5.5, fig.height=5.5,out.width="6cm", fig.align='center',echo=FALSE}
-print('missing HG data')
-#autoplot(r2.urin.mother) + theme_bw()
+```{r fig.width=5.5, fig.height=5.5,out.width="6cm", fig.align='center',echo=FALSE,message=FALSE,warning=FALSE}
+autoplot(r2.urin.mother) + theme_bw()
 ```
 
 ## 
@@ -533,13 +537,11 @@ print('missing HG data')
 Comparison to the model with log-transformed response:
 
 ```{r echo = FALSE}
-print('missing HG data')
-#r3.urin.mother <- lm(log10(Hg_urin) ~  smoking  + amalgam + fish,data=d.hg.m)
+r3.urin.mother <- lm(log10(Hg_urin) ~  smoking  + amalgam + fish,data=d.hg.m)
 ```
 
-```{r fig10,fig.width=5.5, fig.height=5.5,out.width="6cm", fig.align='center',echo=FALSE}
-print('missing HG data')
-#autoplot(r3.urin.mother,smooth.colour=NA) + theme_bw()
+```{r fig10,fig.width=5.5, fig.height=5.5,out.width="6cm", fig.align='center',echo=FALSE,message=FALSE,warning=FALSE}
+autoplot(r3.urin.mother,smooth.colour=NA) + theme_bw()
 ```
 
 This looks __much__ better! However... there is this individual 106 that needs some closer inspection (see slide 43 for the solution regarding this outlier).
@@ -565,14 +567,12 @@ These transformations can (or should) also be applied on covariates!
 
 For instance, the number of amalgam fillings and the number of monthly fish meals should be sqrt-transformed in the mercury example:
 
-```{r}
-print('missing HG data')
-#r4.urin.mother <- lm(log10(Hg_urin) ~  smoking + sqrt(amalgam) + sqrt(fish),data=d.hg.m)
+```{r echo = FALSE, warning=FALSE, message=FALSE}
+r4.urin.mother <- lm(log10(Hg_urin) ~  smoking + sqrt(amalgam) + sqrt(fish),data=d.hg.m)
 ```
 
-```{r fig.width=5.5, fig.height=5.5,out.width="7cm", fig.align='center', echo=FALSE}
-print('missing HG data')
-#autoplot(r4.urin.mother,smooth.colour=NA) + theme_bw()
+```{r fig.width=5.5, fig.height=5.5,out.width="7cm", fig.align='center', echo=FALSE, warning=FALSE, message=FALSE}
+autoplot(r4.urin.mother,smooth.colour=NA) + theme_bw()
 ```
 
 ## Outliers
@@ -604,15 +604,13 @@ In the Hg study, it turned out later on that the outlier 106 had five unreported
 
 A corrected analysis gives a much more regular picture (please compare to slide 40):
 
-```{r echo = FALSE}
-print('missing HG data')
-#d.hg.m["106","amalgam"]<-5
-#r5.urin.mother <- lm(log10(Hg_urin) ~  smoking + sqrt(amalgam) + sqrt(fish),data=d.hg.m)
+```{r echo = FALSE, warning=FALSE, message=FALSE}
+d.hg.m["106","amalgam"]<-5
+r5.urin.mother <- lm(log10(Hg_urin) ~  smoking + sqrt(amalgam) + sqrt(fish),data=d.hg.m)
 ```
 
-```{r eval=T,fig.width=5, fig.height=5,warning=FALSE,out.width="6cm", fig.align='center',echo=FALSE}
-print('missing HG data')
-#autoplot(r5.urin.mother,smooth.colour=NA) + theme_bw()
+```{r eval=T,fig.width=5, fig.height=5,warning=FALSE,out.width="6cm", fig.align='center',echo=FALSE, message=FALSE}
+autoplot(r5.urin.mother,smooth.colour=NA) + theme_bw()
 ```
 
 ## Feedback about today's lecture

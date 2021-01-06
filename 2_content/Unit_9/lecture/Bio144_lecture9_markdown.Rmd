@@ -71,19 +71,17 @@ Such tests might be useful whenever a \textbf{decision} needs to be made (e.g., 
 In regression modeling, the $p$-value is often used as an indicator of covariate importance. Remember the mercury example:
 
 ```{r echo = FALSE}
-print('MISSING HG DATA')
-#d.hg <- read.table("../../../5_some_examples/data_examples/Hg/Hg_urin.csv",header=T, sep=",")
-#d.hg["106","amalgam_quant"] <- 5 # correct for the outlier
-#d.hg <- d.hg[-11]
-#names(d.hg) <- c("Hg_urin", "Hg_soil", "vegetables","migration", "smoking","amalgam", "age", "fish","last_fish","mother")
+d.hg <- read.table("../../../3_datasets/hg_urine_fuzzed.csv",header=T, sep=",")
+d.hg["106","amalgam_quant"] <- 5 # correct for the outlier
+d.hg <- d.hg[-11]
+names(d.hg) <- c("Hg_urin", "Hg_soil", "vegetables","migration", "smoking","amalgam", "age", "fish","last_fish","mother")
 
-#r.lm.hg <- lm(log10(Hg_urin) ~ log10(Hg_soil) + vegetables + migration + smoking + 
-#             sqrt(amalgam) + age * mother + sqrt(fish) + last_fish,d.hg)
+r.lm.hg <- lm(log10(Hg_urin) ~ log10(Hg_soil) + vegetables + migration + smoking + sqrt(amalgam) + age * mother + sqrt(fish) + last_fish,d.hg)
 ```
 
 ```{r results='asis',echo=FALSE,warning=FALSE,message=FALSE}
 library(biostatUZH)
-#tableRegression(r.lm.hg)
+tableRegression(r.lm.hg)
 
 ```
 
@@ -325,8 +323,7 @@ In the Hg example:
 
 ```{r results='asis',echo=FALSE, message=FALSE,warning=FALSE}
 library(biostatUZH)
-#tableRegression(r.lm.hg)
-print('Missing data')
+tableRegression(r.lm.hg)
 ```
 
 
@@ -384,7 +381,7 @@ The estimate for the slope of BMI in the regression for body fat is given as  $\
 \begin{itemize}
 \item The choice of the \alert{95\% is again somewhat arbitrary}. We could also go for 90\% or 99\% or any other interval, but 95\% has established as a commonly accepted range.\\[9mm]
 \item The 95\% CI should {\bf not be misused for simple hypothesis testing} in the sense of \\[2mm]
-``Is 0 in the confidence interval or not?''\\[2mm]
+"Is 0 in the confidence interval or not?"\\[2mm]
 Because this boils down to checking whether $p<0.05$ ...
 
 \end{itemize}
@@ -447,21 +444,17 @@ To understand the problem of ideas 1 and 2, let us fit three models for $\log(Hg
 These two variables are correlated (people who consume a lot of fish are more likely to have it consumed within the last 3 days).
 
 ```{r echo = FALSE, message=FALSE, warning=FALSE}
-print('missing data!')
-#r.lm_fish <- lm(log10(Hg_urin) ~ sqrt(fish),d.hg)
-#r.lm_amalgam <- lm(log10(Hg_urin) ~ last_fish,d.hg)
-#r.lm_fish_amalgam <- lm(log10(Hg_urin) ~ last_fish+ sqrt(fish),d.hg)
+r.lm_fish <- lm(log10(Hg_urin) ~ sqrt(fish),d.hg)
+r.lm_amalgam <- lm(log10(Hg_urin) ~ last_fish,d.hg)
+r.lm_fish_amalgam <- lm(log10(Hg_urin) ~ last_fish+ sqrt(fish),d.hg)
 ```
 
-<!--
-\vspace{8mm}
 \begin{eqnarray} 
-y_i = \beta_0 + \beta_{1}  x^{(1)}_i  +   + \epsilon_i   & \quad &  R^2 = `r print('format(summary(r.lm_fish)$r.squared,nsmall=2,digits=1)')`\\
-y_i = \beta_0 + \beta_{2}  x^{(2)}_i  +   + \epsilon_i   & \quad &  R^2 = `r print('format(summary(r.lm_amalgam)$r.squared,nsmall=2,digits=1)')` \\
-y_i = \beta_0 + \beta_{1}   x^{(1)}_i  + \beta_{2}  x^{(2)}_i    + \epsilon_i  & \quad & R^2 = 
-`r print('format(summary(r.lm_fish_amalgam)$r.squared,2,2,2)')`
+y_i = \beta_0 + \beta_{1}  x^{(1)}_i  +   + \epsilon_i   & \quad &  R^2 = `r format(summary(r.lm_fish)$r.squared,nsmall=2,digits=1)`\\
+y_i = \beta_0 + \beta_{2}  x^{(2)}_i  +   + \epsilon_i   & \quad &  R^2 = `r format(summary(r.lm_amalgam)$r.squared,nsmall=2,digits=1)`\\
+y_i = \beta_0 + \beta_{1}   x^{(1)}_i  + \beta_{2}  x^{(2)}_i    + \epsilon_i  & \quad & R^2 = `r format(summary(r.lm_fish_amalgam)$r.squared,2,2,2)`
 \end{eqnarray}
--->
+
 
 \colorbox{lightgray}{\begin{minipage}{14cm}
 {\bf Note:} The $R^2$ of model (3) with both covariates is much less than the sum of the $R^2$ from models (1) and (2)!
@@ -489,30 +482,25 @@ Which proportion (\%) of variance in $\log(Hg_{\text{urine}})$ is explained by e
 
 ```{r echo = FALSE, warning=FALSE,message=FALSE}
 library(relaimpo)
-print('missing DATA')
-#lmg.hg <- calc.relimp(r.lm.hg)$lmg
+lmg.hg <- calc.relimp(r.lm.hg)$lmg
 ```
 
-```{r echo = FALSE, eval = FALSE}
-#<!--
-#<!-- \begin{table} -->
-#<!-- \begin{tabular}{l @{\hspace{1cm}} r #@{\hspace{1cm}} r} -->
-#<!-- Variable & Rel.\ imp.\ (\%)  & $p$-value\\ -->
-#<!-- \hline -->
-#<!-- $\log(Hg_{\text{soil}})$ &     `r format(lmg.hg[1]*100,2,2,2)`  & `r format(summary(r.lm.hg)$coef[2,4],2,2,2)`\\ -->
-#<!-- Vegetable & `r format(lmg.hg[2]*100,2,2,2)` & `r format(summary(r.lm.hg)$coef[3,4],2,2,2)`\\ -->
-#<!-- Migration & `r format(lmg.hg[3]*100,2,2,2)` & `r format(summary(r.lm.hg)$coef[4,4],2,2,2)`\\ -->
-#<!-- Smoking & `r format(lmg.hg[4]*100,2,2,2)` & `r format(summary(r.lm.hg)$coef[5,4],2,2,2)`\\ -->
-#<!-- Amalgam & `r format(lmg.hg[5]*100,2,2,2)` & <0.0001 \\ -->
-#<!-- Age & `r format(lmg.hg[6]*100,2,2,2)` & `r format(summary(r.lm.hg)$coef[7,4],nsmall=4,digits=1,scientific=F)`\\ -->
-#<!-- Mother & `r format(lmg.hg[7]*100,2,2,2)` & `r format(summary(r.lm.hg)$coef[8,4],2,2,2)`\\ -->
-#<!-- Fish & `r format(lmg.hg[8]*100,2,2,2)` & `r format(summary(r.lm.hg)$coef[9,4],2,2,2)`\\ -->
-#<!-- Last fish & `r format(lmg.hg[9]*100,2,2,2)` & <0.0001\\ -->
-#<!-- Age:mother & `r format(lmg.hg[10]*100,2,2,2)` & `r format(summary(r.lm.hg)$coef[11,4],nsmall=4,digits=1,scientific=FALSE)`\\ -->
-#<!-- \end{tabular} -->
-#<!-- \end{table} -->
-```
-
+\begin{table} 
+\begin{tabular}{l @{\hspace{1cm}} r @{\hspace{1cm}} r} 
+Variable & Rel.\ imp.\ (\%)  & $p$-value\\ 
+\hline 
+$\log(Hg_{\text{soil}})$ &     $`r format(lmg.hg[1]*100,2,2,2)`$  & $`r format(summary(r.lm.hg)$coef[2,4],2,2,2)`$\\
+Vegetable & $`r format(lmg.hg[2]*100,2,2,2)`$ & $`r format(summary(r.lm.hg)$coef[3,4],2,2,2)`$\\
+Migration & $`r format(lmg.hg[3]*100,2,2,2)`$ & $`r format(summary(r.lm.hg)$coef[4,4],2,2,2)`$\\ 
+Smoking & $`r format(lmg.hg[4]*100,2,2,2)`$ & $`r format(summary(r.lm.hg)$coef[5,4],2,2,2)`$\\ 
+Amalgam & $`r format(lmg.hg[5]*100,2,2,2)`$ & <0.0001 \\ 
+Age & $`r format(lmg.hg[6]*100,2,2,2)`$ & $`r format(summary(r.lm.hg)$coef[7,4],nsmall=4,digits=1,scientific=F)`$\\ 
+Mother & $`r format(lmg.hg[7]*100,2,2,2)`$ & $`r format(summary(r.lm.hg)$coef[8,4],2,2,2)`$\\ 
+Fish & $`r format(lmg.hg[8]*100,2,2,2)`$ & $`r format(summary(r.lm.hg)$coef[9,4],2,2,2)`$\\ 
+Last fish & $`r format(lmg.hg[9]*100,2,2,2)`$ & <0.0001\\ 
+Age:mother & $`r format(lmg.hg[10]*100,2,2,2)`$ & $`r format(summary(r.lm.hg)$coef[11,4],nsmall=4,digits=1,scientific=FALSE)`$\\ 
+\end{tabular}
+\end{table} 
 
 ## 
 
@@ -546,18 +534,19 @@ Original Hg model.
 \ 
 Model \alert{without the indicator variable \texttt{last\_fish}}.
 
-```{r echo = FALSE, eval = FALSE, message=FALSE, warning=FALSE}
+```{r echo = FALSE, eval = TRUE, message=FALSE, warning=FALSE}
 library(relaimpo)
 r.lm.hg2 <- update(r.lm.hg, . ~ . -last_fish)
 lmg.hg.2 <- calc.relimp(r.lm.hg2)$lmg
 ```
  
-```{r echo = FALSE, eval = FALSE}
-<!-- \begin{itemize} -->
-<!-- \item {\bf Model 1:} Relative importance of \texttt{fish}: `r format(lmg.hg[8]*100,2,2,2)`\% (see slide \ref{sl:relimp}).\\[2mm] -->
-<!-- \item {\bf Model 2:} Relative importance of \texttt{fish}: $`r format(lmg.hg.2[8]*100,2,2,2)`$\% .\\[8mm]   -->
-<!-- \end{itemize} -->
-```
+
+
+\begin{itemize}
+\item {\bf Model 1:} Relative importance of \texttt{fish}: $`r format(lmg.hg[8]*100,2,2,2)`$\% (see slide 31).\\[2mm] 
+\item {\bf Model 2:} Relative importance of \texttt{fish}: $`r format(lmg.hg.2[8]*100,2,2,2)`$
+\end{itemize}
+
  
 
 \textbf{Interpretation:} If one of two correlated variables is removed, the other absorbs some of the importance from it.
@@ -650,7 +639,7 @@ In 1965 the Epidemiologist Bradford Hill presented a list of criteria to assess 
 \textbf{Bradford-Hill Criteria:}
 \begin{enumerate}
 \item {\bf Strength:} A causal relationship is likely when the observed association is strong.\\[2mm]
-\item {\bf Consistency:} A causal relationship is likely if mutiple independent studies show similar associations.\\[2mm]
+\item {\bf Consistency:} A causal relationship is likely if multiple independent studies show similar associations.\\[2mm]
 \item {\bf Specificity:} A causal relationship is likely when a covariate $x$ is associated only with one potential outcome $y$ and not with other outcomes.\\[2mm]
 \item {\bf Temporality:} The effect has to occur after the cause.\\[2mm]
 \end{enumerate}

@@ -547,22 +547,21 @@ Where
 
 ## 
 
-```{r echo = FALSE}
-print('missing HG data')
-#path <- "../../data_examples/Hg/"
-#d.hg <- read.table(paste(path,"Hg_urin.csv",sep=""),header=T, sep=",")
-#d.hg <- d.hg[d.hg$mother==1,-c(3,4,9,10,11)]
+```{r echo = FALSE, message=FALSE,warning=FALSE}
+path <- "../../../3_datasets/"
+d.hg <- read.table(paste(path,"hg_urine_fuzzed.csv",sep=""),header=T, sep=",")
+d.hg <- d.hg[d.hg$mother==1,-c(3,4,9,10,11)]
 #names(d.hg) <- c("Hg_urin", "Hg_soil", "smoking","amalgam", "age", "fish")
 
-#r1.urin.mother <- lm(log10(Hg_urin) ~  smoking +
-#                     + amalgam + fish,data=d.hg)
+r1.urin.mother <- lm(log10(Hg_urin) ~  smoking +
+                     + amalgam + fish,data=d.hg)
 ```
 
 First check the modelling assumptions:
 
 \begin{center}
 ```{r eval=T,fig.width=6, fig.height=3.4,warning=FALSE,echo=F,out.width="8.5cm",fig.align='center'}
-#autoplot(r1.urin.mother,which=c(1,2),smooth.colour=NA) 
+autoplot(r1.urin.mother,which=c(1,2),smooth.colour=NA) 
 ```
 \end{center}
 
@@ -572,8 +571,9 @@ It seems ok, apart from one point (106) that could be categorized as an outlier.
 
 The results table is given as follows:
 
+\small
 ```{r results='asis',echo=FALSE}
-#tableRegression(r1.urin.mother)
+tableRegression(r1.urin.mother)
 ```
 
 There is some weak ($p=0.12$) indication that smokers have an increased Hg concentration in their body. Their $\log(Hg_{urin})$ is in average by 0.22 higher than for nonsmokers. 
@@ -581,8 +581,8 @@ There is some weak ($p=0.12$) indication that smokers have an increased Hg conce
 In principle, we have now -- at the same time -- fitted \textbf{two models:} one for smokers and one for non-smokers, assuming that the slopes of the remaining covariates are the same for both groups.
 
 \colorbox{lightgray}{\begin{minipage}{14cm}
-Smokers: $y_i = -1.01 + 0.22  + 0.092\cdot amalgam _i+ 0.032\cdot fish_i + \epsilon_i$ \\
-Non-smokers:  $y_i = -1.01  + 0.092\cdot amalgam_i + 0.032\cdot fish_i  + \epsilon_i$ 
+Smokers: $y_i = -1.03 + 0.26  + 0.098\cdot amalgam _i+ 0.032\cdot fish_i + \epsilon_i$ \\
+Non-smokers:  $y_i = -1.03  + 0.098\cdot amalgam_i + 0.032\cdot fish_i  + \epsilon_i$ 
 \end{minipage}}
 
 ## Factor covariates
@@ -787,7 +787,7 @@ anova(r.lm)
 \normalsize
 \textbf{Note:} Here, the $F$-value for `Gattung` is distributed as $F_{2,139}$ under the Null-Hypothesis.
 
-This gives $p=`r format(anova(r.lm)[2,5],2,4,2)`$, thus a clear difference in the regression models for the three species (``Gattung is relevant'').
+This gives $p=`r format(anova(r.lm)[2,5],2,4,2)`$, thus a clear difference in the regression models for the three species ("Gattung is relevant").
 
 ## Plotting the earthworms results
 
