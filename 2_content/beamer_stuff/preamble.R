@@ -1,0 +1,8 @@
+knitr::opts_chunk$set(echo = TRUE)
+options(xtable.comment = FALSE)
+library(tidyverse)
+library(here)
+library(ggfortify)
+library(cowplot)
+library(biostatUZH)
+library(reporttools)
