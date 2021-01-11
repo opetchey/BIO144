@@ -1,0 +1,450 @@
+---
+title: "Course Bio144: Data Analysis in Biology"
+subtitle: "Lecture 1: Introduction and Outlook"
+author: "Owen Petchey"
+institute: "University of Zurich"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  beamer_presentation:
+    includes:
+      in_header: ../../beamer_stuff/preamble.tex
+bibliography: refs.bib
+classoption: "aspectratio=169"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(xtable.comment = FALSE)
+```
+
+## Literature
+
+Compulsory literature (books available as ebooks from uzh):
+
+1. _Lineare Regression_ by W. Stahel (pdf on course webpage)
+2. _Getting Started with R, An introduction for biologists_ (__Second Edition__) Beckerman, Childs \& Petchey, Oxford University Press (DO NOT USE THE FIRST EDITION!).
+3. _The New Statistics With R_ by A. Hector, Oxford University Press;  
+
+$\rightarrow$ See ``Course texts/material'' on course website.
+
+\begin{center}
+\includegraphics[width=2.7cm]{pictures/petchey_buch.jpeg} \qquad \qquad
+\includegraphics[width=2.7cm]{pictures/hector.jpeg}
+\end{center}
+
+## Schedule (12 lecture units + 2 self-study weeks) {.columns-2}
+
+\begin{multicols}{2}
+{\bf Unit 1} Introduction and outlook \\[1mm]
+{\bf Unit 2} No lecture \\[1mm]
+{\bf Unit 3} Simple linear regression\\[1mm]
+{\bf Unit 4} Residual analysis, model validation\\[1mm]
+{\bf Unit 5} Multiple linear regression \\[1mm]
+{\bf Unit 6} ANOVA  \\[1mm]
+{\bf Unit 7} ANCOVA; Matrix Algebra \\[5mm]
+{\bf Unit 8} Model selection  \\[1mm]
+{\bf Unit 9} Interpretation of results, causality \\[1mm]
+{\bf Unit 10} Count data (Poisson regression) \\[1mm]
+{\bf Unit 11} Binary Data (logistic regression)\\[1mm]
+{\bf Unit 12} Measurement error, random effects, selected topics \\[1mm]
+\end{multicols}
+
+## Overarching goals of the course
+
+
+
+* Provide a \textcolor{blue}{solid foundation} for answering biological questions with quantitative data.  
+* Help students to understand the \textcolor{blue}{language of a statistician.}  
+* Ability to understand and interpret results \textcolor{blue}{in research articles.}  
+* Give the students a \textcolor{blue}{challenging, engaging, and enjoyable} learning experience.  
+
+\  
+
+My belief: A solid foundation in statistics makes you independent!  
+
+## Why is statistical data analysis so relevant for the biological and medical sciences?  
+
+Awareness that, without a profound knowledge in statistical data analysis, it will be hard to analyze your data from Bachelor, Master or PhD theses.... 
+
+* \textcolor{blue}{Medicine:} What is the effect of a drug? Which factors cause cancer?
+* __Ecology:__ What is a suitable habitat for a certain animal? Which resources does it need or prefer?
+* \textcolor{red}{Evoloutionary biology:} Do highly inbred animals have decreased chances to survive or reproduce?  
+
+## Learning by doing??  
+
+$\rightarrow$ __Not advisable__ in statistics. Experience is essential, there are many pitfalls.
+
+A good foundation in statistics \textcolor{blue}{makes you more independent} from consultants or the goodwill of colleagues. Without such a knowledge, you will always need help from others.
+
+Data analysis/statistics is itself an exciting part of research! 
+ 
+Data analysis is at the \textcolor{blue}{interface between mathematics and biology/medicine} (and many other applied research fields).
+
+
+## Own examples
+
+\alert{Otter (lutra lutra)}
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+\textit{Research questions}: What is the preferred habitat by otters? How do otters adapt to human altered landscapes?
+\end{minipage}}
+
+_Method:_ Study in Austria, 9 Otter were radio-tracked and monitored during 2-3 years.  
+
+\includegraphics[width=10cm]{pictures/otters.jpeg}
+\scriptsize http://www.prolutra.ch/
+
+## 
+
+\alert{Inbreeding in Alpine ibex}
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+\emph{Research question:} Does inbreeding in Alpine ibex populations have a negative effect on long-term population growth? Inbreeding depression!
+\end{minipage}}  
+
+\begin{multicols}{2}
+\emph{Methods:} Genetic information from blood samples allow to quantify the level of inbreeding in each ibex population. In addition, long-term monitoring of population sizes and harvest rates.  
+
+\includegraphics[width=4cm]{pictures/steinbock.jpg}
+
+\includegraphics[width=4cm]{pictures/ibex_graph.png}
+\end{multicols} 
+
+## \alert{Mercury (Hg) in the soil}
+
+\begin{center}
+\includegraphics[width=8cm]{pictures/wallis.png}
+\end{center}
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+\emph{Research question:} Is the Hg level in the environment (soil) of people's homes associated to the Hg levels in their bodies (urin, hair)?
+\end{minipage}}
+
+_Method:_ Measurements of Hg concentrations on people's properties, as well as measurements and survey of children and their mothers living in these properties.
+
+Highly delicate, emotionally charged, political question!
+\href{http://www.srf.ch/news/regional/bern-freiburg-wallis/quecksilber-im-walliser-boden-schadete-der-gesundheit-nicht}
+{\beamergotobutton{Schweiz Aktuell, 20. Juni 2016}}
+
+## 
+
+\alert{Physical activity in children (Splashy study)}
+
+\begin{center}
+\includegraphics[width=6cm]{pictures/kids.jpg}  
+
+{\scriptsize splashy.ch}
+\end{center}
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+\emph{Research question:} Which factors influence physical activity patterns in children aged 2-6 years?
+\end{minipage}}
+
+_Method:_ The children had to wear accelerometers for several days. In addition, their parents had to fill in a detailed questionnaire.  
+
+Observed variables were, e.g., media consumption, behavior of the parents, age, weight, social structure,...  
+
+## Statistics in the news (April 2016)
+
+\begin{center}
+\includegraphics[width=9cm]{pictures/NZZ1.jpeg}
+\end{center}
+
+## Producing nonsense with statistics... 
+
+... is too easy ...  
+
+\  
+
+A profound knowledge of data analysis and statistics protects you from producing nonsense -- and helps to detect it. See for example:  
+
+\ 
+
+\textcolor{blue}{\href{https://medium.com/wintoncentre/the-risks-of-alcohol-again-2ae8cb006a4a}{The risks of alcohol (by David Spiegelhalter, 23.\ August 2018)}}   
+\ 
+
+\textcolor{blue}{\href{http://callingbullshit.org/syllabus.html}{``Calling bullshit'' course (University of Washington)}}
+
+## Data example 1: Prognostic factors for body fat  
+\scriptsize (From Theo Gasser \& Burkhardt Seifert \emph{Grundbegriffe der Biostatistik})
+
+Body fat is an important indicator for overweight, but difficult to measure. 
+
+__Question:__  Which factors allow for precise estimation (prediction) of body fat?  
+
+Study with 241 male participants. Measured variable were, among others, body fat (\%), age, weight, body size, BMI, neck thickness and abdominal girth.  
+
+```{r, echo = FALSE, message=FALSE, warning=FALSE}
+library(dplyr)
+path <- "../../../3_datasets/"
+d.bodyfat <- read.table(paste(path,"bodyfat.clean.txt",sep=""),header=T)
+d.bodyfat <- d.bodyfat[,c("bodyfat","age","gewicht","hoehe","bmi","neck","abdomen")]
+```
+
+```{r echo = TRUE}
+glimpse(d.bodyfat)
+```
+
+## Scatterplots
+
+\setkeys{Gin}{width=0.85\textwidth}
+
+```{r, fig.width=6, fig.height=6, out.width="6cm", fig.align = 'center'}
+pairs(d.bodyfat)
+```
+
+## 
+
+
+```{r echo = FALSE, fig=TRUE, out.width = "6cm", out.height='6cm', fig.align='center', include = TRUE}
+par(mfrow=c(2,2),mar=c(4,4,1,1))
+plot(bodyfat ~ bmi ,data=d.bodyfat)
+plot(bodyfat ~ gewicht ,data=d.bodyfat,ylab="")
+plot(bodyfat ~ neck ,data=d.bodyfat)
+plot(bodyfat ~ abdomen ,data=d.bodyfat,ylab="")
+```
+
+We are looking for a _model_ that \alert{predicts} body fat as precisely as possible from variables that are easy to measure. 
+
+## Data example 2: Mercury (Hg) in Valais (Switzerland)
+
+__Question:__ Association between Hg concentrations in the soil and in urine of the people living in the respective properties. We use a slightly modified data set here.
+
+```{r echo = FALSE}
+path <- "../../../3_datasets/"
+d.hg <- read.table(paste(path,"hg_urine_fuzzed.csv",sep=""),header=T, sep=",")
+#d.hg <- d.hg[,-c(11)]
+#names(d.hg) <- c("Hg_urin", "Hg_soil", "veg_garden", "migration", "smoking","amalgam", "age", "fish", "last_time_fish", "mother")
+d.hg$mother <- as.factor(d.hg$mother)
+set.seed(234)
+d.hg$Hg_soil <- d.hg$Hg_soil[sample(1:nrow(d.hg))]
+```
+\  
+
+\tiny
+```{r echo = TRUE}
+glimpse(d.hg)
+```
+
+## 
+
+A first visual inspection is not very informative. There is not much that is visible by eye:
+\  
+
+```{r,echo=FALSE, out.width='6cm', fig.align='center', message=FALSE, warning=FALSE}
+library(ggplot2)
+ggplot(d.hg,aes(x=Hg_soil,y=Hg_urin)) + geom_point() + 
+  theme_bw() +
+  xlab("Hg soil") +
+  ylab("Hg urine")
+```
+
+## 
+
+Which other factors might be responsible for high Hg concentrations in urine?
+\  
+
+```{r echo=FALSE, out.width='9cm', fig.align='center', message=FALSE, warning=FALSE}
+require(cowplot)
+theme_set(theme_cowplot(font_size=10)) # reduce default font size
+
+plot.1 <- ggplot(d.hg,aes(x=amalgam,y=Hg_urin)) + geom_point(size=0.5) + 
+  theme_bw() +
+  xlab("Amalgam") +
+  ylab("Hg urine")
+
+plot.2 <- ggplot(d.hg,aes(x=age,y=Hg_urin)) + geom_point(size=0.5) + 
+  theme_bw() +
+  xlab("Age") +
+  ylab("Hg urine")
+
+plot.3 <- ggplot(d.hg,aes(x=fish,y=Hg_urin)) + geom_point(size=0.5) + 
+  theme_bw() +
+  xlab("Fish consumption") +
+  ylab("Hg urine")
+
+plot_grid(plot.1, plot.2, plot.3, ncol=3)
+```
+
+From these plots it is hard to tell which factors exactly influence the Hg pollution in humans.
+
+## 
+
+It is always useful to look at the distribution of the variables in the model. Let us plot the histogram of Hg concentrations:  
+\  
+
+```{r out.width='6cm', echo=FALSE, fig.align='center', message=FALSE, warning=FALSE}
+plot.1 <- ggplot(d.hg,aes(x=Hg_soil)) + geom_histogram() + xlab("Hg soil")
+plot.2 <- ggplot(d.hg,aes(x=Hg_urin)) + geom_histogram() + xlab("Hg urine")
+plot_grid(plot.1, plot.2,ncol=2)
+```
+
+All Hg values seem to "stick" at 0.
+
+## 
+
+The scatterplot does also look much more reasonable with log-transformed values:
+\  
+
+```{r out.width='7cm', echo=FALSE, fig.align='center', message=FALSE, warning=FALSE}
+plot(log(Hg_urin) ~ log(Hg_soil), data=d.hg, xlab="log(Hg soil)", 
+     ylab = "log(Hg Urin)",pch=21,bg=as.numeric(mother)+2,xlim=c(-4.5,4.5))
+legend("topright",legend=c("Children","Mothers"),col=c(3,4),pch=21,pt.bg=c(3,4))
+```
+
+Remember: The idea to log-transform the variables was mainly obvious thanks to \alert{visual inspection}! 
+
+## Data example 3: Diet and blood glucose level
+
+<!--{\scriptsize\citep[p. 190]{elpelt.hartung1987}}-->
+
+24 persons were split into 4 groups. Each group followed another diet (DIAET). The blood glucose concentrations were measured at the beginning and at the end (after 2 weeks). The difference of these values was stored (BLUTZUCK).  
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+{\bf Question:} Are there differences among the groups with respect to changes in blood glucose concentrations?
+\end{minipage}}
+
+Let's look at the raw data (points and boxplots):
+
+```{r echo = FALSE}
+path <- "../../../3_datasets/"
+d.blz <- read.table(paste(path,"blutzucker.dat",sep=""),header=T)
+```
+
+```{r out.height='4cm', out.width='4cm',echo=FALSE, fig.align='center'}
+ggplot(d.blz,aes(x=factor(DIAET),y=BLUTZUCK)) + geom_boxplot() + geom_point(size=3,colour='grey') + theme_bw() + xlab("Diet") + ylab("Blood glucose")
+```
+
+## Data example 4: Blood-screening
+
+<!--{\scriptsize\citep[From ][Chapter 7.1]{hothorn.everitt2014}}-->
+
+Is a high ESR (erythrocyte sedimentation rate) an indicator for certain diseases (rheumatic disease, chronic inflammations)?  
+
+__Specifically:__ Is there an association between the concentrations of the plasma proteins Fibrinogen and Globulin and ESR level ESR$<20mm/hr$?
+
+The `plasma` data come with the package `HSAUR3` <!--\citep{hothorn.everitt2014}.-->
+
+```{r echo = FALSE, message=FALSE, warning=FALSE}
+library("HSAUR3")
+data("plasma",package="HSAUR3")
+plasma$status <- factor(ifelse(plasma$ESR=="ESR < 20","healthy","sick"))
+plasma[c(1,5,9,10,15,29),]
+```
+
+## 
+
+The distinction ESR$<20mm/hr$ (healthy) vs.\ ESR$\geq 20mm/hr$ (sick) leads to a \alert{binary} response variable.  
+
+\begin{center}$\rightarrow$ \emph{conditional density plot}\end{center}
+
+```{r out.width='7cm', out.height='4cm', fig.align='center'}
+par(mfrow=c(1,2))
+cdplot(status ~ fibrinogen,plasma)
+cdplot(status ~ globulin,plasma)
+```
+
+## What is a model?
+
+A model is an approximation of the reality. __Understanding how the real world works__ is usually only possible thanks to simplifying assumptions.
+
+$\rightarrow$ This is exactly __the purpose of statistical data analysis.__
+
+In 2014, David Hand wrote:
+
+_In general, when building statistical models, we must
+not forget that the aim is to understand something about
+the real world. Or predict, choose an action, make
+a decision, summarize evidence, and so on, but always
+about the real world, not an abstract mathematical
+world: our models are not the reality -- a point well
+made by George Box in his often-cited remark that_
+\alert{"all
+models are wrong, but some are useful."}
+<!--\citep{box1979}.}_-->
+
+## Steps in a modelling process ("work flow")
+
+\begin{center}
+\includegraphics[width=11cm]{pictures/workflow.png}
+\end{center}
+
+## The scopes of statistical data analysis
+
+a. \alert{Prediction (extrapolation), interpolation}. Example body fat: use substitute measurements to predict body fat of a person.
+
+b. \alert{Explanation;  determination of important variables}. Example physical activity of children: The study aims to find factors that (positively or negatively) influence the movement behavior of children.
+
+c. \alert{Estimation of parameters and quantify the uncertainty.} Example: Effect size of a novel drug.
+
+d. Optimization.
+
+e. Calibration.
+
+In this course we are concerned with a-c.
+
+## Goals of the course (part 2)
+
+By the end of the course you will be able
+
+* to \textcolor{blue}{analyze} all data examples introduced here using R (and of course many more),
+* to \textcolor{blue}{report and interpret} the results,
+* to \textcolor{blue}{draw conclusions} from them,
+* to give \textcolor{blue}{graphical descriptions} of the data and the results,
+* to \textcolor{blue}{be critical} about what you see.
+
+## Graphical representation of data
+
+You should remember the following options for graphical data descriptions. Several of them appeared already in previous examples.
+
+\begin{tabular}{ll}
+Representation & Useful for \\
+\hline
+ Scatterplots & Pairwise dependency of continuous \\
+    &  variables. \\[1mm]
+ Histograms & Distribution of continuous variables.\\[1mm]
+ Boxplots  & Distribution of continuous variables, ev. \\
+    & conditionally on categories.\\[1mm]
+ Conditional density plots &  Dependency of a binary variable from\\
+    &  a continuous variable.\\[1mm]
+%Barplots & As  (see chapter 10.1 in the Mat183 script)boxplots. \\[1mm]
+Coplots & Dependencies among multiple variables. \\
+\hline
+\end{tabular}
+
+## Coplots
+
+Ideal to graphically display dependencies when more than two variables are involved. Very useful for categorical variables. Example: Mercury in Valais.
+
+```{r out.width='6cm', out.height='5cm'}
+#coplot(log(Hg_urin) ~  age | mother * migration,
+# d.hg, panel = panel.smooth)
+```
+
+##
+
+There are many "fancy" ways to graphically display data (__nice-to-know__):
+
+* 3D-plots
+* Spatial representations (using geodata)
+* Interactive graphs and animations
+
+Many R packages are available for various purposes. Interactive apps can, for example, be generated with Shiny. Check out the shiny gallery:
+
+\url{http://shiny.rstudio.com/gallery/}
+
+## Next week: Simple linear regression
+
+It will be partially a repetition of what you heard in Mat183, chapter 10.2.
+
+## 
+
+References
+
+Box, G.E.P. (1979). Robustness in the strategy of scientific model building. In R.L. Launer and G.N. Wilkinson (Eds.), _In Robustness in Statistics_, pp. 201-236. New York: Academic Press.
+
+Elpelt, B. and J. Hartung (1987). _Grundkurs Statistik, Lehr- und Übungsbuchder angewandten Statistik.
+
+Hothorn, T. and B.S. Everitt (2014). _A Handbook of Statistical Analyses Using R_ (3 ed.). Boca Raton: Chapman & Hall/CRC Press.
+<!--\bibliographystyle{Chicago}-->
+<!--\bibliography{refs}-->

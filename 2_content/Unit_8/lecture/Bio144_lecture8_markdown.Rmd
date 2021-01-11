@@ -1,0 +1,741 @@
+---
+title: "Lecture 8: Model/variable selection"
+subtitle: "BIO144 Data Analysis in Biology"
+author: "Stephanie Muff & Owen Petchey"
+institute: "University of Zurich"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  beamer_presentation:
+    includes:
+      in_header: ../../beamer_stuff/preamble.tex
+bibliography: ../../Unit_1/lecture/refs.bib
+classoption: "aspectratio=169"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(xtable.comment = FALSE)
+```
+
+## Overview
+
+* Predictive vs explanatory models.
+* Selection criteria: AIC, AIC$_c$, BIC.
+* Automatic model selection and its caveats.
+* Model selection bias.
+* Collinearity of covariates
+* Occam's razor principle.
+
+## Course material covered today
+
+The lecture material of today is partially based on the following literature:
+
+* "Lineare regression" chapters 5.1-5.4
+* Chapter 27.1 and 27.2 by Clayton and Hills "Choice and Interpretation of Models" (pdf provided)
+
+\textcolor{blue}{\bf Optional reading:}
+
+* Paper by freedman1983: "A Note on Screening Regression Equations" (Sections 1 and 2 are sufficient to get the point)
+
+## Developing a model
+
+So far, our regression models "fell from heaven": The model family and the terms in the model were almost always given.
+
+However, it is often not immediately obvious which terms are relevant to include in a model. 
+
+Importantly, the approach to find a model __heavily depends on the aim__ for which the model is built. 
+
+The following distinction is important:
+
+* The aim is to \alert{predict} future values of __y__ from known regressors.
+* The aim is to \alert{explain} __y__ using known regressors. Ultimately, the aim is to find causal relationships.
+
+## 
+$\rightarrow$ Even among statisticians there is no real consensus about how, if, or when to select a model:
+
+\begin{center}
+\includegraphics[width=10cm]{pictures/brewer_title.png}
+\end{center}
+
+Note: The first sentence of a paper in _Methods in Ecology and Evolution_ from 2016 is: "Model selection is difficult."
+
+## Why is finding a model so hard?
+
+Remember from week 1:
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+Ein Modell ist eine Ann\"aherung an die Realit\"at. Das Ziel der Statistik und Datenanalyse ist es immer, dank Vereinfachungen der wahren Welt gewisse Zusammenh\"ange zu erkennen.
+\end{minipage}}
+
+Box (1979): \alert{"All models are wrong, but some are useful."}
+
+$\rightarrow$ There is often not a "right" or a "wrong" model -- but there are more and less useful ones.
+
+$\rightarrow$ Finding a model with good properties is sometimes an art...
+
+## Predictive and explanatory models
+
+Before we continue to discuss model/variable selection, we need to be clear about the scope of the model:
+
+* \alert{\bf Predictive models}: These are models that aim to predict the outcome of future subjects.  
+\underline{Example:} In the bodyfat example the aim is to predict people's bodyfat from factors that are easy to measure (age, BMI, weight,..).  
+
+* \alert{\bf Explanatory models}: These are models that aim at understanding the (causal) relationship between covariates and the response.  
+\underline{Example:} The mercury study aims to understand if Hg-concentrations in the soil (covariable) influence the Hg-concentrations in humans (response).  
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+$\rightarrow$ The model selection strategy depends on this distinction.
+\end{minipage}}
+
+## Prediction vs explanation
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+When the aim is \emph{\bf prediction}, the best model is the one that best predicts the fate of a future subject. This is a well defined task and "objective" variable selection strategies to find the model which is best in this sense are potentially useful.\\
+\\However, when used for \emph{\bf explanation} the best model will depend on the scientific question being asked, {\bf and automatic variable selection strategies have no place}. 
+\end{minipage}}
+
+\scriptsize(Clayton and Hills, 1993, chapters 27.1 and 27.2)
+
+## A predictive model: The bodyfat example
+
+The bodyfat study is a typical example for a __predictive model__.  
+
+There are 12 potential predictors (plus the response). Let's fit the full model (without interactions):  
+
+
+```{r, echo=FALSE, eval=TRUE, results='asis', message=FALSE, warning=FALSE}
+d.bodyfat <- read.table("../../../3_datasets/bodyfat.clean.txt",header=T)
+d.bodyfat <- d.bodyfat[,c("bodyfat","age","gewicht","hoehe","bmi","neck","chest","abdomen","hip","thigh","knee","ankle","biceps")]
+
+r.bodyfat <- lm(bodyfat ~ ., d.bodyfat)
+
+library(biostatUZH)
+
+tableRegression(r.bodyfat)
+
+```
+
+## Model selection for predictive models
+
+* \underline{Remember:} $R^2$ is not suitable for model selection, because it \emph{always} increases (improves) when a new variable is included.
+
+* Ideally, the predictive ability of a model is tested by a cross-validation (CV) approach.
+\href{https://en.wikipedia.org/wiki/Cross-validation_(statistics)}
+{\beamergotobutton{Find a description of the CV idea here.}}
+
+* CV can be a bit cumbersome, and sometimes would require additional coding.  
+
+* Approximations to CV: So-called \alert{information-criteria} like AIC, AIC$_c$, BIC.  
+
+* The idea is that the "best" model is the one with the smallest value of the information criterion (where the criterion is selected in advance).
+
+## Information-criteria
+
+Information-criteria for model selection were made popular by 
+<!-- \citet{burnham.anderson2002}. -->
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+The idea is to find a \alert{balance between}  
+
+\begin{center}  
+
+{\bf Good model fit} $\quad\leftrightarrow\quad$ {\bf Low model complexity}
+\end{center}
+\end{minipage}}  
+
+$\rightarrow$ Reward models with better model fit.  
+\
+$\rightarrow$ Penalize models with more parameters.
+
+## AIC
+
+The most prominent criterion is the \alert{AIC (Akaike Information Criterion)}, which measures the \alert{quality of a model}.  
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+The AIC of a model with likelihood $L$ and $p$ parameters is given as
+\begin{equation*}
+AIC = -2\log(L) + 2p \ .
+\end{equation*}
+\end{minipage}}
+\
+__Important: The \underline{lower} the AIC, the \underline{better} the model!__  
+
+The AIC is a \alert{compromise} between:
+
+* a high likelihood $L$ (good model fit) 
+* few model parameters $p$ (low complexity)
+
+## AIC$_c$: The AIC for low sample sizes
+
+When the number of data points $n$ is small with respect to the number of parameters $p$ in a model, the use of a \alert{corrected AIC, the AIC$_c$} is recommended.
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+The {\bf corrected AIC} of a model with $n$ data points, likelihood $L$ and $p$ parameters is given as
+\begin{equation*}
+AIC_c = -2\log(L) + 2p\cdot\frac{n}{n-p-1} \ .
+\end{equation*}
+\end{minipage}}
+
+Burnham and Anderson __recommend to use AIC$_c$ in general, but for sure when the ratio__ $n/p<40$.  
+
+In the \alert{bodyfat example}, we have 243 data points and 13 parameters (including the intercept $\beta_0$), thus $n/p = 143/13 \approx 19 <40$ $\Rightarrow$ AIC$_c$ should be used for model selection! 
+
+## BIC, the brother/sister of AIC
+
+Other information criteria were suggested as well. Another prominent example is the \alert{BIC (Bayesian Information Criterion)}, which is similar in spirit to the AIC.  
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+The BIC of a model for $n$ data points with likelihood $L$ and $p$ parameters is given as
+\begin{equation*}
+BIC = -2\log(L) + p \cdot \ln(n) \ .
+\end{equation*}
+\end{minipage}}
+
+__Again: The \underline{lower} the BIC, the \underline{better} the model!__  
+
+The only difference to AIC is the complexity penalization. The BIC criterion is often __claimed to estimate the predictive quality__ of a model. More recent research indicates that AIC and BIC perform well under different data structures 
+<!-- \citep{brewer.etal2016}. -->
+
+## 
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+Don't worry: No need to remember all these AIC and BIC formulas by heart!
+\end{minipage}}
+\
+What you should remember:  
+\
+AIC, AIC$_c$ and BIC all have the __aim to find a good quality model by penalizing model complexity__.
+
+## Model selection with AIC/AICc/BIC
+
+Given $m$ potential variables to be included in a model.
+\  
+
+* In principle it is possible to minimize the AIC/AICc/BIC over all $2^m$ possible models. Simply fit all models and take the ``best'' one (lowest AIC).  
+
+* This is cumbersome to to "by hand". Useful to rely on implemented procedures in R, which search for the model with minimal AIC/AICc/BIC.
+
+* \alert{Backward selection:}
+__Start with a large/full model.__ In each step, __remove__ the variable that leads to the largest improvement (smallest AIC/AICc/BIC). Do this until no further improvement is possible.
+
+* \alert{Forward selection:}
+__Start with an empty model__ In each step, __add__ the predictor that leads to the largest improvement (smallest AIC/AICc/BIC). Do this until no further improvement is possible.
+
+## "Best" predictive model for bodyfat
+
+Given the predictive nature of the bodyfat model, we search for the model with minimal AICc, for instance using the `stepAIC()` function from the `MASS` package:
+
+```{r, echo=TRUE}
+library(MASS)
+library(AICcmodavg)
+
+r.AIC <- stepAIC(r.bodyfat, direction = c("both"), 
+                 trace = FALSE,AICc=TRUE)
+AICc(r.bodyfat)
+AICc(r.AIC)
+
+```
+
+$\rightarrow$ The AICc for the optimal model is 1, compared to the full model with an AICc of 2. 
+
+\scriptsize Note: Owen will also use `direction=c("forward")` and `direction=c("backward")` in the BC videos.
+
+##
+
+The model was reduced, and only 8 of the 12 variables retain:
+
+```{r results='asis', echo = FALSE}
+tableRegression(r.AIC)
+```
+
+__Note 1:__ AICc minimization may lead to a model that retains variables with relatively large $p$-values (e.g., ankle).  
+
+__Note 2:__ We could continue here and for example include interactions, transformations of variables etc.
+
+
+## Cautionary note about the "best" predictive model  
+
+It is tempting to look at the coefficients and try to interpret what you see, in the sense of "Increasing the weight by 1kg will cause a bodyfat reduction by -0.75 percentage points."  
+
+However, the coefficients of such an optimized "best" model should __not be interpreted__ like that!
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+$\rightarrow$ {\bf Model selection may lead to biased parameter estimates, thus do not draw (biological, medical,..) conclusions from models that were optimized for prediction, for example by AIC/AICc/BIC minimization!}
+\end{minipage}}
+\scriptsize See, e.g., freedman1983, copas1983.
+
+## Your aim is explanation?
+
+"Explanation" means that you will want to interpret the regression coefficients, 95\% CIs and $p$-values. It is then often assumed that some sort of causality ($x\rightarrow y$) exists.
+
+In such a situation, you should formulate a \alert{confirmatory model}: 
+
+* __Start with a clear hypothesis__
+* __Select your covariates according to \alert{a priori} knowledge.__
+*  Ideally formulate __only one__ or a few model(s) __before you start analysing your data.__
+
+
+## 
+
+Confirmatory models have a long tradition medicine. In fact, the main conclusions in a study are only allowed to be drawn from the main model (which needs to be specified even before data are collected):
+
+\begin{center}
+\includegraphics[width=10.5cm]{pictures/claytonHills.png}
+\end{center}
+
+\scriptsize (chapters 27.1 and 27.2, clayton.hills1993)
+
+## Confirmatory vs exploratory
+
+Any __additional analyses__ that you potentially do with your data have the character of __exploratory models__.
+
+$\rightarrow$ Two sorts of __explanatory models/analyses__:
+
+* \alert{Confirmatory}:
+
+  * Clear hypothesis and __a priori__ selection of regressors for ${y}$.
+  
+  * __No variable selection!__
+  
+  *  Allowed to interpret the results and draw quantitative conclusions.
+  
+* \alert{Explanatory}:
+
+  * Build whatever model you want, but the results should only be used to generate new hypotheses, a.k.a. "speculations".
+  
+  * Clearly label the results as "exploratory".
+  
+
+## Interpretation of exploratory models?  
+
+Results from exploratory models can be used to generate new hypotheses, but it is then \alert{not allowed to draw causal conclusions from them}, or to over-interpret effect-sizes.
+\  
+
+$\rightarrow$ In biological publications it is (unfortunately) still common practice that exploratory models, which were optimized with model selection criteria (like AIC), are used to draw conclusions as if the models were confirmatory.
+\  
+
+$\rightarrow$ We illustrate why this is a problem on the next slides.
+
+## Model selection bias
+
+__Aim of the example:__
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+To illustrate how model selection purely based on AIC can lead to biased parameters and overestimated effects.
+\end{minipage}}
+
+Procedure:
+
+1. Randomly generate 100 data points for 50 covariables ${x}^{(1)},\ldots, {x}^{(50)}$ and a response ${y}$:
+
+    ```{r echo = T, eval = T}
+set.seed(123456)
+data <- data.frame(matrix(rnorm(51*100),ncol=51))
+names(data)[51] <- "Y"
+    ```
+    `data` is a 100$\times$ 51 matrix, where the last column is the response. The __data were generated completely independently__, the covariates do not have any explanatory power for the response! 
+    
+## 
+
+2. Fit a linear regression model of ${y}$ against all the 50 variables
+\begin{equation*}
+y_i = \beta_0 + \beta_1 x_i^{(1)} + \ldots + \beta_{50}x_i^{(50)} + \epsilon_i \ .
+\end{equation*}
+
+    ```{r echo=TRUE}
+r.lm <- lm(Y~.,data)
+    ```
+
+    As expected, the distribution of the $p$-values is (more or less) uniform between 0 and 1, with none below 0.05:
+
+    ```{r echo = FALSE, fig.width=4, fig.height=4, out.width="5cm", fig.align = 'center'}
+par(mfrow=c(1,1))
+hist(summary(r.lm)$coef[-1,4],freq=T,main="50 variables",xlab="p-values")
+    ```
+
+## 
+
+3. Then use AICc minimization to obtain the objectively "best" model:
+
+    ```{r}
+r.AICmin <- stepAIC(r.lm, direction = c("both"), 
+                    trace = FALSE,AICc=TRUE)
+    ```
+
+    ```{r, fig.width=4, fig.height=4,out.width="5cm", fig.align='center', echo = FALSE}
+hist(summary(r.AICmin)$coef[-1,4],freq=T,main="18 variables of minimal AICc model",xlab="p-values")
+```
+
+    The distribution of the $p$-values is now skewed: many of them reach rather small values
+`r sum(summary(r.AICmin)$coef[-1,4]<0.05)` have $p<0.05$. This happened \alert{although none of the variables has any explanatory power!}
+
+## 
+\
+So what does the above example show us?
+
+\begin{center}
+\href{http://www.klicker.uzh.ch/bkx}{http://www.klicker.uzh.ch/bkx}
+\end{center}
+
+##
+
+Main problem with model selection:
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+When model selection is carried out based on objective criteria, the effect sizes will to be too large and the uncertainty too small. So you end up being too sure about a too large effect. 
+\end{minipage}}  
+
+$\rightarrow$ This is why such procedures should in general not be used when the aim is explanation.
+
+## Variable selection using $p$-values?
+
+When you read publications, you might eventually see that people use $p$-values to do model selection. Also Stahel (Section 5.3) recommends such a procedure. However:
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+$\rightarrow$ Variable selection using $p$-values is an especially bad idea.
+\end{minipage}}
+
+\begin{center}
+$\rightarrow$ \alert{Please NEVER do variable selection based on $p$-values$^{(\star)}$.}
+\end{center}
+\
+What is the problem?  
+
+\
+
+\scriptsize $^{(\star)}$Even not when the aim is prediction.
+
+## Importance is not reflected by $p$-values
+
+A widely used practice to determine the "importance" of a term is to look at the $p$ value from the $t$ or $F$-test and check if it falls below a certain threshold (usually $p<0.05$). 
+
+__However, there are a few problems with this approach:__  
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+
+* \textbf{A small $p$-value does not necessarily mean that a term is (biologically, medically) important -- and vice versa!}
+
+* When carrying out the tests with $H_0: \beta_j=0$ for all variables sequentially, one runs into a \alert{multiple testing problem}. {\scriptsize (Remember the ANOVA lecture of week 6, slide 28).}
+
+* The respective tests depend crucially on the correctness of the \alert{normality assumption}.
+
+* Covariates are sometimes \alert{collinear}, which leads to more uncertainty in the estimation of the respective regression parameters, and thus to larger $p$-values.
+
+\end{minipage}}
+
+## 
+
+For all these reasons, we __strongly disagree__ with the remark in Stahel's script 5.2, second part in paragraph d.  
+
+\begin{center}
+\includegraphics[width=10cm]{pictures/52d_2.png}
+\end{center}
+
+And we disagree with $p$-values based model selection suggested in Section 5.3 because
+
+* It will also lead to model selection bias __freedman1983__.
+
+* $P$-values are less suitable for model selection than AIC/AICc/BIC for the reasons mentioned on the previous slide. 
+
+## An explanatory model: Mercury example
+
+Let us look at the mercury example. The __research question__ was:  
+
+
+"Gibt es einen Zusammenhang zwischen Quecksilber(Hg)-Bodenwerten von Wohnhäusern und der Hg-Belastung im Körper (Urin, Haar) der Bewohner?"
+
+* _Hg concentration in urine_ ($Hg_{urine}$) is the __response__.
+
+* _Hg concentration in the soil_ ($Hg_{soil}$) is the __predictor of interest__.
+
+\alert{In addition}, the following variables were monitored for each person, because they might influence the mercury level in a person's body:  
+
+_smoking status; number of amalgam fillings; age; number of monthly fish meals; indicator if fish was eaten in the last 3 days; mother vs child; indicator if vegetables from garden are eaten; migration background; height; weight; BMI; sex; education level._  
+
+__Thus: In total additional 13 variables!__
+
+## How many variables can I include in my model?
+
+__Rule of thumb:__
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+Include no more than $n/10$ (10\% of $n$) variables into your linear regression model, where $n$ is the number of data points.
+\end{minipage}}
+
+In the mercury example there are 156 individuals, so a __maximum of 15 variables__ should be included in the model.  
+
+__Remarks:__
+
+* Categorical variables with $k$ levels already require $k-1$ dummy variables. For example, if `education level' has $k=3$ categories, $k-1=2$ parameters are used up.  
+
+* Whenever possible, the model should __not be blown up__ unneccessarily. Even if there are many data points, the use of too many variables may lead to an __overfitted__ model.  
+
+    $\rightarrow$ \scriptsize See \href{https://en.wikipedia.org/wiki/Overfitting}{https://en.wikipedia.org/wiki/Overfitting}.
+    
+## 
+
+In the mercury study, the following variables were included using _a priori_ knowledge/expectations:  
+
+\begin{tabular}{llll}
+Variable & Meaning & type & transformation\\
+\hline
+Hg$\_$urin & Hg conc.\ in urine (response) & continuous & $\log$\\ 
+Hg$\_$soil & Hg conc.\ in the soil  & continuous & $\log$\\
+vegetables & Eats vegetables from garden? & binary\\
+migration & Migration background & binary \\
+smoking & Smoking status & binary \\
+amalgam & No.\ of amalgam fillings & count & $\sqrt{.}$ \\
+age & Age of participant &  continuous\\ 
+fish & Number of fish meals/month & count  & $\sqrt{.}$\\
+last$\_$fish & Fish eaten in last 3 days? &   binary\\
+mother & Mother or child?  & binary\\
+mother:age & Interaction term & binary:continuous\\
+\end{tabular}  
+
+##  
+
+Let us now fit the full model (including all covariates) in R:
+
+```{r fig.height=5, out.width="5cm", echo = FALSE}
+d.hg <- read.table("../../../3_datasets/hg_urine_fuzzed.csv",header=T, sep=",")
+d.hg["106","amalgam_quant"] <- 5 # correct for the outlier
+d.hg <- d.hg[-11]
+names(d.hg) <- c("Hg_urin", "Hg_soil", "vegetables","migration", "smoking","amalgam", "age", "fish","last_fish","mother")
+```
+
+
+```{r, echo=FALSE}
+r.lm1 <- lm(log10(Hg_urin) ~ log10(Hg_soil) + vegetables + migration + smoking + 
+             sqrt(amalgam) + age * mother + sqrt(fish) + last_fish,d.hg)
+
+```
+
+```{r results="asis", echo = FALSE}
+tableRegression(r.lm1)
+```
+
+
+* The $p$-value for mercury in soil, $\log_{10}(Hg_{soil})$, is rather high: $p=`r format(summary(r.lm1)$coef[2,4],2,2,2)`$.
+
+* __Question:__ What is the answer to the main research question?
+
+\begin{center}
+\href{http://www.klicker.uzh.ch/bkx}{http://www.klicker.uzh.ch/bkx}
+\end{center}
+
+## 
+
+A model checking step (always needed, but we did it already in lecture 5):
+
+```{r fig.width=7, fig.height=4,out.width="8cm", echo=FALSE, message=FALSE,warning=FALSE, fig.align='center'}
+library(ggfortify)
+autoplot(r.lm1,which=c(1,2),smooth.col=NA)
+```
+
+This looks ok, no need to improve the model from this point of view.
+
+## 
+
+Even if the model checking step revealed no violations of the assumptions (the model seems to be fine), we sometimes want to know:
+
+* Which of the terms are __important/relevant__?
+* Are there __additional terms__ that might be important?
+* Can we find __additional patterns__ in the data?
+
+$\rightarrow$ We can go on from here and analyse the model in an \alert{exploratory} manner. Such analyses can be useful to generate new hypotheses.  
+
+## 
+
+It would be tempting to check if there would be models with lower AICc.
+
+```{r echo = FALSE, warning=FALSE, message=FALSE}
+r.lm0 <- lm(log10(Hg_urin) ~ log10(Hg_soil) + vegetables + migration + smoking + 
+             sqrt(amalgam) + age + mother + sqrt(fish) + last_fish,d.hg)
+```
+
+For example, we can fit models where certain terms are omitted. Let's start with a model where the interaction $mother\cdot age$ is removed (denoted as `r.lm0`). The AICc then increases clearly, confirming that the term is relevant:
+
+```{r echo = TRUE}
+AICc(r.lm0)
+AICc(r.lm1)
+```
+
+## 
+
+On the other hand, the model where we omit the binary \emph{migration} variable would give a reduced AICc:  
+
+```{r echo = TRUE}
+r.lm0 <- lm(log10(Hg_urin) ~ log10(Hg_soil) + vegetables  + smoking + 
+             sqrt(amalgam) + age * mother + sqrt(fish) + last_fish,d.hg)
+AICc(r.lm0)
+```
+
+__But:__ Given that the mercury model is an __explanatory, confirmatory model__, we should not remove a variable (e.g., migration) simply because it reduces AICc.
+
+$\rightarrow$ Therefore, given the a priori selection of variables and the model validation results, the model from slide  was used in the final publication CITATION:imo.etal2017.
+
+$\rightarrow$ Any further analyses with other models would need to be labelled as \alert{exploratory}.
+
+## Another complication: Collinearity of covariates
+
+\small (See Stahel chapter 5.4)  
+
+\
+
+Given a set of covariates ${x^{(1)}}, {x^{(2)}}, {x^{(3)}}, ...,{x^{(p)}}$. If it is possible for one of the covariates to be written as a \alert{linear combination of the others}
+\begin{equation*}
+x_i^{(j)} = \sum_{k\neq j} c_k x_i^{(k)} \quad \text{for all} \quad  i=1,...,n
+\end{equation*}
+
+the set of covariates is said to be \alert{collinear}.  
+
+
+__Examples:__ 
+
+* Three vectors in a 2D-plane are always collinear.
+* A covariate can be written as a linear combination of two others: $x^{(j)} = c_1\cdot x^{(1)} + c_2 \cdot x^{(2)}$, then the three variables are collinear.
+
+## 
+
+In statistics, the expression "collinearity" is also used when such a collinearity relationship is \emph{approximately} true. For example, when two variables ${x^{(1)}}$ and ${x^{(2)}}$ have a high correlation.  
+
+
+__What is the problem with collinearity?__
+
+A simple (and extreme) example to understand the point: Assume two covariates are identical ${x^{(1)}}={x^{(2)}}$. In the regression model
+\begin{equation*}
+y_i = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \epsilon_i \ ,
+\end{equation*}
+
+the slope coefficients $\beta_1$ and $\beta_2$ \alert{cannot be uniquely determined} (there are many equally "optimal" solutions to the equation)!
+
+When the variables are collinear, this problem is less severe, but the $\beta$ coefficients can be estimated \alert{less precisely}  
+
+$\rightarrow$ standard errors too high.
+
+$\rightarrow$ $p$-values too large.
+
+## Detecting collinearity
+
+The \alert{variance inflation factor} (VIF) is a measure for collinearity. It is defined for each covariate ${x^{(j)}}$ as 
+\begin{equation*}
+VIF_j = \frac{1}{1-R_j^2} \qquad
+\end{equation*}
+ where $R_j^2$ is the $R^2$ of the regression of ${{x^{(j)}}}$ against all other covariates. (Note: if $R_j^2$ is large, this means large collinearity and thus a large VIF).  
+ 
+__Examples__ 
+
+* $R^2_j=0$ $\rightarrow$ no collinearity $\rightarrow$ VIF=1/1 = 1.
+* $R^2_j=0.5$ $\rightarrow$ some collinearity $\rightarrow$ VIF=1/(1-0.5) = 2.  
+* $R^2_j=0.9$ $\rightarrow$  high collinearity $\rightarrow$ VIF=1/(1-0.9) = 10.
+
+## What to do against collineartiy
+
+* \alert{Avoid} it, e.g. in experiments.
+* Consider to \alert{not include a variable} with an inacceptably high $R^2_j$ or $VIF_j$. The tolerance of VIFs are different in the literature and range from 4 to 10 as a maximum tolerable VIF.
+* Be \alert{aware} of it and interpret your results with the respective care.
+* See also Stahel 5.4(i) for a "recipe".  
+
+\
+__Important note:__ We would not care much about collinearity in a predictive model. If collinearity was a problem, AIC/AICc/BIC would probably anyway select a subset where some collinearity is eliminated (because model complexity is balanced against model fit).
+
+## Recommended procedure for explanatory models I
+
+Before you start:
+
+* __Think about a suitable model__. This includes the model family (e.g., linear model), but also potential variables that are relevant using __a priori__ knowledge.  
+* Declare a strategy what you do if _e.g._ modelling assumptions are not met or in the presence of collinearity.
+  
+  * What kind of variable transformations would you try, in which order, and why?
+  * What model simplifications will be considered it it is not possible to fit the intended model?
+  * How will you deal with outliers?
+  * How will you treat missing values in the data?
+  * How will you treat collinear covariates?
+  * ...
+  
+It is advisable to write your strategy down as a "protocol" before doing any analyses. 
+
+## Recommended procedure for explanatory models II
+
+Analyze the data following your "protocol":
+
+* Fit the model and check if modelling assumptions are met.
+* If modelling assumptions are not met, __adapt the model__ as outlined in your protocol.
+* Interpret the model coefficients (effect sizes) and the $p$-values properly (see next week).  
+
+\
+After the analysis that was specified in the "protocol":
+
+* Any additional analyses, which you did not specify in advance, are purely exploratory.
+
+## One more thing: Occam's Razor principle
+
+The principle essentially says that an __explanatory model__ should not be made more complicated than necessary.  
+
+This is also known as the \alert{principle of \bf{parsimony}} (Prinzip der Sparsamkeit):  
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+Systematic effects should be included in a model \textbf{only} if there is knowledge or convincing evidence for the need of them.
+\end{minipage}}  
+
+\href{https://de.wikipedia.org/wiki/Ockhams_Rasiermesser}
+{\beamergotobutton{See Wikipedia for ``Ockham's Rasiermesser''}}  
+
+## Summary
+
+* Model/variable selection is difficult and controversial.  
+
+* Different approaches for predictive or explanatory models.  
+
+* Discriminate explanatory models into confirmatory and exploratory.  
+* AIC, AIC$_c$, BIC: balance between model fit and model complexity.
+
+* Automatic model selection leads to biased parameter estimates and $p$-values.
+
+* Threfore, automatic model selection procedures are inappropriate for explanatory models.
+
+* $P$-values should not be used for model selection, even not for predictive models.
+
+## Self-study week 
+
+Next week is no lecture, so you can
+
+* Consolidate, review, reinforce, expand.
+
+* Read the assigned literature to prepare for week 10.
+
+$\rightarrow$ Please check on openedx.  
+
+## Feedback about today's lecture
+
+Please give us your opinion about the lecture regarding
+
+* unclearest ("muddiest") point
+* the take-home message of today.
+
+via this link:  
+
+\centering{\href{http://www.klicker.uzh.ch/bkx}{http://www.klicker.uzh.ch/bkx}}  
+
+\centering{Thank you!!}
+
+
+## 
+References: \ 
+
+\small
+Brewer, M. J., A. Butler, and S.L. Cooksley (2016). The relative performance of $AIC$, $AIC_c$ and $bic$ in the presence of unobserved heterogeneity. _Methods in Ecology and Evolution 7_, 679-692.\  
+
+Burnham, K.P. and D.R. Anderson (2002). _Model selection and multimodel inference: a practical information-theoretic approach._ New York: Springer.\  
+
+Clayton, D. and M. Hills (1993). _Statistical Models in Epidemiology._ Oxford: Oxford University Press.\  
+
+Copas. J.B. (1983). Regression, prediction and shrinkage. _Journal of the Royal Statistical Society. Series B (Statistical Methodology) 45_, 311-354.\  
+
+Freedman, D.A. (1983). A note on screening regression equations. _The American Statistician 37,_ 152-155.\  
+
+Imo, D., S. Muff, R. Schierl, K. Byber, C. Hitzke, M. Bopp, M. Maggi, S. Bose-O'Reilly, L. Held, and H. Dressel (2017). Risk assessment for children and mothers in a mercury-contaminated area using human-biomonitoring and individual soil measurements: a cross-sectional study. _International Journal of Environmental Health Research 28,_ 1-16.
+
+
+
+
