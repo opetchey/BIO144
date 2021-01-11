@@ -1,0 +1,625 @@
+---
+title: "Lecture 5: Multiple linear regression (finalize) / Residual analysis / Checking modeling assumptions"
+subtitle: "BIO144 Data Analysis in Biology"
+author: "Stephanie Muff & Owen Petchey"
+institute: "University of Zurich"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  beamer_presentation:
+    includes:
+      in_header: ../../beamer_stuff/preamble.tex
+classoption: "aspectratio=169"
+---
+  
+```{r setup, include=FALSE, echo = FALSE, message=FALSE, warning=FALSE}
+source(here::here("2_content/beamer_stuff/preamble.r"))
+```
+
+## Overview
+
+* Interactions between covariates
+* Multiple vs.\ many single regressions
+* Checking assumptions / Model validation
+* What to do when things go wrong?
+* Transformation of variables/the response
+* Handling of outliers
+
+## Course material covered today
+
+The lecture material of today is based on the following literature:
+
+* Chapters 3.2u-x, 3.3, 4.1-4.5 in \emph{Lineare Regression} 
+
+## Recap of last week
+
+* Multiple linear regression model $y_i= \beta_0 + \beta_1 x_i^{(1)}+\beta_2x_i^{(2)}+\ldots + \beta_m x_i^{(m)}+\epsilon_i$.
+
+* \alert{Binary} and \alert{factor} covariates: The idea is to introduce \alert{dummy variables} such that
+\colorbox{lightgray}{\begin{minipage}{10cm}
+\begin{equation*}
+x_i^{(j)} = \left\{ 
+\begin{array} {ll}
+1, & \text{if the $i$th observation belongs to group $j$}.\\
+0, & \text{otherwise.}
+\end{array}\right.
+\end{equation*}
+\end{minipage}}
+
+* Include $x^{(2)}$, ... ,$x^{(k)}$ in the regression, given that $x^{(1)}$ is used as \alert{reference category} ($\beta_1=0$).
+
+* The factor covariates of last week were used to allow for \alert{group-specific intercepts} (see earthworm example).
+
+## Recap of last week II
+
+```{r fig.width=5, fig.height=4, out.width="6.5cm", fig.align='center', echo=FALSE}
+
+
+d.wurm <- read.table(here("5_some_examples/data_examples/ancova/Projekt6Regenwuermer/RegenwuermerDaten_Haupt.txt"),header=T)
+d.wurm[d.wurm$Gattung=="N","GEWICHT"] <- d.wurm[d.wurm$Gattung=="N","GEWICHT"]*0.5
+r.lm <- lm(log10(GEWICHT) ~  MAGENUMF + Gattung,d.wurm)
+cc <- r.lm$coefficients
+ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point() + geom_line(aes(y=cc[1]+cc[2]*MAGENUMF),colour=2)  + geom_line(aes(y=cc[1]+cc[3]+cc[2]*MAGENUMF),colour=3)  + geom_line(aes(y=cc[1]+cc[4] + cc[2]*MAGENUMF),colour=4) + theme_bw()
+
+```
+
+* The \alert{$F$-test} is used to test if $\beta_2=\beta_3=...=\beta_k=0$ at the same time for a factor covariate with $k$ levels. Use the \texttt{anova()} function in R to carry out this test.
+
+## Recap of last week III
+
+* The $F$-test is a \alert{generalization of the $t$-test}, because the latter is used to test $\beta_j = 0$ for one single variable $x^{(j)}$.  
+\
+
+\textcolor{blue}{\large Cooking rule:}
+
+* Test for a single $\beta_j=0$ $\rightarrow$ $t$-test.
+
+* Test for several $\beta_2 = ... = \beta_{k}=0$ simultaneously $\rightarrow$ $F$-test.
+
+$\rightarrow$ \texttt{anova()} 
+
+Thus you will __always__ need the $F$-test `anova()` to obtain a $p$-value for a factor covariate with more than 2 levels!
+
+## Group-specific slopes: Interactions
+
+It may happen that \alert{groups do not only differ in their intercept ($\beta_0$), but also in their slopes ($\beta_x$)}.
+
+In the earthworm example, allowing for different intercepts and slopes:
+
+```{r eval=T,fig.width=5.5, fig.height=4,warning=FALSE,out.width="6.5cm", echo = FALSE, fig.align='center', message=FALSE}
+library(ggplot2)
+library(dplyr)
+ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point() + geom_smooth(method="lm") + theme_bw()
+
+```
+
+__Important:__ This model will be fitted in this week's BC videos.
+
+## Binary variable with interaction
+
+For simplicity, let us look at a binary covariate ($x_i \in \{0,1\}$).
+
+Remember the mercury (Hg) example from last week. We now extended the dataset and include mothers __and__ children ($\leq 11$ years).
+
+It is known that Hg concentrations may change over the lifetime of humans. So let us look at \texttt{log(Hg$_\text{urin}$)} depending on the age of the participants:
+
+```{r eval=T,warning=FALSE,out.width="6.5cm", fig.align='center', echo=FALSE, message=FALSE}
+d.hg <- read.table(here("3_datasets/hg_urine_fuzzed.csv"),header=T, sep=",")
+d.hg <- d.hg[,c(1,2,5,6,7,8,10)]
+#names(d.hg) <- c("Hg_urin", "Hg_soil", "smoking","amalgam", "age", "fish","mother")
+d.hg <- mutate(d.hg,mother=factor(mother))
+ggplot(d.hg,aes(x=age,y=log(Hg_urin),colour=mother)) + geom_point() + geom_smooth(method="lm") + theme_bw()
+```
+
+## 
+
+Observation: __The regression lines are not parallel.__
+
+$\rightarrow$ Children and mothers seem to depend differently on age!
+\ 
+
+What does this mean for the model?
+ 
+$\rightarrow$ Formulate a model that allows for \alert{different intercepts \emph{and} slopes}, depending on group membership (mother/child).
+
+$\rightarrow$ This can be achieved by introducing a so-called \alert{interaction term} into the regression equation.
+
+## 
+
+The smallest possible model is then given as
+\colorbox{lightgray}{\begin{minipage}{14cm}
+\begin{equation}\label{eq:HgInt}
+y_i =  \beta_0 + \beta_1 \text{mother}_i + \beta_2 \text{age}_i + \beta_3\text{age}_i\cdot \text{mother}_i + \epsilon_i \ , 
+\end{equation}
+\end{minipage}}
+
+where $y_i=\log(Hg_{\text{urin}})_i$, and \texttt{mother} is a binary "dummy" variable that indicates if the person is a mother (1) or a child (0).
+
+This results in essentially __two__ models with group specific intercept and slope:
+\colorbox{lightgray}{\begin{minipage}{14cm}
+Mothers ($x_i=1$): $\hat{y}_i = \beta_0 +  \beta_1 + (\beta_2 +\beta_3)\text{age}_i$  
+
+\ 
+
+Children ($x_i=0$): $\hat{y}_i = \beta_0  + \beta_2 \text{age}_i $  
+\end{minipage}}
+
+## 
+
+Fitting model (1) in R is done as follows, where \texttt{age:mother} denotes the interaction term ($\text{age}_i\cdot \text{mother}_i$):
+\  
+
+\tiny
+```{r echo=F}
+r.hg <- lm(log(Hg_urin)~  mother + age + age:mother,d.hg)
+summary(r.hg)$coef
+```
+\normalsize
+
+Interpretation:
+
+Mothers: $\hat{y}_i = -1.06 + (-2.48) + (-0.10 + 0.16) \cdot \text{age}_i$  
+\
+Children: $\hat{y}_i = -1.06 + (-0.10) \cdot \text{age}$
+
+* The Hg level drops in young children.
+* The Hg level increases in adults (mothers).
+
+## 
+
+On the previous slide we have actually fitted 2 models at the same time.  
+
+\ 
+
+* What is the advantage of this?
+* Why is this usually better than fitting two separate models, one for children and one for mothers?  
+
+\
+
+$\rightarrow$ Clicker exercise \href{http://www.klicker.uzh.ch/bkx}{http://www.klicker.uzh.ch/bkx}
+
+## 
+
+Remember (from last week), however, that the Hg model also included smoking status, amalgam fillings and fish consumption as important predictors. It is very straightforward to just include these predictors in model (1), which leads to the following model
+\  
+
+\small
+```{r echo = TRUE}
+r.hg <- lm(log(Hg_urin)~  mother * age + smoking + amalgam + fish,d.hg)
+```
+
+```{r echo = FALSE, results='asis', message=FALSE, warning=FALSE}
+library(biostatUZH)
+tableRegression(r.hg)
+```
+
+\small (Note that \texttt{mother*age} in R encodes for \texttt{mother} + \texttt{age} + \texttt{mother:age}.)
+
+## 
+
+Again, for completeness, some model checking (which one usually does before looking at the results): 
+
+```{r  eval=T,warning=FALSE,out.width="8.5cm", echo = FALSE, message=FALSE, fig.align='center'}
+library(ggfortify)
+autoplot(r.hg,which=c(1,2),smooth.col=NA)
+```
+
+## Linear regression is even more powerful!
+
+We have seen that it is possible to include continuous, binary or factorial covariates in a regression model.
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+Even \alert{transformations} of covariates can be included in (almost) any form. For instance the square of a variable ${x}$
+\begin{equation*}
+y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \epsilon_i \ , 
+\end{equation*}
+which leads to a {\bf quadratic} or {\bf polynomial} regression (if higher order terms are used).
+\end{minipage}}
+
+Other common transformations are (see also slide 38):
+
+* $\log$
+* $\sqrt{..}$
+* $\sin$, $\cos$, ...
+
+## How can a _quadratic_ regression be a _linear regression_??
+
+__Note:__ The word _linear_ refers to the \alert{linearity in the coefficients}, and not on a linear relationship between ${y}$ and ${x}$!
+
+\begin{center}
+\includegraphics[width=11cm]{pictures/multiplReg.png}
+\end{center}
+
+## Multiple vs. many single regressions
+
+Question: Given multiple regression covariates ${x}^{(1)}, {x}^{(2)},...$. Could I simply fit separate simple models for each variable, that is
+
+$y_i = \alpha + \beta x_i^{(1)} + \epsilon_i$  
+
+$y_i = \alpha + \beta x_i^{(2)} + \epsilon_i$
+
+etc.?
+
+## Multiple vs. many single regressions
+
+Question: Given multiple regression covariates ${x}^{(1)}, {x}^{(2)},...$. Could I simply fit separate simple models for each variable, that is
+
+$y_i = \alpha + \beta x_i^{(1)} + \epsilon_i$  
+
+$y_i = \alpha + \beta x_i^{(2)} + \epsilon_i$
+
+etc.?
+
+Answer (Stahel 3.3o):
+
+\begin{center}
+\includegraphics[width=11cm]{pictures/citation.png}
+\end{center}
+
+Why?
+
+## Illustration
+
+Chapter 3.3c in the Stahel script illustrates the point on four artificial examples. The "correct" model is always given as 
+
+\begin{equation*}
+y_i = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \epsilon_i \  ,
+\end{equation*}
+
+where ${x}^{(1)}$ is a continuous variable, and ${x}^{(2)}$ is a binary grouping variable (thus taking values 0 and 1 to indicate the group).
+
+Thus the correct model is 
+
+\begin{equation*}
+\begin{array}{lll}
+\hat{y_i} &= \beta_0 +  \beta_1 x_i^{(1)} & \text{if $x_i^{(2)}=0$.} \\
+\hat{y_i} &= \beta_0 + \beta_2 + \beta_1 x_i^{(1)}   & \text{if $x_i^{(2)}=1$.} 
+\end{array}
+\end{equation*}
+
+## 
+
+\begin{center}
+\includegraphics[width=11cm]{pictures/FigsAB.png}
+\end{center}
+
+Example A: Within-group slope is $>0$. Fitting $y$ against $x$ leads to an overestimated slope when group-variable is not included in the model.
+
+Example B: Within-group slope is $0$, but fitting $y$ against $x$ leads to a slope estimate $>0$, which is only an artifact of not accounting for the group variable $x^{(2)}$.
+
+##
+
+\begin{center}
+\includegraphics[width=11cm]{pictures/FigsCD.png}
+\end{center}
+
+Example C: Within-group slope is $<0$, but fitting $y$ against $x$ leads to an estimated slope of $>0$!
+
+Example D: Within-group slope is $<0$, but fitting $y$ against $x$ leads to a slope estimate of $0$.
+
+## Another interpretation of multiple regression
+
+In multiple regression, the coefficient $\beta_x$ of a covariate $x$ can be interpreted as follows:
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+$\beta_x$ explains how the response changes with $x$, while holding all the other variables constant.
+\end{minipage}}
+
+This idea is similar in spirit to an experimental design, where the influence of a covariate of interest on the response is investigated in various environments\footnote{Clayton, D. and M. Hills (1993). Statistical Models in Epidemiology. Oxford: Oxford University Press.}. Clayton and Hills (1993) continue (p.273):
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+\begin{quote}
+[...] the data analyst is in a position like that of an experimental scientist who has the capability to plan and carry out many experiments within a single day. Not surprisingly, a cool head is required!
+\end{quote}
+\end{minipage}}
+
+## Checking modeling assumptions
+
+
+Remember that in linear regression the modeling assumption is that the errors $\epsilon_i$ are independently normally distributed around zero, that is, $\epsilon_i \sim N(0,\sigma^2)$. This implies four things:
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+\begin{enumerate}[a)]
+\item The expected value of each residual $\epsilon_i$ is 0: $E(\epsilon_i)=0$.
+\item All $\epsilon_i$ have the same variance: $Var(\epsilon_i)=\sigma^2$.
+\item The $\epsilon_i$ are normally distributed.
+\item The $\epsilon_i$ are independent of each other.
+\end{enumerate}
+\end{minipage}}
+
+So far, we have discussed 
+
+* the Tukey-Anscombe plot.
+* the QQ-plot.
+
+## 
+
+The aim is to formulate a model that describes the data well. But always keep in mind the following statement from a wise man:
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+All models are wrong, but some are useful. \scriptsize{(Box 1978)}
+\end{minipage}}
+
+## Overview of model-checking tools
+
+Complete overview of tools used in this course:
+
+* Tukey-Anscombe plot (see lectures 3 and 4)
+
+$\Rightarrow$ \alert{To check assumptions a), b) and d)}
+
+* Quantile-quantile (QQ) plot (see lectures 3 and 4)
+
+$\Rightarrow$ \alert{To check assumption c)}  
+
+* Scale-location plot (Streuungs-Diagramm)  
+
+$\Rightarrow$ \alert{To check assumption b)}
+
+* Leverage plot (Hebelarm-Diagramm)
+
+$\Rightarrow$ \alert{To find influential observations and/or outliers}
+
+__Note:__ these four diagrams are plotted automatically by R when you use the \texttt{plot()} or the \texttt{autoplot()}  function (from the \texttt{ggfortify} package) on an \texttt{lm} object, for example \texttt{autoplot(r.hg)}.
+
+## Tukey-Anscombe plot
+
+It is sometimes useful to enrich the TA-plot by adding a "running mean" or a "smoothed mean", which can give hints on the trend of the residuals. For the mercury example where $\log(Hg_{\text{urin}})$ is regressed on smoking, amalgam  and fish consumption for mothers only (slides 32-34 of lecture 4):  
+
+```{r echo= FALSE, message=FALSE, warning=FALSE}
+d.hg <- read.table(here("3_datasets/hg_urine_fuzzed.csv"),header=T, sep=",")
+d.hg.m <- d.hg[d.hg$mother==1,-c(3,4,9,10,11)]
+#names(d.hg.m) <- c("Hg_urin", "Hg_soil", "smoking","amalgam", "age", "fish")
+```
+
+```{r eval=T,echo=FALSE,message=FALSE,warning=FALSE,out.width="5cm",fig.align='center'}
+r1.urin.mother <- lm(log10(Hg_urin) ~  smoking + amalgam + fish,data=d.hg.m)
+plot(fitted(r1.urin.mother),residuals(r1.urin.mother),xlab="Fitted values",ylab="Residuals")
+abline(h=0,lty=2)
+aa <- data.frame(cbind(x=fitted(r1.urin.mother), y=residuals(r1.urin.mother)))
+aa <- aa[order(aa$x),]
+lo <- loess(y ~ x, aa)
+lines(aa$x,predict(lo), col='red', lwd=2,lty=5)
+```
+
+
+The TA plot (again) indicates that there is an outlier in the range of -0.7 to -0.6.
+
+However, generally we recommend to \alert{not} add a smoothing line, because it may bias our view on the plot.
+
+## 
+
+The TA plot is also able to check the \emph{independence assumption} d). But how?
+
+$\rightarrow$ A dependency would be reflected by some kind of \alert{trend}. 
+
+##
+
+But: The dependency is not necessarily on the fitted values ($x$-axis of TA plot). Ideas:  
+
+* Plot residuals in dependency of time (if available) or sequence of obervations.
+* Plot residuals against the covariates.
+
+```{r warning=FALSE,out.width="8cm", fig.align='center', message=FALSE, echo=FALSE}
+library(ggplot2)
+library(gridExtra)
+d1 <- data.frame(obsNr= 1:length(residuals(r1.urin.mother)), 
+                 resid = residuals(r1.urin.mother),
+                 amalgam = d.hg.m$amalgam,
+                 fish = d.hg.m$fish)
+p1 <- ggplot(d1, aes(x=obsNr,y=resid))+  geom_point() +  geom_hline(yintercept = 0,linetype=2,size=0.3,col=2) +
+  xlab("Observation number (time)") +
+  ylab("Residuals")
+p2 <- ggplot(d1, aes(x=amalgam,y=resid))+  geom_point() +  geom_hline(yintercept = 0,linetype=2,size=0.3,col=2) +
+  xlab("No. of amalgam fillings") +
+  ylab("")
+p3 <- ggplot(d1, aes(x=fish,y=resid))+  geom_point() +  geom_hline(yintercept = 0,linetype=2,size=0.3,col=2) +
+  xlab("No. of fish meals/month") +
+  ylab("")
+grid.arrange(p1, p2, p3, ncol=3)
+```
+
+Again, no pattern = good.
+
+## QQ-plot
+
+The \alert{outlier} recorded above is also visible in the (well-known) QQ-plot, which is useful to check for normal distribution of residuals (assumption c):
+
+```{r eval=T,warning=FALSE,out.width="4cm",echo=FALSE, fig.align='center'}
+library(ggfortify)
+autoplot(r1.urin.mother,2) + theme_bw()
+```
+
+## How do I know if a QQ-plot looks "good"?
+
+There is __no quantitative rule__ to answer this question, experience is needed. However, you can gain this experience from \alert{simulations}. To this end, generate the same number of data points of a normally distributed variable and compare to your plot.
+
+Example: Generate 59 points $\epsilon_i \sim N(0,1)$ each time:
+
+```{r eval=T,fig.width=6.5, fig.height=4.0,warning=FALSE,out.width="8.5cm", fig.align='center',echo=FALSE}
+set.seed(390457)
+par(mfrow=c(2,3),mar=c(4,4,1,1))
+for (ii in 1:6){
+  ss <- rnorm(59)
+qqnorm(ss,main="")
+qqline(ss,xlab="")
+}
+```
+
+## Scale-location plot (Streuungs-Diagramm)
+
+The scale-location plot is particularly suited to check the assumption of equal variances (__homoscedasticity / Homoskedastizität__).
+
+The idea is to plot the square root of the (standardized) residuals $\sqrt{|R_i|}$ against the fitted values $\hat{y_i}$. There should be __no trend__ \scriptsize (Again Hg example): 
+
+```{r eval=T,warning=FALSE,out.width="4cm", fig.align='center', echo=FALSE}
+autoplot(r1.urin.mother,which=3) + theme_bw()
+```
+
+## Leverages ("Hebel")
+
+To understand the leverage plot, we need to introduce the idea of the \emph{leverage} ("Hebel").
+
+In simple regression, the leverage of individual $i$ is defined as $H_{ii} = (1/n) + (x_i-\overline{x})^2 SSQ^{(X)}$. Think about when leverages are expected to be large/small, and answer the two questions here:
+
+\begin{center}
+\href{http://www.klicker.uzh.ch/bkx}{http://www.klicker.uzh.ch/bkx}
+\end{center}
+
+## Graphical illustration of the leverage effect
+
+Data points with $x_i$ values far from the mean have a stronger leverage effect than when $x_i\approx \overline{x}$:
+
+```{r eval=T,fig.width=6.5, fig.height=2.3,warning=FALSE,out.width="9.5cm", echo=FALSE, fig.align='center'}
+set.seed(37489)
+par(mfrow=c(1,3),mar=c(4,4,1,1))
+x <- sort(rnorm(18))
+y <- 2*x + rnorm(18,0,0.4)
+plot(y~x)
+abline(lm(y~x))
+y1 <- y
+y1[18] <- y[18] -5
+plot(y1~x,col=c(rep(1,17),2))
+abline(lm(y~x))
+abline(lm(y1~x),col=2,lty=2)
+y2 <- y
+y2[9] <- y2[9] + 4
+plot(y2~x,col=c(rep(1,8),2,rep(1,9)))
+abline(lm(y~x))
+abline(lm(y2~x),col=2,lty=2)
+```
+
+The outlier in the middle plot "pulls" the regression line in its direction and biases the slope.
+
+\hspace{2cm}$\rightarrow$ \href{http://students.brown.edu/seeing-theory/regression-analysis/index.html}{Click here} to do it manually!
+
+## Leverage plot (Hebelarm-Diagramm)
+
+In the leverage plot, (standardized) residuals $\tilde{R_i}$ are plotted against the leverage $H_{ii}$ (still for the Hg example):
+
+```{r out.width="3cm", fig.align='center', echo=FALSE, message=FALSE, warning=FALSE}
+autoplot(r1.urin.mother,which=5)
+```
+
+\alert{Critical ranges} are the top and bottom right corners!!
+
+Here, individuals 95, 101 and 106 are potential \alert{outliers}.
+
+## What can go ``wrong'' during the modeling process?
+
+* ...
+
+## What to do when things go wrong?
+
+1. \alert{Transform the outcome or the covariables.}
+2. \alert{Take care of outliers.}
+3. Use weighted regression (not discussed here).
+4. Improve the model, e.g., by adding additional terms or interactions (see "model selection" in lecture 8).
+5. Use another model family (generalized or nonlinear regression model).
+
+## Transformation of the response?
+
+Example: Use again the mercury study, include only mothers. Use the response (Hg-concentration in the urine) \alert{without log-transformation}. What would it look like?
+\small
+```{r echo = TRUE}
+r2.urin.mother <- lm(Hg_urin ~  smoking  + amalgam + fish,data=d.hg.m)
+```
+
+```{r fig.width=5.5, fig.height=5.5,out.width="6cm", fig.align='center',echo=FALSE,message=FALSE,warning=FALSE}
+autoplot(r2.urin.mother) + theme_bw()
+```
+
+## 
+
+Comparison to the model with log-transformed response:
+
+```{r echo = FALSE}
+r3.urin.mother <- lm(log10(Hg_urin) ~  smoking  + amalgam + fish,data=d.hg.m)
+```
+
+```{r fig10,fig.width=5.5, fig.height=5.5,out.width="6cm", fig.align='center',echo=FALSE,message=FALSE,warning=FALSE}
+autoplot(r3.urin.mother,smooth.colour=NA) + theme_bw()
+```
+
+This looks __much__ better! However... there is this individual 106 that needs some closer inspection (see slide 43 for the solution regarding this outlier).
+
+## Common transformations
+
+Which tranformations should be considered to cure model deviation symptoms? Answering this depends on plausibility and simplicity, and requires some experience.  
+\
+
+The most common and useful \alert{first aid transformations} are:
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+\begin{itemize}
+\item The log transformation for {\bf concentrations} and {\bf absolute values}.
+\item The square-root ($\sqrt{\cdot}$) transformation for {\bf count data}.
+\item The $\arcsin(\sqrt{\cdot})$ transformation for {\bf proportions/percentages}.
+\end{itemize}
+\end{minipage}}
+
+These transformations can (or should) also be applied on covariates!
+
+## 
+
+For instance, the number of amalgam fillings and the number of monthly fish meals should be sqrt-transformed in the mercury example:
+
+```{r echo = FALSE, warning=FALSE, message=FALSE}
+r4.urin.mother <- lm(log10(Hg_urin) ~  smoking + sqrt(amalgam) + sqrt(fish),data=d.hg.m)
+```
+
+```{r fig.width=5.5, fig.height=5.5,out.width="7cm", fig.align='center', echo=FALSE, warning=FALSE, message=FALSE}
+autoplot(r4.urin.mother,smooth.colour=NA) + theme_bw()
+```
+
+## Outliers
+
+The above plots illustrate that outliers are visible in all diagnostic plots.
+
+What to do in this case?
+
+1. Start by checking the correctness of the data. Is there a typo or a digital point that was shifted by mistake? Check the covariates and the response.
+
+2. If not, ask whether the model has been misspecified. Do reasonable transformations of the response or the covariates eliminate the outlier? Do the residuals have a distribution with a long tail (which makes it more likely that 3. extreme observations occur)?
+
+3. Sometimes, an outlier may be the most interesting observation in a dataset!
+
+4. Consider that outliers can also occur by chance!
+
+## Deleting outliers
+
+It might seem tempting to delete observations that apparently don't fit into the picture. However:
+
+* Do this __only with absolute care__ e.g., if an observation has extremely implausible values!  
+* Before deleting outliers, check points 1-4 from the previous slide.
+* When deleting outliers or the x\% of most extreme observations, you __must mention this in your report__.
+* Confidence intervals, tests and $p$-values might be biased.
+
+## The outlier in the Hg study
+
+In the Hg study, it turned out later on that the outlier 106 had five unreported amalgam fillings!
+
+A corrected analysis gives a much more regular picture (please compare to slide 40):
+
+```{r echo = FALSE, warning=FALSE, message=FALSE}
+d.hg.m["106","amalgam"]<-5
+r5.urin.mother <- lm(log10(Hg_urin) ~  smoking + sqrt(amalgam) + sqrt(fish),data=d.hg.m)
+```
+
+```{r eval=T,fig.width=5, fig.height=5,warning=FALSE,out.width="6cm", fig.align='center',echo=FALSE, message=FALSE}
+autoplot(r5.urin.mother,smooth.colour=NA) + theme_bw()
+```
+
+## Feedback about today's lecture
+
+Please give us your opinion about the lecture regarding
+
+* unclearest ("muddiest") point
+* the take-home message of today.
+
+via this link: 
+
+\centering{\href{http://www.klicker.uzh.ch/bkx}{http://www.klicker.uzh.ch/bkx}}
+
+\centering{Thank you!!}
+
+
