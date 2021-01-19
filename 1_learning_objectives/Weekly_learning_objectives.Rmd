@@ -12,7 +12,8 @@ output:
 
 # Document validity
 
-Valid for FS2020.
+* Valid for FS2020.
+* Valid for FS2021.
 
 # Overarching learning objectives {-}
 
