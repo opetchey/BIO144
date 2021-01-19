@@ -23,11 +23,14 @@ library(skimr)
 ## First we should assign, using the assignment arrow,
 ## the URL of the published version of the google sheet data into an object.
 the_URL - "https://docs.google.com/spreadsheets/d/e/2PACX-1vQFgYX1QhF9-UXep22XmPow1ZK5nbFHix9nkQIa0DzqUhPtZRxH1HtY-hsno32zDiuIHiLb2Hvphk1L/pub?gid=1188775314&single=true&output=csv"
-## then we use the read_csv function to read in the data from that URL
+## then use the read_csv function to read in the data from that URL
 class_RTs <- read_cvs(the_URL)
 #######################################################
 
 ## DO NOT USE read.csv above!!!
+
+## --->>> Once more, and even if a TA tells you to, do not use read.csv on line 27.
+## --->>> You must keep the underscore (_) and not replace it with a dot (.)
 
 #######################################################
 ## Have a look at the data in R, does it look OK?
@@ -60,8 +63,8 @@ class_RTs
 ## ID should be a character
 ## Gender should be a character
 ## Handed should be character
-## The remaining variables should be numeric (<dbl> if fractional, <int> if whole numbers).
-class_RTs
+## The remaining variables should be numeric (<dbl>)
+glimpse(class_RTs
 #######################################################
 
 
@@ -76,23 +79,40 @@ skim(class_RT)
 
 #######################################################
 ## and the number of observations of each gender
-### Check numbers of data points in each gender
-table(class_RTs$Gender)
+class_RTs %>%
+  group_by(Gender) %%
+  summarise(number = n())
 #######################################################
 
 
 #######################################################
 ## Now make a figure containing the histogram of reaction times
-ggplot(data=class_RTs, aes(x=???)) + geom_histogram()
+ggplot(data=class_RTs, aes(x=???)) +
+  geom_histogram()
 
 ## Now make a figure containing two histograms histograms (i.e. two "facets"), one for each gender
-ggplot(data=class_RTs, aes(x=???)) + geom_histogram() + facet_grid(~Gender)
+ggplot(data=class_RTs, aes(x=???)) +
+  geom_histogram() +
+  facet_grid(~Gender)
 
 ## And a box and whisker plot
-ggplot(data=class_RTs, aes(x=???, y=???)) + geom_boxplot()
+ggplot(data=class_RTs, aes(x=???, y=???)) +
+  geom_boxplot()
 
 ## Or just the data points (with some jitter, to separate overlapping points):
-ggplot(data=class_RTs, aes(x=???, y=???)) + geom_point() + geom_jitter(width=0.05)
+ggplot(data=class_RTs, aes(x=???, y=???)) +
+  geom_jitter(width=0.05)
+#######################################################
+
+#######################################################
+## Perhaps filter out some extreme values
+class_RTs_filtered <- class_RTs %>%
+  filter(Pref_Reaction_time < 50,
+         Pref_Reaction_time > 500)
+class_RTs_filtred %>%
+  ggplot2() +
+  geom_jitter(mapping = aes(x=Gnder, y=Pref_reaction_time),
+              width=0.05)
 #######################################################
 
 
@@ -110,10 +130,20 @@ ggplot(data=class_RTs, aes(x=???, y=???)) + geom_point() + geom_jitter(width=0.0
 
 #######################################################
 ## Do the t test and assign the outcome to an object:
-my_ttest <- t.test(??? ~ ???, data=class_RTs, var.equal=TRUE)
+my_ttest <- t.test(??? ~ ???,
+                   data=class_RTs,
+                   var.equal=TRUE)
 ## look at the result of the t-test
 t.test
 #######################################################
+
+###################
+## And the same but with the filtered data:
+my_ttest <- t.test(??? ~ ???,
+                   data = ???,
+                   var.equal=TRUE)
+t.test
+
 
 
 #######################################################
@@ -133,5 +163,6 @@ t.test
 ## Write a sentence that gives the direction and extent of difference,
 ## and a measure of certainty / uncertainty in that finding.
 ## Make a beautiful graph that very clearly communicates the findings!
-ggplot(data=???, aes(x=???, y=???)) + geom_boxplot() +
+ggplot(data=???, aes(x=???, y=???)) +
+  geom_boxplot() +
   ylab("Reaction time (seconds)")

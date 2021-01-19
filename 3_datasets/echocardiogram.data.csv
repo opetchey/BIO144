@@ -1,4 +1,4 @@
-Survival,Still_alive,Age_heart_attack,Peri_aff,Fract_short,Epss,Lvdd,WMS,WMI,Ignore1,Name,Ignore2,Alive
+survival,still_alive,age_at_heart_attack,pericardial_effusion,fractional_shortening,epss,lvdd,wall_motion_score,wall_motion_index,mult,name,group,alive_at_1
 11,0,71,0,0.26,9,4.6,14,1,1,name,1,0
 19,0,72,0,0.38,6,4.1,14,1.7,0.588,name,1,0
 16,0,55,0,0.26,4,3.42,14,1,1,name,1,0
@@ -48,7 +48,7 @@ Survival,Still_alive,Age_heart_attack,Peri_aff,Fract_short,Epss,Lvdd,WMS,WMI,Ign
 19.5,1,81,0,0.12,?,?,9,1.25,0.57,name,2,0
 20,1,59,0,0.03,21.3,6.29,17,1.31,0.928,name,2,0
 0.25,1,63,1,?,?,?,23,2.3,0.714,name,2,1
-?,?,77,?,?,?,?,?,2,?,name,2,?
+,?,?,77,?,?,?,?,?,2,?,name,2
 2,1,56,1,0.04,14,5,?,?,?,name,2,1
 7,1,61,1,0.27,?,?,9,1.5,0.428,name,2,1
 10,0,57,0,0.24,14.8,5.26,18,1.38,0.812,name,2,?
