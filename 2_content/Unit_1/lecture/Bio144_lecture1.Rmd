@@ -16,20 +16,6 @@ classoption: "aspectratio=169"
 source(here::here("2_content/beamer_stuff/preamble.r"))
 ```
 
-## Literature
-
-Compulsory literature (books available as ebooks from uzh):
-
-1. _Lineare Regression_ by W. Stahel (pdf on course webpage)
-2. _Getting Started with R, An introduction for biologists_ (__Second Edition__) Beckerman, Childs \& Petchey, Oxford University Press (DO NOT USE THE FIRST EDITION!).
-3. _The New Statistics With R_ by A. Hector, Oxford University Press;  
-
-$\rightarrow$ See ``Course texts/material'' on course website.
-
-\begin{center}
-\includegraphics[width=2.7cm]{pictures/petchey_buch.jpeg} \qquad \qquad
-\includegraphics[width=2.7cm]{pictures/hector.jpeg}
-\end{center}
 
 ## Schedule (12 lecture units + 2 self-study weeks) {.columns-2}
 
@@ -59,28 +45,26 @@ $\rightarrow$ See ``Course texts/material'' on course website.
 
 \  
 
-My belief: A solid foundation in statistics makes you independent!  
+
 
 ## Why is statistical data analysis so relevant for the biological and medical sciences?  
 
-Awareness that, without a profound knowledge in statistical data analysis, it will be hard to analyze your data from Bachelor, Master or PhD theses.... 
+Only with knowledge of data and statistical data analysis will it be possible to  analyze your data from Bachelor, Master or PhD theses.... 
 
 * \textcolor{blue}{Medicine:} What is the effect of a drug? Which factors cause cancer?
 * __Ecology:__ What is a suitable habitat for a certain animal? Which resources does it need or prefer?
 * \textcolor{red}{Evoloutionary biology:} Do highly inbred animals have decreased chances to survive or reproduce?  
 
-## Learning by doing??  
+## Data and statistics are essential  
 
-$\rightarrow$ __Not advisable__ in statistics. Experience is essential, there are many pitfalls.
-
-A good foundation in statistics \textcolor{blue}{makes you more independent} from consultants or the goodwill of colleagues. Without such a knowledge, you will always need help from others.
+A good foundation in statistics \textcolor{blue}{makes you more independent} from consultants or the goodwill of colleagues. Without such a knowledge, you will have to heavily rely on and trust others.
 
 Data analysis/statistics is itself an exciting part of research! 
  
 Data analysis is at the \textcolor{blue}{interface between mathematics and biology/medicine} (and many other applied research fields).
 
 
-## Own examples
+## Examples of insights from data
 
 \alert{Otter (lutra lutra)}
 
@@ -164,183 +148,25 @@ A profound knowledge of data analysis and statistics protects you from producing
 
 \textcolor{blue}{\href{http://callingbullshit.org/syllabus.html}{``Calling bullshit'' course (University of Washington)}}
 
-## Data example 1: Prognostic factors for body fat  
-\scriptsize (From Theo Gasser \& Burkhardt Seifert \emph{Grundbegriffe der Biostatistik})
-
-Body fat is an important indicator for overweight, but difficult to measure. 
-
-__Question:__  Which factors allow for precise estimation (prediction) of body fat?  
-
-Study with 241 male participants. Measured variable were, among others, body fat (\%), age, weight, body size, BMI, neck thickness and abdominal girth.  
-
-```{r, echo = FALSE, message=FALSE, warning=FALSE}
-library(dplyr)
-library(here)
-d.bodyfat <- read.table(here("3_datasets/bodyfat.clean.txt"),header=T)
-d.bodyfat <- d.bodyfat[,c("bodyfat","age","gewicht","hoehe","bmi","neck","abdomen")]
-```
-
-```{r echo = TRUE}
-glimpse(d.bodyfat)
-```
-
-## Scatterplots
-
-\setkeys{Gin}{width=0.85\textwidth}
-
-```{r, fig.width=6, fig.height=6, out.width="6cm", fig.align = 'center'}
-pairs(d.bodyfat)
-```
-
-## 
 
 
-```{r echo = FALSE, fig=TRUE, out.width = "6cm", out.height='6cm', fig.align='center', include = TRUE}
-par(mfrow=c(2,2),mar=c(4,4,1,1))
-plot(bodyfat ~ bmi ,data=d.bodyfat)
-plot(bodyfat ~ gewicht ,data=d.bodyfat,ylab="")
-plot(bodyfat ~ neck ,data=d.bodyfat)
-plot(bodyfat ~ abdomen ,data=d.bodyfat,ylab="")
-```
+## How do we get insights from data...
 
-We are looking for a _model_ that \alert{predicts} body fat as precisely as possible from variables that are easy to measure. 
+**... rather than nonsense.**
 
-## Data example 2: Mercury (Hg) in Valais (Switzerland)
+* Excellent data management practices.
+* Informative graphical visualisations to explore data.
+* Informative numerical summarise to explore data.
+* Appropriate transformations of data.
+* Appropriate statistics tests / models.
 
-__Question:__ Association between Hg concentrations in the soil and in urine of the people living in the respective properties. We use a slightly modified data set here.
+**Awareness of our "realm":**
 
-```{r echo = FALSE}
-d.hg <- read.table(here("3_datasets/hg_urine_fuzzed.csv"),header=T, sep=",")
-#d.hg <- d.hg[,-c(11)]
-#names(d.hg) <- c("Hg_urin", "Hg_soil", "veg_garden", "migration", "smoking","amalgam", "age", "fish", "last_time_fish", "mother")
-d.hg$mother <- as.factor(d.hg$mother)
-set.seed(234)
-d.hg$Hg_soil <- d.hg$Hg_soil[sample(1:nrow(d.hg))]
-```
-\  
+* Description of patterns, including associations (we will do this).
+* Predicting (we will do this).
+* Inferring causation (we will do this, by analysing experiments randomised manipulations).
 
-\tiny
-```{r echo = TRUE}
-glimpse(d.hg)
-```
 
-## 
-
-A first visual inspection is not very informative. There is not much that is visible by eye:
-\  
-
-```{r,echo=FALSE, out.width='6cm', fig.align='center', message=FALSE, warning=FALSE}
-library(ggplot2)
-ggplot(d.hg,aes(x=Hg_soil,y=Hg_urin)) + geom_point() + 
-  theme_bw() +
-  xlab("Hg soil") +
-  ylab("Hg urine")
-```
-
-## 
-
-Which other factors might be responsible for high Hg concentrations in urine?
-\  
-
-```{r echo=FALSE, out.width='9cm', fig.align='center', message=FALSE, warning=FALSE}
-require(cowplot)
-theme_set(theme_cowplot(font_size=10)) # reduce default font size
-
-plot.1 <- ggplot(d.hg,aes(x=amalgam,y=Hg_urin)) + geom_point(size=0.5) + 
-  theme_bw() +
-  xlab("Amalgam") +
-  ylab("Hg urine")
-
-plot.2 <- ggplot(d.hg,aes(x=age,y=Hg_urin)) + geom_point(size=0.5) + 
-  theme_bw() +
-  xlab("Age") +
-  ylab("Hg urine")
-
-plot.3 <- ggplot(d.hg,aes(x=fish,y=Hg_urin)) + geom_point(size=0.5) + 
-  theme_bw() +
-  xlab("Fish consumption") +
-  ylab("Hg urine")
-
-plot_grid(plot.1, plot.2, plot.3, ncol=3)
-```
-
-From these plots it is hard to tell which factors exactly influence the Hg pollution in humans.
-
-## 
-
-It is always useful to look at the distribution of the variables in the model. Let us plot the histogram of Hg concentrations:  
-\  
-
-```{r out.width='6cm', echo=FALSE, fig.align='center', message=FALSE, warning=FALSE}
-plot.1 <- ggplot(d.hg,aes(x=Hg_soil)) + geom_histogram() + xlab("Hg soil")
-plot.2 <- ggplot(d.hg,aes(x=Hg_urin)) + geom_histogram() + xlab("Hg urine")
-plot_grid(plot.1, plot.2,ncol=2)
-```
-
-All Hg values seem to "stick" at 0.
-
-## 
-
-The scatterplot does also look much more reasonable with log-transformed values:
-\  
-
-```{r out.width='7cm', echo=FALSE, fig.align='center', message=FALSE, warning=FALSE}
-plot(log(Hg_urin) ~ log(Hg_soil), data=d.hg, xlab="log(Hg soil)", 
-     ylab = "log(Hg Urin)",pch=21,bg=as.numeric(mother)+2,xlim=c(-4.5,4.5))
-legend("topright",legend=c("Children","Mothers"),col=c(3,4),pch=21,pt.bg=c(3,4))
-```
-
-Remember: The idea to log-transform the variables was mainly obvious thanks to \alert{visual inspection}! 
-
-## Data example 3: Diet and blood glucose level
-
-<!--{\scriptsize\citep[p. 190]{elpelt.hartung1987}}-->
-
-24 persons were split into 4 groups. Each group followed another diet (DIAET). The blood glucose concentrations were measured at the beginning and at the end (after 2 weeks). The difference of these values was stored (BLUTZUCK).  
-
-\colorbox{lightgray}{\begin{minipage}{14cm}
-{\bf Question:} Are there differences among the groups with respect to changes in blood glucose concentrations?
-\end{minipage}}
-
-Let's look at the raw data (points and boxplots):
-
-```{r echo = FALSE}
-path <- "../../../3_datasets/"
-d.blz <- read.table(here("3_datasets/blutzucker.dat"),header=T)
-```
-
-```{r out.height='4cm', out.width='4cm',echo=FALSE, fig.align='center'}
-ggplot(d.blz,aes(x=factor(DIAET),y=BLUTZUCK)) + geom_boxplot() + geom_point(size=3,colour='grey') + theme_bw() + xlab("Diet") + ylab("Blood glucose")
-```
-
-## Data example 4: Blood-screening
-
-<!--{\scriptsize\citep[From ][Chapter 7.1]{hothorn.everitt2014}}-->
-
-Is a high ESR (erythrocyte sedimentation rate) an indicator for certain diseases (rheumatic disease, chronic inflammations)?  
-
-__Specifically:__ Is there an association between the concentrations of the plasma proteins Fibrinogen and Globulin and ESR level ESR$<20mm/hr$?
-
-The `plasma` data come with the package `HSAUR3` <!--\citep{hothorn.everitt2014}.-->
-
-```{r echo = FALSE, message=FALSE, warning=FALSE}
-library("HSAUR3")
-data("plasma",package="HSAUR3")
-plasma$status <- factor(ifelse(plasma$ESR=="ESR < 20","healthy","sick"))
-plasma[c(1,5,9,10,15,29),]
-```
-
-## 
-
-The distinction ESR$<20mm/hr$ (healthy) vs.\ ESR$\geq 20mm/hr$ (sick) leads to a \alert{binary} response variable.  
-
-\begin{center}$\rightarrow$ \emph{conditional density plot}\end{center}
-
-```{r out.width='7cm', out.height='4cm', fig.align='center'}
-par(mfrow=c(1,2))
-cdplot(status ~ fibrinogen,plasma)
-cdplot(status ~ globulin,plasma)
-```
 
 ## What is a model?
 
@@ -367,19 +193,8 @@ models are wrong, but some are useful."}
 \includegraphics[width=11cm]{pictures/workflow.png}
 \end{center}
 
-## The scopes of statistical data analysis
 
-a. \alert{Prediction (extrapolation), interpolation}. Example body fat: use substitute measurements to predict body fat of a person.
 
-b. \alert{Explanation;  determination of important variables}. Example physical activity of children: The study aims to find factors that (positively or negatively) influence the movement behavior of children.
-
-c. \alert{Estimation of parameters and quantify the uncertainty.} Example: Effect size of a novel drug.
-
-d. Optimization.
-
-e. Calibration.
-
-In this course we are concerned with a-c.
 
 ## Goals of the course (part 2)
 
@@ -403,23 +218,11 @@ Representation & Useful for \\
  Histograms & Distribution of continuous variables.\\[1mm]
  Boxplots  & Distribution of continuous variables, ev. \\
     & conditionally on categories.\\[1mm]
- Conditional density plots &  Dependency of a binary variable from\\
-    &  a continuous variable.\\[1mm]
-%Barplots & As  (see chapter 10.1 in the Mat183 script)boxplots. \\[1mm]
-Coplots & Dependencies among multiple variables. \\
 \hline
 \end{tabular}
 
-## Coplots
 
-Ideal to graphically display dependencies when more than two variables are involved. Very useful for categorical variables. Example: Mercury in Valais.
-
-```{r out.width='6cm', out.height='5cm'}
-#coplot(log(Hg_urin) ~  age | mother * migration,
-# d.hg, panel = panel.smooth)
-```
-
-##
+## A career in visualising data??!!
 
 There are many "fancy" ways to graphically display data (__nice-to-know__):
 
@@ -430,6 +233,23 @@ There are many "fancy" ways to graphically display data (__nice-to-know__):
 Many R packages are available for various purposes. Interactive apps can, for example, be generated with Shiny. Check out the shiny gallery:
 
 \url{http://shiny.rstudio.com/gallery/}
+
+
+## Literature
+
+Recommended literature (books available as ebooks from uzh):
+
+1. _Lineare Regression_ by W. Stahel (pdf on course webpage)
+2. _Getting Started with R, An introduction for biologists_ (__Second Edition__) Beckerman, Childs \& Petchey, Oxford University Press (DO NOT USE THE FIRST EDITION!).
+3. _The New Statistics With R_ by A. Hector, Oxford University Press;  
+
+$\rightarrow$ See ``Course texts/material'' on course website.
+
+\begin{center}
+\includegraphics[width=2.7cm]{pictures/petchey_buch.jpeg} \qquad \qquad
+\includegraphics[width=2.7cm]{pictures/hector.jpeg}
+\end{center}
+
 
 ## Next week: Simple linear regression
 
