@@ -133,13 +133,19 @@ Observed variables were, e.g., media consumption, behavior of the parents, age, 
 \includegraphics[width=9cm]{pictures/NZZ1.jpeg}
 \end{center}
 
+
+## Question you will work on
+
+\begin{center}
+\includegraphics[width=14cm]{pictures/questions.jpeg}
+\end{center}
+
+
+
 ## Producing nonsense with statistics... 
 
 ... is too easy ...  
 
-\  
-
-A profound knowledge of data analysis and statistics protects you from producing nonsense -- and helps to detect it. See for example:  
 
 \ 
 
@@ -148,6 +154,9 @@ A profound knowledge of data analysis and statistics protects you from producing
 
 \textcolor{blue}{\href{http://callingbullshit.org/syllabus.html}{``Calling bullshit'' course (University of Washington)}}
 
+\  
+
+A profound knowledge of data analysis and statistics protects you from producing nonsense -- and helps to detect it. See for example:  
 
 
 ## How do we get insights from data...
@@ -166,9 +175,42 @@ A profound knowledge of data analysis and statistics protects you from producing
 * Predicting (we will do this).
 * Inferring causation (we will do this, by analysing experiments randomised manipulations).
 
+## Steps in a getting insights from data ("work flow")
+
+\begin{center}
+\includegraphics[width=11cm]{pictures/workflow.png}
+\end{center}
+
+## Visualising data
+
+You should remember the following options for graphical data descriptions. Several of them appeared already in previous examples.
+
+\begin{tabular}{ll}
+Representation & Useful for \\
+\hline
+ Scatterplots & Pairwise dependency of continuous \\
+    &  variables. \\[1mm]
+ Histograms & Distribution of continuous variables.\\[1mm]
+ Box and whisker plots  & Distribution of continuous variables for different categories.\\[1mm]
+\hline
+\end{tabular}
+
+All can be augmented, for example by "conditioning" (e.g. colouring points according to the values of a variable).
+
+## A career in visualising data??!!
+
+There are many "fancy" ways to graphically display data (__nice-to-know__):
+
+* 3D-plots
+* Spatial representations (using geodata)
+* Interactive graphs and animations
+
+Many R packages are available for various purposes. Interactive apps can, for example, be generated with Shiny. Check out the shiny gallery:
+
+\url{http://shiny.rstudio.com/gallery/}
 
 
-## What is a model?
+## What is a (statistical) model?
 
 A model is an approximation of the reality. __Understanding how the real world works__ is usually only possible thanks to simplifying assumptions.
 
@@ -187,12 +229,6 @@ made by George Box in his often-cited remark that_
 models are wrong, but some are useful."}
 <!--\citep{box1979}.}_-->
 
-## Steps in a modelling process ("work flow")
-
-\begin{center}
-\includegraphics[width=11cm]{pictures/workflow.png}
-\end{center}
-
 
 
 
@@ -200,39 +236,12 @@ models are wrong, but some are useful."}
 
 By the end of the course you will be able
 
-* to \textcolor{blue}{analyze} all data examples introduced here using R (and of course many more),
-* to \textcolor{blue}{report and interpret} the results,
+* to \textcolor{blue}{explore} and \textcolor{blue}{analyze} data with appropriate methods, including statistical models,
+* to \textcolor{blue}{report} and \textcolor{blue}{interpret} the results,
 * to \textcolor{blue}{draw conclusions} from them,
 * to give \textcolor{blue}{graphical descriptions} of the data and the results,
 * to \textcolor{blue}{be critical} about what you see.
 
-## Graphical representation of data
-
-You should remember the following options for graphical data descriptions. Several of them appeared already in previous examples.
-
-\begin{tabular}{ll}
-Representation & Useful for \\
-\hline
- Scatterplots & Pairwise dependency of continuous \\
-    &  variables. \\[1mm]
- Histograms & Distribution of continuous variables.\\[1mm]
- Boxplots  & Distribution of continuous variables, ev. \\
-    & conditionally on categories.\\[1mm]
-\hline
-\end{tabular}
-
-
-## A career in visualising data??!!
-
-There are many "fancy" ways to graphically display data (__nice-to-know__):
-
-* 3D-plots
-* Spatial representations (using geodata)
-* Interactive graphs and animations
-
-Many R packages are available for various purposes. Interactive apps can, for example, be generated with Shiny. Check out the shiny gallery:
-
-\url{http://shiny.rstudio.com/gallery/}
 
 
 ## Literature
@@ -251,11 +260,6 @@ $\rightarrow$ See ``Course texts/material'' on course website.
 \end{center}
 
 
-## Next week: Simple linear regression
-
-It will be partially a repetition of what you heard in Mat183, chapter 10.2.
-
-## 
 
 References
 
