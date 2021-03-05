@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.1.11)  11 JAN 2021 17:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.1.11)  5 MAR 2021 16:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -875,24 +875,24 @@ File: l3backend-pdftex.def 2021-01-09 L3 backend support: PDF output (pdfTeX)
 ) (./Bio144_lecture3.aux)
 \openout1 = `Bio144_lecture3.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 162.
+LaTeX Font Info:    ... okay on input line 162.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 162.
+LaTeX Font Info:    ... okay on input line 162.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 162.
+LaTeX Font Info:    ... okay on input line 162.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 162.
+LaTeX Font Info:    ... okay on input line 162.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 162.
+LaTeX Font Info:    ... okay on input line 162.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 162.
+LaTeX Font Info:    ... okay on input line 162.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 162.
+LaTeX Font Info:    ... okay on input line 162.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 162.
+LaTeX Font Info:    ... okay on input line 162.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 162.
+LaTeX Font Info:    ... okay on input line 162.
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -939,7 +939,7 @@ ys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring OFF on input line 158.
+Package hyperref Info: Link coloring OFF on input line 162.
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/refcount/refcount.sty
@@ -951,59 +951,59 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count343
 )
-LaTeX Info: Redefining \ref on input line 158.
-LaTeX Info: Redefining \pageref on input line 158.
-LaTeX Info: Redefining \nameref on input line 158.
+LaTeX Info: Redefining \ref on input line 162.
+LaTeX Info: Redefining \pageref on input line 162.
+LaTeX Info: Redefining \nameref on input line 162.
 (./Bio144_lecture3.out) (./Bio144_lecture3.out)
 \@outlinefile=\write6
 \openout6 = `Bio144_lecture3.out'.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/lmr/m/n --> OT1/cmss/m/n on input line 158.
+(Font)                  OT1/lmr/m/n --> OT1/cmss/m/n on input line 162.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/lmr/bx/n --> OT1/cmss/b/n on input line 158.
+(Font)                  OT1/lmr/bx/n --> OT1/cmss/b/n on input line 162.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/lmss/m/n on input line 158.
+(Font)                  OT1/cmss/m/n --> OT1/lmss/m/n on input line 162.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmss/b/n --> OT1/lmss/b/n on input line 158.
+(Font)                  OT1/cmss/b/n --> OT1/lmss/b/n on input line 162.
 \symnumbers=\mathgroup6
 \sympureletters=\mathgroup7
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/lmss/m/n --> T1/lmr/m/n on input line 158.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 158.
+(Font)                  OT1/lmss/m/n --> T1/lmr/m/n on input line 162.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 162.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/lmr/bx/n --> T1/lmss/b/n on input line 158.
+(Font)                  OT1/lmr/bx/n --> T1/lmss/b/n on input line 162.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/lmr/bx/n --> T1/lmss/b/n on input line 158.
-LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 158.
+(Font)                  OT1/lmr/bx/n --> T1/lmss/b/n on input line 162.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 162.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/lmss/m/n --> T1/lmss/m/n on input line 158.
+(Font)                  OT1/lmss/m/n --> T1/lmss/m/n on input line 162.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/lmss/bx/n --> T1/lmss/m/n on input line 158.
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 158.
+(Font)                  OT1/lmss/bx/n --> T1/lmss/m/n on input line 162.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 162.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/lmr/m/it --> T1/lmss/m/it on input line 158.
+(Font)                  OT1/lmr/m/it --> T1/lmss/m/it on input line 162.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/lmr/bx/it --> T1/lmss/m/it on input line 158.
-LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 158.
+(Font)                  OT1/lmr/bx/it --> T1/lmss/m/it on input line 162.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 162.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/lmtt/m/n --> T1/lmtt/m/n on input line 158.
+(Font)                  OT1/lmtt/m/n --> T1/lmtt/m/n on input line 162.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/lmtt/m/n --> T1/lmtt/m/n on input line 158.
+(Font)                  OT1/lmtt/m/n --> T1/lmtt/m/n on input line 162.
 LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
-(Font)                  T1/lmss/m/n --> T1/lmss/b/n on input line 158.
+(Font)                  T1/lmss/m/n --> T1/lmss/b/n on input line 162.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  T1/lmss/m/it --> T1/lmss/b/it on input line 158.
+(Font)                  T1/lmss/m/it --> T1/lmss/b/it on input line 162.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
-(Font)                  OT1/lmss/b/n --> T1/lmr/b/n on input line 158.
+(Font)                  OT1/lmss/b/n --> T1/lmr/b/n on input line 162.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  T1/lmss/b/n --> T1/lmss/b/n on input line 158.
+(Font)                  T1/lmss/b/n --> T1/lmss/b/n on input line 162.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  T1/lmss/m/n --> T1/lmss/b/n on input line 158.
+(Font)                  T1/lmss/m/n --> T1/lmss/b/n on input line 162.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  T1/lmss/m/it --> T1/lmss/b/it on input line 158.
+(Font)                  T1/lmss/m/it --> T1/lmss/b/it on input line 162.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  T1/lmtt/m/n --> T1/lmtt/b/n on input line 158.
+(Font)                  T1/lmtt/m/n --> T1/lmtt/b/n on input line 162.
 
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/translator/translator-
 basic-dictionary-English.dict
@@ -1032,61 +1032,61 @@ Dictionary: translator-theorem-dictionary, Language: English
 <images/BIO144_logo.jpeg, id=14, 820.06375pt x 192.72pt>
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 158.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 162.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 159.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 163.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [1
 
 {/Users/owenpetchey/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.ma
 p} <./images/BIO144_logo.jpeg>]
 LaTeX Font Info:    Trying to load font information for OT1+lmss on input line 
-180.
+182.
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/lm/ot1lmss.fd
 File: ot1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
-80.
+82.
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-180.
+182.
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-180.
+182.
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 180.
+(Font)              <10.95> on input line 182.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 180.
+(Font)              <8> on input line 182.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 180.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 180
+(Font)              <6> on input line 182.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 182
 .
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 180
+LaTeX Font Info:    Trying to load font information for U+msb on input line 182
 .
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10.95> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 180.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 182.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <8> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 180.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 182.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <6> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 180.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 182.
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 180.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 182.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [2
 
@@ -1104,11 +1104,15 @@ File: Bio144_lecture3_files/figure-beamer/unnamed-chunk-2-1.pdf Graphic file (t
 ype pdf)
 <use Bio144_lecture3_files/figure-beamer/unnamed-chunk-2-1.pdf>
 Package pdftex.def Info: Bio144_lecture3_files/figure-beamer/unnamed-chunk-2-1.
-pdf  used on input line 206.
+pdf  used on input line 208.
 (pdftex.def)             Requested size: 142.26378pt x 121.94208pt.
+
+Overfull \vbox (9.49565pt too high) detected at line 208
+ []
+
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 206.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 208.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [4
 
@@ -1126,11 +1130,11 @@ File: Bio144_lecture3_files/figure-beamer/unnamed-chunk-3-1.pdf Graphic file (t
 ype pdf)
 <use Bio144_lecture3_files/figure-beamer/unnamed-chunk-3-1.pdf>
 Package pdftex.def Info: Bio144_lecture3_files/figure-beamer/unnamed-chunk-3-1.
-pdf  used on input line 240.
+pdf  used on input line 238.
 (pdftex.def)             Requested size: 184.9429pt x 158.5247pt.
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 240.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 238.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [6
 
@@ -1142,20 +1146,20 @@ Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 259.
 [7
 
 ]
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 287--287
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 285--285
 [][][][][][][]  
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 287.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 285.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [8
 
 ]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 304.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 300.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [9
 
@@ -1163,41 +1167,41 @@ Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 304.
 <pictures/regrAssumptions.jpg, id=105, 725.71124pt x 365.365pt>
 File: pictures/regrAssumptions.jpg Graphic file (type jpg)
 <use pictures/regrAssumptions.jpg>
-Package pdftex.def Info: pictures/regrAssumptions.jpg  used on input line 318.
+Package pdftex.def Info: pictures/regrAssumptions.jpg  used on input line 312.
 (pdftex.def)             Requested size: 312.9803pt x 157.57219pt.
 
-Overfull \vbox (9.80072pt too high) detected at line 318
+Overfull \vbox (9.80072pt too high) detected at line 312
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 318.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 312.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [10
 
  <./pictures/regrAssumptions.jpg>]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 335.
+(Font)              <5> on input line 327.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <5> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 335.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 327.
 <Bio144_lecture3_files/figure-beamer/unnamed-chunk-4-1.pdf, id=115, 252.945pt x
  237.88875pt>
 File: Bio144_lecture3_files/figure-beamer/unnamed-chunk-4-1.pdf Graphic file (t
 ype pdf)
 <use Bio144_lecture3_files/figure-beamer/unnamed-chunk-4-1.pdf>
 Package pdftex.def Info: Bio144_lecture3_files/figure-beamer/unnamed-chunk-4-1.
-pdf  used on input line 335.
+pdf  used on input line 327.
 (pdftex.def)             Requested size: 142.26378pt x 133.79756pt.
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 335.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 327.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [11
 
  <./Bio144_lecture3_files/figure-beamer/unnamed-chunk-4-1.pdf>]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 359.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 350.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [12
 
@@ -1208,15 +1212,15 @@ File: Bio144_lecture3_files/figure-beamer/unnamed-chunk-5-1.pdf Graphic file (t
 ype pdf)
 <use Bio144_lecture3_files/figure-beamer/unnamed-chunk-5-1.pdf>
 Package pdftex.def Info: Bio144_lecture3_files/figure-beamer/unnamed-chunk-5-1.
-pdf  used on input line 366.
+pdf  used on input line 355.
 (pdftex.def)             Requested size: 284.52756pt x 249.828pt.
 
-Overfull \vbox (40.78154pt too high) detected at line 366
+Overfull \vbox (40.78154pt too high) detected at line 355
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 366.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 355.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [13
 
@@ -1227,15 +1231,15 @@ File: Bio144_lecture3_files/figure-beamer/unnamed-chunk-6-1.pdf Graphic file (t
 ype pdf)
 <use Bio144_lecture3_files/figure-beamer/unnamed-chunk-6-1.pdf>
 Package pdftex.def Info: Bio144_lecture3_files/figure-beamer/unnamed-chunk-6-1.
-pdf  used on input line 373.
+pdf  used on input line 360.
 (pdftex.def)             Requested size: 284.52756pt x 249.828pt.
 
-Overfull \vbox (40.78154pt too high) detected at line 373
+Overfull \vbox (40.78154pt too high) detected at line 360
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 373.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 360.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [14
 
@@ -1246,26 +1250,26 @@ File: Bio144_lecture3_files/figure-beamer/unnamed-chunk-7-1.pdf Graphic file (t
 ype pdf)
 <use Bio144_lecture3_files/figure-beamer/unnamed-chunk-7-1.pdf>
 Package pdftex.def Info: Bio144_lecture3_files/figure-beamer/unnamed-chunk-7-1.
-pdf  used on input line 380.
+pdf  used on input line 365.
 (pdftex.def)             Requested size: 284.52756pt x 249.828pt.
 
-Overfull \vbox (40.78154pt too high) detected at line 380
+Overfull \vbox (40.78154pt too high) detected at line 365
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 380.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 365.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [15
 
  <./Bio144_lecture3_files/figure-beamer/unnamed-chunk-7-1.pdf>]
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 400--400
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 383--383
 [][][][][][][]  
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 400.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 383.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [16
 
@@ -1276,42 +1280,42 @@ File: Bio144_lecture3_files/figure-beamer/unnamed-chunk-8-1.pdf Graphic file (t
 ype pdf)
 <use Bio144_lecture3_files/figure-beamer/unnamed-chunk-8-1.pdf>
 Package pdftex.def Info: Bio144_lecture3_files/figure-beamer/unnamed-chunk-8-1.
-pdf  used on input line 407.
+pdf  used on input line 388.
 (pdftex.def)             Requested size: 284.52756pt x 249.828pt.
 
-Overfull \vbox (40.78154pt too high) detected at line 407
+Overfull \vbox (40.78154pt too high) detected at line 388
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 407.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 388.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [17
 
  <./Bio144_lecture3_files/figure-beamer/unnamed-chunk-8-1.pdf>]
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 437--437
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 416--416
 [][][][][][][]  
  []
 
 
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 437--437
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 416--416
 [][][][][][][]  
  []
 
 
-Overfull \vbox (5.16971pt too high) detected at line 437
+Overfull \vbox (5.16971pt too high) detected at line 416
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 437.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 416.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [18
 
 ]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 448.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 426.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [19
 
@@ -1319,32 +1323,29 @@ Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 448.
 \openout4 = `Bio144_lecture3.vrb'.
 
 (./Bio144_lecture3.vrb
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 9
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 8
 .
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <6> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 10.
-)
+))
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 485.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 461.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [20
 
 ]
-<Bio144_lecture3_files/figure-beamer/unnamed-chunk-11-1.pdf, id=222, 252.945pt 
+<Bio144_lecture3_files/figure-beamer/unnamed-chunk-11-1.pdf, id=221, 252.945pt 
 x 216.81pt>
 File: Bio144_lecture3_files/figure-beamer/unnamed-chunk-11-1.pdf Graphic file (
 type pdf)
 <use Bio144_lecture3_files/figure-beamer/unnamed-chunk-11-1.pdf>
 Package pdftex.def Info: Bio144_lecture3_files/figure-beamer/unnamed-chunk-11-1
-.pdf  used on input line 497.
+.pdf  used on input line 471.
 (pdftex.def)             Requested size: 184.9429pt x 158.5247pt.
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 497.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 471.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [21
 
@@ -1353,20 +1354,20 @@ Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 497.
 
 (./Bio144_lecture3.vrb)
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <14.4> on input line 529.
+(Font)              <14.4> on input line 503.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 529.
+(Font)              <10> on input line 503.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 529.
+(Font)              <7> on input line 503.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <14.4> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 529.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 503.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 529.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 503.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <7> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 529.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 503.
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 529.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 503.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [22
 
@@ -1374,48 +1375,50 @@ Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 529.
 \openout4 = `Bio144_lecture3.vrb'.
 
 (./Bio144_lecture3.vrb
-<Bio144_lecture3_files/figure-beamer/unnamed-chunk-15-1.pdf, id=244, 433.62pt x
+LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <6> not available
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 14.
+<Bio144_lecture3_files/figure-beamer/unnamed-chunk-15-1.pdf, id=243, 433.62pt x
  216.81pt>
 File: Bio144_lecture3_files/figure-beamer/unnamed-chunk-15-1.pdf Graphic file (
 type pdf)
 <use Bio144_lecture3_files/figure-beamer/unnamed-chunk-15-1.pdf>
 Package pdftex.def Info: Bio144_lecture3_files/figure-beamer/unnamed-chunk-15-1
-.pdf  used on input line 28.
+.pdf  used on input line 27.
 (pdftex.def)             Requested size: 142.26378pt x 71.13068pt.
 )
-Overfull \vbox (13.94592pt too high) detected at line 561
+Overfull \vbox (13.94592pt too high) detected at line 533
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 561.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 533.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [23
 
  <./Bio144_lecture3_files/figure-beamer/unnamed-chunk-15-1.pdf>]
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 588--588
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 558--558
 [][][][][][][]  
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 588.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 558.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [24
 
 ]
 
 LaTeX Warning: The counter will not be printed.
-             The label is: d) on input line 622.
+             The label is: d) on input line 590.
 
 
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 622--622
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 590--590
 [][][][][][][]  
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 622.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 590.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [25
 
@@ -1426,45 +1429,42 @@ File: Bio144_lecture3_files/figure-beamer/unnamed-chunk-16-1.pdf Graphic file (
 type pdf)
 <use Bio144_lecture3_files/figure-beamer/unnamed-chunk-16-1.pdf>
 Package pdftex.def Info: Bio144_lecture3_files/figure-beamer/unnamed-chunk-16-1
-.pdf  used on input line 633.
+.pdf  used on input line 599.
 (pdftex.def)             Requested size: 156.49014pt x 156.48903pt.
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 633.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 599.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [26
 
  <./Bio144_lecture3_files/figure-beamer/unnamed-chunk-16-1.pdf>]
 \openout4 = `Bio144_lecture3.vrb'.
 
-(./Bio144_lecture3.vrb
-LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 12.
-)
-Overfull \vbox (6.29402pt too high) detected at line 670
+(./Bio144_lecture3.vrb)
+Overfull \vbox (6.29402pt too high) detected at line 634
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 670.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 634.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [27
 
 ]
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 691--691
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 656--656
 [][][][][][][]  
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 691.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 656.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [28
 
 ]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 717.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 680.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [29
 
@@ -1474,30 +1474,30 @@ Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 717.
 (./Bio144_lecture3.vrb)
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 742.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 703.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [30
 
 ]
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 767--767
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 726--726
 [][][][][][][]  
  []
 
 
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 767--767
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 726--726
 [][][][][][][]  
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 767.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 726.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [31
 
 ]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 806.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 763.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [32
 
@@ -1507,12 +1507,12 @@ Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 806.
 (./Bio144_lecture3.vrb)
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 833.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 789.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [33
 
 ]
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 849--849
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 804--804
 [][][][][][][]  
  []
 
@@ -1522,44 +1522,44 @@ File: Bio144_lecture3_files/figure-beamer/unnamed-chunk-21-1.pdf Graphic file (
 type pdf)
 <use Bio144_lecture3_files/figure-beamer/unnamed-chunk-21-1.pdf>
 Package pdftex.def Info: Bio144_lecture3_files/figure-beamer/unnamed-chunk-21-1
-.pdf  used on input line 849.
+.pdf  used on input line 804.
 (pdftex.def)             Requested size: 170.71652pt x 119.5017pt.
 
-Overfull \vbox (15.32205pt too high) detected at line 849
+Overfull \vbox (20.8574pt too high) detected at line 804
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 849.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 804.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [34
 
  <./Bio144_lecture3_files/figure-beamer/unnamed-chunk-21-1.pdf>]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 864.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 817.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [35
 
 ]
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 877--877
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 828--828
 [][][][][][][]  
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 877.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 828.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [36
 
 ]
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 906--906
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 855--855
 [][][][][][][]  
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 906.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 855.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [37
 
@@ -1569,7 +1569,7 @@ Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 906.
 (./Bio144_lecture3.vrb)
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 939.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 886.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [38
 
@@ -1578,20 +1578,20 @@ Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 939.
 
 (./Bio144_lecture3.vrb
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 23.
+(Font)              <9> on input line 22.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <9> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 23.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 22.
 )
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 979.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 924.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [39
 
 ]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1001.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 944.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [40
 
@@ -1602,31 +1602,31 @@ File: Bio144_lecture3_files/figure-beamer/unnamed-chunk-25-1.pdf Graphic file (
 type pdf)
 <use Bio144_lecture3_files/figure-beamer/unnamed-chunk-25-1.pdf>
 Package pdftex.def Info: Bio144_lecture3_files/figure-beamer/unnamed-chunk-25-1
-.pdf  used on input line 1013.
+.pdf  used on input line 954.
 (pdftex.def)             Requested size: 199.16928pt x 199.16766pt.
 
-Overfull \vbox (10.85034pt too high) detected at line 1013
+Overfull \vbox (10.85034pt too high) detected at line 954
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1013.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 954.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [41
 
  <./Bio144_lecture3_files/figure-beamer/unnamed-chunk-25-1.pdf>]
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 1036--1036
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 975--975
 [][][][][][][]  
  []
 
 
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 1036--1036
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 975--975
 [][][][][][][]  
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1036.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 975.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [42
 
@@ -1637,18 +1637,18 @@ File: Bio144_lecture3_files/figure-beamer/unnamed-chunk-26-1.pdf Graphic file (
 type pdf)
 <use Bio144_lecture3_files/figure-beamer/unnamed-chunk-26-1.pdf>
 Package pdftex.def Info: Bio144_lecture3_files/figure-beamer/unnamed-chunk-26-1
-.pdf  used on input line 1043.
+.pdf  used on input line 980.
 (pdftex.def)             Requested size: 199.16928pt x 199.16766pt.
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1043.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 980.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [43
 
  <./Bio144_lecture3_files/figure-beamer/unnamed-chunk-26-1.pdf>]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1062.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 997.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [44
 
@@ -1659,18 +1659,18 @@ File: Bio144_lecture3_files/figure-beamer/unnamed-chunk-27-1.pdf Graphic file (
 type pdf)
 <use Bio144_lecture3_files/figure-beamer/unnamed-chunk-27-1.pdf>
 Package pdftex.def Info: Bio144_lecture3_files/figure-beamer/unnamed-chunk-27-1
-.pdf  used on input line 1069.
+.pdf  used on input line 1002.
 (pdftex.def)             Requested size: 199.16928pt x 199.16766pt.
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1069.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1002.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [45
 
  <./Bio144_lecture3_files/figure-beamer/unnamed-chunk-27-1.pdf>]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1088.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1018.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [46
 
@@ -1689,11 +1689,11 @@ Package rerunfilecheck Info: File `Bio144_lecture3.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 22056 strings out of 481290
- 408098 string characters out of 5915991
- 682803 words of memory out of 5000000
- 38294 multiletter control sequences out of 15000+600000
- 488827 words of font info for 93 fonts, out of 8000000 for 9000
+ 22055 strings out of 481290
+ 408076 string characters out of 5915991
+ 682783 words of memory out of 5000000
+ 38293 multiletter control sequences out of 15000+600000
+ 488509 words of font info for 92 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  112i,15n,116p,440b,444s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.e
@@ -1723,7 +1723,7 @@ lm/lmsy10.pfb></Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/type1/public
 c/lm/lmtt10.pfb></Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/type1/publ
 ic/lm/lmtt8.pfb></Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/type1/publ
 ic/amsfonts/symbols/msam10.pfb>
-Output written on Bio144_lecture3.pdf (46 pages, 711397 bytes).
+Output written on Bio144_lecture3.pdf (46 pages, 708904 bytes).
 PDF statistics:
  571 PDF objects out of 1000 (max. 8388607)
  459 compressed objects within 5 object streams
