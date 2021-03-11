@@ -20,10 +20,10 @@ source(here::here("2_content/beamer_stuff/preamble.r"))
 
 \begin{itemize}
 \item Checking the assumptions of linear regression: the QQ-plot\\[2mm]
-\item Multiple predictors $x_1$, $x_2$, \ldots, $x_m$\\[2mm]
+\item Multiple linear regression $x_1$, $x_2$, \ldots, $x_m$\\[2mm]
 \item $R^2$ in multiple linear regression\\[2mm]
 \item $t$-tests, $F$-tests and $p$-values\\[2mm]
-\item Binary and factor covariates\\[2mm]
+\item Binary and categorical explanatory variables\\[2mm]
 
 \end{itemize}
 
@@ -97,7 +97,7 @@ hist(r.bodyfat$residuals,nclass=20,xlab="Residuals",main="")
 
 Usually, not the histogram of the residuals is plotted, but the so-called \alert{quantile-quantile} (QQ) plot. The quantiles of the observed distribution are plotted against the quantiles of the respective theoretical (normal) distribution:
 
-```{r eval=T,fig.width=4.5, fig.height=4.5,warning=FALSE,echo=F,out.width="5cm", message=FALSE, fig.align='center'}
+```{r eval=T,fig.width=4.5, fig.height=4.5,warning=FALSE,echo=F,out.width="4cm", message=FALSE, fig.align='center'}
 qqnorm(residuals(r.bodyfat))
 qqline(residuals(r.bodyfat))
 ```
@@ -106,9 +106,31 @@ If the points lie approximately on a straight line, the data is fairly normally 
 
 This is often "tested" by eye, and needs some experience.
 
-## 
+## What on earth is a quantile???
 
-The idea is that, for each observed point, theoretical quantiles are plotted against the sample quantiles.
+Imagine we make 21 measures of something, say 21 reaction times:
+
+```{r fig.width=6, fig.height=1, warning=FALSE, echo=F, out.width="10cm", message=FALSE, fig.align='centre'}
+set.seed(1)
+dd <- tibble(Reaction_time = round(rnorm(21, 300, 20),1))
+ggplot(dd) +
+  geom_jitter(aes(y=1, x=Reaction_time)) +
+  theme(axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+```
+
+The median of these is `r median(dd$Reaction_time)`. The median is the 50% or 0.5 quantile, because half the data points are above it, and half below.
+
+```{r}
+quantile(dd$Reaction_time)
+```
+
+
+## QQ-plot continued...
+
+
+The *theoretical quantiles* come from the normal distribution. The *sample quantiles* come from the distribution of our residuals.
 
 ```{r eval=T,fig.width=6.5, fig.height=4.5,warning=FALSE,echo=F,out.width="8cm", message=FALSE, fig.align='center'}
 par(mfrow=c(1,2))
@@ -122,12 +144,25 @@ y <- c(0.6,0.6,0)
 plot(stdr,pnorm(stdr),xlab="Theoretical quantiles",ylab="Cumulative distribution (F)")
 arrows(x[s], y[s], x[s+1], y[s+1])
 n<-nrow(d.bodyfat)
-plot(stdr,(1:n)/n,xlab="Sample quantiles",ylab="Empirical cumulative distribution")
+plot(stdr,(1:n)/n,xlab="Sample quantiles of the residuals",ylab="Empirical cumulative distribution")
 arrows(x[s], y[s], x[s+1], y[s+1])
 ```
 
-\textcolor{gray}{Optional:You may want to watch the youtube video for more explanation
-\href{https://www.youtube.com/watch?v=-KXy4i8awOg} \textbf{given here}.}
+
+## Another useful diagnostic plot: The QQ-plot
+
+The so-called \alert{quantile-quantile} (QQ) plot. The quantiles of the observed distribution are plotted against the quantiles of the respective theoretical (normal) distribution:
+
+```{r eval=T,fig.width=4.5, fig.height=4.5,warning=FALSE,echo=F,out.width="4cm", message=FALSE, fig.align='center'}
+qqnorm(residuals(r.bodyfat))
+qqline(residuals(r.bodyfat))
+```
+
+If the points lie approximately on a straight line, the data is fairly normally distributed.
+
+*This is often "tested" by eye, and needs some experience.*
+
+
 
 ## 
 
@@ -140,7 +175,7 @@ arrows(x[s], y[s], x[s+1], y[s+1])
 We have so far modeled bodyfat in dependence of bmi, that is: $(body fat)_i = \alpha + \beta \cdot bmi_i + \epsilon_i$.  
 \  
 
-However, other predictors might also be relevant for an accurate prediction of bodyfat.
+However, other explanatory variables might also be relevant for an accurate prediction of bodyfat.
 
 \textbf{Examples:} Age, neck fat (Nackenfalte), hip circumference, abdomen circumference etc.
 
@@ -151,19 +186,27 @@ plot(bodyfat ~ neck,d.bodyfat,xlab="neck", ylab="bodyfat (y)")
 plot(bodyfat ~ hip,d.bodyfat,xlab="hip", ylab="bodyfat (y)")
 ```
 
-## 
-Or again the pairs plot:
 
-```{r eval=T,fig.width=6, fig.height=6,warning=FALSE,echo=F,out.width="8cm", message=FALSE, fig.align='center'}
-pairs(d.bodyfat)
-```
+
+## 
+
+**Multiple linear regression** is when we have more than one explanatory variable. We can then ask three questions:
+\ 
+
+\begin{enumerate}
+\item Is the \textbf{ensemble} of all explanatory variables associated with the response?\\[4mm]
+\item If yes, which explanatory variables are associated with the response? \\[4mm]
+\item What proportion of response variability ($\sigma_y^2$) is explained by the model?
+\end{enumerate}
+
+
 
 ## Multiple linear regression model
 
 The idea is simple: Just \textbf{extend the linear model by additional predictors}.
 
 \begin{itemize}
-\item Given several influence factors $x_i^{(1)}$, \ldots, $x_i^{(m)}$, 
+\item Given several influence explanatory variables $x_i^{(1)}$, \ldots, $x_i^{(m)}$, 
 the straightforward extension of the simple linear model is\\[4mm]
 
 \colorbox{lightgray}{\begin{minipage}{10cm}
@@ -199,16 +242,7 @@ Let us regress the proportion (\%) of bodyfat (from last week) on the predictors
 \text{with} \quad \epsilon_i &\sim& N(0,\sigma^2) \ .
 \end{eqnarray*}
 
-## 
 
-\emph{Before} we estimate the parameters, let us ask the questions that we intend to answer:  
-\ 
-
-\begin{enumerate}
-\item Is the \textbf{ensemble} of all covariates associated with the response?\\[4mm]
-\item If yes, which covariates are associated with the response? \\[4mm]
-\item Which proportion of response variability ($\sigma_y^2$) is explained by the model?
-\end{enumerate}
 
 ## Multiple linear regression with R
 
@@ -236,7 +270,7 @@ autoplot(r.bodyfatM, which=c(1,2),smooth.colour=NA)
 
 This seems ok, so continue with answering questions 1-3.
 
-## Question 1: Are the covariates associated with the response?
+## Question 1: Are the explanatory variables associated with the response?
 
 To answer question 1, we need to perform a so-called \alert{$F$-test}. The results of the test are displayed in the final line of the regression summary. Here, it says:
 
@@ -257,6 +291,18 @@ So apparently (and we already suspected that) the model has some explanatory pow
 
 follows an $F$-distribution with $m$ and $(n-p)$ degrees of freedom, where $m$ are the number of variables, $n$ the number of data points, $p$ the number of $\beta$-parameters (typically $m+1$). $SSQ^{(E)}=\sum_{i=1}^nR_i^2$ is the squared sum of the residuals, and $SSQ^{(R)} = SSQ^{(Y)} - SSQ^{(E)}$ with $SSQ^{(y)}=\sum_{i=1}^n(y_i-\overline{y})^2$.
 
+
+##
+
+$n$ is the number of data points
+
+$m$ is the number of explanatory variables in the regression model
+
+$p$ is the number of beta parameters estimated (e.g. intercept, plus a slope for each explanatory variable, hence $p = m + 1$)
+
+And the degrees of freedom for error are $n - p$
+
+
 ```{r eval = TRUE, echo = FALSE}
 y <- d.bodyfat$bodyfat
 n<-nrow(d.bodyfat)
@@ -274,10 +320,10 @@ invisible(pf(F,m,n-p,lower.tail=FALSE))
 summary(r.bodyfatM)$coef
 ```
 \normalsize
-To answer this question, again look at the \alert{$t$-tests}, for which the $p$-values are given in the final column. Each $p$-value refers to the test for the null hypothesis $\beta^{(j)}_0=0$ for covariate $x^{(j)}$.
+To answer this question, again look at the \alert{$t$-tests}, for which the $p$-values are given in the final column. Each $p$-value refers to the test for the null hypothesis $\beta^{(j)}_0=0$ for explanatory variable $x^{(j)}$.
 
 \colorbox{lightgray}{\begin{minipage}{14cm}
-As in simple linear regression, the $T$-statistic for the $j$-th covariate is calculated as 
+As in simple linear regression, the $T$-statistic for the $j$-th explanatory variable is calculated as 
 
 \begin{equation}\label{eq:beta}
 T_j =  \frac{\hat\beta_j}{se^{(\beta_j)}}\ ,
@@ -365,7 +411,7 @@ abline(c(0,1))
 
 ## 
 
-$R^2$ is also called the \emph{coefficient of determination} or \alert{"Bestimmtheitsmass"}, because it measures the proportion of the reponse's variability that is explained by the ensemble of all covariates:
+$R^2$ is also called the \emph{coefficient of determination} or \alert{"Bestimmtheitsmass"}, because it measures the proportion of the reponse's variability that is explained by the ensemble of all explanatory variables:
 
 \colorbox{lightgray}{\begin{minipage}{14cm}
 \begin{equation*}
@@ -399,11 +445,11 @@ text(35,40,expression(hat(y)),cex=1.5)
 
 Let us look at the $R^2$s from the three bodyfat models \ 
 
-(model 1: $y\sim bmi$\ 
+(model r.bodyfat: $y\sim bmi$\ 
 
-model 2: $y\sim bmi + age$\ 
+model r.bodyfatM: $y\sim bmi + age$\ 
 
-model 3: $y\sim bmi + age + neck + hip + abdomen$): 
+model r.bodyfatM2: $y\sim bmi + age + neck + hip + abdomen$): 
 \tiny
 ```{r echo = TRUE}
 summary(r.bodyfat)$r.squared
@@ -415,11 +461,11 @@ The models explain  $`r round(summary(r.bodyfat)$r.squared*100,0)`$\%, $`r round
 
 It thus \emph{seems} that larger models are "better". However, $R^2$ does always increase when new variables are included, but this does not mean that the model is more reasonable. 
 
-\alert{Model selection} is a topic that will be treated in more detail later in this course (week 8).
+
 
 ## Adjusted $R^2$
 
-When the sample size $n$ is small with respect to the number of variables $m$ included in the model, an \alert{adjusted} $R^2$ gives a better ("fairer") estimation of the actual variability that is explained by the covariates:
+When the sample size $n$ is small with respect to the number of variables $m$ included in the model, an \alert{adjusted} $R^2$ gives a better ("fairer") estimation of the actual variability that is explained by the explanatory variables:
 
 \begin{equation*}
 R^2_a = 1-(1-R^2 )\frac{n-1}{n-m-1}
@@ -489,19 +535,18 @@ tableRegression(lm(y~x2,d.cath))
 Questions:\ 
 
 \begin{enumerate}
-\item Is $x_1$ an influential covariate?
-\item Is $x_2$ an influential covariate?
-\item Are both covariates needed in the model?
+\item Is $x_1$ an important explanatory variable?
+\item Is $x_2$ an important explanatory variable?
+\item Are both explanatory variables needed in the model?
 \item Interpretation of the results?\\[4mm]
 \end{enumerate}
 \  
 
 
-$\rightarrow$ Go to the klicker link \textcolor{blue}{\href{http://www.klicker.uzh.ch/bkx}{http://www.klicker.uzh.ch/bkx}} to answer the questions.
 
-## Binary covariates
+## Binary explanatory variables
 
-So far, the covariates $x$ were always continuous. 
+So far, the explanatory variables $x$ were always continuous. 
 
 In reality, there are \textbf{no restrictions assumed with respect to the $x$ variables}. 
 
@@ -575,16 +620,16 @@ tableRegression(r1.urin.mother)
 
 There is some weak ($p=0.12$) indication that smokers have an increased Hg concentration in their body. Their $\log(Hg_{urin})$ is in average by 0.22 higher than for nonsmokers. 
 
-In principle, we have now -- at the same time -- fitted \textbf{two models:} one for smokers and one for non-smokers, assuming that the slopes of the remaining covariates are the same for both groups.
+In principle, we have now -- at the same time -- fitted \textbf{two models:} one for smokers and one for non-smokers, assuming that the slopes of the remaining explanatory variables are the same for both groups.
 
 \colorbox{lightgray}{\begin{minipage}{14cm}
 Smokers: $y_i = -1.03 + 0.26  + 0.098\cdot amalgam _i+ 0.032\cdot fish_i + \epsilon_i$ \\
 Non-smokers:  $y_i = -1.03  + 0.098\cdot amalgam_i + 0.032\cdot fish_i  + \epsilon_i$ 
 \end{minipage}}
 
-## Factor covariates
+## Categorical explanatory variables
 
-Some covariates indicate a \textbf{category}, for instance the species of an animal or a plant. This type of covariate is called a \textbf{factor}. The trick: convert a factor with $k$ levels (for instance 3 species) into $k$ dummy variables $x_i^{(j)}$ with 
+Some explanatory variables indicate a \textbf{category}, for instance the species of an animal or a plant. This type of explanatory variable is termed \textbf{categorical}. For this there is trick: we can convert a categorical variable with $k$ levels (for instance 3 species) into $k$ dummy variables $x_i^{(j)}$ with 
 
 \colorbox{lightgray}{\begin{minipage}{14cm}
 \begin{equation*}
@@ -597,22 +642,21 @@ x_i^{(j)} = \left\{
 \end{minipage}}
 
 
-Each of the covariates $x^{(1)},\ldots, x^{(k)}$ can then be included as a binary variable in the model
+Each of the explanatory variables $x^{(1)},\ldots, x^{(k)}$ can then be included as a binary variable in the model
 
 \begin{equation*}
 y_i = \beta_0 + \beta_1 x^{(1)} + \ldots + \beta_k x^{(k)} + \epsilon_i \ .
 \end{equation*}
 
-\vspace{6mm}
-However:  this model is \alert{not identifiable}$^\star$.
 
-\scriptsize $^\star$ What does that mean? I could add a constant to $\beta_1, \beta_2, ...\beta_k$ and subtract it from $\beta_0$, and the model would fit equally well to the data, so it cannot be decided which set of the parameters is best.
+
+\scriptsize However: this model is \alert{not identifiable}. We could add a constant to $\beta_1, \beta_2, ...\beta_k$ and subtract it from $\beta_0$, and the model would fit equally well to the data, so it cannot be decided which set of the parameters is best.
 
 ## 
 
 \textbf{Solution: } One of the $k$ categories must be selected as a \emph{reference category} and is \emph{not included in the model}. Typically: the first category is the reference, thus $\beta_1=0$.
 
-The model thus discriminates between the factor levels, such that (assuming $\beta_1=0$)
+The model thus discriminates between the categories, such that (assuming $\beta_1=0$)
 
 \begin{equation*}
 \hat y_i = \left\{
@@ -624,13 +668,12 @@ The model thus discriminates between the factor levels, such that (assuming $\be
 \end{array}\right.
 \end{equation*} 
 
-\textcolor{gray}{Please also consult Stahel 3.2e and g.}
 
 ## !!Important to remember!!
 
 \textcolor{gray}{(Common aspect that leads to confusion!)}\  
 
-Please note that \alert{a factor covariate with $k$ factor levels requires $k-1$ parameters!}\  
+Please note that \alert{a categorical variable with $k$ categories requires $k-1$ parameters!}\  
 
 $\rightarrow$ The \alert{degrees of freedom} are also reduced by $k-1$.
 
@@ -680,10 +723,9 @@ ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point()  +
 
 ## 
 
-Formulate a model with $\log_{10}(\text{Gewicht})$ as response and `Magenumfang` and `Gattung` as covariates.
+Formulate a model with $\log_{10}(\text{Gewicht})$ as response and `Magenumfang` and `Gattung` as explanatory variables.
 This is simple in R:
 
-\scriptsize (\textbf{Hint:} Make sure that `Gattung` is stored as a factor in R (check by `glimpse(d.wurm)`))
 
 \tiny
 ```{r echo = TRUE, eval = TRUE}
@@ -756,13 +798,13 @@ Moreover, the $R^2=0.76$ is relatively high and almost identical to $R^2_a$.
 
 ## Interpreting the results III
 
-\textbf{Question:} Is the "Gattung" covariate relevant in the model, that is, do the model intercepts differ for the three species? \  
+\textbf{Question:} Is the "Gattung" explanatory variable relevant in the model, that is, do the model intercepts differ for the three species? \  
 
 
-\textbf{Problem:} The $p$-values of the worm species are not very meaningful. They belong to tests that compare the intercept of a factor level with the intercept of the reference level (i.e., the \emph{difference} in intercepts!). However, the question is whether the variable `Gattung` has an effect in total. \  
+\textbf{Problem:} The $p$-values of the worm species are not very meaningful. They belong to tests that compare the intercept of a category with the intercept of the reference level (i.e., the \emph{difference} in intercepts!). However, the question is whether the variable `Gattung` has an effect in total. \  
 
 
-\textbf{Solution:} When a factor covariate with $k$ levels is in the model, it occupies $k-1$ parameters. Therefore, \alert{the $t$-test needs to be replaced by the $F$-test.}
+\textbf{Solution:} When a categorical explanatory variable with $k$ levels is in the model, it occupies $k-1$ parameters. Therefore, \alert{the $t$-test needs to be replaced by the $F$-test.}
 
 ## $F$-test to compare models
 
