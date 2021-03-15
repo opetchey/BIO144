@@ -69,8 +69,9 @@ summary(m1)
 
 
 ## make a nice graph with regression line
-ggplot(data=fhc1, aes(x=log10_health_exp_total, y=log10_child_mort)) + geom_point() +
-  geom_smooth(method="lm") +
+ggplot(data=fhc1, aes(x=log10_health_exp_total, y=log10_child_mort, colour = continent)) +
+  geom_point() +
+  geom_smooth(method="lm", mapping = aes(colour = NULL)) +
   theme_bw() +
   xlab("Log10 Per capita total health care spend (dollar)") +
   ylab("Log10 Child mortality\n(number of children per 1000 dying before age 5)")
