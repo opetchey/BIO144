@@ -17,7 +17,7 @@ source(here::here("2_content/beamer_stuff/preamble.r"))
 
 ## Overview
 
-* Interactions between covariates
+* Interactions between explanatory variables
 * Multiple vs.\ many single regressions
 * Checking assumptions / Model validation
 * What to do when things go wrong?
@@ -34,7 +34,7 @@ The lecture material of today is based on the following literature:
 
 * Multiple linear regression model $y_i= \beta_0 + \beta_1 x_i^{(1)}+\beta_2x_i^{(2)}+\ldots + \beta_m x_i^{(m)}+\epsilon_i$.
 
-* \alert{Binary} and \alert{factor} covariates: The idea is to introduce \alert{dummy variables} such that
+* \alert{Binary} and \alert{categorical} explanatory variables: The idea is to introduce \alert{dummy variables} such that
 \colorbox{lightgray}{\begin{minipage}{10cm}
 \begin{equation*}
 x_i^{(j)} = \left\{ 
@@ -47,7 +47,7 @@ x_i^{(j)} = \left\{
 
 * Include $x^{(2)}$, ... ,$x^{(k)}$ in the regression, given that $x^{(1)}$ is used as \alert{reference category} ($\beta_1=0$).
 
-* The factor covariates of last week were used to allow for \alert{group-specific intercepts} (see earthworm example).
+* The categorical explanatory variables of last week were used to allow for \alert{group-specific intercepts} (see earthworm example).
 
 ## Recap of last week II
 
@@ -62,7 +62,7 @@ ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point() + 
 
 ```
 
-* The \alert{$F$-test} is used to test if $\beta_2=\beta_3=...=\beta_k=0$ at the same time for a factor covariate with $k$ levels. Use the \texttt{anova()} function in R to carry out this test.
+* The \alert{$F$-test} is used to test if $\beta_2=\beta_3=...=\beta_k=0$ at the same time for a categorical explanatory variable with $k$ levels. Use the \texttt{anova()} function in R to carry out this test.
 
 ## Recap of last week III
 
@@ -77,7 +77,7 @@ ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point() + 
 
 $\rightarrow$ \texttt{anova()} 
 
-Thus you will __always__ need the $F$-test `anova()` to obtain a $p$-value for a factor covariate with more than 2 levels!
+Thus you will __always__ need the $F$-test `anova()` to obtain a $p$-value for a categorial explanatory variable with more than 2 levels!
 
 ## Group-specific slopes: Interactions
 
@@ -96,7 +96,7 @@ __Important:__ This model will be fitted in this week's BC videos.
 
 ## Binary variable with interaction
 
-For simplicity, let us look at a binary covariate ($x_i \in \{0,1\}$).
+For simplicity, let us look at a binary explanatory variable ($x_i \in \{0,1\}$).
 
 Remember the mercury (Hg) example from last week. We now extended the dataset and include mothers __and__ children ($\leq 11$ years).
 
@@ -107,14 +107,20 @@ d.hg <- read.table(here("3_datasets/hg_urine_fuzzed.csv"),header=T, sep=",")
 d.hg <- d.hg[,c(1,2,5,6,7,8,10)]
 #names(d.hg) <- c("Hg_urin", "Hg_soil", "smoking","amalgam", "age", "fish","mother")
 d.hg <- mutate(d.hg,mother=factor(mother))
-ggplot(d.hg,aes(x=age,y=log(Hg_urin),colour=mother)) + geom_point() + geom_smooth(method="lm") + theme_bw()
+
+d.hg <- d.hg %>%
+  mutate(log_Hg_urin = log(Hg_urin))
+
+
+
+ggplot(d.hg,aes(x=age,y=log_Hg_urin,colour=mother)) + geom_point() + geom_smooth(method="lm") + theme_bw()
 ```
 
 ## 
 
 Observation: __The regression lines are not parallel.__
 
-$\rightarrow$ Children and mothers seem to depend differently on age!
+$\rightarrow$ Children and mother's Hg level seem to depend differently on age!
 \ 
 
 What does this mean for the model?
@@ -149,8 +155,8 @@ Fitting model (1) in R is done as follows, where \texttt{age:mother} denotes the
 \  
 
 \tiny
-```{r echo=F}
-r.hg <- lm(log(Hg_urin)~  mother + age + age:mother,d.hg)
+```{r echo=T}
+r.hg <- lm(log_Hg_urin ~ mother + age + age:mother, data = d.hg)
 summary(r.hg)$coef
 ```
 \normalsize
@@ -175,7 +181,6 @@ On the previous slide we have actually fitted 2 models at the same time.
 
 \
 
-$\rightarrow$ Clicker exercise \href{http://www.klicker.uzh.ch/bkx}{http://www.klicker.uzh.ch/bkx}
 
 ## 
 
@@ -183,8 +188,9 @@ Remember (from last week), however, that the Hg model also included smoking stat
 \  
 
 \small
+
 ```{r echo = TRUE}
-r.hg <- lm(log(Hg_urin)~  mother * age + smoking + amalgam + fish,d.hg)
+r.hg <- lm(log_Hg_urin ~  mother * age + smoking + amalgam + fish, d.hg)
 ```
 
 ```{r echo = FALSE, results='asis', message=FALSE, warning=FALSE}
@@ -205,10 +211,10 @@ autoplot(r.hg,which=c(1,2),smooth.col=NA)
 
 ## Linear regression is even more powerful!
 
-We have seen that it is possible to include continuous, binary or factorial covariates in a regression model.
+We have seen that it is possible to include continuous, binary or categorical explanatory variable in a regression model.
 
 \colorbox{lightgray}{\begin{minipage}{14cm}
-Even \alert{transformations} of covariates can be included in (almost) any form. For instance the square of a variable ${x}$
+Even \alert{transformations} of explanatory variables can be included in (almost) any form. For instance the square of a variable ${x}$
 \begin{equation*}
 y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \epsilon_i \ , 
 \end{equation*}
@@ -231,7 +237,7 @@ __Note:__ The word _linear_ refers to the \alert{linearity in the coefficients},
 
 ## Multiple vs. many single regressions
 
-Question: Given multiple regression covariates ${x}^{(1)}, {x}^{(2)},...$. Could I simply fit separate simple models for each variable, that is
+Question: Given multiple regression variables ${x}^{(1)}, {x}^{(2)},...$. Could I simply fit separate simple models for each variable, that is
 
 $y_i = \alpha + \beta x_i^{(1)} + \epsilon_i$  
 
@@ -241,7 +247,7 @@ etc.?
 
 ## Multiple vs. many single regressions
 
-Question: Given multiple regression covariates ${x}^{(1)}, {x}^{(2)},...$. Could I simply fit separate simple models for each variable, that is
+Question: Given multiple regression explanatory variables ${x}^{(1)}, {x}^{(2)},...$. Could I simply fit separate simple models for each variable, that is
 
 $y_i = \alpha + \beta x_i^{(1)} + \epsilon_i$  
 
@@ -255,7 +261,7 @@ Answer (Stahel 3.3o):
 \includegraphics[width=11cm]{pictures/citation.png}
 \end{center}
 
-Why?
+<!-- 
 
 ## Illustration
 
@@ -296,15 +302,17 @@ Example C: Within-group slope is $<0$, but fitting $y$ against $x$ leads to an e
 
 Example D: Within-group slope is $<0$, but fitting $y$ against $x$ leads to a slope estimate of $0$.
 
+Write your comments here -->
+
 ## Another interpretation of multiple regression
 
-In multiple regression, the coefficient $\beta_x$ of a covariate $x$ can be interpreted as follows:
+In multiple regression, the coefficient $\beta_x$ of explanatory variable $x$ can be interpreted as follows:
 
 \colorbox{lightgray}{\begin{minipage}{14cm}
 $\beta_x$ explains how the response changes with $x$, while holding all the other variables constant.
 \end{minipage}}
 
-This idea is similar in spirit to an experimental design, where the influence of a covariate of interest on the response is investigated in various environments\footnote{Clayton, D. and M. Hills (1993). Statistical Models in Epidemiology. Oxford: Oxford University Press.}. Clayton and Hills (1993) continue (p.273):
+This idea is similar in spirit to an experimental design, where the influence of an explanatory variable of interest on the response is investigated in various environments\footnote{Clayton, D. and M. Hills (1993). Statistical Models in Epidemiology. Oxford: Oxford University Press.}. Clayton and Hills (1993) continue (p.273):
 
 \colorbox{lightgray}{\begin{minipage}{14cm}
 \begin{quote}
@@ -397,7 +405,7 @@ $\rightarrow$ A dependency would be reflected by some kind of \alert{trend}.
 But: The dependency is not necessarily on the fitted values ($x$-axis of TA plot). Ideas:  
 
 * Plot residuals in dependency of time (if available) or sequence of obervations.
-* Plot residuals against the covariates.
+* Plot residuals against the explanatory variable.
 
 ```{r warning=FALSE,out.width="8cm", fig.align='center', message=FALSE, echo=FALSE}
 library(ggplot2)
@@ -422,7 +430,7 @@ Again, no pattern = good.
 
 ## QQ-plot
 
-The \alert{outlier} recorded above is also visible in the (well-known) QQ-plot, which is useful to check for normal distribution of residuals (assumption c):
+The \alert{outlier} recorded above is also visible in the QQ-plot, which is useful to check for normal distribution of residuals (assumption c):
 
 ```{r eval=T,warning=FALSE,out.width="4cm",echo=FALSE, fig.align='center'}
 library(ggfortify)
@@ -455,15 +463,16 @@ The idea is to plot the square root of the (standardized) residuals $\sqrt{|R_i|
 autoplot(r1.urin.mother,which=3) + theme_bw()
 ```
 
+## Sketch explanation of scale-location
+
+
 ## Leverages ("Hebel")
 
 To understand the leverage plot, we need to introduce the idea of the \emph{leverage} ("Hebel").
 
 In simple regression, the leverage of individual $i$ is defined as $H_{ii} = (1/n) + (x_i-\overline{x})^2 SSQ^{(X)}$. Think about when leverages are expected to be large/small, and answer the two questions here:
 
-\begin{center}
-\href{http://www.klicker.uzh.ch/bkx}{http://www.klicker.uzh.ch/bkx}
-\end{center}
+
 
 ## Graphical illustration of the leverage effect
 
@@ -482,7 +491,7 @@ plot(y1~x,col=c(rep(1,17),2))
 abline(lm(y~x))
 abline(lm(y1~x),col=2,lty=2)
 y2 <- y
-y2[9] <- y2[9] + 4
+y2[9] <- y2[9] + 5
 plot(y2~x,col=c(rep(1,8),2,rep(1,9)))
 abline(lm(y~x))
 abline(lm(y2~x),col=2,lty=2)
@@ -510,7 +519,7 @@ Here, individuals 95, 101 and 106 are potential \alert{outliers}.
 
 ## What to do when things go wrong?
 
-1. \alert{Transform the outcome or the covariables.}
+1. \alert{Transform the response and/or explanatory variables.}
 2. \alert{Take care of outliers.}
 3. Use weighted regression (not discussed here).
 4. Improve the model, e.g., by adding additional terms or interactions (see "model selection" in lecture 8).
@@ -544,7 +553,7 @@ This looks __much__ better! However... there is this individual 106 that needs s
 
 ## Common transformations
 
-Which tranformations should be considered to cure model deviation symptoms? Answering this depends on plausibility and simplicity, and requires some experience.  
+Which transformations should be considered to cure model deviation symptoms? Answering this depends on plausibility and simplicity, and requires some experience.  
 \
 
 The most common and useful \alert{first aid transformations} are:
@@ -557,11 +566,11 @@ The most common and useful \alert{first aid transformations} are:
 \end{itemize}
 \end{minipage}}
 
-These transformations can (or should) also be applied on covariates!
+These transformations can also be applied on explanatory variables!
 
 ## 
 
-For instance, the number of amalgam fillings and the number of monthly fish meals should be sqrt-transformed in the mercury example:
+For instance, the number of amalgam fillings and the number of monthly fish meals could be sqrt-transformed in the mercury example:
 
 ```{r echo = FALSE, warning=FALSE, message=FALSE}
 r4.urin.mother <- lm(log10(Hg_urin) ~  smoking + sqrt(amalgam) + sqrt(fish),data=d.hg.m)
@@ -577,13 +586,15 @@ The above plots illustrate that outliers are visible in all diagnostic plots.
 
 What to do in this case?
 
-1. Start by checking the correctness of the data. Is there a typo or a digital point that was shifted by mistake? Check the covariates and the response.
+1. Start by checking the "correctness" of the data. Is there a typo or a digital point that was shifted by mistake? Check both the response and explanatory variables.
 
-2. If not, ask whether the model has been misspecified. Do reasonable transformations of the response or the covariates eliminate the outlier? Do the residuals have a distribution with a long tail (which makes it more likely that 3. extreme observations occur)?
+2. If not, ask whether the model has been misspecified. Do reasonable transformations of the response and/or explanatory variables eliminate the outlier? Do the residuals have a distribution with a long tail (which makes it more likely that 3. extreme observations occur)?
 
 3. Sometimes, an outlier may be the most interesting observation in a dataset!
 
 4. Consider that outliers can also occur by chance!
+
+5. Check in inclusion/exclusion changes the qualitative conclusion, and by how much it changes the quantiative conclusion.
 
 ## Deleting outliers
 
@@ -592,7 +603,7 @@ It might seem tempting to delete observations that apparently don't fit into the
 * Do this __only with absolute care__ e.g., if an observation has extremely implausible values!  
 * Before deleting outliers, check points 1-4 from the previous slide.
 * When deleting outliers or the x\% of most extreme observations, you __must mention this in your report__.
-* Confidence intervals, tests and $p$-values might be biased.
+
 
 ## The outlier in the Hg study
 
@@ -609,17 +620,9 @@ r5.urin.mother <- lm(log10(Hg_urin) ~  smoking + sqrt(amalgam) + sqrt(fish),data
 autoplot(r5.urin.mother,smooth.colour=NA) + theme_bw()
 ```
 
-## Feedback about today's lecture
+## Next steps
 
-Please give us your opinion about the lecture regarding
-
-* unclearest ("muddiest") point
-* the take-home message of today.
-
-via this link: 
-
-\centering{\href{http://www.klicker.uzh.ch/bkx}{http://www.klicker.uzh.ch/bkx}}
-
-\centering{Thank you!!}
-
+* (BC) Before (practical) Class: three videos (20, 13, and 18 mins) going through analysis of the earthworm study data.
+* (IC) In (practical) Class: naked mole rats, reaction times (more independent)
+* Then week 6: Analysis of variance (ANOVA).
 
