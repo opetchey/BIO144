@@ -2,8 +2,9 @@ rm(list=ls())
 
 library(tidyverse)
 library(ggfortify)
+library(forcats)
 
-dd <- read_csv("~/Desktop/earthworm.csv")
+dd <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144/master/3_datasets/earthworm.csv")
 
 table(dd$Gattung)
 
@@ -48,6 +49,12 @@ m2 <- lm(log10_Gewicht ~ Gattung, dd)
 autoplot(m2)
 summary(m2)
 anova(m2)
+
+## make a new variable with N as the reference
+dd <- dd %>%
+  mutate(Gattung_refN_ = fct_relevel(Gattung, "N", after = 0))
+m2.N <- lm(log10_Gewicht ~ Gattung_refN_, dd)
+summary(m2.N)
 
 
 ggplot(dd, aes(x=Magenumf, y=log10_Gewicht, colour=Gattung)) +
