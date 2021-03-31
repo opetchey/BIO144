@@ -122,7 +122,7 @@ By the end of this week you will be able to:
 * **Do everything as with previous models, with one- and two-way ANOVA.**
 * Understand and perform an F-test (the really important one for ANOVA).
 * Describe what hypothesis is tested by an F-test.
-* Understand when to use, and how to perform and interpret post-hoc hypothesis tests.
+* Understand what are post-hoc hypothesis tests, when to use them, and when not to.
 * Recognise that ANOVA is just another linear model, as is linear regression, and all the models you've seen so far.
 * In particular, recognise that the model checking strategy is the same as for linear models from the previous weeks. 
 
