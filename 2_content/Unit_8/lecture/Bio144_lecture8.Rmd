@@ -22,7 +22,7 @@ source(here::here("2_content/beamer_stuff/preamble.r"))
 * Selection criteria: AIC, AIC$_c$, BIC.
 * Automatic model selection and its caveats.
 * Model selection bias.
-* Collinearity of covariates
+* Collinearity of explanatory variables
 * Occam's razor principle.
 
 ## Course material covered today
@@ -79,8 +79,8 @@ Before we continue to discuss model/variable selection, we need to be clear abou
 * \alert{\bf Predictive models}: These are models that aim to predict the outcome of future subjects.  
 \underline{Example:} In the bodyfat example the aim is to predict people's bodyfat from factors that are easy to measure (age, BMI, weight,..).  
 
-* \alert{\bf Explanatory models}: These are models that aim at understanding the (causal) relationship between covariates and the response.  
-\underline{Example:} The mercury study aims to understand if Hg-concentrations in the soil (covariable) influence the Hg-concentrations in humans (response).  
+* \alert{\bf Explanatory models}: These are models that aim at understanding the (causal) relationship between explanatory variables and the response.  
+\underline{Example:} The mercury study aims to understand if Hg-concentrations in the soil (explanatory) influence the Hg-concentrations in humans (response).  
 
 \colorbox{lightgray}{\begin{minipage}{14cm}
 $\rightarrow$ The model selection strategy depends on this distinction.
@@ -105,13 +105,9 @@ There are 12 potential predictors (plus the response). Let's fit the full model 
 ```{r, echo=FALSE, eval=TRUE, results='asis', message=FALSE, warning=FALSE}
 d.bodyfat <- read.table(here("3_datasets/bodyfat.clean.txt"),header=T)
 d.bodyfat <- d.bodyfat[,c("bodyfat","age","gewicht","hoehe","bmi","neck","chest","abdomen","hip","thigh","knee","ankle","biceps")]
-
 r.bodyfat <- lm(bodyfat ~ ., d.bodyfat)
-
 library(biostatUZH)
-
 tableRegression(r.bodyfat)
-
 ```
 
 ## Model selection for predictive models
@@ -211,28 +207,21 @@ Given $m$ potential variables to be included in a model.
 \  
 
 * In principle it is possible to minimize the AIC/AICc/BIC over all $2^m$ possible models. Simply fit all models and take the ``best'' one (lowest AIC).  
-
 * This is cumbersome to to "by hand". Useful to rely on implemented procedures in R, which search for the model with minimal AIC/AICc/BIC.
-
 * \alert{Backward selection:}
 __Start with a large/full model.__ In each step, __remove__ the variable that leads to the largest improvement (smallest AIC/AICc/BIC). Do this until no further improvement is possible.
-
 * \alert{Forward selection:}
 __Start with an empty model__ In each step, __add__ the predictor that leads to the largest improvement (smallest AIC/AICc/BIC). Do this until no further improvement is possible.
 
 ## "Best" predictive model for bodyfat
-
 Given the predictive nature of the bodyfat model, we search for the model with minimal AICc, for instance using the `stepAIC()` function from the `MASS` package:
-
 ```{r, echo=TRUE}
 library(MASS)
 library(AICcmodavg)
-
 r.AIC <- stepAIC(r.bodyfat, direction = c("both"), 
                  trace = FALSE,AICc=TRUE)
 AICc(r.bodyfat)
 AICc(r.AIC)
-
 ```
 
 $\rightarrow$ The AICc for the optimal model is 1, compared to the full model with an AICc of 2. 
@@ -270,7 +259,7 @@ $\rightarrow$ {\bf Model selection may lead to biased parameter estimates, thus 
 In such a situation, you should formulate a \alert{confirmatory model}: 
 
 * __Start with a clear hypothesis__
-* __Select your covariates according to \alert{a priori} knowledge.__
+* __Select your explanatory variables according to \alert{a priori} knowledge.__
 *  Ideally formulate __only one__ or a few model(s) __before you start analysing your data.__
 
 
@@ -325,14 +314,14 @@ To illustrate how model selection purely based on AIC can lead to biased paramet
 
 Procedure:
 
-1. Randomly generate 100 data points for 50 covariables ${x}^{(1)},\ldots, {x}^{(50)}$ and a response ${y}$:
+1. Randomly generate 100 data points for 50 variables ${x}^{(1)},\ldots, {x}^{(50)}$ and a response ${y}$:
 
     ```{r echo = T, eval = T}
 set.seed(123456)
 data <- data.frame(matrix(rnorm(51*100),ncol=51))
 names(data)[51] <- "Y"
     ```
-    `data` is a 100$\times$ 51 matrix, where the last column is the response. The __data were generated completely independently__, the covariates do not have any explanatory power for the response! 
+    `data` is a 100$\times$ 51 matrix, where the last column is the response. The __data were generated completely independently__, the explanatory variables do not have any explanatory power for the response! 
     
 ## 
 
@@ -367,14 +356,6 @@ hist(summary(r.AICmin)$coef[-1,4],freq=T,main="18 variables of minimal AICc mode
 
     The distribution of the $p$-values is now skewed: many of them reach rather small values
 `r sum(summary(r.AICmin)$coef[-1,4]<0.05)` have $p<0.05$. This happened \alert{although none of the variables has any explanatory power!}
-
-## 
-\
-So what does the above example show us?
-
-\begin{center}
-\href{http://www.klicker.uzh.ch/bkx}{http://www.klicker.uzh.ch/bkx}
-\end{center}
 
 ##
 
@@ -418,7 +399,7 @@ __However, there are a few problems with this approach:__
 
 * The respective tests depend crucially on the correctness of the \alert{normality assumption}.
 
-* Covariates are sometimes \alert{collinear}, which leads to more uncertainty in the estimation of the respective regression parameters, and thus to larger $p$-values.
+* Explanatory variables are sometimes \alert{collinear}, which leads to more uncertainty in the estimation of the respective regression parameters, and thus to larger $p$-values.
 
 \end{minipage}}
 
@@ -466,15 +447,11 @@ In the mercury example there are 156 individuals, so a __maximum of 15 variables
 __Remarks:__
 
 * Categorical variables with $k$ levels already require $k-1$ dummy variables. For example, if `education level' has $k=3$ categories, $k-1=2$ parameters are used up.  
-
 * Whenever possible, the model should __not be blown up__ unneccessarily. Even if there are many data points, the use of too many variables may lead to an __overfitted__ model.  
-
     $\rightarrow$ \scriptsize See \href{https://en.wikipedia.org/wiki/Overfitting}{https://en.wikipedia.org/wiki/Overfitting}.
     
 ## 
-
 In the mercury study, the following variables were included using _a priori_ knowledge/expectations:  
-
 \begin{tabular}{llll}
 Variable & Meaning & type & transformation\\
 \hline
@@ -490,11 +467,8 @@ last$\_$fish & Fish eaten in last 3 days? &   binary\\
 mother & Mother or child?  & binary\\
 mother:age & Interaction term & binary:continuous\\
 \end{tabular}  
-
 ##  
-
-Let us now fit the full model (including all covariates) in R:
-
+Let us now fit the full model (including all explanatory variables) in R:
 ```{r fig.height=5, out.width="5cm", echo = FALSE}
 d.hg <- read.table(here("3_datasets/hg_urine_fuzzed.csv"), header=T, sep=",")
 d.hg["106","amalgam_quant"] <- 5 # correct for the outlier
@@ -506,7 +480,6 @@ names(d.hg) <- c("Hg_urin", "Hg_soil", "vegetables","migration", "smoking","amal
 ```{r, echo=FALSE}
 r.lm1 <- lm(log10(Hg_urin) ~ log10(Hg_soil) + vegetables + migration + smoking + 
              sqrt(amalgam) + age * mother + sqrt(fish) + last_fish,d.hg)
-
 ```
 
 ```{r results="asis", echo = FALSE}
@@ -575,24 +548,24 @@ $\rightarrow$ Therefore, given the a priori selection of variables and the model
 
 $\rightarrow$ Any further analyses with other models would need to be labelled as \alert{exploratory}.
 
-## Another complication: Collinearity of covariates
+## Another complication: Collinearity of explanatory variables
 
 \small (See Stahel chapter 5.4)  
 
 \
 
-Given a set of covariates ${x^{(1)}}, {x^{(2)}}, {x^{(3)}}, ...,{x^{(p)}}$. If it is possible for one of the covariates to be written as a \alert{linear combination of the others}
+Given a set of explanatory variables ${x^{(1)}}, {x^{(2)}}, {x^{(3)}}, ...,{x^{(p)}}$. If it is possible for one of the explanatory variables to be written as a \alert{linear combination of the others}
 \begin{equation*}
 x_i^{(j)} = \sum_{k\neq j} c_k x_i^{(k)} \quad \text{for all} \quad  i=1,...,n
 \end{equation*}
 
-the set of covariates is said to be \alert{collinear}.  
+the set of explanatory variables is said to be \alert{collinear}.  
 
 
 __Examples:__ 
 
 * Three vectors in a 2D-plane are always collinear.
-* A covariate can be written as a linear combination of two others: $x^{(j)} = c_1\cdot x^{(1)} + c_2 \cdot x^{(2)}$, then the three variables are collinear.
+* An explanatory variable can be written as a linear combination of two others: $x^{(j)} = c_1\cdot x^{(1)} + c_2 \cdot x^{(2)}$, then the three variables are collinear.
 
 ## 
 
@@ -601,7 +574,7 @@ In statistics, the expression "collinearity" is also used when such a collineari
 
 __What is the problem with collinearity?__
 
-A simple (and extreme) example to understand the point: Assume two covariates are identical ${x^{(1)}}={x^{(2)}}$. In the regression model
+A simple (and extreme) example to understand the point: Assume two explanatory variables are identical ${x^{(1)}}={x^{(2)}}$. In the regression model
 \begin{equation*}
 y_i = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \epsilon_i \ ,
 \end{equation*}
@@ -616,11 +589,11 @@ $\rightarrow$ $p$-values too large.
 
 ## Detecting collinearity
 
-The \alert{variance inflation factor} (VIF) is a measure for collinearity. It is defined for each covariate ${x^{(j)}}$ as 
+The \alert{variance inflation factor} (VIF) is a measure for collinearity. It is defined for each explanatory variable ${x^{(j)}}$ as 
 \begin{equation*}
 VIF_j = \frac{1}{1-R_j^2} \qquad
 \end{equation*}
- where $R_j^2$ is the $R^2$ of the regression of ${{x^{(j)}}}$ against all other covariates. (Note: if $R_j^2$ is large, this means large collinearity and thus a large VIF).  
+ where $R_j^2$ is the $R^2$ of the regression of ${{x^{(j)}}}$ against all other explanatory variables (Note: if $R_j^2$ is large, this means large collinearity and thus a large VIF).  
  
 __Examples__ 
 
@@ -649,7 +622,7 @@ Before you start:
   * What model simplifications will be considered it it is not possible to fit the intended model?
   * How will you deal with outliers?
   * How will you treat missing values in the data?
-  * How will you treat collinear covariates?
+  * How will you treat collinear explanatory variables?
   * ...
   
 It is advisable to write your strategy down as a "protocol" before doing any analyses. 
@@ -679,62 +652,20 @@ Systematic effects should be included in a model \textbf{only} if there is knowl
 
 \href{https://de.wikipedia.org/wiki/Ockhams_Rasiermesser}
 {\beamergotobutton{See Wikipedia for ``Ockham's Rasiermesser''}}  
-
 ## Summary
-
 * Model/variable selection is difficult and controversial.  
-
 * Different approaches for predictive or explanatory models.  
-
 * Discriminate explanatory models into confirmatory and exploratory.  
 * AIC, AIC$_c$, BIC: balance between model fit and model complexity.
-
 * Automatic model selection leads to biased parameter estimates and $p$-values.
-
 * Threfore, automatic model selection procedures are inappropriate for explanatory models.
-
 * $P$-values should not be used for model selection, even not for predictive models.
-
-## Self-study week 
-
-Next week is no lecture, so you can
-
-* Consolidate, review, reinforce, expand.
-
-* Read the assigned literature to prepare for week 10.
-
-$\rightarrow$ Please check on openedx.  
-
-## Feedback about today's lecture
-
-Please give us your opinion about the lecture regarding
-
-* unclearest ("muddiest") point
-* the take-home message of today.
-
-via this link:  
-
-\centering{\href{http://www.klicker.uzh.ch/bkx}{http://www.klicker.uzh.ch/bkx}}  
-
-\centering{Thank you!!}
-
-
 ## 
 References: \ 
-
 \small
 Brewer, M. J., A. Butler, and S.L. Cooksley (2016). The relative performance of $AIC$, $AIC_c$ and $bic$ in the presence of unobserved heterogeneity. _Methods in Ecology and Evolution 7_, 679-692.\  
-
 Burnham, K.P. and D.R. Anderson (2002). _Model selection and multimodel inference: a practical information-theoretic approach._ New York: Springer.\  
-
 Clayton, D. and M. Hills (1993). _Statistical Models in Epidemiology._ Oxford: Oxford University Press.\  
-
 Copas. J.B. (1983). Regression, prediction and shrinkage. _Journal of the Royal Statistical Society. Series B (Statistical Methodology) 45_, 311-354.\  
-
 Freedman, D.A. (1983). A note on screening regression equations. _The American Statistician 37,_ 152-155.\  
-
 Imo, D., S. Muff, R. Schierl, K. Byber, C. Hitzke, M. Bopp, M. Maggi, S. Bose-O'Reilly, L. Held, and H. Dressel (2017). Risk assessment for children and mothers in a mercury-contaminated area using human-biomonitoring and individual soil measurements: a cross-sectional study. _International Journal of Environmental Health Research 28,_ 1-16.
-
-
-
-
