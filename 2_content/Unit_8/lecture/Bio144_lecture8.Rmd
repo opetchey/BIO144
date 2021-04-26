@@ -287,7 +287,7 @@ $\rightarrow$ Two sorts of __explanatory models/analyses__:
   
   *  Allowed to interpret the results and draw quantitative conclusions.
   
-* \alert{Explanatory}:
+* \alert{Exploratory}:
 
   * Build whatever model you want, but the results should only be used to generate new hypotheses, a.k.a. "speculations".
   
@@ -489,11 +489,6 @@ tableRegression(r.lm1)
 
 * The $p$-value for mercury in soil, $\log_{10}(Hg_{soil})$, is rather high: $p=`r format(summary(r.lm1)$coef[2,4],2,2,2)`$.
 
-* __Question:__ What is the answer to the main research question?
-
-\begin{center}
-\href{http://www.klicker.uzh.ch/bkx}{http://www.klicker.uzh.ch/bkx}
-\end{center}
 
 ## 
 
@@ -652,6 +647,7 @@ Systematic effects should be included in a model \textbf{only} if there is knowl
 
 \href{https://de.wikipedia.org/wiki/Ockhams_Rasiermesser}
 {\beamergotobutton{See Wikipedia for ``Ockham's Rasiermesser''}}  
+
 ## Summary
 * Model/variable selection is difficult and controversial.  
 * Different approaches for predictive or explanatory models.  
@@ -660,6 +656,7 @@ Systematic effects should be included in a model \textbf{only} if there is knowl
 * Automatic model selection leads to biased parameter estimates and $p$-values.
 * Threfore, automatic model selection procedures are inappropriate for explanatory models.
 * $P$-values should not be used for model selection, even not for predictive models.
+
 ## 
 References: \ 
 \small
