@@ -55,7 +55,7 @@ table(dd$cont_africa1)
 
 
 ## Lets deal with the NAs
-ddr <- select(dd, rugged, cont_africa1, log10_gdp) %>%
+ddr <- dplyr::select(dd, rugged, cont_africa1, log10_gdp) %>%
   na.omit()
 table(ddr$cont_africa1)
 ## 8 Africa countries with NA, 56 non-Africa.
@@ -106,6 +106,17 @@ ggplot(ddr, aes(x=rugged, y=log10_gdp)) +
   geom_smooth(method="lm") +
   xlab("Terrain Ruggedness Index") +
   ylab("Log10 Real Gross Domestic Product per capita,\nfrom year 2000")
+
+
+## repeat without high ruggedness countries
+ddr_wo_hr <- filter(ddr, rugged < 4)
+ggplot(ddr_wo_hr, aes(x=rugged, y=log10_gdp)) +
+  geom_point() +
+  facet_wrap(~cont_africa1) 
+mod_wo_hr <- lm(log10_gdp ~ rugged * cont_africa1, ddr_wo_hr)
+autoplot(mod_wo_hr)
+summary(mod_wo_hr)
+
 
 
 ## There is a danger here that ggplot has done two separate regression
