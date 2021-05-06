@@ -67,7 +67,7 @@ Such tests might be useful whenever a \textbf{decision} needs to be made (e.g., 
 
 ## $P$-values in regression models
 
-In regression modeling, the $p$-value is often used as an indicator of covariate importance. Remember the mercury example:
+In regression modeling, the $p$-value is often used as an indicator of explanatory model importance. Remember the mercury example:
 
 ```{r echo = FALSE}
 d.hg <- read.table(here("3_datasets/hg_urine_fuzzed.csv"),header=T, sep=",")
@@ -174,16 +174,6 @@ text(-3,0.05,labels="5%")
 
 ```
 
-## Test yourself: Klicker-Exercise
-
-
-\href{http://www.klicker.uzh.ch/bkx}
-{\beamergotobutton{Klicker-Exercise}}
-
-\url{http://www.klicker.uzh.ch/bkx}
-\vspace{5mm}
-
-+ Discussion of the results!
 
 ## What is the problem with the $p$-value? II
 
@@ -248,12 +238,15 @@ In other words:
 {\bf One cannot prove the Null Hypothesis!!}\\[6mm]
 \end{center}
 
+
+## Some causes of non-informative $p$-values
+
 Several reasons may lead to large $p$-values:
 \begin{itemize}
 \item Low sample size ($\rightarrow$ low power).
-\item The truth is not "far" from the null hypothesis. \\
-Example: Small effect sizes in regression models. \\
-\item Collinear covariates.
+\item The truth is not "far" from the null hypothesis. (E.g. Small effect sizes in regression models) \\
+\item Collinear explanatory variables.
+\item Incorrect fitting (e.g. non-linear explanatory variables).
 \end{itemize}
 
 ## Shall we abolish $p$-values?
@@ -264,11 +257,11 @@ Suggestions:
 \begin{enumerate}
 \item Use $p$-values, but don't over-interpret them, \alert{use them properly}.\\[2mm]
 \item Also look at \alert{effect sizes} and \alert{confidence intervals}.\\[2mm]
-\item Also look at \alert{relative importances} of covariates.\\[2mm]
+\item Also look at \alert{relative importances} of explanatory variables.\\[2mm]
 \item {\bf NEVER use $p$-values for model selection.} \\[2mm]
 \end{enumerate}
 
-## Suggestion 1: Proper interpretation of $p$-values
+## Suggestion 1: Graded interpretation of $p$-values
 
 Rather than a black-and-white decision ($p<0.05$), Martin Bland suggests to regard $p$-values as continuous measures for statistical evidence
 (Introduction to Medical Statistics, 4th edition, Oxford University Press): 
@@ -385,10 +378,10 @@ Because this boils down to checking whether $p<0.05$ ...
 
 \end{itemize}
 
-## Suggestion 3:  Look at relative importances of covariates
+## Suggestion 3:  Look at relative importances of explanatory variables
 
 \begin{itemize}
-\item Ultimately, the popularity of $p$-values in regression models is based on the wish to judge which covariates are {\bf relevant}
+\item Ultimately, the popularity of $p$-values in regression models is based on the wish to judge which explanatory variables are {\bf relevant}
 in a model, particularly in observational studies.\\[4mm]
 
 \item The problem with this: Low $p$-values do not automatically imply high relevance (Cox, 1982).\\[4mm]
@@ -398,7 +391,7 @@ in a model, particularly in observational studies.\\[4mm]
 
 ## Relative importance: Decomposing $R^2$
 
-\textbf{Remember:} $R^2$ indicates the proportion of variance explained by \textbf{all} covariates in a model
+\textbf{Remember:} $R^2$ indicates the proportion of variance explained by \textbf{all} explanatory variables in a model
 \begin{equation*}
 y_i = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_2 x_i^{(m)} + \epsilon_i   \ . 
 \end{equation*}
@@ -422,13 +415,13 @@ Further, it is required that
 ## How would you define/calculate relative importance?
 
 \begin{itemize}
-\item {\bf Idea 1:} Fit simple models including only one covariate at the time, \emph{i.e.}:
+\item {\bf Idea 1:} Fit simple models including only one explanatory variable at the time, \emph{i.e.}:
 \begin{equation*}
 y_i = \beta_0 + \beta_j x_i^{(j)} + \epsilon_i   
 \end{equation*}
 for each variable $x^{(j)}$ and use the respective $R^2$ as $r_j$. \\[6mm]
 
-\item {\bf Idea 2:} Fit  the linear model twice, once with and once without the covariate of interest, and then take the \alert{increase} of $R^2$ as $r_j$.\\[1cm]
+\item {\bf Idea 2:} Fit  the linear model twice, once with and once without the explanatory variable of interest, and then take the \alert{increase} of $R^2$ as $r_j$.\\[1cm]
 
 \end{itemize}
 
@@ -449,27 +442,27 @@ r.lm_fish_amalgam <- lm(log10(Hg_urin) ~ last_fish+ sqrt(fish),d.hg)
 ```
 
 \begin{eqnarray} 
-y_i = \beta_0 + \beta_{1}  x^{(1)}_i  +   + \epsilon_i   & \quad &  R^2 = `r format(summary(r.lm_fish)$r.squared,nsmall=2,digits=1)`\\
-y_i = \beta_0 + \beta_{2}  x^{(2)}_i  +   + \epsilon_i   & \quad &  R^2 = `r format(summary(r.lm_amalgam)$r.squared,nsmall=2,digits=1)`\\
+y_i = \beta_0 + \beta_{1}  x^{(1)}_i  +  \epsilon_i   & \quad &  R^2 = `r format(summary(r.lm_fish)$r.squared,nsmall=2,digits=1)`\\
+y_i = \beta_0 + \beta_{2}  x^{(2)}_i  +  \epsilon_i   & \quad &  R^2 = `r format(summary(r.lm_amalgam)$r.squared,nsmall=2,digits=1)`\\
 y_i = \beta_0 + \beta_{1}   x^{(1)}_i  + \beta_{2}  x^{(2)}_i    + \epsilon_i  & \quad & R^2 = `r format(summary(r.lm_fish_amalgam)$r.squared,2,2,2)`
 \end{eqnarray}
 
 
 \colorbox{lightgray}{\begin{minipage}{14cm}
-{\bf Note:} The $R^2$ of model (3) with both covariates is much less than the sum of the $R^2$ from models (1) and (2)!
+{\bf Note:} The $R^2$ of model (3) with both explanatory variables is much less than the sum of the $R^2$ from models (1) and (2)!
 \end{minipage}}
 
 
-$\Rightarrow$ The increase of $R^2$ upon inclusion of a covariate depends on the covariates that are already in the model!
+$\Rightarrow$ The increase of $R^2$ upon inclusion of an explanatory variable depends on the explanatory variables that are already in the model!
 
 ## A better way to calculate relative importance?
 
-Various proposals to calculate relative importance ($R^2$ decomposition) have been proposed. The (currently) most useful is given by the following idea, called {\textbf{LMG} (\textbf{L}indemann, \textbf{M}erenda and \textbf{G}old 1980):
+Various proposals to calculate relative importance ($R^2$ decomposition) have been proposed. The (currently) most useful is given by the following idea, called \textbf{LMG} (\textbf{L}indemann, \textbf{M}erenda and \textbf{G}old 1980):
 
 \begin{itemize}
-\item Fit the model for \alert{all possible orderings of the covariates}.\\[2mm]
-\item Record the incrase in $R^2$ each time a variable is included.\\[2mm]
-\item \alert{Average} over all orderings of the covariates.\\[10mm]
+\item Fit the model for \alert{all possible orderings of the explanatory variables}.\\[2mm]
+\item Record the increase in $R^2$ each time a variable is included.\\[2mm]
+\item \alert{Average} over all orderings of the explanatory variables.\\[10mm]
 \end{itemize}
 
 
@@ -477,7 +470,7 @@ Luckily, the  `R-package` \alert{`relaimpo`}  (Groemping 2006) contains the func
 
 ## Hg results
 
-Which proportion (\%) of variance in $\log(Hg_{\text{urine}})$ is explained by each covariate? Interpret the table below:  
+Which proportion (\%) of variance in $\log(Hg_{\text{urine}})$ is explained by each explanatory variable? Interpret the table below:  
 
 ```{r echo = FALSE, warning=FALSE,message=FALSE}
 library(relaimpo)
@@ -552,13 +545,13 @@ lmg.hg.2 <- calc.relimp(r.lm.hg2)$lmg
 
 ## Causality vs correlation
 
-In \textbf{explanatory models} the ultimate goal is to reveal \alert{causal relationships} between the covariates and the response.
+In \textbf{explanatory models} the ultimate goal is to reveal \alert{causal relationships} between the explanatory variables and the response.
 
 \textbf{Examples:}
 \begin{itemize}
 \item Does Hg in the soil influence Hg-levels in humans?\\[2mm]
 \item Does inbreeding negatively affect population growth of Swiss Alpine ibex (Steinbock)?\\[2mm]
-\item Does exposure to Asbest lead to illness or death?\\[2mm]
+\item Does exposure to Asbestos lead to illness or death?\\[2mm]
 \item ...\\[6mm]
 \end{itemize}
 
@@ -579,7 +572,7 @@ Questions:
 
 ## 
 
-Look at a regression model including covariate ${x}$ and response ${y}$. If the coefficient $\beta_x$ is "significant", there are several possible reasons for this:
+Look at a regression model including explanatory variable ${x}$ and response ${y}$. If the coefficient $\beta_x$ is "significant", there are several possible reasons for this:
 
 \begin{enumerate}
 \item ${x}$ is a {\bf cause} for ${y}$. Write: ${x} \rightarrow {y}$\\[2mm]
@@ -591,7 +584,7 @@ This is the desired situation!\\[4mm]
 {\bf Example:} ${x}$ is \emph{IQ} and ${y}$ is \emph{school education}.\\[2mm]
 In that case, the model is not correctly specified!\\[4mm]
 
-\item There is another covariate ${z}$ that both influences ${x}$ and ${y}$\\
+\item There is another explanatory variable ${z}$ that both influences ${x}$ and ${y}$\\
 $${z} \rightarrow {x} \quad \text{and} \quad {z} \rightarrow {y} \ .$$
 $\rightarrow$ ${x}$ and ${y}$ {\bf covary}, but do not cause each other.
 \end{enumerate}
@@ -639,7 +632,7 @@ In 1965 the Epidemiologist Bradford Hill presented a list of criteria to assess 
 \begin{enumerate}
 \item {\bf Strength:} A causal relationship is likely when the observed association is strong.\\[2mm]
 \item {\bf Consistency:} A causal relationship is likely if multiple independent studies show similar associations.\\[2mm]
-\item {\bf Specificity:} A causal relationship is likely when a covariate $x$ is associated only with one potential outcome $y$ and not with other outcomes.\\[2mm]
+\item {\bf Specificity:} A causal relationship is likely when an explanatory variable $x$ is associated only with one potential outcome $y$ and not with other outcomes.\\[2mm]
 \item {\bf Temporality:} The effect has to occur after the cause.\\[2mm]
 \end{enumerate}
 
@@ -700,7 +693,7 @@ An observed effect is more likely to be \emph{causal} if participants were \emph
  
 ## Causality considerations for model building
 
-It is \textbf{widely unknown} that a model can be broken by the inclusion of a "wrong" covariate, which is causally associated in the wrong direction:
+It is \textbf{widely unknown} that a model can be broken by the inclusion of a "wrong" explanatory variable, which is causally associated in the wrong direction:
 
 
 \begin{center}
@@ -708,17 +701,18 @@ It is \textbf{widely unknown} that a model can be broken by the inclusion of a "
 \end{center}
 
 
-\textbf{Remember:} Avoid to include covariates in your model that are \alert{caused} by the outcome!
+\textbf{Remember:} Avoid to include explanatory variables in your model that are \alert{caused} by the outcome!
 
 \textbf{Example:} ...
 
 ## 
 
+<!-- Damien notes this blog is empty as of May 2021
 Some further reading on a very recent case of a food researcher that conducted "questionable" science:
 
 \href{http://www.timvanderzee.com/the-wansink-dossier-an-overview/}
 {\beamergotobutton{http://www.timvanderzee.com/the-wansink-dossier-an-overview/}}
-\  
+\  -->
 
 \begin{center}
 \includegraphics[width=10cm]{pictures/cell_phones.png}\\
