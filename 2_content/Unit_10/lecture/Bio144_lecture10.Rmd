@@ -44,7 +44,7 @@ The lecture material of today is based on the following literature:
 ## Introduction
 
 \begin{itemize}
-\item We have seen: Covariates in regression models can be \alert{continuous}, \alert{categorical} (binary or multi-level) or \alert{counted numbers} (integers).\\[2mm]
+\item We have seen: Explanatory variables in regression models can be \alert{continuous}, \alert{categorical} (binary or multi-level) or \alert{counted numbers} (integers).\\[2mm]
 \item However, the \alert{response variable} (${y}$) was so far \alert{always continuous}, and the assumption was that the residuals $\epsilon_i\sim N(0,\sigma^2)$.\\[2mm]
 \item \alert{In reality}, the response variable can also be a count (an integer $\geq 0$) or a categorical variable (e.g., presence/absence data).\\[2mm]
 \item Today we will look at the case where the response variable is a \alert{count}, that is, $y_i =0,1,2,\dots$.\\[4mm]
@@ -64,7 +64,7 @@ In biological or medical data, the outcome of interest is quite often a count:
 
 The research question then is: 
 
-\textbf{How do the covariates influence the probability of a certain count outcome?}
+\textbf{How do the explanatory variables influence the probability of a certain count outcome?}
 
 ## Illustrative/working example: Soay sheep
 
@@ -218,7 +218,7 @@ The aim of the GLM approach is that we can still use a \alert{linear predictor} 
 
 Why can't we set $E(y_i)=\eta_i$ for count data? 
 
-\textbf{$\rightarrow$ Because nothing prevents $\eta_i$ from being negative!}\\[4mm]
+\textbf{$\rightarrow$ Because nothing prevents $\eta_i$ from being negative!} 
 
 Let us try to use the same approach as in linear regression, assuming that $E(y_i)=\eta_i$ for our soay sheep counts, that is,
 
@@ -380,7 +380,7 @@ Makes sense, right?
 
 ## Doing it right: The \texttt{anova()} table
 
-Remember: We were sometimes using ANOVA tables, for instance for linear regression output with categorical covariates.
+Remember: We were sometimes using ANOVA tables, for instance for linear regression output with categorical explanatory variables.
 
 \texttt{anova()} is useful again, but it gives us the \alert{Analysis of Deviance} table:
 
@@ -453,7 +453,7 @@ data("polyps")
 
 ## 
 
-Data: Number of polyps (outcome), the binary variable for the treatment, and the continuous covariate age.
+Data: Number of polyps (outcome), the binary variable for the treatment, and the continuous explanatory variable age.
 
 \tiny
 ```{r echo = FALSE, message=FALSE, warning=FALSE, results='asis'}
@@ -512,7 +512,7 @@ summary(polyps.glm)
 In Poisson regression it is assumed that, for each observation $i$,
 $$y_i \sim Po (E(y_i)) \ .$$
 
-However, the \alert{variance is often larger than the mean} in reality, because there are factors that influence the response ("cause variability in it") that cannot be captured by the covariates!  
+However, the \alert{variance is often larger than the mean} in reality, because there are factors that influence the response ("cause variability in it") that cannot be captured by the explanatory variables!  
 
 
 \small 
