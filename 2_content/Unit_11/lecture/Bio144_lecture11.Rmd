@@ -188,17 +188,11 @@ For example, if the probability to win a game is 0.75, then the odds is given as
 
 \end{itemize}
 
-## 
-
-Please go to the following webpage for a short klicker exercise:  
-\ 
-
-\url{http://www.klicker.uzh.ch/bkx}
 
 ## Binomial and binary regression
 
 Usually the situation is more complicated than 
-\begin{center}\textbf{binary covariate} (${x}$) $\rightarrow$ \textbf{binary outcome} (${y}$)\end{center}
+\begin{center}\textbf{binary explanatory variable} (${x}$) $\rightarrow$ \textbf{binary outcome} (${y}$)\end{center}
   
 \  
 
@@ -319,7 +313,7 @@ Clarification of the difference between count data and binomial data:
 
 \textbf{Count data:} 
 \begin{itemize}
-\item Theoretically no upper limit on number of times an "event" (e.g., number of birds observed in a forest plot)
+\item Theoretically no upper limit on number of times an "event" occurs (e.g., number of birds observed in a forest plot)
 \item Counts cannot be expressed as a proportion.\\[6mm]
 \end{itemize}  
 \  
@@ -342,7 +336,7 @@ P(Y=1) = \pi \ , \quad  P(Y=0) = 1-\pi \ .
 \end{minipage}}  
 \  
 
-\textbf{Characteristics of the Beroulli distribution:} \label{sl:bernoulli}
+\textbf{Characteristics of the Bernoulli distribution:} \label{sl:bernoulli}
 \begin{itemize}
 \item $E(Y) = \pi =P(Y=1)$ \tiny (useful to remember)\\[2mm]\normalsize
 \item $Var(Y)=\pi(1-\pi)$.\\[4mm]
@@ -630,7 +624,7 @@ summary(beetle.glm2)
 
 \begin{itemize}
 \item In the beetle example, we were in a comfortable situation: For each level of the does, we had several beetles. For instance, 49 beetles at lowest dose (49.06), of which 6 died (1) and 43 survived (0). This was \alert{binomial} data, an aggregated version of many (here 49) trials with 0 or 1 outcome.\\[3mm]
-\item In reality, one often has only one trial (0/1) for a (combination of) covariate(s).\\[3mm]
+\item In reality, one often has only one trial (0/1) for a (combination of) explanatory variable(s).\\[3mm]
 \item The analysis is the same as for aggregated data, however there are a few complications with graphical descriptions and model checking. \\[6mm]
 \end{itemize}
 
@@ -742,7 +736,6 @@ Please look at the model outcomes (summary and anova table) on the next slides a
 \item Is a \texttt{quasibinomial} model more suitable for these data?
 \end{enumerate}
 
-Please answer here: \url{http://www.klicker.uzh.ch/bkx}
 
 ## 
 
