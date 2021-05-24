@@ -648,11 +648,8 @@ print(ttab1, floating = TRUE, include.rownames=FALSE)
 
 ## 
 
-\textbf{Question:} Is a high ESR (erythrocyte sedimentation rate) an indicator for certain diseases (rheumatic disease, chronic inflammations)?
-\  
+\textbf{Introduction:} Individuals with low ESR (erythrocyte sedimentation rate) are generally considered healthy, and those with ESR greater than $>20mm/hr$ sick. We are interested in if concentrations of the plasma proteins Fibrinogen and Globulin (which can be disease indicators) are associated with an increased probability that an individual has high ESR (ESR$>20mm/hr$, encoded as $y_i=1$)?
 
-\textbf{Specifically: } Do high concentrations of the plasma proteins Fibrinogen and Globulin (which are disease indicators) increase the probability that an individual is sick (ESR$>20mm/hr$, encoded as $y_i=1$)?  
-\ 
 
 \textbf{The model to be fitted:}
 

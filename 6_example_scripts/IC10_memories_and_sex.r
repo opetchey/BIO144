@@ -52,9 +52,6 @@ filtered_memories %>%
   geom_histogram(aes(x = value)) +
   facet_wrap( ~ variable, scales = "free")
 
-## ok
-filter(filtered_memories,
-       variable == varb_of_interest)
 
 ## visualise the data to see if we see differences:
 filtered_memories %>%
@@ -62,6 +59,8 @@ filtered_memories %>%
   geom_jitter(width = 0.1, height = 0) +
   facet_wrap( ~ variable, scale = "free")
 ## no clear differences (2020 data)
+
+
 
 ## now a glm for each , since they are count data, use poisson
 varb_of_interest <- "Number_memory_score"
@@ -72,7 +71,7 @@ mod <- glm(value ~ Gender,
 autoplot(mod)
 ## qqplot on the edge of ok (2020 data)
 summary(mod)
-## model very overdispersed... so change to quasipoisson
+## model underdispersed... so change to quasipoisson
 mod <- glm(value ~ Gender,
            data = filter(filtered_memories,
                          variable == varb_of_interest),
