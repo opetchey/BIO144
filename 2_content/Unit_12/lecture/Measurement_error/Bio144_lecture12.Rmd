@@ -17,7 +17,7 @@ source(here::here("2_content/beamer_stuff/preamble.r"))
 
 ## Overview
 
-* Measurement error (ME) in covariates ($x$) and in the response ($y$) of regression models.
+* Measurement error (ME) in explanatory variable ($x$) and in the response ($y$) of regression models.
 * Effects of ME on regression parameters.
 *  When do I have to worry?
 * Simple methods to correct for ME. 
@@ -58,13 +58,13 @@ The lecture material of today is partially based on the following literature:
 * Generalized linear and non-linear regressions (e.g.\ logistic and Poisson).
 
 
-* Violation of this assumption may lead to \alert{biased} parameter estimates, altered standard errors and $p$-values, incorrect covariate importances, and to \alert{misleading conclusions}.
+* Violation of this assumption may lead to \alert{biased} parameter estimates, altered standard errors and $p$-values, incorrect variable importances, and to \alert{misleading conclusions}.
 * Even standard statistics textbooks do often not mention these problems.
 
 
 
 \begin{center}
-\textcolor{teal}{Measurement error in the covariates ($\mathbf{x}$) violates an assumption of standard regression analyses!! }
+\textcolor{teal}{Measurement error in the explanatory variables ($\mathbf{x}$) violates an assumption of standard regression analyses!! }
 \end{center}
 
 
@@ -79,7 +79,8 @@ Let \alert{$x_i$} be the *correct but unobserved* variable and $w_i$ the observe
 $$w_i = x_i + u_i, \qquad u_i \sim N(0,\sigma^2_{u})$$
 is the **classical ME model**.
 
-```{r fig.width=1.5, fig.height=1.3, fig.align='center'}
+## (continued)
+```{r fig.width=1.5, fig.height=1.1, fig.align='center'}
 par(mar=c(0.1,0.1,0.1,0.1))
 tx<-seq(-4,4,0.01)
 par(mfrow=c(1,1))
@@ -93,27 +94,18 @@ $\rightarrow$ The observed value $w_i$ varies around the true value $x_i$.
 
 
 
-
-
-
-
 ## Illustration of the problem
 
 
-Find regression parameters $\beta_0$ and $\beta_x$ for the model with covariate $\mathbf{x}$:
+Find regression parameters $\beta_0$ and $\beta_x$ for the model with explanatory variable $\mathbf{x}$:
 
 
 $$y_i = 1 \cdot x_i + \epsilon_i, \qquad \epsilon_i \sim N(0,\sigma^2)$$
-
-
-
 \vspace{1mm}
-
-```{r, message=FALSE, fig.width=3, fig.height=2, fig.align='center'}
+\small
+```{r, message=FALSE}
 library(ggplot2)
 set.seed(84522)
-col1 <- "red"
-col2 <- "blue"
 n <- 100
 beta_0 <- 0
 beta_1 <- 1
@@ -121,23 +113,24 @@ epsilon <- rnorm(n, 0, 0.2)
 x <- rnorm(n, 0, 1)
 u <- rnorm(n, 0, 1)
 w <- x + u
-
 # Classical
 y <- beta_0 + beta_1*x + epsilon
 m1 <- lm(y~x)
-m2 <- lm(y~w)
-#nf <- layout(matrix(c(1,2),1,2,byrow=TRUE), c(4,4), c(4,2), TRUE)
-#par( mar=c(4,6,4,1), cex.lab=1.5, cex.axis=1.4, cex.main=1.8)
+```
+\normalsize
+## Plotting
+\small
+```{r, message=FALSE, fig.width=3, fig.height=1.8, fig.align='center'}
 cols <- c("X"="black","W"="red")
-ggplot(mapping=aes(x=x,y=y,col="X")) +  geom_smooth(method="lm") + geom_point(size=0.9) + 
-  # geom_smooth(mapping=aes(x=w,y=y,color="W"),method="lm") +  geom_point(mapping=aes(x=w,y=y,color="W"),size=0.9) + 
+ggplot(mapping=aes(x=x,y=y,col="X")) +  
+  geom_smooth(method="lm") + geom_point(size=0.9) + 
   scale_colour_manual(name="Variable",values=cols) +
   xlab("X") +
   xlim(c(-3.5,3.5)) +
   ylim(c(-2.7,2.7)) +
   theme_bw()
 ```
-
+\normalsize
 
 
 
@@ -148,38 +141,34 @@ However, assume that only an erroneous proxy $\mathbf{w}$ is observed with class
 
 
 $$w_i = x_i + u_i, \qquad u_i \sim N(0,\sigma_u^2), \qquad \sigma^2_u = \sigma^2_x$$
-
 \vspace{1mm}
-
+\small
 ```{r, message=FALSE, fig.width=3, fig.height=2, fig.align='center'}
-library(ggplot2)
-set.seed(84522)
-col1 <- "red"
-col2 <- "blue"
-n <- 100
-beta_0 <- 0
-beta_1 <- 1
-epsilon <- rnorm(n, 0, 0.2)
-x <- rnorm(n, 0, 1)
-u <- rnorm(n, 0, 1)
-w <- x + u
-##Classical
+w <- x + u ## error added to x in this step
+
+## Classical
 y <- beta_0 + beta_1*x + epsilon
 m1 <- lm(y~x)
+
+## Now with added error
 m2 <- lm(y~w)
-#nf <- layout(matrix(c(1,2),1,2,byrow=TRUE), c(4,4), c(4,2), TRUE)
-#par( mar=c(4,6,4,1), cex.lab=1.5, cex.axis=1.4, cex.main=1.8)
+```
+\normalsize
+
+## Plotting
+\small
+```{r, message=FALSE, fig.width=3, fig.height=1.8, fig.align='center'}
 cols <- c("X"="black","W"="red")
-ggplot(mapping=aes(x=x,y=y,color="X")) +  geom_smooth(method="lm") + geom_point(size=0.9) + 
-  geom_smooth(mapping=aes(x=w,y=y,color="W"),method="lm") +  geom_point(mapping=aes(x=w,y=y,color="W"),size=0.9) + 
-  scale_colour_manual(name="Variable",values=cols) +
-  xlab("X or W") +
+ggplot(mapping=aes(x=x,y=y,color="X")) +  geom_smooth(method="lm") +
+  geom_point(size=0.9) + 
+  geom_smooth(mapping=aes(x=w,y=y,color="W"),method="lm") + 
+  geom_point(mapping=aes(x=w,y=y,color="W"),size=0.9) + 
+  scale_colour_manual(name="Variable",values=cols) + xlab("X or W") +
   theme_bw()
 ```
-
+\normalsize
 
 ## A tool you can have a play with...
-
 
 [\beamergotobutton{Illustration in a browser application} ](https://stefaniemuff.shinyapps.io/MEC_ChooseL/)
 
@@ -201,39 +190,7 @@ knitr::include_graphics("images/me_browser_spp.png")
 
 2 ME leads to a \alert{loss of power} for detecting signals.
 
-3 ME \alert{masks imporant features} of the data, making graphical model inspection difficult.
-
-
-```{r, message=FALSE, fig.width=3, fig.height=2, fig.align='center'}
-
-library(ggplot2)
-set.seed(84522)
-col1 <- "red"
-col2 <- "blue"
-n <- 100
-beta_0 <- 0
-beta_1 <- 1
-epsilon <- rnorm(n, 0, 0.2)
-x <- rnorm(n, 0, 1)
-u <- rnorm(n, 0, 1)
-w <- x + u
-##Classical
-y <- beta_0 + beta_1*x + epsilon
-m1 <- lm(y~x)
-m2 <- lm(y~w)
-#nf <- layout(matrix(c(1,2),1,2,byrow=TRUE), c(4,4), c(4,2), TRUE)
-#par( mar=c(4,6,4,1), cex.lab=1.5, cex.axis=1.4, cex.main=1.8)
-cols <- c("X"="black","W"="red")
-ggplot(mapping=aes(x=x,y=y,color="X")) +  geom_smooth(method="lm") + geom_point(size=0.9) + 
-  #geom_smooth(mapping=aes(x=w,y=y,color="W"),method="lm") +  
-  geom_point(mapping=aes(x=w,y=y,color="W"),size=0.9) + 
-  scale_colour_manual(name="Variable",values=cols) +
-  xlab("X or W") +
-  theme_bw()
-
-```
-
-
+3 ME \alert{masks important features} of the data, making graphical model inspection difficult.
 
 
 
@@ -258,7 +215,7 @@ Given the simple linear regression equation $y_i = \beta_0 + \beta_x x_i + \epsi
 $$y_i = \beta^\star_0 + \beta^\star_x w_i + \epsilon_i$$
 
 
-The **naive slope parameter** $\beta_x^\star$} is then underestimated with respect to the true slope $\beta_x$, with **attenuation factor** $\lambda$: 
+The **naive slope parameter** $\beta_x^\star$ is then underestimated with respect to the true slope $\beta_x$, with **attenuation factor** $\lambda$: 
 $$\beta_x^\star =\underbrace{ \left(\frac{\sigma_x^2}{\sigma_x^2 + \sigma_u^2}\right)}_{=\lambda} \beta_x$$
 $\rightarrow$ knowing $\sigma_u^2$ and $\sigma_x^2$, the correct slope can be retrieved!
 
@@ -305,34 +262,49 @@ Idea:
 
 Parameter of interest: $\beta_x$ (e.g. a regression slope).
 
-Problem: The respective covariate $x$ was estimated with error: $$w=x+u\ , \quad u\sim N(0,\sigma_u^2)$$
-
-```{r, message=FALSE, fig.width=3, fig.height=2, fig.align='center'}
+Problem: The respective explanatory variable $x$ was estimated with error: $$w=x+u\ , \quad u\sim N(0,\sigma_u^2)$$
+\small
+```{r, message=FALSE}
 set.seed(212356)
-sigmax <- 1
-sigmau <- 0.25
+sigmax <- 1    # variance in x
+sigmau <- 0.25 # measurement error
 
-# number of measurements
-n <- 4
+B <- 1 # True Beta
+n <- 4 # number of measurements
 
-xx <- seq(1,3,0.25)/4#c(1,4/3,4/2,4/1) / 4
-xx0 <- seq(0,3,0.05)
-yy <- sigmax/(sigmax + xx)+rnorm(length(xx),0,0.03)
-yy0 <- sigmax/(sigmax + xx0)
+# Additional observation error (simulated)
+s <- seq(0, 3, 0.3)/n # note s=0 is the observed
 
-par(mar=c(5,4,0.1,0.1), cex=0.5)
-plot(4*xx,yy,ylim=c(0.4,1.1),xlim=c(0,3.25),xlab=expression(sigma[u]^2),ylab=expression(beta[x]),cex.lab=1.24,cex=1.2)
-#axis(1,tick=T,at=c(0,xx*4))#,labels=c(0,1,1.33,2,4))
-points(4*xx[1],yy[1],pch=18,cex=2.5,col=2)
-points(0,1,pch=18,cex=2.5,col=3)
-legend("topright",legend=c("Naive","Corrected"),pch=18,col=c(2,3),cex=1.2)
-lines(4*xx0,yy0,lty=2,lwd=2)
-abline(v=1,lty=3,lwd=1)
-
-
+# Observed Betas ~ sigmau
+Bo <- B*sigmax/(sigmax + sigmau*(1+s))
 ```
+\normalsize
 
+## Plot
+\small
+```{r, message=FALSE, fig.width=3, fig.height=1.8, fig.align='center'}
+# plot the simulated data
+par(mar=c(3,4,0.5,1), mgp=c(2.2,0.8,0))
+plot((1+s), Bo, ylim=c(0.6,1), xlim=c(0,2), xlab=expression(sigma[u]^2),
+     ylab=expression(beta[x]))
+abline(v=1, lty=3)
+points((1+s[1]),Bo[1],pch=18,cex=2.5,col=2) # highlight Bo
+p <- recordPlot()
+```
+\normalsize
 
+## Find corrected Beta
+\small
+```{r, message=FALSE, fig.width=3, fig.height=1.8, fig.align='center'}
+print(p) # add plot again from above
+model <- lm(Bo ~ poly(s,2)) # fit a quadratic line
+newx <- seq(-1,1,0.1) # fit line to demonstrate fit
+lines((1+newx), predict(model,newdata=data.frame(s=newx)), lty=2)
+Be <- predict(model,newdata=data.frame(s=-1)) # B at s=-1 -> sigmau=0
+points(0,Be,pch=18,cex=2.5,col=4) # add to plot
+legend("topright",legend=c("Naive","Corrected"),pch=18,col=c(2,4),cex=0.7)
+```
+\normalsize
 
 ## Example of SIMEX use (part 1)
 
@@ -348,17 +320,17 @@ with
 **Problem:* The BMI was self-reported and thus suffers from measurement error! Not $x_i$ are observed, but rather 
 $$w_i = x_i + u_i \ , \quad u_i \sim N(0,4)$$ 
 
-* $\mathbf{z}=(z_1,\ldots, z_{100})^\top$ a binary covariate that indicates if the $i$-th person was a male ($z_i=1$) or female ($z_i=0$).
+* $\mathbf{z}=(z_1,\ldots, z_{100})^\top$ a binary explanatory variable that indicates if the $i$-th person was a male ($z_i=1$) or female ($z_i=0$).
 
 
 $\rightarrow$ Apply the SIMEX procedure!
 
 
 
-## Example of SIMEX use (part 2)
+## Simulated example
 
+\small
 ```{r}
-
 set.seed(3243445)
 x <- rnorm(100,24,4)
 w <- x + rnorm(100,0,2)
@@ -366,25 +338,23 @@ z <- ifelse(x>25,rbinom(100,1,0.7),rbinom(100,1,0.3))
 y <- -15 + 1.6*x - 2*z + rnorm(100,0,3)
 data <- data.frame(cbind(w,z,y))
 names(data) <- c("BMI","sex","bodyfat")
-# summary(lm(y ~ x + z))
-# summary(lm(y ~ w + z))
-
 ```
+\normalsize
 
-
+## Check out the results
 
 Use the error-prone BMI variable to fit a "naive" regression:
-
+\small
 ```{r}
 r.lm <- lm(bodyfat ~ BMI + sex,data,x=TRUE)
 summary(r.lm)$coef
 ```
+\normalsize
 
 
-
-
+## Now run simex procedure
 Then run the simex procedure using the `simex()` function from the respective package:
-
+\small
 ```{r}
 library(simex)
 r.simex <- simex(r.lm,
@@ -394,21 +364,18 @@ r.simex <- simex(r.lm,
                  B = 100,
                  fitting.method = "quadratic")
 summary(r.simex)$coef$asymptotic
-
 ```
-
+\normalsize
 
 
 ## Graphical results with quadratic extrapolation function:
-
-
-```{r echo = FALSE, message=FALSE, fig.width=5, fig.height=3, fig.align='center'}
+\small
+```{r echo = FALSE, message=FALSE, fig.width=5, fig.height=2.4, fig.align='center'}
 par(mfrow = c(1,3), mar = c(4,4,2,1))
 plot(r.simex)
 
 ```
-
-
+\normalsize
 
 **Note:** The `sex` variable has \emph{not} been mismeasured, nevertheless it is affected by the error in BMI!
 **Reason:** `sex` and BMI are correlated.
