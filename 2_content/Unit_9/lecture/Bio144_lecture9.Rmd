@@ -263,6 +263,8 @@ Suggestions:
 
 ## Suggestion 1: Graded interpretation of $p$-values
 
+** Potential addition for 2022**: https://www.cell.com/trends/ecology-evolution/fulltext/S0169-5347(21)00284-6
+
 Rather than a black-and-white decision ($p<0.05$), Martin Bland suggests to regard $p$-values as continuous measures for statistical evidence
 (Introduction to Medical Statistics, 4th edition, Oxford University Press): 
 

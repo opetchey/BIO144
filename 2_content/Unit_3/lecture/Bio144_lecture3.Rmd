@@ -31,6 +31,25 @@ The lecture material of today is based on the following literature:
 
 \ 
 
+
+## Downloading and opening data (CSV) files
+
+**Excel will try to be helpful, but in fact it can break things. Do not accept its help, unless you are sure.**
+
+
+\begin{center}
+\includegraphics[width=11cm]{images/excel_save_as.png}
+\end{center}
+
+
+
+
+## The lecture material of today is based on the following literature:
+
+\ 
+
+
+
 * Chapter 2 of _Lineare Regression_, p.7-20 (Stahel script)
 
 ## The body fat example
