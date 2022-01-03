@@ -1,32 +1,32 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2022/dev) (preloaded format=pdflatex 2021.7.20)  20 JUL 2021 09:31
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2022/dev) (preloaded format=pdflatex 2022.1.1)  3 JAN 2022 20:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **Bio144_lecture3.tex
 (./Bio144_lecture3.tex
-LaTeX2e <2021-06-01> patch level 1
-L3 programming layer <2021-07-12> (/Users/owenpetchey/Library/TinyTeX/texmf-dis
+LaTeX2e <2021-11-15> patch level 1
+L3 programming layer <2021-11-22> (/Users/owenpetchey/Library/TinyTeX/texmf-dis
 t/tex/latex/beamer/beamer.cls
-Document Class: beamer 2021/05/26 v3.63 A class for typesetting presentations
+Document Class: beamer 2021/10/18 v3.64 A class for typesetting presentations
 
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbasemodes
 .sty (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox
 .sty
 Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count182
+\etb@tempcnta=\count183
 )
 \beamer@tempbox=\box50
-\beamer@tempcount=\count183
-\c@beamerpauses=\count184
+\beamer@tempcount=\count184
+\c@beamerpauses=\count185
 
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbasedecod
 e.sty
-\beamer@slideinframe=\count185
-\beamer@minimum=\count186
+\beamer@slideinframe=\count186
+\beamer@minimum=\count187
 \beamer@decode@box=\box51
 )
 \beamer@commentbox=\box52
-\beamer@modecount=\count187
+\beamer@modecount=\count188
 ) (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/generic/iftex/ifpdf.sty
 Package: ifpdf 2019/10/25 v3.4 ifpdf legacy package. Use iftex instead.
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
@@ -55,26 +55,26 @@ Package: iftex 2020/03/06 v1.0d TeX engine tests
 \beamer@sectionbox=\box56
 \beamer@logobox=\box57
 \beamer@linebox=\box58
-\beamer@sectioncount=\count188
-\beamer@subsubsectionmax=\count189
-\beamer@subsectionmax=\count190
-\beamer@sectionmax=\count191
-\beamer@totalheads=\count192
-\beamer@headcounter=\count193
-\beamer@partstartpage=\count194
-\beamer@sectionstartpage=\count195
-\beamer@subsectionstartpage=\count196
-\beamer@animationtempa=\count197
-\beamer@animationtempb=\count198
-\beamer@xpos=\count199
-\beamer@ypos=\count266
-\beamer@ypos@offset=\count267
-\beamer@showpartnumber=\count268
-\beamer@currentsubsection=\count269
-\beamer@coveringdepth=\count270
-\beamer@sectionadjust=\count271
-\beamer@toclastsection=\count272
-\beamer@tocsectionnumber=\count273
+\beamer@sectioncount=\count189
+\beamer@subsubsectionmax=\count190
+\beamer@subsectionmax=\count191
+\beamer@sectionmax=\count192
+\beamer@totalheads=\count193
+\beamer@headcounter=\count194
+\beamer@partstartpage=\count195
+\beamer@sectionstartpage=\count196
+\beamer@subsectionstartpage=\count197
+\beamer@animationtempa=\count198
+\beamer@animationtempb=\count199
+\beamer@xpos=\count266
+\beamer@ypos=\count267
+\beamer@ypos@offset=\count268
+\beamer@showpartnumber=\count269
+\beamer@currentsubsection=\count270
+\beamer@coveringdepth=\count271
+\beamer@sectionadjust=\count272
+\beamer@toclastsection=\count273
+\beamer@tocsectionnumber=\count274
 
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbaseoptio
 ns.sty (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/graphics/keyval
@@ -89,9 +89,9 @@ Package: geometry 2020/01/02 v5.9 Page Geometry
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/generic/iftex/ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 )
-\Gm@cnth=\count274
-\Gm@cntv=\count275
-\c@Gm@tempcnt=\count276
+\Gm@cnth=\count275
+\Gm@cntv=\count276
+\c@Gm@tempcnt=\count277
 \Gm@bindingoffset=\dimen154
 \Gm@wd@mp=\dimen155
 \Gm@odd@mp=\dimen156
@@ -102,16 +102,16 @@ Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 \Gm@layoutvoffset=\dimen161
 \Gm@dimlist=\toks17
 ) (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/base/size11.clo
-File: size11.clo 2021/02/12 v1.4n Standard LaTeX file (size option)
+File: size11.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
 )
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/pgf/basiclayer/pgfcore
 .sty (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/graphics/graphicx
 .sty
-Package: graphicx 2020/12/05 v1.2c Enhanced LaTeX Graphics (DPC,SPQR)
+Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2021/03/04 v1.4d Standard LaTeX Graphics (DPC,SPQR)
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/graphics/trig.sty
-Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
 )
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/graphics.
 cfg
@@ -173,14 +173,14 @@ sfiltered.code.tex
 \pgf@yd=\dimen175
 \w@pgf@writea=\write3
 \r@pgf@reada=\read2
-\c@pgf@counta=\count277
-\c@pgf@countb=\count278
-\c@pgf@countc=\count279
-\c@pgf@countd=\count280
+\c@pgf@counta=\count278
+\c@pgf@countb=\count279
+\c@pgf@countc=\count280
+\c@pgf@countd=\count281
 \t@pgf@toka=\toks22
 \t@pgf@tokb=\toks23
 \t@pgf@tokc=\toks24
-\pgf@sys@id@count=\count281
+\pgf@sys@id@count=\count282
 
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgf.
 cfg
@@ -199,28 +199,28 @@ File: pgfsys-common-pdf.def 2021/05/15 v3.1.9a (3.1.9a)
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgfs
 yssoftpath.code.tex
 File: pgfsyssoftpath.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgfsyssoftpath@smallbuffer@items=\count282
-\pgfsyssoftpath@bigbuffer@items=\count283
+\pgfsyssoftpath@smallbuffer@items=\count283
+\pgfsyssoftpath@bigbuffer@items=\count284
 )
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgfs
 ysprotocol.code.tex
 File: pgfsysprotocol.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 )) (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/xcolor/xcolor.sty
-Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
+Package: xcolor 2021/10/31 v2.13 LaTeX color extensions (UK)
 
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
-Package xcolor Info: Driver file: pdftex.def on input line 225.
-Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
-Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1352.
-Package xcolor Info: Model `RGB' extended on input line 1364.
-Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1366.
-Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1367.
-Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1368.
-Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
-Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
-Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
+Package xcolor Info: Driver file: pdftex.def on input line 227.
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1352.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1356.
+Package xcolor Info: Model `RGB' extended on input line 1368.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1370.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1371.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1372.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1373.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1374.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1375.
 )
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfco
 re.code.tex
@@ -235,7 +235,7 @@ e.tex
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathpars
 er.code.tex
 \pgfmath@dimen=\dimen176
-\pgfmath@count=\count284
+\pgfmath@count=\count285
 \pgfmath@box=\box60
 \pgfmath@toks=\toks25
 \pgfmath@stack@operand=\toks26
@@ -261,7 +261,7 @@ tions.misc.code.tex)
 tions.integerarithmetics.code.tex)))
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfloa
 t.code.tex
-\c@pgfmathroundto@lastzeros=\count285
+\c@pgfmathroundto@lastzeros=\count286
 ))
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfint.code
 .tex)
@@ -301,7 +301,7 @@ File: pgfcorescopes.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 \pgfpic=\box61
 \pgf@hbox=\box62
 \pgf@layerbox@main=\box63
-\pgf@picture@serial@count=\count286
+\pgf@picture@serial@count=\count287
 )
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfco
 regraphicstate.code.tex
@@ -336,8 +336,8 @@ File: pgfcorearrows.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 reshade.code.tex
 File: pgfcoreshade.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 \pgf@max=\dimen256
-\pgf@sys@shading@range@num=\count287
-\pgf@shadingcount=\count288
+\pgf@sys@shading@range@num=\count288
+\pgf@shadingcount=\count289
 )
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfco
 reimage.code.tex
@@ -367,8 +367,8 @@ File: pgfcorerdf.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/pgf/utilities/xxcolor.
 sty
 Package: xxcolor 2003/10/24 ver 0.1
-\XC@nummixins=\count289
-\XC@countmixins=\count290
+\XC@nummixins=\count290
+\XC@countmixins=\count291
 ) (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/base/atbegshi-ltx.st
 y
 Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
@@ -417,8 +417,8 @@ y
 Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
 )
 \@linkdim=\dimen257
-\Hy@linkcounter=\count291
-\Hy@pagecounter=\count292
+\Hy@linkcounter=\count292
+\Hy@pagecounter=\count293
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2021-06-07 v7.00m Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
@@ -436,7 +436,7 @@ Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 y
 Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
-\Hy@SavedSpaceFactor=\count293
+\Hy@SavedSpaceFactor=\count294
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
 File: puenc.def 2021-06-07 v7.00m Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
@@ -453,7 +453,7 @@ Package hyperref Info: Plain pages OFF on input line 4207.
 Package hyperref Info: Backreferencing OFF on input line 4212.
 Package hyperref Info: Implicit mode OFF; no redefinition of LaTeX internals.
 Package hyperref Info: Bookmarks ON on input line 4445.
-\c@Hy@tempcnt=\count294
+\c@Hy@tempcnt=\count295
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip16
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
@@ -468,7 +468,7 @@ c.sty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
 )
 ))
-\Fld@menulength=\count295
+\Fld@menulength=\count296
 \Field@Width=\dimen259
 \Fld@charsize=\dimen260
 Package hyperref Info: Hyper figures OFF on input line 6076.
@@ -480,7 +480,7 @@ Package hyperref Info: Link coloring with OCG OFF on input line 6101.
 Package hyperref Info: PDF/A mode OFF on input line 6106.
 LaTeX Info: Redefining \ref on input line 6146.
 LaTeX Info: Redefining \pageref on input line 6150.
-\Hy@abspage=\count296
+\Hy@abspage=\count297
 
 Package hyperref Message: Stopped early.
 
@@ -490,12 +490,12 @@ Package hyperref Info: Driver (autodetected): hpdftex.
 File: hpdftex.def 2021-06-07 v7.00m Hyperref driver for pdfTeX
 
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/base/atveryend-ltx.sty
-Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atvery packag
-e
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend pac
+kage
 with kernel methods
 )
-\Fld@listcount=\count297
-\c@bookmark@seq@number=\count298
+\Fld@listcount=\count298
+\c@bookmark@seq@number=\count299
 
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfi
 lecheck.sty
@@ -537,36 +537,36 @@ sty)
 reens.sty)
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbaseoverl
 ay.sty
-\beamer@argscount=\count299
+\beamer@argscount=\count300
 \beamer@lastskipcover=\skip50
-\beamer@trivlistdepth=\count300
+\beamer@trivlistdepth=\count301
 )
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbasetitle
 .sty)
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbasesecti
 on.sty
-\c@lecture=\count301
-\c@part=\count302
-\c@section=\count303
-\c@subsection=\count304
-\c@subsubsection=\count305
+\c@lecture=\count302
+\c@part=\count303
+\c@section=\count304
+\c@subsection=\count305
+\c@subsubsection=\count306
 )
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbaseframe
 .sty
 \beamer@framebox=\box65
 \beamer@frametitlebox=\box66
 \beamer@zoombox=\box67
-\beamer@zoomcount=\count306
-\beamer@zoomframecount=\count307
+\beamer@zoomcount=\count307
+\beamer@zoomframecount=\count308
 \beamer@frametextheight=\dimen261
-\c@subsectionslide=\count308
+\c@subsectionslide=\count309
 \beamer@frametopskip=\skip51
 \beamer@framebottomskip=\skip52
 \beamer@frametopskipautobreak=\skip53
 \beamer@framebottomskipautobreak=\skip54
 \beamer@envbody=\toks29
 \framewidth=\dimen262
-\c@framenumber=\count309
+\c@framenumber=\count310
 )
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbaseverba
 tim.sty
@@ -575,7 +575,7 @@ tim.sty
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbaseframe
 size.sty
 \beamer@splitbox=\box68
-\beamer@autobreakcount=\count310
+\beamer@autobreakcount=\count311
 \beamer@autobreaklastheight=\dimen263
 \beamer@frametitletoks=\toks30
 \beamer@framesubtitletoks=\toks31
@@ -619,8 +619,8 @@ Package: enumerate 2015/07/23 v3.00 enumerate extensions (DPC)
 \@enLab=\toks33
 )
 \beamer@bibiconwidth=\skip55
-\c@figure=\count311
-\c@table=\count312
+\c@figure=\count312
+\c@table=\count313
 \abovecaptionskip=\skip56
 \belowcaptionskip=\skip57
 )
@@ -631,11 +631,11 @@ ation.sty
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbasetheor
 ems.sty (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsmat
 h.sty
-Package: amsmath 2021/04/20 v2.17j AMS math features
+Package: amsmath 2021/10/15 v2.17l AMS math features
 \@mathmargin=\skip58
 For additional information on amsmath, use the `?' option.
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.sty
-Package: amstext 2000/06/29 v2.01 AMS text
+Package: amstext 2021/08/26 v2.01 AMS text
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks34
@@ -644,15 +644,15 @@ File: amsgen.sty 1999/11/30 v2.0 generic functions
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 \pmbraise@=\dimen274
 ) (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty
-Package: amsopn 2016/03/08 v2.02 operator names
+Package: amsopn 2021/08/26 v2.02 operator names
 )
-\inf@bad=\count313
+\inf@bad=\count314
 LaTeX Info: Redefining \frac on input line 234.
-\uproot@=\count314
-\leftroot@=\count315
+\uproot@=\count315
+\leftroot@=\count316
 LaTeX Info: Redefining \overline on input line 399.
-\classnum@=\count316
-\DOTSCASE@=\count317
+\classnum@=\count317
+\DOTSCASE@=\count318
 LaTeX Info: Redefining \ldots on input line 496.
 LaTeX Info: Redefining \dots on input line 499.
 LaTeX Info: Redefining \cdots on input line 620.
@@ -661,15 +661,15 @@ LaTeX Info: Redefining \cdots on input line 620.
 \big@size=\dimen275
 LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
-\macc@depth=\count318
-\c@MaxMatrixCols=\count319
+\macc@depth=\count319
+\c@MaxMatrixCols=\count320
 \dotsspace@=\muskip17
-\c@parentequation=\count320
-\dspbrk@lvl=\count321
+\c@parentequation=\count321
+\dspbrk@lvl=\count322
 \tag@help=\toks35
-\row@=\count322
-\column@=\count323
-\maxfields@=\count324
+\row@=\count323
+\column@=\count324
+\maxfields@=\count325
 \andhelp@=\toks36
 \eqnshift@=\dimen276
 \alignsep@=\dimen277
@@ -681,8 +681,8 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
 \multlinegap=\skip59
 \multlinetaggap=\skip60
 \mathdisplay@stack=\toks38
-LaTeX Info: Redefining \[ on input line 2923.
-LaTeX Info: Redefining \] on input line 2924.
+LaTeX Info: Redefining \[ on input line 2938.
+LaTeX Info: Redefining \] on input line 2939.
 ) (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/amscls/amsthm.sty
 Package: amsthm 2020/05/29 v2.20.6
 \thm@style=\toks39
@@ -695,7 +695,7 @@ Package: amsthm 2020/05/29 v2.20.6
 \thm@headsep=\skip63
 \dth@everypar=\toks44
 )
-\c@theorem=\count325
+\c@theorem=\count326
 )
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbasetheme
 s.sty))
@@ -717,23 +717,23 @@ edefault.sty)))
 Package: pgfpages 2011/01/05 ver 0.02
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/tools/calc.sty
 Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count326
-\calc@Bcount=\count327
+\calc@Acount=\count327
+\calc@Bcount=\count328
 \calc@Adimen=\dimen284
 \calc@Bdimen=\dimen285
 \calc@Askip=\skip64
 \calc@Bskip=\skip65
 LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
-\calc@Ccount=\count328
+\calc@Ccount=\count329
 \calc@Cskip=\skip66
 )
-\pgf@logicalpages=\count329
-\pgf@firstshipout=\count330
-\pgf@lastshipout=\count331
-\pgf@currentshipout=\count332
-\pgf@cpn=\count333
-\pgf@shipoutnextto=\count334
+\pgf@logicalpages=\count330
+\pgf@firstshipout=\count331
+\pgf@lastshipout=\count332
+\pgf@currentshipout=\count333
+\pgf@cpn=\count334
+\pgf@shipoutnextto=\count335
 \pgfphysicalheight=\dimen286
 \pgfphysicalwidth=\dimen287
 \pgfpages@shipoutbox=\box75
@@ -790,35 +790,38 @@ Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
 )
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/microtype/microtype.st
 y
-Package: microtype 2021/03/14 v2.8c Micro-typographical refinements (RS)
+Package: microtype 2021/12/10 v3.0b Micro-typographical refinements (RS)
 \MT@toks=\toks47
-\MT@count=\count335
-LaTeX Info: Redefining \textls on input line 790.
+\MT@count=\count336
+\MT@tempbox=\box76
+LaTeX Info: Redefining \leftprotrusion on input line 1010.
+LaTeX Info: Redefining \rightprotrusion on input line 1018.
+LaTeX Info: Redefining \textls on input line 1173.
 \MT@outer@kern=\dimen288
-LaTeX Info: Redefining \textmicrotypecontext on input line 1374.
-\MT@listname@count=\count336
+LaTeX Info: Redefining \textmicrotypecontext on input line 1759.
+\MT@listname@count=\count337
 
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/microtype/microtype-pd
 ftex.def
-File: microtype-pdftex.def 2021/03/14 v2.8c Definitions specific to pdftex (RS)
+File: microtype-pdftex.def 2021/12/10 v3.0b Definitions specific to pdftex (RS)
 
-LaTeX Info: Redefining \lsstyle on input line 915.
-LaTeX Info: Redefining \lslig on input line 915.
+LaTeX Info: Redefining \lsstyle on input line 897.
+LaTeX Info: Redefining \lslig on input line 897.
 \MT@outer@space=\skip67
 )
 Package microtype Info: Loading configuration file microtype.cfg.
 
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/microtype/microtype.cf
 g
-File: microtype.cfg 2021/03/14 v2.8c microtype main configuration file (RS)
+File: microtype.cfg 2021/12/10 v3.0b microtype main configuration file (RS)
 )) (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/fancyvrb/fancyvrb.s
 ty
-Package: fancyvrb 2021/01/20 v3.7 verbatim text (tvz,hv)
-\FV@CodeLineNo=\count337
+Package: fancyvrb 2021/12/21 4.1b verbatim text (tvz,hv)
+\FV@CodeLineNo=\count338
 \FV@InFile=\read3
-\FV@TabBox=\box76
-\c@FancyVerbLine=\count338
-\FV@StepNumber=\count339
+\FV@TabBox=\box77
+\c@FancyVerbLine=\count339
+\FV@StepNumber=\count340
 \FV@OutFile=\write5
 ) (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/framed/framed.sty
 Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
@@ -828,29 +831,28 @@ Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
 \FrameRule=\dimen291
 \FrameSep=\dimen292
 ) (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/tools/multicol.sty
-Package: multicol 2019/12/09 v1.8y multicolumn formatting (FMi)
-\c@tracingmulticols=\count340
-\mult@box=\box77
+Package: multicol 2021/10/28 v1.9b multicolumn formatting (FMi)
+\c@tracingmulticols=\count341
+\mult@box=\box78
 \multicol@leftmargin=\dimen293
-\c@unbalance=\count341
-\c@collectmore=\count342
-\doublecol@number=\count343
-\multicoltolerance=\count344
-\multicolpretolerance=\count345
+\c@unbalance=\count342
+\c@collectmore=\count343
+\doublecol@number=\count344
+\multicoltolerance=\count345
+\multicolpretolerance=\count346
 \full@width=\dimen294
 \page@free=\dimen295
 \premulticols=\dimen296
 \postmulticols=\dimen297
 \multicolsep=\skip69
 \multicolbaselineskip=\skip70
-\partial@page=\box78
-\last@line=\box79
+\partial@page=\box79
+\last@line=\box80
 \maxbalancingoverflow=\dimen298
-\mult@rightbox=\box80
-\mult@grightbox=\box81
-\mult@gfirstbox=\box82
+\mult@rightbox=\box81
+\mult@grightbox=\box82
 \mult@firstbox=\box83
-\@tempa=\box84
+\mult@gfirstbox=\box84
 \@tempa=\box85
 \@tempa=\box86
 \@tempa=\box87
@@ -887,20 +889,20 @@ Package: multicol 2019/12/09 v1.8y multicolumn formatting (FMi)
 \@tempa=\box118
 \@tempa=\box119
 \@tempa=\box120
-\c@minrows=\count346
-\c@columnbadness=\count347
-\c@finalcolumnbadness=\count348
+\c@minrows=\count347
+\c@columnbadness=\count348
+\c@finalcolumnbadness=\count349
 \last@try=\dimen299
 \multicolovershoot=\dimen300
 \multicolundershoot=\dimen301
 \mult@nat@firstbox=\box121
 \colbreak@box=\box122
-\mc@col@check@num=\count349
+\mc@col@check@num=\count350
 )
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pd
 ftex.def
-File: l3backend-pdftex.def 2021-07-12 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count350
+File: l3backend-pdftex.def 2021-12-14 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count351
 \l__pdf_internal_box=\box123
 ) (./Bio144_lecture3.aux)
 \openout1 = `Bio144_lecture3.aux'.
@@ -979,7 +981,7 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 tlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count351
+\c@section@level=\count352
 )
 LaTeX Info: Redefining \ref on input line 161.
 LaTeX Info: Redefining \pageref on input line 161.
@@ -1060,6 +1062,12 @@ theorem-dictionary-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
 )
 LaTeX Info: Redefining \microtypecontext on input line 161.
+Package microtype Info: Applying patch `item' on input line 161.
+Package microtype Info: Applying patch `toc' on input line 161.
+Package microtype Info: Applying patch `eqnum' on input line 161.
+
+Package microtype Warning: Unable to apply patch `footnote' on input line 161.
+
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using protrusion set `basicmath'.
@@ -1088,8 +1096,20 @@ Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 162.
 
 {/Users/owenpetchey/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.ma
 p} <./images/BIO144_logo.jpeg>]
+<images/excel_save_as.png, id=26, 1182.4175pt x 510.90875pt>
+File: images/excel_save_as.png Graphic file (type png)
+<use images/excel_save_as.png>
+Package pdftex.def Info: images/excel_save_as.png  used on input line 174.
+(pdftex.def)             Requested size: 312.9803pt x 135.23425pt.
+File: images/BIO144_logo.jpeg Graphic file (type jpg)
+<use images/BIO144_logo.jpeg>
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 174.
+(pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
+[2
+
+ <./images/excel_save_as.png>]
 LaTeX Font Info:    Trying to load font information for OT1+lmss on input line 
-181.
+193.
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/lm/ot1lmss.fd
 File: ot1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
@@ -1098,34 +1118,34 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
-81.
+93.
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-181.
+193.
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-181.
+193.
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 181.
+(Font)              <10.95> on input line 193.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 181.
+(Font)              <8> on input line 193.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 181.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 181
+(Font)              <6> on input line 193.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 193
 .
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 181
+LaTeX Font Info:    Trying to load font information for U+msb on input line 193
 .
 (/Users/owenpetchey/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -1133,264 +1153,245 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10.95> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 181.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 193.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <8> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 181.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 193.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <6> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 181.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 193.
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 181.
-(pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[2
-
-]
-File: images/BIO144_logo.jpeg Graphic file (type jpg)
-<use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 188.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 193.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [3
 
 ]
-<images/excel_save_as.png, id=42, 1182.4175pt x 510.90875pt>
-File: images/excel_save_as.png Graphic file (type png)
-<use images/excel_save_as.png>
-Package pdftex.def Info: images/excel_save_as.png  used on input line 200.
-(pdftex.def)             Requested size: 312.9803pt x 135.23425pt.
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 200.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 205.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [4
 
- <./images/excel_save_as.png>]
-File: images/BIO144_logo.jpeg Graphic file (type jpg)
-<use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 212.
-(pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[5
-
 ]
-<Bio144_lecture3_files/figure-beamer/unnamed-chunk-2-1.pdf, id=60, 252.945pt x 
+<Bio144_lecture3_files/figure-beamer/unnamed-chunk-2-1.pdf, id=53, 252.945pt x 
 216.81pt>
 File: Bio144_lecture3_files/figure-beamer/unnamed-chunk-2-1.pdf Graphic file (t
 ype pdf)
 <use Bio144_lecture3_files/figure-beamer/unnamed-chunk-2-1.pdf>
 Package pdftex.def Info: Bio144_lecture3_files/figure-beamer/unnamed-chunk-2-1.
-pdf  used on input line 225.
+pdf  used on input line 218.
 (pdftex.def)             Requested size: 142.26378pt x 121.94208pt.
 
-Overfull \vbox (9.49565pt too high) detected at line 225
+Overfull \vbox (9.49565pt too high) detected at line 218
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 225.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 218.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[6
+[5
 
  <./Bio144_lecture3_files/figure-beamer/unnamed-chunk-2-1.pdf>]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 245.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 238.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[7
+[6
 
 ]
-<Bio144_lecture3_files/figure-beamer/unnamed-chunk-3-1.pdf, id=84, 252.945pt x 
+<Bio144_lecture3_files/figure-beamer/unnamed-chunk-3-1.pdf, id=76, 252.945pt x 
 216.81pt>
 File: Bio144_lecture3_files/figure-beamer/unnamed-chunk-3-1.pdf Graphic file (t
 ype pdf)
 <use Bio144_lecture3_files/figure-beamer/unnamed-chunk-3-1.pdf>
 Package pdftex.def Info: Bio144_lecture3_files/figure-beamer/unnamed-chunk-3-1.
-pdf  used on input line 255.
+pdf  used on input line 248.
 (pdftex.def)             Requested size: 184.9429pt x 158.5247pt.
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 255.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 248.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[8
+[7
 
  <./Bio144_lecture3_files/figure-beamer/unnamed-chunk-3-1.pdf>]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 276.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 269.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[9
+[8
 
 ]
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 302--302
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 295--295
 [][][][][][][]  
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 302.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 295.
+(pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
+[9
+
+]
+File: images/BIO144_logo.jpeg Graphic file (type jpg)
+<use images/BIO144_logo.jpeg>
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 310.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [10
 
 ]
-File: images/BIO144_logo.jpeg Graphic file (type jpg)
-<use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 317.
-(pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[11
-
-]
-<pictures/regrAssumptions.jpg, id=122, 725.71124pt x 365.365pt>
+<pictures/regrAssumptions.jpg, id=115, 725.71124pt x 365.365pt>
 File: pictures/regrAssumptions.jpg Graphic file (type jpg)
 <use pictures/regrAssumptions.jpg>
-Package pdftex.def Info: pictures/regrAssumptions.jpg  used on input line 329.
+Package pdftex.def Info: pictures/regrAssumptions.jpg  used on input line 322.
 (pdftex.def)             Requested size: 312.9803pt x 157.57219pt.
 
-Overfull \vbox (9.80072pt too high) detected at line 329
+Overfull \vbox (9.80072pt too high) detected at line 322
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 329.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 322.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[12
+[11
 
  <./pictures/regrAssumptions.jpg>]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 344.
+(Font)              <5> on input line 337.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <5> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 344.
-<Bio144_lecture3_files/figure-beamer/unnamed-chunk-4-1.pdf, id=131, 252.945pt x
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 337.
+<Bio144_lecture3_files/figure-beamer/unnamed-chunk-4-1.pdf, id=124, 252.945pt x
  237.88875pt>
 File: Bio144_lecture3_files/figure-beamer/unnamed-chunk-4-1.pdf Graphic file (t
 ype pdf)
 <use Bio144_lecture3_files/figure-beamer/unnamed-chunk-4-1.pdf>
 Package pdftex.def Info: Bio144_lecture3_files/figure-beamer/unnamed-chunk-4-1.
-pdf  used on input line 344.
+pdf  used on input line 337.
 (pdftex.def)             Requested size: 142.26378pt x 133.79756pt.
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 344.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 337.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[13
+[12
 
  <./Bio144_lecture3_files/figure-beamer/unnamed-chunk-4-1.pdf>]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 367.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 360.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[14
+[13
 
 ]
-<Bio144_lecture3_files/figure-beamer/unnamed-chunk-5-1.pdf, id=153, 411.5375pt 
+<Bio144_lecture3_files/figure-beamer/unnamed-chunk-5-1.pdf, id=146, 411.5375pt 
 x 361.35pt>
 File: Bio144_lecture3_files/figure-beamer/unnamed-chunk-5-1.pdf Graphic file (t
 ype pdf)
 <use Bio144_lecture3_files/figure-beamer/unnamed-chunk-5-1.pdf>
 Package pdftex.def Info: Bio144_lecture3_files/figure-beamer/unnamed-chunk-5-1.
-pdf  used on input line 372.
+pdf  used on input line 365.
 (pdftex.def)             Requested size: 284.52756pt x 249.828pt.
 
-Overfull \vbox (40.78154pt too high) detected at line 372
+Overfull \vbox (40.78154pt too high) detected at line 365
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 372.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 365.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[15
+[14
 
  <./Bio144_lecture3_files/figure-beamer/unnamed-chunk-5-1.pdf>]
-<Bio144_lecture3_files/figure-beamer/unnamed-chunk-6-1.pdf, id=167, 411.5375pt 
+<Bio144_lecture3_files/figure-beamer/unnamed-chunk-6-1.pdf, id=160, 411.5375pt 
 x 361.35pt>
 File: Bio144_lecture3_files/figure-beamer/unnamed-chunk-6-1.pdf Graphic file (t
 ype pdf)
 <use Bio144_lecture3_files/figure-beamer/unnamed-chunk-6-1.pdf>
 Package pdftex.def Info: Bio144_lecture3_files/figure-beamer/unnamed-chunk-6-1.
-pdf  used on input line 377.
+pdf  used on input line 370.
 (pdftex.def)             Requested size: 284.52756pt x 249.828pt.
 
-Overfull \vbox (40.78154pt too high) detected at line 377
+Overfull \vbox (40.78154pt too high) detected at line 370
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 377.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 370.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[16
+[15
 
  <./Bio144_lecture3_files/figure-beamer/unnamed-chunk-6-1.pdf>]
-<Bio144_lecture3_files/figure-beamer/unnamed-chunk-7-1.pdf, id=180, 411.5375pt 
+<Bio144_lecture3_files/figure-beamer/unnamed-chunk-7-1.pdf, id=173, 411.5375pt 
 x 361.35pt>
 File: Bio144_lecture3_files/figure-beamer/unnamed-chunk-7-1.pdf Graphic file (t
 ype pdf)
 <use Bio144_lecture3_files/figure-beamer/unnamed-chunk-7-1.pdf>
 Package pdftex.def Info: Bio144_lecture3_files/figure-beamer/unnamed-chunk-7-1.
-pdf  used on input line 382.
+pdf  used on input line 375.
 (pdftex.def)             Requested size: 284.52756pt x 249.828pt.
 
-Overfull \vbox (40.78154pt too high) detected at line 382
+Overfull \vbox (40.78154pt too high) detected at line 375
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 382.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 375.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[17
+[16
 
  <./Bio144_lecture3_files/figure-beamer/unnamed-chunk-7-1.pdf>]
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 400--400
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 393--393
 [][][][][][][]  
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 400.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 393.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[18
+[17
 
 ]
-<Bio144_lecture3_files/figure-beamer/unnamed-chunk-8-1.pdf, id=200, 411.5375pt 
+<Bio144_lecture3_files/figure-beamer/unnamed-chunk-8-1.pdf, id=193, 411.5375pt 
 x 361.35pt>
 File: Bio144_lecture3_files/figure-beamer/unnamed-chunk-8-1.pdf Graphic file (t
 ype pdf)
 <use Bio144_lecture3_files/figure-beamer/unnamed-chunk-8-1.pdf>
 Package pdftex.def Info: Bio144_lecture3_files/figure-beamer/unnamed-chunk-8-1.
-pdf  used on input line 405.
+pdf  used on input line 398.
 (pdftex.def)             Requested size: 284.52756pt x 249.828pt.
 
-Overfull \vbox (40.78154pt too high) detected at line 405
+Overfull \vbox (40.78154pt too high) detected at line 398
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 405.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 398.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[19
+[18
 
  <./Bio144_lecture3_files/figure-beamer/unnamed-chunk-8-1.pdf>]
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 433--433
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 426--426
 [][][][][][][]  
  []
 
 
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 433--433
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 426--426
 [][][][][][][]  
  []
 
 
-Overfull \vbox (5.16971pt too high) detected at line 433
+Overfull \vbox (5.16971pt too high) detected at line 426
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 433.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 426.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[20
+[19
 
 ]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 443.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 436.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[21
+[20
 
 ]
 \openout4 = `Bio144_lecture3.vrb'.
@@ -1403,46 +1404,46 @@ File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ))
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 478.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 471.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[22
+[21
 
 ]
-<Bio144_lecture3_files/figure-beamer/unnamed-chunk-11-1.pdf, id=237, 252.945pt 
+<Bio144_lecture3_files/figure-beamer/unnamed-chunk-11-1.pdf, id=230, 252.945pt 
 x 216.81pt>
 File: Bio144_lecture3_files/figure-beamer/unnamed-chunk-11-1.pdf Graphic file (
 type pdf)
 <use Bio144_lecture3_files/figure-beamer/unnamed-chunk-11-1.pdf>
 Package pdftex.def Info: Bio144_lecture3_files/figure-beamer/unnamed-chunk-11-1
-.pdf  used on input line 488.
+.pdf  used on input line 481.
 (pdftex.def)             Requested size: 184.9429pt x 158.5247pt.
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 488.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 481.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[23
+[22
 
  <./Bio144_lecture3_files/figure-beamer/unnamed-chunk-11-1.pdf>]
 \openout4 = `Bio144_lecture3.vrb'.
 
 (./Bio144_lecture3.vrb)
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <14.4> on input line 520.
+(Font)              <14.4> on input line 513.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 520.
+(Font)              <10> on input line 513.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 520.
+(Font)              <7> on input line 513.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <14.4> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 520.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 513.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 520.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 513.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <7> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 520.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 513.
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 520.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 513.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[24
+[23
 
 ]
 \openout4 = `Bio144_lecture3.vrb'.
@@ -1450,7 +1451,7 @@ Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 520.
 (./Bio144_lecture3.vrb
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <6> not available
 (Font)              Font shape `T1/lmtt/b/n' tried instead on input line 14.
-<Bio144_lecture3_files/figure-beamer/unnamed-chunk-15-1.pdf, id=259, 433.62pt x
+<Bio144_lecture3_files/figure-beamer/unnamed-chunk-15-1.pdf, id=252, 433.62pt x
  216.81pt>
 File: Bio144_lecture3_files/figure-beamer/unnamed-chunk-15-1.pdf Graphic file (
 type pdf)
@@ -1459,56 +1460,56 @@ Package pdftex.def Info: Bio144_lecture3_files/figure-beamer/unnamed-chunk-15-1
 .pdf  used on input line 27.
 (pdftex.def)             Requested size: 142.26378pt x 71.13068pt.
 )
-Overfull \vbox (13.94592pt too high) detected at line 550
+Overfull \vbox (13.94592pt too high) detected at line 543
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 550.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 543.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[25
+[24
 
  <./Bio144_lecture3_files/figure-beamer/unnamed-chunk-15-1.pdf>]
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 575--575
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 568--568
 [][][][][][][]  
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 575.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 568.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[26
+[25
 
 ]
 
 LaTeX Warning: The counter will not be printed.
-             The label is: d) on input line 607.
+             The label is: d) on input line 600.
 
 
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 607--607
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 600--600
 [][][][][][][]  
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 607.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 600.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[27
+[26
 
 ]
-<Bio144_lecture3_files/figure-beamer/unnamed-chunk-16-1.pdf, id=289, 289.08pt x
+<Bio144_lecture3_files/figure-beamer/unnamed-chunk-16-1.pdf, id=281, 289.08pt x
  289.08pt>
 File: Bio144_lecture3_files/figure-beamer/unnamed-chunk-16-1.pdf Graphic file (
 type pdf)
 <use Bio144_lecture3_files/figure-beamer/unnamed-chunk-16-1.pdf>
 Package pdftex.def Info: Bio144_lecture3_files/figure-beamer/unnamed-chunk-16-1
-.pdf  used on input line 616.
+.pdf  used on input line 609.
 (pdftex.def)             Requested size: 156.49014pt x 156.48903pt.
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 616.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 609.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[28
+[27
 
  <./Bio144_lecture3_files/figure-beamer/unnamed-chunk-16-1.pdf>]
 \openout4 = `Bio144_lecture3.vrb'.
@@ -1516,60 +1517,60 @@ Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 616.
 (./Bio144_lecture3.vrb)
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 651.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 644.
+(pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
+[28
+
+]
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 666--666
+[][][][][][][]  
+ []
+
+File: images/BIO144_logo.jpeg Graphic file (type jpg)
+<use images/BIO144_logo.jpeg>
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 666.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [29
 
 ]
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 673--673
-[][][][][][][]  
- []
-
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 673.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 690.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [30
 
 ]
+\openout4 = `Bio144_lecture3.vrb'.
+
+(./Bio144_lecture3.vrb)
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 697.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 713.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [31
 
 ]
-\openout4 = `Bio144_lecture3.vrb'.
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 736--736
+[][][][][][][]  
+ []
 
-(./Bio144_lecture3.vrb)
+
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 736--736
+[][][][][][][]  
+ []
+
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 720.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 736.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [32
 
 ]
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 743--743
-[][][][][][][]  
- []
-
-
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 743--743
-[][][][][][][]  
- []
-
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 743.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 773.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [33
-
-]
-File: images/BIO144_logo.jpeg Graphic file (type jpg)
-<use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 780.
-(pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[34
 
 ]
 \openout4 = `Bio144_lecture3.vrb'.
@@ -1577,61 +1578,61 @@ Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 780.
 (./Bio144_lecture3.vrb)
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 806.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 799.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[35
+[34
 
 ]
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 821--821
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 814--814
 [][][][][][][]  
  []
 
-<Bio144_lecture3_files/figure-beamer/unnamed-chunk-21-1.pdf, id=356, 722.7pt x 
+<Bio144_lecture3_files/figure-beamer/unnamed-chunk-21-1.pdf, id=349, 722.7pt x 
 505.89pt>
 File: Bio144_lecture3_files/figure-beamer/unnamed-chunk-21-1.pdf Graphic file (
 type pdf)
 <use Bio144_lecture3_files/figure-beamer/unnamed-chunk-21-1.pdf>
 Package pdftex.def Info: Bio144_lecture3_files/figure-beamer/unnamed-chunk-21-1
-.pdf  used on input line 821.
+.pdf  used on input line 814.
 (pdftex.def)             Requested size: 170.71652pt x 119.5017pt.
 
-Overfull \vbox (20.8574pt too high) detected at line 821
+Overfull \vbox (20.8574pt too high) detected at line 814
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 821.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 814.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[36
+[35
 
  <./Bio144_lecture3_files/figure-beamer/unnamed-chunk-21-1.pdf>]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 834.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 827.
+(pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
+[36
+
+]
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 838--838
+[][][][][][][]  
+ []
+
+File: images/BIO144_logo.jpeg Graphic file (type jpg)
+<use images/BIO144_logo.jpeg>
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 838.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [37
 
 ]
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 845--845
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 865--865
 [][][][][][][]  
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 845.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 865.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [38
-
-]
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 872--872
-[][][][][][][]  
- []
-
-File: images/BIO144_logo.jpeg Graphic file (type jpg)
-<use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 872.
-(pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[39
 
 ]
 \openout4 = `Bio144_lecture3.vrb'.
@@ -1639,9 +1640,9 @@ Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 872.
 (./Bio144_lecture3.vrb)
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 903.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 896.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[40
+[39
 
 ]
 \openout4 = `Bio144_lecture3.vrb'.
@@ -1654,95 +1655,95 @@ LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <9> not available
 )
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 941.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 934.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[41
+[40
 
 ]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 961.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 954.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[42
+[41
 
 ]
-<Bio144_lecture3_files/figure-beamer/unnamed-chunk-25-1.pdf, id=418, 361.35pt x
+<Bio144_lecture3_files/figure-beamer/unnamed-chunk-25-1.pdf, id=410, 361.35pt x
  361.35pt>
 File: Bio144_lecture3_files/figure-beamer/unnamed-chunk-25-1.pdf Graphic file (
 type pdf)
 <use Bio144_lecture3_files/figure-beamer/unnamed-chunk-25-1.pdf>
 Package pdftex.def Info: Bio144_lecture3_files/figure-beamer/unnamed-chunk-25-1
-.pdf  used on input line 971.
+.pdf  used on input line 964.
 (pdftex.def)             Requested size: 199.16928pt x 199.16766pt.
 
-Overfull \vbox (10.85034pt too high) detected at line 971
+Overfull \vbox (10.85034pt too high) detected at line 964
  []
 
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 971.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 964.
+(pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
+[42
+
+ <./Bio144_lecture3_files/figure-beamer/unnamed-chunk-25-1.pdf>]
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 985--985
+[][][][][][][]  
+ []
+
+
+Overfull \hbox (5.99998pt too wide) in paragraph at lines 985--985
+[][][][][][][]  
+ []
+
+File: images/BIO144_logo.jpeg Graphic file (type jpg)
+<use images/BIO144_logo.jpeg>
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 985.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 [43
 
- <./Bio144_lecture3_files/figure-beamer/unnamed-chunk-25-1.pdf>]
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 992--992
-[][][][][][][]  
- []
-
-
-Overfull \hbox (5.99998pt too wide) in paragraph at lines 992--992
-[][][][][][][]  
- []
-
-File: images/BIO144_logo.jpeg Graphic file (type jpg)
-<use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 992.
-(pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[44
-
 ]
-<Bio144_lecture3_files/figure-beamer/unnamed-chunk-26-1.pdf, id=439, 361.35pt x
+<Bio144_lecture3_files/figure-beamer/unnamed-chunk-26-1.pdf, id=432, 361.35pt x
  361.35pt>
 File: Bio144_lecture3_files/figure-beamer/unnamed-chunk-26-1.pdf Graphic file (
 type pdf)
 <use Bio144_lecture3_files/figure-beamer/unnamed-chunk-26-1.pdf>
 Package pdftex.def Info: Bio144_lecture3_files/figure-beamer/unnamed-chunk-26-1
-.pdf  used on input line 997.
+.pdf  used on input line 990.
 (pdftex.def)             Requested size: 199.16928pt x 199.16766pt.
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 997.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 990.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[45
+[44
 
  <./Bio144_lecture3_files/figure-beamer/unnamed-chunk-26-1.pdf>]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1014.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1007.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[46
+[45
 
 ]
-<Bio144_lecture3_files/figure-beamer/unnamed-chunk-27-1.pdf, id=460, 361.35pt x
+<Bio144_lecture3_files/figure-beamer/unnamed-chunk-27-1.pdf, id=453, 361.35pt x
  361.35pt>
 File: Bio144_lecture3_files/figure-beamer/unnamed-chunk-27-1.pdf Graphic file (
 type pdf)
 <use Bio144_lecture3_files/figure-beamer/unnamed-chunk-27-1.pdf>
 Package pdftex.def Info: Bio144_lecture3_files/figure-beamer/unnamed-chunk-27-1
-.pdf  used on input line 1019.
+.pdf  used on input line 1012.
 (pdftex.def)             Requested size: 199.16928pt x 199.16766pt.
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1019.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1012.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[47
+[46
 
  <./Bio144_lecture3_files/figure-beamer/unnamed-chunk-27-1.pdf>]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1035.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1028.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-[48
+[47
 
 ]
 \tf@nav=\write7
@@ -1759,13 +1760,13 @@ Package rerunfilecheck Info: File `Bio144_lecture3.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 23497 strings out of 480502
- 441758 string characters out of 5898416
- 744550 words of memory out of 5000000
- 40351 multiletter control sequences out of 15000+600000
- 495811 words of font info for 158 fonts, out of 8000000 for 9000
+ 24554 strings out of 480313
+ 481687 string characters out of 5896116
+ 758505 words of memory out of 5000000
+ 41596 multiletter control sequences out of 15000+600000
+ 496048 words of font info for 160 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 101i,15n,108p,440b,446s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 99i,15n,104p,1012b,446s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.e
 nc}{/Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}
 {/Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/U
@@ -1793,10 +1794,10 @@ lm/lmsy10.pfb></Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/type1/public
 c/lm/lmtt10.pfb></Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/type1/publ
 ic/lm/lmtt8.pfb></Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/type1/publ
 ic/amsfonts/symbols/msam10.pfb>
-Output written on Bio144_lecture3.pdf (48 pages, 1071508 bytes).
+Output written on Bio144_lecture3.pdf (47 pages, 1070741 bytes).
 PDF statistics:
- 613 PDF objects out of 1000 (max. 8388607)
- 473 compressed objects within 5 object streams
- 145 named destinations out of 1000 (max. 500000)
+ 604 PDF objects out of 1000 (max. 8388607)
+ 465 compressed objects within 5 object streams
+ 142 named destinations out of 1000 (max. 500000)
  55424 words of extra memory for PDF output out of 61914 (max. 10000000)
 

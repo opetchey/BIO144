@@ -16,23 +16,11 @@ source(here::here("2_content/beamer_stuff/preamble.r"))
 ```
 
 
-## Overview
-
-* Introduction of the linear regression model
-* Parameter estimation
-* Simple model checking
-* Goodness of the model: Correlation and $R^2$
-* Tests and confidence intervals
-* Confidence and prediction ranges
-
-## Course material covered today
-
-The lecture material of today is based on the following literature:
-
-\ 
 
 
-## Downloading and opening data (CSV) files
+## First an alert!
+
+Downloading and opening data (CSV) files
 
 **Excel will try to be helpful, but in fact it can break things. Do not accept its help, unless you are sure.**
 
@@ -42,15 +30,23 @@ The lecture material of today is based on the following literature:
 \end{center}
 
 
+## Overview
+
+* Introduction of the linear regression model
+* Parameter estimation
+* Simple model checking
+* Goodness of the model: Correlation and $R^2$
+* Tests and confidence intervals
+* Confidence and prediction ranges
+
 
 
 ## The lecture material of today is based on the following literature:
 
 \ 
 
-
-
 * Chapter 2 of _Lineare Regression_, p.7-20 (Stahel script)
+
 
 ## The body fat example
 
@@ -74,11 +70,11 @@ ggplot(d.bodyfat,aes(x=bmi,y=bodyfat)) + geom_point() +
 ## Linear relationship
 
 * The most simple relationship between an \emph{explanatory variable} ($X$) and a \emph{target/outcome variable} ($Y$) is a linear relationship. All points $(x_i,y_i)$, $i= 1,\ldots, n$, on a  straight line follow the equation
-$$y_i = \alpha + \beta x_i\ .$$
+$$y_i = \beta_0 + \beta_1 x_i\ .$$
 
-* Here, $\alpha$ is the \alert{axis intercept} and $\beta$ the \alert{slope} of the line. $\beta$ is also denoted as the regression coefficient of $X$.
+* Here, $\beta_0$ is the \alert{axis intercept} and $\beta_1$ the \alert{slope} of the line. $\beta_1$ is also denoted as the regression coefficient of $X$.
 
-* If $\alpha=0$ the line goes through the origin $(x,y)=(0,0)$.
+* If $\beta_0=0$ the line goes through the origin $(x,y)=(0,0)$.
 
 * \alert{Interpretation} of linear dependency: proportional increase in $y$ with increase (decrease) in $x$.
 
@@ -93,7 +89,7 @@ ggplot(d.bodyfat,aes(x=bmi,y=bodyfat)) + geom_point() + theme_bw() + ylab("body 
 geom_abline(intercept = -36, slope = 2.25, color="blue",    size=0.6) 
 ```
 
-__Task:__ Estimate the regression parameters $\alpha$ and $\beta$ (by "eye") and write them down. 
+__Task:__ Estimate the regression parameters $\beta_0$ and $\beta_1$ (by "eye") and write them down. 
 
 ## 
 
@@ -112,14 +108,14 @@ $\Rightarrow$ We need a __model__ that describes the relationship between BMI an
 
 \colorbox{lightgray}{\begin{minipage}{14cm}
 In the linear regression model the dependent variable $Y$ is related to the independent variable $x$ as
-$$Y = \alpha + \beta x + \epsilon \ , \qquad \epsilon \sim N(0,\sigma^2)$$
+$$Y = \beta_0 + \beta_1 x + \epsilon \ , \qquad \epsilon \sim N(0,\sigma^2)$$
 \end{minipage}}
 
-In this formulation $Y$ is a random variable $Y \sim N(\alpha + \beta x, \sigma^2$) where
-$$Y \quad= \quad \underbrace{\text{expected value}}_{E(Y) = \alpha + \beta x} \quad + \quad \underbrace{\text{random error}}_{\epsilon}  \ .$$
+In this formulation $Y$ is a random variable $Y \sim N(\beta_0 + \beta_1 x, \sigma^2$) where
+$$Y \quad= \quad \underbrace{\text{expected value}}_{E(Y) = \beta_0 + \beta_1 x} \quad + \quad \underbrace{\text{random error}}_{\epsilon}  \ .$$
 Note:
 
-* The model for $Y$ given $x$ has \alert{three parameters}: $\alpha$, $\beta$ and $\sigma^2$ .
+* The model for $Y$ given $x$ has \alert{three parameters}: $\beta_0$, $\beta_1$ and $\sigma^2$ .
 * $x$ is the \alert{independent} / \alert{explanatory} / \alert{regressor} variable.
 * $Y$ is the \alert{dependent} / \alert{outcome} / \alert{response} variable.
 
@@ -164,11 +160,11 @@ $\rightarrow$ Random variation is always present. This leads us to the next ques
 
 ## Parameter estimation
 
-In a regression analysis, the task is to estimate the \alert{regression coefficients} $\alpha$, $\beta$ and the \alert{residual variance} $\sigma^2$ for a given set of $(x,y)$ data.
+In a regression analysis, the task is to estimate the \alert{regression coefficients} $\beta_0$, $\beta_1$ and the \alert{residual variance} $\sigma^2$ for a given set of $(x,y)$ data.
 
 * __Problem:__ For more than two points $(x_i,y_i)$, $i=1,\ldots, n$, there is generally no perfectly fitting line.
 
-* __Aim:__ We want to find the parameters $(a,b)$ of the best fitting line $Y = a + b x$.
+* __Aim:__ We want to estimate the parameters $(\beta_0,\beta_1)$ of the best fitting line $Y = \beta_0 + \beta_1 x$.
 
 * __Idea:__ Minimize the deviations between the data points $(x_i,y_i)$ and the regression line.
 
@@ -223,9 +219,9 @@ segments(x[11],y[11],(y[11]-4)/(-2),y[11],col=2,lwd=2)
 For multiple reasons (theoretical aspects and mathematical convenience), the parameters are estimated using the \alert{least squares} approach. In this, yet something else is minimized:
 
 \colorbox{lightgray}{\begin{minipage}{14cm}
-The parameters $\alpha$ and $\beta$ are estimated such that the sum of \alert{squared vertical distances} (sum of squared residuals)
+The parameters $\beta_0$ and $\beta_1$ are estimated such that the sum of \alert{squared vertical distances} (sum of squared residuals)
 
-$$SSE = \sum_{i=1}^n e_i^2 \ , \qquad \text{where} \quad e_i = y_i - \underbrace{(\alpha + \beta x_i)}_{=\hat{y}_i} $$
+$$SSE = \sum_{i=1}^n e_i^2 \ , \qquad \text{where} \quad e_i = y_i - \underbrace{(\beta_0 + \beta_1 x_i)}_{=\hat{y}_i} $$
 
 is being minimized.
 \end{minipage}}
@@ -255,12 +251,12 @@ polygon(from_x,from_y,to_x,to_y,col=2,lwd=2)
 
 ## Least squares estimates
 
-For a given sample $(x_i,y_i), i=1,..,n$, with mean values $\overline{x}$ and $\overline{y}$, the least squares estimates $\hat\alpha$ and $\hat\beta$ are computed as 
+For a given sample $(x_i,y_i), i=1,..,n$, with mean values $\overline{x}$ and $\overline{y}$, the least squares estimates $\hat\beta_0$ and $\hat\beta_1$ are computed as 
 
 \colorbox{lightgray}{\begin{minipage}{14cm}
 \begin{eqnarray*}
-\hat\beta &=& \frac{\sum_{i=1}^n  (y_i - \overline{y}) (x_i - \overline{x})}{ \sum_{i=1}^n (x_i - \overline{x})^2 } = \frac{cov(x,y)}{var(x)} \ , \\[4mm]
-\hat\alpha &=& \overline{y} - \hat\beta \overline{x}  \ .
+\hat\beta_1 &=& \frac{\sum_{i=1}^n  (y_i - \overline{y}) (x_i - \overline{x})}{ \sum_{i=1}^n (x_i - \overline{x})^2 } = \frac{cov(x,y)}{var(x)} \ , \\[4mm]
+\hat\beta_0 &=& \overline{y} - \hat\beta_1 \overline{x}  \ .
 \end{eqnarray*}
 \end{minipage}}
 
@@ -268,7 +264,7 @@ Moreover,
 
 \colorbox{lightgray}{\begin{minipage}{14cm}
 \begin{eqnarray*}
-\hat\sigma^2 &=& \frac{1}{n-2}\sum_{i=1}^n e_i^2 \quad \text{with residuals  } e_i = y_i - (\hat\alpha + \hat\beta x_i)
+\hat\sigma^2 &=& \frac{1}{n-2}\sum_{i=1}^n e_i^2 \quad \text{with residuals  } e_i = y_i - (\hat\beta_0 + \hat\beta_1 x_i)
 \end{eqnarray*}
 \end{minipage}}
 
@@ -294,7 +290,7 @@ r.bodyfat <- lm(bodyfat ~ bmi, d.bodyfat)
 summary(r.bodyfat)
 ```
 
-<!--$\Rightarrow$ $\hat\alpha = $ `r round(r.bodyfat$coef[1],2)` ,  $\hat\beta=$ `r round(r.bodyfat$coef[2],2)`, $\hat\sigma_e =$ 
+<!--$\Rightarrow$ $\hat\beta_0 = $ `r round(r.bodyfat$coef[1],2)` ,  $\hat\beta_1=$ `r round(r.bodyfat$coef[2],2)`, $\hat\sigma_e =$ 
 `r round(summary(r.bodyfat)$sigma,2)`-->
 
 ## 
@@ -312,9 +308,9 @@ ggplot(d.bodyfat,aes(bmi,bodyfat)) + geom_point() + geom_smooth(method='lm',se=F
 
 \underline{Interpretation:} for an increase in the BMI by one index point, we roughly expect a 1.82\% percentage increase in bodyfat.
 
-## Uncertainty in the estimates $\hat\alpha$ and $\hat\beta$
+## Uncertainty in the estimates $\hat\beta_0$ and $\hat\beta_1$
 
-Important: $\hat\alpha$ and $\hat\beta$ are themselves \alert{random variables} and as such contain \alert{uncertainty}!
+Important: $\hat\beta_0$ and $\hat\beta_1$ are themselves \alert{random variables} and as such contain \alert{uncertainty}!
 
 Let us look again at the regression output, this time only for the coefficients. The second column shows the standard error of the estimate:
 
@@ -331,7 +327,7 @@ summary(r.bodyfat)$coef
 $\rightarrow$ The logical next question is: what is the distribution of the estimates?
 
 
-## Distribution of the estimators for $\hat\alpha$ and $\hat\beta$
+## Distribution of the estimators for $\hat\beta_0$ and $\hat\beta_1$
 
 To obtain an idea, we generate data points according to model
 
@@ -354,7 +350,7 @@ for (ii in 1:niter){
 ```
 
 \normalsize
-Doing it 1000 times, we obtain the following distributions for $\hat\alpha$ and $\hat\beta$:
+Doing it 1000 times, we obtain the following distributions for $\hat\beta_0$ and $\hat\beta_1$:
 
 ```{r eval=T,fig.width=6, fig.height=3,warning=FALSE,out.width="5cm", echo=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
 library(cowplot)
@@ -374,16 +370,16 @@ This looks suspiciously normal!
 In fact, from theory it is known that  
 
 \begin{eqnarray*}
-\hat\beta \sim N(\beta,{\sigma^{(\beta)2}}) & \quad \text{and} \quad & \hat\alpha \sim N(\alpha,{\sigma^{(\alpha)2}})
+\hat\beta_1 \sim N(\beta_1,{\sigma^{(\beta_1)2}}) & \quad \text{and} \quad & \hat\beta_0 \sim N(\beta_0,{\sigma^{(\beta_0)2}})
 \end{eqnarray*}
 
-For formulas of the standard deviations ${\sigma^{(\beta)2}}$ and ${\sigma^{(\alpha)2}}$, please consult Stahel 2.2.h.
+For formulas of the standard deviations ${\sigma^{(\beta_1)2}}$ and ${\sigma^{(\beta_0)2}}$, please consult Stahel 2.2.h.
 
 \colorbox{lightgray}{\begin{minipage}{14cm}
 {\bf To remember:}
 \begin{itemize}
-\item $\hat\alpha$ and $\hat\beta$ are \alert{unbiased estimators} of $\alpha$ and $\beta$.
-\item the parameters estimates $\hat\alpha$ and $\hat\beta$ are \alert{normally distributed.}
+\item $\hat\beta_0$ and $\hat\beta_1$ are \alert{unbiased estimators} of $\beta_0$ and $\beta_1$.
+\item the parameters estimates $\hat\beta_0$ and $\hat\beta_1$ are \alert{normally distributed.}
 \item the formulas for the variances depend on the residual variance $\sigma^2$, the sample size $n$ and the variability of $X$ (SSQ$^{(X)(\star)})$.
 \end{itemize}
 \end{minipage}}
@@ -474,7 +470,7 @@ After the regression parameters and their uncertainties have been estimated, the
 
 1. __"Are the parameters compatible with some specific value?"__  
 \
-Typically, the question is whether the slope $\beta$ might be 0 or not, that is: "Is there an effect of the covariate $x$ or not?"  
+Typically, the question is whether the slope $\beta_1$ might be 0 or not, that is: "Is there an effect of the covariate $x$ or not?"  
 \
 $\Rightarrow$ This leads to a \alert{\bf statistical test}.  
 \
@@ -499,9 +495,9 @@ How do these things help us to answer the two questions above?
 Remember: in a statistical test you first need to specify the \emph{null hypothesis}. Here, typically, the null hypothesis is
 
 \colorbox{lightgray}{\begin{minipage}{14cm}
-$$H_0: \quad \beta = \beta_0 =  0  \ .$$
+$$H_0: \quad \beta_1 =  0  \ .$$
 \begin{center}
-In words: $H_0$ =   "no effect" \\
+In words: $H_0$ =   "no association" \\
 \end{center}
 \end{minipage}}
 
@@ -510,7 +506,7 @@ In words: $H_0$ =   "no effect" \\
 
 Here, the \emph{alternative hypothesis} is given by
 \colorbox{lightgray}{\begin{minipage}{14cm}
-$$H_A: \quad \beta \neq  0  $$
+$$H_A: \quad \beta_1 \neq  0  $$
 \end{minipage}}
 
 ## 
@@ -531,12 +527,12 @@ $\rightarrow$ It is some type of \textbf{summary statistic} that follows a known
 \begin{center}
 \colorbox{lightgray}{\begin{minipage}{5cm}
 \begin{equation}\label{eq:beta}
-T=\frac{\hat\beta - \beta_0}{se^{(\beta)}}\ . %\quad \text{with} \quad se^{(\beta)}=\sqrt{\hat\sigma_e^2/SSQ^{(X)}}  \ .
+T=\frac{\hat\beta_1 - C}{se^{(\beta_1)}}\ . %\quad \text{with} \quad se^{(\beta_1)}=\sqrt{\hat\sigma_e^2/SSQ^{(X)}}  \ .
 \end{equation}
 \end{minipage}}
 \end{center}
 
-Again: typically, $\beta_0=0$, so the formula simplifies to $T=\frac{\hat\beta}{se^{(\beta)}}$.
+Again: typically, $C=0$, so the formula simplifies to $T=\frac{\hat\beta_1}{se^{(\beta_1)}}$.
 
 Under $H_0$, $T$ has a $t$-distribution with $n-2$ degrees of freedom ($n=$ number of data points).
 
@@ -554,7 +550,7 @@ Task:
 \
 $\rightarrow$ Please use equation \eqref{eq:beta} to find out how the first three columns (Estimate, Std. Error and t value) are related! Check by a calculation...
 
-Note: The last column contains the \textbf{$p$-value} of the test $\beta=0$.
+Note: The last column contains the \textbf{$p$-value} of the test $\beta_1=0$.
 
 ## Recap: Formal definition of the $p$-value
 
@@ -597,7 +593,7 @@ text(-3,0.05,labels="2.5%")
 
 The regression output on slide 33 indicates that the $p$-value for BMI is very small ($p<0.0001$).
 
-Conclusion: there is __very strong evidence__ that the BMI is associated with bodyfat, because $p$ is extremely small (thus it is very unlikely that such a slope $\hat\beta$ would be seen if there was no effect of BMI on body fat).
+Conclusion: there is __very strong evidence__ that the BMI is associated with bodyfat, because $p$ is extremely small (thus it is very unlikely that such a slope $\hat\beta_1$ would be seen if there was no effect of BMI on body fat).
 
 This basically answers question 1 from slide 29.
 
@@ -619,11 +615,11 @@ Which values of the parameters are compatible with the data?
 
 To answer this question, we can determine the confidence intervals of the regression parameters.
 
-__Facts we know about $\hat\beta$__
+__Facts we know about $\hat\beta_1$__
 
-* $\hat\beta$ is estimated with a standard error of $\sigma^{(\beta)}$
-* The distribution of $\hat\beta$ is normal, namely $\hat\beta\sim N(\beta,\sigma^{(\beta)2})$.
-* However, since we need to estimate $\sigma^{(\beta)}$ from the data (the standard error), we have a $t$-distribution.
+* $\hat\beta_1$ is estimated with a standard error of $\sigma^{(\beta_1)}$
+* The distribution of $\hat\beta_1$ is normal, namely $\hat\beta_1\sim N(\beta_1,\sigma^{(\beta_1)2})$.
+* However, since we need to estimate $\sigma^{(\beta_1)}$ from the data (the standard error), we have a $t$-distribution.
 
 ## 
 
@@ -631,7 +627,7 @@ Doing some calculations (similar to those in chapter 8.2.2 of Mat183 script) lea
 
 \begin{center}
 \colorbox{lightgray}{\begin{minipage}{6cm}
-$$[\hat\beta - c \cdot \hat\sigma^{(\beta)} ; \hat\beta + c \cdot \hat\sigma^{(\beta)}] \ ,$$
+$$[\hat\beta_1 - c \cdot \hat\sigma^{(\beta_1)} ; \hat\beta_1 + c \cdot \hat\sigma^{(\beta_1)}] \ ,$$
 \end{minipage}}
 \end{center}
 
@@ -659,7 +655,7 @@ In summary,
 tableRegression(r.bodyfat)
 ```
 
-\underline{Interpretation:} for an increase in the bmi by one index point, roughly 1.82\% percentage points more bodyfat are expected, and all true values for $\beta$ between 1.61 and 2.03 are compatible with the observed data.
+\underline{Interpretation:} for an increase in the bmi by one index point, roughly 1.82\% percentage points more bodyfat are expected, and all true values for $\beta_1$ between 1.61 and 2.03 are compatible with the observed data.
 
 ## Confidence and Prediction Ranges
 
@@ -704,10 +700,10 @@ Note: The prediction range is much broader than the confidence range.
 Given a fixed value of $x$, say $x_0$. The question is: 
 
 \colorbox{lightgray}{\begin{minipage}{14cm}
-Where does $\hat y_0 = \hat\alpha + \hat\beta x_0$ lie with a certain confidence (i.e., 95\%)? 
+Where does $\hat y_0 = \hat\beta_0 + \hat\beta_1 x_0$ lie with a certain confidence (i.e., 95\%)? 
 \end{minipage}}
 
-This question is not trivial, because both $\hat\alpha$ and $\hat\beta$ are estimates from the data and contain uncertainty. 
+This question is not trivial, because both $\hat\beta_0$ and $\hat\beta_1$ are estimates from the data and contain uncertainty. 
 
 The details of the calculation are given in Stahel 2.4b. 
 
@@ -715,7 +711,7 @@ The details of the calculation are given in Stahel 2.4b.
 Plotting the confidence interval around all $\hat y_0$ values one obtains the \textbf{confidence range} or \textbf{confidence band for the expected values} of $y$.
 \end{minipage}}
 
-Note: For the confidence range, only the uncertainty in the estimates $\hat\alpha$ and $\hat\beta$ matters.
+Note: For the confidence range, only the uncertainty in the estimates $\hat\beta_0$ and $\hat\beta_1$ matters.
 
 ## 
 
@@ -744,7 +740,7 @@ Given a fixed value of $x$, say $x_0$. The question is:
 Where does a {\bf future observation} lie with a certain confidence (i.e., 95\%)? 
 \end{minipage}}
 
-To answer this question, we have to \alert{consider not only the uncertainty in the predicted value} $\hat y_0 =  \hat\alpha + \hat\beta x_0$, but also the \alert{error in the equation $\epsilon_i \sim N(0,\sigma^2)$}.  
+To answer this question, we have to \alert{consider not only the uncertainty in the predicted value} $\hat y_0 =  \hat\beta_0 + \hat\beta_1 x_0$, but also the \alert{error in the equation $\epsilon_i \sim N(0,\sigma^2)$}.  
 
 This is the reason why the {\bf prediction range is always wider than the confidence range}.
 

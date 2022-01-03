@@ -49,10 +49,10 @@ r.bodyfat <- lm(bodyfat ~ bmi,d.bodyfat)
 ```{=tex}
 \begin{itemize}
 \item The linear regression model for the data ${y}=(y_1,\ldots,y_n)$ given ${x}=(x_1,\ldots,x_n)$ is
-$$y_i = \alpha + \beta x_i + \epsilon_i \ , \qquad \epsilon_i\sim N(0,\sigma^2) \  \text{independent}.$$\\[2mm]
-\item Estimate the parameters $\alpha$, $\beta$ and $\sigma^2$ by  \href{http://students.brown.edu/seeing-theory/regression-analysis/index.html#section1}{\textcolor{blue}{least squares}}.\\[2mm]
-\item The estimated parameters $\hat\alpha$, $\hat\beta$ contain \alert{uncertainty} and are normally distributed around the true values. %(actually, also $\hat\sigma_e^2$...). \\[2mm]
-\item Use the knowledge about the distribution to formulate \alert{statistical tests}, such as: Is $\beta=0$?\\
+$$y_i = \beta_0 + \beta_1 x_i + \epsilon_i \ , \qquad \epsilon_i\sim N(0,\sigma^2) \  \text{independent}.$$\\[2mm]
+\item Estimate the parameters $\beta_0$, $\beta_1$ and $\sigma^2$ by  \href{http://students.brown.edu/seeing-theory/regression-analysis/index.html#section1}{\textcolor{blue}{least squares}}.\\[2mm]
+\item The estimated parameters $\hat\beta_0$, $\hat\beta_1$ contain \alert{uncertainty} and are normally distributed around the true values. %(actually, also $\hat\sigma_e^2$...). \\[2mm]
+\item Use the knowledge about the distribution to formulate \alert{statistical tests}, such as: Is $\beta_1=0$?\\
 $\rightarrow$ \alert{$T$-test} with $n-2$ degrees of freedom.\\[2mm]
 \item All this is done automatically by R:
 \end{itemize}
@@ -181,7 +181,7 @@ normally distributed.
 ## Bodyfat example
 
 We have so far modeled bodyfat in dependence of bmi, that is:
-$(body fat)_i = \alpha + \beta \cdot bmi_i + \epsilon_i$.\
+$(body fat)_i = \beta_0 + \beta_1 \cdot bmi_i + \epsilon_i$.\
  
 
 However, other explanatory variables might also be relevant for an

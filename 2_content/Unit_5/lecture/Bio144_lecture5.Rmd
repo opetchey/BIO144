@@ -239,19 +239,9 @@ __Note:__ The word _linear_ refers to the \alert{linearity in the coefficients},
 
 Question: Given multiple regression variables ${x}^{(1)}, {x}^{(2)},...$. Could I simply fit separate simple models for each variable, that is
 
-$y_i = \alpha + \beta x_i^{(1)} + \epsilon_i$  
+$y_i = \beta_0 + \beta_1 x_i^{(1)} + \epsilon_i$  
 
-$y_i = \alpha + \beta x_i^{(2)} + \epsilon_i$
-
-etc.?
-
-## Multiple vs. many single regressions
-
-Question: Given multiple regression explanatory variables ${x}^{(1)}, {x}^{(2)},...$. Could I simply fit separate simple models for each variable, that is
-
-$y_i = \alpha + \beta x_i^{(1)} + \epsilon_i$  
-
-$y_i = \alpha + \beta x_i^{(2)} + \epsilon_i$
+$y_i = \beta_0 + \beta_1 x_i^{(2)} + \epsilon_i$
 
 etc.?
 
