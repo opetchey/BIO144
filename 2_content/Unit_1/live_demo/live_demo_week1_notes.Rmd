@@ -87,14 +87,15 @@ Do the reaction time test and write down your reaction time in fractions of a se
 
 While you're there, also please do the other three tests, and write down your score. We don't need these for our current question about reaction times, but we might look at this data later in the course.
 
-Now go to this web page: https://goo.gl/forms/clIdMtTj1g1npfLk2 and enter your ID, gender, and four scores. Please be careful!
+Now go to this web page:  https://forms.gle/XE88JJXrUdNSD4Vy5 and enter your ID, gender, and four scores. Please be careful!
 
 Go ahead and do all that.
 
 ## Look at the data!
 
 Here is the link to the datasheet containing all the data you just recorded:
-https://docs.google.com/spreadsheets/d/1wltFGU6bbkYeiDzzvQTIsYwOuqpDZL8xiLAxX0QJWWk/edit#gid=1188775314
+https://docs.google.com/spreadsheets/d/1ZulPZhBTtABuIG_zMp86Gcy2LZ37Q0ZrxzI-fGOJZZs/edit?usp=sharing
+
 
 Lets have a look at it, see what you've done. (I'm scared! I know how difficult it is to enter data without making mistakes! And I have some experience of how different people are!)
 
@@ -114,6 +115,10 @@ library(ggplot2)
 ## Now read in the data, using the read_csv() function. We give it the URL of the published version of the google sheet data.
 the_URL <- "https://docs.google.com/spreadsheets/d/e/2PACX-1vS1ebhHb4gnepfKzXadFeZdqBIRP-mQfxgZ5_FZ3i9ZBbC9nRHZ5xoXX5_OsQWrPtDsidRoG-9XwD3o/pub?gid=1188775314&single=true&output=csv"
 class_RTs <- read_csv(the_URL)
+
+## FS22 csv link: https://docs.google.com/spreadsheets/d/e/2PACX-1vQDI5oZ54MD4Qm_WDydUAWgRYX1PRWMoOWJCSFN5mZJ6Yf-irKq_n6-7CyPsJ13BoEksusqRUBdcgii/pub?gid=133427610&single=true&output=csv
+
+
 
 ## Have a look at the data in R
 #View(class_RTs)
@@ -257,6 +262,11 @@ The spread of the reaction times for men, and the spread for women, should be ab
 
 We can get a good idea about this, in this case, by looking at the distribution of the two groups of reaction times (see above). Again, we need to have in mind how similar the variance can be, without invalidating this assumption the data. There are quantitative tests for equal variance, we may look at them later.
 
+```{r}
+m1 <- lm(Pref_Reaction_time ~ Gender, data=class_RTs)
+library(ggfortify)
+autoplot(m1, smooth.colour = NA)
+```
 
 
 ## Do the statistical test
