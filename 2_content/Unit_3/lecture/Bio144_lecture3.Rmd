@@ -1,5 +1,5 @@
 ---
-title: "Lecture 3: Simple linear regression"
+title: "Lecture 3: Regression"
 subtitle: "BIO144 Data Analysis in Biology"
 author: "Stephanie Muff & Owen Petchey"
 institute: "University of Zurich"
@@ -30,15 +30,18 @@ Downloading and opening data (CSV) files
 \end{center}
 
 
+
+
 ## Overview
 
-* Introduction of the linear regression model
-* Parameter estimation
-* Simple model checking
-* Goodness of the model: Correlation and $R^2$
-* Tests and confidence intervals
-* Confidence and prediction ranges
+* Why use (linear) regression?
+* Fitting the line (= parameter estimation)
+* Is linear regression good enough model to use?
+* What to do when things go wrong?
+* Transformation of variables/the response
+* Handling of outliers
 
+(Next lecture will be interpretation and use of the model. We don't use it until we know it is "working well").
 
 
 ## The lecture material of today is based on the following literature:
@@ -48,14 +51,37 @@ Downloading and opening data (CSV) files
 * Chapter 2 of _Lineare Regression_, p.7-20 (Stahel script)
 
 
-## The body fat example
+## A head's up...
 
-\
+* Regression is a type of "linear model". 
+* A t-test is a linear model.
 
-Remember: Aim is to find prognostic factors for body fat, without actually measuring it.
-Even simpler question: How good is BMI as a predictor for body fat?
+Over the next five lectures you will learn about other types of linear model.
 
-\
+* Multiple regression.
+* ANOVA.
+* ANCOVA.
+
+All are mathematically very similar, with many similar properties.
+
+The same function in R 'lm' is used to make them all.
+
+
+
+## Why use regression?
+
+
+Imagine we want to know if BMI (easily measured; height and weight) is a good indicator of percentage body fat (less easily measured; specialist instrument required). If it is, then we save some time and effort, and still get the knowledge we need (e.g. percentage body fat).
+
+
+Put another way: is BMI a good predictor for percentage body fat?
+
+We can address this by looking at the relationship between the two continuous variables, BMI and percentage body fat (next slide).
+
+
+
+## Does BMI related to percent body fat?
+
 ```{r echo = FALSE, eval=TRUE}
 d.bodyfat <- read.table(here("3_datasets/bodyfat.clean.txt"),header=T)
 d.bodyfat <- d.bodyfat[,c("bodyfat","age","gewicht","hoehe","bmi","neck","abdomen","hip")]
@@ -67,40 +93,54 @@ ggplot(d.bodyfat,aes(x=bmi,y=bodyfat)) + geom_point() +
   theme_bw() + ylab("body fat (%)")
 ```
 
-## Linear relationship
+Happy? Not quite? There are many questions we may want to answer:
 
-* The most simple relationship between an \emph{explanatory variable} ($X$) and a \emph{target/outcome variable} ($Y$) is a linear relationship. All points $(x_i,y_i)$, $i= 1,\ldots, n$, on a  straight line follow the equation
+* What is a good mathematical representation of the relationship?
+* Is the relationship different from what we would expect by change?
+* How good is the mathematical representation?
+* How much uncertainty is there in any predictions?
+
+
+
+## Linear regression
+
+We often use linear regression because:
+
+* A linear relationship is mathematically simple.
+* Prior knowledge and observed data suggest it is at least a good starting point.
+
+* Given an \emph{explanatory variable} ($X$) and a \emph{response variable} ($Y$) all points $(x_i,y_i)$, $i= 1,\ldots, n$, on a  straight line follow the equation
 $$y_i = \beta_0 + \beta_1 x_i\ .$$
 
-* Here, $\beta_0$ is the \alert{axis intercept} and $\beta_1$ the \alert{slope} of the line. $\beta_1$ is also denoted as the regression coefficient of $X$.
-
+* $\beta_0$ is the \alert{intercept} - the value of $Y$ when $x_i = 0$
+* $\beta_1$ the \alert{slope} of the line, also known as the regression coefficient of $X$.
 * If $\beta_0=0$ the line goes through the origin $(x,y)=(0,0)$.
-
 * \alert{Interpretation} of linear dependency: proportional increase in $y$ with increase (decrease) in $x$.
 
-## 
 
-But which is the "true" or "best" line?
+
+## Which is the "best" line?
 
 ```{r eval=TRUE, fig.width=3.5, fig.height=3, warning=FALSE, echo = FALSE, out.width='6.5cm', fig.align='center'}
 ggplot(d.bodyfat,aes(x=bmi,y=bodyfat)) + geom_point() + theme_bw() + ylab("body fat (%)")  + 
   geom_abline(intercept = -25, slope = 1.7, color="red",   size=0.6) +
   geom_abline(intercept = -35, slope = 2.1, color="green",    size=0.6) +
-geom_abline(intercept = -36, slope = 2.25, color="blue",    size=0.6) 
+  geom_abline(intercept = -36, slope = 2.25, color="blue",    size=0.6) 
 ```
 
 __Task:__ Estimate the regression parameters $\beta_0$ and $\beta_1$ (by "eye") and write them down. 
 
-## 
+
+
+## Not a perfect fit to the data
 
 \
 
 It is obvious that 
 
 * the linear relationship does not describe the data perfectly
-* another realization of the data (other 243 males) would lead to a slightly different picture.
+* another realization of the data (a different group of people) would lead to a slightly different picture.
 
-\
 
 $\Rightarrow$ We need a __model__ that describes the relationship between BMI and bodyfat.
 
@@ -123,7 +163,9 @@ Note:
 
 __Note__
 
-* The linear model propagates the most simple relationship between two variables. When using it, please always think if such a relationship is meaningful/reasonable/plausible.
+* The linear model propagates the most simple relationship between two variables.
+* It is often a good starting point.
+* But before using it, please always think if such a relationship is meaningful/reasonable/plausible.
 * Always look at the data \alert{before} you start with model fitting.
 
 
@@ -132,10 +174,13 @@ __Note__
 The assumptions about the linear regression model lie in the error term $$\epsilon \sim N(0,\sigma^2) \ . $$
 
 \begin{center}
-\includegraphics[width=11cm]{pictures/regrAssumptions.jpg}
+\includegraphics[width=9cm]{pictures/regrAssumptions.jpg}
 \end{center}
 
-Note: The true regression line goes through $E(Y)$.
+Note: The regression line goes through $E(Y)$.
+
+
+
 
 ## Insights from data simulation
 
@@ -144,7 +189,7 @@ Note: The true regression line goes through $E(Y)$.
 Generate an independent (explanatory) variable __x__ and __two__ samples of a dependent variable __y__ assuming that
 $$y_i = 4 - 2x_i + \epsilon_i \ , \quad \epsilon_i\sim N(0,0.5^2) \ .$$
 
-```{r eval=T, fig.width=3.5, fig.height=3.3, out.width='5cm', echo = FALSE, fig.align='center'}
+```{r eval=T, fig.width=3.5, fig.height=3.3, out.width='4cm', echo = FALSE, fig.align='center'}
 set.seed(134539)
 par(mar=c(4,4,1,1))
 x <- runif(25,-2,2)
@@ -157,6 +202,8 @@ legend("topright",legend=c("sample 1","sample 2"),col=1:2, pch=1)
 ```
 
 $\rightarrow$ Random variation is always present. This leads us to the next question.
+
+
 
 ## Parameter estimation
 
@@ -173,7 +220,7 @@ But how?
 
 ## Should we minimize these distances...
 
-```{r eval=T,fig.width=5.7, fig.height=5,warning=FALSE,out.width="10cm", echo = FALSE, fig.align='center'}
+```{r eval=T,fig.width=5.7, fig.height=5,warning=FALSE,out.width="8cm", echo = FALSE, fig.align='center'}
 set.seed(9670)
 n <- 10
 x <- rnorm(n)
@@ -188,7 +235,7 @@ segments(x[11],y[11],x1,4-2*(x1),col=2,lwd=2)
 
 ## Or these?
 
-```{r eval=T,fig.width=5.7, fig.height=5,warning=FALSE,out.width="10cm", echo = FALSE, fig.align='center'}
+```{r eval=T,fig.width=5.7, fig.height=5,warning=FALSE,out.width="8cm", echo = FALSE, fig.align='center'}
 set.seed(9670)
 n <- 10
 x <- rnorm(n)
@@ -202,7 +249,7 @@ segments(x[11],y[11],x[11],4-2*x[11],col=2,lwd=2)
 
 ## Or maybe even these?
 
-```{r eval=T,fig.width=5.7, fig.height=5,warning=FALSE,out.width="10cm", echo = FALSE, fig.align='center'}
+```{r eval=T,fig.width=5.7, fig.height=5,warning=FALSE,out.width="8cm", echo = FALSE, fig.align='center'}
 set.seed(9670)
 n <- 10
 x <- rnorm(n)
@@ -230,7 +277,7 @@ __Note:__ $\hat y_i = a + b x_i$ are the \alert{predicted values}.
 
 ## So we minimize the sum of these areas!
 
-```{r eval=T,fig.width=5.7, fig.height=5,warning=FALSE,out.width="10cm", fig.align='center', echo=FALSE}
+```{r eval=T,fig.width=5.7, fig.height=5,warning=FALSE,out.width="8cm", fig.align='center', echo=FALSE}
 set.seed(9670)
 n <- 10
 x <- rnorm(n)
@@ -270,7 +317,7 @@ Moreover,
 
 is an unbiased estimate of the residual variance $\sigma^2$.
 
-\small (The derivation of the parameters can be looked up in the Stahel script 2.A b. Idea: Minimization through derivating equations and setting them =0.)
+\small (Derivations are in the Stahel script 2.A b. Hint: differentiate, set to zero, solve.)
 
 ## Do-it-yourself "by hand"
 
@@ -279,6 +326,9 @@ Go to the Shiny gallery and try to ``estimate'' the correct parameters.
 You can do this here:
 
 \url{https://gallery.shinyapps.io/simple_regression/}
+
+
+
 
 ## Estimation using R
 
@@ -302,471 +352,420 @@ library(reporttools)
 library(biostatUZH)
 ```
 
-```{r eval=T,fig.width=3.5, fig.height=3,warning=FALSE,echo=F,out.width="6.5cm", fig.align='center', message=FALSE, warning=FALSE}
+```{r eval=T,fig.width=3.5, fig.height=3,warning=FALSE,echo=F,out.width="6cm", fig.align='center', message=FALSE, warning=FALSE}
 ggplot(d.bodyfat,aes(bmi,bodyfat)) + geom_point() + geom_smooth(method='lm',se=F) + theme_bw()
 ```
 
 \underline{Interpretation:} for an increase in the BMI by one index point, we roughly expect a 1.82\% percentage increase in bodyfat.
 
-## Uncertainty in the estimates $\hat\beta_0$ and $\hat\beta_1$
-
-Important: $\hat\beta_0$ and $\hat\beta_1$ are themselves \alert{random variables} and as such contain \alert{uncertainty}!
-
-Let us look again at the regression output, this time only for the coefficients. The second column shows the standard error of the estimate:
-
-\ 
-\tiny
-```{r echo=T,eval=T}
-summary(r.bodyfat)$coef
-
-```
-
-\
- 
-\normalsize
-$\rightarrow$ The logical next question is: what is the distribution of the estimates?
 
 
-## Distribution of the estimators for $\hat\beta_0$ and $\hat\beta_1$
 
-To obtain an idea, we generate data points according to model
+## Is the model good enough to use?
 
-$$y_i = 4 - 2x_i + \epsilon_i \ , \quad \epsilon_i\sim N(0,0.5^2). $$
-In each round, we estimate the parameters and store them:
+* All models are wrong, but is ours good enough to be useful.
+* Are the assumption of the model justified?
+* It would be very unwise to use the model before we know if it is good enough to use.
+* Don't jump out of an aeroplane until you know your parachute is good enough!
 
-```{r echo = FALSE, eval = TRUE}
-set.seed(1)
-```
+\begin{center}
+\includegraphics[width=6cm]{images/jumping.jpeg}
+\end{center}
 
-\tiny
-```{r echo = T, eval = T}
-niter <- 1000
-pars <- matrix(NA,nrow=niter,ncol=2)
-for (ii in 1:niter){
-  x <- rnorm(100)
-  y <- 4 - 2*x + rnorm(100,0,sd=0.5)
-  pars[ii,] <- lm(y~x)$coef
-}
-```
 
-\normalsize
-Doing it 1000 times, we obtain the following distributions for $\hat\beta_0$ and $\hat\beta_1$:
+## What assumptions to we make?
 
-```{r eval=T,fig.width=6, fig.height=3,warning=FALSE,out.width="5cm", echo=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
-library(cowplot)
-pars <- data.frame(pars)
-names(pars) <- c("alpha","beta")
- 
-p1 <-  ggplot(pars,aes(x=alpha)) + geom_histogram() +  theme_bw()
-p2 <-  ggplot(pars,aes(x=beta)) + geom_histogram() +  theme_bw()
-p <- plot_grid(p1,p2,  ncol = 2, rel_heights = c(1, .2))
-p
-```
+The main assumption in linear regression is that the residuals follow a $N(0,\sigma^2)$ distribution.
 
-## 
+We make this assumption because it is often well enough met, and give great mathematical tractibility.
 
-This looks suspiciously normal!
+This assumption implies that:
 
-In fact, from theory it is known that  
-
-\begin{eqnarray*}
-\hat\beta_1 \sim N(\beta_1,{\sigma^{(\beta_1)2}}) & \quad \text{and} \quad & \hat\beta_0 \sim N(\beta_0,{\sigma^{(\beta_0)2}})
-\end{eqnarray*}
-
-For formulas of the standard deviations ${\sigma^{(\beta_1)2}}$ and ${\sigma^{(\beta_0)2}}$, please consult Stahel 2.2.h.
-
+```{=tex}
 \colorbox{lightgray}{\begin{minipage}{14cm}
-{\bf To remember:}
-\begin{itemize}
-\item $\hat\beta_0$ and $\hat\beta_1$ are \alert{unbiased estimators} of $\beta_0$ and $\beta_1$.
-\item the parameters estimates $\hat\beta_0$ and $\hat\beta_1$ are \alert{normally distributed.}
-\item the formulas for the variances depend on the residual variance $\sigma^2$, the sample size $n$ and the variability of $X$ (SSQ$^{(X)(\star)})$.
-\end{itemize}
-\end{minipage}}
-
-$$^{(\star)}$$  $$\text{SSQ}^{(X)} = \sum_{i=1}^n (x_i-\overline{x})^2 $$
-
-## Are the modelling assumptions met?
-
-In practice, it is advisable to check if all our \alert{modelling assumptions are met}.
-
-$\rightarrow$ Otherwise we might draw invalid conclusions from the results.
-
-Remember: Our assumption is that $\epsilon_i \sim N(0,\sigma^2)$. This implies
-
-\colorbox{lightgray}{\begin{minipage}{10cm}
-\begin{enumerate}[a)]
-\item The expected value of $\epsilon_i$ is 0: $E(\epsilon_i)=0$.
-\item All $\epsilon_i$ have the same variance: $Var(\epsilon_i)=\sigma^2.$
-\item All $\epsilon_i$ are normally distributed.
+\begin{enumerate}[(a)]
+\item The $\epsilon_i$ are normally distributed.\\[2mm]
+\item All $\epsilon_i$ have the same variance: $Var(\epsilon_i)=\sigma^2$. \\[2mm]
+\item The $\epsilon_i$ are independent of each other.
 \end{enumerate}
 \end{minipage}}
+```
 
-In addition, it is assumed that
+Furthermore:
 
-\colorbox{lightgray}{\begin{minipage}{14cm}
-\begin{enumerate}[d)]
-\item  $\epsilon_1, \epsilon_2, \ldots, \epsilon_n$ are independent.
-\end{enumerate}
-\end{minipage}}
+- (d) we assumed a linear relationship (related to (c) above).
+- (e) implies there are no outliers (implied by (a) above)
 
-__Note:__ We do not actually observe $\epsilon_i$, but only the residuals $e_i$.
-Let us introduce two simple graphical model checking tools for our residuals $e_i$.
 
-## Model checking tool II: Histogram of residuals
+
+
+## (a) Normally distributed residuals
 
 Look at the histogram of the residuals:
 
 ```{r fig.width=4,fig.height=4,echo=FALSE,out.width='5.5cm', fig.align='center'}
-hist(r.bodyfat$residuals,nclass=20,xlab="Residuals",main='')
+hist(r.bodyfat$residuals,nclass=15,xlab="Residuals",main='')
 ```
 
-The normal distribution assumption (c) seems ok as well.
+The normal distribution assumption (a) seems ok as well.
 
-## How good is the regression model?
 
-This is, per se, a difficult question....
+## (a) Normally distributed residuals: The QQ-plot
 
-One often considered index is the __coefficient of determination (Bestimmtheitsmass)__ $R^2$.
-Let us again look at the regression output form the bodyfat example:
+Usually, not the histogram of the residuals is plotted, but the
+so-called \alert{quantile-quantile} (QQ) plot. The quantiles of the
+observed distribution are plotted against the quantiles of the
+respective theoretical (normal) distribution:
 
-```{r echo=TRUE, eval = TRUE}
-summary(r.bodyfat)$r.squared
+```{r eval=T,fig.width=4.5, fig.height=4.5,warning=FALSE,echo=F,out.width="4cm", message=FALSE, fig.align='center'}
+qqnorm(residuals(r.bodyfat))
+qqline(residuals(r.bodyfat))
 ```
 
-Compare this to the squared correlation between the two variables:
+If the points lie approximately on a straight line, the data is fairly
+normally distributed.
 
-```{r echo = TRUE, eval = TRUE}
-cor(d.bodyfat$bodyfat,d.bodyfat$bmi)^2
+This is often "tested" by eye, and needs some experience.
+
+## What on earth is a quantile???
+
+Imagine we make 21 measures of something, say 21 reaction times:
+
+```{r fig.width=6, fig.height=1, warning=FALSE, echo=F, out.width="10cm", message=FALSE, fig.align='centre'}
+set.seed(1)
+dd <- tibble(Reaction_time = round(rnorm(21, 300, 20),1))
+ggplot(dd) +
+  geom_jitter(aes(y=1, x=Reaction_time)) +
+  theme(axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
 ```
 
+The median of these is `r median(dd$Reaction_time)`. The median is the
+50% or 0.5 quantile, because half the data points are above it, and half
+below.
 
-\colorbox{lightgray}{\begin{minipage}{10cm}
-$\rightarrow$ In simple linear regression, $R^2$ is the squared correlation between the independent and the dependent variable.
-\end{minipage}}
-
-##
-
-\colorbox{lightgray}{\begin{minipage}{14cm}
-\begin{itemize} 
-\item $R^2$ indicates the proportion of variability of the response variable ${y}$ that is \textbf{explained by the ensemble of all covariates}. 
-\item Its value lies between 0 and 1.
-\end{itemize}
-\end{minipage}}  
-
-\
-
-The __larger__ $R^2$  
-\
-$\Rightarrow$  the \textbf{more} variability of ${y}$ is captured ("explained") by the covariate  
-$\Rightarrow$ the \textbf{"better"} is the model.  
-
-\
-\scriptsize(However, it's a bit more complicated, see later in the course...)
-
-## Testing and Confidence Intervals
-
-After the regression parameters and their uncertainties have been estimated, there are typically two fundamental questions:  
-
-1. __"Are the parameters compatible with some specific value?"__  
-\
-Typically, the question is whether the slope $\beta_1$ might be 0 or not, that is: "Is there an effect of the covariate $x$ or not?"  
-\
-$\Rightarrow$ This leads to a \alert{\bf statistical test}.  
-\
-2. __"Which values of the parameters are compatible with the data?"__  
-\
-$\Rightarrow$ This leads us to determine \alert{\bf confidence intervals}.
-
-## 
-
-Let's first go back to the output from the bodyfat example: 
-
-```{r echo = TRUE, eval = TRUE}
-summary(r.bodyfat)$coef
+```{r}
+quantile(dd$Reaction_time)
 ```
-\  
-Besides the estimate and the standard error (which we discussed before), there is a \alert{\texttt{t value}} and a probability \alert{\texttt{Pr(>|t|)}} that we need to understand.
 
-How do these things help us to answer the two questions above?
+## The QQ-plot continued...
 
-## Testing the effect of a covariate  
+The *theoretical quantiles* come from the normal distribution. The
+*sample quantiles* come from the distribution of our residuals.
 
-Remember: in a statistical test you first need to specify the \emph{null hypothesis}. Here, typically, the null hypothesis is
-
-\colorbox{lightgray}{\begin{minipage}{14cm}
-$$H_0: \quad \beta_1 =  0  \ .$$
-\begin{center}
-In words: $H_0$ =   "no association" \\
-\end{center}
-\end{minipage}}
-
-\small (Included in $H_0$ is the assumption that the data follow the simple linear regression model!)  
-\
-
-Here, the \emph{alternative hypothesis} is given by
-\colorbox{lightgray}{\begin{minipage}{14cm}
-$$H_A: \quad \beta_1 \neq  0  $$
-\end{minipage}}
-
-## 
-
-Remember: To carry out a statistical test, we need a \emph{test statistic}.
-
-\begin{center}
-\colorbox{lightgray}{\begin{minipage}{5cm}
-\begin{center}
-What is a test statistic? %\\[6mm]%(Clicker exercise!)
-\end{center}
-\end{minipage}}
-\end{center}
-
-\vspace{2mm}
-$\rightarrow$ It is some type of \textbf{summary statistic} that follows a known distribution under $H_0$. For our purpose, we use the so-called \textbf{$T$-statistic} 
-
-\begin{center}
-\colorbox{lightgray}{\begin{minipage}{5cm}
-\begin{equation}\label{eq:beta}
-T=\frac{\hat\beta_1 - C}{se^{(\beta_1)}}\ . %\quad \text{with} \quad se^{(\beta_1)}=\sqrt{\hat\sigma_e^2/SSQ^{(X)}}  \ .
-\end{equation}
-\end{minipage}}
-\end{center}
-
-Again: typically, $C=0$, so the formula simplifies to $T=\frac{\hat\beta_1}{se^{(\beta_1)}}$.
-
-Under $H_0$, $T$ has a $t$-distribution with $n-2$ degrees of freedom ($n=$ number of data points).
-
-\small (You should try to recall the t-distribution. Check Mat183, keyword: t-test.)
-
-## 
-
-So let's again go back to the bodyfat regression output:
-
-```{r echo = TRUE, eval = TRUE}
-summary(r.bodyfat)$coef
-```
-\
-Task: 
-\
-$\rightarrow$ Please use equation \eqref{eq:beta} to find out how the first three columns (Estimate, Std. Error and t value) are related! Check by a calculation...
-
-Note: The last column contains the \textbf{$p$-value} of the test $\beta_1=0$.
-
-## Recap: Formal definition of the $p$-value
-
-\colorbox{lightgray}{\begin{minipage}{14cm}
-The \textbf{formal definition of $p$-value} is the probability to observe a data summary (e.g., an average) that is at least as extreme as the one observed, given that the Null Hypothesis is correct.
-\end{minipage}}  
-\
-Example (normal distribution): Assume the observed test-statistic leads to a $z$-value = -1.96  
-\
-$\Rightarrow$ $Pr(|z|\geq 1.96)=0.05$ and $Pr(z\leq-1.96)=0.025$.
-
-```{r eval=TRUE, fig.align='center',out.width="6cm",echo = FALSE}
+```{r eval=T,fig.width=6.5, fig.height=4.5,warning=FALSE,echo=F,out.width="8cm", message=FALSE, fig.align='center'}
 par(mfrow=c(1,2))
+x<-seq(-3,3,0.1)
+stdr <- sort(scale(r.bodyfat$residuals))
 
-zz1 <- qnorm(0.025)
-zz2 <- qnorm(0.975)
-zz3 <- qnorm(0.025)
+s <- seq(2)  # one shorter than data
+x <- c(-2.5,qnorm(0.6),qnorm(0.6))
+y <- c(0.6,0.6,0)
 
-cord.x1 <- c(-4,seq(-4,zz1,0.01),zz1)
-cord.y1 <- c(0,dnorm(seq(-4,zz1,0.01)),0)
-
-cord.x2 <- c(zz2,seq(zz2,4,0.01),4)
-cord.y2 <- c(0,dnorm(seq(zz2,4,0.01)),0)
-
-curve(dnorm(x,0,1),-4,4,ylab="density",main="Two-sided p-value (0.05)",xlab="")
-polygon(cord.x1,cord.y1,col='gray')
-polygon(cord.x2,cord.y2,col='gray')
-text(-3,0.05,labels="2.5%")
-text(3,0.05,labels="2.5%")
-
-cord.x3 <- c(-4,seq(-4,zz3,0.01),zz3)
-cord.y3 <- c(0,dnorm(seq(-4,zz3,0.01)),0)
-
-curve(dnorm(x,0,1),-4,4,ylab="density",main="One-sided p-value (0.025)",xlab="")
-polygon(cord.x3,cord.y3,col='gray')
-text(-3,0.05,labels="2.5%")
+plot(stdr,pnorm(stdr),xlab="Theoretical quantiles",ylab="Cumulative distribution (F)")
+arrows(x[s], y[s], x[s+1], y[s+1])
+n<-nrow(d.bodyfat)
+plot(stdr,(1:n)/n,xlab="Sample quantiles of the residuals",ylab="Empirical cumulative distribution")
+arrows(x[s], y[s], x[s+1], y[s+1])
 ```
 
-## 
 
-The regression output on slide 33 indicates that the $p$-value for BMI is very small ($p<0.0001$).
+## How do I know if a QQ-plot looks "good"?
 
-Conclusion: there is __very strong evidence__ that the BMI is associated with bodyfat, because $p$ is extremely small (thus it is very unlikely that such a slope $\hat\beta_1$ would be seen if there was no effect of BMI on body fat).
+There is __no quantitative rule__ to answer this question, experience is needed. However, you can gain this experience from \alert{simulations}. To this end, generate the same number of data points of a normally distributed variable and compare to your plot.
 
-This basically answers question 1 from slide 29.
+Example: Generate 59 points $\epsilon_i \sim N(0,1)$ each time:
 
-## A cautionary note on the use of $p$-values
+```{r eval=T,fig.width=6.5, fig.height=4.0,warning=FALSE,out.width="8.5cm", fig.align='center',echo=FALSE}
+set.seed(390457)
+par(mfrow=c(2,3),mar=c(4,4,1,1))
+for (ii in 1:6){
+  ss <- rnorm(59)
+qqnorm(ss,main="")
+qqline(ss,xlab="")
+}
+```
 
-Maybe you have seen that in statistical testing, often the criterion $p\leq 0.05$ is used to test whether $H_0$ should be rejected. This is often done in a black-or-white manner.
+
+
+
+## (b) Equal variance (all $\epsilon_i$ have the same variance)
+
+Scale-location plot (Streuungs-Diagramm).
+
+The scale-location plot is particularly suited to check the assumption of equal variances (__homoscedasticity / Homoskedastizität__).
+
+The idea is to plot the square root of the (standardized) residuals $\sqrt{|R_i|}$ against the fitted values $\hat{y_i}$. There should be __no trend__: 
+
+```{r eval=T,warning=FALSE,out.width="6cm", fig.align='center', echo=FALSE}
+plot(r.bodyfat,which=3, add.smooth = FALSE)
+```
+
+## Sketch explanation of scale-location
+
+
+
+
+
+## (c) Independence (the $\epsilon_i$ are independent of each other)
+
+* Think carefully about how the data were collected.
+* Think carefully about any structure and / or groupings in the data that are not described in it.
+
+
+
+## (d) Linearity (related to independence)
+
+With simple regression, we can assess this directly on the graph with fitted line (scroll to an example).
+
+Even then, it can be useful to look at a graph called the **Tukey-Anscombe plot*. It is a graph of the residuals versus the fitted values.
+
+
+```{r eval = TRUE, message=FALSE, fig.width=5, fig.height=4,warning=FALSE,echo=F,out.width="7cm", fig.align='center'}
+plot(r.bodyfat$fitted,r.bodyfat$residuals,xlab="Fitted", ylab="Residuals")
+abline(h=0,lty=2)
+
+```
+
+
+It is sometimes useful to enrich the TA-plot by adding a "running mean" or a "smoothed mean", which can give hints on the trend of the residuals. However, generally we recommend to \alert{not} add a smoothing line, because it may bias our view on the plot.
+
+
+But: The dependency is not necessarily on the fitted values ($x$-axis of TA plot). Ideas:  
+
+* Plot residuals in dependency of time (if available) or sequence of obervations.
+* Plot residuals against the explanatory variable.
+
+
+## (e) No outliers
+
+An outlier is a data point (value) that is an abnormal distance from the others.
+
+How to identify outliers:
+
+* Look at the histograms of the data, and scatter plots (OK, but not foolproof).
+* Look at the distribution of the residuals.
+
+How to identify important outliers:
+* Look at "leverage".
+
+
+## Leverages ("Hebel")
+
+```{r fig.width=5, fig.height=4, warning=FALSE, echo=F, out.width="6cm", fig.align='center'}
+plot(r.bodyfat, which=5, add.smooth = FALSE)
+
+```
+
+
+To understand the leverage plot, we need to introduce the idea of the \emph{leverage} ("Hebel").
+
+In simple regression, the leverage of individual $i$ is defined as $H_{ii} = (1/n) + (x_i-\overline{x})^2 SSQ^{(X)}$. Think about when leverages are expected to be large/small, and answer the two questions here:
+
+
+
+## Graphical illustration of the leverage effect
+
+Data points with $x_i$ values far from the mean have a stronger leverage effect than when $x_i\approx \overline{x}$:
+
+```{r eval=T,fig.width=6.5, fig.height=2.3,warning=FALSE,out.width="9.5cm", echo=FALSE, fig.align='center'}
+set.seed(37489)
+par(mfrow=c(1,3),mar=c(4,4,1,1))
+x <- sort(rnorm(18))
+y <- 2*x + rnorm(18,0,0.4)
+plot(y~x)
+abline(lm(y~x))
+y1 <- y
+y1[18] <- y[18] -5
+plot(y1~x,col=c(rep(1,17),2))
+abline(lm(y~x))
+abline(lm(y1~x),col=2,lty=2)
+y2 <- y
+y2[9] <- y2[9] + 5
+plot(y2~x,col=c(rep(1,8),2,rep(1,9)))
+abline(lm(y~x))
+abline(lm(y2~x),col=2,lty=2)
+```
+
+The outlier in the middle plot "pulls" the regression line in its direction and biases the slope.
+
+\hspace{1cm}$\rightarrow$ \href{http://students.brown.edu/seeing-theory/regression-analysis/index.html}{Click here} to do it manually!
+
+## Leverage plot (Hebelarm-Diagramm)
+
+In the leverage plot, (standardized) residuals $\tilde{R_i}$ are plotted against the leverage $H_{ii}$ :
+
+```{r out.width="5cm", fig.align='center', echo=FALSE, message=FALSE, warning=FALSE}
+plot(r.bodyfat, which=5, add.smooth = FALSE)
+```
+
+\alert{Critical ranges} are the top and bottom right corners!!
+
+Here, observations 36, 39, and 207 are labelled as potential \alert{outliers}.
+
+
+## An extreme outlier...
+
+Now I multiplied by 3 the observed value of bodyfat in observation 39.
+
+```{r out.width="7cm", fig.align='center', echo=FALSE, message=FALSE, warning=FALSE}
+d.bodyfat_plusextreme <- d.bodyfat
+d.bodyfat_plusextreme$bodyfat[39] <- d.bodyfat$bodyfat[39]*3
+r.bodyfat_plusextreme <- lm(bodyfat ~ bmi, d.bodyfat_plusextreme)
+#plot(r.bodyfat_plusextreme, which=5, smooth.colour = "red") + theme_bw()
+plot(r.bodyfat_plusextreme, which=5, add.smooth = FALSE)
+```
+
+Some texts will give a rule of thumb that points with Cook’s distances greater than 1 should be considered influential, while other books claim a reasonable rule of thumb is  $4 / ( n - p - 1 )$
+ where $n$ is the sample size, and $p$ is the number of $beta$ parameters.
+
+
+## What can go "wrong" during the modeling process?
+
+Answer: a lot of things!
+
+* Non-linearity.
+* Non-normal distribution of residuals.
+* Heteroscadisticity (unequal variance).
+* Important outliers.
+
+
+## What to do when things "go wrong"?
+
+1. Now: Transform the response and/or explanatory variables.
+2. Now: Take care of outliers.
+3. Later in the course: Improve the model, e.g., by adding additional terms or interactions.
+4. Later in the course: Use another model family (generalized or nonlinear regression model).
+5. Not in this course: Use weighted regression.
+
+
+## Non-linearity
+
+```{r out.width="7cm", fig.align='center', echo=FALSE, message=FALSE, warning=FALSE}
+eg_data <- tibble(x = runif(50)) %>%
+  mutate(y = x ^ 3 + rnorm(50,0,0.1), 
+         log10_y = log10(y),
+         sqrt_y = sqrt(y))
+
+p1 <- ggplot(eg_data, aes(x = x, y = y)) +
+  geom_point() + 
+  theme_bw() + geom_smooth(method = "lm", se = FALSE)
+
+m1 <- lm(y ~ x, eg_data)
+
+p2 <- ggplot(mapping = aes(x = fitted(m1), y = residuals(m1))) +
+  geom_point() + theme_bw() +
+  geom_hline(yintercept = 0, linetype = "dashed")
+
+
+library(patchwork)
+
+p1 + p2
+```
+
+
+## Transformation of the response?
+
+Square root transform of the response variable $Y$:
+
+```{r out.width="7cm", fig.align='center', echo=FALSE, message=FALSE, warning=FALSE}
+p3 <- ggplot(eg_data, aes(x = x, y = sqrt_y)) +
+  geom_point() + 
+  theme_bw() + geom_smooth(method = "lm", se = FALSE)
+m2 <- lm(sqrt_y ~ x, eg_data)
+p4 <- ggplot(mapping = aes(x = fitted(m2), y = residuals(m2))) +
+  geom_point() + theme_bw() +
+  geom_hline(yintercept = 0, linetype = "dashed")
+
+
+
+(p1 + p2) / (p3 + p4)
+```
+
+
+## Another transformation
+
+Log transformation of the response variable $Y$:
+
+```{r out.width="7cm", fig.align='center', echo=FALSE, message=FALSE, warning=FALSE}
+p5 <- ggplot(eg_data, aes(x = x, y = log10_y)) +
+  geom_point() + 
+  theme_bw() + geom_smooth(method = "lm", se = FALSE)
+m3 <- lm(log10_y ~ x, eg_data)
+p6 <- ggplot(mapping = aes(x = fitted(m3), y = residuals(m3))) +
+  geom_point() + theme_bw() +
+  geom_hline(yintercept = 0, linetype = "dashed")
+
+(p1 + p2) / (p3 + p4) / (p5 + p6)
+```
+
+
+## Common transformations
+
+Which transformations should be considered to cure model deviation symptoms? There is no simple answer. But some guidelines. E.g. if we see nonlinearity and increasing variance with increasing fitted values, then a log transform may improve matter.
+
+* This is why we look at if the model is good / appropriate before we start using it. I.e. we make sure our parachute is in good working order *before* we jump from the aeroplane.
+
+Some common and useful \alert{first aid transformations} are:
 
 \colorbox{lightgray}{\begin{minipage}{14cm}
-However, we will put a lot of attention to a more reasonable and cautionary interpretation of $p$-values in this course! 
+\begin{itemize}
+\item The log transformation for {\bf concentrations} and {\bf absolute values}.
+\item The square-root ($\sqrt{\cdot}$) transformation for {\bf count data}.
+\item The $\arcsin(\sqrt{\cdot})$ transformation for {\bf proportions/percentages}.
+\end{itemize}
 \end{minipage}}
 
-## Confidence intervals of regression parameters
-
-Question 2 from slide 29:
-
-\colorbox{lightgray}{\begin{minipage}{14cm}
-Which values of the parameters are compatible with the data?
-\end{minipage}}
-
-To answer this question, we can determine the confidence intervals of the regression parameters.
-
-__Facts we know about $\hat\beta_1$__
-
-* $\hat\beta_1$ is estimated with a standard error of $\sigma^{(\beta_1)}$
-* The distribution of $\hat\beta_1$ is normal, namely $\hat\beta_1\sim N(\beta_1,\sigma^{(\beta_1)2})$.
-* However, since we need to estimate $\sigma^{(\beta_1)}$ from the data (the standard error), we have a $t$-distribution.
-
-## 
-
-Doing some calculations (similar to those in chapter 8.2.2 of Mat183 script) leads us to the 95\% confidence interval  
-
-\begin{center}
-\colorbox{lightgray}{\begin{minipage}{6cm}
-$$[\hat\beta_1 - c \cdot \hat\sigma^{(\beta_1)} ; \hat\beta_1 + c \cdot \hat\sigma^{(\beta_1)}] \ ,$$
-\end{minipage}}
-\end{center}
-
-where $c$ is the 97.5\% quantile of the $t$-distribution with $n-2$ degrees of freedom.
-
-Doing this for the bodfat example "by hand" is not hard. We have 241 degrees of freedom:
-
-```{r echo = TRUE, eval = TRUE}
-coefs <- summary(r.bodyfat)$coef
-beta <- coefs[2,1]
-sdbeta <- coefs[2,2] 
-beta + c(-1,1) * qt(0.975,241) * sdbeta 
-```
-
-## 
-
-Even easier: directly ask R to give you the CIs.
-
-```{r echo = TRUE, eval = TRUE}
-confint(r.bodyfat,level=c(0.95))
-```
-
-In summary,
-```{r results='asis', echo = FALSE}
-tableRegression(r.bodyfat)
-```
-
-\underline{Interpretation:} for an increase in the bmi by one index point, roughly 1.82\% percentage points more bodyfat are expected, and all true values for $\beta_1$ between 1.61 and 2.03 are compatible with the observed data.
-
-## Confidence and Prediction Ranges
-
-* Remember: When another sample from the same population was taken, the regression line would look slightly different.  
-
-* There are two questions to be asked:  
+These transformations can also be applied on explanatory variables!
 
 
-1. Which other regression lines are compatible with the observed data?
-\
-$\Rightarrow$ This leads to the \textbf{confidence range}.
- 
-2. Where do future observations with a given $x$ coordinate lie?
-\
-$\Rightarrow$ This leads to the \textbf{prediction range}.
 
-## Bodyfat example
+## Outliers
 
-\begin{center}
-```{r eval=TRUE, fig.width=5, fig.height=5,out.width="7cm", echo=FALSE}
-t.range <- range(d.bodyfat$bmi)
-t.xwerte <- seq(t.range[1]-1,t.range[2]+1,by=1)
-t.vert <- predict(r.bodyfat,se.fit=T,newdata=data.frame(bmi=t.xwerte),
-interval ="confidence")$fit
-t.vorh <- predict(r.bodyfat,se.fit=T,newdata=data.frame(bmi=t.xwerte),
-interval ="prediction")$fit
-plot(d.bodyfat$bmi,d.bodyfat$bodyfat,main="",xlab="BMI",ylab="bodyfat",xlim=range(t.xwerte),ylim=c(-5,50),cex=0.8)
-abline(r.bodyfat,lwd=2)
-lines(x=t.xwerte,y=t.vert[,2],lty=8,lwd=2,col=2)
-lines(x=t.xwerte,y=t.vert[,3],lty=8,lwd=2,col=2)
-lines(x=t.xwerte,y=t.vorh[,2],lty=8,lwd=2,col=4)
-lines(x=t.xwerte,y=t.vorh[,3],lty=8,lwd=2,col=4)
-legend("bottomright", c("confidence range (95%)", "prediction range (95%)"),
-lty=8, cex=1,col=c(2,4),lwd=2)
-```
-\end{center}
+What do we do when we identify the presence of one or more outliers?
 
-Note: The prediction range is much broader than the confidence range.
+1. Start by checking the "correctness" of the data. Is there a typo or a digital point that was shifted by mistake? Check both the response and explanatory variables.
 
-## Calculation of the confidence range
+2. If not, ask whether the model has been mis-specified. Do reasonable transformations of the response and/or explanatory variables eliminate the outlier? Do the residuals have a distribution with a long tail (which makes it more likely that extreme observations occur)?
 
-Given a fixed value of $x$, say $x_0$. The question is: 
+3. Sometimes, an outlier may be the most interesting observation in a dataset!
 
-\colorbox{lightgray}{\begin{minipage}{14cm}
-Where does $\hat y_0 = \hat\beta_0 + \hat\beta_1 x_0$ lie with a certain confidence (i.e., 95\%)? 
-\end{minipage}}
+4. Consider that outliers can also occur by chance!
 
-This question is not trivial, because both $\hat\beta_0$ and $\hat\beta_1$ are estimates from the data and contain uncertainty. 
+5. Was the outlier created by some interesting but different process from the other data points.
 
-The details of the calculation are given in Stahel 2.4b. 
-
-\colorbox{lightgray}{\begin{minipage}{14cm}
-Plotting the confidence interval around all $\hat y_0$ values one obtains the \textbf{confidence range} or \textbf{confidence band for the expected values} of $y$.
-\end{minipage}}
-
-Note: For the confidence range, only the uncertainty in the estimates $\hat\beta_0$ and $\hat\beta_1$ matters.
-
-## 
+6. Only if you decide to report the results of both scenario can you check if inclusion/exclusion changes the qualitative conclusion, and by how much it changes the quantitative conclusion.
 
 
-```{r eval=TRUE, fig.width=5,fig.height=5, out.width='7cm', echo = FALSE, fig.align='center'}
-t.range <- range(d.bodyfat$bmi)
-t.xwerte <- seq(t.range[1]-1,t.range[2]+1,by=1)
-t.vert <- predict(r.bodyfat,se.fit=T,newdata=data.frame(bmi=t.xwerte),
-interval ="confidence")$fit
-t.vorh <- predict(r.bodyfat,se.fit=T,newdata=data.frame(bmi=t.xwerte),
-interval ="prediction")$fit
-plot(d.bodyfat$bmi,d.bodyfat$bodyfat,main="Confidence range",xlab="BMI",ylab="bodyfat",xlim=range(t.xwerte),ylim=c(-5,50),cex=0.8)
-abline(r.bodyfat,lwd=2)
-lines(x=t.xwerte,y=t.vert[,2],lty=8,lwd=2,col=2)
-lines(x=t.xwerte,y=t.vert[,3],lty=8,lwd=2,col=2)
-legend("bottomright", c("confidence range (95%)"),
-lty=8, cex=1,col=c(2),lwd=2)
-```
+## Deleting outliers
+
+It might seem tempting to delete observations that apparently don't fit into the picture. However:
+
+* Do this __only with absolute care__ e.g., if an observation has extremely implausible values!  
+* Before deleting outliers, check points 1-6 from the previous slide.
+* When deleting outliers or the x\% of most extreme observations, you __must mention this in your report__.
 
 
-## Calculations of the prediction range
 
-Given a fixed value of $x$, say $x_0$. The question is:  
 
-\colorbox{lightgray}{\begin{minipage}{10cm}
-Where does a {\bf future observation} lie with a certain confidence (i.e., 95\%)? 
-\end{minipage}}
+## Overview
 
-To answer this question, we have to \alert{consider not only the uncertainty in the predicted value} $\hat y_0 =  \hat\beta_0 + \hat\beta_1 x_0$, but also the \alert{error in the equation $\epsilon_i \sim N(0,\sigma^2)$}.  
+* Why use (linear) regression?
+* Fitting the line (= parameter estimation)
+* Is linear regression good enough model to use?
+* What to do when things go wrong?
+* Transformation of variables/the response
+* Handling of outliers
 
-This is the reason why the {\bf prediction range is always wider than the confidence range}.
-
-## 
-
-```{r eval=T,fig.width=5,fig.height=5,out.width="7cm",echo=FALSE, fig.align='center'}
-t.range <- range(d.bodyfat$bmi)
-t.xwerte <- seq(t.range[1]-1,t.range[2]+1,by=1)
-t.vert <- predict(r.bodyfat,se.fit=T,newdata=data.frame(bmi=t.xwerte),
-interval ="confidence")$fit
-t.vorh <- predict(r.bodyfat,se.fit=T,newdata=data.frame(bmi=t.xwerte),
-interval ="prediction")$fit
-plot(d.bodyfat$bmi,d.bodyfat$bodyfat,main="Prediction range",xlab="BMI",ylab="bodyfat",xlim=range(t.xwerte),ylim=c(-5,50),cex=0.8)
-abline(r.bodyfat,lwd=2)
-lines(x=t.xwerte,y=t.vorh[,2],lty=8,lwd=2,col=4)
-lines(x=t.xwerte,y=t.vorh[,3],lty=8,lwd=2,col=4)
-legend("bottomright", c( "prediction range (95%)"),
-lty=8, cex=1,col=c(4),lwd=2)
-```
+During the course we'll see many more examples of things going at least a bit wrong. And we'll do our best to improve the model, so we can be confident in it, and start to use it. Which we will start to do next week in Lecture 4.
 
 ## Tasks until the next practical (Thu/Fri)
 
 The idea of the course is that as a preparation for the practical part you will do the following:
 
 * Consolidate your understanding of today's lecture.
-* Go to openedX and do all the "Before class (BC)" tasks.  
+* Go to OLAT and do all the "Homework" tasks.  
 
 
 \bf $\rightarrow$ The same procedure applies to all course weeks.
