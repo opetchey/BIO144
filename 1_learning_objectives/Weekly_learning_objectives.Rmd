@@ -1,7 +1,7 @@
 ---
 title: "Weekly Learning Objectives - BIO144, Data Analysis for Biologists"
 author: "Owen Petchey & Stephanie Muff"
-date: "September 2018"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   html_document:
     df_print: paged
@@ -12,8 +12,7 @@ output:
 
 # Document validity
 
-* Valid for FS2020.
-* Valid for FS2021.
+* Valid only for FS2022
 
 # Overarching learning objectives {-}
 
@@ -55,60 +54,64 @@ By the end of this week you will be able to:
 
 (Please note that these skills are assessed in the Graded Assessments 1 and 2)
 
-# Unit 3 - Linear Regression {-}
+# Unit 3 - Linear Regression Part 1 {-}
 
 By the end of this week you will be able to:
 
 * Describe the type of biological / biomedical question that linear regression could help answer.
 * What we should have done, before we do a linear regression.
 * Understand how the intercept and slope are estimated in linear regression.
-* Fit and interpret a linear regression model to data in R / RStudio.
-* Recall the assumptions of linear regression.
-* Evaluation the assumptions of normality and of independence of residuals.
+* Plot a suitable graph showing the regression relationship.
+* Fit a linear regression model to data in R / RStudio.
+* Describe the assumptions of linear regression.
+* Evaluation the if the assumptions of are adequately met.
+* Get fitted values, residuals, and arbitrary predictions of a linear regression in R / RStudio.
+
+(Please note that these skills are assessed in the Graded Assessment 3)
+
+
+# Unit 4 - Linear regression part 2, and multiple regresion {-}
+
+By the end of this week you will be able to:
+
+Linear Regression Part 2:
+
 * Interpret the biological meaning of the estimated parameters.
 * Quantify how good is the linear regression model.
 * Perform a relevant hypothesis test.
 * Calculate the 95% confidence interval of the estimated coefficients (e.g. intercept and slope).
 * Describe the difference between a confidence range and a prediction range.
 * Be able to calculate yourself the degrees of freedom of error for bivariate regression.
-* Get fitted values, residuals, and arbitrary predictions of a linear regression in R / RStudio.
 * Appropriately communicate, using text and graphically, the findings of a questioned answered with linear regression.
 * Perform linear regression in R / Rstudio, including all of the above.
 
+Multiple regression:
 
-(Please note that these skills are assessed in the Graded Assessment 3)
-
-# Unit 4 - Multiple linear regression part 1 {-}
-
-By the end of this week you will be able to:
-
-* Describe the assumptions of linear regression.
-* Use QQ-plots and Tukey-Anscombe plots to assess validity of these assumptions.
-* **Do all the things listed for week 2, except with multiple predictor / explanatory variables.**
+* **Do all the things listed for Unit 3, and the previous part of Unit 4, except with multiple predictor / explanatory variables.**
 * In particular, describe the type of biological / biomedical question that multiple linear regression could help answer.
+* Use the four common graphs for assessing validity of model assumptions (i.e. Tukey-Anscombe plot, QQ-plot, scale-location plot, and leverage plot).
+* Use the ggfortify add-on package to easily produce these four diagnostic graphs.
 * In particular, interpret the R model `summary` table for models with multiple predictor variables.
 * Start to recognise the implications of having correlated predictor variables.
+
+(Please note that these skills are assessed in the Graded Assessment 4)
+
+
+# Unit 5 - Binary/categorical explanatory variables, and interactions {-}
+
+
 * Relate what are binary and factor type predictor / explanatory variables (sometimes called covariates).
 * Start to do all the above for models with binary and factor covariates.
 * In particular, calculated degrees of freedom for error with binary and factor covariates.
 * In particular, use the F-test to compare models with/without a factor covariate.
 * In particular, interpret the R model `summary` and `anova` table for binary and factor covariates.
-
-
-(Please note that these skills are assessed in the Graded Assessment 4)
-
-
-# Unit 5 - Multiple linear regression part 2 {-}
-
-By the end of this week you will be able to:
-
 * Describe the type of biological / biomedical question that linear regression with interactions among predictor variables could help answer.
-* **Do all the things listed for week 2, except with interactions among multiple predictor / explanatory variables.**
-* In particulary, find and interpret the interaction terms in the R model `anova` table.
+* **Do all the things listed for Unit 2 & 3, except with interactions among multiple predictor / explanatory variables.**
+* In particular, find and interpret the interaction terms in the R model `anova` table.
 * In particular, calculated degrees of freedom for error with interacting predictor variables.
 * Use the four common graphs for assessing validity of model assumptions (i.e. Tukey-Anscombe plot, QQ-plot, scale-location plot, and leverage plot).
-* Use the ggfortify add-on package to easily produce these four diagnostic graphs.
 * Recognise and fix two problems: non-normal residuals, and outliers.
+
 
 (Please note that these skills are assessed in the Graded Assessment 5)
 
