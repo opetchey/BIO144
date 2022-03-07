@@ -393,7 +393,7 @@ This assumption implies that:
 
 Furthermore:
 
-- (d) we assumed a linear relationship (related to (c) above).
+- (d) we assumed a linear relationship.
 - (e) implies there are no outliers (implied by (a) above)
 
 
@@ -515,7 +515,7 @@ plot(r.bodyfat,which=3, add.smooth = FALSE)
 
 
 
-## (d) Linearity (related to independence)
+## (d) Linearity
 
 With simple regression, we can assess this directly on the graph with fitted line (scroll to an example).
 
@@ -561,7 +561,7 @@ plot(r.bodyfat, which=5, add.smooth = FALSE)
 
 To understand the leverage plot, we need to introduce the idea of the \emph{leverage} ("Hebel").
 
-In simple regression, the leverage of individual $i$ is defined as $H_{ii} = (1/n) + (x_i-\overline{x})^2 SSQ^{(X)}$. Think about when leverages are expected to be large/small, and answer the two questions here:
+In simple regression, the leverage of individual $i$ is defined as $H_{ii} = (1/n) + (x_i-\overline{x})^2 / SSQ^{(X)}$. 
 
 
 
@@ -590,7 +590,7 @@ abline(lm(y2~x),col=2,lty=2)
 
 The outlier in the middle plot "pulls" the regression line in its direction and biases the slope.
 
-\hspace{1cm}$\rightarrow$ \href{http://students.brown.edu/seeing-theory/regression-analysis/index.html}{Click here} to do it manually!
+
 
 ## Leverage plot (Hebelarm-Diagramm)
 
@@ -642,7 +642,7 @@ Answer: a lot of things!
 
 ## Non-linearity
 
-```{r out.width="7cm", fig.align='center', echo=FALSE, message=FALSE, warning=FALSE}
+```{r out.width="10cm", out.height="5cm", fig.align='center', echo=FALSE, message=FALSE, warning=FALSE}
 eg_data <- tibble(x = runif(50)) %>%
   mutate(y = x ^ 3 + rnorm(50,0,0.1), 
          log10_y = log10(y),
