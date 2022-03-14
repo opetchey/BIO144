@@ -130,13 +130,22 @@ SSQ^{(Y)} &=& SSQ^{(R)} \qquad\qquad \quad + \qquad\quad\qquad SSQ^{(E)} \\[2mm]
 This can be visualized for a model with only one predictor:\
  
 
-```{r eval=T,fig.width=5, fig.height=5.3,warning=FALSE,echo=F,out.width="7cm", fig.align='center'}
+```{r eval=T,fig.width=5, out.height="5cm", warning=FALSE,echo=F,out.width="12cm", fig.width = 12, fig.height = 5, fig.align='center'}
+par(mfrow=c(1,2))
 r.bodyft <- lm(bodyfat ~ bmi , d.bodyfat)
 plot(bodyfat~bmi,d.bodyfat,cex.lab=1.5)
 abline(h=mean(d.bodyfat$bodyfat),lty=2)
-abline(r.bodyfat)
+#abline(r.bodyfat)
 text(35,15,expression(bar(y)),cex=1.5)
+#text(35,40,expression(hat(y)),cex=1.5)
+plot(bodyfat~bmi,d.bodyfat,cex.lab=1.5)
+#abline(h=mean(d.bodyfat$bodyfat),lty=2)
+abline(r.bodyfat)
+#text(35,15,expression(bar(y)),cex=1.5)
 text(35,40,expression(hat(y)),cex=1.5)
+
+
+
 ```
 
 
@@ -253,7 +262,7 @@ summary(r.bodyfat)$coef
 \  
 Besides the estimate and the standard error (which we discussed before), there is a \alert{\texttt{t value}} and a probability \alert{\texttt{Pr(>|t|)}} that we need to understand.
 
-How do these things help us to answer the two questions above?
+How do these things help us?
 
 
 
@@ -268,8 +277,7 @@ In words: $H_0$ =   "no association" \\
 \end{center}
 \end{minipage}}
 
-\small (Included in $H_0$ is the assumption that the data follow the simple linear regression model!)  
-\
+
 
 Here, the \emph{alternative hypothesis} is given by
 \colorbox{lightgray}{\begin{minipage}{14cm}
@@ -317,7 +325,7 @@ Task:
 \
 $\rightarrow$ Please use equation \eqref{eq:beta} to find out how the first three columns (Estimate, Std. Error and t value) are related! Check by a calculation...
 
-Note: The last column contains the \textbf{$p$-value} of the test $\beta_1=0$.
+Note: The last column contains the \textbf{$p$-value} of the test of the null hypothesis of $\beta_1=0$.
 
 
 ## Recap: Formal definition of the $p$-value
@@ -527,7 +535,7 @@ lty=8, cex=1,col=c(4),lwd=2)
 
 
 
-## That is regression done (if only!)
+## That is regression done (at least for our current purposes)
 
 * Why use (linear) regression?
 * Fitting the line (= parameter estimation)
