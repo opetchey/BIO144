@@ -71,6 +71,9 @@ y_i = \left\{
 \end{minipage}}
 ```
 
+## Sketch a table & draw bar graph
+
+
 ## Example: Smoking variable in Hg Study
 
 For the 59 mothers in the Hg study, check if their smoking status
@@ -146,6 +149,7 @@ Smokers: $y_i = -1.03 + 0.26  + 0.098\cdot amalgam _i+ 0.032\cdot fish_i + \epsi
 Non-smokers:  $y_i = -1.03  + 0.098\cdot amalgam_i + 0.032\cdot fish_i  + \epsilon_i$ 
 \end{minipage}}
 ```
+
 ## Categorical explanatory variables
 
 Some explanatory variables indicate a \textbf{category}, for instance
@@ -178,11 +182,47 @@ add a constant to $\beta_1, \beta_2, ...\beta_k$ and subtract it from
 $\beta_0$, and the model would fit equally well to the data, so it
 cannot be decided which set of the parameters is best.
 
-## 
+## Sketch a table & draw bar graph
+
+
+## Categorical explanatory variables (duplicate slide)
+
+Some explanatory variables indicate a \textbf{category}, for instance
+the species of an animal or a plant. This type of explanatory variable
+is termed \textbf{categorical}. For this there is trick: we can convert
+a categorical variable with $k$ levels (for instance 3 species) into $k$
+dummy variables $x_i^{(j)}$ with
+
+```{=tex}
+\colorbox{lightgray}{\begin{minipage}{14cm}
+\begin{equation*}
+x_i^{(j)} = \left\{ 
+\begin{array} {ll}
+1, & \text{if the $i$th observation belongs to group $j$}.\\
+0, & \text{otherwise.}
+\end{array}\right.
+\end{equation*}
+\end{minipage}}
+```
+Each of the explanatory variables $x^{(1)},\ldots, x^{(k)}$ can then be
+included as a binary variable in the model
+
+```{=tex}
+\begin{equation*}
+y_i = \beta_0 + \beta_1 x^{(1)} + \ldots + \beta_k x^{(k)} + \epsilon_i \ .
+\end{equation*}
+```
+\scriptsize However: this model is \alert{not identifiable}. We could
+add a constant to $\beta_1, \beta_2, ...\beta_k$ and subtract it from
+$\beta_0$, and the model would fit equally well to the data, so it
+cannot be decided which set of the parameters is best.
+
+
+## Solution...
 
 \textbf{Solution: } One of the $k$ categories must be selected as a
 \emph{reference category} and is \emph{not included in the model}.
-Typically: the alpabeticallyfirst category is the reference, thus $\beta_1=0$.
+Typically: the alpabetically first category is the reference, thus $\beta_1=0$.
 
 The model thus discriminates between the categories, such that (assuming
 $\beta_1=0$)
@@ -283,7 +323,7 @@ Before doing anything else, check the modeling assumptions:
 
 ```{=tex}
 \begin{center}
-```{r eval = TRUE, fig.width=6,fig.height=6,warning=FALSE,echo=F,out.width="8cm",fig.align='center',message=FALSE}
+```{r eval = TRUE, fig.width=5,fig.height=5,warning=FALSE,echo=F,out.width="6cm",fig.align='center',message=FALSE}
 autoplot(r.lm,which=c(1,2, 3, 5),smooth.colour=NA) 
 ```
 \end{center}
@@ -355,24 +395,25 @@ $R^2_a$.
 \textbf{Question:} Is the "Gattung" explanatory variable relevant in the
 model, that is, do the model intercepts differ for the three species?  
 
-\textbf{Problem:} The $p$-values of the worm species are not very
+\textbf{Problem:} The $p$-values of the t-test for each of the worm species are not very
 meaningful. They belong to tests that compare the intercept of a
 category with the intercept of the reference level (i.e., the
 \emph{difference} in intercepts!). However, the question is whether the
 variable `Gattung` has an effect in total.  
 
-\textbf{Solution:} When a categorical explanatory variable with $k$
-levels is in the model, it occupies $k-1$ parameters. Therefore,
-\alert{the $t$-test needs to be replaced by the $F$-test.}
+\textbf{Solution:} To test if a categorical explanatory variable explains a significant amount of variability, we use an $F$-test (we saw this in regression; it is a "variance ratio" test.}
 
-## $F$-test to compare models
+## $F$-test
 
 ```{=tex}
 \begin{center}
 \includegraphics[width=11cm]{pictures/Ftest.png}
 \end{center}
 ```
-\small Remember: $F_{1,n-p} = t^2_{n-p}$
+
+
+## $F$-test (explanatory sketches)
+
 
 ## $F$-test for the earthworms
 
@@ -402,9 +443,13 @@ cc <- r.lm$coefficients
 ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point() + geom_line(aes(y=cc[1]+cc[2]*MAGENUMF),colour=2)  + geom_line(aes(y=cc[1]+cc[3]+cc[2]*MAGENUMF),colour=3)  + geom_line(aes(y=cc[1]+cc[4] + cc[2]*MAGENUMF),colour=4) + theme_bw()
 ```
 
+## That was a lot...
 
+Binary and categorical variables...
 
-## Group-specific slopes: Interactions
+* Take a few minutes to consolidate, identify questions, ask them.
+
+## Group-specific slopes: **Interactions**
 
 It may happen that \alert{groups do not only differ in their intercept ($\beta_0$), but also in their slopes ($\beta_x$)}.
 
@@ -427,7 +472,7 @@ Remember the mercury (Hg) example from last week. We now extended the dataset an
 
 It is known that Hg concentrations may change over the lifetime of humans. So let us look at \texttt{log(Hg$_\text{urin}$)} depending on the age of the participants:
 
-```{r eval=T,warning=FALSE,out.width="6.5cm", fig.align='center', echo=FALSE, message=FALSE}
+```{r eval=T,warning=FALSE,out.width="6.5cm", fig.align='center', echo=FALSE, message=FALSE, fig.height=3, fig.width=4}
 d.hg <- read.table(here("3_datasets/hg_urine_fuzzed.csv"),header=T, sep=",")
 d.hg <- d.hg[,c(1,2,5,6,7,8,10)]
 #names(d.hg) <- c("Hg_urin", "Hg_soil", "smoking","amalgam", "age", "fish","mother")
@@ -509,7 +554,7 @@ On the previous slide we have actually fitted 2 models at the same time.
 
 ## 
 
-Remember (from last week), however, that the Hg model also included smoking status, amalgam fillings and fish consumption as important predictors. It is very straightforward to just include these predictors in model (1), which leads to the following model
+Remember, however, that the Hg model also included smoking status, amalgam fillings and fish consumption as important predictors. It is very straightforward to just include these predictors in model (1), which leads to the following model
 \  
 
 \small
@@ -687,7 +732,7 @@ d.hg.m <- d.hg[d.hg$mother==1,-c(3,4,9,10,11)]
 #names(d.hg.m) <- c("Hg_urin", "Hg_soil", "smoking","amalgam", "age", "fish")
 ```
 
-```{r eval=T,echo=FALSE,message=FALSE,warning=FALSE,out.width="5cm",fig.align='center'}
+```{r eval=T,echo=FALSE,message=FALSE,warning=FALSE,out.width="4cm",fig.align='center', fig.width=4, fig.height=4}
 r1.urin.mother <- lm(log10(Hg_urin) ~  smoking + amalgam + fish,data=d.hg.m)
 plot(fitted(r1.urin.mother),residuals(r1.urin.mother),xlab="Fitted values",ylab="Residuals")
 abline(h=0,lty=2)
@@ -715,7 +760,7 @@ But: The dependency is not necessarily on the fitted values ($x$-axis of TA plot
 * Plot residuals in dependency of time (if available) or sequence of obervations.
 * Plot residuals against the explanatory variable.
 
-```{r warning=FALSE,out.width="8cm", fig.align='center', message=FALSE, echo=FALSE}
+```{r echo=FALSE, fig.align='center', fig.height=3, fig.width=8, message=FALSE, warning=FALSE, out.width="8cm"}
 library(ggplot2)
 library(gridExtra)
 d1 <- data.frame(obsNr= 1:length(residuals(r1.urin.mother)), 
@@ -740,16 +785,16 @@ Again, no pattern = good.
 
 The \alert{outlier} recorded above is also visible in the QQ-plot, which is useful to check for normal distribution of residuals (assumption c):
 
-```{r eval=T,warning=FALSE,out.width="8cm",echo=FALSE, fig.align='center'}
+```{r eval=T,warning=FALSE,out.width="8cm",echo=FALSE, fig.align='center', fig.width=8, fig.height=4}
 library(ggfortify)
-autoplot(r1.urin.mother,2) + theme_bw()
+autoplot(r1.urin.mother,2) 
 ```
 
 
 ## Check equal variance assumption
 
-```{r eval=T,warning=FALSE,out.width="8cm", fig.align='center', echo=FALSE}
-autoplot(r1.urin.mother,which=3) + theme_bw()
+```{r eval=T,warning=FALSE,out.width="8cm", fig.align='center', echo=FALSE, fig.width=8, fig.height=4}
+autoplot(r1.urin.mother,which=3) 
 ```
 
 
@@ -757,7 +802,7 @@ autoplot(r1.urin.mother,which=3) + theme_bw()
 
 In the leverage plot, (standardized) residuals $\tilde{R_i}$ are plotted against the leverage $H_{ii}$ (still for the Hg example):
 
-```{r out.width="3cm", fig.align='center', echo=FALSE, message=FALSE, warning=FALSE}
+```{r out.width="5cm", fig.align='center', echo=FALSE, message=FALSE, warning=FALSE, fig.height=4, fig.width=8}
 autoplot(r1.urin.mother,which=5)
 ```
 
