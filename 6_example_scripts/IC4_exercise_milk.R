@@ -113,7 +113,7 @@ pred1 %>%
 ## Make a graph of the modelled/predicted relationship of
 ## kcal.per.g against mass for mean neocortex percent
 ## first make the new data to predict over
-new_data <- expand.grid(neocortex.perc = mean(milk$mass),
+new_data <- expand.grid(neocortex.perc = mean(milk$neocortex.perc),
                         mass = seq(min(milk$mass),
                                    max(milk$mass),
                                    length=100))
