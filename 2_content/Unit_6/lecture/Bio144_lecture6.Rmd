@@ -53,16 +53,15 @@ We have now actually fitted __three__ models, one model for each species:
 
 \colorbox{lightgray}{\begin{minipage}{14cm}  
 
-L: $\hat{y}_i =`r format(worm.coef[1,1],2,2,2)`+
-`r format(worm.coef[1,1],2,2,2)` + `r round(worm.coef[2,1],2)` \cdot \text{MAGENUMF}$  
+L: $\hat{y}_i =`r format(worm.coef[1,1],2,2,2)` + `r round(worm.coef[2,1],2)` \cdot \text{MAGENUMF}$  
 
 \ 
 
-N: $\hat{y}_i = `r format(worm.coef[1,1],2,2,2)` + `r format(worm.coef[3,1],2,2,2)`  + `r round(worm.coef[2,1],2)` + `r round(worm.coef[5,1],2)`\cdot \text{MAGENUMF}$  
+N: $\hat{y}_i = `r format(worm.coef[1,1],2,2,2)` + `r format(worm.coef[3,1],2,2,2)`  + (`r round(worm.coef[2,1],2)` + `r round(worm.coef[5,1],2)`)\cdot \text{MAGENUMF}$  
 
 \ 
 
-O: $\hat{y}_i = `r format(worm.coef[1,1],2,2,2)` + `r format(worm.coef[4,1],2,2,2)` + `r round(worm.coef[2,1],2)` + `r round(worm.coef[6,1],2)`\cdot \text{MAGENUMF}$
+O: $\hat{y}_i = `r format(worm.coef[1,1],2,2,2)` + `r format(worm.coef[4,1],2,2,2)` + (`r round(worm.coef[2,1],2)` + `r round(worm.coef[6,1],2)`)\cdot \text{MAGENUMF}$
 \end{minipage}}
 
 To remember:
@@ -217,7 +216,7 @@ Interpretation: The effects $\beta_1$, $\beta_2$ etc give the deviation from the
 ## ANOVA as a special case of a linear model
 
 \colorbox{lightgray}{\begin{minipage}{14cm}
-Model \eqref{eq:aov} is identical to the regression model with a categorical explanatory variable, see lecture 4. 
+Model \eqref{eq:aov} is identical to the regression model with a categorical explanatory variable, see lecture 5. 
 \end{minipage}}
 
 __Interpretation: The categories are the different group memberships.__
@@ -242,20 +241,20 @@ __Aim of ANOVA__: to test _globally_ if the groups differ. That is:
 \vspace{-4mm}
 \begin{eqnarray*}
 {H_0} &:& \mu_1=\mu_2=\ldots = \mu_g  \quad \text{or, equivalently} \quad  \beta_2 = \ldots = \beta_g =0  \\[2mm]
-{H_1} &:& \text{At least two groups are different}
+{H_1} &:& \text{The group means are not all the same.}
 \end{eqnarray*}
 \end{minipage}}
 
-Remember lectures 4 and 5: We have already used the $F$-test for categorical variables (see $F$-test for the earthworms in lecture 4 or cooking rule on slide 6 in lecture 5). This was equivalent to testing if all $\beta$s that belong to a categorical variable are =0 at the same time. 
+We have already used the $F$-test for categorical variables (see $F$-test for the earthworms in lecture 5). This was equivalent to testing if all $\beta$s that belong to a categorical variable are =0 at the same time. 
 
 $\rightarrow$ Equivalent to testing if the categorical covariate is needed in the model.
 
 This is \alert{the very same problem here}, thus we need the $F$-test again!
 
-## Variance decomposition
+## Calculating and analysing the variances
 
 \small
-To derive the ingredients of the $F$-test, we look at the decomposition of variance (Remember this idea from lecture 4, slide 23):
+To derive the ingredients of the $F$-test, we look at the variances :
 \normalsize
 \begin{eqnarray*}
 \text{total variability} &=&  \text{explained variability} +  \text{  residual variability} \\
@@ -278,7 +277,6 @@ MS_E = \frac{SS_{\text{within}}}{n-g}
 \end{equation*}
 \end{minipage}}
 
-##
 
 
 ## Interpretation of the $F$ statistic
@@ -293,6 +291,7 @@ qplot(as.factor(d.mais$HYBRID),d.mais$YIELD) + xlab('Hybrid (Sorte') + ylab('Yie
 geom_hline(yintercept = 62.555, col = 'red') + geom_point(data= d.agg, aes(x = HYBRID, y = YIELD, col = 'red'), shape = 15)
 ```
 
+##
 
 
 ## Interpretation of the $F$ statistic II
@@ -378,13 +377,13 @@ anova(r.mais)
 You can see that the value of $F=$ `r format(summary(r.mais)$fstatistic[1],nsmall=2,digits=2)` is $F$-distributed with 3 and 16 degrees of freedom, and the $p$-value of the test ``$\beta_2=\beta_3=\beta_4=0$'' is $<0.0001$.
 
 \colorbox{lightgray}{\begin{minipage}{14cm}
-Conclusion: There are differences among the four groups!
+Conclusion: Not all of the means are the same!
 \end{minipage}}
 \colorbox{lightgray}{\begin{minipage}{14cm}
 $\rightarrow$ This is equivalent to  ``The group variable is relevant for the model''.
 \end{minipage}}
 \small 
-__Exercise:__ Look at the table a bit closer. How are `Df`, `Sum Sq`, `Mean Sq`, `F value` and `Pr(<F)} related?`
+
 
 ## 
 
@@ -491,8 +490,6 @@ low & group 3 & group 4\\
 
 Start by looking at means and standard deviations in the groups, as well as at a graphical description of the means: 
 
-\  
-
 \tiny
 ```{r echo = FALSE, message=FALSE, warning=FALSE}
 library(HSAUR3)
@@ -500,8 +497,8 @@ names(weightgain) <- c("source","amount","weightgain")
 d.weightgain <- mutate(weightgain,amount = relevel(amount,ref="Low"))
 ```
 
-```{r echo = TRUE, message=FALSE, warning=FALSE}
-d.weightgain %>% group_by(source,amount) %>% summarise(meanW = mean(weightgain),sdW = sd(weightgain))
+```{r echo = FALSE, message=FALSE, warning=FALSE}
+d.weightgain %>% group_by(source,amount) %>% summarise(meanW = mean(weightgain),sdW = sd(weightgain), n = n())
 ```
 
 \normalsize
@@ -542,6 +539,9 @@ Note: We again need additional constraints. Here we always use the R default (\a
 \end{itemize}
 
 \scriptsize Alternative:  $\sum_i\beta_i = \sum_i\gamma_i = 0$ (\alert{sum-to-zero contrast}).
+
+##
+
 
 ## Two way ANOVA 
 
@@ -617,9 +617,14 @@ summary(r.weight2)$coef
 ```
 
 
-## 
+## The model diagnostics:  
 
-__Interpretation of the coefficients__ 
+```{r fig.width=5,fig.align='center',echo = FALSE, message=FALSE, warning=FALSE, fig.height=5,out.width="7cm"}
+autoplot(r.weight2,smooth.colour=NA)
+```
+
+
+## Interpretation of the coefficients
 
 \alert{This works in the same way as for categorical covariates in regression!} To see this, let us estimate the means from the model. From the above output, we have \scriptsize [because of using treatment contrasts]:
 
@@ -629,7 +634,7 @@ $\hat\beta_{beef}=0$, $\hat\beta_{cereal}=4.7$,
 \ 
 $\hat\gamma_{low}=0$, $\hat\gamma_{high}=20.8$,  
 \ 
-$\hat{(\beta\gamma)}_{cereal/high}= -18.8$ $\hat{(\beta\gamma)}_{beef/high}=\hat{(\beta\gamma)}_{beef/low}=\hat(\beta\gamma)_{cereal/low}=0$.
+$\hat{(\beta\gamma)}_{beef/high}=\hat{(\beta\gamma)}_{beef/low}=\hat(\beta\gamma)_{cereal/low}=0$, $\hat{(\beta\gamma)}_{cereal/high}= -18.8$.
 
 Therefore:
 
@@ -652,13 +657,6 @@ anova(lm(weightgain ~ amount,subset(d.weightgain,source=="Beef")))
 anova(lm(weightgain ~ amount,subset(d.weightgain,source=="Cereal")))
 ```
 
-## 
-
-And finally, the model diagnostics:  
-
-```{r fig.width=5,fig.align='center',echo = FALSE, message=FALSE, warning=FALSE, fig.height=5,out.width="7cm"}
-autoplot(r.weight2,smooth.colour=NA)
-```
 
 ## Exercise:  
 
