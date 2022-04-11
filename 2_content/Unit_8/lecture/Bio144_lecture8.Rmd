@@ -1,14 +1,13 @@
 ---
 title: "Lecture 8: Model/variable selection"
 subtitle: "BIO144 Data Analysis in Biology"
-author: "Stephanie Muff & Owen Petchey"
+author: "Owen Petchey & Damien Farine"
 institute: "University of Zurich"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   beamer_presentation:
     includes:
       in_header: ../../beamer_stuff/preamble.tex
-bibliography: ../../Unit_1/lecture/refs.bib
 classoption: "aspectratio=169"
 ---
 
@@ -46,8 +45,8 @@ Importantly, the approach to find a model __heavily depends on the aim__ for whi
 
 The following distinction is important:
 
-* The aim is to \alert{predict} future values of __y__ from known regressors.
-* The aim is to \alert{explain} __y__ using known regressors. Ultimately, the aim is to find causal relationships.
+* The aim is to \alert{predict} future values of __y__ from known regressors. Variables in the model are covariates.
+* The aim is to \alert{explain} __y__ using known regressors. Ultimately, the aim is to find causal relationships. Variables in the model are explanatory variables.
 
 ## 
 $\rightarrow$ Even among statisticians there is no real consensus about how, if, or when to select a model:
@@ -215,11 +214,11 @@ __Start with an empty model__ In each step, __add__ the predictor that leads to 
 
 ## "Best" predictive model for bodyfat
 Given the predictive nature of the bodyfat model, we search for the model with minimal AICc, for instance using the `stepAIC()` function from the `MASS` package:
-```{r, echo=TRUE}
+```{r, echo=TRUE, message=FALSE}
 library(MASS)
 library(AICcmodavg)
-r.AIC <- stepAIC(r.bodyfat, direction = c("both"), 
-                 trace = FALSE,AICc=TRUE)
+# remember: r.bodyfat <- lm(bodyfat ~ ., d.bodyfat)
+r.AIC <- stepAIC(r.bodyfat,direction=c("both"),trace = FALSE,AICc=TRUE)
 AICc(r.bodyfat)
 AICc(r.AIC)
 ```
@@ -321,7 +320,7 @@ set.seed(123456)
 data <- data.frame(matrix(rnorm(51*100),ncol=51))
 names(data)[51] <- "Y"
     ```
-    `data` is a 100$\times$ 51 matrix, where the last column is the response. The __data were generated completely independently__, the explanatory variables do not have any explanatory power for the response! 
+    `data` is a 100$\times$ 51 matrix, where the last column is the response. The __data were generated completely independently__, the covariates do not have any explanatory power for the response! 
     
 ## 
 
@@ -399,7 +398,7 @@ __However, there are a few problems with this approach:__
 
 * The respective tests depend crucially on the correctness of the \alert{normality assumption}.
 
-* Explanatory variables are sometimes \alert{collinear}, which leads to more uncertainty in the estimation of the respective regression parameters, and thus to larger $p$-values.
+* Variables are sometimes \alert{collinear}, which leads to more uncertainty in the estimation of the respective regression parameters, and thus to larger $p$-values.
 
 \end{minipage}}
 
@@ -539,28 +538,26 @@ AICc(r.lm0)
 
 __But:__ Given that the mercury model is an __explanatory, confirmatory model__, we should not remove a variable (e.g., migration) simply because it reduces AICc.
 
-$\rightarrow$ Therefore, given the a priori selection of variables and the model validation results, the model from slide  was used in the final publication CITATION:imo.etal2017.
+$\rightarrow$ Therefore, given the a priori selection of variables and the model validation results, the model from slide  was used in the final publication (citation:imo.etal2017).
 
 $\rightarrow$ Any further analyses with other models would need to be labelled as \alert{exploratory}.
 
-## Another complication: Collinearity of explanatory variables
+## Another complication: Collinearity of covariates / explanatory variables
 
 \small (See Stahel chapter 5.4)  
 
-\
-
-Given a set of explanatory variables ${x^{(1)}}, {x^{(2)}}, {x^{(3)}}, ...,{x^{(p)}}$. If it is possible for one of the explanatory variables to be written as a \alert{linear combination of the others}
+Given a set of variables ${x^{(1)}}, {x^{(2)}}, {x^{(3)}}, ...,{x^{(p)}}$. If it is possible for one of the variables to be written as a \alert{linear combination of the others}
 \begin{equation*}
 x_i^{(j)} = \sum_{k\neq j} c_k x_i^{(k)} \quad \text{for all} \quad  i=1,...,n
 \end{equation*}
 
-the set of explanatory variables is said to be \alert{collinear}.  
+the set of variables is said to be \alert{collinear}.  
 
 
 __Examples:__ 
 
 * Three vectors in a 2D-plane are always collinear.
-* An explanatory variable can be written as a linear combination of two others: $x^{(j)} = c_1\cdot x^{(1)} + c_2 \cdot x^{(2)}$, then the three variables are collinear.
+* Any variable that can be written as a linear combination of two others: $x^{(j)} = c_1\cdot x^{(1)} + c_2 \cdot x^{(2)}$, then the three variables are collinear.
 
 ## 
 
@@ -569,7 +566,7 @@ In statistics, the expression "collinearity" is also used when such a collineari
 
 __What is the problem with collinearity?__
 
-A simple (and extreme) example to understand the point: Assume two explanatory variables are identical ${x^{(1)}}={x^{(2)}}$. In the regression model
+A simple (and extreme) example to understand the point: Assume two variables are identical ${x^{(1)}}={x^{(2)}}$. In the regression model
 \begin{equation*}
 y_i = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \epsilon_i \ ,
 \end{equation*}
@@ -584,11 +581,11 @@ $\rightarrow$ $p$-values too large.
 
 ## Detecting collinearity
 
-The \alert{variance inflation factor} (VIF) is a measure for collinearity. It is defined for each explanatory variable ${x^{(j)}}$ as 
+The \alert{variance inflation factor} (VIF) is a measure for collinearity. It is defined for each variable ${x^{(j)}}$ as 
 \begin{equation*}
 VIF_j = \frac{1}{1-R_j^2} \qquad
 \end{equation*}
- where $R_j^2$ is the $R^2$ of the regression of ${{x^{(j)}}}$ against all other explanatory variables (Note: if $R_j^2$ is large, this means large collinearity and thus a large VIF).  
+ where $R_j^2$ is the $R^2$ of the regression of ${{x^{(j)}}}$ against all other variables (Note: if $R_j^2$ is large, this means large collinearity and thus a large VIF).  
  
 __Examples__ 
 
@@ -617,7 +614,7 @@ Before you start:
   * What model simplifications will be considered it it is not possible to fit the intended model?
   * How will you deal with outliers?
   * How will you treat missing values in the data?
-  * How will you treat collinear explanatory variables?
+  * How will you treat collinear variables?
   * ...
   
 It is advisable to write your strategy down as a "protocol" before doing any analyses. 

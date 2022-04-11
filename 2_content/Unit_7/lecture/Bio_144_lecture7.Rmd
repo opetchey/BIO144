@@ -1,7 +1,7 @@
 ---
 title: "Lecture 7: ANCOVA, short introduction to Linear Algebra"
 subtitle: "BIO144 Data Analysis in Biology"
-author: "Stephanie Muff & Owen Petchey"
+author: "Owen Petchey & Damien Farine"
 institute: "University of Zurich"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
@@ -137,6 +137,8 @@ ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point() + 
 \alert{Categorical} and \alert{continuous} covariates were used to predict a continuous outcome $\rightarrow$ ANCOVA.
 
 ## 
+
+
 \tiny
 ```{r echo = TRUE, eval = TRUE}
 r.lm <- lm(log(GEWICHT) ~  MAGENUMF + Gattung,d.wurm)
@@ -146,6 +148,8 @@ summary(r.lm)$coef
 \ 
 
 __Important:__  The $p$-values for the entries `GattungN` and `GattungOc` are not very meaningful (why?).
+
+##
 
 To understand if "Gattung" has an effect, __we need to carry out an $F$-test__ $\rightarrow$ ANOVA table:
 \tiny  
@@ -158,7 +162,7 @@ anova(r.lm)
 
 ## 
 
-We also included an __interaction term__ between `MAGENUMF` and `Gattung` to allow for different slopes:  
+We can also include an __interaction term__ between `MAGENUMF` and `Gattung` to allow for different slopes:  
 
 \ 
 
@@ -890,6 +894,8 @@ t.Y <- t.y  + t.e
 t.Y
 ```
 \normalsize
+
+## 
 
 It is now possible to fit the model with `lm`: 
 
