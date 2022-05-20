@@ -572,10 +572,12 @@ summary(polyps.glm2)
 ## 
 
 \begin{itemize}
-\item The \alert{dispersion parameter} is now estiamted as 10.73, which is calculated as  
+\item The \alert{dispersion parameter} is estimated as 10.73, which is close to that calculated by  
 \begin{center}
 \texttt{Residual deviance / df}.\\[6mm]
 \end{center}
+
+(See the relevant FAQ on OLAT for further details.)
 
 \item The $p$-values for the coefficients are now larger! In particular, there is only weak evidence ($p=0.063$) for an effect of age!\\[2mm]
 $\rightarrow$ The \texttt{poisson} family gave too optimistic $p$-values!\\[2mm]
