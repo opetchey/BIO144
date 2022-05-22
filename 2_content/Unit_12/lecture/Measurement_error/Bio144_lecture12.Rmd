@@ -80,7 +80,7 @@ $$w_i = x_i + u_i, \qquad u_i \sim N(0,\sigma^2_{u})$$
 is the **classical ME model**.
 
 ## (continued)
-```{r fig.width=1.5, fig.height=1.1, fig.align='center'}
+```{r fig.width=1.5, fig.height=1.1, fig.align='center', echo = FALSE}
 par(mar=c(0.1,0.1,0.1,0.1))
 tx<-seq(-4,4,0.01)
 par(mfrow=c(1,1))
@@ -103,7 +103,7 @@ Find regression parameters $\beta_0$ and $\beta_x$ for the model with explanator
 $$y_i = 1 \cdot x_i + \epsilon_i, \qquad \epsilon_i \sim N(0,\sigma^2)$$
 \vspace{1mm}
 \small
-```{r, message=FALSE}
+```{r, message=FALSE, echo = FALSE}
 library(ggplot2)
 set.seed(84522)
 n <- 100
@@ -118,9 +118,9 @@ y <- beta_0 + beta_1*x + epsilon
 m1 <- lm(y~x)
 ```
 \normalsize
-## Plotting
+
 \small
-```{r, message=FALSE, fig.width=3, fig.height=1.8, fig.align='center'}
+```{r, message=FALSE, fig.width=3, fig.height=1.8, fig.align='center', echo=FALSE}
 cols <- c("X"="black","W"="red")
 ggplot(mapping=aes(x=x,y=y,col="X")) +  
   geom_smooth(method="lm") + geom_point(size=0.9) + 
@@ -143,7 +143,7 @@ However, assume that only an erroneous proxy $\mathbf{w}$ is observed with class
 $$w_i = x_i + u_i, \qquad u_i \sim N(0,\sigma_u^2), \qquad \sigma^2_u = \sigma^2_x$$
 \vspace{1mm}
 \small
-```{r, message=FALSE, fig.width=3, fig.height=2, fig.align='center'}
+```{r, message=FALSE, fig.width=3, fig.height=2, fig.align='center', echo = FALSE}
 w <- x + u ## error added to x in this step
 
 ## Classical
@@ -155,9 +155,9 @@ m2 <- lm(y~w)
 ```
 \normalsize
 
-## Plotting
+
 \small
-```{r, message=FALSE, fig.width=3, fig.height=1.8, fig.align='center'}
+```{r, message=FALSE, fig.width=3, fig.height=1.8, fig.align='center', echo = FALSE}
 cols <- c("X"="black","W"="red")
 ggplot(mapping=aes(x=x,y=y,color="X")) +  geom_smooth(method="lm") +
   geom_point(size=0.9) + 
@@ -264,7 +264,7 @@ Parameter of interest: $\beta_x$ (e.g. a regression slope).
 
 Problem: The respective explanatory variable $x$ was estimated with error: $$w=x+u\ , \quad u\sim N(0,\sigma_u^2)$$
 \small
-```{r, message=FALSE}
+```{r, message=FALSE, echo = FALSE}
 set.seed(212356)
 sigmax <- 1    # variance in x
 sigmau <- 0.25 # measurement error
@@ -280,9 +280,9 @@ Bo <- B*sigmax/(sigmax + sigmau*(1+s))
 ```
 \normalsize
 
-## Plot
+
 \small
-```{r, message=FALSE, fig.width=3, fig.height=1.8, fig.align='center'}
+```{r, message=FALSE, fig.width=3, fig.height=1.8, fig.align='center', echo = FALSE}
 # plot the simulated data
 par(mar=c(3,4,0.5,1), mgp=c(2.2,0.8,0))
 plot((1+s), Bo, ylim=c(0.6,1), xlim=c(0,2), xlab=expression(sigma[u]^2),
@@ -295,7 +295,7 @@ p <- recordPlot()
 
 ## Find corrected Beta
 \small
-```{r, message=FALSE, fig.width=3, fig.height=1.8, fig.align='center'}
+```{r, message=FALSE, fig.width=3, fig.height=1.8, fig.align='center', echo = FALSE}
 print(p) # add plot again from above
 model <- lm(Bo ~ poly(s,2)) # fit a quadratic line
 newx <- seq(-1,1,0.1) # fit line to demonstrate fit
