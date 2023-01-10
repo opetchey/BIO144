@@ -26,9 +26,12 @@ library(dplyr)
 library(ggfortify)
 library(lme4)
 
+## get the correct url for this years reaction time data
+## get it from your week 1 practical script
+the_url_for_this_years_reaction_time_google_sheet <- "put the url inside these brackets"
 
 ## read in the data
-class_RTs <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQFgYX1QhF9-UXep22XmPow1ZK5nbFHix9nkQIa0DzqUhPtZRxH1HtY-hsno32zDiuIHiLb2Hvphk1L/pub?gid=1188775314&single=true&output=csv")
+class_RTs <- read_csv(the_url_for_this_years_reaction_time_google_sheet)
 
 
 #Week 9 Tidying data:
