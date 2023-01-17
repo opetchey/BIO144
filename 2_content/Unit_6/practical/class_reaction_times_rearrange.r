@@ -18,9 +18,6 @@ class_RTs <- select(class_RTs, ID, Gender, Pref_Reactiontime, Nonpref_Reactionti
 dd <- tidyr::gather(class_RTs, key=key, value=Reaction_time, 3:4)
 dd <- tidyr::separate(dd, col=key, sep="_", into=c("Hand", "Junk"))
 dd <- select(dd, -Junk)
-dd <- mutate(dd, Reaction_time=ifelse(Reaction_time<2.1, Reaction_time*1000, Reaction_time))
-
-dd <- filter(dd, Reaction_time<1900)
 
 
 ggplot(dd, aes(x=Gender, y=Reaction_time, col=Hand)) +

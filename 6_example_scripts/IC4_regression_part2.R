@@ -1,5 +1,7 @@
 ## clear R's brain
 rm(list=ls())
+ 
+## The part relevant to IC4 starts at line 74 (but you must still run the code between here and there)
 
 ## load some useful packages
 library(readr)
@@ -29,7 +31,7 @@ fhc1 <- fhc %>%
   drop_na() ## drop rows with any NAs
 
 ## here is the answer to the first question... the number of rows in this dataset.
- 
+
 ## plot the relationship between health care expenditure and child mortality
 ggplot(data=fhc1, aes(x=health_exp_total, y=child_mort)) + geom_point()
 
@@ -62,7 +64,6 @@ ggplot(mapping=aes(residuals(m1))) + geom_histogram()
 ## That was the answer to question 14
 
 
-## Some extras below, which will be used in later Units.
 
 ## Do this with the raw, non log transformed data, to see just how bad it is.
 ## fit the linear model and assign it to object named m1
@@ -71,7 +72,7 @@ ggplot(mapping=aes(x=fitted(m2), y=residuals(m2))) + geom_point()
 ggplot(mapping=aes(residuals(m2))) + geom_histogram()
 
 
-## look that the model terms
+## Here is where we get the estimated intercept and slope:
 summary(m1)
 
 
