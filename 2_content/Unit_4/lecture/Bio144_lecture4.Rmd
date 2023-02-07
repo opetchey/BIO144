@@ -964,6 +964,24 @@ Questions to consider:
 \end{enumerate}
 ```
 
+
+## Rounding and the final exam
+
+\small The final exam contains numerous questions which you will need to answer by entering a number. You will be instructed how many decimal places the number should be rounded to like so...
+
+In the first question of the exam is written: **Important**: Throughout the exam, unless otherwise stated in the question, always give numeric answers to precision of two decimal places (as one would get using `round(x, 2)`, where x is the answer to be rounded).
+
+In other questions you are reminded of this... **Important**: As usual, give numeric answers to precision of two decimal places (as one would get using `round(x, 2)`, where x is the answer to be rounded). Be careful, however, to only round the final number you calculate. Do not round any numbers that you then use in later calculations.
+
+And in other questions this is over-ridden, e.g.,
+
+* **Important**: Give the answer without decimal places.
+
+* **Important:** Give your answer rounded  to **three** decimal places using the `round` function.
+
+And in some questions you are not reminded to give the answer to two decimal places.
+
+
 ## Recap
 
 * How well does the model describe the data: Correlation and $R^2$
