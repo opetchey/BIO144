@@ -3,16 +3,16 @@ title: "Weekly Learning Objectives - BIO144, Data Analysis for Biologists"
 author: "Owen Petchey & Stephanie Muff"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
+  pdf_document:
+    toc: yes
   html_document:
     df_print: paged
-    toc: yes
-  pdf_document:
     toc: yes
 ---
 
 # Document validity
 
-* Valid only for FS2022
+* Valid only for FS2023
 
 # Overarching learning objectives {-}
 
