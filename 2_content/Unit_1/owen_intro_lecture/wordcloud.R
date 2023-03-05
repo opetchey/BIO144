@@ -3,6 +3,7 @@ library(janitor)
 library(wordcloud)
 library(wordcloud2)
 library(RColorBrewer)
+library(tidytext)
 
 words <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vREbywoQ3q6U3ibxnnLL1gDG89cynoGeT6Gdr5Ye40PGaxG-0jlSmMaoEsoVj2jPUaZA3Cd8mQns1LL/pub?gid=459099465&single=true&output=csv") %>%
   clean_names() %>%
@@ -18,3 +19,21 @@ wordcloud(words = words$word, freq = words$freq, min.freq = 1,
 
 wordcloud2(data=words, size=0.6, color='random-dark')
 wordcloud2(data=words, size = 0.7, shape = 'pentagon')
+
+words <- read_csv("2_content/Unit_1/owen_intro_lecture/What words would you use to describe a high quality data analysis_ (Responses).csv") %>%
+  clean_names() %>%
+  rename(word = see_above) %>%
+  unnest_tokens(word, word) %>%
+  anti_join(get_stopwords()) %>%
+  group_by(word) %>%
+  summarise(freq = n())
+
+set.seed(1234) # for reproducibility 
+wordcloud(words = words$word, freq = words$freq, min.freq = 1,
+          max.words=200, random.order=FALSE, rot.per=0.35,
+          colors=brewer.pal(8, "Dark2"))
+
+
+wordcloud2(data=words, size=0.6, color='random-dark')
+wordcloud2(data=words, size = 0.7, shape = 'pentagon')
+

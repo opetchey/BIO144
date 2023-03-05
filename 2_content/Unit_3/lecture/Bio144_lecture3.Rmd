@@ -377,7 +377,7 @@ ggplot(d.bodyfat,aes(bmi,bodyfat)) + geom_point() + geom_smooth(method='lm',se=F
 
 The main assumption in linear regression is that the residuals follow a $N(0,\sigma^2)$ distribution.
 
-We make this assumption because it is often well enough met, and give great mathematical tractibility.
+We make this assumption because it is often well enough met, and it gives great mathematical tractibility.
 
 This assumption implies that:
 
