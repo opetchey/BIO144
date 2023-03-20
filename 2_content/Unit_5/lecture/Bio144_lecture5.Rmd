@@ -13,7 +13,9 @@ classoption: "aspectratio=169"
   
 ```{r setup, include=FALSE, echo = FALSE, message=FALSE, warning=FALSE}
 source(here::here("2_content/beamer_stuff/preamble.r"))
+library(here)
 ```
+
 
 ## Overview
 
@@ -71,7 +73,7 @@ y_i = \left\{
 \end{minipage}}
 ```
 
-## Sketch a table & draw bar graph
+## Sketch
 
 
 ## Example: Smoking variable in Hg Study
@@ -93,7 +95,7 @@ Where
 ```{=tex}
 \begin{itemize}
 \item $\log(Hg_{urin})$ is the urine mercury concentration.
-\item $x^{(1)}$ is the binary smoking indicator (0/1), denoted as {\bf dummy variable}.
+\item $x^{(1)}$ is the binary smoking indicator (0/1).
 \item $x^{(2)}$ the number of amalgam fillings.
 \item $x^{(3)}$ the monthly number of marine fish meals.
 \end{itemize}
@@ -182,7 +184,10 @@ add a constant to $\beta_1, \beta_2, ...\beta_k$ and subtract it from
 $\beta_0$, and the model would fit equally well to the data, so it
 cannot be decided which set of the parameters is best.
 
-## Sketch a table & draw bar graph
+## Sketch (1)
+
+
+
 
 
 ## Categorical explanatory variables (duplicate slide)
@@ -221,8 +226,8 @@ cannot be decided which set of the parameters is best.
 ## Solution...
 
 \textbf{Solution: } One of the $k$ categories must be selected as a
-\emph{reference category} and is \emph{not included in the model}.
-Typically: the alpabetically first category is the reference, thus $\beta_1=0$.
+\emph{reference category} and is \emph{included in the model as the intercept}.
+Typically: the alphabetically first category is the reference, thus $\beta_1=0$.
 
 The model thus discriminates between the categories, such that (assuming
 $\beta_1=0$)
@@ -238,6 +243,18 @@ $\beta_1=0$)
 \end{array}\right.
 \end{equation*}
 ```
+
+
+
+## Sketch (2)
+
+
+
+## Sketch (3)
+
+
+
+
 ## !!Important to remember!!
 
 \textcolor{gray}{(Common aspect that leads to confusion!)} 
@@ -246,6 +263,16 @@ Please note that
 \alert{a categorical variable with $k$ categories requires $k-1$ parameters!}
 
 $\rightarrow$ The \alert{degrees of freedom} are also reduced by $k-1$.
+
+
+## Sketch (about degrees of freedom, 1)
+
+
+
+## Sketch (about degrees of freedom, 2)
+
+
+
 
 ## Example: Earthworm study
 
@@ -268,53 +295,35 @@ Octolasion), weight, stomach circumference (Magenumfang).
 
 ## 
 
-Data inspection suggests that the three species have different weight
-and stomach sizes: 
+Data inspection suggests that the three species have different weights:
 
 ```{=tex}
 \begin{center}
 ```{r eval=T,fig.width=6, fig.height=3.5,warning=FALSE,echo=F,out.width="6.5cm",fig.align='center',message=FALSE}
 library(lattice)
 par(mfrow=c(1,2))
-d.wurm <- read.table ("../../../5_some_examples/data_examples/ancova/Projekt6Regenwuermer/RegenwuermerDaten_Haupt.txt",header=T)
+d.wurm <- read.table (here("5_some_examples/data_examples/ancova/Projekt6Regenwuermer/RegenwuermerDaten_Haupt.txt"),header=T)
 d.wurm[d.wurm$Gattung=="N","GEWICHT"] <- d.wurm[d.wurm$Gattung=="N","GEWICHT"]*0.5
 boxplot(GEWICHT ~ Gattung, d.wurm,xlab="Gattung",ylab="Gewicht (g)")
-boxplot(MAGENUMF ~ Gattung, d.wurm,xlab="Gattung",ylab="Magenumfang")
+boxplot(log10(GEWICHT) ~ Gattung, d.wurm,xlab="Gattung",ylab="Log10 Gewicht (g)")
 ```
 
 
-```{r eval=T,fig.width=4.2, fig.height=2.9,warning=FALSE,echo=F,out.width="5.5cm",fig.align='center',message=FALSE}
+```{r eval=F,fig.width=4.2, fig.height=2.9,warning=FALSE,echo=F,out.width="5.5cm",fig.align='center',message=FALSE}
 library(ggplot2)
 ggplot(d.wurm,aes(x=MAGENUMF,y= GEWICHT,colour=Gattung)) + geom_point() + theme_bw()
 ```
 \end{center}
 ```
-## 
 
-However, data inspection also suggests that there is not really a linear
-relationship between weight and stomach size -- rather it looks
-\alert{exponential}!
+##
 
-Therefore, \alert{log-transform} the response (weight), and it looks
-much better:
-
-```{=tex}
-\begin{center}
-```{r eval=T,fig.width=5, fig.height=3.4,warning=FALSE,echo=F,out.width="8cm",fig.align='center',message=FALSE}
-ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point()  + theme_bw()
-```
-\end{center}
-```
-## 
-
-Formulate a model with $\log_{10}(\text{Gewicht})$ as response and
-`Magenumfang` and `Gattung` as explanatory variables. This is simple in
-R:
+Formulate a model with $\log_{10}(\text{Gewicht})$ as response and `Gattung` as the explanatory variable.
 
 \tiny
 
 ```{r echo = TRUE, eval = TRUE}
-r.lm <- lm(log10(GEWICHT) ~  MAGENUMF + Gattung,d.wurm)
+r.lm <- lm(log10(GEWICHT) ~  Gattung, d.wurm)
 ```
 
 \normalsize
@@ -328,7 +337,6 @@ autoplot(r.lm,which=c(1,2, 3, 5),smooth.colour=NA)
 ```
 \end{center}
 ```
-$\rightarrow$ This seems ok (although the TA plot is a bit funnel-like).
 
 ## 
 
@@ -338,7 +346,7 @@ $\rightarrow$ This seems ok (although the TA plot is a bit funnel-like).
 tableRegression(r.lm)
 ```
 
-$R^2=0.76$, $R^2_a = 0.75$.
+$R^2=0.33$, $R^2_a = 0.32$.
 
 ```{=tex}
 \colorbox{lightgray}{\begin{minipage}{14cm}
@@ -351,7 +359,7 @@ $R^2=0.76$, $R^2_a = 0.75$.
 \textbf{Degrees of freedom:} We had 143 data points. How many degrees of
 freedom are left for the residual error? 
 
-Answer: We estimated 4 parameters, thus $143-4=139$.
+
 
 ```{r echo = FALSE}
 worm.coef <- summary(r.lm)$coef
@@ -362,9 +370,8 @@ worm.coef <- summary(r.lm)$coef
 ```{=tex}
 \begin{itemize} 
 \item $\beta_0=`r format(worm.coef[1,1],2,2,2)`$ is the intercept.
-\item $\beta_1=`r round(worm.coef[2,1],2)`$ is the slope for \texttt{MAGENUMF}.
-\item $\beta_2=`r round(worm.coef[3,1],2)`$ is the coefficient for Gattung=Nicodrilus.
-\item $\beta_3=`r format(worm.coef[4,1],2,2,2)`$ is the coefficient for Gattung =Octolasion.
+\item $\beta_2=`r round(worm.coef[2,1],2)`$ is the coefficient for Gattung=Nicodrilus.
+\item $\beta_3=`r format(worm.coef[3,1],2,2,2)`$ is the coefficient for Gattung =Octolasion.
 \item No coefficient is needed for Gattung Lumbricus, because $\beta_L=0$.\\[6mm]
 \end{itemize}
 ```
@@ -372,23 +379,12 @@ worm.coef <- summary(r.lm)$coef
 \colorbox{lightgray}{\begin{minipage}{14cm}
 We have now actually fitted {\bf three} models, one model for each species:\\[2mm]
 
-Lumbricus: $\hat{y}_i = `r format(worm.coef[1,1],2,2,2)` + `r round(worm.coef[2,1],2)`\cdot \text{MAGENUMF}$ \\[2mm]
-Nicodrilus: $\hat{y}_i = `r format(worm.coef[1,1],2,2,2)` + (`r round(worm.coef[3,1],2)`)  + `r round(worm.coef[2,1],2)`\cdot \text{MAGENUMF}$ \\[2mm]
-Octolasion: $\hat{y}_i = `r format(worm.coef[1,1],2,2,2)` + (`r format(worm.coef[4,1],2,2,2)`)  + `r round(worm.coef[2,1],2)`\cdot \text{MAGENUMF}$
+Lumbricus: $\hat{y}_i = `r format(worm.coef[1,1],2,2,2)`$ \\[2mm]
+Nicodrilus: $\hat{y}_i = `r format(worm.coef[1,1],2,2,2)` + (`r round(worm.coef[2,1],2)`)$ \\[2mm]
+Octolasion: $\hat{y}_i = `r format(worm.coef[1,1],2,2,2)` + (`r format(worm.coef[3,1],2,2,2)`)$
 \end{minipage}}
 ```
-## Interpreting the results II
 
-\textbf{Main question:} Is there a relation between stomach size and
-body mass?  
-
-\textbf{Results:} `MAGENUMF` has a positive slope estimate with
-$p<0.0001$, thus very strong evidence that the relation exists.
-Increasing `MAGENUMF` by 1 unit increases $\log_{10}$(`GEWICHT`) by
-+0.31. 
-
-Moreover, the $R^2=0.76$ is relatively high and almost identical to
-$R^2_a$.
 
 ## Interpreting the results III
 
@@ -412,13 +408,18 @@ variable `Gattung` has an effect in total.  
 ```
 
 
-## $F$-test (explanatory sketches)
+## $F$-test (sketch 1)
+
+
+
+## $F$-test (sketch 1)
+
 
 
 ## $F$-test for the earthworms
 
 The function `anova()` in R does the $F$-test for categorical variables.
- 
+
 
 \tiny
 
@@ -426,21 +427,22 @@ The function `anova()` in R does the $F$-test for categorical variables.
 anova(r.lm)
 ```
 
-  \normalsize \textbf{Note:} Here, the $F$-value for `Gattung` is
-distributed as $F_{2,139}$ under the Null-Hypothesis.
+\normalsize \textbf{Note:} Here, the $F$-value for `Gattung` is
+distributed as $F_{2,140}$ under the Null-Hypothesis.
 
-This gives $p=`r format(anova(r.lm)[2,5],2,4,2)`$, thus a clear
+This gives $p=`r format(anova(r.lm)[1,5],2,4,2)`$, thus a clear
 difference in the regression models for the three species ("Gattung is
 relevant").
 
 ## Plotting the earthworms results
 
-All species have the same slope (this is a modeling assumption), but
-different intercepts:
-
 ```{r eval=T,fig.width=5, fig.height=4,warning=FALSE,echo=F,out.width="8cm", message=FALSE, fig.align='center'}
-cc <- r.lm$coefficients
-ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point() + geom_line(aes(y=cc[1]+cc[2]*MAGENUMF),colour=2)  + geom_line(aes(y=cc[1]+cc[3]+cc[2]*MAGENUMF),colour=3)  + geom_line(aes(y=cc[1]+cc[4] + cc[2]*MAGENUMF),colour=4) + theme_bw()
+cc <- data.frame(Gattung = sort(unique(d.wurm$Gattung)),
+             means = predict(r.lm, newdata = data.frame(Gattung = sort(unique(d.wurm$Gattung)))))
+ggplot(d.wurm,aes(x=Gattung,y=log10(GEWICHT),colour=Gattung)) +
+  geom_point(data = cc, mapping = aes(y = means), size = 5, alpha = 0.5) + 
+  geom_point()
+
 ```
 
 ## That was a lot...
@@ -449,11 +451,8 @@ Binary and categorical variables...
 
 * Take a few minutes to consolidate, identify questions, ask them.
 
-## Group-specific slopes: **Interactions**
+## The earthworm data has more to learn from
 
-It may happen that \alert{groups do not only differ in their intercept ($\beta_0$), but also in their slopes ($\beta_x$)}.
-
-In the earthworm example, allowing for different intercepts and slopes:
 
 ```{r eval=T,fig.width=5.5, fig.height=4,warning=FALSE,out.width="6.5cm", echo = FALSE, fig.align='center', message=FALSE}
 library(ggplot2)
@@ -462,13 +461,14 @@ ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point() + 
 
 ```
 
-__Important:__ This model will be fitted in this week's BC videos.
+This model will be fitted in this week's BC videos.
+
 
 ## Binary variable with interaction
 
 For simplicity, let us look at a binary explanatory variable ($x_i \in \{0,1\}$).
 
-Remember the mercury (Hg) example from last week. We now extended the dataset and include mothers __and__ children ($\leq 11$ years).
+Remember the mercury (Hg) example. We now extended the dataset and include mothers __and__ children ($\leq 11$ years).
 
 It is known that Hg concentrations may change over the lifetime of humans. So let us look at \texttt{log(Hg$_\text{urin}$)} depending on the age of the participants:
 
@@ -680,7 +680,7 @@ This idea is similar in spirit to an experimental design, where the influence of
 \end{quote}
 \end{minipage}}
 
-## Checking modeling assumptions (in depth recap)
+## Checking modeling assumptions (recap)
 
 
 Remember that in linear regression the modeling assumption is that the errors $\epsilon_i$ are independently normally distributed around zero, that is, $\epsilon_i \sim N(0,\sigma^2)$. This implies four things:
