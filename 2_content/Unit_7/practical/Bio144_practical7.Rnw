@@ -65,6 +65,7 @@
 
 
 \begin{document}
+\SweaveOpts{concordance=TRUE}
 \begin{center}
 {\bf Bio144, 4./5. April 2019} \\[8mm] 
 {\large Practical part 7: Exercise on linear algebra}\\[10mm]
@@ -97,7 +98,7 @@ Calculate all of the following expressions, if they are defined. Solve at least 
 \end{enumerate} 
 
 \begin{enumerate}[\bf{2.}] \item 
-\begin{enumerate}[a)]  \item Repeat the example given in slides 35--38 of lecture 6 using R. \\ 
+\begin{enumerate}[a)]  \item Repeat the example given in slides 41--45 of lecture 7 using R. \\ 
 \item Repeat the procedure from a) 100 times. In each iteration, store the estimated coefficient vector $(\hat\beta_0,\hat\beta_1,\hat\beta_2)$. Note that the estimates will be a bit different in each iteration, because another residual vector \texttt{t.e} is used.\\ 
 \item Plot the histograms of the $\beta$s, the coefficients as a function of the simulation number, and scatterplots of $\hat\beta_1$ vs.\ $\hat\beta_0$, $\hat\beta_2$ vs.\ $\hat\beta_0$ and $\hat\beta_2$ vs.\ $\hat\beta_1$.\\
 \end{enumerate}
