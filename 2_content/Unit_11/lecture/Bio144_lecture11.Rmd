@@ -1,9 +1,9 @@
 ---
 title: "Lecture 11: Modeling binary data"
 subtitle: "BIO144 Data Analysis in Biology"
-author: "Stephanie Muff & Owen Petchey"
+author: "Stephanie Muff, Owen Petchey & Erik Willems"
 institute: "University of Zurich"
-date: "`r format(Sys.time(), '%d %B, %Y')`"
+date: "15 May, 2023"
 output:
   beamer_presentation:
     includes:
@@ -18,10 +18,13 @@ source(here::here("2_content/beamer_stuff/preamble.r"))
 ## Overview
 
 \begin{itemize}
-\item Binary response variables
-\item Contingency tables, $\chi^2$ test
+\item Generalized Linear Models (GLMs)
+  \begin{itemize}
+  \item Count outcome $\rightarrow$ Poisson regression
+  \item Binary outcome $\rightarrow$ logistic regression
+  \end{itemize}
+\item Contingency tables, $\chi^2$-test
 \item Odds and (log) odds ratios
-\item Logistic regression
 \item Residual analysis / model checking / deviances
 \item Interpretation of the results
 \end{itemize}
@@ -42,77 +45,72 @@ The lecture material of today is based on the following literature:
 \item Chapters 9.1 - 9.3 from \emph{The new statistics with R} (Hector book).\\[12mm]
 \end{itemize}
 
-Note that I have also uploaded the continuation of the Stahel script, chapters 7-9 that cover GLMs. This is \textbf{not} mandatory literature.
+Note: on OLAT you'll also find the continuation of the Stahel script, chapters 7-9 that cover GLMs. This is \textbf{not} mandatory literature.
 
 ## Recap of last week: GLMs and Poisson regression
 
 \begin{itemize}
-\item We introduced \alert{generalized linear models} (GLMS) and key terms:\\
-\hspace{1cm}{\bf Family} \hspace{1cm}{\bf Linear predictor}  \hspace{1cm}{\bf Link function}\\[4mm]
-
-\item GLMs are useful when the response variable ${y}$ is not continuous \\
-($\rightarrow$ residuals are not Gaussian).\\[4mm]
-
-\item Count data usually lead to \alert{Poisson regression}.\\[4mm]
+\item We encountered \alert{Generalized Linear Models} (GLMS) and their key components:
+  \begin{itemize}
+  \item Linear predictor
+  \item Family
+  \item Link function
+  \end{itemize}
+\item GLMs are useful when the response variable ${y}$ is not continuous, or more generally, when we can't assume that residuals follow a Gaussian distribution.\\[4mm]
+\item Count data (without known maximum) can be modelled using \alert{Poisson regression}.\\[4mm]
 \end{itemize}
 
 ## Introduction
 
 \begin{itemize}
-\item Today, we will look at the case where the \alert{response variable is binary} (0 or 1) or \alert{binomial} (\emph{e.g.} 5 out of 7 trials).\\[2mm]
-\item In binary/binomial regression, the question will be: "Which variables influence the \alert{probability} $p$ of the outcome?"\\[4mm]
+\item Today, we will look at situations in which the \alert{response variable} is binary (1/0) or binomial (\emph{e.g.} 5 out of 7 trials).\\[2mm]
+
+\item The question is: "Which variables influence the \alert{probability} $p$ of the outcome?"\\[4mm]
 \end{itemize}
 
 \textbf{Examples:} 
 \begin{itemize}
-\item Outcome: Heart attack (yes=1, no=0). \\
-Question: which variables lead to higher or lower risk of heart attack?\\[2mm]
-\item Outcome: Survival (yes=1, no=0).\\
+\item Outcome: Heart attack (yes= 1, no= 0). \\
+Question: which variables affect the risk of heart attack?\\[2mm]
+\item Outcome: Survival (yes= 1, no= 0).\\
 Question: which variables influence the survival probability of premature babies (Frühgeburten)?\\[2mm]
 \end{itemize}
 
 ## Some repetition: The $\chi^2$ test
 
-You have dealt with binary (categorical) data in Mat183! Remember the $\chi^2$ test for contingency tables (simplest: 2 x 2 tables).  
+You may recall binary (categorical) data from Mat183, where you encountered the $\chi^2$ test for contingency tables (simplest case is a 2 x 2 table).  
 \  
 
-Example: Heart attack and hormonal contraception (Verhütungspille) (from Stahel):  
-\  
-
+Example: Heart attack and hormonal contraception (Verhütungspille; from Stahel):
 
 \begin{center}
-\includegraphics[width=4cm]{pictures/table1.png}
+\includegraphics[width=5cm]{pictures/table1.png}
 \end{center}
-
 
 \small 
 "Hormonal contraception" is the predictor ($x$) and "heart attack" the outcome ($y$).  
 \  
-
 \normalsize
-\textbf{Question:} Does hormonal contraception ($x$) have an influence on heart attacks ($y$)?
+\textbf{Question:} Does hormonal contraception ($x$) influence the risk of heart attack ($y$)?
 
-This question is \alert{equivalent to asking whether the proportion} of patients with heart attack \alert{is the same} in both groups.
+This question is \alert{equivalent to asking whether the proportion} of patients with heart attack \alert{is the same} in both treatment groups.
 
 ## 
 
-The respective test-statistic can be calculated as
+The test-statistic can be calculated as:
 
 \colorbox{lightgray}{\begin{minipage}{14cm}
 \begin{equation*}
-T = \sum_{\text{all entries}} \frac{(\text{observed} - \text{expected})^2}{\text{expected}} \ .
+\sum_{\text{all entries}} \frac{(\text{observed} - \text{expected})^2}{\text{expected}} \ .
 \end{equation*}
 \end{minipage}}
-
-By hand, $T$ is obtained as 
-
 
 \begin{equation*}
 \frac{(23 - 14.8)^2}{14.8} + \frac{(34 - 42.2)^2}{42.2} + \frac{(35 -  43.2)^2}{43.2} + \frac{(132 - 123.8)^2}{123.8} =  8.329
 \end{equation*}  
 
 \ 
-and is expected to be $\chi^2_{1}$ distributed \tiny(one degree of freedom: $(2-1)\cdot(2-1)$)}.  
+and is expected to be $\chi^2_{1}$ distributed \tiny(1 degree of freedom: $(2-1)\cdot(2-1)$).  
 \ 
 
 \normalsize
@@ -121,36 +119,31 @@ The $p$-value of this test is given as $\Pr(X\geq 8.329)=`r format(1-pchisq(8.32
 
 \tiny
 ```{r echo = TRUE}
-pchisq(8.329,1,lower.tail=F)
+pchisq(8.329, 1, lower.tail= F)
 ```
 
 \normalsize
 
-\bf $\rightarrow $ There is \alert{strong evidence} for an association of hormonal contraception with heart attacks!
+$\rightarrow$ There is \alert{strong evidence} for an association between hormonal contraception and the risk of heart attack.
 
-## Quantification of a dependency
+## Quantifying the strength of the association
 
-If two variables are not independent, it is often desired to \alert{quantify} the dependency.  
-\  
-
-Let one variable be the grouping variable (e.g., hormonal contraception vs no hormonal contraception). Then $\pi_1$ and $\pi_2$ are the relative frequencies (proportions) observed in the two groups. For example:  
+If we consider hormonal contraception vs. no hormonal contraception as our two treatment groups, then $\pi_1$ and $\pi_2$ represent the relative frequencies (proportions) of women with heart attack in each group:  
 
 \begin{eqnarray*}
 \pi_1 = 23/57 &=& 0.404 \\
 \pi_2 = 35/167 &=& 0.210\\
 \end{eqnarray*}
 
-are the proportions of females with a heart attack in the two groups.
+Using these values, there are at least 3 metrics that can be used to quantify how the two groups differ...
 
 ## 
-
-There are at least three numbers that can be calculated to quantify how the two groups differ:  
-\  
+Three measures to quantify the association/difference between groups:
 
 \begin{itemize}
-\item Risk difference: $\pi_1 - \pi_2 = 0.404 - 0.210$ = 0.194\\[4mm]
+\item Risk difference: $\pi_1 - \pi_2 = 0.404 - 0.210$ = 0.194\\[2mm]
 
-\item Relative risk: $\pi_1 / \pi_2 = 0.404 / 0.210 = 1.92 $\\[4mm]
+\item Relative risk: $\pi_1 / \pi_2 = 0.404 / 0.210 = 1.92 $\\[2mm]
 \item \alert{Odds ratio} ("Chancenverhältnis"):
 \begin{equation*}
 OR = \frac{\pi_1 / (1-\pi_1)}{\pi_2 / (1-\pi_2)} = \frac{ 0.404 / (1- 0.404)}{0.210 / (1-0.210)} = 2.55 \ ,
@@ -161,8 +154,8 @@ where $\pi/(1-\pi)$ is the odds (die "Chance").
 
 Interpretation:
 \begin{enumerate}
-\item   $OR=1$  $\rightarrow$ the two groups are independent.
-\item   $OR > 1 (<1) $ $\rightarrow$ positive (negative) dependency.
+\item   $OR=1$  $\rightarrow$ the two groups do not differ.
+\item   $OR > 1 (<1) $ $\rightarrow$ group 1 > (or <) group 2
 \end{enumerate}
 \end{itemize}
 
@@ -182,25 +175,22 @@ For example, if the probability to win a game is 0.75, then the odds is given as
 \end{equation*}
 
 \begin{enumerate}
-\item   $\log(OR)=0$ $\rightarrow$ the two groups are independent.
-\item   $\log(OR)>0 (<0)$ $\rightarrow$ positive (negative) dependency.
+\item   $\log(OR)=0$ $\rightarrow$ the two groups do not differ.
+\item   $\log(OR)>0 (<0)$ $\rightarrow$ group 1 > (or <) group 2
 \end{enumerate}
-
 \end{itemize}
 
 
 ## Binomial and binary regression
 
-Usually the situation is more complicated than 
-\begin{center}\textbf{binary explanatory variable} (${x}$) $\rightarrow$ \textbf{binary outcome} (${y}$)\end{center}
-  
-\  
-
-Often, we are interested in a relationship 
-\begin{center}  \textbf{Continuous/categ./binary} variables ${x}^{(1)}$, ${x}^{(2)}$,.. $\rightarrow$ \textbf{binary outcome} (${y}$) \\[10mm]
+Often, the situation is more complicated than: 
+\begin{center} {\bf binary outcome (${y}$)$\sim$ binary explanatory variable (${x}$)}\end{center}
+\
+Often, we are interested in: 
+\begin{center} {\bf binary outcome (${y}$)$\sim$ continuous/categorical variables ${x}^{(1)}$, ${x}^{(2)}$, ... }\\[10mm]
 \end{center} 
 
-$\rightarrow$ A regression model is needed again!
+$\rightarrow$ A (multiple) regression model is needed!
 
 ## Illustrative/working example
 
@@ -230,13 +220,13 @@ xlab("Dose") + ylab("Mortality rate")
 ```
 
 with linear (blue) and smoothed line (red).
-\textbf{Question:} (How) does the dose of the insecticide (${x}$) affect the survival probability (${y}$) of the beetles?
+\textbf{Question:} (How) does the dose of the insecticide (${x}$) affect the mortality (${y}$) of the beetles?
 
 ## 
 
 \textbf{What can we see from the plot?}
 \begin{itemize}
-\item Mortality increases with higher doses of the herbicide (not surprising, right?).\\[2mm]
+\item Mortality increases with higher doses of the herbicide \\[2mm]
 \item The linear line seems unreasonable. In particular, extrapolation to lower or higher doses leads to mortalities $<0$ or $>1$, which is not possible.  
 \tiny (Remember: A probability is between 0 and 1 by definition.)\\[8mm]
 \end{itemize}
@@ -246,26 +236,22 @@ with linear (blue) and smoothed line (red).
 \textbf{How does one analyze these data correctly?}
 \begin{itemize}
 \item So far, we know linear and Poisson regression.\\[2mm]
-\item Both of these are \alert{not} the correct approaches here.\\[2mm]
+\item \alert{Neither} are the correct approach here.\\[2mm]
 \end{itemize}
 
 ## The "wrong" analyses
 
 \textbf{Wrong analysis 1: Linear regression}  
 
-We could simply use 
+We could simply use:
 $$E(y_i) = \beta_0 + \beta_1 Dose_i $$
 with $E(y_i)=\pi_i =$ probability to die for individuals $i$ with $Dose_i$.  
-R does this analysis without complaint (!):
+\
 \small  
 \ 
 
-```{r echo = TRUE, eval = FALSE}
-lm(Mortality_rate ~ Dose, data=beetle)
-```
-
-```{r echo = FALSE, eval = TRUE, message=FALSE, warning=FALSE}
-r.lm <- lm(Mortality_rate ~ Dose, data=beetle)
+```{r echo = TRUE, eval = TRUE, message=FALSE, warning=FALSE}
+r.lm<- lm(Mortality_rate~ Dose, data= beetle)
 ```
 \normalsize
 Estimates are $\hat\beta_0 = `r format(r.lm$coef[1],2,2,2)`$ and $\hat\beta_1=`r format(r.lm$coef[2],2,2,2)`$. This means for instance that, for a zero dose, the probability to die would be $E(y_i)=`r format(r.lm$coef[1],2,2,2)`$.  
@@ -273,9 +259,8 @@ Estimates are $\hat\beta_0 = `r format(r.lm$coef[1],2,2,2)`$ and $\hat\beta_1=`r
 \colorbox{lightgray}{\begin{minipage}{14cm}
 {\bf Problems:} 
 \begin{itemize}
-\item Linear regression leads to impossible predicted probability values! \\
-$\Rightarrow$ \alert{Impossible predictions!}
-\item For $y_i = \beta_0 + \beta_1 Dose_i + \epsilon_i$, residuals $\epsilon_i$ are {\bf not} normally distributed!
+\item Impossible predicted probabilities \\
+\item Residuals $\epsilon_i$ are {\bf not} normally distributed
 \end{itemize}
 \end{minipage}}
 
@@ -283,19 +268,14 @@ $\Rightarrow$ \alert{Impossible predictions!}
 
 \textbf{Wrong analysis 2: Poisson regression}
 
-What about Poisson regression with the counts `Number_killed` in the response? We could use
+What about Poisson regression with the counts `Number_killed` in the response? We could use:
 $$\log(E(y_i)) = \beta_0 + \beta_1 Dose_i$$
 
-with $E(y_i)=$ number killed. Again, R does this analysis without complaining, although these are not `real' counts:
+with $E(y_i)=$ number killed.
 \  
 
-\small
-```{r echo=TRUE, eval=FALSE}
-glm(Number_killed ~ Dose, data=beetle,family=poisson)
-```
-
 ```{r echo = TRUE, eval = TRUE, message=FALSE, warning=FALSE}
-r.pois <- glm(Number_killed ~ Dose, data=beetle,family=poisson)
+r.pois<- glm(Number_killed~ Dose, data= beetle,family= poisson)
 ```
 
 
@@ -303,25 +283,25 @@ r.pois <- glm(Number_killed ~ Dose, data=beetle,family=poisson)
 This leads to $\hat\beta_0=`r format(r.pois$coef[1],2,2,2)`$ and $\hat\beta_1=`r format(r.pois$coef[2],2,2,2)`$. 
 
 \colorbox{lightgray}{\begin{minipage}{14cm}
-{\bf Problem:} This means for instance that, for a dose of 76, one expects that $E(y_i)=\exp(\hat\beta_0 + \hat\beta_1 \cdot 76) = 
-`r format(exp(r.pois$coef[1] + r.pois$coef[2]*76),2,2,2)`$ beetles die. However, there are only 60 beetles in each group, so the predicted number killed is more than what is available. $\Rightarrow$ \alert{Impossible predictions!}
+{\bf Problem:} This model also makes impossible predictions as, for a dose of 76, it predicts that $E(y_i)=\exp(\hat\beta_0 + \hat\beta_1 \cdot 76) = 
+`r format(exp(r.pois$coef[1] + r.pois$coef[2]*76),2,2,2)`$ beetles die, which is more than the number of beetles that were tested!
 \end{minipage}}
 
-## Sidenote: count vs.\ binomial data
+## Sidenote: Poisson vs.\ binomial distribution
 
-Clarification of the difference between count data and binomial data:  
+Clarification of the difference between the Poisson and binomial distribution:  
 
-\textbf{Count data:} 
+\textbf{Poisson is appropriate when:} 
 \begin{itemize}
-\item Theoretically no upper limit on number of times an "event" occurs (e.g., number of birds observed in a forest plot)
+\item There is no theoretical upper limit to the number of times an "event" can occur, or observed values are far from such an upper limit (e.g., number of birds observed in a forest plot)
 \item Counts cannot be expressed as a proportion.\\[6mm]
 \end{itemize}  
 \  
-\textbf{Binomial data:}
+\textbf{Binomial is appropriate when:}
 \begin{itemize} 
 \item Aggregated version of many binary experiments, that is, each can be 0 or 1. 
-\item Therefore, there is an upper limit on the number of times an "event" can be observed (e.g., number of deaths cannot be greater than total number of individuals).
-\item Successes can be expressed as a proportion (number of successes/number of trials).
+\item There is an upper limit to the number of times an "event" can occur (e.g., number of deaths out of a known total number of individuals).
+\item Events can be expressed as a proportion (number of successes/number of trials).
 \end{itemize}
 
 ## A model for binary data?
@@ -329,7 +309,7 @@ Clarification of the difference between count data and binomial data:
 Remember the Bernoulli distribution from Mat183:  
 
 \colorbox{lightgray}{\begin{minipage}{14cm}
-The probability distribution of a binary random variable $Y$ $\in \{0,1\}$ with parameter $\pi$ is defined as
+The probability distribution of a binary random variable $Y$ $\in \{0,1\}$ with parameter $\pi$ is defined as:
 \begin{equation*} 
 P(Y=1) = \pi \ , \quad  P(Y=0) = 1-\pi \ .
 \end{equation*}
@@ -338,7 +318,7 @@ P(Y=1) = \pi \ , \quad  P(Y=0) = 1-\pi \ .
 
 \textbf{Characteristics of the Bernoulli distribution:} \label{sl:bernoulli}
 \begin{itemize}
-\item $E(Y) = \pi =P(Y=1)$ \tiny (useful to remember)\\[2mm]\normalsize
+\item $E(Y) = \pi =P(Y=1)$\\[2mm]
 \item $Var(Y)=\pi(1-\pi)$.\\[4mm]
 
 $\rightarrow$ The variance of the distribution is determined by its mean.\\[4mm]
@@ -350,7 +330,7 @@ Binomial data is an \alert{aggregation of binary data}:
 \begin{itemize}
 \item Repeat the experiment with $P(Y=1)=\pi$ a total number of $n$ times, calculate how often a success was observed ($k$ times).
 
-\item The expected proportion of successes (``success rate'', here $k/n$) has then the same expectation as the success probability of a single experiment: 
+\item The expected proportion of successes (``success rate'', here $k/n$) has the same expectation as the success probability of a single experiment: 
 \begin{equation*}
 E\left(\frac{\sum_{i=1}^n{Y}}{n}\right) = \pi = E(Y)  \ .
 \end{equation*}
@@ -391,27 +371,24 @@ We can again use the GLM machinery from last week! The \alert{linear predictor} 
 \end{equation*}
 
 
-We again need a \alert{link function} that relates the linear predictor $\eta_i$ to the expected value $E(y_i)$.  
+We need a \alert{link function} that relates the linear predictor $\eta_i$ to the expected value $E(y_i)$.  
 \  
 
-Remember we used the $\log$ link last week, but that seems a bad idea here (see slide 17).  
-\  
-
-The link function must be chosen such that the expected value $E(y_i)$ is always between 0 and 1!
+The link function must be chosen such that the expected value $E(y_i)$ is always between 0 and 1.
 
 ## Link function: The logistic transformation
 
 A transformation that assigns a probability ($\pi$) between 0 and 1 a value between $-\infty$ and $\infty$ is the \alert{logit-transformation}:  
 
 \colorbox{lightgray}{\begin{minipage}{14cm}
-$$g(\pi) = \log \left(\frac{\pi}{1-\pi}\right) = \log(\pi) - \log(1-\pi) \ .$$
+$$g(\pi) = \log \left(\frac{\pi}{1-\pi}\right)\ .$$
 \end{minipage}}
 
 A graph depicts the functional form of $g(\cdot)$: 
 
 ```{r fig.width=4, fig.height=4,out.width="4.5cm", fig.align='center', echo = FALSE, message=FALSE, warning=FALSE}
 x <- seq(0,1,0.001)
-plot(x,log(x/(1-x)),xlab=expression(pi),ylab=expression(log(pi/(1-pi))),cex=0.7)
+plot(log(x/(1-x)), x, ylab=expression(pi), xlab=expression(log(pi/(1-pi))),cex=0.7)
 ```
 
 \small See also Box 9.2 (p.\ 123) in \emph{The new statistics with R}.
@@ -419,13 +396,12 @@ plot(x,log(x/(1-x)),xlab=expression(pi),ylab=expression(log(pi/(1-pi))),cex=0.7)
 ## The logistic regression model
 
 \colorbox{lightgray}{\begin{minipage}{14cm}
-In order to prevent the expected value $E(y_i)$ of a binary experiment (0/1) to attain unreasonable values, we thus formulate the \alert{logistic regression model} as
+In order to prevent the expected value $E(y_i)$ of a binary experiment (1/0) to attain unreasonable values, we thus formulate the \alert{logistic regression model} as
 \begin{equation*}
 \log\left( \frac{\pi_i}{1-\pi_i} \right) = \beta_0 + \beta_1 x_i^{(1)} + \beta_2 x_i^{(2)} + \ldots + \beta_p x_i^{(p)} \ 
 \end{equation*}
 
-with $\pi_i = P(y_i=1) \ .$
-\end{minipage}}
+with $\pi_i = P(y_i=1) \ .$ \end{minipage}}
 
 \  
 
@@ -439,11 +415,11 @@ with $\pi_i = P(y_i=1) \ .$
 \begin{itemize}
 \item As for the Poisson GLM, we can estimate the parameters $\beta_0, \beta_1, \ldots $ by maximizing the likelihood (ML estimation).\\[3mm]
 
-\item Luckily, the \texttt{glm()} function in R can also handle binomial and binary data!\\[3mm]
+\item The \texttt{glm()} function in R can also handle binomial and binary data\\[3mm]
 
-\item For \texttt{glm(..., family=binomial)}, the default link function is the logistic link. \\[3mm]
+\item For \texttt{glm(..., family= binomial)}, the default link function is the logistic link. \\[3mm]
 
-\item A complication comes from the fact that we need to tell the function \alert{two numbers for the response}:
+\item Another novelty lies in the fact that we need to give the function \alert{two numbers for the response}:
   \begin{itemize}
   \item The number of successes, encoded as 1 (here: number killed )
   \item The number of failures, encoded as 0 (here: number survived)
@@ -454,29 +430,29 @@ with $\pi_i = P(y_i=1) \ .$
 
 \small
 ```{r echo = TRUE, message=FALSE, warning=FALSE}
-beetle$Number_survived <- beetle$Number_tested - beetle$Number_killed
-beetle.glm <- glm(cbind(Number_killed,Number_survived) ~ Dose, 
-             data = beetle, family = binomial)
+beetle$Number_survived<- beetle$Number_tested - beetle$Number_killed
+beetle.glm<- glm(cbind(Number_killed, Number_survived)~ Dose, 
+                 data= beetle, family= binomial)
 ```
 
 ## Doing it right: Model diagnostics
 
-As always, before looking at the regression output, let's do some model diagnostics:
+As always, before looking at the output, assess model diagnostics:
 
 ```{r echo = FALSE, warning=FALSE, message=FALSE,fig.width=5, fig.height=5,out.width="6cm", fig.align='center'}
 library(ggfortify)
 autoplot(beetle.glm,smooth.colour=NA)
 ```
 
-$\rightarrow$ Hard to see much due to very low number of data points.
+$\rightarrow$ Hard to see much due to low number of data points.
 
 ## 
 
 \begin{itemize}
-\item As in Poisson regression, it is not clear how do define residuals, there are many ways (data scale, linear predictor scale, likelihood scale).\\[3mm]
-\item Again, different types of residuals are used in the plots, but \texttt{autoplot()} does it automatically right. \\[3mm]
-\item \alert{Be careful}: such plots are only reasonable for \alert{aggregated data} (which we have here)! The larger the groups, the more precise are the underlying assumptions (approximate equality of distributions).\\[3mm]
-\item See example on slide 41 for an example with non-aggregated (binary) data.
+\item As in Poisson regression, it is not clear how to define residuals, there are many ways (data scale, linear predictor scale, likelihood scale).\\[3mm]
+\item Again, different types of residuals are used in the plots generated by \texttt{autoplot()}. \\[3mm]
+\item \alert{Be careful}: such plots are only reasonable for \alert{aggregated data} (which we have here)! The larger the groups, the more precise the underlying assumptions (approximate equality of distributions).\\[3mm]
+\item See example on slide 40 for an example with non-aggregated (binary) data.
 \end{itemize}
 
 ## Doing it right: Interpreting the coefficients
@@ -503,7 +479,7 @@ This is a \textbf{qualitative interpretation} of the coefficients.
 \small 
 Note: The $\beta$ coefficients are approximately normally distributed as $N(\hat\beta,\hat\sigma^2_\beta)$. 
 
-$\rightarrow$ confidence intervals etc.\ can be calculated as in the linear case!
+$\rightarrow$ confidence intervals etc.\ can be calculated as in the linear case
 
 ## Quantitative interpretation of the coefficients
 
@@ -513,7 +489,7 @@ Remember the regression model
 \end{equation}
 
 
-To understand what $\beta_1$ tells us, let's rearrange the equation. Solving the equation for $\pi_i$ leads to
+To understand what $\beta_1$ tells us, let's solve for $\pi_i$:
 
 \begin{equation}\label{eq:prob}
 \pi_i = P(y_i=1 | Dose_i)= \frac{\exp(\beta_0 + \beta_1 Dose_i)}{1 + \exp(\beta_0 + \beta_1 Dose_i)} \ . 
@@ -554,11 +530,11 @@ We can look at the \alert{Analysis of Deviance} table (directly using `test="Chi
 
 \tiny
 ```{r echo = TRUE, message=FALSE, warning=FALSE}
-anova(beetle.glm,test="Chisq")
+anova(beetle.glm, test= "Chisq")
 ```
 \normalsize
 
-\textbf{Interpretation:} The total deviance is 267.66, and of this 259.23 is explained by `Dose` (using 1 degree of freedom). This seems really good, because the $\chi^2$ test gives a $p$-value that is reeeeallly small ($<2.2e-16$).
+\textbf{Interpretation:} The total deviance is 267.66, and of this 259.23 is explained by `Dose` (using 1 degree of freedom). This seems really good, because the $\chi^2$ test gives a $p$-value that is reallly small.
 
 ## Plotting the fit
 
@@ -573,8 +549,8 @@ dd <- data.frame(xx=xx,ppi=ppi)
 ggplot(beetle, aes(x = Dose, y = Mortality_rate)) + theme_bw() +
 geom_point() +
 xlab("Dose") + ylab("Mortality rate (Pr(Y=1))")  +
-geom_line(aes(xx, ppi,colour = "red"), dd, size=1.2) + 
-  scale_color_discrete(guide = FALSE)
+geom_line(aes(xx, ppi,colour = "red"), dd, lwd=1.2) + 
+  scale_color_discrete(guide= "none")
 ```
 
 (Compare to Figure 9.1 in the Hector book \emph{The new statistics with R}.)
@@ -583,13 +559,13 @@ geom_line(aes(xx, ppi,colour = "red"), dd, size=1.2) +
 
 Remember :
 \begin{itemize}
-\item Slides 20 and 21: $E(Y)=\pi$ and $Var(Y)=\pi(1-\pi)$, thus \alert{the variance is determined by the mean!}  
+\item Slides 18 and 20: $E(Y)=\pi$ and $Var(Y)=\pi(1-\pi)$, thus \alert{the variance is determined by the mean}  
 
 
 \item "Overdispersion" means \alert{"extra variability"} (larger than the model predicts or allows). \\[2mm]
 \item Probable reason: Variables are missing in the model!\\[2mm]
 \item Overdispersion leads to \alert{too small $p$-values}.\\[2mm]
-\item Detectable by looking at the \alert{residual deviance}: \\[2mm]
+\item Can be detected by looking at the \alert{residual deviance}: \\[2mm]
 \texttt{Residual deviance} $>>$ \texttt{df} $\quad\rightarrow$ Overdispersion \\[2mm]
 
 \item Also possible: underdispersion (dependency in the data), if:\\[2mm]
@@ -602,20 +578,20 @@ Here, the residual deviance is \textbf{8.44} with \textbf{6} degrees of freedom.
 \  
 
 ```{r echo = TRUE}
-pchisq(8.438,6,lower.tail=F)
+pchisq(8.438, 6, lower.tail=F)
 ```
 
-$\rightarrow$ $p=`r format(1-pchisq(8.438,6),2,2,2)`$ seems not problematic.  
+$\rightarrow$ $p=`r format(1-pchisq(8.438,6),2,2,2)`$ does not seem problematic.  
 \  
 
-One can nevertheless account for overdispersion by switching to a \alert{`quasibinomial`} model. This allows to estimate the dispersion parameter separately.
+One can nevertheless account for overdispersion by switching to a \alert{`quasibinomial`} model, which estimates the dispersion parameter separately.
 
 ## 
 
 \tiny
 ```{r echo = TRUE, message=FALSE, warning=FALSE}
-beetle.glm2 <- glm(cbind(Number_killed,Number_survived) ~ Dose, 
-             data = beetle, family = quasibinomial)
+beetle.glm2<- glm(cbind(Number_killed, Number_survived)~ Dose, 
+             data= beetle, family= quasibinomial)
 summary(beetle.glm2)
 ```
 \normalsize
@@ -623,7 +599,7 @@ summary(beetle.glm2)
 ## Binary response / non-aggregated data
 
 \begin{itemize}
-\item In the beetle example, we were in a comfortable situation: For each level of the does, we had several beetles. For instance, 49 beetles at lowest dose (49.06), of which 6 died (1) and 43 survived (0). This was \alert{binomial} data, an aggregated version of many (here 49) trials with 0 or 1 outcome.\\[3mm]
+\item In the beetle example, we were in a comfortable situation: For each level of the dosis, we had several beetles. For instance, 49 beetles at lowest dose (49.06), of which 6 died (1) and 43 survived (0). This was \alert{binomial} data, an aggregated version of many (here 49) trials with 0 or 1 outcome.\\[3mm]
 \item In reality, one often has only one trial (0/1) for a (combination of) explanatory variable(s).\\[3mm]
 \item The analysis is the same as for aggregated data, however there are a few complications with graphical descriptions and model checking. \\[6mm]
 \end{itemize}
@@ -648,7 +624,7 @@ print(ttab1, floating = TRUE, include.rownames=FALSE)
 
 ## 
 
-\textbf{Introduction:} Individuals with low ESR (erythrocyte sedimentation rate) are generally considered healthy, and those with ESR greater than $>20mm/hr$ sick. We are interested in if concentrations of the plasma proteins Fibrinogen and Globulin (which can be disease indicators) are associated with an increased probability that an individual has high ESR (ESR$>20mm/hr$, encoded as $y_i=1$)?
+\textbf{Introduction:} Individuals with a low ESR (Erythrocyte Sedimentation Rate) are generally considered healthy, while those with an ESR $>20mm/hr$ are not. We are interested whether concentrations of the plasma proteins Fibrinogen and Globulin (which can be disease indicators) are associated with an increased probability that an individual has a high ESR (ESR$>20mm/hr$, encoded as $y_i=1$)?
 
 
 \textbf{The model to be fitted:}
@@ -662,7 +638,7 @@ with $E(y_i)=P(y_i=1)=\pi_i$. \\
 
 ## Complication 1 with binary data: Graphical description
 
-Plotting the response $y$ ($y=1$ if ESR$>20$ and $y=0$ otherwise) against the covariats does not lead to very illustrative graphs: 
+Plotting the response $y$ ($y=1$ if ESR$>20$ and $y=0$ if ESR$<20$) against the covariats does not lead to very informative graphs: 
 \  
 
 ```{r echo = FALSE, message=FALSE, warning=FALSE, fig.align='center',fig.width=5.5, fig.height=2.5,out.width="8cm"}
@@ -682,7 +658,7 @@ plot_grid(p1, p2, ncol=2)
 
 ##
 
-It is a bit more illustrative to give a \alert{conditional density plot} (`cdplot()`):
+It is a bit more informative to look at a \alert{conditional density plot} (`cdplot()`):
 \  
 
 ```{r fig.align='center', message=FALSE, warning=FALSE, echo = FALSE, fig.width=7, fig.height=4.5,out.width="10cm"}
@@ -697,7 +673,7 @@ cdplot(y ~ globulin,plasma)
 \textbf{a) Residual plots:}
 
 \alert{Plotting the residuals} is possible, but \alert{not meaningful}.
-\scriptsize Why? Becasue the model checking assumptions rely on aggregated data!
+\scriptsize Why? Because the model checking assumptions rely on aggregated data!
 
 ```{r echo = FALSE, warning=FALSE, message=FALSE, fig.align='center',fig.width=5, fig.height=4.5,out.width="6.5cm"}
 plasma.glm <- glm(y ~ fibrinogen + globulin, data = plasma, family=binomial)
@@ -716,11 +692,11 @@ Why? Becasue for a single binary (0/1) variable it is impossible to estimate a v
 
 ## Your turn!
 
-Apart from the above complications, fitting and interpreting the model is analogous to aggregated binary data. Let's continue with the blood screening example:  
+Apart from these complications, fitting and interpreting the model is analogous to aggregated binary data. Let's continue with the blood screening example:  
 \  
 \tiny
 ```{r echo = TRUE, eval = FALSE}
-plasma.glm <- glm(y ~ fibrinogen + globulin, data = plasma, family = binomial)
+plasma.glm <- glm(y~ fibrinogen + globulin, data= plasma, family= binomial)
 
 ```
 \normalsize
@@ -728,7 +704,7 @@ plasma.glm <- glm(y ~ fibrinogen + globulin, data = plasma, family = binomial)
 Please look at the model outcomes (summary and anova table) on the next slides and answer the following questions:
 
 \begin{enumerate}
-\item Is there evidence for an an effect of fibrinogen and/or globulin on the outcome (ESR$>20$)?\\[2mm]
+\item Is there evidence for an an effect of fibrinogen and/or globulin on the outcome?\\[2mm]
 \item What is the \emph{quantitative} interpretation of the $\beta_1$ coefficient (what happens to $P(ESR>20)$ when fibrinogen incrases by 1 unit)? \\[2mm]
 \item Is a \texttt{quasibinomial} model more suitable for these data?
 \end{enumerate}
@@ -751,10 +727,10 @@ anova(plasma.glm,test="Chisq")
 ## Summary
 
 \begin{itemize}
-\item Logistic regression is useful to model binary/binomial data.\\[3mm]
+\item Logistic regression is also known as a \alert{binary/binomial GLM}\\[3mm]
 \item The link function is the logistic link.\\[3mm]
 \item The coefficients of logistic regression are log odds ratios \\
 \begin{center}$\Leftrightarrow \quad$ $\exp(\beta)$ is an odds ratio \\[2mm]\end{center}
-\item Differences between aggregated (binomial) and binary data.\\[3mm]
-\item Overdispersion not detectable for binary data!
+\item You can think of binomial data as aggregated binary data\\[3mm]
+\item Overdispersion does not apply to binary data
 \end{itemize}
