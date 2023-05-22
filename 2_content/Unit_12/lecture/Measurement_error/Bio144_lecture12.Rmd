@@ -1,9 +1,9 @@
 ---
 title: "Lecture 12: Measurement Error"
 subtitle: "BIO144 Data Analysis in Biology"
-author: "Owen Petchey & Stephanie Muff"
+author: "Owen Petchey, Stephanie Muff & Erik Willems"
 institute: "University of Zurich"
-date: "`r format(Sys.time(), '%d %B, %Y')`"
+date: "22 May, 2023"
 output:
   beamer_presentation:
     includes:
@@ -17,14 +17,14 @@ source(here::here("2_content/beamer_stuff/preamble.r"))
 
 ## Overview
 
-* Measurement error (ME) in explanatory variable ($x$) and in the response ($y$) of regression models.
-* Effects of ME on regression parameters.
-*  When do I have to worry?
-* Simple methods to correct for ME. 
+* Measurement error (ME) in one or more explanatory variable(s) ($x$)
+* Effects of ME on model parameters
+* When do you have to worry?
+* An example of a method to correct for ME 
 
 ## Course material covered today
 
-The lecture material of today is partially based on the following literature:
+The lecture material is partially based on:
 
 * Chapter 6.1 in "Lineare regression" (BC reading)
 
@@ -32,54 +32,40 @@ The lecture material of today is partially based on the following literature:
 ## Sources of measurement error (ME)
 
 * **Measurement imprecision** in the field or in the lab (length, weight, blood pressure, etc.).
-* Errors due to **incomplete** or **biased observations** (e.g., self-reported dietary aspects, health history).
-* Biased observations due to **preferential sampling or repeated observations**.
+* Errors due to **incomplete** or **inaccurate observations** (e.g., self-reported dietary aspects, health history).
 * Rounding error, digit preference.
-* **Misclassification error** (e.g., exposure or disease classification).
+* **Classification error** (e.g., exposure or disease classification).
 * \ldots
 
 \begin{center}
 \textcolor{teal}{"Error" is often used synonymous to "uncertainty".}
 \end{center}
 
+## Yet another assumption...
 
+It is an \alert{implicit assumption} of most statistical tests that explanatory variables are measured or estimated \alert{without error}. This is true for: 
 
+* correlation
+* regression and ANOVA
+* Generalized Linear Models (e.g. Poison and binomial GLMs)\
+\
 
+Violation of this assumption may lead to:
 
-
-
-## Another fundamental assumption (often neglected!)
-
-
-* It is a \alert{fundamental assumption}  that explanatory variables are measured or estimated \alert{without error}, for instance for 
-
-* the calculation of correlations.
-* linear regression and ANOVA.
-* Generalized linear and non-linear regressions (e.g.\ logistic and Poisson).
-
-
-* Violation of this assumption may lead to \alert{biased} parameter estimates, altered standard errors and $p$-values, incorrect variable importances, and to \alert{misleading conclusions}.
-* Even standard statistics textbooks do often not mention these problems.
-
-
+* biased parameter estimates, standard errors, and thus wrong $p$-values
+* incorrect (relative) variable importance, and thus *even more* misguided conclusions
 
 \begin{center}
-\textcolor{teal}{Measurement error in the explanatory variables ($\mathbf{x}$) violates an assumption of standard regression analyses!! }
+\textcolor{teal}{Standard statistics textbooks often do not mention this assumption at all!}
 \end{center}
-
-
-
-
 
 ## Classical measurement error
 
-A very common error type:
+A very common type of error:
 
-Let \alert{$x_i$} be the *correct but unobserved* variable and $w_i$ the observed variable with error $u_i$. Then
+Let \alert{$x_i$} be the \alert{correct but unobserved} variable and $w_i$ the observed variable with error $u_i$. Then the **classical ME model** is: 
 $$w_i = x_i + u_i, \qquad u_i \sim N(0,\sigma^2_{u})$$
-is the **classical ME model**.
 
-## (continued)
 ```{r fig.width=1.5, fig.height=1.1, fig.align='center', echo = FALSE}
 par(mar=c(0.1,0.1,0.1,0.1))
 tx<-seq(-4,4,0.01)
@@ -89,8 +75,7 @@ abline(v=0,lty=2,lwd=0.5)
 text(0,0.02,labels=expression(x[i]),cex=0.6)
 text(-1.5,0.3,labels=expression(w[i]),cex=0.6)
 ```
-**Examples:**   Imprecise measurements of a concentration, a mass, a length etc.
-$\rightarrow$ The observed value $w_i$ varies around the true value $x_i$.
+**Examples:**   Inaccurate measurements of a concentration, a mass, a length etc. $\rightarrow$ the observed value $w_i$ varies around the true value $x_i$.
 
 
 
@@ -100,7 +85,7 @@ $\rightarrow$ The observed value $w_i$ varies around the true value $x_i$.
 Find regression parameters $\beta_0$ and $\beta_x$ for the model with explanatory variable $\mathbf{x}$:
 
 
-$$y_i = 1 \cdot x_i + \epsilon_i, \qquad \epsilon_i \sim N(0,\sigma^2)$$
+$$y_i = 0 + 1 \cdot x_i + \epsilon_i, \qquad \epsilon_i \sim N(0,\sigma^2)$$
 \vspace{1mm}
 \small
 ```{r, message=FALSE, echo = FALSE}
@@ -134,7 +119,7 @@ ggplot(mapping=aes(x=x,y=y,col="X")) +
 
 
 
-## Illustration of the problem II
+## Illustration of the problem
 
 
 However, assume that only an erroneous proxy $\mathbf{w}$ is observed with classical ME
@@ -168,7 +153,7 @@ ggplot(mapping=aes(x=x,y=y,color="X")) +  geom_smooth(method="lm") +
 ```
 \normalsize
 
-## A tool you can have a play with...
+## A tool you can play around with...
 
 [\beamergotobutton{Illustration in a browser application} ](https://stefaniemuff.shinyapps.io/MEC_ChooseL/)
 
@@ -177,83 +162,68 @@ knitr::include_graphics("images/me_browser_spp.png")
 ```
 
 
-
-
-
-
 ##  The "Triple Whammy of Measurement Error"
 
 (Carroll et al. 2006)
 
 
-1 \alert{Bias}: The inclusion of erroneous variables in downstream analyses may lead to biased parameter estimates.
+1. \alert{Bias}ed parameter estimates
 
-2 ME leads to a \alert{loss of power} for detecting signals.
+2. \alert{Loss of power} to detect signals
 
-3 ME \alert{masks important features} of the data, making graphical model inspection difficult.
+3. \alert{Masks important features} of the data, making graphical model inspection difficult
 
 
+## How to correct for ME?
 
-## How to correct for error?
+* Generally, to correct for the error you need an **error model** and knowledge of the **error model parameters**.
 
-* Generally, to correct for the error we need an **error model** and knowledge of the **error model parameters**
-**Example** If classical error $w_i = x_i + u_i$ with $u_i \sim N(0,\sigma_u^2)$ is present, knowledge of the **error variance** $\sigma_u^2$ is needed.
+**Example:** If classical error \alert{$w_i = x_i + u_i$ with $u_i \sim N(0,\sigma_u^2)$} is present, knowledge of the **error variance** \alert{$\sigma_u^2$} is required.
 
 **Strategy**: Take repeated measurements to estimate the error variance!
 
 * In \alert{simple cases}, formulas for the bias exist.
 
-* In most cases, such simple relations don't exist. Specific error modeling methods are then needed!
+* In most cases, such simple relations don't exist, and dedicated error modelling methods are needed.
 
 
-
-
-
-## Attenuation in simple linear regression
+## Attenuation in normal linear regression
 
 Given the simple linear regression equation $y_i = \beta_0 + \beta_x x_i + \epsilon_i$ with $w_i = x_i + u_i$. Assume that $w_i$ instead of $x_i$ is used in the regression:
 $$y_i = \beta^\star_0 + \beta^\star_x w_i + \epsilon_i$$
 
 
-The **naive slope parameter** $\beta_x^\star$ is then underestimated with respect to the true slope $\beta_x$, with **attenuation factor** $\lambda$: 
+The **naive slope parameter** $\beta_x^\star$ underestimates the true slope $\beta_x$ by **attenuation factor** $\lambda$: 
 $$\beta_x^\star =\underbrace{ \left(\frac{\sigma_x^2}{\sigma_x^2 + \sigma_u^2}\right)}_{=\lambda} \beta_x$$
 $\rightarrow$ knowing $\sigma_u^2$ and $\sigma_x^2$, the correct slope can be retrieved!
 
-**Example:** $\sigma_x^2 = 5$, $\sigma_u^2 = 1$, $\rightarrow$  $\lambda = \frac{5}{6} = 0.83$
+**Example:** $\sigma_x^2 = 5$, $\sigma_u^2 = 1$, $\rightarrow$  $\lambda = \frac{5}{5 + 1} = 0.83$
 
 
 
 
 ## Error modeling
 
-The **two most popular approaches**:
+**Two common approaches**:
 
 * **SIMEX**: SIMulation EXtrapolation, a heuristic and intuitive idea.
-* **Bayesian methods**: Prior information about the error enters a model. Then use
-
-$$\text{Likelihood} \times \text{prior} = \text{posterior}$$
-
-to calculate the parameter distribution after error correction.
-
-
+* **Bayesian methods**: Information about the error enters the model as a $prior$.
+\
 
 \colorbox{lightgray}{\begin{minipage}{13.5cm}
-{In any case, assessing the biasing effect of the error, as well as error modeling, can be done \alert{only if the error structure (model) and the respective model parameters} (e.g., error variances) \alert{are known!}} 
+{Both, however, require that the \alert{error model}, and its respective parameters (e.g., $\sigma_u^2$) \alert{are known!}} 
 \end{minipage}}
+\
+
+Thus, information about the error mechanism is essential, and potential sources of error must be identified at the planning stages of a study!
 
 
-Therefore: Information about the error mechanism is essential, and potential errors must be identified already in the planning phase.
+## SIMEX: An intuitive idea
 
+Suggested by Cook & Stefanski (1994), SIMEX takes a two-step approach:
 
-
-## SIMEX: A very intuitive idea
-
-Suggested by Cook & Stefanski (1994).
-
-Idea:
-
-* **Simulation phase:** The error in the data is \alert{progressively aggravated} in order to determine how the quantity of interest is affected by the error.
-* **Extrapolation phase:** The observed trend is then \alert{extrapolated back} to a hypothetical error-free value.
+1. **Simulation phase:** The error in the data is \alert{progressively aggravated} in order to determine how the model parameter of interest is affected.
+2. **Extrapolation phase:** The simulated trend is then \alert{extrapolated back} to a hypothetical error-free value of the model parameter.
 
 
 
@@ -293,7 +263,7 @@ p <- recordPlot()
 ```
 \normalsize
 
-## Find corrected Beta
+## Extrapolate to obtain an estimate of the corrected beta
 \small
 ```{r, message=FALSE, fig.width=3, fig.height=1.8, fig.align='center', echo = FALSE}
 print(p) # add plot again from above
@@ -317,7 +287,7 @@ with
 * $\mathbf{y}=(y_1,\ldots, y_{100})^\top$: variable with \% Bodyfat of 100 individuals.
 * $\mathbf{x}=(x_1,\ldots, x_{100})^\top$ the BMI of the individuals.
 
-**Problem:* The BMI was self-reported and thus suffers from measurement error! Not $x_i$ are observed, but rather 
+**Problem:** The BMI was self-reported and thus suffers from measurement error. Not $x_i$ was observed, but rather 
 $$w_i = x_i + u_i \ , \quad u_i \sim N(0,4)$$ 
 
 * $\mathbf{z}=(z_1,\ldots, z_{100})^\top$ a binary explanatory variable that indicates if the $i$-th person was a male ($z_i=1$) or female ($z_i=0$).
@@ -332,12 +302,14 @@ $\rightarrow$ Apply the SIMEX procedure!
 \small
 ```{r}
 set.seed(3243445)
-x <- rnorm(100,24,4)
-w <- x + rnorm(100,0,2)
-z <- ifelse(x>25,rbinom(100,1,0.7),rbinom(100,1,0.3))
-y <- -15 + 1.6*x - 2*z + rnorm(100,0,3)
-data <- data.frame(cbind(w,z,y))
-names(data) <- c("BMI","sex","bodyfat")
+x<- rnorm(100, 24, 4)
+w<- x + rnorm(100, 0, 2)
+z<- ifelse(x > 25, rbinom(100, 1, 0.7), rbinom(100, 1, 0.3))
+
+y<- -15 + 1.6*x - 2*z + rnorm(100, 0, 3)
+
+data<- data.frame(cbind(w, z, y))
+  names(data)<- c("BMI", "sex", "bodyfat")
 ```
 \normalsize
 
@@ -346,23 +318,23 @@ names(data) <- c("BMI","sex","bodyfat")
 Use the error-prone BMI variable to fit a "naive" regression:
 \small
 ```{r}
-r.lm <- lm(bodyfat ~ BMI + sex,data,x=TRUE)
+r.lm <- lm(bodyfat ~ BMI + sex, data, x= TRUE)
 summary(r.lm)$coef
 ```
 \normalsize
 
 
 ## Now run simex procedure
-Then run the simex procedure using the `simex()` function from the respective package:
+Then run the SIMEX procedure using the `simex()` function:
 \small
-```{r}
+```{r warning=FALSE}
 library(simex)
 r.simex <- simex(r.lm,
                  SIMEXvariable = "BMI",
-                 measurement.error = sqrt(4),
-                 lambda = seq(0.1,2.5,0.1),
+                 measurement.error= sqrt(4),
+                 lambda= seq(0.1, 2.5, 0.1),
                  B = 100,
-                 fitting.method = "quadratic")
+                 fitting.method= "quadratic")
 summary(r.simex)$coef$asymptotic
 ```
 \normalsize
@@ -385,8 +357,8 @@ plot(r.simex)
 
 ## Practical advice
 
-* Think about error problems **before** you start collecting your data!
-* Ideally, take **repeated measurements**, maybe of a subset of data points.
+* Think about measurement error **before** you start collecting your data.
+* Ideally, take **repeated measurements**, maybe of a subset of data points
 * Figure out if error is a problem and what the bias in your parameters might be. You might need simulations to find out.
 * If needed, model the error. **Seek help from a statistician!**
 
