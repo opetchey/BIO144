@@ -12,7 +12,8 @@ library(ggfortify)
 library(simex)
 
 ## Now read in the data, using the read_csv() function. We give it the URL of the published version of the google sheet data.
-class_RTs <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vTkjwG3pwSTAzuF6clwk6pE72Jc1jLl9wIh-0CGBXcrZPvG_MuCInV4w-HXZGukedKMPfJNzA2qBNpt/pub?gid=1650713051&single=true&output=csv")
+## 2024 link
+class_RTs <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vT0S581py-IDp4bIQnqFFTttQ1JChFHMMjgkYEbSv88nD1yqV1ocNY1eqrLifEPOHxkCZ4q73XeJcTX/pub?gid=1441390006&single=true&output=csv")
 
 ## Must be very careful to get the next line right!!! Really important!!!
 names(class_RTs) <- c("Timestamp", "ID", "Gender", "Weight",
@@ -107,7 +108,8 @@ library(ggfortify)
 library(simex)
 
 ## Now read in the data, using the read_csv() function. We give it the URL of the published version of the google sheet data.
-the_URL <- "https://docs.google.com/spreadsheets/d/e/2PACX-1vQFgYX1QhF9-UXep22XmPow1ZK5nbFHix9nkQIa0DzqUhPtZRxH1HtY-hsno32zDiuIHiLb2Hvphk1L/pub?gid=1188775314&single=true&output=csv"
+## 2024 link
+the_URL <- "https://docs.google.com/spreadsheets/d/e/2PACX-1vT0S581py-IDp4bIQnqFFTttQ1JChFHMMjgkYEbSv88nD1yqV1ocNY1eqrLifEPOHxkCZ4q73XeJcTX/pub?gid=1441390006&single=true&output=csv"
 class_RTs_all <- read_csv(the_URL)
 
 ## Must be very careful to get the next line right!!! Really important!!!

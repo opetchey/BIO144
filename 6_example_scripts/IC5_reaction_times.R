@@ -19,7 +19,7 @@ library(skimr)
 ## Now read in the data, using the read_csv() function.
 ## First we should assign, using the assignment arrow,
 ## the URL of the published version of the google sheet data into an object.
-the_URL <- "https://docs.google.com/spreadsheets/d/e/2PACX-1vQFgYX1QhF9-UXep22XmPow1ZK5nbFHix9nkQIa0DzqUhPtZRxH1HtY-hsno32zDiuIHiLb2Hvphk1L/pub?gid=1188775314&single=true&output=csv"
+the_URL <- "https://docs.google.com/spreadsheets/d/e/2PACX-1vT0S581py-IDp4bIQnqFFTttQ1JChFHMMjgkYEbSv88nD1yqV1ocNY1eqrLifEPOHxkCZ4q73XeJcTX/pub?gid=1441390006&single=true&output=csv"
 ## then use the read_csv function to read in the data from that URL
 class_RTs <- read_csv(the_URL)
 #######################################################
