@@ -330,15 +330,19 @@ Note: The last column contains the \textbf{$p$-value} of the test of the null hy
 
 ## Recap: Formal definition of the $p$-value
 
+\vspace*{6pt}
+
 \colorbox{lightgray}{\begin{minipage}{14cm}
 The \textbf{formal definition of $p$-value} is the probability to observe a data summary (e.g., an average) that is at least as extreme as the one observed, given that the Null Hypothesis is correct.
 \end{minipage}}  
 \
-Example (normal distribution): Assume the observed test-statistic leads to a $t$-value = -1.96  
+Example (normal distribution): Assume that we calculated that $t$-value = -1.96  
 \
-$\Rightarrow$ $Pr(t\geq 1.96)=0.05$ and $Pr(t\leq-1.96)=0.025$.
+$\Rightarrow$ $Pr(|t|\geq 1.96)=0.05$ and $Pr(t\leq-1.96)=0.025$.
 
-```{r eval=TRUE, fig.align='center',out.width="6cm",echo = FALSE}
+\vspace*{-4pt}
+
+```{r eval=TRUE, fig.align='center',fig.width=10, fig.height=4,echo = FALSE, out.height="5cm"}
 par(mfrow=c(1,2))
 
 zz1 <- qnorm(0.025)
