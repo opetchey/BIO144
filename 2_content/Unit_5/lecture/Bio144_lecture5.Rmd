@@ -281,7 +281,7 @@ $\rightarrow$ The \alert{degrees of freedom} are also reduced by $k-1$.
   
   * Thus, for the calculation of $\text{SS}_{Tot}$ we have $n-1$ degrees of freedom (DF), because we used 1 DF to calculate $\overline{y}$ from $y_i$ (in other words, $\overline{y}$ and $y_i$ are not independent)
   
-* The DF are the number of data points that are free to vary, given what we want calculate
+* The DF are the number of data points that are free to vary, given what we want to calculate
 
   * We lose one DF for every parameter that we want to estimate 
 
