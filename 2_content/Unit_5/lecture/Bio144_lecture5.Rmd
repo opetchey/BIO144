@@ -265,9 +265,25 @@ Please note that
 $\rightarrow$ The \alert{degrees of freedom} are also reduced by $k-1$.
 
 
-## Sketch (about degrees of freedom, 1)
+<!-- ## Sketch (about degrees of freedom, 1) -->
 
+## Degrees of freedom DF, example
 
+<!-- \vspace{-3cm} -->
+
+* When we calculate something from the data and use it then we constrain the data $\rightarrow$ it has less "freedom"
+
+* For example, to calculate $\text{SS}_{Tot} = \sum_{i=1}^n (y_i - \overline{y})^2$ we need $\overline{y}$
+
+  * Now let's say we know that $\overline{y}=4$ & $n=5$, what values can $y_i$ have?
+  
+  * 4 out of the 5 $y_i$ can have whichever value, e.g. $y_i=\{2,5,3,6,\Box\}$, but given the first 4 values and given $\overline{y}$ & $n$, we know that the fifth value must be $\Box=5$ $\Rightarrow$ the fifth value is no longer free to vary
+  
+  * Thus, for the calculation of $\text{SS}_{Tot}$ we have $n-1$ degrees of freedom (DF), because we used 1 DF to calculate $\overline{y}$ from $y_i$ (in other words, $\overline{y}$ and $y_i$ are not independent)
+  
+* The DF are the number of data points that are free to vary, given what we want calculate
+
+  * We lose one DF for every parameter that we want to estimate 
 
 ## Sketch (about degrees of freedom, 2)
 
@@ -724,7 +740,7 @@ __Note:__ these four diagrams are plotted automatically by R when you use the \t
 
 ## Tukey-Anscombe plot
 
-It is sometimes useful to enrich the TA-plot by adding a "running mean" or a "smoothed mean", which can give hints on the trend of the residuals. For the mercury example where $\log(Hg_{\text{urin}})$ is regressed on smoking, amalgam  and fish consumption for mothers only (slides 32-34 of lecture 4):  
+It is sometimes useful to enrich the TA-plot by adding a "running mean" or a "smoothed mean", which can give hints on the trend of the residuals. For the mercury example where $\log(Hg_{\text{urin}})$ is regressed on smoking, amalgam  and fish consumption:  
 
 ```{r echo= FALSE, message=FALSE, warning=FALSE}
 d.hg <- read.table(here("3_datasets/hg_urine_fuzzed.csv"),header=T, sep=",")
@@ -732,7 +748,7 @@ d.hg.m <- d.hg[d.hg$mother==1,-c(3,4,9,10,11)]
 #names(d.hg.m) <- c("Hg_urin", "Hg_soil", "smoking","amalgam", "age", "fish")
 ```
 
-```{r eval=T,echo=FALSE,message=FALSE,warning=FALSE,out.width="4cm",fig.align='center', fig.width=4, fig.height=4}
+```{r eval=T,echo=FALSE,message=FALSE,warning=FALSE,fig.align='center', out.width="4cm", fig.width=4, fig.height=4}
 r1.urin.mother <- lm(log10(Hg_urin) ~  smoking + amalgam + fish,data=d.hg.m)
 plot(fitted(r1.urin.mother),residuals(r1.urin.mother),xlab="Fitted values",ylab="Residuals")
 abline(h=0,lty=2)
