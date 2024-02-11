@@ -277,7 +277,7 @@ $\rightarrow$ The \alert{degrees of freedom} are also reduced by $k-1$.
 
   * Now let's say we know that $\overline{y}=4$ & $n=5$, what values can $y_i$ have?
   
-  * 4 out of the 5 $y_i$ can have whichever value, e.g. $y_i=\{2,5,3,6,\Box\}$, but given the first 4 values and given $\overline{y}$ & $n$, we know that the fifth value must be $\Box=5$ $\Rightarrow$ the fifth value is no longer free to vary
+  * 4 out of the 5 $y_i$ can have whichever value, e.g. $y_i=\{2,5,3,6,\Box\}$, but given the first 4 values and given $\overline{y}$ & $n$, we know that the fifth value must be $\Box=4$ $\Rightarrow$ the fifth value is no longer free to vary
   
   * Thus, for the calculation of $\text{SS}_{Tot}$ we have $n-1$ degrees of freedom (DF), because we used 1 DF to calculate $\overline{y}$ from $y_i$ (in other words, $\overline{y}$ and $y_i$ are not independent)
   
