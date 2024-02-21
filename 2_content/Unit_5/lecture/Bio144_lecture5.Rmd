@@ -265,11 +265,11 @@ Please note that
 $\rightarrow$ The \alert{degrees of freedom} are also reduced by $k-1$.
 
 
+<!-- Note 2024 by Uriah: I changed this slide for this year, before it was just a sketch -->
+
 <!-- ## Sketch (about degrees of freedom, 1) -->
 
 ## Degrees of freedom DF, example
-
-<!-- \vspace{-3cm} -->
 
 * When we calculate something from the data and use it then we constrain the data $\rightarrow$ it has less "freedom"
 
@@ -283,7 +283,7 @@ $\rightarrow$ The \alert{degrees of freedom} are also reduced by $k-1$.
   
 * The DF are the number of data points that are free to vary, given what we want to calculate
 
-  * We lose one DF for every parameter that we want to estimate 
+  * **Note**: We lose one DF for every beta parameter that we want to estimate!
 
 ## Sketch (about degrees of freedom, 2)
 
@@ -424,11 +424,74 @@ variable `Gattung` has an effect in total.  
 ```
 
 
-## $F$-test (sketch 1)
+## $F$-test: does the categorical variable *Gattung* explain a significant amount of variability?
+
+\vspace*{-10pt}
+
+$F\text{-statistic} =\frac{\text{additional variability explained by including } Gattung}{\text{residual variability not explained}}=$
+
+\vspace*{60pt}
 
 
+\par\noindent\rule{\textwidth}{0.4pt}
 
-## $F$-test (sketch 1)
+\vspace*{-6pt}
+
+Remember, $SST = SSR + SSE$
+
+\vspace*{40pt}
+
+
+## $F$-test (sketch)
+
+\vspace*{50pt}
+
+
+```{r, fig.width=8, fig.height=3.5, echo=FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(patchwork)
+
+L1 = c(1.8,1.6,2.6)
+N1 = c(6.3,5,6.7) + 0.5
+Oc1 = c(10.4,9.1,10.5) - 0.5
+mean1 = mean(c(L1,N1,Oc1))
+
+Fdd1 <- data.frame(Gattung = rep(c("L","N","Oc"),each=3),
+                   y = c(L1,N1,Oc1))
+
+p1 <-
+  Fdd1 %>% 
+  ggplot(aes(Gattung, y))+
+  geom_hline(yintercept = mean1, linetype=2)+
+  geom_point(position = position_dodge2(width = 0.3), col="red", size=.9) +
+  theme_half_open()+
+  theme(axis.title.y = element_text(angle = 0, vjust = 1))+
+  scale_y_continuous(breaks = mean1, labels = expression(bar("y")), limits = c(min(Fdd1$y),max(Fdd1$y))) +
+  geom_segment(aes(x = 0.85, y = mean(L1), xend = 1.15, yend = mean(L1)), colour = "red")+
+  geom_segment(aes(x = 1.85, y = mean(N1), xend = 2.15, yend = mean(N1)), colour = "red")+
+  geom_segment(aes(x = 2.85, y = mean(Oc1), xend = 3.15, yend = mean(Oc1)), colour = "red")
+
+L2 = c(6.3, 4.4 , 7.6) +0.2
+N2 = c(6.5, 4 , 7.6) + 0.2
+Oc2 = c(5.7, 4.1, 7.8) -0.4
+mean2 = mean(c(L2,N2,Oc2))
+
+Fdd2 <- data.frame(Gattung = rep(c("L","N","Oc"),each=3),
+                   y = c(L2,N2,Oc2))
+
+p2 <- Fdd2 %>% 
+  ggplot(aes(Gattung, y))+
+  geom_hline(yintercept = mean2, linetype=2)+
+  geom_point(position = position_dodge2(width = 0.3), col="red", size=.9) +
+  theme_half_open()+
+  theme(axis.title.y = element_text(angle = 0, vjust = 1))+
+  scale_y_continuous(breaks = mean2, labels = expression(bar("y")), limits = c(min(Fdd1$y),max(Fdd1$y))) +
+  geom_segment(aes(x = 0.85, y = mean(L2), xend = 1.15, yend = mean(L2)), colour = "red")+
+  geom_segment(aes(x = 1.85, y = mean(N2), xend = 2.15, yend = mean(N2)), colour = "red")+
+  geom_segment(aes(x = 2.85, y = mean(Oc2), xend = 3.15, yend = mean(Oc2)), colour = "red")
+
+p1 + plot_spacer() + p2 + plot_layout(widths = c(3,0.5,3))
+```
 
 
 
@@ -680,6 +743,11 @@ Example D: Within-group slope is $<0$, but fitting $y$ against $x$ leads to a sl
 
 Write your comments here -->
 
+
+<!-- Note 2024 by Uriah: I commented out most of the follwoing slide as they are usually skipped (because repetition) -->
+
+<!--
+
 ## Another interpretation of multiple regression
 
 In multiple regression, the coefficient $\beta_x$ of explanatory variable $x$ can be interpreted as follows:
@@ -907,6 +975,7 @@ r5.urin.mother <- lm(log10(Hg_urin) ~  smoking + sqrt(amalgam) + sqrt(fish),data
 autoplot(r5.urin.mother,smooth.colour=NA) + theme_bw()
 ```
 
+-->
 
 ## Recap
 
