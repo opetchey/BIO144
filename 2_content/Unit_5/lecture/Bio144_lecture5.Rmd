@@ -22,7 +22,7 @@ library(here)
 * Binary and categorical explanatory variables
 * Interactions between explanatory variables
 * Multiple vs.\ many single regressions
-* Recap of checking model assumptions
+<!-- * Recap of checking model assumptions -->
 
 
 ## Course material covered today
@@ -116,13 +116,12 @@ r1.urin.mother <- lm(log10(Hg_urin) ~  smoking +
 
 First check the modelling assumptions:
 
-```{=tex}
-\begin{center}
+
 ```{r eval=T,fig.width=6, fig.height=6,warning=FALSE,echo=F,out.width="6cm",fig.align='center'}
 autoplot(r1.urin.mother,which=c(1,2, 3, 5),smooth.colour=NA) 
 ```
-\end{center}
-```
+
+
 Seems ok, apart from one point (106) that could be categorized as an
 outlier. We ignore it for the moment.
 
@@ -176,7 +175,7 @@ included as a binary variable in the model
 
 ```{=tex}
 \begin{equation*}
-y_i = \beta_0 + \beta_1 x^{(1)} + \ldots + \beta_k x^{(k)} + \epsilon_i \ .
+y_i = \beta_0 + \beta_1 x^{(1)}_i + \ldots + \beta_k x^{(k)}_i + \epsilon_i \ .
 \end{equation*}
 ```
 \scriptsize However: this model is \alert{not identifiable}. We could
@@ -214,7 +213,7 @@ included as a binary variable in the model
 
 ```{=tex}
 \begin{equation*}
-y_i = \beta_0 + \beta_1 x^{(1)} + \ldots + \beta_k x^{(k)} + \epsilon_i \ .
+y_i = \beta_0 + \beta_1 x^{(1)}_i + \ldots + \beta_k x^{(k)}_i + \epsilon_i \ .
 \end{equation*}
 ```
 \scriptsize However: this model is \alert{not identifiable}. We could
@@ -273,13 +272,13 @@ $\rightarrow$ The \alert{degrees of freedom} are also reduced by $k-1$.
 
 * When we calculate something from the data and use it then we constrain the data $\rightarrow$ it has less "freedom"
 
-* For example, to calculate $\text{SS}_{Tot} = \sum_{i=1}^n (y_i - \overline{y})^2$ we need $\overline{y}$
+* For example, to calculate $\text{SSQ}^{(Y)} = \sum_{i=1}^n (y_i - \overline{y})^2$ we need $\overline{y}$
 
   * Now let's say we know that $\overline{y}=4$ & $n=5$, what values can $y_i$ have?
   
   * 4 out of the 5 $y_i$ can have whichever value, e.g. $y_i=\{2,5,3,6,\Box\}$, but given the first 4 values and given $\overline{y}$ & $n$, we know that the fifth value must be $\Box=4$ $\Rightarrow$ the fifth value is no longer free to vary
   
-  * Thus, for the calculation of $\text{SS}_{Tot}$ we have $n-1$ degrees of freedom (DF), because we used 1 DF to calculate $\overline{y}$ from $y_i$ (in other words, $\overline{y}$ and $y_i$ are not independent)
+  * Thus, for the calculation of $\text{SSQ}^{(Y)}$ we have $n-1$ degrees of freedom (DF), because we used 1 DF to calculate $\overline{y}$ from $y_i$ (in other words, $\overline{y}$ and $y_i$ are not independent)
   
 * The DF are the number of data points that are free to vary, given what we want to calculate
 
@@ -306,31 +305,31 @@ berechnenbar, die der Dachs aufgenommen hat.
 \textbf{Frage:} Besteht eine Beziehung zwischen dem Umfang des
 Muskelmagenteilchens und dem Gewicht des Regenwurms?
 
-Data set of $n=143$ worms with three species (Lumbricus, Nicodrilus,
+Data set of $n=143$ worms with three genera (Lumbricus, Nicodrilus,
 Octolasion), weight, stomach circumference (Magenumfang).
 
 ## 
 
-Data inspection suggests that the three species have different weights:
+Data inspection suggests that the three genera have different weights:
 
-```{=tex}
-\begin{center}
-```{r eval=T,fig.width=6, fig.height=3.5,warning=FALSE,echo=F,out.width="6.5cm",fig.align='center',message=FALSE}
+
+```{r eval=T,fig.width=12, fig.height=6,warning=FALSE,echo=FALSE,out.width="12.cm",fig.align='center',message=FALSE}
 library(lattice)
 par(mfrow=c(1,2))
 d.wurm <- read.table (here("5_some_examples/data_examples/ancova/Projekt6Regenwuermer/RegenwuermerDaten_Haupt.txt"),header=T)
 d.wurm[d.wurm$Gattung=="N","GEWICHT"] <- d.wurm[d.wurm$Gattung=="N","GEWICHT"]*0.5
-boxplot(GEWICHT ~ Gattung, d.wurm,xlab="Gattung",ylab="Gewicht (g)")
-boxplot(log10(GEWICHT) ~ Gattung, d.wurm,xlab="Gattung",ylab="Log10 Gewicht (g)")
+boxplot(GEWICHT ~ Gattung, d.wurm,xlab="Gattung",ylab="Gewicht (g)",cex.lab=1.5, cex.axis=1.5)
+boxplot(log10(GEWICHT) ~ Gattung, d.wurm,xlab="Gattung",ylab="Log10 Gewicht (g)",cex.lab=1.5, cex.axis=1.5)
 ```
 
 
-```{r eval=F,fig.width=4.2, fig.height=2.9,warning=FALSE,echo=F,out.width="5.5cm",fig.align='center',message=FALSE}
+
+```{r eval=FALSE, fig.align='center', fig.height=2.9, fig.width=4.2, message=FALSE, warning=FALSE, include=FALSE, out.width="5.5cm"}
 library(ggplot2)
 ggplot(d.wurm,aes(x=MAGENUMF,y= GEWICHT,colour=Gattung)) + geom_point() + theme_bw()
 ```
-\end{center}
-```
+
+
 
 ##
 
@@ -393,7 +392,7 @@ worm.coef <- summary(r.lm)$coef
 ```
 ```{=tex}
 \colorbox{lightgray}{\begin{minipage}{14cm}
-We have now actually fitted {\bf three} models, one model for each species:\\[2mm]
+We have now actually fitted {\bf three} models, one model for each genus:\\[2mm]
 
 Lumbricus: $\hat{y}_i = `r format(worm.coef[1,1],2,2,2)`$ \\[2mm]
 Nicodrilus: $\hat{y}_i = `r format(worm.coef[1,1],2,2,2)` + (`r round(worm.coef[2,1],2)`)$ \\[2mm]
@@ -402,12 +401,12 @@ Octolasion: $\hat{y}_i = `r format(worm.coef[1,1],2,2,2)` + (`r format(worm.coef
 ```
 
 
-## Interpreting the results III
+## Interpreting the results II
 
 \textbf{Question:} Is the "Gattung" explanatory variable relevant in the
-model, that is, do the model intercepts differ for the three species?  
+model, that is, do the model intercepts differ for the three genera? 
 
-\textbf{Problem:} The $p$-values of the t-test for each of the worm species are not very
+\textbf{Problem:} The $p$-values of the t-test for each of the worm genus are not very
 meaningful. They belong to tests that compare the intercept of a
 category with the intercept of the reference level (i.e., the
 \emph{difference} in intercepts!). However, the question is whether the
@@ -510,7 +509,7 @@ anova(r.lm)
 distributed as $F_{2,140}$ under the Null-Hypothesis.
 
 This gives $p=`r format(anova(r.lm)[1,5],2,4,2)`$, thus a clear
-difference in the regression models for the three species ("Gattung is
+difference in the regression models for the three genera ("Gattung is
 relevant").
 
 ## Plotting the earthworms results
@@ -631,6 +630,62 @@ On the previous slide we have actually fitted 2 models at the same time.
 \
 
 
+
+
+## 
+
+Remember, however, that the Hg model also included smoking status, amalgam fillings and fish consumption as important predictors. It is very straightforward to just include these predictors in model (1), which leads to the following model
+\  
+
+\small
+
+```{r echo = TRUE}
+r.hg <- lm(log_Hg_urin ~  mother * age + smoking + amalgam + fish, d.hg)
+```
+
+```{r echo = FALSE, results='asis', message=FALSE, warning=FALSE}
+library(biostatUZH)
+tableRegression(r.hg)
+```
+
+\small (Note that \texttt{mother*age} in R encodes for \texttt{mother} + \texttt{age} + \texttt{mother:age}.)
+
+## 
+
+Again, for completeness, some model checking (which one usually does before looking at the results): 
+
+```{r  eval=T,warning=FALSE,out.width="8.5cm", echo = FALSE, message=FALSE, fig.align='center'}
+library(ggfortify)
+autoplot(r.hg,which=c(1,2, 3, 5),smooth.col=NA)
+```
+
+## Linear regression is even more powerful!
+
+We have seen that it is possible to include continuous, binary or categorical explanatory variable in a regression model.
+
+\colorbox{lightgray}{\begin{minipage}{14cm}
+Even \alert{transformations} of explanatory variables can be included in (almost) any form. For instance the square of a variable ${x}$
+\begin{equation*}
+y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \epsilon_i \ , 
+\end{equation*}
+which leads to a {\bf quadratic} or {\bf polynomial} regression (if higher order terms are used).
+\end{minipage}}
+
+Other common transformations are:
+
+* $\log$
+* $\sqrt{..}$
+* $\sin$, $\cos$, ...
+
+## How can a _quadratic_ regression be a _linear regression_??
+
+__Note:__ The word _linear_ refers to the \alert{linearity in the coefficients}, and not on a linear relationship between ${y}$ and ${x}$!
+
+\begin{center}
+\includegraphics[width=11cm]{pictures/multiplReg.png}
+\end{center}
+
+
 ## Multiple vs. many single regressions
 
 Question: Given multiple regression variables ${x}^{(1)}, {x}^{(2)},...$. Could I simply fit separate simple models for each variable, that is
@@ -691,63 +746,17 @@ Example D: Within-group slope is $<0$, but fitting $y$ against $x$ leads to a sl
 Write your comments here -->
 
 
-## 
-
-Remember, however, that the Hg model also included smoking status, amalgam fillings and fish consumption as important predictors. It is very straightforward to just include these predictors in model (1), which leads to the following model
-\  
-
-\small
-
-```{r echo = TRUE}
-r.hg <- lm(log_Hg_urin ~  mother * age + smoking + amalgam + fish, d.hg)
-```
-
-```{r echo = FALSE, results='asis', message=FALSE, warning=FALSE}
-library(biostatUZH)
-tableRegression(r.hg)
-```
-
-\small (Note that \texttt{mother*age} in R encodes for \texttt{mother} + \texttt{age} + \texttt{mother:age}.)
-
-## 
-
-Again, for completeness, some model checking (which one usually does before looking at the results): 
-
-```{r  eval=T,warning=FALSE,out.width="8.5cm", echo = FALSE, message=FALSE, fig.align='center'}
-library(ggfortify)
-autoplot(r.hg,which=c(1,2, 3, 5),smooth.col=NA)
-```
-
-## Linear regression is even more powerful!
-
-We have seen that it is possible to include continuous, binary or categorical explanatory variable in a regression model.
-
-\colorbox{lightgray}{\begin{minipage}{14cm}
-Even \alert{transformations} of explanatory variables can be included in (almost) any form. For instance the square of a variable ${x}$
-\begin{equation*}
-y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \epsilon_i \ , 
-\end{equation*}
-which leads to a {\bf quadratic} or {\bf polynomial} regression (if higher order terms are used).
-\end{minipage}}
-
-Other common transformations are (see also slide 38):
-
-* $\log$
-* $\sqrt{..}$
-* $\sin$, $\cos$, ...
-
-## How can a _quadratic_ regression be a _linear regression_??
-
-__Note:__ The word _linear_ refers to the \alert{linearity in the coefficients}, and not on a linear relationship between ${y}$ and ${x}$!
-
-\begin{center}
-\includegraphics[width=11cm]{pictures/multiplReg.png}
-\end{center}
 
 
 
 
-<!-- Note 2024 by Uriah: I commented out most of the follwoing slide as they are usually skipped (because repetition) -->
+
+
+
+
+
+
+<!-- Note 2024 by Uriah: I commented out most of the following slides as they are usually skipped (because repetition) -->
 
 <!--
 
