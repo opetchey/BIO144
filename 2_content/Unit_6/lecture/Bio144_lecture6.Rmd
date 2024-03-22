@@ -1,7 +1,7 @@
 ---
 title: "Lecture 6: ANOVA"
 subtitle: "BIO144 Data Analysis in Biology"
-author: "Stephanie Muff & Owen Petchey"
+author: "Stephanie Muff & Owen Petchey & Uriah Daugaard"
 institute: "University of Zurich"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
@@ -169,15 +169,15 @@ qplot(as.factor(d.mais$HYBRID),d.mais$YIELD) + xlab('Hybrid (Sorte') + ylab('Yie
 geom_hline(yintercept = 62.555, col = 'red') + geom_point(data= d.agg, aes(x = HYBRID, y = YIELD, col = 'red'), shape = 15)
 ```
 
-## 
+<!-- ##  -->
 
-## 
+##
 
 We formulate a model as follows: \begin{eqnarray*}
 y_{ij} = \mu_i + \epsilon_{ij} \ ,
 \end{eqnarray*} where
 
--   $y_{ij}$= "Yield of the $j^\text{th}$ plant of hybrid $i$"
+-   $y_{ij}$= "Yield of hybrid $i$ in location $j$"
 -   $\mu_i$="Mean yield of hybrid $i$"
 -   $\epsilon_{ij}\sim(0,\sigma^2)$ is an independent error term.
 
@@ -365,12 +365,12 @@ require(tidyverse)
 glimpse(d.mais)
 ```
 
-## 
+<!-- ##  -->
 
-```{r fig.width=7, fig.height=5,out.width="5.5cm", fig.align='center',echo=FALSE, message=FALSE,warning=FALSE}
-ggplot(d.mais) +
-  geom_point(aes(x = HYBRID, y = YIELD))
-```
+<!-- ```{r fig.width=7, fig.height=5,out.width="5.5cm", fig.align='center',echo=FALSE, message=FALSE,warning=FALSE} -->
+<!-- ggplot(d.mais) + -->
+<!--   geom_point(aes(x = HYBRID, y = YIELD)) -->
+<!-- ``` -->
 
 ## Hybrid-Mais example -- Estimation
 
