@@ -338,7 +338,7 @@ An overview of the results is typically given in an ANOVA table
 \begin{tabular}{llllll}
 Variation & df & SS & MS = SS/df & F & $p$ \\ 
  \hline
- Between groups & $g-1$ & $SS_G$  &  $MS_G$ & $\frac{MS_G}{MS_E}$ & $Pr(F_{g-1,n-g}>|F|))$\\
+ Between groups & $g-1$ & $SS_G$  &  $MS_G$ & $\frac{MS_G}{MS_E}$ & $Pr(F_{g-1,n-g}>F)$\\
  Within groups &  $n-g$ & $SS_E$ & $MS_E$ & \\ 
  \hline 
  Total & $n-1$ & $SS_{\text{total}}$ & \\
