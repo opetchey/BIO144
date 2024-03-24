@@ -179,7 +179,7 @@ y_{ij} = \mu_i + \epsilon_{ij} \ ,
 
 -   $y_{ij}$= "Yield of hybrid $i$ in location $j$"
 -   $\mu_i$="Mean yield of hybrid $i$"
--   $\epsilon_{ij}\sim(0,\sigma^2)$ is an independent error term.
+-   $\epsilon_{ij}\sim N(0,\sigma^2)$ is an independent error term.
 
 Typically, this is **rewritten as** \begin{eqnarray*}
 y_{ij} = \mu + \beta_i + \epsilon_{ij} \ ,
@@ -196,7 +196,7 @@ Assume we have $g$ groups and in each group $i$ there are $n_i$ measurements of 
 \begin{eqnarray}
 y_{ij} = \mu + \beta_i + \epsilon_{ij} \quad \text{for }\quad  i &=&1,\ldots ,g \ , \label{eq:aov}  \\
 j &=& 1,\ldots, n_i , \nonumber\\ 
-\epsilon_{ij} &\sim& (0,\sigma^2) \quad i.i.d. \nonumber
+\epsilon_{ij} &\sim& N(0,\sigma^2) \quad i.i.d. \nonumber
 \end{eqnarray}
 \end{minipage}}
 ```
@@ -204,7 +204,7 @@ j &=& 1,\ldots, n_i , \nonumber\\
     regression models.
 -   The estimation of $\mu$, and the $\beta$ coefficients is again done
     by \alert{least squares minimization}.
--   The $\epsilon_{ij} \sim (0,\sigma^2)$ $i.i.d.$ assumption is again
+-   The $\epsilon_{ij} \sim N(0,\sigma^2)$ $i.i.d.$ assumption is again
     crucial, so \alert{model checking} will be needed again.
 
 ## 
@@ -717,6 +717,17 @@ Group 4: cereal / high & $\hat{y}_{cereal,high} = 79.2 + 4.7 + 20.8 - 18.8 = 85.
 
 ## 
 
+\vspace*{-90pt}
+
+\scriptsize
+
+```{=tex}
+\hspace*{0pt}\hfill $\hat{y}_{beef,low} = 79.2 + 0 + 0 + 0 = 79.2$  \\
+\hspace*{0pt}\hfill $\hat{y}_{cereal,low} = 79.2 + 4.7 + 0 + 0 = 83.9$ \\  
+\hspace*{0pt}\hfill $\hat{y}_{beef,high} = 79.2 + 0 + 20.8 + 0 = 100$  \\
+\hspace*{0pt}\hfill $\hat{y}_{cereal,high} = 79.2 + 4.7 + 20.8 - 18.8 = 85.9$
+```
+
 ## A cautionary note
 
 **Be careful:** In the presence of interactions, the $p$-values of the
@@ -736,7 +747,7 @@ anova(lm(weightgain ~ amount,subset(d.weightgain,source=="Cereal")))
 
 In an experiment the influence of four of fertilizer (DUENGER) on the
 yield (ERTRAG) on 5 species (SORTE) of crops was investigated. For each
-DUENGER $\times$ ERTRAG combination, 3 repeats were taken.
+DUENGER $\times$ SORTE combination, 3 repeats were taken.
 
  
 
@@ -768,7 +779,8 @@ head(d.duenger,10)
 And the interaction plot:
 
 ```{r fig.width=4,fig.height=4,out.width="4.5cm",fig.align='center',echo=FALSE,message=FALSE,warning=FALSE, }
-interaction.plot(d.duenger$DUENGER,d.duenger$SORTE,d.duenger$ERTRAG,xlab="Duenger",ylab="Mean Ertrag")
+with(d.duenger,
+     interaction.plot(DUENGER,SORTE,ERTRAG,xlab="Duenger",ylab="Mean Ertrag"))
 ```
 
 ## 
