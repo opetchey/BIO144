@@ -1,160 +1,212 @@
 ---
 title: "Lecture 7: ANCOVA, short introduction to Linear Algebra"
 subtitle: "BIO144 Data Analysis in Biology"
-author: "Owen Petchey & Damien Farine"
+author: "Stefanie Muff, Owen Petchey and Erik Willems"
 institute: "University of Zurich"
-date: "`r format(Sys.time(), '%d %B, %Y')`"
+date: "03 April, 2023"
 output:
   beamer_presentation:
     includes:
       in_header: ../../beamer_stuff/preamble.tex
 classoption: "aspectratio=169"
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
-  
-```{r setup, include=FALSE, echo = FALSE, message=FALSE, warning=FALSE}
-source(here::here("2_content/beamer_stuff/preamble.r"))
-```
 
+```{r setup, include=FALSE, echo = FALSE, message=FALSE, warning=FALSE}
+# source(here::here("2_content/beamer_stuff/preamble.r"))
+
+# Contents of preamble.R (loading of biostatUZH commented out)
+knitr::opts_chunk$set(echo = TRUE)
+options(xtable.comment = FALSE)
+library(tidyverse)
+library(here)
+library(ggfortify)
+library(cowplot)
+# library(biostatUZH)
+library(reporttools)
+
+library(ggpubr)
+```
 
 ## Overview
 
+```{=tex}
 \begin{itemize}
-\item ANCOVA
-\item Introduction to linear Algebra
+\item ANCOVA ($ANalysis~of~COVAriance$)
+\item Introduction to linear algebra
 \end{itemize}
-\ 
-Note: 
-ANCOVA = ANalysi of COVAriance (Kovarianzanalyse)
-
+```
 ## Course material covered today
 
+```{=tex}
 \begin{itemize}
 \item "Getting Started with R" chapter 6.3
 \item  "Lineare regression" chapters 3.A (p.\ 43-45) and 3.4, 3.5 (p.\ 39-42)
 \end{itemize}
-
+```
 ## Recap of ANOVA
 
+```{=tex}
 \begin{itemize}
-\item ANOVA is a method to test if the means of \alert{two or more groups are different}.\\[2mm]
-\item Post-hoc tests and contrasts, including correction for $p$-values, to understand the differences between the groups. \\[2mm]
-\item Two-way ANOVA for factorial designs, interactions.\\[2mm]
-\item ANOVA is a special case of linear regression with categorical covariates.
+\item ANOVA is a method to test whether the means of
+\alert{two or more groups differ}\\[2mm]
+\item Post-hoc tests and contrasts, including correction for $p$-values, to
+understand the differences between the groups\\[2mm]
+\item Two-way ANOVA for factorial designs, interactions\\[2mm]
+\item ANOVA: 'linear regression with categorical predictor(s)'
+\begin{itemize}
+\item One categorical predictor~= one-way ANOVA
+\item Two categorical predictors= two-way ANOVA
+\item $etc.$
 \end{itemize}
-
+\end{itemize}
+```
 ## Recap of two-way ANOVA example
 
-Remember: Influence of four levels of fertilizer (DUENGER) on the yield (ERTRAG) on 5 species (SORTE) of crops was investigated. For each DUENGER $\times$ ERTRAG combination, 3 repeats were taken.
+The influence of four levels of fertilizer (DUENGER) on the yield (ERTRAG)
+of 5 crop species (SORTE) was investigated. For each DUENGER $\times$
+ERTRAG combination, 3 measurements were made.
 
 ```{r message=FALSE, warning=FALSE, echo = FALSE, eval=TRUE}
-d.duenger <- read.table(here("5_some_examples/data_examples/WBL/duenger.dat"),header=T,sep=",")
+d.duenger <- read.table(here("5_some_examples/data_examples/WBL/duenger.dat"),
+                        header=T,sep=",")
 d.duenger <- mutate(d.duenger,SORTE=as.factor(SORTE),DUENGER=as.factor(DUENGER))
 ```
 
 Interaction plot with ERTRAG and log(ERTRAG) as response:
+
 ```{r fig.width=4,fig.height=4,out.width="4.5cm", echo=FALSE, warning=FALSE,message=FALSE}
 require(cowplot)
-a = interaction.plot(d.duenger$DUENGER,d.duenger$SORTE,(d.duenger$ERTRAG),xlab="Duenger",ylab="Mean Ertrag",trace.label="Sorte")
+a = interaction.plot(d.duenger$DUENGER,d.duenger$SORTE,(d.duenger$ERTRAG),
+                     xlab="Duenger",ylab="Mean Ertrag",trace.label="Sorte")
 
-b = interaction.plot(d.duenger$DUENGER,d.duenger$SORTE,log(d.duenger$ERTRAG),xlab="Duenger",ylab="log(Mean Ertrag)",trace.label="Sorte")
+b = interaction.plot(d.duenger$DUENGER,d.duenger$SORTE,log(d.duenger$ERTRAG),
+                     xlab="Duenger",ylab="log(Mean Ertrag)",
+                     trace.label="Sorte")
 plot_grid(a,b)
 ```
 
-Remember: We used log(ERTRAG), because the residual plots were otherwise not ok.
-
+Remember: We used log(ERTRAG), because residual plots were not ok otherwise.
 
 ## 
 
 \tiny
+
 ```{r echo = TRUE}
 r.duenger2 <- lm(log(ERTRAG) ~ DUENGER*SORTE,d.duenger)
 anova(r.duenger2)
 ```
-\ 
-\normalsize
-Questions: 
+
+\normalsize Questions:
+
+```{=tex}
 \begin{itemize}
 \item Number of parameters? 
 \item Degrees of freedom (60 data points)?
 \item Interpretation?
 \end{itemize}
-
+```
 ## 
+
 \tiny
+
 ```{r echo = TRUE, size = 'tiny'}
 summary(r.duenger2)
 ```
 
-## Analysis of Covariance (ANCOVA)
+## Analysis of Covariance
 
-\colorbox{lightgray}{\begin{minipage}{14cm}
-An ANCOVA is an analysis of variance (ANOVA), \alert{including} also at least one \alert{continuous covariate}.
-\end{minipage}}
-\vspace{6mm}
+ANCOVA:
 
-ANCOVA unifies several concepts that we approached in this course so far:
+```{=tex}
+\begin{itemize}
+\item An extension of ANOVA
+\item A method to test whether the means of two or more groups
+differ, \alert{controlling for the effect of one (or more) continuous covariate(s)}
+\item Makes an additional assumption about the "homogeneity of
+regression slopes"
 
 \begin{itemize}
-\item Linear regression\\[3mm]
-\item Categorical covariates\\[3mm]
-\item Interactions (of continuous and categorical covariates)\\[3mm]
-\item Analysis of Variance (ANOVA)\\[6mm]
+\item No interaction between the categorical and (any of the) continuous
+covariate(s)
+\item If there is an interaction, comparing group means becomes
+uninformative \\ (the model may still be biologically interesting though!)
 \end{itemize}
 
-As such, it is a __special case of the linear regression model__.
-
+\normalsize
+\item A \textbf{linear model} (just like regression and ANOVA)
+\end{itemize}
+```
 ## 
 
-Given a categorical covariate $x_i$ and a continuous covariate $z_i$. Then the ANCOVA equation (without interactions) is given as
+Given a categorical covariate $x_i$ and a continuous covariate $z_i$, the ANCOVA
+equation is:
+\
+\
+\
 
+```{=tex}
 \colorbox{lightgray}{\begin{minipage}{14cm}
 \begin{equation*}
 y_i = \beta_0 + \beta_1x_i^{(1)} + ... + \beta_kx_i^{(k)} + \beta_z z_i + \epsilon_i \ ,
 \end{equation*}
 where $x_i^{(k)}$ is the $k$th dummy variable ($x_i^{(k)}$=1 if $i$th observation belongs to category $k$, 0 otherwise).
 \end{minipage}}
-\ 
+```
+\
 
+**Note 1:** Again, for reasons of identifiability, we typically set $\beta_1=0$
 
-__Note 1:__ It is straightforward to add an interaction of $x_i$ with $z_i$.
-\  
-
-__Note 2:__ Again, for identifiability reason, we typically set $\beta_1=0$.
+**Note 2:** It is easy to add the interaction between $x_i$ with $z_i$, but
+            strictly speaking such a model would no longer be an ANCOVA
 
 ## Once more: the earthworms
 
-"Magenumfang" was used to predict "Gewicht" of the worm, including as covariate also the worm species.
+"Gewicht" of the worm was expressed as a function of "Magenumfang" and "Gattung"
 
 ```{r echo = FALSE, eval = TRUE}
 d.wurm <- read.table(here("5_some_examples/data_examples/ancova/Projekt6Regenwuermer/RegenwuermerDaten_Haupt.txt"),header=T)
 d.wurm[d.wurm$Gattung=="N","GEWICHT"] <- d.wurm[d.wurm$Gattung=="N","GEWICHT"]*0.5
 ```
 
-```{r fig.width=5,fig.height=3.5,out.width="6.5cm", echo=FALSE, message=FALSE,warning=FALSE,fig.align='center'}
-ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point() + theme_bw()
+```{r fig.width=12,fig.height=3.5,out.width="14cm", echo=FALSE, message=FALSE,warning=FALSE,fig.align='center'}
+
+ggarrange(
+  ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) +
+    geom_point(alpha= .4) +
+    theme_bw(),
+    ggplot(d.wurm, aes(Gattung, log10(GEWICHT), col= MAGENUMF)) +
+    geom_point(alpha= .4) +
+    stat_summary(fun= mean, geom= "point", size= 3) +
+    stat_summary(fun.data= mean_cl_normal, geom= "errorbar", width= .2) +
+    theme_bw(),
+ncol= 2)
 ```
 
-\alert{Categorical} and \alert{continuous} covariates were used to predict a continuous outcome $\rightarrow$ ANCOVA.
+\alert{Categorical} and \alert{continuous} covariates were used to
+predict a continuous outcome $\rightarrow$ ANCOVA?
 
 ## 
 
-
 \tiny
+
 ```{r echo = TRUE, eval = TRUE}
 r.lm <- lm(log(GEWICHT) ~  MAGENUMF + Gattung,d.wurm)
 summary(r.lm)$coef
 ```
-\normalsize  
-\ 
 
-__Important:__  The $p$-values for the entries `GattungN` and `GattungOc` are not very meaningful (why?).
+\normalsize
 
-##
 
-To understand if "Gattung" has an effect, __we need to carry out an $F$-test__ $\rightarrow$ ANOVA table:
-\tiny  
+**Important:** The $p$-values for the estimates of `(Intercept)`, `GattungN` and `GattungOc` are not very meaningful (why?).
 
-\  
+## 
+
+To understand if "Gattung" has an effect, **we need to carry out an**
+$F$-test $\rightarrow$ ANOVA table: \tiny
+
 
 ```{r echo = TRUE, eval = TRUE}
 anova(r.lm)
@@ -162,37 +214,41 @@ anova(r.lm)
 
 ## 
 
-We can also include an __interaction term__ between `MAGENUMF` and `Gattung` to allow for different slopes:  
+To check whether the assumption of $homogeneity~of~regression~slopes$ holds, we need to make sure the **interaction** between `MAGENUMF` and `Gattung` is not significant:
 
-\ 
 
 ```{r fig.width=5, fig.height=3.5,out.width="6.5cm", fig.align='center', echo=FALSE, warning=FALSE, message=FALSE}
-library(ggplot2)
-library(dplyr)
-ggplot(d.wurm,aes(x=MAGENUMF,y=log10(GEWICHT),colour=Gattung)) + geom_point() + geom_smooth(method="lm") + theme_bw()
+
+ggplot(d.wurm, aes(x= MAGENUMF, y= log10(GEWICHT), col= Gattung)) +
+  geom_point() +
+  geom_smooth(method="lm") +
+  theme_bw()
 ```
 
 ## 
 
-$\rightarrow$ We again need the __$F$-test__ to check whether the respective interaction term is needed:  
+$\rightarrow$ We fit a new model, and again use the $F$-test:
 
-\ 
 
 \small
+
 ```{r echo = TRUE, eval = TRUE}
 r.lm2<- lm(log(GEWICHT) ~  MAGENUMF * Gattung,d.wurm)
 anova(r.lm2)
 ```
+
 \normalsize
-$\rightarrow$ $p=0.167$, thus interaction is probably not relevant. 
+
+$\rightarrow$ $p=0.167$, the interaction is probably not relevant $\rightarrow$
+ANCOVA makes sense
 
 ## A new example: cholesterol levels
 
-__Example:__ Cholesterol levels [mg/ml] for 45 women from three US states (Iowa, Nebraska, Arizona), were measured.
+**Example:** Cholesterol levels [mg/ml] of 45 women from three US
+states were measured.
 
-__Question:__ Do these levels differ between the states?
+**Question:** Do these levels differ between the states, controlling for the age  (years) of each subject?
 
-Age (years) may be a relevant covariable.
 
 ```{r echo = FALSE}
 d.chol <- read.table(here("5_some_examples/data_examples/ancova/cholesterol/cholesterol.txt"),header=T)
@@ -202,87 +258,93 @@ d.chol <- read.table(here("5_some_examples/data_examples/ancova/cholesterol/chol
  d.chol <- rbind(d.chol,dd2)
 ```
 
-
 ```{r fig.width=4, fig.height=3.5,out.width="5.7cm",fig.align='center',warning=FALSE,message=FALSE, echo = FALSE}
-library(ggplot2)
-ggplot(d.chol,aes(x=state,y=cholesterol)) + geom_boxplot()
+
+ggplot(d.chol, aes(x= state,y= cholesterol)) +
+  geom_boxplot()
 ```
 
 ## 
 
-The scatter plot gives an idea about the model that might be useful here:
+The scatter plot already gives us a clue here...
 
 ```{r, message=FALSE, warning=FALSE, echo = FALSE, fig.align='center',fig.width=5, fig.height=3.5,out.width="6.5cm"}
-library(ggplot2)
-library(dplyr)
-ggplot(d.chol,aes(x=age,y=cholesterol,colour=state)) + geom_point() + geom_smooth(method="lm") + theme_bw()
+
+ggplot(d.chol, aes(x= age,y= cholesterol, col= state)) +
+  geom_point() +
+  geom_smooth(method="lm") +
+  theme_bw()
 ```
 
-$\rightarrow$ We include state, age and the interaction of the two. 
+$\rightarrow$ The slopes look somewhat different, so we include `state`, `age` and the interaction between the two into our model.
 
 ## 
 
 Doing the analysis:
 
 ```{r echo = TRUE}
-r.lm <- lm(cholesterol ~ age*state,data=d.chol)
+r.lm <- lm(cholesterol ~ age * state, data= d.chol)
 anova(r.lm)
 ```
 
-Interpretation?
+What does this mean?
 
 ## 
 
-Compare the results from the previous slide to the estimated coefficients:
+Compare the results from the previous slide to the estimated
+coefficients:
 
 ```{r echo = TRUE}
 r.lm <- lm(cholesterol ~ age*state,data=d.chol)
 summary(r.lm)$coef
 ```
 
-__Note:__ The $p$-values for the `age` coefficient is not the same as in the ANOVA table.
-__Reason:__ `anova()` tests the models against one another in the __order__ specified.
+\
+
+**Note:**
+The strength of the association between `cholesterol` and `age` is less pronounced in Iowa and Nebraska than in Arizona $\rightarrow$ no ANCOVA!
 
 ## 
 
-As always, some model checking is necessary:  
+As always, some model checking is necessary:
 
-\ 
+
 ```{r fig.width=6, fig.height=3.5,out.width="7.5cm", fig.align='center', echo = FALSE, message=FALSE, warning=FALSE}
-require(ggfortify)
-autoplot(r.lm,which=c(1,2),smooth.colour=NA)
+
+autoplot(r.lm,which=c(1,2), smooth.colour=NA)
 ```
 
-\ 
 
 $\rightarrow$ This seems ok.
 
-## An introduction to linear Algebra
+## An introduction to linear algebra
 
-Who has some knowledge of linear Algebra?
+Who remembers linear algebra, perhaps from high school?
 
-__Overview__ 
+**Overview**
 
+```{=tex}
 \begin{itemize}
 
-\item The basics about  
+\item Some basics about  
 \begin{itemize}
 \item vectors \\[1mm]
 \item matrices \\[1mm]
 \item matrix algebra \\[1mm]
 \item matrix multiplication \\[2mm]
 \end{itemize}
-\item Why is linear Algebra useful? \\[2mm]
+\item Why is linear algebra useful? \\[2mm]
 \item What does it have to do with data analysis and statistics?\\[2mm]
-\item Regression equations in matrix notation.
+\item Linear models in matrix notation.
 \end{itemize}
-
+```
 ## Motivation
 
 Why are vectors, matrices and their algebraic rules useful?
 
+```{=tex}
 \begin{itemize}
-\item \textbf{Example 1:} The observations for a covariate ${x}$ or the response ${y}$ for all individuals $1\leq i\leq n$ can be stored in a vector (vectors and matrices are always given in \textbf{bold} letters):
+\item \textbf{Example 1:} The observations for a covariate ${x}$ or the response ${y}$ for all individuals $1\leq i\leq n$ can be stored as a vector:
 \begin{equation*}
 {x}=\left(
 \begin{array}{c}
@@ -302,7 +364,7 @@ y_n
 \right)  \ .
 \end{equation*}
 ~\\[2mm]
-\item \textbf{Example 2:} Covariance matrices for multiple variables. Say we have ${x}^{(1)}$ and ${x}^{(2)}$. The \alert{covariance matrix} is then given as
+\item \textbf{Example 2:} Covariance matrices for multiple variables. Say we have ${x}^{(1)}$ and ${x}^{(2)}$. The \alert{covariance matrix} is then given as:
 \begin{equation*}
 \left(
 \begin{array}{cc}
@@ -313,9 +375,10 @@ Cov({x}^{(1)},{x}^{(2)}) & Var({x}^{(2)}) \\
 \end{equation*}
 ~\\
 \end{itemize}
-
+```
 ## 
 
+```{=tex}
 \begin{itemize}
 \item \textbf{Example 3:} The \alert{data} (e.g.\ of some regression model) can be stored in a \alert{matrix}:
 \begin{equation*}
@@ -339,24 +402,23 @@ This is the so-called \alert{design matrix} with a vector of 1's in the first co
 
 with ${\tilde\beta}$ the vector of regression coefficients and ${e}$ the vector of errors
 \end{itemize}
-
-
+```
 ## 
 
 Why do we discuss this topic in our course?
 
+```{=tex}
 \begin{itemize}
 \item Useful for \alert{compact notation}.\\[2mm]
-\item Enabels you to \alert{understand many statistical texts} (books, research articles) that remain inaccessible otherwise. \\[2mm]
+\item Enables you to \alert{understand many statistical texts} (books, research articles) that remain inaccessible otherwise. \\[2mm]
 \item Useful for \alert{efficient coding}, e.g. in R, which helps to increase speed and to reduce error rates.\\[2mm]
-\item More advanced concepts often rely on linear algebra, e.g. \alert{principal component analysis} (PCA) or \alert{random effects} models.\\[2mm]
+\item More advanced statistical concepts often rely on linear algebra, e.g. \alert{Principal Component Analysis} (PCA) or \alert{random effects} models.\\[2mm]
 \item Is part of a \alert{general education} (Allgemeinbildung) ;-) \\
 \end{itemize}
+```
+## Matrices
 
-## Marices
-
-An $n\times m$ \alert{Matrix} is given as
-\begin{equation*}
+An \alert{$n\times m$} Matrix is given as: \begin{equation*}
 {A} = \left(
 \begin{array}{cccc}
 a_{11} & a_{12} &  ... & a_{1m}\\
@@ -364,11 +426,10 @@ a_{21} & a_{22} & ... & a_{2m} \\
 \vdots & \vdots &  & \vdots \\
 a_{n1} & a_{n2} & ... & a_{nm}
 \end{array}\right) \ ,
-\end{equation*}
-with rows $1 = 1, \ldots , n$ and columns $j=1,\ldots,m$.
+\end{equation*} with rows $1 = 1, \ldots , n$ and columns
+$j=1,\ldots,m$.
 
-\textbf{Quadratic matrix:} $n=m$. Example:
-\begin{equation*}
+\textbf{Square matrix:} $n=m$. Example: \begin{equation*}
 \left(
 \begin{array}{ccc}
 1 & 2 & 3 \\
@@ -380,39 +441,38 @@ with rows $1 = 1, \ldots , n$ and columns $j=1,\ldots,m$.
 
 ## 
 
-\textbf{Symmetric matrix:} $a_{ij} = a_{ji}$. Example:
-\begin{equation*}
+\textbf{Symmetric matrix:} $a_{ij} = a_{ji}$. Example: \begin{equation*}
 \left(
 \begin{array}{ccc}
 1 & 2 & 3 \\
 2 & 3 & 4 \\
 3 & 4 & 5 \\
 \end{array}
-\right) \ .
+\right) 
 \end{equation*}
 
-
-\textbf{The diagonal of a quadratic matrix} is given by $(a_{11},a_{22},\ldots , a_{nn})$. Example: the diagonal of the above matrix is given as
-\begin{equation*}
-(a_{11},a_{22},a_{33}) = (1,3,5) \ .
+\textbf{The diagonal of a square matrix} is given by
+$(a_{11},a_{22},\ldots , a_{nn})$. Example: the diagonal of the above
+matrix is given as \begin{equation*}
+(a_{11},a_{22},a_{33}) = (1,3,5)
 \end{equation*}
 
-
-\textbf{Diagonal matrix:} A matrix that has entries $\neq 0$ \alert{only on the diagonal}. Example:
-\begin{equation*}
+\textbf{Diagonal matrix:} A matrix that has entries $\neq 0$
+\alert{only on the diagonal}. Example: \begin{equation*}
 \left(
 \begin{array}{ccc}
 1 & 0 & 0 \\
 0 & 3 & 0 \\
 0 & 0 & 5 \\
 \end{array}
-\right) \ .
+\right)
 \end{equation*}
 
 ## 
 
-\textbf{Transposing a matrix:} Given a matrix ${A}$. Exchange the rows by the columns and vice versa. This leads to the \alert{transposed matrix} ${A}^\top$:
-\begin{equation*}
+\textbf{Transposing a matrix:} Given a matrix ${A}$. Exchange the rows
+by the columns and vice versa. This leads to the
+\alert{transposed matrix} ${A}^\top$: \begin{equation*}
 {A} = \left(
 \begin{array}{cccc}
 a_{11} & a_{12} &  ... & a_{1m}\\
@@ -426,12 +486,10 @@ a_{11} & a_{21} &  ... & a_{n1}\\
 a_{12} & a_{22} & ... & a_{n2} \\
 \vdots & \vdots &  & \vdots \\
 a_{1m} & a_{2m} & ... & a_{nm}
-\end{array}\right) \ .
+\end{array}\right)
 \end{equation*}
 
-
-Examples (note also the change of dimensions):
-\begin{equation*}
+Examples (note the "flip" in dimensions with non-square matrices): \begin{equation*}
 {A} = \left(
 \begin{array}{cccc}
 1 & 2 & 3 & 4\\
@@ -448,6 +506,7 @@ Examples (note also the change of dimensions):
 \end{array}\right)
 \end{equation*}
 
+```{=tex}
 \begin{equation*}
 {A} = \left(
 \begin{array}{cccc}
@@ -462,9 +521,10 @@ Examples (note also the change of dimensions):
 4 & 8 \\
 \end{array}\right)
 \end{equation*}
-
+```
 ## 
 
+```{=tex}
 \begin{itemize}
 \item Transposing a matrix \alert{twice} leads to the original matrix: $$({A}^\top)^\top = {A} \ .$$ 
 
@@ -472,7 +532,7 @@ Examples (note also the change of dimensions):
 \item When a matrix is \alert{symmetric}, then $${A}^\top = {A} \ .$$
 This is true in particular for diagonal matrices.
 \end{itemize}
-
+```
 ## Vectors
 
 A vector is nothing else than $n$ numbers written in a column:
@@ -504,12 +564,14 @@ b_1  & b_2  & \hdots & b_n
 \right)
 \end{equation*}
 
-\textbf{Note:} By definition (by default), a vector is always a column vector. 
+\textbf{Note:} By definition (by default), a vector is always a column
+vector.
 
 ## Addition and subtraction
 
+```{=tex}
 \begin{itemize}
-\item Adding and subtracting matrices and vectors is only possible when the objects have the \alert{same dimension}.
+\item Adding and subtracting matrices and vectors is only possible when the objects have the \alert{same dimensions}.
 \item Examples: Elementwise addition (or subtraction)
 
 \begin{equation*}
@@ -580,14 +642,15 @@ b_1  & b_2  & \hdots & b_n
 \end{equation*}
 
 \end{itemize}
-
+```
 ## Multiplication by a scalar
 
-Multiplication with a "number" (scalar) is simple: Multiply each element in a vector or a matrix.
+Multiplication with a "number" (scalar) is simple: Multiply each element
+in a vector or a matrix.
 
 Examples:
 
-
+```{=tex}
 \begin{equation*}
 3 \cdot \left(
 \begin{array}{ccc}
@@ -603,8 +666,8 @@ Examples:
 \end{array}
 \right)
 \end{equation*}
-
-
+```
+```{=tex}
 \begin{equation*}
 -2 \cdot \left(
 \begin{array}{c}
@@ -622,15 +685,15 @@ Examples:
 \end{array}
 \right) 
 \end{equation*}
-
+```
 ## Matrix multiplication
 
+```{=tex}
 \colorbox{lightgray}{\begin{minipage}{14cm}
-The multiplication of two matrices ${A}$ and ${B}$ is \alert{defined if}
+The multiplication of two matrices ${A}$ and ${B}$ is \alert{only defined if}
 \begin{center}number of columns in ${A}$ = number of rows in ${B}$.\end{center}
 \end{minipage}}
-
-
+```
 It is easiest to explain matrix multiplication with an example:
 \begin{eqnarray*}
 \left(
@@ -648,9 +711,9 @@ It is easiest to explain matrix multiplication with an example:
 \right) &=& 
 \left(
 \begin{array}{cc}
-2\cdot 3 + 1\cdot 4   &   2\cdot 1 + 1\cdot (-2) \\
-(-1)\cdot 3 + 0\cdot 4 & (-1)\cdot 1 + 0\cdot (-2) \\
-3\cdot 3 + 1\cdot 4 & 3\cdot 1 + 1\cdot (-2)
+~~2\cdot 3 + 1\cdot 4 & ~~2\cdot 1 + 1\cdot -2 \\
+-1\cdot 3 + 0\cdot 4 & -1\cdot 1 + 0\cdot -2 \\
+~~3\cdot 3 + 1\cdot 4 & ~~3\cdot 1 + 1\cdot -2
 \end{array}
 \right) \\
 &=& \left(
@@ -660,29 +723,41 @@ It is easiest to explain matrix multiplication with an example:
 13  & 1
 \end{array}
 \right)
-\end{eqnarray*} 
+\end{eqnarray*}
 
+```{=tex}
 \href{http://matrix.reshish.com/multiplication.php}
 {\beamergotobutton{Matrix multiplication app}}
+```
+**In general:**
+\
+\ An \alert{$n\times m$} Matrix multiplied by an \alert{$m\times p$} Matrix= an \alert{$n\times p$} Matrix
 
 ## Matrix multiplication rules I
 
-Attention: Matrix multiplication does \alert{not} follow the same rules as scalar multiplication!!!
+Matrix multiplication does \alert{not} follow the same rules as scalar multiplication!!
+
+```{=tex}
+\begin{itemize}
+\item The \alert{commutative property} does not hold:
 
 \begin{itemize}
-\item It can happen that ${A}\cdot {B}$ can be calculated, but ${B}\cdot {A}$ is not defined (see example on previous slide). \\[4mm]
-\item In general: ${A}\cdot {B} \neq  {B}\cdot {A}$, even if both are defined.\\[4mm]
-\item It can happen that ${A}\cdot {B} ={0}$ (${0}$ matrix), although both ${A}\neq {0}$ and ${B}\neq {0}$. \\[4mm]
-\item The \alert{Assoziativgesetz holds:} ${A}\cdot ({B} \cdot {C}) = ({A}\cdot {B}) \cdot {C}$. \\[4mm]
-\item The \alert{Distributivgesetz holds:} 
+\item It is possible that ${A}\cdot {B}$ can be calculated, whereas ${B}\cdot {A}$ is not defined (see example on previous slide).
+\item In general, ${A}\cdot {B} \neq {B}\cdot {A}$, even if both are defined.
+\end{itemize}
+
+\item It can happen that ${A}\cdot {B} ={0}$ (a "zero matrix"), although both ${A}\neq {0}$ and ${B}\neq {0}$. \\[4mm]
+\item The \alert{associative property} holds: ${A}\cdot ({B} \cdot {C}) = ({A}\cdot {B}) \cdot {C}$. \\[4mm]
+\item The \alert{distributive property} holds: 
 \begin{eqnarray*}
 {A}\cdot ({B} + {C}) &=& {A}\cdot {B} +   {A}\cdot {C}  \\
 ({A} + {B} ) \cdot {C} &=& {A}\cdot {C} + {B}\cdot {C} 
 \end{eqnarray*}
 \end{itemize}
-
+```
 ## Matrix multiplication rules II
 
+```{=tex}
 \begin{itemize}
 \item Transposing inverts the order: $({A}\cdot {B})^\top = {B}^\top \cdot {A}^\top$.\\[4mm]
 \item The product ${A}\cdot{A}^\top$ is \alert{always symmetric}. \\[4mm]
@@ -704,44 +779,48 @@ If ${a}$ and ${b}$ have the \alert{same length}:
  \sum_i a_i  b_i
 \end{equation*}
 \end{itemize}
-
+```
 ## Short exercise
 
-Given vectors ${a}$ and ${b}$ and matrix ${C}$:
-\begin{equation*}
+Given vectors ${a}$ and ${b}$ and matrix ${C}$: \begin{equation*}
 {a} =\left( \begin{array}{c} 1 \\  -2 \\ 3 \\ 0 \end{array}\right), \quad
 {b} = \left( \begin{array}{c}-2\\  4 \end{array}\right), \quad 
 {C}=\left(\begin{array}{cc} 1 & 0 \\ -1 & 2 \end{array}\right)
 \end{equation*}
 
-
 Calculate, if defined
+
+```{=tex}
 \begin{itemize}
 \item ${a}^\top \cdot {b}$ \\[2mm]
 \item ${a} \cdot {b}^\top$ \\[2mm]
 \item ${C}\cdot {a}$ \\[2mm]
 \item ${C}\cdot {b}$ \\[2mm]
 \end{itemize}
-
+```
 ## The length of a vector
 
-The \alert{length of a vector} ${a}^\top=(a_1,a_2,\ldots, a_n)$ is defined as $||{a}||$ with
-\begin{equation*}
+The \alert{length of a vector} ${a}^\top=(a_1,a_2,\ldots, a_n)$ is
+defined as $||{a}||$ with \begin{equation*}
 ||{a}||^2 = {a}^\top \cdot {a} =   \sum_i a_i^2  \ .
 \end{equation*}
 
-This is basically the \alert{Pythagoras} idea in 2, 3, ... $n$ dimensions.
+This is basically the \alert{Pythagoras} idea in 2, 3, ... $n$
+dimensions.
 
 In 2 dimensions: $||{a}|| = \sqrt{a_1^2 + a_2^2}$:
 
+```{=tex}
 \begin{center}
 \includegraphics[width=4cm]{pictures/pythagoras.png}
 \end{center}
-
+```
 ## Identity matrix (Einheitsmatrix)
 
-The identity matrix (of dimension $m$) is probably the simplest matrix that exists. It has 1's on the diagonal and 0's everywhere else:
+The identity matrix (of dimension $m$) is probably the simplest matrix
+that exists. It has 1's on the diagonal and 0's everywhere else:
 
+```{=tex}
 \begin{equation*}
 {I} = 
 \left( 
@@ -753,32 +832,33 @@ The identity matrix (of dimension $m$) is probably the simplest matrix that exis
 \end{array}
 \right)
 \end{equation*}
-
-
-Multiplication with the identity matrix leaves a $m\times n$ matrix ${A}$ unchanged:
-$${A} \cdot {I}  = {A} \ .$$
-
+```
+Multiplication with the identity matrix leaves a $m\times n$ matrix
+${A}$ unchanged: $${A} \cdot {I}  = {A} \ .$$
 
 ## Inverse matrix
 
+```{=tex}
 \colorbox{lightgray}{\begin{minipage}{14cm}
-Given a quadratic matrix ${A}$ that fulfills
+Given a square matrix ${A}$ that fulfills
 \begin{equation*}
 {B}\cdot {A} = {I} \ ,
 \end{equation*}
 then ${B}$ is called the \alert{inverse} of ${A}$ (and vice versa). One then writes 
 $${B}={A}^{-1} \ .$$
 \end{minipage}}
+```
+Note:
 
-Note: 
+```{=tex}
 \begin{itemize}
 \item In that case it also holds that ${A}\cdot {B} = {I}$.\\[2mm]
 \item Therefore: $\, {A}={B}^{-1} \quad  \Leftrightarrow \quad  {B}={A}^{-1}$ \\
 \end{itemize}
-
-
+```
 ## 
 
+```{=tex}
 \begin{itemize}
 \item The inverse of ${A}$ may \alert{not exist}. If it exists, ${A}$ is \alert{regular}, otherwise \alert{singular}.\\[4mm]
 \item $({A}^{-1})^{-1} = {A}$. \\[4mm]
@@ -789,20 +869,20 @@ $$({A}\cdot {B})^{-1} = {B}^{-1} \cdot {A}^{-1} \ .$$\\
 $$({A}^\top)^{-1} = ({A}^{-1})^\top \ .$$
 Therefore one may also write ${A}^{-\top}$.
 \end{itemize}
-
+```
 ## Linear regression in matrix notation
 
-Linear regression with $n$ data points can be understood as an \alert{equation system with $n$ equations}.
+Linear regression with $n$ data points can be understood as an
+\alert{equation system with $n$ equations}.
 
-Remember example 4 from slide 21: We said that a linear regression model can be written compactly using \alert{matrix multiplication}:
+Remember the example from slide 21/22: We said that a linear regression model can be written compactly using \alert{matrix multiplication}:
 
+```{=tex}
 \begin{equation*}
 {y} = {\tilde{X}} \cdot {\tilde\beta} + {e}  \ .
 \end{equation*}
-
-
-Task: Verify this now, using a model with two variables ${x}^{(1)}$ and ${x}^{(2)}$ and
-\begin{equation*}
+```
+Let's illustrate with a model with two predictor variabless ${x}^{(1)}$ and ${x}^{(2)}$: \begin{equation*}
 {y}=\left(\begin{array}{c} y_1 \\ y_2 \\ \vdots \\ y_n\end{array}\right), \;
 \, 
 {\tilde{X}} = 
@@ -820,25 +900,28 @@ Task: Verify this now, using a model with two variables ${x}^{(1)}$ and ${x}^{(2
 
 ## 
 
-It can be shown (see Stahel 3.4f,g) that \alert{the least-squares estimates} $\hat{\beta}$ can be calculated as
+It can be shown (see Stahel 3.4f,g) that
+\alert{the least-squares estimates} $\hat{\beta}$ are calculated as:
 \begin{equation*}
 \hat{\beta} = (\tilde{{X}}^\top \tilde{{X}})^{-1} \cdot \tilde{{X}}^\top \cdot {y} 
 \end{equation*}
 
-Does this look complicated? 
-\  
+Does this look complicated?
 
-Let's test this in R ....
+Let's have a look in R...
 
 ## Doing linear algebra in R
 
-Let us look at model ${y} = {\tilde{X}} \cdot {\tilde\beta} + {e}$ with coefficients
-\  
+Let us look at model ${y} = {\tilde{X}} \cdot {\tilde\beta} + {e}$ with
+coefficients:
+\
+\
+$\beta_0=10, \beta_1=5, \beta_2=-2$,
+\
+\
+and variables:
 
-$\beta_0=10, \beta_1=5, \beta_2=-2$ and variables  
-
-\ 
-
+```{=tex}
 \begin{center}
 \begin{tabular}{ccc}
 $i$ & $x_i^{(1)}$ & $x_i^{(2)}$ \\
@@ -850,16 +933,16 @@ $i$ & $x_i^{(1)}$ & $x_i^{(2)}$ \\
 5 & 4 & 4\\
 \end{tabular}
 \end{center}
-
-Thus the model is given as 
-\begin{equation*}
+```
+Thus the model is given as \begin{equation*}
 y_i = 10 + 5 x_i^{(1)}  -2 x_i^{(2)} + \epsilon_i \ , \text{for }\quad 1\leq i \leq n \ . 
-\end{equation*}
-Let us start by generating the "true" response, calculated as ${\tilde{X}} {\tilde\beta}$
+\end{equation*} Let's start by generating the "true" response,
+calculated as ${\tilde{X}} {\tilde\beta}$
 
-##
+## 
 
 \small
+
 ```{r echo = TRUE}
 x1 <- c(0,1,2,3,4)
 x2 <- c(4,1,0,1,4)
@@ -871,14 +954,16 @@ t.y
 ```
 
 \normalsize
-Matrix multiplication in R is done by the \alert{`\%*\%`} symbol. 
 
+Matrix multiplication in R is done by the \alert{`\%*\%`} symbol.
 
 ## 
 
-Next, we generate the vector containing the $\epsilon_i \sim N(0,\sigma^2)$ with $\sigma^2=1$:
+Next, we generate the vector containing the
+$\epsilon_i \sim N(0,\sigma^2)$ with $\sigma^2=1$:
 
 \small
+
 ```{r echo = TRUE}
 t.e <- rnorm(5,0,1)
 t.e
@@ -886,20 +971,24 @@ t.e
 
 \normalsize
 
-which we add to the "true" ${y}={\tilde{X}} {\tilde\beta}$ values, to obtain the "observed" values: 
+which we add to the "true" ${y}={\tilde{X}} {\tilde\beta}$ values, to
+obtain the "observed" values:
 
 \small
+
 ```{r echo = TRUE}
 t.Y <- t.y  + t.e
 t.Y
 ```
+
 \normalsize
 
 ## 
 
-It is now possible to fit the model with `lm`: 
+It is now possible to fit the model with `lm`:
 
 \small
+
 ```{r echo = TRUE}
 r.lm <- lm(t.Y ~ x1 + x2)
 summary(r.lm)$coef
@@ -909,35 +998,41 @@ summary(r.lm)$coef
 
 Alternatively, we can use formula
 
+```{=tex}
 \begin{equation*}
 \hat{\beta} = (\tilde{{X}}^\top \tilde{{X}})^{-1}   \tilde{{X}}^\top   {y} 
 \end{equation*}
-
-to find the parameter estimates: 
+```
+to find the parameter estimates:
 
 \small
+
 ```{r echo = TRUE}
 solve(t(Xtilde) %*% Xtilde)  %*%  t(Xtilde) %*% t.Y
 ```
 
 \normalsize
 
+```{=tex}
 \begin{itemize}
 \item \texttt{solve()} calculates the \alert{inverse} (here the inverse of $\tilde{{X}}^\top \tilde{{X}}$).
 \item \texttt{t()} gives the \alert{transposed} (here of $\tilde{{X}}^\top$).\\[4mm]
 \end{itemize}
-
-__Task:__ Do this calculation by yourself and verify for each step that the dimensions of the matrices and the vector are indeed fitting, so that this expression is defined.
+```
+**Task:** Do this calculation by yourself and verify for each step that
+the dimensions of the matrices and the vector are indeed fitting, so
+that this expression is defined.
 
 ## 
 
+```{=tex}
 \begin{center}
 {\bf Appendix}
 \end{center}
-
+```
 ## Some R commands for matrix algebra
 
-Reading vectors and a matrices into R:
+Reading vectors and matrices into R:
 
 \small
 
@@ -955,15 +1050,16 @@ B
 
 ## 
 
-Adding and subtracting: 
+Adding and subtracting:
 
 \small
+
 ```{r echo = TRUE}
 A + B
 A - B
 ```
 
-However, be careful, R sometims does unreasonable things: 
+However, be careful, R sometims does unreasonable things:
 
 ```{r echo = TRUE}
 A + a
@@ -971,25 +1067,27 @@ A + a
 
 What happened here??
 
-##
+## 
 
-Matrix multiplication: 
-\tiny
+Matrix multiplication: \tiny
+
 ```{r echo = TRUE}
 C <- A %*% t(B)
 C
 A%*%a
 ```
+
 \normalsize
 
-Matrix inversion (possible for quadratic matrices only):
+Matrix inversion (possible for square matrices only):
 
 \tiny
+
 ```{r echo = TRUE}
 solve(C)
 C %*% solve(C)
 ```
+
 \normalsize
 
 Why does `solve(A)` or `solve(B)` not work?
-

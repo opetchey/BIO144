@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.12.2)  17 JAN 2023 10:29
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.12.2)  12 MAR 2023 18:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1172,7 +1172,7 @@ Overfull \hbox (5.99998pt too wide) in paragraph at lines 531--531
 [][][][][][][]  
  []
 
-<Bio144_lecture4_files/figure-beamer/unnamed-chunk-12-1.pdf, id=169, 689.57625pt x 434.62375pt>
+<Bio144_lecture4_files/figure-beamer/unnamed-chunk-12-1.pdf, id=168, 689.57625pt x 434.62375pt>
 File: Bio144_lecture4_files/figure-beamer/unnamed-chunk-12-1.pdf Graphic file (type pdf)
 <use Bio144_lecture4_files/figure-beamer/unnamed-chunk-12-1.pdf>
 Package pdftex.def Info: Bio144_lecture4_files/figure-beamer/unnamed-chunk-12-1.pdf  used on input line 531.
@@ -1284,7 +1284,7 @@ Overfull \hbox (2.34512pt too wide) has occurred while \output is active
 [23
 
 ]
-<Bio144_lecture4_files/figure-beamer/unnamed-chunk-16-1.pdf, id=232, 328.22626pt x 285.065pt>
+<Bio144_lecture4_files/figure-beamer/unnamed-chunk-16-1.pdf, id=231, 328.22626pt x 285.065pt>
 File: Bio144_lecture4_files/figure-beamer/unnamed-chunk-16-1.pdf Graphic file (type pdf)
 <use Bio144_lecture4_files/figure-beamer/unnamed-chunk-16-1.pdf>
 Package pdftex.def Info: Bio144_lecture4_files/figure-beamer/unnamed-chunk-16-1.pdf  used on input line 677.
@@ -1322,7 +1322,7 @@ Overfull \hbox (2.34512pt too wide) has occurred while \output is active
 [25
 
 ]
-<Bio144_lecture4_files/figure-beamer/unnamed-chunk-17-1.pdf, id=255, 328.22626pt x 319.1925pt>
+<Bio144_lecture4_files/figure-beamer/unnamed-chunk-17-1.pdf, id=254, 328.22626pt x 319.1925pt>
 File: Bio144_lecture4_files/figure-beamer/unnamed-chunk-17-1.pdf Graphic file (type pdf)
 <use Bio144_lecture4_files/figure-beamer/unnamed-chunk-17-1.pdf>
 Package pdftex.def Info: Bio144_lecture4_files/figure-beamer/unnamed-chunk-17-1.pdf  used on input line 703.
@@ -1351,7 +1351,7 @@ Overfull \hbox (2.34512pt too wide) has occurred while \output is active
 [27
 
 ]
-<Bio144_lecture4_files/figure-beamer/unnamed-chunk-18-1.pdf, id=278, 328.22626pt x 319.1925pt>
+<Bio144_lecture4_files/figure-beamer/unnamed-chunk-18-1.pdf, id=277, 328.22626pt x 319.1925pt>
 File: Bio144_lecture4_files/figure-beamer/unnamed-chunk-18-1.pdf Graphic file (type pdf)
 <use Bio144_lecture4_files/figure-beamer/unnamed-chunk-18-1.pdf>
 Package pdftex.def Info: Bio144_lecture4_files/figure-beamer/unnamed-chunk-18-1.pdf  used on input line 725.
@@ -1392,7 +1392,7 @@ Overfull \hbox (2.34512pt too wide) has occurred while \output is active
 [30
 
 ]
-<Bio144_lecture4_files/figure-beamer/unnamed-chunk-19-1.pdf, id=309, 412.54124pt x 168.63pt>
+<Bio144_lecture4_files/figure-beamer/unnamed-chunk-19-1.pdf, id=308, 412.54124pt x 168.63pt>
 File: Bio144_lecture4_files/figure-beamer/unnamed-chunk-19-1.pdf Graphic file (type pdf)
 <use Bio144_lecture4_files/figure-beamer/unnamed-chunk-19-1.pdf>
 Package pdftex.def Info: Bio144_lecture4_files/figure-beamer/unnamed-chunk-19-1.pdf  used on input line 783.
@@ -1472,7 +1472,7 @@ Overfull \hbox (2.34512pt too wide) has occurred while \output is active
 [36
 
 ]
-<Bio144_lecture4_files/figure-beamer/unnamed-chunk-21-1.pdf, id=360, 428.60126pt x 423.5825pt>
+<Bio144_lecture4_files/figure-beamer/unnamed-chunk-21-1.pdf, id=359, 428.60126pt x 423.5825pt>
 File: Bio144_lecture4_files/figure-beamer/unnamed-chunk-21-1.pdf Graphic file (type pdf)
 <use Bio144_lecture4_files/figure-beamer/unnamed-chunk-21-1.pdf>
 Package pdftex.def Info: Bio144_lecture4_files/figure-beamer/unnamed-chunk-21-1.pdf  used on input line 897.
@@ -1572,7 +1572,7 @@ Overfull \hbox (2.34512pt too wide) has occurred while \output is active
 [42
 
 ]
-<Bio144_lecture4_files/figure-beamer/unnamed-chunk-26-1.pdf, id=412, 245.91875pt x 240.9pt>
+<Bio144_lecture4_files/figure-beamer/unnamed-chunk-26-1.pdf, id=411, 245.91875pt x 240.9pt>
 File: Bio144_lecture4_files/figure-beamer/unnamed-chunk-26-1.pdf Graphic file (type pdf)
 <use Bio144_lecture4_files/figure-beamer/unnamed-chunk-26-1.pdf>
 Package pdftex.def Info: Bio144_lecture4_files/figure-beamer/unnamed-chunk-26-1.pdf  used on input line 1069.
@@ -1598,7 +1598,7 @@ Overfull \hbox (5.99998pt too wide) in paragraph at lines 1092--1092
 [][][][][][][]  
  []
 
-<Bio144_lecture4_files/figure-beamer/unnamed-chunk-27-1.pdf, id=429, 255.95625pt x 233.87375pt>
+<Bio144_lecture4_files/figure-beamer/unnamed-chunk-27-1.pdf, id=428, 255.95625pt x 233.87375pt>
 File: Bio144_lecture4_files/figure-beamer/unnamed-chunk-27-1.pdf Graphic file (type pdf)
 <use Bio144_lecture4_files/figure-beamer/unnamed-chunk-27-1.pdf>
 Package pdftex.def Info: Bio144_lecture4_files/figure-beamer/unnamed-chunk-27-1.pdf  used on input line 1092.
@@ -1656,7 +1656,7 @@ Overfull \hbox (2.34512pt too wide) has occurred while \output is active
 [47
 
 ]
-<Bio144_lecture4_files/figure-beamer/unnamed-chunk-31-1.pdf, id=467, 311.1625pt x 311.1625pt>
+<Bio144_lecture4_files/figure-beamer/unnamed-chunk-31-1.pdf, id=466, 311.1625pt x 311.1625pt>
 File: Bio144_lecture4_files/figure-beamer/unnamed-chunk-31-1.pdf Graphic file (type pdf)
 <use Bio144_lecture4_files/figure-beamer/unnamed-chunk-31-1.pdf>
 Package pdftex.def Info: Bio144_lecture4_files/figure-beamer/unnamed-chunk-31-1.pdf  used on input line 1204.
@@ -1701,12 +1701,9 @@ Overfull \hbox (2.34512pt too wide) has occurred while \output is active
 [50
 
 ]
-\openout4 = `Bio144_lecture4.vrb'.
-
-(./Bio144_lecture4.vrb)
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1301.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1297.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 
 Overfull \hbox (2.34512pt too wide) has occurred while \output is active
@@ -1718,7 +1715,7 @@ Overfull \hbox (2.34512pt too wide) has occurred while \output is active
 ]
 File: images/BIO144_logo.jpeg Graphic file (type jpg)
 <use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1329.
+Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1311.
 (pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
 
 Overfull \hbox (2.34512pt too wide) has occurred while \output is active
@@ -1726,18 +1723,6 @@ Overfull \hbox (2.34512pt too wide) has occurred while \output is active
  []
 
 [52
-
-]
-File: images/BIO144_logo.jpeg Graphic file (type jpg)
-<use images/BIO144_logo.jpeg>
-Package pdftex.def Info: images/BIO144_logo.jpeg  used on input line 1343.
-(pdftex.def)             Requested size: 71.13188pt x 16.71474pt.
-
-Overfull \hbox (2.34512pt too wide) has occurred while \output is active
-[][][][]  
- []
-
-[53
 
 ]
 \tf@nav=\write7
@@ -1757,18 +1742,18 @@ Package rerunfilecheck Info: File `Bio144_lecture4.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 24711 strings out of 476931
- 483636 string characters out of 5824584
- 810124 words of memory out of 5000000
- 45069 multiletter control sequences out of 15000+600000
- 566831 words of font info for 179 fonts, out of 8000000 for 9000
+ 24690 strings out of 476931
+ 483326 string characters out of 5824584
+ 810120 words of memory out of 5000000
+ 45063 multiletter control sequences out of 15000+600000
+ 563239 words of font info for 172 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  99i,15n,104p,1012b,450s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}</Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb></Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi9.pfb></Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss10.pfb></Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss12.pfb></Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss8.pfb></Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss9.pfb></Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmssbo10.pfb></Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb></Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsso10.pfb></Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsso12.pfb></Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsso8.pfb></Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsso9.pfb></Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt8.pfb></Users/owenpetchey/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on Bio144_lecture4.pdf (53 pages, 793461 bytes).
+Output written on Bio144_lecture4.pdf (52 pages, 791411 bytes).
 PDF statistics:
- 661 PDF objects out of 1000 (max. 8388607)
- 510 compressed objects within 6 object streams
- 161 named destinations out of 1000 (max. 500000)
- 57447 words of extra memory for PDF output out of 61914 (max. 10000000)
+ 653 PDF objects out of 1000 (max. 8388607)
+ 503 compressed objects within 6 object streams
+ 158 named destinations out of 1000 (max. 500000)
+ 55399 words of extra memory for PDF output out of 61914 (max. 10000000)
 

@@ -112,11 +112,9 @@ library(dplyr)
 library(ggplot2)
 
 ## Now read in the data, using the read_csv() function. We give it the URL of the published version of the google sheet data.
-the_URL <- "https://docs.google.com/spreadsheets/d/e/2PACX-1vQDI5oZ54MD4Qm_WDydUAWgRYX1PRWMoOWJCSFN5mZJ6Yf-irKq_n6-7CyPsJ13BoEksusqRUBdcgii/pub?gid=133427610&single=true&output=csv"
+## Is updated with 2024 link
+the_URL <- "https://docs.google.com/spreadsheets/d/e/2PACX-1vT0S581py-IDp4bIQnqFFTttQ1JChFHMMjgkYEbSv88nD1yqV1ocNY1eqrLifEPOHxkCZ4q73XeJcTX/pub?gid=1441390006&single=true&output=csv"
 class_RTs <- read_csv(the_URL)
-
-## FS22 csv link: https://docs.google.com/spreadsheets/d/e/2PACX-1vQDI5oZ54MD4Qm_WDydUAWgRYX1PRWMoOWJCSFN5mZJ6Yf-irKq_n6-7CyPsJ13BoEksusqRUBdcgii/pub?gid=133427610&single=true&output=csv
-
 
 
 ## Have a look at the data in R

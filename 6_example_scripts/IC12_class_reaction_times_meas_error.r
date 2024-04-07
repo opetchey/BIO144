@@ -10,7 +10,7 @@ library(ggfortify)
 library(simex)
 
 ## Now read in the data, using the read_csv() function. We give it the URL of the published version of the google sheet data.
-dd_all <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQFgYX1QhF9-UXep22XmPow1ZK5nbFHix9nkQIa0DzqUhPtZRxH1HtY-hsno32zDiuIHiLb2Hvphk1L/pub?gid=1188775314&single=true&output=csv")
+dd_all <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vT0S581py-IDp4bIQnqFFTttQ1JChFHMMjgkYEbSv88nD1yqV1ocNY1eqrLifEPOHxkCZ4q73XeJcTX/pub?gid=1441390006&single=true&output=csv")
 
 ## Must be very careful to get the next line right!!! Really important!!!
 names(dd_all) <- c("Timestamp", "ID", "Gender", "Pref_Reaction_time_1",

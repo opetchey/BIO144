@@ -12,30 +12,34 @@ library(ggfortify)
 library(simex)
 
 ## Now read in the data, using the read_csv() function. We give it the URL of the published version of the google sheet data.
-dd_all <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQFgYX1QhF9-UXep22XmPow1ZK5nbFHix9nkQIa0DzqUhPtZRxH1HtY-hsno32zDiuIHiLb2Hvphk1L/pub?gid=1188775314&single=true&output=csv")
+## 2024 link
+class_RTs <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vT0S581py-IDp4bIQnqFFTttQ1JChFHMMjgkYEbSv88nD1yqV1ocNY1eqrLifEPOHxkCZ4q73XeJcTX/pub?gid=1441390006&single=true&output=csv")
 
 ## Must be very careful to get the next line right!!! Really important!!!
-names(dd_all) <- c("Timestamp", "ID", "Gender", "Pref_Reaction_time_1",
-                   "Verbal_memory_score", "Number_memory_score",
-                   "Visual_memory_score",
-                   "Weight_kgs", "Handed", "Nonpref_Reaction_time_ave",  
-                   "Pref_Reaction_time_2", "Pref_Reaction_time_3",  
-                   "Pref_Reaction_time_4", "Pref_Reaction_time_5",
-                   "Pref_Reaction_time_ave", "Random_number")
+names(class_RTs) <- c("Timestamp", "ID", "Gender", "Weight",
+                      "Handedness", "Pref_Reaction_time_1",
+                      "Pref_Reaction_time_2", "Pref_Reaction_time_3", 
+                      "Pref_Reaction_time_4", "Pref_Reaction_time_5",
+                      "Pref_Reaction_time",
+                      "Nonpref_Reaction_time_ave",
+                      "Verbal_memory_score", "Number_memory_score",
+                      "Visual_memory_score", "Random_number")
 
-dd_filtered <- dd_all %>%
-  filter(Pref_Reaction_time_ave > 50,
-         Pref_Reaction_time_ave < 500)
+dd_filtered <- class_RTs %>%
+  filter(Pref_Reaction_time > 50,
+         Pref_Reaction_time < 500) %>%
+  filter(Nonpref_Reaction_time_ave > 50,
+         Nonpref_Reaction_time_ave < 500)
 
 
-ggplot(dd_filtered, aes(x=Pref_Reaction_time_ave, y=Nonpref_Reaction_time_ave)) +
+ggplot(dd_filtered, aes(x=Pref_Reaction_time, y=Nonpref_Reaction_time_ave)) +
   geom_point()
 
 ## plot the mean of the preferred hand reaction time on the x-axis in black
 ## and one of the individual measures of that also on x-axis.
 ## And plot against nonpreferred-hand reaction time
 ggplot(dd_filtered,
-       aes(x=Pref_Reaction_time_ave,
+       aes(x=Pref_Reaction_time,
            y=Nonpref_Reaction_time_ave)) +
   geom_point(col="blue") +
   #geom_smooth(method="lm",col="blue") +
@@ -104,7 +108,8 @@ library(ggfortify)
 library(simex)
 
 ## Now read in the data, using the read_csv() function. We give it the URL of the published version of the google sheet data.
-the_URL <- "https://docs.google.com/spreadsheets/d/e/2PACX-1vQFgYX1QhF9-UXep22XmPow1ZK5nbFHix9nkQIa0DzqUhPtZRxH1HtY-hsno32zDiuIHiLb2Hvphk1L/pub?gid=1188775314&single=true&output=csv"
+## 2024 link
+the_URL <- "https://docs.google.com/spreadsheets/d/e/2PACX-1vT0S581py-IDp4bIQnqFFTttQ1JChFHMMjgkYEbSv88nD1yqV1ocNY1eqrLifEPOHxkCZ4q73XeJcTX/pub?gid=1441390006&single=true&output=csv"
 class_RTs_all <- read_csv(the_URL)
 
 ## Must be very careful to get the next line right!!! Really important!!!

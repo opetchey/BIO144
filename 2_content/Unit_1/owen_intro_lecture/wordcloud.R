@@ -4,10 +4,12 @@ library(wordcloud)
 library(wordcloud2)
 library(RColorBrewer)
 library(tidytext)
+library(readxl)
 
-words <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vREbywoQ3q6U3ibxnnLL1gDG89cynoGeT6Gdr5Ye40PGaxG-0jlSmMaoEsoVj2jPUaZA3Cd8mQns1LL/pub?gid=459099465&single=true&output=csv") %>%
+words <- read_xlsx("What words would you use to describe a
+high quality data analysis_(1-1).xlsx") %>%
   clean_names() %>%
-  rename(word = see_above) %>%
+  rename(word = what_words_would_you_use_to_describe_a_high_quality_data_analysis) %>%
   group_by(word) %>%
   summarise(freq = n())
 

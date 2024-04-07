@@ -1,7 +1,7 @@
 ---
 title: "Lecture 3: Regression"
 subtitle: "BIO144 Data Analysis in Biology"
-author: "Stephanie Muff & Owen Petchey"
+author: "Stephanie Muff, Owen Petchey & Uriah Daugaard"
 institute: "University of Zurich"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
@@ -108,10 +108,8 @@ We often use linear regression because:
 
 * A linear relationship is mathematically simple.
 * Prior knowledge and observed data suggest it is at least a good starting point.
-
 * Given an \emph{explanatory variable} ($X$) and a \emph{response variable} ($Y$) all points $(x_i,y_i)$, $i= 1,\ldots, n$, on a  straight line follow the equation
 $$y_i = \beta_0 + \beta_1 x_i\ .$$
-
 * $\beta_0$ is the \alert{intercept} - the value of $Y$ when $x_i = 0$
 * $\beta_1$ the \alert{slope} of the line, also known as the regression coefficient of $X$.
 * If $\beta_0=0$ the line goes through the origin $(x,y)=(0,0)$.
@@ -184,7 +182,8 @@ Note: The regression line goes through $E(Y)$.
 
 ## Insights from data simulation
 
-\scriptsize (Simulation are \emph{always} a great way to understand statistics!!)
+<!-- \scriptsize  -->
+(Simulation are \emph{always} a great way to understand statistics!!)
 
 Generate an independent (explanatory) variable __x__ and __two__ samples of a dependent variable __y__ assuming that
 $$y_i = 4 - 2x_i + \epsilon_i \ , \quad \epsilon_i\sim N(0,0.5^2) \ .$$
@@ -349,6 +348,7 @@ The resulting line can be added to the scatterplot:
 
 ```{r echo = FALSE, message=FALSE, warning=FALSE}
 library(reporttools)
+# install.packages("biostatUZH", repos="http://R-Forge.R-project.org")
 library(biostatUZH)
 ```
 
@@ -517,25 +517,28 @@ plot(r.bodyfat,which=3, add.smooth = FALSE)
 
 ## (d) Linearity
 
-With simple regression, we can assess this directly on the graph with fitted line (scroll to an example).
+With simple regression, we can assess this directly on the graph with fitted line <!-- scroll to an example  -->
 
 Even then, it can be useful to look at a graph called the **Tukey-Anscombe plot*. It is a graph of the residuals versus the fitted values.
 
 
-```{r eval = TRUE, message=FALSE, fig.width=5, fig.height=4,warning=FALSE,echo=F,out.width="7cm", fig.align='center'}
+```{r eval = TRUE, message=FALSE, fig.width=5, fig.height=4,warning=FALSE,echo=F,out.width="7cm", fig.align='left'}
 plot(r.bodyfat$fitted,r.bodyfat$residuals,xlab="Fitted", ylab="Residuals")
 abline(h=0,lty=2)
-
 ```
 
+\vspace*{-6pt}
 
-It is sometimes useful to enrich the TA-plot by adding a "running mean" or a "smoothed mean", which can give hints on the trend of the residuals. However, generally we recommend to \alert{not} add a smoothing line, because it may bias our view on the plot.
+\begingroup
+\fontsize{8}{8}\selectfont
+It can be useful to add a "smoothed mean" to the TA-plot, which can give hints on the trend of the residuals.
+However, generally we recommend to \alert{not} add a smoothing line, because it may bias our view on the plot.
+\endgroup
 
+<!-- But: The dependency is not necessarily on the fitted values ($x$-axis of TA plot). Ideas:   -->
 
-But: The dependency is not necessarily on the fitted values ($x$-axis of TA plot). Ideas:  
-
-* Plot residuals in dependency of time (if available) or sequence of obervations.
-* Plot residuals against the explanatory variable.
+<!-- * Plot residuals in dependency of time (if available) or sequence of obervations. -->
+<!-- * Plot residuals against the explanatory variable. -->
 
 
 ## (e) No outliers
@@ -726,15 +729,10 @@ These transformations can also be applied on explanatory variables!
 What do we do when we identify the presence of one or more outliers?
 
 1. Start by checking the "correctness" of the data. Is there a typo or a digital point that was shifted by mistake? Check both the response and explanatory variables.
-
 2. If not, ask whether the model has been mis-specified. Do reasonable transformations of the response and/or explanatory variables eliminate the outlier? Do the residuals have a distribution with a long tail (which makes it more likely that extreme observations occur)?
-
 3. Sometimes, an outlier may be the most interesting observation in a dataset!
-
 4. Consider that outliers can also occur by chance!
-
 5. Was the outlier created by some interesting but different process from the other data points.
-
 6. Only if you decide to report the results of both scenario can you check if inclusion/exclusion changes the qualitative conclusion, and by how much it changes the quantitative conclusion.
 
 
