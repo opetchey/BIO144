@@ -1,0 +1,105 @@
+Slide 1:
+Welcome everyone to today's lecture on ANCOVA and Linear Algebra. As you may have guessed, my name is neither Stefanie nor Owen, so I must be that third person whose name is on the slide behind me. I'm a senior lecturer in the DEA, and also work as a biostatistician at the Kantonsspital St Gallen, where I help medical doctors make sense of their patient data. My own research here at uni, in contrast, focuses on the behaviour of non-human primates in their natural environment, however, particularly their spatial ecology as well as how cooperation in the context of between-group conflict is regulated on ecological time scales, and what evolutionary mechanisms might be at work to maintain it in a population. I've taught a number of statistics courses in the past, but this is the first time I'm part of BIO 144, so I'm probably as curious as you all are to find out how things will go today.
+
+As I understood from Owen, he typically starts off by reminding you that the slides on OLAT were only updated over lunch, so if you already downloaded them earlier, please do so again to make sure you have the most recent version on your own machines. I'm also going to emulate Owen's lecture style to some extent, in that I'll be using my tablet, and make notes on the slides as we go along. These annotated slides will be uploaded as well to OLAT, probably later today.
+
+Slide 2:
+So what's on the menu today? As mentioned two main topics: the first is very much a logical extension of what you heard last week. The second topic, is perhaps a rather exotic one, and to be honest, I'm equally impressed as surprised that this is part of an introductory statistics course for biologists.
+
+Slide 3:
+As always, if you want more in-depth background information on today's topics, you can have a look at the following paragraph's in the "Beckerman and Petchey" and "Stahel" books, respectively.
+
+Slide 4:
+Before introducing you tho the concept of an ANCOVA, let's first remind ourselves again of what ANOVA entailed.
+ANOVA is an omnibus test: it tells you that group means are different, it can't tell you which groups are different.
+In order to establish this, you saw you had to delve a little deeper, and either follow up the intial F-test with post-hoc pairwise comparisons, correcting your p-values for the fact that you're performing multiple tests using the same data, or if you can, specify specific hypothesis a priori by setting contrasts in your linear model.
+
+Slide 5:
+That's all great, but perhaps also a little abstract, so let's revisit a concrete example you encountered last week.
+Heteroscedasticity in residual plots => log-transform
+
+Slide 6:
+Explain numbers: df, SS, MS, F; read bottom-up
+
+Slide 8:
+In classical ANCOVA, the continuous covariate is considered to be a nuisance variable, something we're not interested in per se, but for which we want to control our analysis
+
+Slide 9:
+Identifiability: to make sure that a unique set of parameters can be estimated, a categorical variable with m levels is represented by m -1 dummy variables
+
+Slide 11:
+p-values don't account for the fact that we use the same data multiple times!
+
+Slide 17:
+Read these tables "bottom-up": don't interpret p-values for main effects in the presence of a significant interaction!
+
+Slide 18:
+Again: read bottom-up and don't interpret p-values for main effects!
+
+
+---
+
+
+Slide 22:
+Draw n rows and 3 columns on here, compare to datasheet, e.g. in Excel
+
+Slide 23:
+Allgemeinausbildung... maybe more relevant 20 yrs ago, when I was sitting where you are now, but nowadays I personally think computer skills are much more important than algebraic skills... Still, for a more thorough understanding of how linear models work, a basic idea about matrix algebra is useful
+
+Slide 25:
+To illustrate symmetry, draw diagonal + bidirectional arrows
+Diagonal matrix: var-cov matrix like this implies all predictor variables are perfectly independent => ideal (and extremely unlikely) scenario!
+
+Slide 26:
+Matrix manipulations
+In square matrices, we're "flipping" across the diagonal, in non-square matrices, the dimensions of the matrix "flip"
+
+Slide 28:
+Vector is a n x 1 matrix, transposing results in a 1 x n matrix
+
+Slide 29:
+Additional matrix manipulations
+
+Slide 30
+Scalar is a 1 x 1 Matrix
+
+Slide 31:
+Now, things get a little more tricky!
+Draw "sausages" around first row and first column and around the corresponding value in the outcome matrix, another sausage around third row second column
+
+Slide 32:
+Some at first perhaps, counterintuitive properties!
+
+Slide 33:
+A Scalar is the outcome of the multiplication of a row vector and vector of equal length
+e.g. 1 x m . m x 1   = 1 x 1:
+ (1, 2, 3) . (4|5|6) = 32
+
+Slide 34:
+1: not possible
+2: 4 x 2 outcome: (-2|4|-6|0 & 4|-8|12|0)
+3: not possible
+4: 2 x 1 outcome: (-2|10)
+
+Slide 35:
+||a|| is the magnitude of vector a, which is a scalar that expresses the length of vector a
+
+Slide 38:
+Okay, what does all this have to do with linear models?
+
+Slide 39:
+We have a vector of observations on 1 outcome variable that we want to express as a function of a model design matrix, a matrix with nrows equal to y, and n columns equal to the number of predictor variables + 1 -for the intercept-, multiplied by a vector of parameters that minimizes the (squared) errors associated with each observation.
+
+Slide 40:
+Does this look complicated?
+I definitely think so: I've got a biologists brain, whereas Stefanie, who made these slides, has a much srronger mathematical background than I do!
+
+Slide 41:
+Let's see whether we can learn by doing then
+
+Slide 42:
+t.y the true values of y, assuming we measured x without any measurment errors, and that the vector of betas is exactly correct as well
+
+Slide 43:
+Of course, biological systems are always messy, so to reflect what we may observe, we can back-engineer the observed values by adding some inevitable sampling error to them
+
