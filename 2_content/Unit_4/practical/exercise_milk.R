@@ -2,7 +2,6 @@
 rm(list=ls())
 
 ## load some libraries
-library(rethinking)
 library(tidyverse)
 library(ggfortify)
 library(cowplot)
