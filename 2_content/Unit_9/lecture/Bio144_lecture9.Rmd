@@ -113,7 +113,7 @@ significance testing (1920s!). Issues:
 ## 
 
 **Note**: R.A. Fisher, the "inventor" of the $p$-value (1920s) didn't
-ingtend the $p$-value to be used in the way it is today (which is: doing
+intend the $p$-value to be used in the way it is today (which is: doing
 a single experiment and use $p<0.05$ to arrive at a conclusion)!
 
 From Goodman (2016):\
@@ -303,12 +303,13 @@ But: The level of significance must also depend on the context!
 
 A suggestion from 2017 by 72 authors in the field:
 
+```{=tex}
 \begin{center}
 
 \includegraphics[width=10cm]{pictures/benjamin.png}
 
 \end{center}
-
+```
 \tiny (Benjamin et al., 2017, Nature Human Behaviour)
 
 \
@@ -716,9 +717,9 @@ cause-and-effect hypothesis and none can be required $sina~qua~non$."
 ```
 \
 
-However, these criteria are perhaps a little outdated by now, and the
-study of causality and causal inference from statistical models is a
-very active field of current research.
+However, these criteria are perhaps a little dated by now, and the study
+of causality and causal inference from statistical models is a very
+active field of current research.
 
 ## Experimental vs. observational studies
 
