@@ -3,7 +3,7 @@ title: "Lecture 12: Measurement Error"
 subtitle: "BIO144 Data Analysis in Biology"
 author: "Owen Petchey, Stephanie Muff & Erik Willems"
 institute: "University of Zurich"
-date: "22 May, 2023"
+date: "27 May, 2024"
 output:
   beamer_presentation:
     includes:
@@ -13,6 +13,15 @@ classoption: "aspectratio=169"
 
 ```{r setup, include=FALSE, echo = FALSE, message=FALSE, warning=FALSE}
 source(here::here("2_content/beamer_stuff/preamble.r"))
+```
+
+## A request from your TA's
+
+"Help us help you... (even?) better next year!"
+\
+
+```{r out.width='40%', fig.align='center', echo=FALSE}
+knitr::include_graphics("images/qr-code.png")
 ```
 
 ## Overview
