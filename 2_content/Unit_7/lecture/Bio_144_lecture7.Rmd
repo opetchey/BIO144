@@ -3,7 +3,7 @@ title: "Lecture 7: ANCOVA, short introduction to Linear Algebra"
 subtitle: "BIO144 Data Analysis in Biology"
 author: "Stefanie Muff, Owen Petchey and Erik Willems"
 institute: "University of Zurich"
-date: "03 April, 2023"
+date: "08 April, 2024"
 output:
   beamer_presentation:
     includes:

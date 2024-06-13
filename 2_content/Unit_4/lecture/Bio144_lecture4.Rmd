@@ -1,7 +1,7 @@
 ---
 title: "Lecture 4: Regression (continued) and multiple regression"
 subtitle: "BIO144 Data Analysis in Biology"
-author: "Stephanie Muff & Owen Petchey"
+author: "Stephanie Muff, Owen Petchey & Uriah Daugaard"
 institute: "University of Zurich"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
