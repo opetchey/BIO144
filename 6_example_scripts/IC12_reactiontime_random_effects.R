@@ -28,7 +28,8 @@ library(lme4)
 
 ## get the correct url for this years reaction time data
 ## get it from your week 1 practical script
-the_url_for_this_years_reaction_time_google_sheet <- "put the url inside these brackets"
+## the following currently has the 2024 dataset link
+the_url_for_this_years_reaction_time_google_sheet <- "https://docs.google.com/spreadsheets/d/e/2PACX-1vT0S581py-IDp4bIQnqFFTttQ1JChFHMMjgkYEbSv88nD1yqV1ocNY1eqrLifEPOHxkCZ4q73XeJcTX/pub?gid=1441390006&single=true&output=csv"
 
 ## read in the data
 class_RTs <- read_csv(the_url_for_this_years_reaction_time_google_sheet)
@@ -39,13 +40,14 @@ class_RTs <- read_csv(the_url_for_this_years_reaction_time_google_sheet)
 #Solution: Gather all five measurements for one individual into one column.
 
 ## Must be very careful to get the next line right!!! Really important!!!
-names(class_RTs) <- c("Timestamp", "ID", "Gender", "Pref_Reaction_time_1",
-                      "Verbal_memory_score", "Number_memory_score",
-                      "Visual_memory_score",
-                      "Weight_kgs", "Handed", "Nonpref_Reactiontime",  
+names(class_RTs) <- c("Timestamp", "ID", "Gender", 
+                      "Weight_kgs", "Handed", "Pref_Reaction_time_1",  
                       "Pref_Reaction_time_2", "Pref_Reaction_time_3",  
                       "Pref_Reaction_time_4", "Pref_Reaction_time_5",
-                      "Pref_Reactiontime", "Random_number")
+                      "Pref_Reactiontime_ave",
+                      "Nonpref_Reactiontime_ave",
+                      "Verbal_memory_score", "Number_memory_score",
+                      "Visual_memory_score", "Random_number")
 
 #Removing columns
 ddnew <- select(class_RTs, -Timestamp,
@@ -58,7 +60,7 @@ ddnew <- select(class_RTs, -Timestamp,
 gathered_dd <- gather(class_RTs,
                       key = 'measurement',
                       value = 'react_time',
-                      c('Pref_Reactiontime',  #key stands for the columns that are now put into one, later you can group them and use a legend
+                      c('Pref_Reaction_time_1',  #key stands for the columns that are now put into one, later you can group them and use a legend
                         'Pref_Reaction_time_2',
                         'Pref_Reaction_time_3',
                         'Pref_Reaction_time_4',
@@ -116,7 +118,7 @@ anova(m1)
 m2 <- lm(react_time ~  Gender, data = gathered_dd)
 autoplot(m2)
 anova(m2)
-## very strong evidence of sex difference (in 2020)
+## strong evidence of sex difference (in 2024)
 
 
 # Taking variation into account within individuals:
