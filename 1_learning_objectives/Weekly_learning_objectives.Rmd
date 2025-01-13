@@ -12,7 +12,7 @@ output:
 
 # Document validity
 
-* Valid only for FS2023
+* Valid only for FS2025
 
 # Overarching learning objectives {-}
 

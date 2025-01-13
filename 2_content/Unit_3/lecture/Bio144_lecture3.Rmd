@@ -96,7 +96,7 @@ ggplot(d.bodyfat,aes(x=bmi,y=bodyfat)) + geom_point() +
 Happy? Not quite? There are many questions we may want to answer:
 
 * What is a good mathematical representation of the relationship?
-* Is the relationship different from what we would expect by change?
+* Is the relationship different from what we would expect by chance?
 * How good is the mathematical representation?
 * How much uncertainty is there in any predictions?
 
@@ -262,10 +262,11 @@ segments(x[11],y[11],(y[11]-4)/(-2),y[11],col=2,lwd=2)
 
 ## Least squares
 
-For multiple reasons (theoretical aspects and mathematical convenience), the parameters are estimated using the \alert{least squares} approach. In this, yet something else is minimized:
+For multiple reasons (theoretical aspects and mathematical convenience), the parameters are estimated using the **least squares** approach. In this, yet something else is minimized:
 
-\colorbox{lightgray}{\begin{minipage}{14cm}
-The parameters $\beta_0$ and $\beta_1$ are estimated such that the sum of \alert{squared vertical distances} (sum of squared residuals)
+The parameters $\beta_0$ and $\beta_1$ are estimated such that the **sum of squared vertical distances** (sum of squared residuals)
+
+SSE means **S**um of **S**quared **E**rrors.
 
 $$SSE = \sum_{i=1}^n e_i^2 \ , \qquad \text{where} \quad e_i = y_i - \underbrace{(\beta_0 + \beta_1 x_i)}_{=\hat{y}_i} $$
 
@@ -373,7 +374,7 @@ ggplot(d.bodyfat,aes(bmi,bodyfat)) + geom_point() + geom_smooth(method='lm',se=F
 \end{center}
 
 
-## What assumptions to we make?
+## What assumptions do we make?
 
 The main assumption in linear regression is that the residuals follow a $N(0,\sigma^2)$ distribution.
 
