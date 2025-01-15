@@ -1526,6 +1526,7 @@ if (window.hljs) {
 
 
 
+
 <style type="text/css">
 .main-container {
 max-width: 940px;
@@ -1547,6 +1548,9 @@ outline: none;
 summary {
 display: list-item;
 }
+details > summary > p:only-child {
+display: inline;
+}
 pre code {
 padding: 0;
 }
@@ -1565,23 +1569,17 @@ overflow-y: auto;
 border: 1px solid #ddd;
 border-radius: 4px;
 }
-.tabset-dropdown > .nav-tabs > li.active:before {
-content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+content: "\e259";
 font-family: 'Glyphicons Halflings';
 display: inline-block;
 padding: 10px;
 border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-content: "";
-border: none;
-}
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-content: "";
+content: "\e258";
 font-family: 'Glyphicons Halflings';
-display: inline-block;
-padding: 10px;
-border-right: 1px solid #ddd;
+border: none;
 }
 .tabset-dropdown > .nav-tabs > li.active {
 display: block;
@@ -1625,7 +1623,7 @@ display: none;
 <h1 class="title toc-ignore">Weekly Learning Objectives - BIO144, Data
 Analysis for Biologists</h1>
 <h4 class="author">Owen Petchey &amp; Stephanie Muff</h4>
-<h4 class="date">20 February, 2023</h4>
+<h4 class="date">15 January, 2025</h4>
 
 </div>
 
@@ -1664,7 +1662,7 @@ outlook</a></li>
 <div id="document-validity" class="section level1">
 <h1>Document validity</h1>
 <ul>
-<li>Valid only for FS2023</li>
+<li>Valid only for FS2025</li>
 </ul>
 </div>
 <div id="overarching-learning-objectives" class="section level1 unnumbered">
@@ -1719,8 +1717,6 @@ correlation.</li>
 <li>Relate the difference between statistical and biological
 significance.</li>
 </ul>
-<p>(Please note that these skills are assessed in the Graded Assessments
-1 and 2)</p>
 </div>
 <div id="unit-3---linear-regression-part-1" class="section level1 unnumbered">
 <h1 class="unnumbered">Unit 3 - Linear Regression Part 1</h1>
@@ -1738,8 +1734,6 @@ regression.</li>
 <li>Get fitted values, residuals, and arbitrary predictions of a linear
 regression in R / RStudio.</li>
 </ul>
-<p>(Please note that these skills are assessed in the Graded Assessment
-3)</p>
 </div>
 <div id="unit-4---linear-regression-part-2-and-multiple-regresion" class="section level1 unnumbered">
 <h1 class="unnumbered">Unit 4 - Linear regression part 2, and multiple
@@ -1778,8 +1772,6 @@ models with multiple predictor variables.</li>
 <li>Start to recognise the implications of having correlated predictor
 variables.</li>
 </ul>
-<p>(Please note that these skills are assessed in the Graded Assessment
-4)</p>
 </div>
 <div id="unit-5---binarycategorical-explanatory-variables-and-interactions" class="section level1 unnumbered">
 <h1 class="unnumbered">Unit 5 - Binary/categorical explanatory
@@ -1811,8 +1803,6 @@ leverage plot).</li>
 <li>Recognise and fix two problems: non-normal residuals, and
 outliers.</li>
 </ul>
-<p>(Please note that these skills are assessed in the Graded Assessment
-5)</p>
 </div>
 <div id="unit-6---anova" class="section level1 unnumbered">
 <h1 class="unnumbered">Unit 6 - ANOVA</h1>
@@ -1834,8 +1824,6 @@ regression, and all the models you’ve seen so far.</li>
 <li>In particular, recognise that the model checking strategy is the
 same as for linear models from the previous weeks.</li>
 </ul>
-<p>(Please note that these skills are assessed in the Graded Assessment
-6)</p>
 </div>
 <div id="unit-7---ancova-matrix-alegbra" class="section level1 unnumbered">
 <h1 class="unnumbered">Unit 7 - ANCOVA &amp; Matrix alegbra</h1>
@@ -1856,8 +1844,6 @@ inversion, transposing etc)</li>
 notation.</li>
 <li>Do some linear algebra in R.</li>
 </ul>
-<p>(Please note that these skills are assessed in the Graded Assessment
-7)</p>
 </div>
 <div id="unit-8---model-selection" class="section level1 unnumbered">
 <h1 class="unnumbered">Unit 8 - Model selection</h1>
@@ -1878,8 +1864,6 @@ recommended for explanatory models.</li>
 <li>Recognise the importance of a priori hypotheses for escaping the
 nightmare that is model selection in explanatory models.</li>
 </ul>
-<p>(Please note that these skills are assessed in the Graded Assessment
-8)</p>
 </div>
 <div id="unit-9---interpretation-causality-and-cautionary-notes" class="section level1 unnumbered">
 <h1 class="unnumbered">Unit 9 - Interpretation, causality, and
@@ -1904,8 +1888,6 @@ variables, including via LMG.</li>
 <li>Describe the difference between observational and experimental
 studies, and its importance for inference.</li>
 </ul>
-<p>(Please note that these skills are assessed in the Graded Assessment
-9)</p>
 </div>
 <div id="unit-10---analysing-count-data" class="section level1 unnumbered">
 <h1 class="unnumbered">Unit 10 - Analysing count data</h1>
@@ -1934,8 +1916,6 @@ RStudio.</li>
 <li>Understand and check for a common problem with count data:
 overdispersion.</li>
 </ul>
-<p>(Please note that these skills are assessed in the Graded Assessment
-10)</p>
 </div>
 <div id="unit-11---analysing-binary-data" class="section level1 unnumbered">
 <h1 class="unnumbered">Unit 11 - Analysing binary data</h1>
@@ -1965,8 +1945,6 @@ RStudio.</li>
 function).</li>
 <li>Understand and check for overdispersion.</li>
 </ul>
-<p>(Please note that these skills are assessed in the Graded Assessment
-11)</p>
 </div>
 <div id="unit-12---measurement-error-repeated-measures-and-random-effects-recap-and-outlook" class="section level1 unnumbered">
 <h1 class="unnumbered">Unit 12 - Measurement error; repeated measures
@@ -2016,8 +1994,6 @@ classification</li>
 <li>Randomisation based methods</li>
 </ul></li>
 </ul>
-<p>(Please note that these skills are assessed in the Graded Assessment
-12)</p>
 </div>
 
 

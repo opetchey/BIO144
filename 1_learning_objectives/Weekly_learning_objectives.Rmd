@@ -3,10 +3,10 @@ title: "Weekly Learning Objectives - BIO144, Data Analysis for Biologists"
 author: "Owen Petchey & Stephanie Muff"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
-  pdf_document:
-    toc: yes
   html_document:
     df_print: paged
+    toc: yes
+  pdf_document:
     toc: yes
 ---
 
@@ -52,8 +52,6 @@ By the end of this week you will be able to:
 * Make simple graphs using the ggplot function.
 * Relate the difference between statistical and biological significance.
 
-(Please note that these skills are assessed in the Graded Assessments 1 and 2)
-
 # Unit 3 - Linear Regression Part 1 {-}
 
 By the end of this week you will be able to:
@@ -66,9 +64,6 @@ By the end of this week you will be able to:
 * Describe the assumptions of linear regression.
 * Evaluation the if the assumptions of are adequately met.
 * Get fitted values, residuals, and arbitrary predictions of a linear regression in R / RStudio.
-
-(Please note that these skills are assessed in the Graded Assessment 3)
-
 
 # Unit 4 - Linear regression part 2, and multiple regresion {-}
 
@@ -94,11 +89,7 @@ Multiple regression:
 * In particular, interpret the R model `summary` table for models with multiple predictor variables.
 * Start to recognise the implications of having correlated predictor variables.
 
-(Please note that these skills are assessed in the Graded Assessment 4)
-
-
 # Unit 5 - Binary/categorical explanatory variables, and interactions {-}
-
 
 * Relate what are binary and factor type predictor / explanatory variables (sometimes called covariates).
 * Start to do all the above for models with binary and factor covariates.
@@ -111,10 +102,6 @@ Multiple regression:
 * In particular, calculated degrees of freedom for error with interacting predictor variables.
 * Use the four common graphs for assessing validity of model assumptions (i.e. Tukey-Anscombe plot, QQ-plot, scale-location plot, and leverage plot).
 * Recognise and fix two problems: non-normal residuals, and outliers.
-
-
-(Please note that these skills are assessed in the Graded Assessment 5)
-
 
 # Unit 6 - ANOVA {-}
 
@@ -129,10 +116,6 @@ By the end of this week you will be able to:
 * Recognise that ANOVA is just another linear model, as is linear regression, and all the models you've seen so far.
 * In particular, recognise that the model checking strategy is the same as for linear models from the previous weeks. 
 
-
-(Please note that these skills are assessed in the Graded Assessment 6)
-
-
 # Unit 7 - ANCOVA & Matrix alegbra {-}
 
 By the end of this week you will be able to:
@@ -146,9 +129,6 @@ By the end of this week you will be able to:
 * Be able to formulate a linear regression model in matrix notation.
 * Do some linear algebra in R.
 
-(Please note that these skills are assessed in the Graded Assessment 7)
-
-
 # Unit 8 - Model selection {-}
 
 By the end of this week you will be able to:
@@ -161,9 +141,6 @@ By the end of this week you will be able to:
 * Relate the difference between explanatory and predictive models.
 * Understand why automatic model selection procedures are not recommended for explanatory models.
 * Recognise the importance of a priori hypotheses for escaping the nightmare that is model selection in explanatory models.
-
-(Please note that these skills are assessed in the Graded Assessment 8)
-
 
 # Unit 9 - Interpretation, causality, and cautionary notes {-}
 
@@ -181,9 +158,6 @@ By the end of this week you will be able to:
 * Recall the nine Bradford-Hill-Criteria for causal inference.
 * Describe the difference between observational and experimental studies, and its importance for inference.
 
-(Please note that these skills are assessed in the Graded Assessment 9)
-
-
 # Unit 10 - Analysing count data {-}
 
 By the end of this week you will be able to:
@@ -199,10 +173,6 @@ By the end of this week you will be able to:
 * Understand and perform Chi-squared-tests using the anova function.
 * Say what is different about the model summary table produced by R / RStudio.
 * Understand and check for a common problem with count data: overdispersion.
-
-(Please note that these skills are assessed in the Graded Assessment 10)
-
-
 
 # Unit 11 - Analysing binary data {-}
 
@@ -221,11 +191,6 @@ By the end of this week you will be able to:
 * Say what is different about the model summary table produced by R / RStudio.
 * Understand and perform an Chi-squared-test (using the anova function).
 * Understand and check for overdispersion.
-
-
-(Please note that these skills are assessed in the Graded Assessment 11)
-
-
 
 # Unit 12 - Measurement error; repeated measures and random effects; recap and outlook {-}
 
@@ -259,7 +224,4 @@ By the end of this week you will be able to:
     + Spatial analyses / statistics
     + Power analysis
     + Randomisation based methods
-
-(Please note that these skills are assessed in the Graded Assessment 12)
-
 
