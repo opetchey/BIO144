@@ -16,14 +16,15 @@ library(ggplot2)
 library(skimr)
 #######################################################
 
+## get the dataset from here:
+## https://lms.uzh.ch/url/RepositoryEntry/17654940136/CourseFolder/0/path%3D~~human%5Fbenchmark%5Fdata%5FFS25%2Ecsv/0
 
 #######################################################
 ## Now read in the data, using the read_csv() function.
-## First we should assign, using the assignment arrow,
-## the URL of the published version of the google sheet data into an object.
-the_URL <- "https://docs.google.com/spreadsheets/d/e/2PACX-1vTl3AnTRihwmiBfyKukIecYH9qMI507JFriFszHLHO8c6WfLfIQx0nnWIHkMXQO-vvcWkg5Y-u17JkR/pub?gid=1774295787&single=true&output=csv"
-## then use the read_csv function to read in the data from that URL
-class_RTs <- read_csv(the_URL)
+## Use the read_csv function to read in the data
+## Note that you will need to put the data in the same folder as this script, then
+## open RStudio by double clicking on the script file.
+class_RTs <- read_csv("~/Desktop/human_benchmark_data_FS25.csv")
 #######################################################
 
 ## DO NOT USE read.csv above!!!
