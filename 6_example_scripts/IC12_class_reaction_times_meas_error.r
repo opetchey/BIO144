@@ -10,10 +10,10 @@ library(ggfortify)
 library(simex)
 
 ## Now read in the data, using the read_csv() function. We give it the URL of the published version of the google sheet data.
-dd_all <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vT0S581py-IDp4bIQnqFFTttQ1JChFHMMjgkYEbSv88nD1yqV1ocNY1eqrLifEPOHxkCZ4q73XeJcTX/pub?gid=1441390006&single=true&output=csv")
+dd_all <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vTl3AnTRihwmiBfyKukIecYH9qMI507JFriFszHLHO8c6WfLfIQx0nnWIHkMXQO-vvcWkg5Y-u17JkR/pub?output=csv")
 
 ## Must be very careful to get the next line right!!! Really important!!!
-names(dd_all) <- c("Timestamp", "ID", "Gender", "Pref_Reaction_time_1",
+names(dd_all) <- c("Timestamp", "Gender", "Pref_Reaction_time_1",
                "Verbal_memory_score", "Number_memory_score",
                "Visual_memory_score",
                "Weight_kgs", "Handed", "Nonpref_Reaction_time_ave",  
@@ -72,7 +72,7 @@ ggplot(dd_filtered,aes(x=Pref_Reaction_time_ave,y=Nonpref_Reaction_time_ave)) +
   geom_point()  +
   xlim(0,700) +
   ylim(0,700) +
-  geom_abline( slope=r.lm$coefficients[2], intercept=r.lm$coefficients[1]) +
+  geom_abline( slope=lm_aves$coefficients[2], intercept=lm_aves$coefficients[1]) +
   geom_abline( slope=r.simex$coefficients[2], intercept=r.simex$coefficients[1],colour="green",size=1.5)
 
 

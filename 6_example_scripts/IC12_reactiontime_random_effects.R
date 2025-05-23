@@ -29,18 +29,16 @@ library(lme4)
 ## get the correct url for this years reaction time data
 ## get it from your week 1 practical script
 ## the following currently has the 2024 dataset link
-the_url_for_this_years_reaction_time_google_sheet <- "https://docs.google.com/spreadsheets/d/e/2PACX-1vT0S581py-IDp4bIQnqFFTttQ1JChFHMMjgkYEbSv88nD1yqV1ocNY1eqrLifEPOHxkCZ4q73XeJcTX/pub?gid=1441390006&single=true&output=csv"
 
 ## read in the data
-class_RTs <- read_csv(the_url_for_this_years_reaction_time_google_sheet)
-
+class_RTs <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vTl3AnTRihwmiBfyKukIecYH9qMI507JFriFszHLHO8c6WfLfIQx0nnWIHkMXQO-vvcWkg5Y-u17JkR/pub?output=csv")
 
 #Week 9 Tidying data:
 #Problem: For one individual you have: Reaction time for preferred hand you've got 5 measurements!
 #Solution: Gather all five measurements for one individual into one column.
 
 ## Must be very careful to get the next line right!!! Really important!!!
-names(class_RTs) <- c("Timestamp", "ID", "Gender", 
+names(class_RTs) <- c("Timestamp", "Gender", 
                       "Weight_kgs", "Handed", "Pref_Reaction_time_1",  
                       "Pref_Reaction_time_2", "Pref_Reaction_time_3",  
                       "Pref_Reaction_time_4", "Pref_Reaction_time_5",
@@ -48,6 +46,8 @@ names(class_RTs) <- c("Timestamp", "ID", "Gender",
                       "Nonpref_Reactiontime_ave",
                       "Verbal_memory_score", "Number_memory_score",
                       "Visual_memory_score", "Random_number")
+class_RTs <- class_RTs |> 
+  mutate(ID = as.factor(row_number())) #create ID column
 
 #Removing columns
 ddnew <- select(class_RTs, -Timestamp,
@@ -90,7 +90,7 @@ ggplot(gathered_dd, aes(x = ID, y = react_time))+
 ##R-function:
 ##effect size: different slopes between gender
 ##CI of effect size:
-##Number of observations: 177
+##Number of observations: 234
 ##df : 
 
 
@@ -111,14 +111,14 @@ pref_average <- gathered_dd %>%
 m1 <- lm(mean.rt ~ Gender, data = pref_average)
 autoplot(m1)
 anova(m1)
-## no evidence of sex difference (in 2020)
+## weak evidence of sex difference (in 2025)
 
 
 # Ignoring multiple observations (ignoring random effects)
 m2 <- lm(react_time ~  Gender, data = gathered_dd)
 autoplot(m2)
 anova(m2)
-## strong evidence of sex difference (in 2024)
+## very strong evidence of sex difference (in 2025)
 
 
 # Taking variation into account within individuals:
@@ -127,4 +127,4 @@ m3 <- lmer(react_time ~ Gender + (1|ID),
            data = gathered_dd, REML = FALSE)
 summary(m3)
 confint(m3)
-## difference between sexes CI overlaps zero, so no evidence of difference
+## weak evidence of difference between sexes in 2025... CI close to zero difference
