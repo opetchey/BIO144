@@ -13,13 +13,11 @@ library(simex)
 dd_all <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vTl3AnTRihwmiBfyKukIecYH9qMI507JFriFszHLHO8c6WfLfIQx0nnWIHkMXQO-vvcWkg5Y-u17JkR/pub?output=csv")
 
 ## Must be very careful to get the next line right!!! Really important!!!
-names(dd_all) <- c("Timestamp", "Gender", "Pref_Reaction_time_1",
-               "Verbal_memory_score", "Number_memory_score",
-               "Visual_memory_score",
-               "Weight_kgs", "Handed", "Nonpref_Reaction_time_ave",  
-               "Pref_Reaction_time_2", "Pref_Reaction_time_3",  
-               "Pref_Reaction_time_4", "Pref_Reaction_time_5",
-               "Pref_Reaction_time_ave", "Random_number")
+names(dd_all) <- c("Timestamp", "Gender", "Weight_kg", "Handed",
+                   "Pref_Reaction_time_1",  "Pref_Reaction_time_2", "Pref_Reaction_time_3",
+                   "Pref_Reaction_time_4", "Pref_Reaction_time_5", "Pref_Reaction_time_ave",
+                   "Nonpref_Reaction_time_ave", "Verbal_memory_score", "Number_memory_score",
+                   "Visual_memory_score", "Random_number")
 
 dd_filtered <- dd_all %>%
   filter(Pref_Reaction_time_ave > 50,
